@@ -1,0 +1,443 @@
+rules_version = '2';
+
+// ============================================================================================
+// SECURITY RULES — see BUILD_PLAN.md Phase 2/3 for the design rationale. Key decisions:
+//
+// 1. companyId resolution: this project is client-SDK-only (no Admin SDK / Cloud Functions),
+//    so there is no way to mint custom claims server-side. Instead, `users/{uid}.companyId` is
+//    the source of truth, looked up via get() in every rule below. Slightly more expensive per
+//    rule evaluation than a custom claim, but it's the only option under this constraint.
+//
+// 2. First-signup bootstrap problem: creating a company normally requires *already* belonging
+//    to that company (checked via the users/{uid} lookup above) — but at signup time, the
+//    user doc doesn't exist yet. `isBootstrapping()` below allows `create` on the tenant-root
+//    documents (company, its default branch/role/financialYear docs, and the user's own
+//    profile doc) *only* for an authenticated user who does not yet have a users/{uid} doc —
+//    i.e., only during their own first signup, never again afterwards. This is a deliberate,
+//    accepted trade-off: without a Cloud Function trigger, nothing stops a not-yet-onboarded
+//    auth account from creating more than one orphan company before ever finishing signup.
+//    That's company-spam, not a cross-tenant data leak — no rule gap here exposes another
+//    tenant's data. Logged in PROGRESS.md.
+//
+// 3. Menu permission keys are leaf-scoped, matching `src/config/nav.ts`'s `menuKey()` — e.g.
+//    `"administration/users"`, `"settings/branches"` — not bare section names. `hasMenuAccess()`
+//    calls below must use the exact same leaf keys as `src/config/default-roles.ts` seeds and
+//    the Role Configure UI writes, or every non-fullAccess role would be silently denied
+//    everything. (An earlier draft of this file used bare section keys like `"settings"` before
+//    Phase 3 introduced leaf-level granularity — fixed before ever being deployed.)
+//
+// 4. Default-deny: only collections a real phase has actually built get an explicit `allow`
+//    below. Everything else falls through to the final catch-all `deny`. A collection with no
+//    rule here is a phase that isn't done yet, not an oversight — add its rules in the same
+//    phase that adds the collection (per BUILD_PLAN.md's quality bar), not before.
+// ============================================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function myUserDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function hasUserDoc() {
+      return isSignedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    // True only for an authenticated account that has not yet completed signup — the narrow
+    // window in which creating a brand-new tenant is allowed. See note (2) above.
+    function isBootstrapping() {
+      return isSignedIn() && !hasUserDoc();
+    }
+
+    function myCompanyId() {
+      return myUserDoc().data.companyId;
+    }
+
+    // Phase 8: a `disabled` account is rejected client-side at the next `logIn()` attempt (see
+    // `src/lib/auth.ts`) and by `ProtectedRoute`'s own backstop for an already-open session — but
+    // neither of those touches this file, and nothing before Phase 8 ever checked `status` here
+    // either. Baking it into the one function almost every other rule in this file calls through
+    // means a disabled account loses *all* write/read access the moment this is deployed, not
+    // just the UI's willingness to show it to them — matches BUILD_PLAN.md's "gated both
+    // client-side and server-side, never one without the other" bar. A user can still always
+    // read their *own* profile doc regardless (see `users/{uid}`'s own `allow get` below, which
+    // checks `request.auth.uid == uid` directly, never through this function) — the one exception
+    // that has to stay open for the disabled banner/sign-out flow to work at all.
+    function belongsToCompany(companyId) {
+      return hasUserDoc() && myCompanyId() == companyId && myUserDoc().data.status == 'active';
+    }
+
+    function myRoleDoc(companyId) {
+      return get(/databases/$(database)/documents/companies/$(companyId)/roles/$(myUserDoc().data.roleId));
+    }
+
+    // Coarse, menu-level gate — Phase 3 tightens this to real per-action checks once the Role
+    // Configure UI actually populates `actionPermissions`; until then `fullAccess` (Owner) or
+    // the relevant `menuPermissions[menuKey]` flag is all there is to check. `menuKey` must be
+    // a leaf key (e.g. `"administration/users"`), never a bare section name — see note (3).
+    function hasMenuAccess(companyId, menuKey) {
+      let role = myRoleDoc(companyId).data;
+      return role.fullAccess == true || role.menuPermissions[menuKey] == true;
+    }
+
+    // ---- users/{uid} ------------------------------------------------------------------------
+    // A user may always read/update their own profile. Creation is allowed either during that
+    // same user's first-signup bootstrap (their own uid only), or by an existing company member
+    // with User Management access adding a *new teammate* — necessarily a different uid than
+    // the creator's own, since an admin is creating someone else's account (Phase 3's "Add New
+    // User"). Deletion is never allowed client-side (Phase 3 uses a "disable", i.e. a status
+    // update, not a delete).
+    match /users/{uid} {
+      allow get: if isSignedIn() && (
+        request.auth.uid == uid ||
+        belongsToCompany(resource.data.companyId)
+      );
+      // No `list` rule yet, deliberately — a bare `isSignedIn()` here wouldn't actually
+      // constrain which documents a list query could return. Phase 3's User Management list
+      // page queries `where('companyId', '==', myCompanyId())`, which this rule authorizes by
+      // requiring every returned document to satisfy `belongsToCompany` — Firestore rejects the
+      // whole query at request time if it could return anything this rule wouldn't allow via
+      // `get`, so an unscoped list attempt (no companyId filter) is rejected outright.
+      allow list: if isSignedIn() && belongsToCompany(resource.data.companyId);
+      allow create: if isSignedIn() && (
+        (request.auth.uid == uid && isBootstrapping()) ||
+        (belongsToCompany(request.resource.data.companyId) &&
+          hasMenuAccess(request.resource.data.companyId, 'administration/users'))
+      );
+      allow update: if isSignedIn() && (
+        // A user may update their own profile, but never re-assign their own company/role.
+        (request.auth.uid == uid &&
+          request.resource.data.companyId == resource.data.companyId &&
+          request.resource.data.roleId == resource.data.roleId) ||
+        // Or a User-Management-permitted teammate manages another user's status/role.
+        (belongsToCompany(resource.data.companyId) &&
+          hasMenuAccess(resource.data.companyId, 'administration/users'))
+      );
+      allow delete: if false;
+    }
+
+    // ---- companies/{companyId} ---------------------------------------------------------------
+    match /companies/{companyId} {
+      allow get: if belongsToCompany(companyId);
+      allow create: if isBootstrapping();
+      // The seeded default company is `protected` — Settings > Company Settings enforces "can't
+      // disable/delete" client-side (BUILD_PLAN Phase 10); the rule backs that up server-side.
+      allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/company') &&
+        (resource.data.protected != true || request.resource.data.protected == true);
+      allow delete: if false;
+
+      // ---- companies/{companyId}/branches/{branchId} -----------------------------------------
+      match /branches/{branchId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/branches'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/branches') &&
+          (resource.data.protected != true || request.resource.data.protected == true);
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/branches') &&
+          resource.data.protected != true;
+      }
+
+      // ---- companies/{companyId}/roles/{roleId} ----------------------------------------------
+      match /roles/{roleId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/roles'));
+        // The Owner role is protected — only another Owner (fullAccess) can edit it (matches
+        // "can only be managed by another Owner" from the reference app).
+        allow update: if belongsToCompany(companyId) &&
+          (resource.data.protected != true
+            ? hasMenuAccess(companyId, 'administration/roles')
+            : myRoleDoc(companyId).data.fullAccess == true);
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/roles') &&
+          resource.data.protected != true;
+      }
+
+      // ---- companies/{companyId}/financialYears/{fyId} ---------------------------------------
+      match /financialYears/{fyId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/financial-years'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/financial-years');
+        allow delete: if false; // financial years are never deleted, only superseded
+      }
+
+      // ---- companies/{companyId}/workflowConfig/{roleId} -------------------------------------
+      match /workflowConfig/{roleId} {
+        // Read is company-wide, not gated behind 'settings/workflow' — every signed-in role
+        // needs to read *its own* config (Phase 5's status×action gating, job-access scope,
+        // etc. all read this at runtime), not just whoever can open the Designer.
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/workflow');
+      }
+
+      // ---- companies/{companyId}/formSchemas/{formType} --------------------------------------
+      match /formSchemas/{formType} {
+        // Same reasoning as workflowConfig above — Phase 5's real Create Job Card form reads
+        // this for every role, not just whoever configured it.
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/workflow');
+      }
+
+      // ---- companies/{companyId}/parties/{partyId} -------------------------------------------
+      // Started minimal in Phase 5 (Job Card creation needs a customer to search or quick-add);
+      // Phase 7's Masters > Parties page extends the same collection (category, GST/PAN, credit
+      // terms) rather than replacing it. Anyone who can create a job card can still quick-add a
+      // walk-in customer; `masters/parties` access covers the fuller management case. `delete`
+      // stays `false` — Phase 7's "Delete" is a soft `status: 'deleted'` update instead, since a
+      // party may still be referenced by this company's own historical job cards/receipts.
+      match /parties/{partyId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) &&
+          (hasMenuAccess(companyId, 'service/job-cards') || hasMenuAccess(companyId, 'masters/parties'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/parties');
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/items/{itemId} ----------------------------------------------
+      // Same reasoning as parties above — started minimal in Phase 5 (Job Cards' parts/service
+      // items and Service Items needed a real catalog before Item Master existed), extended by
+      // Phase 7's fuller Item Master (classification, pricing, enabled-in flags) on this same
+      // collection. `delete` stays `false` — same soft-delete-via-status reasoning as parties.
+      match /items/{itemId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) &&
+          (hasMenuAccess(companyId, 'service/job-cards') ||
+            hasMenuAccess(companyId, 'service/items') ||
+            hasMenuAccess(companyId, 'masters/items'));
+        allow update: if belongsToCompany(companyId) &&
+          (hasMenuAccess(companyId, 'service/items') || hasMenuAccess(companyId, 'masters/items'));
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/serviceOptions/{optionType}/items/{id} ----------------------
+      // Read is company-wide — the Create Job Card form's Device Type/Brand/Model/Problems
+      // pickers need these regardless of who's creating the job card.
+      match /serviceOptions/{optionType}/items/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/options');
+      }
+
+      // ---- companies/{companyId}/jobCards/{jobId} --------------------------------------------
+      // Menu-level gating for now, same trade-off Phase 3 documented for `roles`/`users`: the
+      // Workflow Designer's real per-status/per-action enforcement (Phase 4) is a client-side
+      // UX guardrail, not yet mirrored here — tightening this to check `workflowConfig`'s
+      // status×action matrix from within a rule is real added complexity for a check the UI
+      // already performs, and is exactly the kind of thing to revisit once a phase actually
+      // needs the stronger guarantee, not before.
+      match /jobCards/{jobId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/job-cards');
+        // The ordinary case is Service's own access; the second clause exists only so a
+        // Finance-side Void Receipt (no Job Cards access at all) can still reverse the one field
+        // it's responsible for — `paidAmount` — on the job that receipt was against, without
+        // being able to touch anything else about the job.
+        allow update: if belongsToCompany(companyId) && (
+          hasMenuAccess(companyId, 'service/job-cards') ||
+          (hasMenuAccess(companyId, 'finance/receipts') &&
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['paidAmount', 'updatedAt']))
+        );
+        allow delete: if false;
+
+        // ---- companies/{companyId}/jobCards/{jobId}/timeline/{eventId} ----------------------
+        // Append-only — every entry is written once, at the moment of the real action it
+        // records (see `JobTimelineEventDoc`'s own doc comment). No update/delete rule at all.
+        match /timeline/{eventId} {
+          allow read: if belongsToCompany(companyId);
+          allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/job-cards');
+        }
+      }
+
+      // ---- companies/{companyId}/jobCosting/{jobId} ------------------------------------------
+      match /jobCosting/{jobId} {
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/costing');
+      }
+
+      // ---- companies/{companyId}/fieldVisits/{id} --------------------------------------------
+      // A denormalized mirror of a job's own `fieldVisit` timeline event (see `FieldVisitDoc`'s
+      // own doc comment) — written by the same Job Cards action, read by Field Visit Report.
+      // Append-only, same "the record of what happened never gets edited" principle as the job
+      // timeline itself.
+      match /fieldVisits/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/job-cards');
+        allow update, delete: if false;
+      }
+
+      // ---- companies/{companyId}/receipts/{receiptId} ----------------------------------------
+      // Phase 5 wrote to this collection from Job Cards only (advance/final payment); Phase 6
+      // adds the standalone "New Entry" (Receipt/Payment, optionally not tied to any job card)
+      // and Void Receipt — same collection throughout, never a second one. `update` is
+      // deliberately narrow: the only legal update is voiding (flip `voided` false→true), never
+      // a rewrite of the amount/party/etc. after the fact — same "append-only ledger" principle
+      // as the job timeline. Fine-grained action gating (who may void) is menu-level here, same
+      // caveat as every other rule in this file (see note 3) — real per-action enforcement is
+      // client-side (`usePermissions().canDo(specialActionKey('finance','voidReceipt'))`) until
+      // a server component can check `actionPermissions` too.
+      match /receipts/{receiptId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) &&
+          (hasMenuAccess(companyId, 'service/job-cards') || hasMenuAccess(companyId, 'finance/receipts'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'finance/receipts') &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['voided', 'updatedAt']) &&
+          resource.data.voided == false && request.resource.data.voided == true;
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/uom, itemCategories, paymentModes, partyCategories ----------
+      // Phase 7 Masters. Read is company-wide (Item Master's own form, Job Cards, Parties, etc.
+      // all need these dropdowns regardless of who's using them); write is gated to each
+      // master's own menu. `source: 'system'` rows (seeded at signup) can be edited but never
+      // hard-deleted — the same `protected`-style guard used for Branches/Roles since Phase 2,
+      // just keyed by a field name that matches this phase's own `UomDoc`/etc. shape.
+      match /uom/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/uom');
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/uom') &&
+          resource.data.source != 'system';
+      }
+      match /itemCategories/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/item-categories');
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/item-categories') &&
+          resource.data.source != 'system';
+      }
+      match /paymentModes/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes');
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes') &&
+          resource.data.source != 'system';
+      }
+      match /partyCategories/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/party-categories');
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/party-categories') &&
+          resource.data.source != 'system';
+      }
+
+      // ---- companies/{companyId}/secondHandPurchases/{id} ------------------------------------
+      // `update` is intentionally broader than "just the Purchase page" — Device Sale flips
+      // `status: 'sold'` on the purchase doc in the same batch as creating the sale doc (see
+      // `useCreateSecondHandSale`'s own doc comment), so a Sale-only role needs write access
+      // here too, same trade-off as Finance's own `jobCards.paidAmount` clause in Phase 6.
+      match /secondHandPurchases/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'second-hand-device/purchase');
+        allow update: if belongsToCompany(companyId) &&
+          (hasMenuAccess(companyId, 'second-hand-device/purchase') || hasMenuAccess(companyId, 'second-hand-device/sale'));
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/secondHandSales/{id} ----------------------------------------
+      // Append-only, like every other financial-event doc in this app (receipts, timeline
+      // events) — a sale is never edited after the fact, only ever created.
+      match /secondHandSales/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'second-hand-device/sale');
+        allow update: if false;
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/counters/{docType} ------------------------------------------
+      // Backs `getNextSequence()` (`src/lib/sequences.ts`) — every phase since Phase 5 (Job
+      // Cards, Receipts, Parties, and now Second Hand Purchases/Sales) transacts against this
+      // collection to mint a sequential id. Gated to company membership only, not a specific
+      // menu: whichever menu already gated the real document's own `create` rule is the actual
+      // access control; this is just shared internal plumbing every one of them needs to touch.
+      // (A gap fixed in this phase, not introduced by it — every prior phase's sequence-writing
+      // transaction only ever worked because the real project's rules were never deployed yet;
+      // see PROGRESS.md's "Action needed from you".)
+      match /counters/{docType} {
+        allow read, write: if belongsToCompany(companyId);
+      }
+
+      // ---- companies/{companyId}/auditLog/{id} -----------------------------------------------
+      // Phase 8 — the trail every mutation across the whole app writes to (see
+      // `src/lib/audit-log.ts`). `create` is deliberately company-membership-only, not gated to
+      // a specific menu: every module's own mutation writes here as part of *its own* batch, so
+      // whatever menu access that real write already required is the actual access control —
+      // this rule only has to stop a cross-tenant write, not re-litigate per-module permissions.
+      // Append-only: no `update`/`delete`, same "the record of what happened never gets edited
+      // after the fact" principle as the job timeline and every receipt/sale doc before it.
+      match /auditLog/{id} {
+        allow read: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/audit');
+        allow create: if belongsToCompany(companyId);
+        allow update, delete: if false;
+      }
+
+      // ---- companies/{companyId}/sessions/{id} -----------------------------------------------
+      // `create` happens once per successful login (any company member, for their own session).
+      // `update` is narrowed two ways: only the session's own owner may touch it (never another
+      // user's), and only for the two fields a heartbeat/logout ever legitimately changes.
+      match /sessions/{id} {
+        allow read: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/sessions');
+        allow create: if belongsToCompany(companyId) && request.resource.data.userId == request.auth.uid;
+        allow update: if belongsToCompany(companyId) && resource.data.userId == request.auth.uid &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastActivityAt', 'endedAt']);
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/ipWhitelist/{id} --------------------------------------------
+      // Read is company-wide, not gated behind 'administration/ip-whitelist' — `useIpAccessCheck`
+      // runs for *every* signed-in role (it's what decides whether they're blocked at all), not
+      // just whoever manages the list. See `ip-enforcement.ts` for why this is advisory-only.
+      match /ipWhitelist/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/ip-whitelist');
+      }
+
+      // ---- companies/{companyId}/printTemplates/{id} -----------------------------------------
+      match /printTemplates/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats');
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats') &&
+          resource.data.protected != true;
+      }
+
+      // ---- companies/{companyId}/whatsappConfig/{docId} --------------------------------------
+      // A single fixed doc (id "config"), same pattern as `formSchemas`. Gated by the 'settings'
+      // module's own `manageWhatsapp` special action, not a menu-permission entity key — see
+      // `permission-schema.ts`'s own `settings` section (there's no `whatsapp` CRUD entity there).
+      match /whatsappConfig/{docId} {
+        allow read: if belongsToCompany(companyId);
+        allow write: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/whatsapp'));
+      }
+
+      // ---- companies/{companyId}/backups/{id} + backupSettings/{docId} -----------------------
+      // Metadata only — the actual JSON payload lives in Firebase Storage (see `storage.rules`).
+      // `update`/`delete` denied: a backup record is a point-in-time fact, never edited or
+      // removed once taken (matches every other "the record of what happened never changes"
+      // collection in this app).
+      match /backups/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/backup');
+        allow update, delete: if false;
+      }
+      match /backupSettings/{docId} {
+        allow read, write: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/backup'));
+      }
+
+      // ---- companies/{companyId}/archives/{id} -----------------------------------------------
+      // A restored-as-archive snapshot's own metadata — same append-only reasoning as `backups`.
+      match /archives/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/backup');
+        allow update, delete: if false;
+      }
+    }
+
+    // Everything else has no rule yet because no phase has built that collection yet — falls
+    // through to deny below.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

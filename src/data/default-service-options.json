@@ -1,0 +1,2218 @@
+{
+  "data": {
+    "groups": [
+      {
+        "group": "brand",
+        "options": [
+          {
+            "_id": "6a9651aa5655009beacf3288",
+            "group": "brand",
+            "label": "Samsung",
+            "slug": "samsung",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS",
+                "Laptop"
+              ]
+            },
+            "order": 1,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3289",
+            "group": "brand",
+            "label": "Xiaomi",
+            "slug": "xiaomi",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 2,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf328a",
+            "group": "brand",
+            "label": "Redmi",
+            "slug": "redmi",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 3,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf328b",
+            "group": "brand",
+            "label": "Realme",
+            "slug": "realme",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 4,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf328c",
+            "group": "brand",
+            "label": "Vivo",
+            "slug": "vivo",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 5,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf328d",
+            "group": "brand",
+            "label": "Oppo",
+            "slug": "oppo",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 6,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf328e",
+            "group": "brand",
+            "label": "OnePlus",
+            "slug": "oneplus",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 7,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf328f",
+            "group": "brand",
+            "label": "Apple",
+            "slug": "apple",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS",
+                "Laptop"
+              ]
+            },
+            "order": 8,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3290",
+            "group": "brand",
+            "label": "Poco",
+            "slug": "poco",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet"
+              ]
+            },
+            "order": 9,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3291",
+            "group": "brand",
+            "label": "iQOO",
+            "slug": "iqoo",
+            "meta": {
+              "deviceType": [
+                "Mobile"
+              ]
+            },
+            "order": 10,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3292",
+            "group": "brand",
+            "label": "Motorola",
+            "slug": "motorola",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone",
+                "Tablet"
+              ]
+            },
+            "order": 11,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3293",
+            "group": "brand",
+            "label": "Nokia",
+            "slug": "nokia",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone",
+                "Tablet"
+              ]
+            },
+            "order": 12,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3294",
+            "group": "brand",
+            "label": "Infinix",
+            "slug": "infinix",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet"
+              ]
+            },
+            "order": 13,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3295",
+            "group": "brand",
+            "label": "Tecno",
+            "slug": "tecno",
+            "meta": {
+              "deviceType": [
+                "Mobile"
+              ]
+            },
+            "order": 14,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3296",
+            "group": "brand",
+            "label": "Google",
+            "slug": "google",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Earbuds / TWS"
+              ]
+            },
+            "order": 15,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3297",
+            "group": "brand",
+            "label": "Honor",
+            "slug": "honor",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Tablet"
+              ]
+            },
+            "order": 16,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3298",
+            "group": "brand",
+            "label": "Lava",
+            "slug": "lava",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone"
+              ]
+            },
+            "order": 17,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3299",
+            "group": "brand",
+            "label": "itel",
+            "slug": "itel",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone"
+              ]
+            },
+            "order": 18,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf329a",
+            "group": "brand",
+            "label": "Jio",
+            "slug": "jio",
+            "meta": {
+              "deviceType": [
+                "Keypad Phone"
+              ]
+            },
+            "order": 19,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf329b",
+            "group": "brand",
+            "label": "Other",
+            "slug": "other",
+            "meta": {
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS",
+                "Laptop"
+              ]
+            },
+            "order": 20,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          }
+        ]
+      },
+      {
+        "group": "cancel_reason",
+        "options": [
+          {
+            "_id": "6a9651d4d02bdfe457b3d7cc",
+            "group": "cancel_reason",
+            "slug": "customer_request",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.276Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Customer Request",
+            "meta": {},
+            "order": 1,
+            "updatedAt": "2026-09-01T04:17:24.276Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7cd",
+            "group": "cancel_reason",
+            "slug": "device_not_repairable",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.276Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Device Not Repairable",
+            "meta": {},
+            "order": 2,
+            "updatedAt": "2026-09-01T04:17:24.276Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7cf",
+            "group": "cancel_reason",
+            "slug": "parts_not_available",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.276Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Parts Not Available",
+            "meta": {},
+            "order": 3,
+            "updatedAt": "2026-09-01T04:17:24.276Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7d0",
+            "group": "cancel_reason",
+            "slug": "customer_took_device_back",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.276Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Customer Took Device Back",
+            "meta": {},
+            "order": 4,
+            "updatedAt": "2026-09-01T04:17:24.276Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7d1",
+            "group": "cancel_reason",
+            "slug": "duplicate_entry",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.276Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Duplicate Entry",
+            "meta": {},
+            "order": 5,
+            "updatedAt": "2026-09-01T04:17:24.276Z"
+          }
+        ]
+      },
+      {
+        "group": "customer_item",
+        "options": [
+          {
+            "_id": "6a9651d4d02bdfe457b3d7bf",
+            "slug": "sim_card",
+            "group": "customer_item",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.267Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "SIM Card",
+            "meta": {},
+            "order": 1,
+            "updatedAt": "2026-09-01T04:17:24.267Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c5",
+            "slug": "sim_tray",
+            "group": "customer_item",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.267Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "SIM Tray",
+            "meta": {},
+            "order": 2,
+            "updatedAt": "2026-09-01T04:17:24.267Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c7",
+            "slug": "memory_card",
+            "group": "customer_item",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.267Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Memory Card",
+            "meta": {},
+            "order": 3,
+            "updatedAt": "2026-09-01T04:17:24.267Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c8",
+            "slug": "back_cover",
+            "group": "customer_item",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.267Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Back Cover",
+            "meta": {},
+            "order": 4,
+            "updatedAt": "2026-09-01T04:17:24.267Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c9",
+            "slug": "battery",
+            "group": "customer_item",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.267Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Battery",
+            "meta": {},
+            "order": 5,
+            "updatedAt": "2026-09-01T04:17:24.267Z"
+          }
+        ]
+      },
+      {
+        "group": "device_type",
+        "options": [
+          {
+            "_id": "6a9651aa5655009beacf3282",
+            "group": "device_type",
+            "label": "Mobile",
+            "slug": "mobile",
+            "meta": {
+              "identifierType": "imei"
+            },
+            "order": 1,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.080Z",
+            "updatedAt": "2026-09-01T04:16:42.080Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3283",
+            "group": "device_type",
+            "label": "Keypad Phone",
+            "slug": "keypad_phone",
+            "meta": {
+              "identifierType": "imei"
+            },
+            "order": 2,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.081Z",
+            "updatedAt": "2026-09-01T04:16:42.081Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3284",
+            "group": "device_type",
+            "label": "Tablet",
+            "slug": "tablet",
+            "meta": {
+              "identifierType": "imei"
+            },
+            "order": 3,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.081Z",
+            "updatedAt": "2026-09-01T04:16:42.081Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3285",
+            "group": "device_type",
+            "label": "Smart Watch",
+            "slug": "smart_watch",
+            "meta": {
+              "identifierType": "serial"
+            },
+            "order": 4,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.081Z",
+            "updatedAt": "2026-09-01T04:16:42.081Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3286",
+            "group": "device_type",
+            "label": "Earbuds / TWS",
+            "slug": "earbuds_tws",
+            "meta": {
+              "identifierType": "serial"
+            },
+            "order": 5,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.081Z",
+            "updatedAt": "2026-09-01T04:16:42.081Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf3287",
+            "group": "device_type",
+            "label": "Laptop",
+            "slug": "laptop",
+            "meta": {
+              "identifierType": "serial"
+            },
+            "order": 6,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          }
+        ]
+      },
+      {
+        "group": "hold_reason",
+        "options": [
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c1",
+            "group": "hold_reason",
+            "slug": "waiting_for_spare_part",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.271Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Waiting for Spare Part",
+            "meta": {},
+            "order": 1,
+            "updatedAt": "2026-09-01T04:17:24.271Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c2",
+            "group": "hold_reason",
+            "slug": "customer_approval_pending",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.271Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Customer Approval Pending",
+            "meta": {},
+            "order": 2,
+            "updatedAt": "2026-09-01T04:17:24.271Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c3",
+            "group": "hold_reason",
+            "slug": "payment_pending",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.271Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Payment Pending",
+            "meta": {},
+            "order": 3,
+            "updatedAt": "2026-09-01T04:17:24.271Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c4",
+            "group": "hold_reason",
+            "slug": "parts_out_of_stock",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.271Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Parts Out of Stock",
+            "meta": {},
+            "order": 4,
+            "updatedAt": "2026-09-01T04:17:24.271Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7c6",
+            "group": "hold_reason",
+            "slug": "customer_unreachable",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.271Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Customer Unreachable",
+            "meta": {},
+            "order": 5,
+            "updatedAt": "2026-09-01T04:17:24.271Z"
+          }
+        ]
+      },
+      {
+        "group": "model",
+        "options": [
+          {
+            "_id": "6a9651aa5655009beacf329c",
+            "group": "model",
+            "label": "Galaxy S24",
+            "slug": "samsung_galaxy_s24",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 1,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf329d",
+            "group": "model",
+            "label": "Galaxy S23",
+            "slug": "samsung_galaxy_s23",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 2,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf329e",
+            "group": "model",
+            "label": "Galaxy S22",
+            "slug": "samsung_galaxy_s22",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 3,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf329f",
+            "group": "model",
+            "label": "Galaxy A55",
+            "slug": "samsung_galaxy_a55",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 4,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a0",
+            "group": "model",
+            "label": "Galaxy A54",
+            "slug": "samsung_galaxy_a54",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 5,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a1",
+            "group": "model",
+            "label": "Galaxy A35",
+            "slug": "samsung_galaxy_a35",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 6,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.082Z",
+            "updatedAt": "2026-09-01T04:16:42.082Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a2",
+            "group": "model",
+            "label": "Galaxy A15",
+            "slug": "samsung_galaxy_a15",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 7,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a3",
+            "group": "model",
+            "label": "Galaxy M35",
+            "slug": "samsung_galaxy_m35",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 8,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a4",
+            "group": "model",
+            "label": "Galaxy M15",
+            "slug": "samsung_galaxy_m15",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 9,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a5",
+            "group": "model",
+            "label": "Galaxy F15",
+            "slug": "samsung_galaxy_f15",
+            "meta": {
+              "brand": "Samsung",
+              "deviceType": "Mobile"
+            },
+            "order": 10,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a6",
+            "group": "model",
+            "label": "Redmi Note 13 Pro",
+            "slug": "xiaomi_redmi_note_13_pro",
+            "meta": {
+              "brand": "Xiaomi",
+              "deviceType": "Mobile"
+            },
+            "order": 11,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a7",
+            "group": "model",
+            "label": "Redmi Note 12",
+            "slug": "xiaomi_redmi_note_12",
+            "meta": {
+              "brand": "Xiaomi",
+              "deviceType": "Mobile"
+            },
+            "order": 12,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a8",
+            "group": "model",
+            "label": "Xiaomi 14",
+            "slug": "xiaomi_xiaomi_14",
+            "meta": {
+              "brand": "Xiaomi",
+              "deviceType": "Mobile"
+            },
+            "order": 13,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32a9",
+            "group": "model",
+            "label": "Xiaomi 13",
+            "slug": "xiaomi_xiaomi_13",
+            "meta": {
+              "brand": "Xiaomi",
+              "deviceType": "Mobile"
+            },
+            "order": 14,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32aa",
+            "group": "model",
+            "label": "Redmi 13C",
+            "slug": "xiaomi_redmi_13c",
+            "meta": {
+              "brand": "Xiaomi",
+              "deviceType": "Mobile"
+            },
+            "order": 15,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ab",
+            "group": "model",
+            "label": "Redmi Note 13",
+            "slug": "redmi_redmi_note_13",
+            "meta": {
+              "brand": "Redmi",
+              "deviceType": "Mobile"
+            },
+            "order": 16,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ac",
+            "group": "model",
+            "label": "Redmi Note 13 Pro",
+            "slug": "redmi_redmi_note_13_pro",
+            "meta": {
+              "brand": "Redmi",
+              "deviceType": "Mobile"
+            },
+            "order": 17,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ad",
+            "group": "model",
+            "label": "Redmi Note 12",
+            "slug": "redmi_redmi_note_12",
+            "meta": {
+              "brand": "Redmi",
+              "deviceType": "Mobile"
+            },
+            "order": 18,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ae",
+            "group": "model",
+            "label": "Redmi 13C",
+            "slug": "redmi_redmi_13c",
+            "meta": {
+              "brand": "Redmi",
+              "deviceType": "Mobile"
+            },
+            "order": 19,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32af",
+            "group": "model",
+            "label": "Redmi 12",
+            "slug": "redmi_redmi_12",
+            "meta": {
+              "brand": "Redmi",
+              "deviceType": "Mobile"
+            },
+            "order": 20,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.083Z",
+            "updatedAt": "2026-09-01T04:16:42.083Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b0",
+            "group": "model",
+            "label": "Redmi A3",
+            "slug": "redmi_redmi_a3",
+            "meta": {
+              "brand": "Redmi",
+              "deviceType": "Mobile"
+            },
+            "order": 21,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b1",
+            "group": "model",
+            "label": "Realme 12 Pro",
+            "slug": "realme_realme_12_pro",
+            "meta": {
+              "brand": "Realme",
+              "deviceType": "Mobile"
+            },
+            "order": 22,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b2",
+            "group": "model",
+            "label": "Realme 12",
+            "slug": "realme_realme_12",
+            "meta": {
+              "brand": "Realme",
+              "deviceType": "Mobile"
+            },
+            "order": 23,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b3",
+            "group": "model",
+            "label": "Realme 11",
+            "slug": "realme_realme_11",
+            "meta": {
+              "brand": "Realme",
+              "deviceType": "Mobile"
+            },
+            "order": 24,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b4",
+            "group": "model",
+            "label": "Realme Narzo 70",
+            "slug": "realme_realme_narzo_70",
+            "meta": {
+              "brand": "Realme",
+              "deviceType": "Mobile"
+            },
+            "order": 25,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b5",
+            "group": "model",
+            "label": "Realme C55",
+            "slug": "realme_realme_c55",
+            "meta": {
+              "brand": "Realme",
+              "deviceType": "Mobile"
+            },
+            "order": 26,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b6",
+            "group": "model",
+            "label": "Realme C53",
+            "slug": "realme_realme_c53",
+            "meta": {
+              "brand": "Realme",
+              "deviceType": "Mobile"
+            },
+            "order": 27,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b7",
+            "group": "model",
+            "label": "Vivo V30",
+            "slug": "vivo_vivo_v30",
+            "meta": {
+              "brand": "Vivo",
+              "deviceType": "Mobile"
+            },
+            "order": 28,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b8",
+            "group": "model",
+            "label": "Vivo V29",
+            "slug": "vivo_vivo_v29",
+            "meta": {
+              "brand": "Vivo",
+              "deviceType": "Mobile"
+            },
+            "order": 29,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32b9",
+            "group": "model",
+            "label": "Vivo Y28",
+            "slug": "vivo_vivo_y28",
+            "meta": {
+              "brand": "Vivo",
+              "deviceType": "Mobile"
+            },
+            "order": 30,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ba",
+            "group": "model",
+            "label": "Vivo Y18",
+            "slug": "vivo_vivo_y18",
+            "meta": {
+              "brand": "Vivo",
+              "deviceType": "Mobile"
+            },
+            "order": 31,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32bb",
+            "group": "model",
+            "label": "Vivo T3",
+            "slug": "vivo_vivo_t3",
+            "meta": {
+              "brand": "Vivo",
+              "deviceType": "Mobile"
+            },
+            "order": 32,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32bc",
+            "group": "model",
+            "label": "Vivo Y200",
+            "slug": "vivo_vivo_y200",
+            "meta": {
+              "brand": "Vivo",
+              "deviceType": "Mobile"
+            },
+            "order": 33,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32bd",
+            "group": "model",
+            "label": "Oppo Reno 12",
+            "slug": "oppo_oppo_reno_12",
+            "meta": {
+              "brand": "Oppo",
+              "deviceType": "Mobile"
+            },
+            "order": 34,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32be",
+            "group": "model",
+            "label": "Oppo Reno 11",
+            "slug": "oppo_oppo_reno_11",
+            "meta": {
+              "brand": "Oppo",
+              "deviceType": "Mobile"
+            },
+            "order": 35,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32bf",
+            "group": "model",
+            "label": "Oppo A78",
+            "slug": "oppo_oppo_a78",
+            "meta": {
+              "brand": "Oppo",
+              "deviceType": "Mobile"
+            },
+            "order": 36,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c0",
+            "group": "model",
+            "label": "Oppo A58",
+            "slug": "oppo_oppo_a58",
+            "meta": {
+              "brand": "Oppo",
+              "deviceType": "Mobile"
+            },
+            "order": 37,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c1",
+            "group": "model",
+            "label": "Oppo F25 Pro",
+            "slug": "oppo_oppo_f25_pro",
+            "meta": {
+              "brand": "Oppo",
+              "deviceType": "Mobile"
+            },
+            "order": 38,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c2",
+            "group": "model",
+            "label": "Oppo A18",
+            "slug": "oppo_oppo_a18",
+            "meta": {
+              "brand": "Oppo",
+              "deviceType": "Mobile"
+            },
+            "order": 39,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c3",
+            "group": "model",
+            "label": "OnePlus 12",
+            "slug": "oneplus_oneplus_12",
+            "meta": {
+              "brand": "OnePlus",
+              "deviceType": "Mobile"
+            },
+            "order": 40,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c4",
+            "group": "model",
+            "label": "OnePlus 12R",
+            "slug": "oneplus_oneplus_12r",
+            "meta": {
+              "brand": "OnePlus",
+              "deviceType": "Mobile"
+            },
+            "order": 41,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c5",
+            "group": "model",
+            "label": "OnePlus 11",
+            "slug": "oneplus_oneplus_11",
+            "meta": {
+              "brand": "OnePlus",
+              "deviceType": "Mobile"
+            },
+            "order": 42,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c6",
+            "group": "model",
+            "label": "OnePlus Nord 4",
+            "slug": "oneplus_oneplus_nord_4",
+            "meta": {
+              "brand": "OnePlus",
+              "deviceType": "Mobile"
+            },
+            "order": 43,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c7",
+            "group": "model",
+            "label": "OnePlus Nord CE 4",
+            "slug": "oneplus_oneplus_nord_ce_4",
+            "meta": {
+              "brand": "OnePlus",
+              "deviceType": "Mobile"
+            },
+            "order": 44,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c8",
+            "group": "model",
+            "label": "iPhone 15 Pro Max",
+            "slug": "apple_iphone_15_pro_max",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 45,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32c9",
+            "group": "model",
+            "label": "iPhone 15 Pro",
+            "slug": "apple_iphone_15_pro",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 46,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ca",
+            "group": "model",
+            "label": "iPhone 15",
+            "slug": "apple_iphone_15",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 47,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32cb",
+            "group": "model",
+            "label": "iPhone 14 Pro Max",
+            "slug": "apple_iphone_14_pro_max",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 48,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32cc",
+            "group": "model",
+            "label": "iPhone 14",
+            "slug": "apple_iphone_14",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 49,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32cd",
+            "group": "model",
+            "label": "iPhone 13",
+            "slug": "apple_iphone_13",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 50,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ce",
+            "group": "model",
+            "label": "iPhone 12",
+            "slug": "apple_iphone_12",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 51,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32cf",
+            "group": "model",
+            "label": "iPhone 11",
+            "slug": "apple_iphone_11",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 52,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.085Z",
+            "updatedAt": "2026-09-01T04:16:42.085Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d0",
+            "group": "model",
+            "label": "iPhone SE",
+            "slug": "apple_iphone_se",
+            "meta": {
+              "brand": "Apple",
+              "deviceType": "Mobile"
+            },
+            "order": 53,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d1",
+            "group": "model",
+            "label": "Poco X6 Pro",
+            "slug": "poco_poco_x6_pro",
+            "meta": {
+              "brand": "Poco",
+              "deviceType": "Mobile"
+            },
+            "order": 54,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d2",
+            "group": "model",
+            "label": "Poco X6",
+            "slug": "poco_poco_x6",
+            "meta": {
+              "brand": "Poco",
+              "deviceType": "Mobile"
+            },
+            "order": 55,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d3",
+            "group": "model",
+            "label": "Poco M6 Pro",
+            "slug": "poco_poco_m6_pro",
+            "meta": {
+              "brand": "Poco",
+              "deviceType": "Mobile"
+            },
+            "order": 56,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d4",
+            "group": "model",
+            "label": "Poco C65",
+            "slug": "poco_poco_c65",
+            "meta": {
+              "brand": "Poco",
+              "deviceType": "Mobile"
+            },
+            "order": 57,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d5",
+            "group": "model",
+            "label": "Poco F6",
+            "slug": "poco_poco_f6",
+            "meta": {
+              "brand": "Poco",
+              "deviceType": "Mobile"
+            },
+            "order": 58,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d6",
+            "group": "model",
+            "label": "iQOO Neo 9 Pro",
+            "slug": "iqoo_iqoo_neo_9_pro",
+            "meta": {
+              "brand": "iQOO",
+              "deviceType": "Mobile"
+            },
+            "order": 59,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d7",
+            "group": "model",
+            "label": "iQOO Z9",
+            "slug": "iqoo_iqoo_z9",
+            "meta": {
+              "brand": "iQOO",
+              "deviceType": "Mobile"
+            },
+            "order": 60,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.086Z",
+            "updatedAt": "2026-09-01T04:16:42.086Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d8",
+            "group": "model",
+            "label": "iQOO Z7",
+            "slug": "iqoo_iqoo_z7",
+            "meta": {
+              "brand": "iQOO",
+              "deviceType": "Mobile"
+            },
+            "order": 61,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32d9",
+            "group": "model",
+            "label": "iQOO 12",
+            "slug": "iqoo_iqoo_12",
+            "meta": {
+              "brand": "iQOO",
+              "deviceType": "Mobile"
+            },
+            "order": 62,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32da",
+            "group": "model",
+            "label": "Moto G84",
+            "slug": "motorola_moto_g84",
+            "meta": {
+              "brand": "Motorola",
+              "deviceType": "Mobile"
+            },
+            "order": 63,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32db",
+            "group": "model",
+            "label": "Moto G54",
+            "slug": "motorola_moto_g54",
+            "meta": {
+              "brand": "Motorola",
+              "deviceType": "Mobile"
+            },
+            "order": 64,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32dc",
+            "group": "model",
+            "label": "Moto G34",
+            "slug": "motorola_moto_g34",
+            "meta": {
+              "brand": "Motorola",
+              "deviceType": "Mobile"
+            },
+            "order": 65,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32dd",
+            "group": "model",
+            "label": "Moto Edge 50",
+            "slug": "motorola_moto_edge_50",
+            "meta": {
+              "brand": "Motorola",
+              "deviceType": "Mobile"
+            },
+            "order": 66,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32de",
+            "group": "model",
+            "label": "Moto E13",
+            "slug": "motorola_moto_e13",
+            "meta": {
+              "brand": "Motorola",
+              "deviceType": "Mobile"
+            },
+            "order": 67,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32df",
+            "group": "model",
+            "label": "Nokia G42",
+            "slug": "nokia_nokia_g42",
+            "meta": {
+              "brand": "Nokia",
+              "deviceType": "Mobile"
+            },
+            "order": 68,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e0",
+            "group": "model",
+            "label": "Nokia G21",
+            "slug": "nokia_nokia_g21",
+            "meta": {
+              "brand": "Nokia",
+              "deviceType": "Mobile"
+            },
+            "order": 69,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e1",
+            "group": "model",
+            "label": "Nokia C32",
+            "slug": "nokia_nokia_c32",
+            "meta": {
+              "brand": "Nokia",
+              "deviceType": "Mobile"
+            },
+            "order": 70,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e2",
+            "group": "model",
+            "label": "Nokia C12",
+            "slug": "nokia_nokia_c12",
+            "meta": {
+              "brand": "Nokia",
+              "deviceType": "Mobile"
+            },
+            "order": 71,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e3",
+            "group": "model",
+            "label": "Infinix Note 40",
+            "slug": "infinix_infinix_note_40",
+            "meta": {
+              "brand": "Infinix",
+              "deviceType": "Mobile"
+            },
+            "order": 72,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e4",
+            "group": "model",
+            "label": "Infinix Hot 40",
+            "slug": "infinix_infinix_hot_40",
+            "meta": {
+              "brand": "Infinix",
+              "deviceType": "Mobile"
+            },
+            "order": 73,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e5",
+            "group": "model",
+            "label": "Infinix Smart 8",
+            "slug": "infinix_infinix_smart_8",
+            "meta": {
+              "brand": "Infinix",
+              "deviceType": "Mobile"
+            },
+            "order": 74,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e6",
+            "group": "model",
+            "label": "Infinix Zero 30",
+            "slug": "infinix_infinix_zero_30",
+            "meta": {
+              "brand": "Infinix",
+              "deviceType": "Mobile"
+            },
+            "order": 75,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e7",
+            "group": "model",
+            "label": "Tecno Spark 20",
+            "slug": "tecno_tecno_spark_20",
+            "meta": {
+              "brand": "Tecno",
+              "deviceType": "Mobile"
+            },
+            "order": 76,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e8",
+            "group": "model",
+            "label": "Tecno Pova 6",
+            "slug": "tecno_tecno_pova_6",
+            "meta": {
+              "brand": "Tecno",
+              "deviceType": "Mobile"
+            },
+            "order": 77,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32e9",
+            "group": "model",
+            "label": "Tecno Camon 20",
+            "slug": "tecno_tecno_camon_20",
+            "meta": {
+              "brand": "Tecno",
+              "deviceType": "Mobile"
+            },
+            "order": 78,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ea",
+            "group": "model",
+            "label": "Pixel 8 Pro",
+            "slug": "google_pixel_8_pro",
+            "meta": {
+              "brand": "Google",
+              "deviceType": "Mobile"
+            },
+            "order": 79,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32eb",
+            "group": "model",
+            "label": "Pixel 8",
+            "slug": "google_pixel_8",
+            "meta": {
+              "brand": "Google",
+              "deviceType": "Mobile"
+            },
+            "order": 80,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ec",
+            "group": "model",
+            "label": "Pixel 7a",
+            "slug": "google_pixel_7a",
+            "meta": {
+              "brand": "Google",
+              "deviceType": "Mobile"
+            },
+            "order": 81,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ed",
+            "group": "model",
+            "label": "Pixel 7",
+            "slug": "google_pixel_7",
+            "meta": {
+              "brand": "Google",
+              "deviceType": "Mobile"
+            },
+            "order": 82,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ee",
+            "group": "model",
+            "label": "Honor X9b",
+            "slug": "honor_honor_x9b",
+            "meta": {
+              "brand": "Honor",
+              "deviceType": "Mobile"
+            },
+            "order": 83,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32ef",
+            "group": "model",
+            "label": "Honor 90",
+            "slug": "honor_honor_90",
+            "meta": {
+              "brand": "Honor",
+              "deviceType": "Mobile"
+            },
+            "order": 84,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f0",
+            "group": "model",
+            "label": "Honor X7b",
+            "slug": "honor_honor_x7b",
+            "meta": {
+              "brand": "Honor",
+              "deviceType": "Mobile"
+            },
+            "order": 85,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f1",
+            "group": "model",
+            "label": "Lava Agni 2",
+            "slug": "lava_lava_agni_2",
+            "meta": {
+              "brand": "Lava",
+              "deviceType": "Mobile"
+            },
+            "order": 86,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f2",
+            "group": "model",
+            "label": "Lava Blaze 2",
+            "slug": "lava_lava_blaze_2",
+            "meta": {
+              "brand": "Lava",
+              "deviceType": "Mobile"
+            },
+            "order": 87,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f3",
+            "group": "model",
+            "label": "Lava Yuva 3",
+            "slug": "lava_lava_yuva_3",
+            "meta": {
+              "brand": "Lava",
+              "deviceType": "Mobile"
+            },
+            "order": 88,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f4",
+            "group": "model",
+            "label": "itel A70",
+            "slug": "itel_itel_a70",
+            "meta": {
+              "brand": "itel",
+              "deviceType": "Mobile"
+            },
+            "order": 89,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f5",
+            "group": "model",
+            "label": "itel P55",
+            "slug": "itel_itel_p55",
+            "meta": {
+              "brand": "itel",
+              "deviceType": "Mobile"
+            },
+            "order": 90,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          },
+          {
+            "_id": "6a9651aa5655009beacf32f6",
+            "group": "model",
+            "label": "itel S23",
+            "slug": "itel_itel_s23",
+            "meta": {
+              "brand": "itel",
+              "deviceType": "Mobile"
+            },
+            "order": 91,
+            "isActive": true,
+            "deletedAt": null,
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.088Z",
+            "updatedAt": "2026-09-01T04:16:42.088Z"
+          }
+        ]
+      },
+      {
+        "group": "outstanding_reason",
+        "options": [
+          {
+            "_id": "6a9651d4d02bdfe457b3d7b8",
+            "slug": "regular_customer,_will_pay_later",
+            "group": "outstanding_reason",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.260Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Regular Customer, Will Pay Later",
+            "meta": {},
+            "order": 1,
+            "updatedAt": "2026-09-01T04:17:24.260Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7b9",
+            "slug": "monthly_settlement_customer",
+            "group": "outstanding_reason",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.260Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Monthly Settlement Customer",
+            "meta": {},
+            "order": 2,
+            "updatedAt": "2026-09-01T04:17:24.260Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7ba",
+            "slug": "partial_payment,_balance_tomorrow",
+            "group": "outstanding_reason",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.260Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Partial Payment, Balance Tomorrow",
+            "meta": {},
+            "order": 3,
+            "updatedAt": "2026-09-01T04:17:24.260Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3d7bb",
+            "slug": "insurance_claim_pending",
+            "group": "outstanding_reason",
+            "__v": 0,
+            "createdAt": "2026-09-01T04:17:24.260Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Insurance Claim Pending",
+            "meta": {},
+            "order": 4,
+            "updatedAt": "2026-09-01T04:17:24.260Z"
+          }
+        ]
+      },
+      {
+        "group": "problems",
+        "options": []
+      }
+    ]
+  }
+}

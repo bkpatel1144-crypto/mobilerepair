@@ -1,0 +1,19 @@
+{
+  "name": "aim — Repair Shop ERP",
+  "short_name": "aim",
+  "description": "aim — repair-shop & second-hand-device ERP by AIM ENTERPRISE",
+  "start_url": "/app/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#0d9488",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
