@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
 import { FormModal } from '@/components/shared/form-modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -47,8 +48,18 @@ const CONFIRM_PHRASE = 'OVERWRITE'
 export function BackupRestorePage() {
   const { profile } = useAuth()
   const stats = useDatabaseStats()
-  const { data: backups = [], isLoading: backupsLoading } = useBackups()
-  const { data: archives = [], isLoading: archivesLoading } = useArchives()
+  const {
+    data: backups = [],
+    isLoading: backupsLoading,
+    error: backupsError,
+    refetch: refetchBackups,
+  } = useBackups()
+  const {
+    data: archives = [],
+    isLoading: archivesLoading,
+    error: archivesError,
+    refetch: refetchArchives,
+  } = useArchives()
   const { data: settings } = useBackupSettings()
   const updateSettings = useUpdateBackupSettings()
   const createBackup = useCreateBackup()
@@ -209,7 +220,7 @@ export function BackupRestorePage() {
         <p className="flex items-center gap-1.5 text-sm font-semibold">
           <Clock className="size-4 text-muted-foreground" />
           Backup History
-          {!backupsLoading && (
+          {!backupsLoading && !backupsError && (
             <span className="rounded-full bg-muted px-1.5 py-0.5 text-xs">{backups.length}</span>
           )}
         </p>
@@ -219,6 +230,8 @@ export function BackupRestorePage() {
               <Skeleton key={i} className="h-9 w-full rounded-lg" />
             ))}
           </div>
+        ) : backupsError ? (
+          <ErrorState error={backupsError} onRetry={() => void refetchBackups()} title="Couldn't load your backups" />
         ) : backups.length === 0 ? (
           <EmptyState icon={Clock} title="No backups yet." description="Create your first backup above." />
         ) : (
@@ -280,7 +293,7 @@ export function BackupRestorePage() {
           <p className="flex items-center gap-1.5 text-sm font-semibold">
             <ArchiveIcon className="size-4 text-muted-foreground" />
             Archives
-            {!archivesLoading && (
+            {!archivesLoading && !archivesError && (
               <span className="rounded-full bg-muted px-1.5 py-0.5 text-xs">{archives.length}</span>
             )}
           </p>
@@ -290,6 +303,8 @@ export function BackupRestorePage() {
                 <Skeleton key={i} className="h-12 w-full rounded-lg" />
               ))}
             </div>
+          ) : archivesError ? (
+            <ErrorState error={archivesError} onRetry={() => void refetchArchives()} title="Couldn't load your archives" />
           ) : archives.length === 0 ? (
             <EmptyState
               icon={ArchiveIcon}
