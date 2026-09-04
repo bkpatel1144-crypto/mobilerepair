@@ -76,7 +76,7 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: 'Receivables', slug: 'receivables' },
       { label: 'Payables', slug: 'payables' },
       { label: 'Supplier Payables', slug: 'supplier-payables', locked: true },
-      { label: 'Expenses', slug: 'expenses', locked: true },
+      { label: 'Expenses', slug: 'expenses' },
     ],
   },
   {

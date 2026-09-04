@@ -3,10 +3,11 @@ import { db } from '@/lib/firebase'
 import {
   itemCategoriesCollection,
   paymentModesCollection,
+  expenseCategoriesCollection,
   partyCategoriesCollection,
   uomCollection,
 } from '@/lib/firestore-paths'
-import type { ItemCategoryDoc, PartyCategoryDoc, PaymentModeDoc, UomDoc } from '@/types/firestore'
+import type { ItemCategoryDoc, PartyCategoryDoc, PaymentModeDoc, UomDoc , ExpenseCategoryDoc} from '@/types/firestore'
 
 /**
  * The default Masters dataset every new company starts with, seeded in the same signup batch as
@@ -69,6 +70,22 @@ const ITEM_CATEGORY_SEED: { name: string; code: string; parentCode: string | nul
 
 /** Adds every default Masters document to `batch` (not committed here — `seedTenantForUser()`
  * commits everything together, same as `addDefaultServiceOptionsToBatch`). */
+/** A usable starting set for Expenses, same convention as Payment Modes — a shop should be able
+ * to record rent on day one without first building a category list. All editable afterwards. */
+const EXPENSE_CATEGORY_SEED = [
+  'Rent',
+  'Salary & Wages',
+  'Electricity',
+  'Internet & Phone',
+  'Tea & Refreshments',
+  'Transport',
+  'Repairs & Maintenance',
+  'Packaging & Consumables',
+  'Marketing',
+  'Bank Charges',
+  'Miscellaneous',
+]
+
 export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, now: unknown) {
   // Refs (not just ids) are pre-created in one pass so Inch's `baseUomId` can resolve to Meter's
   // real id regardless of seed order, then every doc is `batch.set()` in a second pass.
@@ -129,6 +146,21 @@ export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, n
     }
     batch.set(ref, data)
   }
+
+  EXPENSE_CATEGORY_SEED.forEach((name, i) => {
+    const ref = doc(collection(db, expenseCategoriesCollection(companyId)))
+    const data: ExpenseCategoryDoc = {
+      name,
+      displayOrder: i + 1,
+      // Protected so the starting set can't be emptied out from under the expense form; a shop
+      // can still add its own and ignore these.
+      protected: true,
+      status: 'active',
+      createdAt: now as never,
+      updatedAt: now as never,
+    }
+    batch.set(ref, data)
+  })
 
   return { categoryIdByCode }
 }

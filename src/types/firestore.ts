@@ -447,6 +447,81 @@ export interface ReceiptDoc {
   updatedAt: Timestamp
 }
 
+/** `companies/{companyId}/expenseCategories/{id}` — Rent, Salary, Electricity and so on.
+ * Seeded with a usable starting set, same convention as Payment Modes and Party Categories,
+ * and extendable inline from the expense form rather than needing its own Masters page. */
+export interface ExpenseCategoryDoc {
+  name: string
+  displayOrder: number
+  protected: boolean
+  status: EntityStatus
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+/**
+ * `companies/{companyId}/expenses/{id}` — shop running costs, the thing Profit & Loss subtracts
+ * from gross profit.
+ *
+ * Every expense also writes a paired `receipts` document with `direction: 'out'`, in the same
+ * batch. That is deliberate: Cash Book and Party Ledger are both built on `receipts`, and if an
+ * expense lived only here then the cash book's closing balance would disagree with the actual
+ * till by exactly the shop's running costs. `receiptId` records the pairing so voiding one can
+ * void the other.
+ */
+export interface ExpenseDoc {
+  expenseNumber: string // "EXP-2026-27-00001"
+  /** The day the money actually left, which is not always the day it was entered. */
+  expenseDate: Timestamp
+  categoryId: string
+  categoryName: string // denormalized so a renamed category never rewrites history
+  amount: number
+  mode: 'cash' | 'upi' | 'card'
+  /** Optional — rent has a landlord, tea usually doesn't. */
+  paidToPartyId: string | null
+  paidToPartyName: string | null
+  branchId: string
+  notes: string | null
+  /** The `receipts` doc written alongside this one. */
+  receiptId: string
+  voided: boolean
+  createdById: string
+  createdByName: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+/**
+ * `companies/{companyId}/supplierBills/{id}` — what the shop owes a supplier.
+ *
+ * The gap this fills: `jobCosting.costItems[].supplier` is a free-text *name* with no paid/unpaid
+ * state, so parts bought on credit were invisible to the app (see `use-payables.ts`, which says
+ * so). A bill here references a real supplier Party, carries a due date, and is settled by
+ * `receipts` with `direction: 'out'` — so payment history lives in one place across the app
+ * rather than being re-implemented per screen.
+ *
+ * `amountPaid` is maintained on the document rather than summed from receipts on read: the
+ * aging buckets sort by it, and recomputing a sum per bill per render is the kind of thing that
+ * quietly turns a payables page into a slow one.
+ */
+export interface SupplierBillDoc {
+  billNumber: string // "SB-2026-27-00001" — our own reference
+  /** The supplier's own invoice number, if they gave one. */
+  supplierRef: string | null
+  supplierId: string
+  supplierName: string
+  billDate: Timestamp
+  dueDate: Timestamp | null
+  amount: number
+  amountPaid: number
+  notes: string | null
+  status: 'open' | 'paid' | 'void'
+  createdById: string
+  createdByName: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
 /** Backs the transactional sequential-ID generator (`src/lib/sequences.ts`) — not itself a
  * BUILD_PLAN-listed collection, but required infrastructure for the `JC-2026-27-00001`-style
  * IDs Phase 5+ generates. One doc per `docType` per company. */

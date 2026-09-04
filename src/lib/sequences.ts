@@ -56,3 +56,14 @@ export function formatReceiptId(receiptDate: Date, seq: number) {
   const mm = pad(receiptDate.getMonth() + 1, 2)
   return `RCP-${dd}${mm}-${pad(seq, 5)}`
 }
+
+/** `EXP-2026-27-00001` — financial-year-scoped like Job Cards, not day-scoped like receipts.
+ * An expense is a book entry people look up by year, not a counter slip. */
+export function formatExpenseId(fyLabel: string, seq: number) {
+  return `EXP-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
+}
+
+/** `SB-2026-27-00001` (Supplier Bill) */
+export function formatSupplierBillId(fyLabel: string, seq: number) {
+  return `SB-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
+}

@@ -93,6 +93,19 @@ export const secondHandSalesCollection = (companyId: string) =>
 export const secondHandSaleDoc = (companyId: string, id: string) =>
   `${secondHandSalesCollection(companyId)}/${id}`
 
+export const expenseCategoriesCollection = (companyId: string) =>
+  `companies/${companyId}/expenseCategories`
+export const expenseCategoryDoc = (companyId: string, id: string) =>
+  `${expenseCategoriesCollection(companyId)}/${id}`
+export const expensesCollection = (companyId: string) => `companies/${companyId}/expenses`
+export const expenseDoc = (companyId: string, id: string) =>
+  `${expensesCollection(companyId)}/${id}`
+
+export const supplierBillsCollection = (companyId: string) =>
+  `companies/${companyId}/supplierBills`
+export const supplierBillDoc = (companyId: string, id: string) =>
+  `${supplierBillsCollection(companyId)}/${id}`
+
 export const auditLogCollection = (companyId: string) => `companies/${companyId}/auditLog`
 export const sessionsCollection = (companyId: string) => `companies/${companyId}/sessions`
 export const sessionDoc = (companyId: string, id: string) => `${sessionsCollection(companyId)}/${id}`

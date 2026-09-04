@@ -369,6 +369,33 @@ service cloud.firestore {
       // this rule only has to stop a cross-tenant write, not re-litigate per-module permissions.
       // Append-only: no `update`/`delete`, same "the record of what happened never gets edited
       // after the fact" principle as the job timeline and every receipt/sale doc before it.
+      // ---- companies/{companyId}/expenseCategories/{id} --------------------------------------
+      match /expenseCategories/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'finance/expenses'));
+        allow delete: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'finance/expenses') && resource.data.protected != true;
+      }
+
+      // ---- companies/{companyId}/expenses/{id} ------------------------------------------------
+      // No delete rule at all: an expense is voided, never removed, so the cash book can always
+      // be reconciled against yesterday's printout. Same treatment as receipts.
+      match /expenses/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'finance/expenses');
+        allow delete: if false;
+      }
+
+      // ---- companies/{companyId}/supplierBills/{id} -------------------------------------------
+      match /supplierBills/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'finance/supplier-payables');
+        allow delete: if false;
+      }
+
       match /auditLog/{id} {
         allow read: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/audit');
         allow create: if belongsToCompany(companyId);

@@ -123,6 +123,9 @@ const ReceivablesPage = lazy(() =>
 const PayablesPage = lazy(() =>
   import('@/pages/app/finance/payables-page').then((m) => ({ default: m.PayablesPage }))
 )
+const ExpensesPage = lazy(() =>
+  import('@/pages/app/finance/expenses-page').then((m) => ({ default: m.ExpensesPage }))
+)
 const UomPage = lazy(() => import('@/pages/app/masters/uom-page').then((m) => ({ default: m.UomPage })))
 const ItemCategoriesPage = lazy(() =>
   import('@/pages/app/masters/item-categories-page').then((m) => ({ default: m.ItemCategoriesPage }))
@@ -219,6 +222,7 @@ const LEAF_PAGE_OVERRIDES: Record<string, React.ComponentType> = {
   'finance/cashbook': CashBookPage,
   'finance/receivables': ReceivablesPage,
   'finance/payables': PayablesPage,
+  'finance/expenses': ExpensesPage,
   'masters/uom': UomPage,
   'masters/item-categories': ItemCategoriesPage,
   'masters/items': ItemMasterPage,

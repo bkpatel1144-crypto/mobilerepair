@@ -68,6 +68,8 @@ export const PERMISSION_SCHEMA: ModulePermissionSchema[] = [
       { key: 'cashBook', label: 'Cash Book' },
       { key: 'receivables', label: 'Receivables' },
       { key: 'payables', label: 'Payables' },
+      { key: 'expenses', label: 'Expenses' },
+      { key: 'supplierPayables', label: 'Supplier Payables' },
     ],
     specialActions: [
       { key: 'voidReceipt', label: 'Void Receipt' },
