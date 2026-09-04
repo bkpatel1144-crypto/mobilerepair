@@ -98,8 +98,10 @@ export function RecordCostingModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-xl bg-background p-5 shadow-xl">
-        <div className="mb-4 flex items-center justify-between">
+      {/* `dvh` not `vh` so mobile browser chrome is accounted for, and the panel is now a
+       * flex column that clips: the panes below own their own scrolling. */}
+      <div className="flex max-h-[calc(100dvh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-xl bg-background p-5 shadow-xl">
+        <div className="mb-4 flex shrink-0 items-center justify-between">
           <div>
             <h2 className="flex items-center gap-2 text-lg font-semibold">
               <span className="flex size-8 items-center justify-center rounded-full bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">₹</span>
@@ -111,8 +113,13 @@ export function RecordCostingModal({
           </Button>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[1fr_280px]">
-          <div className="space-y-3">
+        {/* Per-pane scrolling from `lg` up. With the whole panel as the single scroller, the
+         * right-hand summary — which is where Save Costing and Cancel live — scrolled away as
+         * soon as you worked down the cost-entry list, so saving meant scrolling back past
+         * everything you had just filled in. `minmax(0,…)` on both tracks for the usual
+         * min-content reason. Stacked below `lg`, the panel scrolls as one column instead. */}
+        <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto lg:grid-cols-[minmax(0,1fr)_minmax(0,280px)] lg:overflow-hidden">
+          <div className="space-y-3 lg:min-h-0 lg:overflow-y-auto lg:pr-1">
             {job.partsUsed.length > 0 && (
               <div className="rounded-lg bg-amber-50 p-3 dark:bg-amber-500/10">
                 <p className="mb-2 flex items-center gap-1.5 text-sm font-medium text-amber-800 dark:text-amber-400">
@@ -218,7 +225,7 @@ export function RecordCostingModal({
             </button>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 lg:min-h-0 lg:overflow-y-auto">
             <div className="rounded-lg border p-3 text-sm">
               <p className="font-medium">Job Card: {job.jobNumber}</p>
               <p className="text-muted-foreground">Technician: {job.assignedToName ?? '—'}</p>

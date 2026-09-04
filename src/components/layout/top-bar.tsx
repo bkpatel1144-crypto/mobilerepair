@@ -71,11 +71,20 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-background px-3 sm:px-4">
-      <Button variant="ghost" size="icon-sm" onClick={onMenuClick} aria-label="Toggle navigation">
+      {/* Mobile only. On desktop the sidebar is always present and carries its own collapse
+       * toggle, so a second nav control up here was redundant; the wordmark moved into the
+       * sidebar with it, matching the reference. */}
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        className="md:hidden"
+        onClick={onMenuClick}
+        aria-label="Open navigation"
+      >
         <Menu className="size-5" />
       </Button>
 
-      <Link to="/app/dashboard" className="text-base font-bold">
+      <Link to="/app/dashboard" className="text-base font-bold md:hidden">
         aim
       </Link>
 

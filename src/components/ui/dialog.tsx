@@ -36,13 +36,35 @@ function DialogOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) 
   )
 }
 
+/**
+ * Dialog widths live here as a `size` prop rather than a class the caller passes.
+ *
+ * They have to: the base class set `sm:max-w-sm`, and `tailwind-merge` can't drop a
+ * `sm:`-prefixed class in favour of an unprefixed one from the caller (they're different
+ * variants, so both survive the merge and the `sm:` one wins the cascade from 640px up). A
+ * caller asking for `max-w-4xl` therefore got a 384px dialog on every desktop screen — which is
+ * what squashed the Print Template editor's live-preview column to a single character per line.
+ * Selecting the `sm:`-prefixed class from here means the variant always matches and the merge
+ * resolves the way the caller expects.
+ */
+const DIALOG_SIZES = {
+  sm: 'sm:max-w-sm',
+  md: 'sm:max-w-lg',
+  lg: 'sm:max-w-2xl',
+  xl: 'sm:max-w-4xl',
+} as const
+
+export type DialogSize = keyof typeof DIALOG_SIZES
+
 function DialogContent({
   className,
   children,
   showCloseButton = true,
+  size = 'sm',
   ...props
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean
+  size?: DialogSize
 }) {
   return (
     <DialogPortal>
@@ -50,7 +72,14 @@ function DialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          'fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+          'fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+          // A dialog is centred with `-translate-y-1/2`, so content taller than the viewport
+          // overflows *both* edges and its footer buttons end up off-screen with no way to
+          // scroll to them — the modal is simply unusable. Cap the height and let the body
+          // scroll inside instead. `100dvh` (not `vh`) so mobile browser chrome is accounted
+          // for. A caller that runs its own internal scroll regions passes `overflow-hidden`.
+          'max-h-[calc(100dvh-2rem)] overflow-y-auto',
+          DIALOG_SIZES[size],
           className
         )}
         {...props}

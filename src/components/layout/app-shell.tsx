@@ -25,11 +25,22 @@ export function AppShell() {
 
   return (
     <BreadcrumbExtraProvider>
-      <div className="flex h-dvh flex-col">
-        <TopBar onMenuClick={handleMenuClick} onSearchClick={() => setCommandOpen(true)} />
-        <div className="flex flex-1 overflow-hidden">
-          <AppSidebar collapsed={collapsed} onExpandRequest={() => setCollapsed(false)} />
-          <MobileSidebar open={mobileOpen} onOpenChange={setMobileOpen} />
+      {/* Sidebar is a full-height column *beside* the header, not underneath it — the header
+       * used to span the full width with the wordmark and hamburger in it, which is not how the
+       * reference app is built (see SCREENS_NOTES.md's capture: the sidebar owns the wordmark,
+       * its own collapse toggle and a nav search, and runs floor to ceiling). */}
+      <div className="flex h-dvh overflow-hidden">
+        <AppSidebar
+          collapsed={collapsed}
+          onExpandRequest={() => setCollapsed(false)}
+          onToggleCollapse={() => setCollapsed((c) => !c)}
+        />
+        <MobileSidebar open={mobileOpen} onOpenChange={setMobileOpen} />
+        {/* `min-w-0`: without it this flex child floors at its content's min-content width, so a
+         * wide table inside a page would push the whole column out and scroll the app sideways
+         * instead of scrolling within its own container. */}
+        <div className="flex min-w-0 flex-1 flex-col">
+          <TopBar onMenuClick={handleMenuClick} onSearchClick={() => setCommandOpen(true)} />
           <main className="flex-1 overflow-y-auto">
             <Outlet />
           </main>

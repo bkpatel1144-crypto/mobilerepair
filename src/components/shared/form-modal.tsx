@@ -50,8 +50,11 @@ export function FormModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          'inset-0 top-0 left-0 h-full max-w-full translate-x-0 translate-y-0 overflow-y-auto rounded-none',
-          'sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-w-lg sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl',
+          // Full-screen sheet under `sm` — so `max-h-none` here to undo DialogContent's own
+          // viewport cap, which would otherwise leave a 1rem dead strip at the bottom of an
+          // intentionally edge-to-edge mobile modal.
+          'inset-0 top-0 left-0 h-full max-h-none max-w-full translate-x-0 translate-y-0 overflow-y-auto rounded-none',
+          'sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[calc(100dvh-2rem)] sm:max-w-lg sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl',
           className
         )}
       >

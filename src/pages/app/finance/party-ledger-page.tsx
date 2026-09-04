@@ -140,7 +140,7 @@ function PartyLedgerDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full overflow-y-auto sm:max-w-2xl">
+      <SheetContent size="xl" className="w-full overflow-y-auto">
         {party && (
           <>
             <SheetHeader>

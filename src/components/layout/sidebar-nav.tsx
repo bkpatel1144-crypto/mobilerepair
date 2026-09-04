@@ -21,6 +21,8 @@ interface SidebarNavProps {
    * collapsed — there's nowhere to show sub-items otherwise. */
   onExpandRequest?: () => void
   onNavigate?: () => void
+  /** Text from the sidebar's own search box. Matches section and leaf labels. */
+  filter?: string
 }
 
 /**
@@ -33,13 +35,22 @@ interface SidebarNavProps {
  * A locked (not-yet-built) leaf is a separate concept from a permission and still renders,
  * disabled, for any role that can otherwise see its section.
  */
-export function SidebarNav({ collapsed, onExpandRequest, onNavigate }: SidebarNavProps) {
+export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: SidebarNavProps) {
   const location = useLocation()
   const { canView, isLoading } = usePermissions()
   const initialOpen = NAV_SECTIONS.find((s) =>
     s.children.some((c) => location.pathname === buildPath(s.key, c.slug))
   )?.key
   const [openSection, setOpenSection] = useState<string | undefined>(initialOpen)
+
+  const q = (filter ?? '').trim().toLowerCase()
+  const filtering = q.length > 0
+  const matches = (text: string) => text.toLowerCase().includes(q)
+  // While searching, a section shows if it matches by name (all its leaves stay visible, so you
+  // can see what's in it) or if any leaf matches (only the matching leaves show). Sections are
+  // force-expanded so results are actually readable without a second click on each one.
+  const leafMatches = (section: NavSection, leafLabel: string) =>
+    !filtering || matches(section.label) || matches(leafLabel)
 
   function handleSectionClick(section: NavSection) {
     if (collapsed) {
@@ -62,7 +73,7 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate }: SidebarNa
 
   return (
     <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto p-2">
-      {canView(DASHBOARD_MENU_KEY) && (
+      {canView(DASHBOARD_MENU_KEY) && (!filtering || matches(DASHBOARD_NAV.label)) && (
         <NavItem
           to="/app/dashboard"
           icon={DASHBOARD_NAV.icon}
@@ -82,12 +93,17 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate }: SidebarNa
         const hasRealAccess = section.children.some(
           (leaf) => !leaf.locked && canView(menuKey(section.key, leaf.slug))
         )
-        const visibleChildren = hasRealAccess
-          ? section.children.filter((leaf) => leaf.locked || canView(menuKey(section.key, leaf.slug)))
-          : []
+        const visibleChildren = (
+          hasRealAccess
+            ? section.children.filter((leaf) => leaf.locked || canView(menuKey(section.key, leaf.slug)))
+            : []
+        ).filter((leaf) => leafMatches(section, leaf.label))
         if (visibleChildren.length === 0) return null
 
-        const isOpen = openSection === section.key && !collapsed
+        // Searching forces every surviving section open — a list of collapsed section headers
+        // is not a search result, and the accordion's one-at-a-time rule would hide all but one
+        // match anyway.
+        const isOpen = (filtering || openSection === section.key) && !collapsed
         const Icon = section.icon
         const sectionButton = (
           <button

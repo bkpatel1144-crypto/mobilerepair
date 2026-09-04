@@ -22,7 +22,7 @@ export function JobCardDetailDrawer({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-3xl">
+      <SheetContent size="2xl" className="flex w-full flex-col gap-0 p-0">
         <ScrollArea className="flex-1">
           <div className="p-5 pr-8">
             {job && (

@@ -74,7 +74,9 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(1 0 0);
+  /* A touch off pure white so the sidebar reads as its own column against the content, as in
+   * the reference. Dark mode already separates the two (0.205 vs 0.145). */
+  --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.6 0.118 184.704);
   --sidebar-primary-foreground: oklch(0.985 0 0);

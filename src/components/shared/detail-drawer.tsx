@@ -70,7 +70,7 @@ export function DetailDrawer({
 }: DetailDrawerProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className={cn('flex w-full flex-col gap-0 p-0 sm:max-w-lg', className)}>
+      <SheetContent size="lg" className={cn('flex w-full flex-col gap-0 p-0', className)}>
         <ScrollArea className="flex-1">
           <div className="space-y-5 p-5 pr-8">
             <div>

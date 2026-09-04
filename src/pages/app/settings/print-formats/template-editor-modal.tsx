@@ -88,13 +88,27 @@ export function TemplateEditorModal({
 
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden sm:rounded-xl">
+      <DialogContent
+        size="xl"
+        className="flex max-h-[calc(100dvh-2rem)] flex-col gap-3 overflow-hidden sm:rounded-xl"
+      >
         <DialogTitle>{existing ? 'Edit Print Template' : 'Design Template'}</DialogTitle>
         <DialogDescription>Field-picker + ordered blocks, bound to real data at print time.</DialogDescription>
 
-        <div className="grid flex-1 gap-4 overflow-y-auto lg:grid-cols-[1.2fr_1fr]">
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2">
+        {/* `minmax(0,…)` on both tracks: a grid track is `min-content`-floored by default, and
+         * the editor column contains selects/buttons that refuse to shrink, so it held the
+         * track open and starved the preview column down to a few pixels — the source of the
+         * one-letter-per-line "LIVE PREVIEW" heading and the dialog's horizontal scrollbar.
+         * Stacks below `lg`, where there simply isn't room for two panes.
+         *
+         * Scrolling is per-pane from `lg` up, not on this grid. When the grid itself was the
+         * scroller, the two columns moved as one body: working down a long block list dragged
+         * the live preview up and out of view, which defeats the point of having a preview
+         * beside the editor at all. Below `lg` the panes are stacked, so the grid scrolls as a
+         * single column instead — nested scroll regions in a stack are worse than one. */}
+        <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:overflow-hidden">
+          <div className="space-y-3 lg:min-h-0 lg:overflow-y-auto lg:pr-1">
+            <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
               <div className="space-y-1.5">
                 <Label>Template Name</Label>
                 <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Standard Job Card Bill" />
@@ -186,10 +200,14 @@ export function TemplateEditorModal({
             </div>
           </div>
 
-          <div className="space-y-2">
-            <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Live Preview (sample data)</p>
-            <div className="overflow-auto rounded-lg border bg-muted/30 p-3">
-              <iframe title="Template preview" srcDoc={previewHtml} className="mx-auto h-96 w-full rounded border bg-white" />
+          <div className="flex min-w-0 flex-col gap-2 lg:min-h-0">
+            <p className="shrink-0 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+              Live Preview (sample data)
+            </p>
+            <div className="min-h-0 flex-1 overflow-auto rounded-lg border bg-muted/30 p-3">
+              {/* `h-96` fixed meant the preview neither grew into a tall dialog nor shrank in a
+               * short one; it now fills its pane and scrolls within it. */}
+              <iframe title="Template preview" srcDoc={previewHtml} className="mx-auto h-96 w-full rounded border bg-white lg:h-full lg:min-h-96" />
             </div>
           </div>
         </div>
