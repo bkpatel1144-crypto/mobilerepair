@@ -29,6 +29,20 @@ import { buildPath } from '@/config/nav'
 const ADVANCE_QUICK_AMOUNTS = [0, 100, 200, 500, 1000]
 const COST_QUICK_AMOUNTS = [200, 500, 1000, 1500, 2000, 3000, 5000]
 
+/**
+ * The two-up field row used throughout this form.
+ *
+ * `auto-fit` rather than a fixed `grid-cols-2`, because every field in these rows is
+ * conditionally rendered from the company's own Workflow Designer schema (`isVisible`). With a
+ * fixed two-column grid, hiding one of a pair left the survivor in a half-width cell with a
+ * dead hole beside it — visible out of the box, since `imei2` ships hidden by default and so
+ * "Serial No" rendered as a half-width field against empty space. `auto-fit` collapses the
+ * empty track, so a lone visible field takes the full width and a visible pair still splits
+ * evenly. It also gives the mobile stack for free: below ~32rem the tracks no longer fit
+ * side by side and drop to one column, with no breakpoint to keep in sync.
+ */
+const FIELD_ROW = 'grid gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))]'
+
 const DRAFT_KEY = 'aim-create-job-card-draft'
 
 /** Everything worth restoring after an accidental navigation away or a reload — a lightweight
@@ -444,7 +458,7 @@ export function CreateJobCardPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-x-4">
+        <div className={FIELD_ROW}>
           <div className="space-y-1.5">
             <Label>
               Device Type <span className="text-red-600">*</span>
@@ -511,7 +525,7 @@ export function CreateJobCardPage() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4">
+        <div className={FIELD_ROW}>
           {isVisible('model') && (
             <div className="space-y-1.5">
               <Label>
@@ -569,7 +583,7 @@ export function CreateJobCardPage() {
         </div>
 
         {(isVisible('imei2') || isVisible('serialNo')) && (
-          <div className="grid grid-cols-2 gap-x-4">
+          <div className={FIELD_ROW}>
             {isVisible('imei2') && (
               <div className="space-y-1.5">
                 <Label>
@@ -736,21 +750,35 @@ export function CreateJobCardPage() {
          * real empty space, so a plain border here — no margin compensation needed — sits
          * cleanly in the middle of it instead. */}
         <div className="space-y-4 lg:border-l lg:border-border lg:pl-6">
+        {/* Stacked, not a 2-up grid. Side by side, each field got ~half of an already-half-width
+         * column, so the 7 cost chips wrapped to three rows against the advance field's two and
+         * the block ended ragged — with a lone "₹1,000" sitting level with "₹1,500 ₹2,000
+         * ₹3,000" as if the two sets were one pool. Full width fits each set on one row.
+         * SCREENS_NOTES.md lists these as consecutive fields anyway, not a pair. */}
         {(isVisible('estimatedCost') || isVisible('advanceReceived')) && (
-          <div className="grid grid-cols-2 gap-x-4">
+          <div className="space-y-4">
             {isVisible('estimatedCost') && (
               <div className="space-y-1.5">
                 <Label>
                   Estimated Cost <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
                 </Label>
                 <Input type="number" min={0} value={estimatedCost} onChange={(e) => setEstimatedCost(Number(e.target.value) || 0)} />
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1.5">
                   {COST_QUICK_AMOUNTS.map((amt) => (
                     <button
                       key={amt}
                       type="button"
+                      data-slot="button"
                       onClick={() => setEstimatedCost(amt)}
-                      className="rounded-full border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted"
+                      aria-pressed={estimatedCost === amt}
+                      className={
+                        'rounded-full border px-2.5 py-1 text-xs transition-colors ' +
+                        // Was the only quick-pick row in the form with no selected state, so
+                        // clicking a chip gave no feedback beyond the number changing.
+                        (estimatedCost === amt
+                          ? 'border-teal-600 bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-400'
+                          : 'text-muted-foreground hover:bg-muted')
+                      }
                     >
                       ₹{amt.toLocaleString('en-IN')}
                     </button>
@@ -765,14 +793,16 @@ export function CreateJobCardPage() {
                   Advance Received <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
                 </Label>
                 <Input type="number" min={0} value={advanceReceived} onChange={(e) => setAdvanceReceived(Number(e.target.value) || 0)} />
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1.5">
                   {ADVANCE_QUICK_AMOUNTS.map((amt) => (
                     <button
                       key={amt}
                       type="button"
+                      data-slot="button"
                       onClick={() => setAdvanceReceived(amt)}
+                      aria-pressed={advanceReceived === amt}
                       className={
-                        'rounded-full border px-2 py-0.5 text-xs ' +
+                        'rounded-full border px-2.5 py-1 text-xs transition-colors ' +
                         (advanceReceived === amt
                           ? 'border-teal-600 bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-400'
                           : 'text-muted-foreground hover:bg-muted')
@@ -845,7 +875,7 @@ export function CreateJobCardPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-x-4">
+        <div className={FIELD_ROW}>
           <div className="space-y-1.5">
             <Label>
               Received By <span className="text-red-600">*</span>
