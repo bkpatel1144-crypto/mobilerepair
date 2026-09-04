@@ -421,6 +421,15 @@ service cloud.firestore {
       // `update`/`delete` denied: a backup record is a point-in-time fact, never edited or
       // removed once taken (matches every other "the record of what happened never changes"
       // collection in this app).
+      // ---- companies/{companyId}/printDevices/{docId} ----------------------------------------
+      // Single fixed doc, same shape as whatsappConfig/backupSettings. Readable by anyone in the
+      // company (the list is a shared note about which printer is which); writable only with the
+      // Print Formats menu permission, which is where the screen lives.
+      match /printDevices/{docId} {
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats');
+      }
+
       match /backups/{id} {
         allow read: if belongsToCompany(companyId);
         allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/backup');

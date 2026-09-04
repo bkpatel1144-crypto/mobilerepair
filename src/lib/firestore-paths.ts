@@ -111,6 +111,8 @@ export const archiveDoc = (companyId: string, id: string) => `${archivesCollecti
 // `formSchemaDoc`'s `jobCard`/`lead` — no separate collection helper needed for either.
 export const whatsappConfigDoc = (companyId: string) => `companies/${companyId}/whatsappConfig/config`
 export const backupSettingsDoc = (companyId: string) => `companies/${companyId}/backupSettings/config`
+/** Named printer profiles — reference records only; see `PrintDevicesDialog`. */
+export const printDevicesDoc = (companyId: string) => `companies/${companyId}/printDevices/config`
 
 export const companiesCollection = () => 'companies'
 

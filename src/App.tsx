@@ -188,6 +188,11 @@ const BillingPage = lazy(() => import('@/pages/app/settings/billing-page').then(
 const PrintFormatsPage = lazy(() =>
   import('@/pages/app/settings/print-formats-page').then((m) => ({ default: m.PrintFormatsPage }))
 )
+const PrintTemplateDesignerPage = lazy(() =>
+  import('@/pages/app/settings/print-formats/designer-page').then((m) => ({
+    default: m.PrintTemplateDesignerPage,
+  }))
+)
 const WhatsAppPage = lazy(() => import('@/pages/app/settings/whatsapp-page').then((m) => ({ default: m.WhatsAppPage })))
 const BackupRestorePage = lazy(() =>
   import('@/pages/app/settings/backup-restore-page').then((m) => ({ default: m.BackupRestorePage }))
@@ -347,6 +352,14 @@ function App() {
                         element={
                           <RequireMenuAccess menuKey="service/job-cards">
                             <JobCardDetailPage />
+                          </RequireMenuAccess>
+                        }
+                      />
+                      <Route
+                        path="settings/print-formats/:templateId"
+                        element={
+                          <RequireMenuAccess menuKey="settings/print-formats">
+                            <PrintTemplateDesignerPage />
                           </RequireMenuAccess>
                         }
                       />
