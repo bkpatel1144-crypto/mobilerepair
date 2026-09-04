@@ -660,7 +660,7 @@ export interface IpWhitelistDoc {
   updatedAt: Timestamp
 }
 
-export type AuditResult = 'success' | 'unauthorized' | 'blocked'
+export type AuditResult = 'success' | 'unauthorized' | 'blocked' | 'failed'
 
 /** `companies/{companyId}/auditLog/{id}` (`preview (16)`/`(17)`) — the one trail every mutation
  * in the app writes to, in the *same* batch as the real write it's recording (see

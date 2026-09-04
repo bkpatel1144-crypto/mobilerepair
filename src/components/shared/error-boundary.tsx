@@ -16,8 +16,10 @@ interface ErrorBoundaryState {
  * with nothing catching it. React error boundaries can only be class components; this is the
  * one class component in the codebase for exactly that reason.
  *
- * TODO(Phase 8): report `error` to companies/{id}/auditLog (or a real error-tracking service)
- * instead of just console.error, once that collection and its write path exist.
+ * Crashes are also recorded to `companies/{id}/auditLog` (Phase 11, closing Phase 8's TODO) so a
+ * white-screen report from a shop has something behind it besides a `console.error` in a browser
+ * nobody was watching. See `logCrashEvent()` for why it reads the profile cache rather than
+ * `useAuth()`.
  */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { error: null }
@@ -28,6 +30,17 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, info: ErrorInfo) {
     console.error('[ErrorBoundary] caught render error:', error, info.componentStack)
+
+    // A *dynamic* import, deliberately: this boundary is one of the few things App.tsx imports
+    // statically, and `audit-log` pulls in the Firestore SDK. A top-level import here would put
+    // the whole of Firebase back into the marketing bundle that App.tsx's own lazy-loading
+    // comment exists to keep it out of.
+    //
+    // Nothing here may throw or reject: this runs while the app is already broken, and a failed
+    // report must not replace the crash screen with a second crash.
+    void import('@/lib/audit-log')
+      .then((m) => m.logCrashEvent(error, info.componentStack))
+      .catch(() => {})
   }
 
   render() {

@@ -17,11 +17,19 @@ import type { AuditResult } from '@/types/firestore'
 
 type CardFilter = 'all' | 'online' | 'today' | 'users' | 'ips' | 'failed' | 'unauthorized' | 'blocked'
 
-const RESULT_LABEL: Record<AuditResult, string> = { success: 'Success', unauthorized: 'Unauthorized', blocked: 'Blocked' }
+// 'failed' is only ever written by crash reporting, which is not a login event — it is
+// listed here because `AuditResult` is shared, not because this report can show it.
+const RESULT_LABEL: Record<AuditResult, string> = {
+  success: 'Success',
+  unauthorized: 'Unauthorized',
+  blocked: 'Blocked',
+  failed: 'Failed',
+}
 const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
   success: 'success',
   unauthorized: 'danger',
   blocked: 'warning',
+  failed: 'danger',
 }
 
 export function LoginReportPage() {

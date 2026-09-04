@@ -1,7 +1,8 @@
 import { addDoc, collection, doc, getDoc, serverTimestamp, type WriteBatch } from 'firebase/firestore'
 import type { User as FirebaseUser } from 'firebase/auth'
-import { db } from '@/lib/firebase'
+import { auth, db } from '@/lib/firebase'
 import { auditLogCollection, branchDoc } from '@/lib/firestore-paths'
+import { readCachedProfile } from '@/lib/profile-cache'
 import type { AuditLogDoc, AuditResult, BranchDoc, UserDoc } from '@/types/firestore'
 
 /**
@@ -208,4 +209,59 @@ export async function flushPendingAuditWrite(): Promise<void> {
 export function addLoginAuditToBatch(batch: WriteBatch, companyId: string, uid: string, profile: UserDoc, ip: string | null): void {
   const ref = doc(collection(db, auditLogCollection(companyId)))
   batch.set(ref, buildLoginAuditData(uid, profile, 'success', ip))
+}
+
+// ---- Crash reporting ---------------------------------------------------------------------
+// Closes the `TODO(Phase 8)` in `error-boundary.tsx`: a render crash that unmounts the whole app
+// used to leave nothing behind but a `console.error` in a browser nobody was watching.
+//
+// Deliberately not routed through `AuditContext`/`useAuth()`: the boundary is a class component
+// mounted *above* AuthProvider (it has to be, or a crash inside AuthProvider itself would go
+// uncaught), so it has no hooks and no profile in scope. `auth.currentUser` plus the existing
+// per-viewer profile cache give the same five fields without one, and a crash while signed out
+// simply isn't recorded — there is no company to record it against.
+
+/** One entry per page session. React can invoke `componentDidCatch` more than once for a single
+ * failure, and a crash-on-render loop would otherwise write a row per attempt. */
+let crashLogged = false
+
+export async function logCrashEvent(
+  error: Error,
+  componentStack: string | null | undefined
+): Promise<void> {
+  if (crashLogged) return
+  crashLogged = true
+
+  const uid = auth.currentUser?.uid
+  if (!uid) return
+  const profile = readCachedProfile(uid)
+  if (!profile?.companyId) return
+
+  const ip = await getClientIp()
+  const data: AuditLogDoc = {
+    action: 'Application Error',
+    module: 'auth',
+    entityType: 'Crash',
+    entityId: null,
+    entityLabel: error.name || 'Error',
+    targetLabel: typeof location !== 'undefined' ? location.pathname : '',
+    critical: true,
+    result: 'failed',
+    details: {
+      message: error.message,
+      // Bounded: a React component stack runs to hundreds of lines, and a Firestore document is
+      // capped at ~1 MiB. The top frames are the ones that identify the failing component.
+      componentStack: (componentStack ?? '').split('\n').slice(0, 20).join('\n'),
+      stack: (error.stack ?? '').split('\n').slice(0, 20).join('\n'),
+      url: typeof location !== 'undefined' ? location.href : '',
+    },
+    performedById: uid,
+    performedByName: profile.fullName,
+    performedByRole: profile.roleName,
+    performedByBranch: '',
+    ip,
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+    createdAt: serverTimestamp() as never,
+  }
+  await addDoc(collection(db, auditLogCollection(profile.companyId)), data)
 }

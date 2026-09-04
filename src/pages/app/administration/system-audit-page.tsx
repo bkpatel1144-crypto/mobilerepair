@@ -14,11 +14,17 @@ import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
 import type { AuditResult } from '@/types/firestore'
 
-const RESULT_LABEL: Record<AuditResult, string> = { success: 'Success', unauthorized: 'Unauthorized', blocked: 'Blocked' }
+const RESULT_LABEL: Record<AuditResult, string> = {
+  success: 'Success',
+  unauthorized: 'Unauthorized',
+  blocked: 'Blocked',
+  failed: 'Failed',
+}
 const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
   success: 'success',
   unauthorized: 'danger',
   blocked: 'warning',
+  failed: 'danger',
 }
 
 export function SystemAuditPage() {
@@ -120,6 +126,7 @@ export function SystemAuditPage() {
             <SelectItem value="success">Success</SelectItem>
             <SelectItem value="unauthorized">Unauthorized</SelectItem>
             <SelectItem value="blocked">Blocked</SelectItem>
+            <SelectItem value="failed">Failed</SelectItem>
           </SelectContent>
         </Select>
       </FilterBar>
