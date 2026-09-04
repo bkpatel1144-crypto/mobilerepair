@@ -208,6 +208,7 @@ export function useCreateJobCard() {
         createdAt: now as never,
         updatedAt: now as never,
         deliveredAt: null,
+        billGeneratedAt: null,
         closedAt: null,
         cancelledAt: null,
       }

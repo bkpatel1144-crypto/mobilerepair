@@ -99,7 +99,11 @@ function buildActionPatch(
     }
     case 'generateBill':
       return {
-        patch: { status: 'ready', finalAmount: input.finalAmount },
+        patch: {
+          status: 'ready',
+          finalAmount: input.finalAmount,
+          billGeneratedAt: serverTimestamp() as never,
+        },
         event: {
           type: 'billGenerated',
           title: 'Bill Generated',

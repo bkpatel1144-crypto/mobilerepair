@@ -348,6 +348,10 @@ export interface JobCardDoc {
   createdAt: Timestamp
   updatedAt: Timestamp
   deliveredAt: Timestamp | null
+  /** Set when the `generateBill` action runs. Null for jobs that have never been billed, and
+   * also for jobs billed before this field existed — the Sales Invoices list falls back to
+   * `updatedAt` for those rather than inventing a date. */
+  billGeneratedAt: Timestamp | null
   closedAt: Timestamp | null
   cancelledAt: Timestamp | null
 }

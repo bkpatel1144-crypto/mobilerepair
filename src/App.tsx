@@ -48,6 +48,9 @@ const DashboardPage = lazy(() =>
 const PlaceholderPage = lazy(() =>
   import('@/pages/app/placeholder-page').then((m) => ({ default: m.PlaceholderPage }))
 )
+const SalesInvoicesPage = lazy(() =>
+  import('@/pages/app/sales/sales-invoices-page').then((m) => ({ default: m.SalesInvoicesPage }))
+)
 const RoleManagementPage = lazy(() =>
   import('@/pages/app/administration/role-management-page').then((m) => ({
     default: m.RoleManagementPage,
@@ -194,6 +197,7 @@ const BackupRestorePage = lazy(() =>
 // NAV_SECTIONS still renders <PlaceholderPage>, generated generically below, until its own
 // phase builds it. Keyed by `menuKey()` so this can never drift from the nav config.
 const LEAF_PAGE_OVERRIDES: Record<string, React.ComponentType> = {
+  'sales/invoices': SalesInvoicesPage,
   'administration/roles': RoleManagementPage,
   'administration/users': UserManagementPage,
   'administration/sessions': ActiveSessionsPage,
