@@ -22,15 +22,15 @@ export function MobileSidebar({ open, onOpenChange }: MobileSidebarProps) {
           <span className="text-lg font-bold tracking-tight">aim</span>
         </div>
 
-        <div className="shrink-0 px-3 py-2.5">
+        <div className="shrink-0 px-3 pt-3 pb-1">
           <div className="relative">
-            <Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               placeholder="Search..."
               aria-label="Search navigation"
-              className="h-9 bg-background pl-8"
+              className="h-10 rounded-full bg-background pl-9"
             />
           </div>
         </div>

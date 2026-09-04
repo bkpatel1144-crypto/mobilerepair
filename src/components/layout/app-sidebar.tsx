@@ -42,19 +42,19 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
     <aside
       className={cn(
         'hidden h-dvh shrink-0 flex-col border-r bg-sidebar transition-[width] duration-150 md:flex',
-        collapsed ? 'w-16' : 'w-[250px]'
+        collapsed ? 'w-16' : 'w-[270px]'
       )}
     >
       {/* Wordmark + collapse toggle. Collapsed, the wordmark gives way so the toggle can centre
        * in the rail — otherwise the two fight over 64px and both end up clipped. */}
       <div
         className={cn(
-          'flex h-14 shrink-0 items-center gap-2 border-b px-3',
+          'flex h-16 shrink-0 items-center gap-2 px-4',
           collapsed ? 'justify-center' : 'justify-between'
         )}
       >
         {!collapsed && (
-          <Link to="/app/dashboard" className="text-base font-bold tracking-tight">
+          <Link to="/app/dashboard" className="text-lg font-bold tracking-tight">
             aim
           </Link>
         )}
@@ -72,15 +72,15 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
        * magnifier to expand first would be a worse affordance than the section icons already
        * sitting right there. */}
       {!collapsed && (
-        <div className="shrink-0 px-3 py-2.5">
+        <div className="shrink-0 px-3 pt-3 pb-1">
           <div className="relative">
-            <Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               placeholder="Search..."
               aria-label="Search navigation"
-              className="h-8 bg-background pl-8"
+              className="h-10 rounded-full border-sidebar-border bg-background pl-9"
             />
           </div>
         </div>

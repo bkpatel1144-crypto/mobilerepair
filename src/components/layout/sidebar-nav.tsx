@@ -72,7 +72,7 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
   }
 
   return (
-    <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto p-2">
+    <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
       {canView(DASHBOARD_MENU_KEY) && (!filtering || matches(DASHBOARD_NAV.label)) && (
         <NavItem
           to="/app/dashboard"
@@ -110,11 +110,11 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
             type="button"
             onClick={() => handleSectionClick(section)}
             className={cn(
-              'flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted',
+              'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-[0.9375rem] font-medium text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent/40 hover:text-sidebar-foreground',
               collapsed && 'justify-center px-0'
             )}
           >
-            <Icon className="size-4.5 shrink-0" />
+            <Icon className="size-5 shrink-0" />
             {!collapsed && (
               <>
                 <span className="flex-1 truncate text-left">{section.label}</span>
@@ -185,16 +185,27 @@ function NavItem({
       onClick={onNavigate}
       className={({ isActive }) =>
         cn(
-          'flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm font-medium transition-colors',
+          'flex items-center gap-3 rounded-lg px-3 py-2.5 text-[0.9375rem] font-medium transition-colors',
           collapsed && 'justify-center px-0',
+          // A filled pill rather than the old 2px left border: the border read as a separate
+          // marker stuck to the edge, while the pill reads as the row itself being selected.
           isActive
-            ? 'border-l-2 border-teal-600 bg-sidebar-accent text-sidebar-accent-foreground'
-            : 'border-l-2 border-transparent text-foreground/80 hover:bg-muted'
+            ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+            : 'text-sidebar-foreground/75 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
         )
       }
     >
-      <Icon className="size-4.5 shrink-0" />
-      {!collapsed && <span className="truncate">{label}</span>}
+      {({ isActive }) => (
+        <>
+          <Icon className="size-5 shrink-0" />
+          {!collapsed && (
+            <>
+              <span className="flex-1 truncate">{label}</span>
+              {isActive && <span className="size-1.5 shrink-0 rounded-full bg-current" />}
+            </>
+          )}
+        </>
+      )}
     </NavLink>
   )
 
@@ -222,10 +233,10 @@ function NavLeafLink({
       onClick={onNavigate}
       className={({ isActive }) =>
         cn(
-          'flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm transition-colors',
+          'flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm transition-colors',
           isActive
             ? 'bg-sidebar-accent font-medium text-sidebar-accent-foreground'
-            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+            : 'text-sidebar-foreground/65 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
         )
       }
     >
