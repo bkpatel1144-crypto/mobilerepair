@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, increment, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, increment, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { receiptsCollection, receiptDoc, jobCardDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { getNextSequence, formatReceiptId } from '@/lib/sequences'
@@ -29,17 +30,17 @@ export function useReceipts() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: receiptsQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, receiptsCollection(companyId!)))
+  return useLiveQuery<ReceiptWithId[]>(
+    receiptsQueryKey(companyId),
+    companyId ? collection(db, receiptsCollection(companyId)) : null,
+    (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
-      return snap.docs
-        .map((d) => ({ id: d.id, ...(d.data() as ReceiptDoc) }) as ReceiptWithId)
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+      return (docs as ReceiptWithId[]).sort(
+        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+      )
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export interface CreateReceiptInput {

@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { branchesCollection, branchDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { slugifyCode } from '@/lib/utils'
@@ -22,16 +23,16 @@ export function useBranches() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: branchesQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, branchesCollection(companyId!)))
-      return snap.docs
-        .map((d) => ({ id: d.id, ...(d.data() as BranchDoc) }))
-        .sort((a, b) => a.name.localeCompare(b.name))
+  return useLiveQuery<(BranchDoc & { id: string })[]>(
+    branchesQueryKey(companyId),
+    companyId ? collection(db, branchesCollection(companyId)) : null,
+    (docs) => {
+      const rows = docs as (BranchDoc & { id: string })[]
+      return ((rows) => rows
+        .sort((a, b) => a.name.localeCompare(b.name)))(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 /** `preview (15)` — Name only; the code auto-generates from it (`slugifyCode`), matching the

@@ -877,6 +877,38 @@ export interface PrintTemplateDocV1 {
   updatedAt: Timestamp
 }
 
+/**
+ * `companies/{companyId}/printDevices/{id}` — one shop PC running the Print Agent.
+ *
+ * Browsers cannot address a USB or network thermal printer, and cannot send ESC-POS/ZPL at all.
+ * The agent is a small program installed on the shop PC that can: the browser writes a print job
+ * here, the agent picks it up and drives the printer directly, which is what makes a template's
+ * `printSpeed`/`printDensity`/`ups`/`gapMm` mean anything.
+ *
+ * Pairing is code-based rather than credential-based: the browser mints a short-lived code, the
+ * shopkeeper types it into the agent, and the agent claims this document. That way the agent
+ * never holds a password, and a lost PC is revoked by deleting one row rather than rotating
+ * anything.
+ */
+export interface PrintDeviceDoc {
+  /** Null until an agent claims the code and reports its own machine name. */
+  name: string | null
+  status: 'pending' | 'paired' | 'revoked'
+  /** Shown to the user to type into the agent. Cleared once claimed. */
+  pairingCode: string
+  /** Codes are deliberately short-lived — an unused one left lying around is a way in. */
+  codeExpiresAt: Timestamp
+  pairedAt: Timestamp | null
+  /** Heartbeat from the agent; drives the online/offline dot. */
+  lastSeenAt: Timestamp | null
+  platform: string | null
+  agentVersion: string | null
+  createdById: string
+  createdByName: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
 /** `companies/{companyId}/whatsappConfig/config` — a single fixed doc (same "one company-wide
  * doc, not a collection" pattern as `formSchemas/jobCard`), backing the WhatsApp button already
  * shipped on the Job Card detail page since Phase 5 (previously a hardcoded message string). */

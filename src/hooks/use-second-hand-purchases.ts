@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { secondHandPurchaseDoc, secondHandPurchasesCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { getCurrentFinancialYear } from '@/lib/financial-year'
@@ -28,17 +29,17 @@ export function useSecondHandPurchases() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: secondHandPurchasesQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, secondHandPurchasesCollection(companyId!)))
+  return useLiveQuery<SecondHandPurchaseWithId[]>(
+    secondHandPurchasesQueryKey(companyId),
+    companyId ? collection(db, secondHandPurchasesCollection(companyId)) : null,
+    (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
-      return snap.docs
-        .map((d) => ({ id: d.id, ...(d.data() as SecondHandPurchaseDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+      return (docs as SecondHandPurchaseWithId[]).sort(
+        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+      )
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export function deviceLabel(p: Pick<SecondHandPurchaseDoc, 'brandName' | 'model' | 'deviceTypeName'>) {

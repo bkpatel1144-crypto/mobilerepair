@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { financialYearsCollection, financialYearDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
@@ -20,16 +21,16 @@ export function useFinancialYears() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: financialYearsQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, financialYearsCollection(companyId!)))
-      return snap.docs
-        .map((d) => ({ id: d.id, ...(d.data() as FinancialYearDoc) }))
-        .sort((a, b) => b.startDate.toMillis() - a.startDate.toMillis())
+  return useLiveQuery<(FinancialYearDoc & { id: string })[]>(
+    financialYearsQueryKey(companyId),
+    companyId ? collection(db, financialYearsCollection(companyId)) : null,
+    (docs) => {
+      const rows = docs as (FinancialYearDoc & { id: string })[]
+      return ((rows) => rows
+        .sort((a, b) => b.startDate.toMillis() - a.startDate.toMillis()))(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 /** `preview (3)` — Name/Start/End Date, for a manually created (non-sequential) FY. Never

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDoc, getDocs, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { collection, doc, getDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { workflowConfigCollection, workflowConfigDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { emptyStatusActionMatrix } from '@/config/workflow-statuses-actions'
@@ -26,14 +27,15 @@ export function useWorkflowConfigs() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: workflowConfigsQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, workflowConfigCollection(companyId!)))
-      return snap.docs.map((d) => ({ id: d.id, ...(d.data() as WorkflowConfigDoc) }))
+  return useLiveQuery<(WorkflowConfigDoc & { id: string })[]>(
+    workflowConfigsQueryKey(companyId),
+    companyId ? collection(db, workflowConfigCollection(companyId)) : null,
+    (docs) => {
+      const rows = docs as (WorkflowConfigDoc & { id: string })[]
+      return ((rows) => rows)(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export function useWorkflowConfig(roleId: string | undefined) {

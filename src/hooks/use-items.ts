@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, orderBy, query, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, orderBy, query, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { itemDoc, itemsCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
@@ -21,14 +22,15 @@ export function useItems() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: itemsQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(query(collection(db, itemsCollection(companyId!)), orderBy('name', 'asc')))
-      return snap.docs.map((d) => ({ id: d.id, ...(d.data() as ItemDoc) }))
+  return useLiveQuery<(ItemDoc & { id: string })[]>(
+    itemsQueryKey(companyId),
+    companyId ? query(collection(db, itemsCollection(companyId)), orderBy('name', 'asc')) : null,
+    (docs) => {
+      const rows = docs as (ItemDoc & { id: string })[]
+      return ((rows) => rows)(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 /** `SRV001`/`PRT001`-style codes, matching `preview (75)`'s exact convention — a simple

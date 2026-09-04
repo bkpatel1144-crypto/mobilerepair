@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { doc, getDoc, getDocs, collection, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { doc, getDoc, collection, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { jobCostingCollection, jobCostingDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
@@ -24,14 +25,15 @@ export function useJobCostingList() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: jobCostingListQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, jobCostingCollection(companyId!)))
-      return snap.docs.map((d) => ({ id: d.id, ...(d.data() as JobCostingDoc) }))
+  return useLiveQuery<(JobCostingDoc & { id: string })[]>(
+    jobCostingListQueryKey(companyId),
+    companyId ? collection(db, jobCostingCollection(companyId)) : null,
+    (docs) => {
+      const rows = docs as (JobCostingDoc & { id: string })[]
+      return ((rows) => rows)(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export function useJobCosting(jobId: string | undefined) {

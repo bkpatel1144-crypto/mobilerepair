@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, orderBy, query, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, orderBy, query, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import { paymentModeDoc, paymentModesCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { slugifyCode } from '@/lib/utils'
@@ -17,14 +18,15 @@ export function usePaymentModes() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: paymentModesQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(query(collection(db, paymentModesCollection(companyId!)), orderBy('name', 'asc')))
-      return snap.docs.map((d) => ({ id: d.id, ...(d.data() as PaymentModeDoc) }))
+  return useLiveQuery<(PaymentModeDoc & { id: string })[]>(
+    paymentModesQueryKey(companyId),
+    companyId ? query(collection(db, paymentModesCollection(companyId)), orderBy('name', 'asc')) : null,
+    (docs) => {
+      const rows = docs as (PaymentModeDoc & { id: string })[]
+      return ((rows) => rows)(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export interface PaymentModeInput {

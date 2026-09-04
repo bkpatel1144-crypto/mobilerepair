@@ -1,7 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, query, where, getDocs, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, query, serverTimestamp, where, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { usersCollection, userDoc } from '@/lib/firestore-paths'
+import { useLiveQuery } from '@/hooks/use-live-query'
+import { userDoc, usersCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { createTeammateUser, type CreateTeammateInput } from '@/lib/user-management'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
@@ -19,17 +20,17 @@ export function useUsers() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: usersQueryKey(companyId),
-    queryFn: async () => {
-      // Company-scoped filter — required by firestore.rules' `list` rule (see firestore.rules'
-      // comment on `users/{uid}`), not just a client-side nicety.
-      const q = query(collection(db, usersCollection()), where('companyId', '==', companyId))
-      const snap = await getDocs(q)
-      return snap.docs.map((d) => ({ id: d.id, ...(d.data() as UserDoc) }) as UserWithId)
+  return useLiveQuery<(UserDoc & { id: string })[]>(
+    usersQueryKey(companyId),
+    // Company-scoped filter — required by firestore.rules' `list` rule on `users/{uid}` (see
+    // its comment there), not just a client-side nicety: an unscoped listen is rejected outright.
+    companyId ? query(collection(db, usersCollection()), where('companyId', '==', companyId)) : null,
+    (docs) => {
+      const rows = docs as (UserDoc & { id: string })[]
+      return ((rows) => rows)(rows)
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export function useCreateTeammate() {

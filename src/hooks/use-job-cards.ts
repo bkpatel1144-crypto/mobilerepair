@@ -3,11 +3,11 @@ import {
   collection,
   doc,
   getDoc,
-  getDocs,
   serverTimestamp,
   writeBatch,
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useLiveQuery } from '@/hooks/use-live-query'
 import {
   jobCardsCollection,
   jobCardDoc,
@@ -49,17 +49,17 @@ export function useJobCards() {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: jobCardsQueryKey(companyId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, jobCardsCollection(companyId!)))
+  return useLiveQuery<JobCardWithId[]>(
+    jobCardsQueryKey(companyId),
+    companyId ? collection(db, jobCardsCollection(companyId)) : null,
+    (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
-      return snap.docs
-        .map((d) => ({ id: d.id, ...(d.data() as JobCardDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+      return (docs as JobCardWithId[]).sort(
+        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+      )
     },
-    enabled: !!companyId,
-  })
+    !!companyId
+  )
 }
 
 export function useJobCard(jobId: string | undefined) {
@@ -84,17 +84,17 @@ export function useJobTimeline(jobId: string | undefined) {
   const { profile } = useAuth()
   const companyId = profile?.companyId
 
-  return useQuery({
-    queryKey: jobTimelineQueryKey(companyId, jobId),
-    queryFn: async () => {
-      const snap = await getDocs(collection(db, jobTimelineCollection(companyId!, jobId!)))
+  return useLiveQuery<TimelineEventWithId[]>(
+    jobTimelineQueryKey(companyId, jobId),
+    companyId && jobId ? collection(db, jobTimelineCollection(companyId, jobId)) : null,
+    (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
-      return snap.docs
-        .map((d) => ({ id: d.id, ...(d.data() as JobTimelineEventDoc) }))
-        .sort((a, b) => (a.createdAt?.toDate?.()?.getTime() ?? now) - (b.createdAt?.toDate?.()?.getTime() ?? now))
+      return (docs as TimelineEventWithId[]).sort(
+        (a, b) => (a.createdAt?.toDate?.()?.getTime() ?? now) - (b.createdAt?.toDate?.()?.getTime() ?? now)
+      )
     },
-    enabled: !!companyId && !!jobId,
-  })
+    !!companyId && !!jobId
+  )
 }
 
 export interface CreateJobCardInput {

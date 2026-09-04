@@ -425,9 +425,16 @@ service cloud.firestore {
       // Single fixed doc, same shape as whatsappConfig/backupSettings. Readable by anyone in the
       // company (the list is a shared note about which printer is which); writable only with the
       // Print Formats menu permission, which is where the screen lives.
-      match /printDevices/{docId} {
+      // One doc per paired shop PC. Readable company-wide so any till can see which agent is
+      // online; only the Print Formats menu permission may mint or revoke one.
+      //
+      // Note the agent itself claims a pending row by matching `pairingCode` — that write is
+      // made with the *shopkeeper's* credentials at pair time, not the agent's, so no rule here
+      // needs to admit an unauthenticated client.
+      match /printDevices/{deviceId} {
         allow read: if belongsToCompany(companyId);
-        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats');
+        allow create, update, delete: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'settings/print-formats');
       }
 
       match /backups/{id} {
