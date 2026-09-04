@@ -17,7 +17,7 @@ export function MarketingFooter() {
               Repair-shop &amp; second-hand-device ERP by AIM ENTERPRISE. Free forever.
             </p>
           </div>
-          <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground">
+          <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground [&_a]:flex [&_a]:min-h-11 [&_a]:items-center sm:[&_a]:min-h-0">
             <a href="/#workflow" className="hover:text-foreground">
               Workflow
             </a>

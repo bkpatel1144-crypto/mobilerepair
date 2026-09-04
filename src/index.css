@@ -131,3 +131,49 @@
     @apply font-sans;
   }
 }
+
+/* ---------------------------------------------------------------------------------------
+ * Touch tap targets (BUILD_PLAN.md Phase 11: "44px+ tap targets" at 375px).
+ *
+ * This design system is deliberately dense — `h-8` buttons, `size-7` icon buttons — because
+ * Phases 1-10 matched it to the reference app's desktop screenshots pixel for pixel. So this
+ * is gated on `pointer: coarse`: a mouse keeps the exact dense layout the reference defines,
+ * and only touch devices get the larger targets.
+ *
+ * Real `min-height`/`min-width` rather than a transparent `::after` halo, which is the usual
+ * trick but the wrong one here: adjacent icon buttons sit `gap-1.5` (6px) apart, so 44px halos
+ * would overlap by ~10px and whichever painted last would silently swallow the other's taps.
+ * Growing the control itself can't overlap anything, and every row that holds these is either
+ * `flex-wrap` or a scroll container, so nothing is pushed off-screen. `min-*` (not `h-*`) means
+ * controls already at or above 44px are untouched.
+ * ------------------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  [data-slot='button'],
+  [data-slot='input'],
+  [data-slot='select-trigger'],
+  [data-slot='select-item'],
+  [data-slot='dropdown-menu-item'],
+  [data-slot='command-item'],
+  [data-slot='tabs-trigger'] {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+
+  /* Text inputs and textareas only need the vertical dimension — they are already full-width,
+   * and a min-width here would fight their own `w-full`. */
+  [data-slot='input'],
+  [data-slot='textarea'] {
+    min-width: 0;
+  }
+  [data-slot='textarea'] {
+    min-height: 2.75rem;
+  }
+
+  /* Checkbox and switch stay visually small (a 44px checkbox looks broken); they get their
+   * target from the label row that wraps them instead. */
+  [data-slot='checkbox'],
+  [data-slot='switch'] {
+    min-height: 0;
+    min-width: 0;
+  }
+}

@@ -217,6 +217,7 @@ export function SalesInvoicesPage() {
             <button
               key={t}
               type="button"
+              data-slot="button"
               onClick={() => setTab(t)}
               aria-pressed={tab === t}
               className={

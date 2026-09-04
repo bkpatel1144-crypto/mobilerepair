@@ -50,8 +50,13 @@ export function MarketingNav() {
         <button
           type="button"
           onClick={() => setMobileOpen((o) => !o)}
-          className="ml-auto sm:hidden"
+          // The icon is `size-5`, so without an explicit box this button was a 20x20 tap target —
+          // and it is the *only* way to open the nav on a phone. Sized to 44px here rather than
+          // left to index.css's coarse-pointer rule, since this one is worth guaranteeing on
+          // every pointer type.
+          className="-mr-2 ml-auto inline-flex size-11 items-center justify-center rounded-lg hover:bg-muted sm:hidden"
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>

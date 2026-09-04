@@ -81,6 +81,7 @@ export function JobCostingPage() {
             <button
               key={t}
               type="button"
+              data-slot="button"
               onClick={() => setTab(t)}
               className={
                 'rounded-md px-3 py-1 text-sm capitalize ' +
