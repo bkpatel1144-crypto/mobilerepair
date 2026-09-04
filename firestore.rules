@@ -109,10 +109,16 @@ service cloud.firestore {
           hasMenuAccess(request.resource.data.companyId, 'administration/users'))
       );
       allow update: if isSignedIn() && (
-        // A user may update their own profile, but never re-assign their own company/role.
+        // A user editing their own profile (the My Profile drawer) may touch only these three
+        // fields — an allow-list, not a pin-list. Pinning companyId/roleId alone left `status`
+        // writable, and since `belongsToCompany()` requires `status == 'active'`, a *disabled*
+        // user could re-enable their own account by writing to their own document: this branch
+        // never calls belongsToCompany(), so being disabled did not block reaching it. Also
+        // covers roleName/roleCode (denormalized authority labels the UI trusts), branchId, and
+        // `protected`, none of which self-service has any business changing.
         (request.auth.uid == uid &&
-          request.resource.data.companyId == resource.data.companyId &&
-          request.resource.data.roleId == resource.data.roleId) ||
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['fullName', 'email', 'updatedAt'])) ||
         // Or a User-Management-permitted teammate manages another user's status/role.
         (belongsToCompany(resource.data.companyId) &&
           hasMenuAccess(resource.data.companyId, 'administration/users'))

@@ -11,6 +11,9 @@ import {
   Bell,
   LogOut,
   User as UserIcon,
+  ShieldCheck,
+  Building2,
+  CreditCard,
 } from 'lucide-react'
 import {
   Breadcrumb,
@@ -36,7 +39,10 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { useTheme } from '@/hooks/use-theme'
 import { useAuth } from '@/hooks/use-auth'
-import { findNavEntry } from '@/config/nav'
+import { findNavEntry, buildPath } from '@/config/nav'
+import { useCompany } from '@/hooks/use-company'
+import { usePermissions } from '@/hooks/use-permissions'
+import { ProfileDrawer } from '@/components/layout/profile-drawer'
 import { EmptyState } from '@/components/shared/empty-state'
 
 interface TopBarProps {
@@ -50,6 +56,9 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
   const { theme, toggleTheme } = useTheme()
   const { profile, logOut } = useAuth()
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const { data: company } = useCompany()
+  const { canView } = usePermissions()
 
   const entry = findNavEntry(location.pathname)
   const breadcrumbExtra = useBreadcrumbExtraValue()
@@ -214,7 +223,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
                 <span className="text-xs text-muted-foreground">{profile.roleName}</span>
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuContent align="end" className="w-72">
               {/* Base UI requires GroupLabel (DropdownMenuLabel) to live inside a Menu.Group
                * (DropdownMenuGroup) — unlike the classic Radix-based shadcn recipe, where a
                * bare Label needed no wrapper. Omitting it throws "MenuGroupContext is missing"
@@ -222,19 +231,58 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
                * browser test against this exact TopBar. */}
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="font-normal">
-                  <p className="truncate text-sm font-medium">{profile.fullName}</p>
-                  <p className="truncate text-xs text-muted-foreground">{profile.email}</p>
+                  <div className="flex items-center gap-3 py-1">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-purple-600 text-sm font-semibold text-white">
+                      {getInitials(profile.fullName)}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold">{profile.fullName}</p>
+                      {/* Mobile over email: for teammate accounts the mobile *is* the login
+                       * identifier (see `createTeammateUser`), and email is optional. */}
+                      <p className="truncate text-xs text-muted-foreground">
+                        {profile.mobile ?? profile.email}
+                      </p>
+                      <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-teal-100 px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide text-teal-700 uppercase dark:bg-teal-500/15 dark:text-teal-400">
+                        <ShieldCheck className="size-3" />
+                        {profile.roleName}
+                      </span>
+                    </div>
+                  </div>
                 </DropdownMenuLabel>
               </DropdownMenuGroup>
+
               <DropdownMenuSeparator />
-              <DropdownMenuItem disabled>
+
+              <DropdownMenuGroup>
+                <DropdownMenuLabel className="font-normal">
+                  <p className="text-[0.65rem] font-medium tracking-wide text-muted-foreground uppercase">
+                    Organization
+                  </p>
+                  <p className="flex items-center gap-2 pt-0.5">
+                    <Building2 className="size-4 shrink-0 text-muted-foreground" />
+                    <span className="truncate font-medium">{company?.name ?? '—'}</span>
+                  </p>
+                </DropdownMenuLabel>
+              </DropdownMenuGroup>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem onClick={() => setProfileOpen(true)}>
                 <UserIcon />
                 My Profile
               </DropdownMenuItem>
+              {canView('settings/billing') && (
+                <DropdownMenuItem render={<Link to={buildPath('settings', 'billing')} />}>
+                  <CreditCard />
+                  Billing &amp; Subscription
+                </DropdownMenuItem>
+              )}
+
               <DropdownMenuSeparator />
+
               <DropdownMenuItem variant="destructive" onClick={handleLogOut}>
                 <LogOut />
-                Sign out
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -248,6 +296,10 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           </div>
         )}
       </div>
+
+      {/* Lives here rather than in AppShell so the dropdown that opens it owns its state — the
+       * shell has no other reason to know about the profile. */}
+      <ProfileDrawer open={profileOpen} onOpenChange={setProfileOpen} />
     </header>
   )
 }
