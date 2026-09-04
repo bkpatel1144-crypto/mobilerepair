@@ -210,6 +210,8 @@ export function newElement(
     text: null as string | null,
     showLabel: false,
     symbology: null as string | null,
+    rotation: 0,
+    visibleWhen: null,
     style: makeStyle(),
     locked: false,
     hidden: false,

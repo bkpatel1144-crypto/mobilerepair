@@ -268,9 +268,21 @@ export function DesignerCanvas({
                             width: el.w * scale,
                             height: Math.max(el.h * scale, 2),
                             zIndex: el.z,
+                            transform: el.rotation ? `rotate(${el.rotation}deg)` : undefined,
                           }}
                         >
                           <ElementView el={el} values={values} />
+                          {/* A condition is invisible on paper by design, so the canvas has to
+                            * say so — otherwise a row that will vanish at print time looks
+                            * identical to one that won't. */}
+                          {el.visibleWhen && (
+                            <span
+                              title={`Hidden when ${el.visibleWhen.fieldKey} is ${el.visibleWhen.op === 'notEmpty' ? 'empty' : 'set'}`}
+                              className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full bg-amber-400 text-[9px] font-bold text-amber-950"
+                            >
+                              ?
+                            </span>
+                          )}
                           {isSelected && !el.locked && (
                             <span
                               onPointerDown={(e) => beginDrag(e, 'resize', el)}

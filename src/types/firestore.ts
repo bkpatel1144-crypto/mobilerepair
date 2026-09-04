@@ -785,9 +785,25 @@ export interface PrintElement {
   showLabel: boolean
   /** `barcode`/`qrcode` only. */
   symbology: string | null
+  /** Degrees clockwise. Rotating on the canvas rather than in the print CSS keeps what you see
+   * and what prints identical — both apply the same transform about the element's centre. */
+  rotation: number
+  /**
+   * Optional print-time condition. `null` means always printed.
+   *
+   * Exists because a template is one layout serving every record: a GSTIN line on a bill is
+   * correct for a registered shop and an empty labelled row for everyone else. Rather than
+   * maintain two templates, the row hides itself when the value it depends on is absent. Only
+   * emptiness is testable — a client-side template engine has no business encoding business
+   * rules beyond "is there anything to show".
+   */
+  visibleWhen: { fieldKey: string; op: 'notEmpty' | 'empty' } | null
   style: PrintElementStyle
-  locked: boolean
+  /** Hidden in the designer only — still prints. Distinct from `visibleWhen`, which is a
+   * print-time rule; this one is the Layers panel's eye toggle for getting something out of the
+   * way while you work. */
   hidden: boolean
+  locked: boolean
 }
 
 export interface PrintPaper {

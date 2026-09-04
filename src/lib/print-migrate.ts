@@ -61,6 +61,8 @@ export function migratePrintTemplate(raw: PrintTemplateDoc | PrintTemplateDocV1)
       text: b.kind === 'text' ? b.text : b.kind === 'field' ? b.label : null,
       showLabel: b.kind === 'field',
       symbology: null,
+      rotation: 0,
+      visibleWhen: null,
       style: makeStyle({
         fontSize: FONT_PT[b.fontSize] ?? 8.5,
         bold: b.bold,

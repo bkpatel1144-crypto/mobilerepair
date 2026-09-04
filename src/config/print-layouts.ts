@@ -71,6 +71,8 @@ function buildBand(band: PrintBand, rows: Row[], contentWidth: number): { elemen
     text: null,
     showLabel: false,
     symbology: null,
+    rotation: 0,
+    visibleWhen: null,
     style,
     locked: false,
     hidden: false,

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft, Save, Eye, Printer, Undo2, Redo2, Copy, Trash2, Grid3x3, ZoomIn, ZoomOut,
   AlignLeft, AlignCenter, AlignRight, AlignStartVertical, Type, Image as ImageIcon, Barcode,
-  QrCode, Minus, Square, Lock, LockOpen, EyeOff, Download, MoreVertical,
+  QrCode, Minus, Square, Lock, LockOpen, EyeOff, Download, MoreVertical, Star, Ruler, RotateCcw,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -18,7 +18,17 @@ import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { usePrintTemplates, useUpdatePrintTemplate } from '@/hooks/use-print-templates'
+import {
+  usePrintTemplates,
+  useUpdatePrintTemplate,
+  useSetDefaultPrintTemplate,
+  useDuplicatePrintTemplate,
+} from '@/hooks/use-print-templates'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { buildDefaultLayout } from '@/config/print-layouts'
+import { PRINT_PRESETS } from '@/config/print-presets'
+import { PageSetupDialog } from './page-setup-dialog'
 import { useCompany } from '@/hooks/use-company'
 import { PRINT_FIELDS, printDocumentTypeLabel, type PrintFieldDef } from '@/config/print-fields'
 import { samplePrintContext } from '@/lib/print-sample'
@@ -55,6 +65,8 @@ export function PrintTemplateDesignerPage() {
   const { data: templates = [], isLoading, error: loadError, refetch } = usePrintTemplates()
   const { data: company } = useCompany()
   const update = useUpdatePrintTemplate()
+  const setDefault = useSetDefaultPrintTemplate()
+  const duplicate = useDuplicatePrintTemplate()
 
   const template = templates.find((t) => t.id === templateId) ?? null
 
@@ -64,6 +76,9 @@ export function PrintTemplateDesignerPage() {
   const [activeBand, setActiveBand] = useState<PrintBand>('header')
   const [leftTab, setLeftTab] = useState<'fields' | 'layers'>('fields')
   const [confirmBack, setConfirmBack] = useState(false)
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [pageSetupOpen, setPageSetupOpen] = useState(false)
+  const [confirmReset, setConfirmReset] = useState(false)
 
   const state = useDesignerState(
     template ? draftFromTemplate(template) : { name: '', paper: { width: 80, height: 120, unit: 'mm', orientation: 'portrait' }, margins: { top: 3, right: 3, bottom: 3, left: 3 }, settings: { copies: 1, duplicateCopy: false, duplicateCopyDirection: 'stacked', ups: 1, gapMm: 2, printSpeed: 4, printDensity: 8 }, bandHeights: { header: 0, detail: 0, footer: 0 }, elements: [] }
@@ -144,8 +159,11 @@ export function PrintTemplateDesignerPage() {
           aria-label="Template name"
         />
         <span className="text-sm text-muted-foreground">{printDocumentTypeLabel(template.documentType)}</span>
+        {state.isDirty && (
+          <span className="text-sm font-medium text-amber-600 dark:text-amber-400">Unsaved changes</span>
+        )}
         <div className="ml-auto flex flex-wrap items-center gap-2">
-          <Button type="button" variant="outline" onClick={() => openPrintWindow(html())}>
+          <Button type="button" variant="outline" onClick={() => setPreviewOpen(true)}>
             <Eye className="size-4" />
             Preview
           </Button>
@@ -162,6 +180,27 @@ export function PrintTemplateDesignerPage() {
               <MoreVertical className="size-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              {!template.isDefault && (
+                <DropdownMenuItem
+                  onClick={() =>
+                    setDefault.mutate({
+                      target: template,
+                      siblings: templates.filter((t) => t.documentType === template.documentType),
+                    })
+                  }
+                >
+                  <Star />
+                  Set as Default
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={() => duplicate.mutate(template)}>
+                <Copy />
+                Duplicate
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setPageSetupOpen(true)}>
+                <Ruler />
+                Page Setup
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   const blob = new Blob([JSON.stringify({ ...template, ...draft }, null, 2)], {
@@ -175,7 +214,11 @@ export function PrintTemplateDesignerPage() {
                 }}
               >
                 <Download />
-                Export JSON
+                Export as JSON
+              </DropdownMenuItem>
+              <DropdownMenuItem variant="destructive" onClick={() => setConfirmReset(true)}>
+                <RotateCcw />
+                Reset to Default
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -398,6 +441,45 @@ export function PrintTemplateDesignerPage() {
               </div>
 
               <div className="space-y-1">
+                <Label className="text-xs">Rotation (°)</Label>
+                <Input
+                  type="number"
+                  step="1"
+                  value={one.rotation}
+                  onChange={(e) => patchEl({ rotation: Number(e.target.value) || 0 })}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="text-xs">Visibility</Label>
+                <Select
+                  value={one.visibleWhen ? one.visibleWhen.fieldKey : '__always'}
+                  onValueChange={(v) => {
+                    if (!v) return
+                    patchEl({
+                      visibleWhen: v === '__always' ? null : { fieldKey: v, op: 'notEmpty' },
+                    })
+                  }}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__always">Always visible</SelectItem>
+                    {fields.map((f) => (
+                      <SelectItem key={f.key} value={f.key}>
+                        Hide when {f.label} is empty
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  Applies at print time, per record — useful for a row like GSTIN that only some
+                  shops have.
+                </p>
+              </div>
+
+              <div className="space-y-1">
                 <Label className="text-xs">Colour</Label>
                 <Input type="color" value={one.style.color} onChange={(e) => patchStyle({ color: e.target.value })} className="h-9 p-1" />
               </div>
@@ -405,6 +487,65 @@ export function PrintTemplateDesignerPage() {
           )}
         </div>
       </div>
+
+      {/* Preview renders the *real* print HTML in a sandboxed iframe rather than opening a print
+        * window — you can check a layout without dismissing a printer dialog every time. It is
+        * the identical output `Print` produces; nothing preview-only is injected. */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent size="xl" className="flex max-h-[calc(100dvh-2rem)] flex-col gap-3 overflow-hidden">
+          <DialogTitle className="flex items-baseline gap-2">
+            Preview
+            <span className="text-sm font-normal text-muted-foreground">— sample data</span>
+          </DialogTitle>
+          <div className="min-h-0 flex-1 overflow-auto rounded-lg border bg-muted/40 p-4">
+            <iframe
+              title="Template preview"
+              srcDoc={html()}
+              sandbox=""
+              className="mx-auto block h-[60vh] w-full max-w-[840px] rounded border bg-white"
+            />
+          </div>
+          <div className="flex shrink-0 justify-end gap-2">
+            <Button type="button" variant="outline" onClick={() => setPreviewOpen(false)}>
+              Close
+            </Button>
+            <Button type="button" onClick={() => openPrintWindow(html())}>
+              <Printer className="size-4" />
+              Print
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <PageSetupDialog
+        open={pageSetupOpen}
+        onOpenChange={setPageSetupOpen}
+        draft={draft}
+        onChange={(patch) => state.commit((prev) => ({ ...prev, ...patch }))}
+      />
+
+      <ConfirmDialog
+        open={confirmReset}
+        onOpenChange={setConfirmReset}
+        title="Reset to the default layout?"
+        message="Every element on this template is replaced with the standard layout for its paper size. Undo still works until you leave the designer."
+        confirmLabel="Reset"
+        onConfirm={() => {
+          const preset =
+            PRINT_PRESETS.find(
+              (p) => p.documentType === template!.documentType && p.presetKey === template!.presetKey
+            ) ?? PRINT_PRESETS.find((p) => p.documentType === template!.documentType)
+          if (!preset) return
+          const layout = buildDefaultLayout(preset)
+          state.commit((prev) => ({
+            ...prev,
+            elements: layout.elements,
+            bandHeights: layout.bandHeights,
+          }))
+          state.setSelectedIds([])
+          setConfirmReset(false)
+        }}
+      />
 
       <ConfirmDialog
         open={confirmBack}

@@ -33,6 +33,9 @@ function styleAttr(el: PrintElement, extra = ''): string {
     s.italic ? 'font-style:italic' : '',
     `text-align:${s.align}`,
     `color:${s.color}`,
+    // About the centre, so a rotated element stays where it was placed rather than swinging off
+    // its own top-left corner — which is also how the canvas draws it.
+    el.rotation ? `transform:rotate(${el.rotation}deg)` : '',
     extra,
   ]
     .filter(Boolean)
@@ -41,8 +44,18 @@ function styleAttr(el: PrintElement, extra = ''): string {
 
 /** One element's HTML. `values` is the caller-supplied print context — see `print-contexts.ts`;
  * a field with no value in it renders empty rather than showing its own key. */
+/** `visibleWhen` is evaluated against the record being printed, so one template serves both a
+ * GST-registered shop and one without. `hidden` is *not* checked here — it is a designer-only
+ * convenience for getting an element out of the way while working, and must still print. */
+function passesCondition(el: PrintElement, values: PrintContext): boolean {
+  if (!el.visibleWhen) return true
+  const raw = values[el.visibleWhen.fieldKey]
+  const isEmpty = raw === null || raw === undefined || String(raw).trim() === ''
+  return el.visibleWhen.op === 'notEmpty' ? !isEmpty : isEmpty
+}
+
 function renderElement(el: PrintElement, values: PrintContext): string {
-  if (el.hidden) return ''
+  if (!passesCondition(el, values)) return ''
 
   switch (el.type) {
     case 'line':
