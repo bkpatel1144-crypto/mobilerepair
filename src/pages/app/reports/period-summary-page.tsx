@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Calendar, Download, FileText } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared/expandable-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -126,7 +127,7 @@ export function PeriodSummaryPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+      <StatCardGrid>
         <StatCard label="Jobs" value={totals.jobs} />
         <StatCard label="Revenue" value={formatCurrency(totals.revenue)} tone="success" />
         <StatCard label="Job Cost" value={formatCurrency(totals.jobCost)} tone="warning" />
@@ -134,7 +135,7 @@ export function PeriodSummaryPage() {
         <StatCard label="Shop Expenses" value={formatCurrency(SHOP_EXPENSES)} />
         <StatCard label="Net Profit" value={formatCurrency(totals.netProfit)} tone={totals.netProfit < 0 ? 'danger' : 'success'} />
         <StatCard label="Net Margin" value={formatPercent(totals.netMargin)} tone={totals.netMargin < 0 ? 'danger' : 'default'} />
-      </div>
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

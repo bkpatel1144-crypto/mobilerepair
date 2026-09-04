@@ -7,6 +7,7 @@ import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -94,12 +95,12 @@ export function PartyLedgerPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Total Parties" value={summaries.length} sublabel="With job card activity" />
         <StatCard label="Total Billed" value={`₹${totalBilled}`} sublabel="Active jobs only" tone="purple" />
         <StatCard label="Total Collected" value={`₹${totalCollected}`} sublabel="Incl. advance on unbilled jobs" tone="success" />
         <StatCard label="Total Outstanding" value={`₹${totalOutstanding}`} sublabel="Pending collection" tone="danger" />
-      </div>
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search party name, mobile, code...">
         <div className="flex gap-1">

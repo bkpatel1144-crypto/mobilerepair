@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BarChart3, Download } from 'lucide-react'
+import { BarChart3, Download, IndianRupee, Percent, TrendingDown, TrendingUp} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -111,13 +112,13 @@ export function JobWiseProfitPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <StatCardGrid>
         <StatCard label="Jobs" value={totals.jobs} icon={BarChart3} />
-        <StatCard label="Revenue" value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Cost" value={formatCurrency(totals.cost)} tone="warning" />
-        <StatCard label="Profit" value={formatCurrency(totals.profit)} tone={totals.profit < 0 ? 'danger' : 'success'} />
-        <StatCard label="Avg Margin" value={formatPercent(totals.avgMargin)} tone={totals.avgMargin < 0 ? 'danger' : 'default'} />
-      </div>
+        <StatCard label="Revenue" icon={IndianRupee} value={formatCurrency(totals.revenue)} tone="success" />
+        <StatCard label="Cost" icon={TrendingDown} value={formatCurrency(totals.cost)} tone="warning" />
+        <StatCard label="Profit" icon={TrendingUp} value={formatCurrency(totals.profit)} tone={totals.profit < 0 ? 'danger' : 'success'} />
+        <StatCard label="Avg Margin" icon={Percent} value={formatPercent(totals.avgMargin)} tone={totals.avgMargin < 0 ? 'danger' : 'default'} />
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

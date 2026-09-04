@@ -6,6 +6,7 @@ import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { Button } from '@/components/ui/button'
 import { useReceivables, type ReceivableRow, type AgingBucket } from '@/hooks/use-receivables'
 import { jobCardsQueryKey } from '@/hooks/use-job-cards'
@@ -63,12 +64,12 @@ export function ReceivablesPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Total Outstanding" value={`₹${data.totalOutstanding}`} tone="danger" />
         <StatCard label="Total Billed" value={`₹${data.totalBilled}`} tone="purple" />
         <StatCard label="Total Collected" value={`₹${data.totalCollected}`} tone="success" />
         <StatCard label="Collection %" value={`${data.collectionPercent}%`} tone="info" />
-      </div>
+      </StatCardGrid>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {(Object.keys(BUCKET_LABELS) as AgingBucket[]).map((b) => (

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Store, Pencil } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { FormModal } from '@/components/shared/form-modal'
@@ -83,11 +84,11 @@ export function CompanySettingsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader icon={Store} title="Company Management" subtitle="Manage company information and settings" />
 
-      <div className="grid grid-cols-3 gap-3 sm:max-w-md">
+      <StatCardGrid>
         <StatCard label="Active" value={company ? 1 : 0} tone="success" selected />
         <StatCard label="Inactive" value={0} />
         <StatCard label="Deleted" value={0} />
-      </div>
+      </StatCardGrid>
 
       <DataTable
         columns={columns}

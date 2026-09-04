@@ -3,6 +3,7 @@ import { Download, RefreshCw, Receipt } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -104,11 +105,11 @@ export function SaleRegisterPage() {
         }
       />
 
-      <div className="grid grid-cols-3 gap-3 sm:max-w-lg">
+      <StatCardGrid>
         <StatCard label="Sales (₹)" value={`₹${totalSales}`} />
         <StatCard label="Profit (₹)" value={`₹${totalProfit}`} tone={totalProfit >= 0 ? 'success' : 'danger'} />
         <StatCard label="Sales" value={filtered.length} />
-      </div>
+      </StatCardGrid>
       {totalInvested > 0 && (
         <p className="text-sm text-muted-foreground">↗ Average margin: {avgMargin.toFixed(1)}%</p>
       )}

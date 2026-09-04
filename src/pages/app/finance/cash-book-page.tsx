@@ -6,6 +6,7 @@ import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { Button } from '@/components/ui/button'
 import { useCashBook, type CashBookRow } from '@/hooks/use-cash-book'
 import { receiptsQueryKey } from '@/hooks/use-receipts'
@@ -60,12 +61,12 @@ export function CashBookPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Opening" value={`₹${data.opening}`} />
         <StatCard label="Total Credit (IN)" value={`₹${data.totalCredit}`} tone="success" />
         <StatCard label="Total Debit (OUT)" value={`₹${data.totalDebit}`} tone="danger" />
         <StatCard label="Closing" value={`₹${data.closing}`} tone="info" />
-      </div>
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search receipt, party..." dateRange={dateRange === 'all' ? undefined : dateRange} onDateRangeChange={setDateRange} />
 

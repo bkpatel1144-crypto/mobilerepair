@@ -402,8 +402,12 @@ service cloud.firestore {
         allow create: if isBootstrapping() ||
           (belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats'));
         allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats');
-        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats') &&
-          resource.data.protected != true;
+        // Seeded defaults are deletable too. The invariant worth protecting is not "a seed is
+        // sacred" but "a document type never has zero formats", and a rule cannot count
+        // siblings — Firestore rules can't query. The client hides Delete on the last format
+        // for a type, and Add Missing Defaults restores any seed from the catalogue, so a
+        // deletion here is always recoverable.
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats');
       }
 
       // ---- companies/{companyId}/whatsappConfig/{docId} --------------------------------------

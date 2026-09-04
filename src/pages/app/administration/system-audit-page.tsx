@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ClipboardList, AlertTriangle, Download, Calendar } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -105,11 +106,11 @@ export function SystemAuditPage() {
         }
       />
 
-      <div className="grid grid-cols-3 gap-3 sm:max-w-lg">
+      <StatCardGrid>
         <StatCard label="Total Events" value={events.length} icon={ClipboardList} />
         <StatCard label="Critical" value={criticalCount} icon={AlertTriangle} tone={criticalCount > 0 ? 'danger' : 'default'} selected={criticalOnly} onClick={() => setCriticalOnly((v) => !v)} />
         <StatCard label="Today" value={todayCount} icon={Calendar} />
-      </div>
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search action, entity, user...">
         <Select value={moduleFilter} onValueChange={(v) => v && setModuleFilter(v)}>

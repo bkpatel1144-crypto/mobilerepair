@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Ruler, Plus, MoreVertical, Pencil, Ban, CheckCircle2, Trash2 } from 'lucide-react'
+import { Ruler, Plus, MoreVertical, Pencil, Ban, CheckCircle2, Trash2, Lock} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -132,10 +133,10 @@ export function UomPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:max-w-md">
+      <StatCardGrid>
         <StatCard label="Total" value={uoms.length} icon={Ruler} />
-        <StatCard label="System" value={uoms.filter((u) => u.source === 'system').length} />
-      </div>
+        <StatCard label="System" icon={Lock} value={uoms.filter((u) => u.source === 'system').length} />
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search UOMs...">
         <Select value={typeFilter} onValueChange={(v) => v && setTypeFilter(v)}>

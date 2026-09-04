@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Package, Wrench, Plus, Pencil, Ban, CheckCircle2 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -94,11 +95,11 @@ export function ItemMasterPage() {
         }
       />
 
-      <div className="grid grid-cols-3 gap-3 sm:max-w-xl">
+      <StatCardGrid>
         <StatCard label="Total" value={items.length} icon={Package} />
-        <StatCard label="Active" value={items.filter((i) => i.status === 'active').length} tone="success" />
-        <StatCard label="Services" value={items.filter((i) => i.type === 'service').length} />
-      </div>
+        <StatCard label="Active" icon={CheckCircle2} value={items.filter((i) => i.status === 'active').length} tone="success" />
+        <StatCard label="Services" icon={Wrench} value={items.filter((i) => i.type === 'service').length} />
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search items...">
         <Select value={typeFilter} onValueChange={(v) => v && setTypeFilter(v as typeof typeFilter)}>

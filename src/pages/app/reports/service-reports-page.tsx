@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BarChart3, Download, SlidersHorizontal, Package } from 'lucide-react'
+import { BarChart3, Download, SlidersHorizontal, Package, Activity, AlertTriangle, CheckCircle2, Clock, IndianRupee} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared/expandable-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -221,14 +222,14 @@ export function ServiceReportsPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <StatCardGrid>
         <StatCard label="Total Jobs" value={totals.total} icon={BarChart3} />
-        <StatCard label="Pending" value={totals.pending} tone="warning" />
-        <StatCard label="In Progress" value={totals.inProgress} tone="info" />
-        <StatCard label="Completed" value={totals.completed} tone="success" />
-        <StatCard label="Revenue" value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Outstanding" value={formatCurrency(totals.outstanding)} tone={totals.outstanding > 0 ? 'danger' : 'default'} />
-      </div>
+        <StatCard label="Pending" icon={Clock} value={totals.pending} tone="warning" />
+        <StatCard label="In Progress" icon={Activity} value={totals.inProgress} tone="info" />
+        <StatCard label="Completed" icon={CheckCircle2} value={totals.completed} tone="success" />
+        <StatCard label="Revenue" icon={IndianRupee} value={formatCurrency(totals.revenue)} tone="success" />
+        <StatCard label="Outstanding" icon={AlertTriangle} value={formatCurrency(totals.outstanding)} tone={totals.outstanding > 0 ? 'danger' : 'default'} />
+      </StatCardGrid>
 
       <div className="space-y-2">
         <FilterBar

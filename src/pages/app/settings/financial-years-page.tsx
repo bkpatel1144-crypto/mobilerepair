@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Calendar, CalendarPlus, CheckCircle2, Lock, AlertTriangle, Star } from 'lucide-react'
+import { Calendar, CalendarPlus, CheckCircle2, Lock, AlertTriangle, Star, XCircle} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
@@ -93,12 +94,12 @@ export function FinancialYearsPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:max-w-xl">
+      <StatCardGrid>
         <StatCard label="Total" value={fys.length} icon={Calendar} />
         <StatCard label="Active" value={fys.filter((f) => f.isActive).length} icon={CheckCircle2} tone="success" />
         <StatCard label="Locked" value={fys.filter((f) => f.isLocked).length} icon={Lock} />
-        <StatCard label="Inactive" value={fys.filter((f) => !f.isActive).length} tone="warning" />
-      </div>
+        <StatCard label="Inactive" icon={XCircle} value={fys.filter((f) => !f.isActive).length} tone="warning" />
+      </StatCardGrid>
 
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Button type="button" variant="outline" onClick={handleCreateNext} disabled={isLoading || createFy.isPending}>

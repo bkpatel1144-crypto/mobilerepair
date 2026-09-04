@@ -166,17 +166,37 @@ export function useSetDefaultPrintTemplate() {
   })
 }
 
-/** Only a non-`protected` template may ever reach this — the UI hides Delete on every seeded
- * default, and `firestore.rules` backs that up server-side. */
+/**
+ * Deletes a template, including a seeded default — `Add Missing Defaults` restores those from
+ * the catalogue, so nothing here is unrecoverable. The UI refuses only the last format for a
+ * document type, which would leave that type's print buttons with nothing to render.
+ *
+ * If the deleted one was the default, a sibling is promoted in the *same batch*. Otherwise the
+ * document type would be left with formats but no default, and every print button for it would
+ * silently fall back to whichever template happened to sort first.
+ */
 export function useDeletePrintTemplate() {
   const { user, profile } = useAuth()
   const companyId = profile!.companyId
   const queryClient = useQueryClient()
+  const { data: all = [] } = usePrintTemplates()
 
   return useMutation({
     mutationFn: async (template: PrintTemplateWithId) => {
       const batch = writeBatch(db)
       batch.delete(doc(db, printTemplateDoc(companyId, template.id)))
+
+      if (template.isDefault) {
+        const heir = all.find(
+          (t) => t.id !== template.id && t.documentType === template.documentType
+        )
+        if (heir) {
+          batch.update(doc(db, printTemplateDoc(companyId, heir.id)), {
+            isDefault: true,
+            updatedAt: serverTimestamp(),
+          })
+        }
+      }
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: 'Delete',
         module: 'settings',

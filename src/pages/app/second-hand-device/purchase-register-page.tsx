@@ -3,6 +3,7 @@ import { Download, RefreshCw, ClipboardList } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -99,10 +100,10 @@ export function PurchaseRegisterPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:max-w-md">
+      <StatCardGrid>
         <StatCard label="Purchases (₹)" value={`₹${totalPurchases}`} />
         <StatCard label="Purchases" value={filtered.length} />
-      </div>
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

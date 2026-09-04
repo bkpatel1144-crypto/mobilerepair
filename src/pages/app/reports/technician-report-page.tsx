@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Users, Download, TrendingDown, TrendingUp } from 'lucide-react'
+import { Users, Download, TrendingDown, TrendingUp, FileText, IndianRupee} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared/expandable-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -138,13 +139,13 @@ export function TechnicianReportPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <StatCardGrid>
         <StatCard label="Technicians" value={totals.technicians} icon={Users} tone="purple" />
-        <StatCard label="Jobs" value={totals.jobs} />
-        <StatCard label="Revenue" value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Cost" value={formatCurrency(totals.cost)} tone="warning" />
-        <StatCard label="Profit" value={formatCurrency(totals.profit)} tone={totals.profit < 0 ? 'danger' : 'success'} />
-      </div>
+        <StatCard label="Jobs" icon={FileText} value={totals.jobs} />
+        <StatCard label="Revenue" icon={IndianRupee} value={formatCurrency(totals.revenue)} tone="success" />
+        <StatCard label="Cost" icon={TrendingDown} value={formatCurrency(totals.cost)} tone="warning" />
+        <StatCard label="Profit" icon={TrendingUp} value={formatCurrency(totals.profit)} tone={totals.profit < 0 ? 'danger' : 'success'} />
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

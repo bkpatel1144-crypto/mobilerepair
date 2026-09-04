@@ -35,6 +35,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
@@ -140,7 +141,7 @@ export function DashboardPage() {
         <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your dashboard" />
       ) : (
         <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <StatCardGrid>
         <StatCard label="Total Job Cards" value={stats.totalJobCards} icon={FileText} />
         <StatCard
           label="Total in Pipeline"
@@ -169,7 +170,7 @@ export function DashboardPage() {
         <StatCard label="Delivered" value={stats.delivered} icon={Truck} tone="purple" />
         <StatCard label="Closed" value={stats.closed} icon={Lock} />
         <StatCard label="Pending Return" value={stats.pendingReturn} icon={Undo2} tone="warning" />
-      </div>
+      </StatCardGrid>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-lg border p-4">

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Building2, Crown, Pencil } from 'lucide-react'
+import { Building2, Crown, Pencil, CheckCircle2, XCircle} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
@@ -95,23 +96,23 @@ export function BranchManagementPage() {
         }
       />
 
-      <div className="grid grid-cols-3 gap-3 sm:max-w-md">
+      <StatCardGrid>
         <StatCard label="Total Branches" value={branches.length} icon={Building2} />
         <StatCard
-          label="Active"
+          label="Active" icon={CheckCircle2}
           value={branches.filter((b) => b.status === 'active').length}
           tone="success"
           selected={statusFilter === 'active'}
           onClick={() => setStatusFilter((f) => (f === 'active' ? 'all' : 'active'))}
         />
         <StatCard
-          label="Inactive"
+          label="Inactive" icon={XCircle}
           value={branches.filter((b) => b.status === 'disabled').length}
           tone="warning"
           selected={statusFilter === 'disabled'}
           onClick={() => setStatusFilter((f) => (f === 'disabled' ? 'all' : 'disabled'))}
         />
-      </div>
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search branches by name or code..." />
 

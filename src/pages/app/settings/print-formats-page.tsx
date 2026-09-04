@@ -247,17 +247,18 @@ export function PrintFormatsPage() {
                                   <Copy />
                                   Duplicate
                                 </DropdownMenuItem>
-                                {/* A protected seed has no Delete — it is the fallback every real
-                                 * print button resolves to. Duplicate it and edit the copy. */}
-                                {!t.protected && (
-                                  <DropdownMenuItem
-                                    variant="destructive"
-                                    onClick={() => setDeleteTarget(t)}
-                                  >
-                                    <Trash2 />
-                                    Delete
-                                  </DropdownMenuItem>
-                                )}
+                                {/* Any format can be deleted, seeded ones included — Add Missing
+                                  * Defaults puts a seed back. The one case that is refused is the
+                                  * last format for a document type, which would leave that type's
+                                  * print buttons with nothing to render. */}
+                                <DropdownMenuItem
+                                  variant="destructive"
+                                  disabled={formats.length <= 1}
+                                  onClick={() => setDeleteTarget(t)}
+                                >
+                                  <Trash2 />
+                                  {formats.length <= 1 ? 'Delete — only format' : 'Delete'}
+                                </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </div>
@@ -278,7 +279,11 @@ export function PrintFormatsPage() {
         title="Delete this template?"
         message={
           deleteTarget
-            ? `"${deleteTarget.name}" will be removed permanently. Any print action currently using it falls back to the default ${printDocumentTypeLabel(deleteTarget.documentType)} format.`
+            ? `"${deleteTarget.name}" will be removed. ${
+                deleteTarget.isDefault
+                  ? `It is the current default, so another ${printDocumentTypeLabel(deleteTarget.documentType)} format becomes the default.`
+                  : `Any print action using it falls back to the default ${printDocumentTypeLabel(deleteTarget.documentType)} format.`
+              }${deleteTarget.protected ? ' Add Missing Defaults can restore it later.' : ''}`
             : ''
         }
         confirmLabel="Delete"

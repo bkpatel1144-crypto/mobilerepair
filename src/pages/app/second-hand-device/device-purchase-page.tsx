@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Smartphone, Plus, RefreshCw, Printer, Pencil, Wrench, Undo2, ChevronDown } from 'lucide-react'
+import { Smartphone, Plus, RefreshCw, Printer, Pencil, Wrench, Undo2, ChevronDown, Package, Truck} from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -111,13 +112,13 @@ export function DevicePurchasePage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <StatCardGrid>
         <StatCard label="Total Purchased" value={purchases.length} icon={Smartphone} />
-        <StatCard label="In Stock" value={purchases.filter((p) => p.status === 'inStock').length} tone="success" />
-        <StatCard label="In Refurb" value={purchases.filter((p) => p.status === 'inRefurb').length} tone="warning" />
-        <StatCard label="Sold" value={purchases.filter((p) => p.status === 'sold').length} tone="info" />
-        <StatCard label="Returned" value={purchases.filter((p) => p.status === 'returnedToSeller').length} tone="danger" />
-      </div>
+        <StatCard label="In Stock" icon={Package} value={purchases.filter((p) => p.status === 'inStock').length} tone="success" />
+        <StatCard label="In Refurb" icon={Wrench} value={purchases.filter((p) => p.status === 'inRefurb').length} tone="warning" />
+        <StatCard label="Sold" icon={Truck} value={purchases.filter((p) => p.status === 'sold').length} tone="info" />
+        <StatCard label="Returned" icon={Undo2} value={purchases.filter((p) => p.status === 'returnedToSeller').length} tone="danger" />
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

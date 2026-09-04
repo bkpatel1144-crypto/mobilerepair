@@ -9,13 +9,13 @@ import {
   Search,
   Banknote,
   Smartphone,
-  CreditCard,
-} from 'lucide-react'
+  CreditCard, IndianRupee} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -200,11 +200,11 @@ export function ReceiptsPaymentsPage() {
         }
       />
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <StatCardGrid>
         <StatCard label="Today Received" value={`₹${todayReceived}`} sublabel={`${active.filter((r) => r.direction === 'in' && (r.createdAt?.toDate?.() ?? new Date(0)) >= today).length} receipts`} icon={Wallet} tone="success" />
-        <StatCard label="Net Amount" value={`₹${netAmount}`} sublabel="After money out" tone="info" />
-        <StatCard label="Cash · Net" value={`₹${cashNet}`} />
-      </div>
+        <StatCard label="Net Amount" icon={IndianRupee} value={`₹${netAmount}`} sublabel="After money out" tone="info" />
+        <StatCard label="Cash · Net" icon={Wallet} value={`₹${cashNet}`} />
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

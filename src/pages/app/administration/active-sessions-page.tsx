@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Monitor, Users, Clock, ChevronRight, Wifi } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -77,11 +78,11 @@ export function ActiveSessionsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader icon={Monitor} title="Active Sessions" subtitle="Signed-in devices across your team" />
 
-      <div className="grid grid-cols-3 gap-3">
+      <StatCardGrid>
         <StatCard label="Currently Online" value={online.length} icon={Wifi} tone="success" />
         <StatCard label="Unique Users" value={uniqueUsers} icon={Users} />
         <StatCard label="Idle (30m+)" value={idle.length} icon={Clock} tone={idle.length > 0 ? 'warning' : 'default'} />
-      </div>
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search by user, device, IP..." />
 

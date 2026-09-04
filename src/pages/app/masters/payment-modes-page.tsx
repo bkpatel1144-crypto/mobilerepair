@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CreditCard, Plus, Star, MoreVertical, Pencil, Ban, CheckCircle2, Trash2 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -115,10 +116,10 @@ export function PaymentModesPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:max-w-md">
+      <StatCardGrid>
         <StatCard label="Total" value={modes.length} icon={CreditCard} />
-        <StatCard label="Active" value={modes.filter((m) => m.status === 'active').length} tone="success" />
-      </div>
+        <StatCard label="Active" icon={CheckCircle2} value={modes.filter((m) => m.status === 'active').length} tone="success" />
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search payment modes..." />
 

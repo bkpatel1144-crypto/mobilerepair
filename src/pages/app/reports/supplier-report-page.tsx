@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Package, Download, Wrench, TrendingDown } from 'lucide-react'
+import { Package, Download, Wrench, TrendingDown, ShoppingCart} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared/expandable-table'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -152,11 +153,11 @@ export function SupplierReportPage() {
         }
       />
 
-      <div className="grid grid-cols-3 gap-3 sm:max-w-lg">
+      <StatCardGrid>
         <StatCard label="Suppliers" value={totals.suppliers} icon={Package} tone="warning" />
-        <StatCard label="Total Purchase" value={formatCurrency(totals.totalPurchase)} />
-        <StatCard label="Total Qty" value={totals.totalQty} />
-      </div>
+        <StatCard label="Total Purchase" icon={ShoppingCart} value={formatCurrency(totals.totalPurchase)} />
+        <StatCard label="Total Qty" icon={Package} value={totals.totalQty} />
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

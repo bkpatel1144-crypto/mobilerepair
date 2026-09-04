@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ShoppingBag, RefreshCw, DollarSign } from 'lucide-react'
+import { ShoppingBag, RefreshCw, DollarSign, Truck, Wrench} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -77,12 +78,12 @@ export function DeviceSalePage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Available to Sell" value={availableToSell.length} icon={ShoppingBag} tone="success" />
-        <StatCard label="In Refurb" value={inRefurb.length} tone="warning" />
-        <StatCard label="Sold" value={sold.length} tone="info" />
+        <StatCard label="In Refurb" icon={Wrench} value={inRefurb.length} tone="warning" />
+        <StatCard label="Sold" icon={Truck} value={sold.length} tone="info" />
         <StatCard label="Total Profit" value={`₹${totalProfit}`} icon={DollarSign} tone={totalProfit >= 0 ? 'success' : 'danger'} />
-      </div>
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}

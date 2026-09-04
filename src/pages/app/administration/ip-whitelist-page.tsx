@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ShieldCheck, Plus, Pencil, Trash2, Ban, CheckCircle2, MoreVertical } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -96,10 +97,10 @@ export function IpWhitelistPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:max-w-md">
+      <StatCardGrid>
         <StatCard label="Total" value={entries.length} icon={ShieldCheck} />
-        <StatCard label="Active" value={entries.filter((e) => e.active).length} tone="success" />
-      </div>
+        <StatCard label="Active" icon={CheckCircle2} value={entries.filter((e) => e.active).length} tone="success" />
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search by label or IP..." />
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { MapPin, Clock, Users, Briefcase, Download, X } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -158,7 +159,7 @@ export function FieldVisitReportPage() {
         }
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Total Visits" value={totals.visits} icon={MapPin} />
         <StatCard label="Total Time Spent" value={formatDurationLabel(totals.totalMinutes * 60000)} icon={Clock} tone="purple" />
         <StatCard
@@ -169,7 +170,7 @@ export function FieldVisitReportPage() {
           onClick={totals.technicians.size > 0 ? () => setShowTechnicianList((v) => !v) : undefined}
         />
         <StatCard label="Jobs Visited" value={totals.jobs.size} icon={Briefcase} tone="success" />
-      </div>
+      </StatCardGrid>
 
       {showTechnicianList && totals.technicians.size > 0 && (
         <div className="flex flex-wrap items-center gap-1.5 rounded-lg border bg-muted/30 p-2.5 text-sm">

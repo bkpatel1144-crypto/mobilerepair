@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LogIn, Users, Globe, ShieldAlert, ShieldX, Ban, Wifi, Clock } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -80,7 +81,7 @@ export function LoginReportPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader icon={LogIn} title="Login Report" subtitle="Every account sign-in across your company" />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Online Right Now" value={data.onlineRightNow} icon={Wifi} tone="success" selected={cardFilter === 'online'} onClick={() => setCardFilter(cardFilter === 'online' ? 'all' : 'online')} />
         <StatCard label="Logins Today" value={data.loginsToday} icon={LogIn} selected={cardFilter === 'today'} onClick={() => setCardFilter(cardFilter === 'today' ? 'all' : 'today')} />
         <StatCard label="Users Today" value={data.usersToday} icon={Users} selected={cardFilter === 'users'} onClick={() => setCardFilter(cardFilter === 'users' ? 'all' : 'users')} />
@@ -89,7 +90,7 @@ export function LoginReportPage() {
         <StatCard label="Unauthorized" value={data.unauthorizedToday} icon={ShieldX} tone="danger" selected={cardFilter === 'unauthorized'} onClick={() => setCardFilter(cardFilter === 'unauthorized' ? 'all' : 'unauthorized')} />
         <StatCard label="Blocked IPs" value={data.blockedIpsToday} icon={Ban} tone="danger" selected={cardFilter === 'blocked'} onClick={() => setCardFilter(cardFilter === 'blocked' ? 'all' : 'blocked')} />
         <StatCard label="Busiest Time Today" value={data.busiestHourLabel ?? '—'} icon={Clock} />
-      </div>
+      </StatCardGrid>
 
       <FilterBar
         dateRange={dateRange === 'all' ? undefined : dateRange}

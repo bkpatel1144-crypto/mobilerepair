@@ -6,6 +6,7 @@ import { FilterBar } from '@/components/shared/filter-bar'
 import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { Button } from '@/components/ui/button'
 import { usePayables } from '@/hooks/use-payables'
@@ -52,12 +53,12 @@ export function PayablesPage() {
         <ErrorState error={loadError} onRetry={() => void refetch()} />
       ) : (
         <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatCardGrid>
         <StatCard label="Total Payable" value={`₹${data.totalPayable}`} tone="danger" />
         <StatCard label="Refund Due" value={`₹${data.refundDueTotal}`} tone="warning" />
         <StatCard label="Unused Advance" value={`₹${data.unusedAdvanceTotal}`} tone="info" />
         <StatCard label="Advance Credit" value={`₹${data.advanceCreditTotal}`} tone="purple" />
-      </div>
+      </StatCardGrid>
 
       <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search job card, customer...">
         <div className="flex gap-1">
