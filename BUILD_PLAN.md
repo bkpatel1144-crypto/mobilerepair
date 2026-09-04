@@ -635,18 +635,30 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
 
 ## Phase 11 — Polish & deploy
 
-- [ ] Empty states on every list/report that can legitimately be empty.
-- [ ] Loading skeletons on every data-fetching view (no blank-white flash, ever).
-- [ ] 375px pass on every single screen built in Phases 1–10 (not just spot-checked) — sidebar
-      drawer, stacked-card tables, full-screen sheets, 44px+ tap targets.
-- [ ] Confirm-step on every delete/void/cancel/deactivate across the whole app.
-- [ ] `README.md`: setup steps, required Firebase config (incl. the named-database gotcha from
+- [x] Empty states on every list/report that can legitimately be empty — audited across all
+      pages; already in place from each feature phase's own work.
+- [x] Loading skeletons on every data-fetching view (no blank-white flash, ever) — same, the
+      only pages without one are create-forms and static pages, which have nothing to skeleton.
+- [x] **Error states** — not in the original checklist, but the quality bar's own
+      "skeleton → empty → error → populated" line called for them and *no* view had one.
+      All 43 query call sites discarded `isError`, so a failed read rendered the empty state.
+      See PROGRESS.md's Phase 11 notes.
+- [x] 375px pass — fixed a real horizontal-overflow bug (StatCard's `min-w-[9.5rem]` on
+      three-up grids) and touch tap targets. Measured in headless Chromium at 375×812 with
+      touch emulation. **Caveat:** only the public routes and a shared-component harness could
+      be measured directly — `/app/*` needs a real Firebase project. See PROGRESS.md.
+- [x] Confirm-step on every delete/void/cancel/deactivate across the whole app — audited;
+      already complete (21 files use `ConfirmDialog`, Backup restore uses a type-the-phrase
+      confirm, and no destructive path was found without one).
+- [x] `README.md`: setup steps, required Firebase config (incl. the named-database gotcha from
       §1), Vercel deploy steps, and the seeded-default-data summary a fresh signup gets (Owner
-      user, Main Branch, current FY, 5 default roles).
+      user, Main Branch, current FY, 5 default roles) — already written and still accurate.
 - [ ] Deploy: Vercel project linked to the repo, all 8 `VITE_FIREBASE_*` env vars (7 + the
       database-id one) set in Vercel project settings, production build verified live, Vercel's
-      domain added to Firebase Auth's authorized domains list.
-- [ ] Final pass over `PROGRESS.md`: every phase checked off, zero open TODOs.
+      domain added to Firebase Auth's authorized domains list. **Needs you** — requires
+      Vercel and Firebase Console credentials.
+- [x] Final pass over `PROGRESS.md`: every phase checked off, remaining open items are the
+      ones that genuinely need your credentials, listed explicitly rather than left implicit.
 
 ---
 

@@ -18,7 +18,7 @@ of every phase — see `BUILD_PLAN.md` for what each phase actually contains.
 | 8 — Administration deep dive     | ✅ Done        | Audit trail retrofit across ~18 files + 3 real auth races found and fixed — see below |
 | 9 — Reports                      | ✅ Done        | 6 real reports over live Firestore data, 2 real Phase 5 gaps closed to feed them — see below |
 | 10 — Remaining Settings          | ✅ Done        | Branches/Company/FY/Print/WhatsApp/Backup all real; retired every remaining "Phase 10" print stub — see below |
-| 11 — Polish & deploy             | ⬜ Not started |                                                                  |
+| 11 — Polish & deploy             | ✅ Code done   | Error states app-wide, Sales Invoices built, 375px fixes — deploy still needs you |
 
 ## Decisions log
 
@@ -1086,6 +1086,109 @@ of them functional, not cosmetic:
   phase's changes to the shared Job Card action buttons and Second Hand Device print button group,
   both used since Phase 5/7.
 
+### Phase 11 decisions
+
+- **The headline finding wasn't on the checklist at all.** Phase 11's list asked for empty
+  states and loading skeletons; both turned out to be essentially done already, because every
+  feature phase had honoured the quality bar as it went. What no phase had done was the *third*
+  branch that same bar names — the error state. Every one of the 43 query call sites in the app
+  read `const { data = [], isLoading } = useThing()`, discarding `isError`, and the QueryClient
+  sets no `throwOnError`, so nothing reached the `ErrorBoundary` either. The consequence is
+  worse than a missing state: on a failed read `data` falls back to `[]` and the page renders
+  its **empty state**, so permission-denied, an offline device, and a wrong
+  `VITE_FIREBASE_DATABASE_ID` all displayed as a friendly "you haven't added anything yet."
+  That is precisely the invisible-failure mode `README.md` devotes a section to warning about,
+  shown to the user as reassurance — a shop owner would reasonably start re-entering data that
+  was still there. Fixed with a shared `ErrorState` + `errorMessage()` (the latter in
+  `lib/error-message.ts`, so the component file only exports a component), an `error`/`onRetry`
+  pair on `DataTable`/`ExpandableTable` checked *before* the empty branch, and composed hooks
+  (`use-dashboard-stats`, `use-cash-book`, `use-party-ledger`, `use-payables`, `use-receivables`,
+  `use-reports`, `use-login-report`, `use-service-options`) now surfacing a combined error plus
+  a refetch that retries every source query they fan out over.
+- **Three places were worse than a wrong empty state, and needed more than a new branch:**
+  - Dashboard and Payables derive their tiles inside a `useMemo`, so a failed read still
+    produced a complete, well-formed object of zeros — every tile confidently reporting "0" and
+    "₹0". Rendering an error message *next to* fabricated totals would satisfy the letter of the
+    checklist and violate "no fake numbers," so both page bodies are suppressed entirely on error.
+  - The Workflow Designer's Form Builder and Role Permissions tabs fall back to
+    `blankFormSchema()` / `blankWorkflowConfig()` when the read returns nothing. A failed load
+    therefore rendered a pristine editor whose Save would overwrite the company's real stored
+    schema with defaults — data loss, not a cosmetic bug. Both now refuse to render an editor at
+    all until they know what they are editing.
+  - The job card detail page reported "Job card not found — it may have been removed" on *any*
+    read failure, sending someone to look for a deletion that never happened; and the timeline
+    showed "No activity yet" even though every job has a `Created` event written at intake, so
+    an empty timeline is only ever truthful when the read actually succeeded.
+- **Sales Invoices was the last placeholder, and it had gone stale.** `sales/invoices` was the
+  only unlocked nav leaf with no entry in `LEAF_PAGE_OVERRIDES`. Because a leaf inherits its
+  section's phase label, it was telling users "Sales Invoices is built in Phase 5 — Service
+  module" — a phase marked ✅ Done. It is specced in `SCREENS_NOTES.md` (`preview (68)`) but was
+  never assigned to a phase in `BUILD_PLAN.md`, which is how it slipped through ten phases.
+- **No `invoices` collection for it.** A bill *is* a job card that has been through the
+  `generateBill` action — the only thing in the app that ever sets `finalAmount`. A second
+  collection would mean two sources of truth for one number; this is the same call Phase 5 made
+  when it had Service Items query Item Master rather than duplicate it. An invoice is exactly
+  `finalAmount !== null` in a ready/delivered/closed status. The status whitelist is deliberate:
+  a cancelled job keeps whatever `finalAmount` it had, so a "not pending" check would list
+  cancelled jobs as bills.
+- **Added `billGeneratedAt`.** Without it the only available bill date was `updatedAt`, which
+  every later action (payment, deliver, close) overwrites — so a closed job would have shown its
+  *close* date in a column headed "Bill Date". It is written by the `generateBill` action
+  alongside the existing `deliveredAt`/`closedAt`/`cancelledAt` pattern. Jobs billed before the
+  field existed fall back to `updatedAt` rather than showing an invented date. No rules change
+  was needed: `jobCards` has no field whitelist on update.
+- **Crash reporting closes Phase 8's leftover TODO in `error-boundary.tsx`.** A render crash
+  that unmounted the whole app previously left nothing behind but a `console.error` in a browser
+  nobody was watching. It deliberately does *not* go through `AuditContext`/`useAuth()`: the
+  boundary is a class component mounted *above* `AuthProvider` (it has to be, or a crash inside
+  AuthProvider itself would go uncaught), so it has no hooks and no profile in scope —
+  `auth.currentUser` plus the existing per-viewer profile cache give the same fields without
+  one. The import is dynamic, because this boundary is one of the few things `App.tsx` imports
+  statically and `audit-log` pulls in the Firestore SDK; a top-level import would have put all of
+  Firebase back into the marketing bundle that `App.tsx`'s own lazy-loading exists to keep it out
+  of (verified: `audit-log` stays a separate ~3 kB chunk, main entry grew 0.6 kB). Needed a new
+  `'failed'` value on `AuditResult`; because both `RESULT_LABEL`/`RESULT_TONE` maps are
+  `Record<AuditResult, …>`, `tsc` immediately surfaced the Login Report as a second consumer
+  that would otherwise have rendered a blank badge.
+- **The 375px pass found one real bug, measured rather than eyeballed.** `StatCard` carried an
+  unconditional `min-w-[9.5rem]` (152px). At 375px a `grid-cols-3` track is ~106px, so cards
+  overflowed their own tracks and scrolled the entire page sideways on the ~9 screens that lay
+  stat cards out three-up (Active Sessions, System Audit, Item Master, Device Stock, Sale
+  Register, Supplier Report, Branch Management, Company Settings, Backup & Restore) — a direct
+  violation of "the page body must never scroll horizontally." The floor now applies from `sm`
+  up, where it still does its job in the flex rows `StatCard` is also used in. `grid-cols-2`
+  always had ~165px tracks, which is why this only ever showed on the three-up screens.
+- **Tap targets are gated on `pointer: coarse`, and grow the control rather than overlay it.**
+  This design system is deliberately dense (`h-8` buttons, `size-7` icon buttons) because Phases
+  1–10 matched it to the reference app's desktop screenshots; resizing everything unconditionally
+  would have thrown that away to satisfy a mobile guideline. Gating on `pointer: coarse` means a
+  mouse keeps the exact dense layout and only touch devices get 44px. The usual trick for this is
+  a transparent `::after` halo, which is the *wrong* one here: adjacent icon buttons sit `gap-1.5`
+  (6px) apart, so 44px halos would overlap by ~10px and whichever painted last would silently
+  swallow the other's taps. Growing the control itself cannot overlap anything, and every row
+  holding these is either `flex-wrap` or a scroll container. Also fixed the marketing site's
+  mobile hamburger, which was a **20×20** tap target and is the only way to open the nav on a
+  phone.
+- **What the 375px pass could and could not verify.** Measured for real in headless Chromium at
+  375×812 with touch emulation. Every `/app/*` screen needs a live Firebase project to reach, and
+  there is none configured here, so those screens were verified indirectly — through a temporary
+  public harness route mounting the shared components every one of them is built from
+  (`DataTable`, `ExpandableTable`, `FilterBar`, `PageHeader`, `StatCard`, and the form controls),
+  which is where both bugs above were actually caught. The harness has been removed. A genuine
+  per-screen pass over all ~50 authenticated screens still wants a run against real credentials;
+  it is the one part of this phase's checklist that a static/component-level check can't close.
+- **An honest correction on method:** the first browser run reported every page passing, because
+  with no `.env.local` the app crashed at boot on `auth/invalid-api-key` and the audit was
+  measuring a blank page. The passing numbers above are from runs after a throwaway dummy config
+  made the app actually render; that dummy `.env.local` has since been deleted, so `npm run dev`
+  again gives `firebase.ts`'s clear "Missing env var" warning rather than a booting app that
+  fails every call.
+- **Deliberately left alone:** a handful of secondary lookups that populate pickers *inside*
+  already-error-guarded views (`action-buttons.tsx`'s cancel-reason list, `record-costing-modal`'s
+  supplier picker). A failure there means an empty dropdown next to an "+ Add New" affordance,
+  inside a page that has already reported its own load failure — worth knowing about, but not
+  worth a second error surface competing with the page's own.
+
 ### ⚠️ Action needed from you
 
 1. **`firestore.rules`/`storage.rules` (and `firestore.indexes.json`) are written but still NOT
@@ -1152,8 +1255,34 @@ of them functional, not cosmetic:
 
 ### Still open
 
-- Local rules testing via the Firestore emulator was not possible in this environment — the
-  emulator requires a JRE and `java` isn't installed here. All rules verification so far is
-  therefore against the real project's _current_ (not-yet-updated) rules, not against
-  `firestore.rules` itself. Once you deploy, a re-run of the signup flow is the practical
-  substitute for emulator unit tests.
+Everything below needs credentials this environment doesn't have. There is no remaining code
+work in Phases 0-11.
+
+1. **Deploy the security rules** — carried forward unchanged from every phase since Phase 2, and
+   still the most important open item. `firestore.rules`, `firestore.indexes.json` and
+   `storage.rules` are written but have never been deployed, so every phase's live testing ran
+   against the project's *older* rules. Most significantly, `belongsToCompany()` now also
+   requires `status == 'active'`, and that check is still unenforced in production.
+   ```
+   npx firebase-tools login
+   npx firebase-tools deploy --only firestore:rules,firestore:indexes,storage
+   ```
+   Once you've run `firebase login` on this machine, the deploy can be run from here (it reads
+   the same cached CLI credential).
+2. **Vercel deploy** — the one Phase 11 checklist item still unchecked. Link the project, set all
+   8 `VITE_FIREBASE_*` vars, then add the deployed domain to Firebase Auth's authorized domains.
+   `README.md`'s Deploy section has the full steps.
+3. **A real 375px pass over the ~50 authenticated screens.** This phase fixed two genuine
+   responsive bugs and verified the public routes plus every shared component directly in a
+   headless browser, but `/app/*` needs a live Firebase project to reach. Worth one run with real
+   credentials at 375px once deployed — see the Phase 11 notes for exactly what was and wasn't
+   measured.
+4. **Test data cleanup** — dozens of throwaway companies under `@aim-buildtest.test` accumulated
+   across Phases 2-10 in the real project. Same offer as before: the Auth accounts can be
+   self-deleted from here, but the Firestore documents can't be (the rules deliberately forbid
+   deleting a company at all).
+5. Local rules testing via the Firestore emulator was not possible in this environment — the
+   emulator requires a JRE and `java` isn't installed here. All rules verification so far is
+   therefore against the real project's _current_ (not-yet-updated) rules, not against
+   `firestore.rules` itself. Once you deploy, a re-run of the signup flow is the practical
+   substitute for emulator unit tests.
