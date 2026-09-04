@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ErrorState } from '@/components/shared/error-state'
 import { cn } from '@/lib/utils'
 
 export interface DataTableColumn<T> {
@@ -44,6 +45,11 @@ interface DataTableProps<T> {
   rowKey: (row: T) => string
   onRowClick?: (row: T) => void
   isLoading?: boolean
+  /** A failed query's thrown value. Rendered *instead of* `emptyState` — see `ErrorState`'s
+   * doc comment for why conflating the two is a real hazard, not just a cosmetic one. */
+  error?: unknown
+  /** Usually the query's `refetch`. */
+  onRetry?: () => void
   emptyState?: React.ReactNode
   pageSizeOptions?: number[]
   defaultPageSize?: number
@@ -58,6 +64,8 @@ export function DataTable<T>({
   rowKey,
   onRowClick,
   isLoading,
+  error,
+  onRetry,
   emptyState,
   pageSizeOptions = [10, 20, 50],
   defaultPageSize = 10,
@@ -106,6 +114,16 @@ export function DataTable<T>({
         {Array.from({ length: 5 }).map((_, i) => (
           <Skeleton key={i} className="h-12 w-full" />
         ))}
+      </div>
+    )
+  }
+
+  // Order matters: an errored query usually *also* has zero rows, so this must win over the
+  // empty branch or the failure is silently reported as "nothing here yet".
+  if (error) {
+    return (
+      <div className={className}>
+        <ErrorState error={error} onRetry={onRetry} />
       </div>
     )
   }

@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { FormError } from '@/components/shared/form-error'
+import { ErrorState } from '@/components/shared/error-state'
 import { SearchSelect } from '@/components/shared/search-select'
 import { PatternLockPicker, PatternLockPreview } from '@/components/shared/pattern-lock'
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
@@ -31,7 +32,12 @@ export function CreateSecondHandPurchasePage() {
   const { user, profile } = useAuth()
   const { data: parties = [] } = useParties()
   const { data: users = [] } = useUsers()
-  const { data: options, isLoading: optionsLoading } = useAllServiceOptions()
+  const {
+    data: options,
+    isLoading: optionsLoading,
+    error: optionsError,
+    refetch: refetchOptions,
+  } = useAllServiceOptions()
   const createParty = useCreateParty()
   const createBrand = useCreateServiceOption('brands')
   const createModel = useCreateServiceOption('models')
@@ -82,6 +88,17 @@ export function CreateSecondHandPurchasePage() {
   const [purchasedById, setPurchasedById] = useState<string | null>(null)
   const [expectedSalePrice, setExpectedSalePrice] = useState<number | ''>('')
   const [notes, setNotes] = useState('')
+
+  // Was `return null` — a blank white screen on a failed catalogue read, with no way to tell
+  // that from a slow one. Same reasoning as the Create Job Card form: the device Brand/Model
+  // pickers come entirely from this catalogue.
+  if (optionsError) {
+    return (
+      <div className="p-4 sm:p-6">
+        <ErrorState error={optionsError} onRetry={() => void refetchOptions()} title="Couldn't load the purchase form" />
+      </div>
+    )
+  }
 
   if (optionsLoading || !options) return null
 

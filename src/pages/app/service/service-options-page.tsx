@@ -4,6 +4,7 @@ import { ChevronRight, Plus, RefreshCw, Shuffle, Info } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { RouteFallback } from '@/components/shared/route-fallback'
+import { ErrorState } from '@/components/shared/error-state'
 import { PageHeader } from '@/components/shared/page-header'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import {
@@ -288,7 +289,7 @@ function ModelsSection({
 }
 
 export function ServiceOptionsPage() {
-  const { data, isLoading } = useAllServiceOptions()
+  const { data, isLoading, error: loadError, refetch } = useAllServiceOptions()
   const splitSharedBrands = useSplitSharedBrands()
   const queryClient = useQueryClient()
   const [openSections, setOpenSections] = useState<Set<ServiceOptionType>>(new Set(['brands']))
@@ -296,6 +297,13 @@ export function ServiceOptionsPage() {
   const [confirmingSplit, setConfirmingSplit] = useState(false)
 
   if (isLoading) return <RouteFallback />
+  if (loadError) {
+    return (
+      <div className="p-4 sm:p-6">
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load service options" />
+      </div>
+    )
+  }
 
   const sharedBrandCount = data.brands.filter((b) => (b.deviceTypeIds?.length ?? 0) > 1).length
 

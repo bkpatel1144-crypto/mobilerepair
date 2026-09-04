@@ -33,7 +33,7 @@ import { crudKey } from '@/config/permission-schema'
 const TYPE_OPTIONS = ['Cash', 'UPI', 'Card', 'Bank Transfer', 'Other']
 
 export function PaymentModesPage() {
-  const { data: modes = [], isLoading } = usePaymentModes()
+  const { data: modes = [], isLoading, error: loadError, refetch } = usePaymentModes()
   const { canDo } = usePermissions()
   const setStatus = useSetPaymentModeStatus()
   const deleteMode = useDeletePaymentMode()
@@ -127,6 +127,8 @@ export function PaymentModesPage() {
         data={filtered}
         rowKey={(m) => m.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={CreditCard} title="No payment modes yet" description="Add your first payment mode above." />}
       />
 

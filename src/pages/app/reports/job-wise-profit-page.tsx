@@ -23,7 +23,7 @@ function statusLabel(key: string) {
  * matches the reference's own "Jobs: 1" count reflecting only the costed job, not every job
  * card ever created). */
 export function JobWiseProfitPage() {
-  const { data: rows, isLoading } = useCostedJobs()
+  const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
   const [customFrom, setCustomFrom] = useState('')
@@ -137,6 +137,8 @@ export function JobWiseProfitPage() {
         data={filtered}
         rowKey={(r) => r.job.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={BarChart3} title="No costed jobs yet" description="Record actual costing on a closed job to see its profit here." />}
       />
     </div>

@@ -42,7 +42,7 @@ interface SupplierGroup {
  * comment for why this isn't a partyId reference). A cost item with no supplier picked isn't
  * attributable to anyone and is deliberately excluded, not lumped into a fake "Unknown" row. */
 export function SupplierReportPage() {
-  const { data: rows, isLoading } = useCostedJobs()
+  const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [supplierFilter, setSupplierFilter] = useState('all')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -184,6 +184,8 @@ export function SupplierReportPage() {
         data={filtered}
         rowKey={(g) => g.supplierName}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Package} title="No supplier purchases yet" description="Pick a supplier while recording a job's actual costing to see them here." />}
         renderExpanded={(g) => {
           const topParts = Array.from(

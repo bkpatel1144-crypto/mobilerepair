@@ -37,7 +37,7 @@ function blankForm(company: CompanyWithId): UpdateCompanyInput {
  * below always has exactly one row, matching the reference's own screenshot for the same
  * underlying reason. No "Create Company" — see BUILD_PLAN.md's Phase 10 deviations. */
 export function CompanySettingsPage() {
-  const { data: company, isLoading } = useCompany()
+  const { data: company, isLoading, error: loadError, refetch } = useCompany()
   const [viewing, setViewing] = useState(false)
   const [editing, setEditing] = useState(false)
   const [form, setForm] = useState<UpdateCompanyInput | null>(null)
@@ -94,6 +94,8 @@ export function CompanySettingsPage() {
         data={company ? [company] : []}
         rowKey={(c) => c.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={() => setViewing(true)}
         emptyState={<EmptyState icon={Store} title="No company found" />}
       />

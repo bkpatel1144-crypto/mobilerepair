@@ -22,7 +22,7 @@ const BUCKET_LABELS: Record<AgingBucket, string> = {
 export function ReceivablesPage() {
   const { profile } = useAuth()
   const queryClient = useQueryClient()
-  const { data, isLoading } = useReceivables()
+  const { data, isLoading, error: loadError, refetch } = useReceivables()
   const [search, setSearch] = useState('')
 
   const filtered = data.rows.filter((r) =>
@@ -83,6 +83,8 @@ export function ReceivablesPage() {
         data={filtered}
         rowKey={(r) => r.job.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={
           <EmptyState
             icon={Search}

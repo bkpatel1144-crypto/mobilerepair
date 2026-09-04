@@ -25,7 +25,7 @@ import { PrintButtonGroup } from './device-purchase-page'
 import { purchaseDetailSections, purchaseTimeline, PURCHASE_STATUS_LABEL, PURCHASE_STATUS_TONE } from './purchase-detail-sections'
 
 export function PurchaseRegisterPage() {
-  const { data: purchases = [], isLoading } = useSecondHandPurchases()
+  const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { data: options } = useAllServiceOptions()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -135,6 +135,8 @@ export function PurchaseRegisterPage() {
         data={filtered}
         rowKey={(p) => p.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={ClipboardList} title="No purchases found" description="Purchases recorded from Device Purchase will appear here." />}
       />

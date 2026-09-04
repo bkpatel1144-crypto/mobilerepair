@@ -30,7 +30,7 @@ import { formatTimestamp } from '@/lib/utils'
 type PartyTypeFilter = 'all' | 'customer' | 'supplier' | 'both'
 
 export function PartiesPage() {
-  const { data: parties = [], isLoading } = useParties()
+  const { data: parties = [], isLoading, error: loadError, refetch } = useParties()
   const { data: categories = [] } = usePartyCategories()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'parties', 'update'))
@@ -127,6 +127,8 @@ export function PartiesPage() {
         data={filtered}
         rowKey={(p) => p.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Users} title="No parties found" description="Add your first customer or supplier above." />}
       />

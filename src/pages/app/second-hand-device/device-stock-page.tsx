@@ -25,7 +25,7 @@ function daysInStock(p: SecondHandPurchaseWithId) {
 }
 
 export function DeviceStockPage() {
-  const { data: purchases = [], isLoading } = useSecondHandPurchases()
+  const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
   const [viewing, setViewing] = useState<SecondHandPurchaseWithId | null>(null)
@@ -89,6 +89,8 @@ export function DeviceStockPage() {
         data={filtered}
         rowKey={(p) => p.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Boxes} title="No devices in stock" description="Devices you purchase will show up here until sold." />}
       />

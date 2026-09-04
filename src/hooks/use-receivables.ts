@@ -31,7 +31,7 @@ function bucketFor(days: number): AgingBucket {
  * a cancelled job's shortfall is a *payable* (a refund the shop may owe back), not money still
  * owed to the shop, so `usePayables` claims that case instead of double-counting it here. */
 export function useReceivables() {
-  const { data: jobs = [], isLoading } = useJobCards()
+  const { data: jobs = [], isLoading, error, refetch } = useJobCards()
 
   const data = useMemo<ReceivablesData>(() => {
     // `new Date()` here, not the bare `Date.now()` — same value, but the latter is the specific
@@ -70,5 +70,5 @@ export function useReceivables() {
     }
   }, [jobs])
 
-  return { data, isLoading }
+  return { data, isLoading, error, refetch }
 }

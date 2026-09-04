@@ -17,7 +17,7 @@ export function CashBookPage() {
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
-  const { data, isLoading } = useCashBook(dateRange)
+  const { data, isLoading, error: loadError, refetch } = useCashBook(dateRange)
 
   const filtered = data.rows.filter((r) =>
     search.trim()
@@ -74,6 +74,8 @@ export function CashBookPage() {
         data={filtered}
         rowKey={(r) => r.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Search} title="No entries in this range" description="Receipts and payments recorded here will appear in the cash book." />}
       />
 

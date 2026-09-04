@@ -58,7 +58,7 @@ function groupByTechnician(rows: CostedJobRow[]): TechnicianGroup[] {
  * `assignedToId`/`assignedToName` (the technician a job's own final assignment landed on — a
  * job handed over mid-repair already reflects its *last* assignee by the time it's Closed). */
 export function TechnicianReportPage() {
-  const { data: rows, isLoading } = useCostedJobs()
+  const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [technicianFilter, setTechnicianFilter] = useState('all')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -172,6 +172,8 @@ export function TechnicianReportPage() {
         data={filtered}
         rowKey={(g) => g.technicianId}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Users} title="No costed jobs yet" description="Technician performance appears once jobs have recorded costing." />}
         renderExpanded={(g) => (
           <div className="space-y-3 p-4">

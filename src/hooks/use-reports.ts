@@ -56,7 +56,12 @@ export function useCostedJobs() {
     return rows
   }, [jobsQuery.data, costingQuery.data])
 
-  return { data, isLoading: jobsQuery.isLoading || costingQuery.isLoading }
+  return {
+    data,
+    isLoading: jobsQuery.isLoading || costingQuery.isLoading,
+    error: jobsQuery.error ?? costingQuery.error,
+    refetch: () => Promise.all([jobsQuery.refetch(), costingQuery.refetch()]),
+  }
 }
 
 export interface FieldVisitWithId extends FieldVisitDoc {

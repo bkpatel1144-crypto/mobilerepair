@@ -114,7 +114,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
  * Reads `useJobCards()` directly (every job, any status) — unlike the profit-based reports below
  * it, this one isn't limited to costed/Closed jobs. */
 export function ServiceReportsPage() {
-  const { data: jobs = [], isLoading } = useJobCards()
+  const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { data: users = [] } = useUsers()
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [search, setSearch] = useState('')
@@ -293,6 +293,8 @@ export function ServiceReportsPage() {
         data={filtered}
         rowKey={(j) => j.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={BarChart3} title="No job cards found" description="Try widening your filters or date range." />}
         renderExpanded={(j) => <ServiceReportRowDetail job={j} />}
       />

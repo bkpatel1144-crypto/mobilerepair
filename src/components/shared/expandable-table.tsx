@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ErrorState } from '@/components/shared/error-state'
 import { cn } from '@/lib/utils'
 
 export interface ExpandableTableColumn<T> {
@@ -37,6 +38,9 @@ interface ExpandableTableProps<T> {
    * Reports, a job breakdown for Period Summary/Technician/Supplier Report, etc. */
   renderExpanded: (row: T) => React.ReactNode
   isLoading?: boolean
+  /** See `DataTable`'s identical prop — an errored query must never render as an empty one. */
+  error?: unknown
+  onRetry?: () => void
   emptyState?: React.ReactNode
   pageSizeOptions?: number[]
   defaultPageSize?: number
@@ -55,6 +59,8 @@ export function ExpandableTable<T>({
   rowKey,
   renderExpanded,
   isLoading,
+  error,
+  onRetry,
   emptyState,
   pageSizeOptions = [10, 20, 50],
   defaultPageSize = 10,
@@ -84,6 +90,14 @@ export function ExpandableTable<T>({
         {Array.from({ length: 5 }).map((_, i) => (
           <Skeleton key={i} className="h-12 w-full" />
         ))}
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className={className}>
+        <ErrorState error={error} onRetry={onRetry} />
       </div>
     )
   }

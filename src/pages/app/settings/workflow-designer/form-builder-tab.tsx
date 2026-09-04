@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { RouteFallback } from '@/components/shared/route-fallback'
+import { ErrorState } from '@/components/shared/error-state'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import {
   useFormSchema,
@@ -66,7 +67,7 @@ function writeTemplates(formType: FormType, templates: Record<string, SchemaDraf
 }
 
 export function FormBuilderTab({ formType }: { formType: FormType }) {
-  const { data: existingSchema, isLoading } = useFormSchema(formType)
+  const { data: existingSchema, isLoading, error: loadError, refetch } = useFormSchema(formType)
   const saveSchema = useSaveFormSchema(formType)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { fields, sections } = fieldsAndSectionsFor(formType)
@@ -85,6 +86,14 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
   if (!isLoading && seededKey !== seedKey) {
     setSeededKey(seedKey)
     setDraft(draftFromSchema(baseline))
+  }
+
+  // Must come before the draft guard: on a failed read `existingSchema` is undefined, so
+  // `baseline` silently becomes `blankFormSchema()` and the builder would render a pristine
+  // default schema. Saving that would overwrite the company's real stored form with defaults —
+  // so refuse to render an editor at all until we know what we are editing.
+  if (loadError) {
+    return <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this form's saved layout" />
   }
 
   if (isLoading || !draft) return <RouteFallback />

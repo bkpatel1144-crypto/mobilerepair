@@ -27,7 +27,7 @@ import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 
 export function ItemCategoriesPage() {
-  const { data: categories = [], isLoading } = useItemCategories()
+  const { data: categories = [], isLoading, error: loadError, refetch } = useItemCategories()
   const { data: items = [] } = useItems()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'itemCategories', 'update'))
@@ -106,6 +106,8 @@ export function ItemCategoriesPage() {
         data={filtered}
         rowKey={(c) => c.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={FolderTree} title="No item categories yet" description="Add your first category above." />}
       />

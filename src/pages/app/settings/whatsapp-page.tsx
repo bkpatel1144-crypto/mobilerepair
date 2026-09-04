@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ErrorState } from '@/components/shared/error-state'
 import { useWhatsAppConfig, useUpdateWhatsAppConfig } from '@/hooks/use-whatsapp-config'
 import type { WhatsAppTemplateDoc } from '@/types/firestore'
 
@@ -16,7 +17,7 @@ const PLACEHOLDER_HINT = '{{customerName}} {{jobNumber}} {{status}} {{amount}} {
  * (previously a single hardcoded message string) — editing a template here changes what that
  * button, and every other lifecycle-event send, actually sends. */
 export function WhatsAppPage() {
-  const { data: config, isLoading } = useWhatsAppConfig()
+  const { data: config, isLoading, error: loadError, refetch } = useWhatsAppConfig()
   const updateConfig = useUpdateWhatsAppConfig()
   const [countryCode, setCountryCode] = useState<string | null>(null)
   const [templates, setTemplates] = useState<WhatsAppTemplateDoc[] | null>(null)
@@ -56,6 +57,8 @@ export function WhatsAppPage() {
             <Skeleton key={i} className="h-24 w-full rounded-lg" />
           ))}
         </div>
+      ) : loadError ? (
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your WhatsApp templates" />
       ) : (
         <>
           <div className="max-w-xs space-y-1.5">

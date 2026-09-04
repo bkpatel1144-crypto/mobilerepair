@@ -32,7 +32,7 @@ import { crudKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
 
 export function IpWhitelistPage() {
-  const { data: entries = [], isLoading } = useIpWhitelist()
+  const { data: entries = [], isLoading, error: loadError, refetch } = useIpWhitelist()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('administration', 'ipWhitelist', 'update'))
 
@@ -108,6 +108,8 @@ export function IpWhitelistPage() {
         data={filtered}
         rowKey={(e) => e.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={
           <EmptyState
             icon={ShieldCheck}

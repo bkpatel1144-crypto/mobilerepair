@@ -30,8 +30,14 @@ function formatHourRange(hour: number): string {
  * which login outcomes actually get a row here (`'success'`/`'unauthorized'`/`'blocked'`) and
  * which can't be (a genuinely wrong password/no-such-account attempt). */
 export function useLoginReport() {
-  const { data: auditLog = [], isLoading: auditLoading } = useAuditLog()
-  const { data: sessions = [], isLoading: sessionsLoading } = useSessions()
+  const { data: auditLog = [], isLoading: auditLoading, error: auditError, refetch: refetchAudit } =
+    useAuditLog()
+  const {
+    data: sessions = [],
+    isLoading: sessionsLoading,
+    error: sessionsError,
+    refetch: refetchSessions,
+  } = useSessions()
 
   const data = useMemo<LoginReportData>(() => {
     const loginEvents = auditLog.filter((e) => e.entityType === 'Login')
@@ -81,5 +87,10 @@ export function useLoginReport() {
     }
   }, [auditLog, sessions])
 
-  return { data, isLoading: auditLoading || sessionsLoading }
+  return {
+    data,
+    isLoading: auditLoading || sessionsLoading,
+    error: auditError ?? sessionsError,
+    refetch: () => Promise.all([refetchAudit(), refetchSessions()]),
+  }
 }

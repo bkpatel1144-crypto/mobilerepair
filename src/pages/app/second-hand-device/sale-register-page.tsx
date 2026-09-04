@@ -24,7 +24,7 @@ import { PrintButtonGroup } from './device-purchase-page'
 import { purchaseDetailSections, purchaseTimeline } from './purchase-detail-sections'
 
 export function SaleRegisterPage() {
-  const { data: sales = [], isLoading } = useSecondHandSales()
+  const { data: sales = [], isLoading, error: loadError, refetch } = useSecondHandSales()
   const { data: purchases = [] } = useSecondHandPurchases()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -126,6 +126,8 @@ export function SaleRegisterPage() {
         data={filtered}
         rowKey={(s) => s.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Receipt} title="No sales yet" description="Devices sold from Device Sale will appear here." />}
       />

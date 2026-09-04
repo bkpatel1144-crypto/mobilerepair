@@ -27,7 +27,7 @@ function getInitials(name: string) {
 export function UserManagementPage() {
   const navigate = useNavigate()
   const { user: currentUser } = useAuth()
-  const { data: users = [], isLoading } = useUsers()
+  const { data: users = [], isLoading, error: loadError, refetch } = useUsers()
   const setStatus = useSetUserStatus()
 
   const [search, setSearch] = useState('')
@@ -139,6 +139,8 @@ export function UserManagementPage() {
         rowKey={(u) => u.id}
         onRowClick={setSelectedUser}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={
           <EmptyState
             icon={Users}

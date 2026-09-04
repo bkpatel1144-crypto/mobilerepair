@@ -54,7 +54,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 const MODE_ICONS = { cash: Banknote, upi: Smartphone, card: CreditCard } as const
 
 export function ReceiptsPaymentsPage() {
-  const { data: receipts = [], isLoading } = useReceipts()
+  const { data: receipts = [], isLoading, error: loadError, refetch } = useReceipts()
   const { canDo, isOwner } = usePermissions()
   const queryClient = useQueryClient()
   const { profile } = useAuth()
@@ -231,6 +231,8 @@ export function ReceiptsPaymentsPage() {
         data={filtered}
         rowKey={(r) => r.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={
           <EmptyState icon={Search} title="No receipts found" description="Receipts recorded here, and from Job Cards, will appear in this list." />
         }

@@ -25,7 +25,7 @@ import type { ItemType } from '@/types/firestore'
 const TYPE_LABEL: Record<ItemType, string> = { service: 'Service', part: 'Part', product: 'Product' }
 
 export function ItemMasterPage() {
-  const { data: items = [], isLoading } = useItems()
+  const { data: items = [], isLoading, error: loadError, refetch } = useItems()
   const { data: categories = [] } = useItemCategories()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'items', 'update'))
@@ -117,6 +117,8 @@ export function ItemMasterPage() {
         data={filtered}
         rowKey={(i) => i.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Package} title="No items yet" description="Add your first item above." />}
       />

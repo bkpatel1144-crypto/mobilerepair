@@ -32,7 +32,7 @@ function statusLabel(key: string) {
 export function JobCardsPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { data: jobs = [], isLoading } = useJobCards()
+  const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { data: users = [] } = useUsers()
   const { user, profile } = useAuth()
   const { canDo } = usePermissions()
@@ -218,6 +218,8 @@ export function JobCardsPage() {
         rowKey={(j) => j.id}
         onRowClick={setSelectedJob}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={
           <EmptyState
             icon={ClipboardCheck}

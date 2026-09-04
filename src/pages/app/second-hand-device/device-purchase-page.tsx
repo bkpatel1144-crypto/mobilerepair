@@ -45,7 +45,7 @@ import { buildPath } from '@/config/nav'
 import { purchaseDetailSections, purchaseTimeline, PURCHASE_STATUS_LABEL, PURCHASE_STATUS_TONE } from './purchase-detail-sections'
 
 export function DevicePurchasePage() {
-  const { data: purchases = [], isLoading } = useSecondHandPurchases()
+  const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { canDo } = usePermissions()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -132,6 +132,8 @@ export function DevicePurchasePage() {
         data={filtered}
         rowKey={(p) => p.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Smartphone} title="No purchases yet" description="Record your first device purchase above." />}
       />

@@ -25,7 +25,7 @@ const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
 }
 
 export function LoginReportPage() {
-  const { data, isLoading } = useLoginReport()
+  const { data, isLoading, error: loadError, refetch } = useLoginReport()
   const { data: sessions = [] } = useSessions()
   const [cardFilter, setCardFilter] = useState<CardFilter>('all')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -95,6 +95,8 @@ export function LoginReportPage() {
         data={filtered}
         rowKey={(e) => e.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={LogIn} title="No logins found" description="Sign-ins will appear here as your team logs in." />}
       />

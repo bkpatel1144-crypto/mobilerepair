@@ -36,6 +36,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { StatCard } from '@/components/shared/stat-card'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ScanJobCardModal } from '@/components/shared/scan-job-card-modal'
 import { useDashboardStats } from '@/hooks/use-dashboard-stats'
@@ -64,7 +65,7 @@ function greeting() {
 export function DashboardPage() {
   const [range, setRange] = useState<DateRangeKey | 'all'>('all')
   const [scanOpen, setScanOpen] = useState(false)
-  const { data: stats, isLoading } = useDashboardStats(range)
+  const { data: stats, isLoading, error: loadError, refetch } = useDashboardStats(range)
   const { profile } = useAuth()
 
   const quickActions = [
@@ -131,6 +132,14 @@ export function DashboardPage() {
         </Button>
       </FilterBar>
 
+      {/* `stats` is derived in a useMemo, so a failed `jobCards` read still yields a complete
+       * object of zeros — every tile would read "0" and both charts would show their "no data
+       * yet" empty state, i.e. a confident, fabricated "your shop did nothing". BUILD_PLAN's
+       * "no fake numbers" bar means showing the failure instead. */}
+      {loadError ? (
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your dashboard" />
+      ) : (
+        <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <StatCard label="Total Job Cards" value={stats.totalJobCards} icon={FileText} />
         <StatCard
@@ -246,6 +255,8 @@ export function DashboardPage() {
           )}
         </div>
       </div>
+        </>
+      )}
 
       <ScanJobCardModal open={scanOpen} onOpenChange={setScanOpen} />
     </div>

@@ -27,7 +27,7 @@ import { formatTimestamp } from '@/lib/utils'
  * `protected: true`) can never be disabled or deleted through this UI, backed server-side by
  * `firestore.rules`' own `resource.data.protected != true` guard. */
 export function BranchManagementPage() {
-  const { data: branches = [], isLoading } = useBranches()
+  const { data: branches = [], isLoading, error: loadError, refetch } = useBranches()
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'disabled'>('all')
   const [viewing, setViewing] = useState<BranchWithId | null>(null)
@@ -120,6 +120,8 @@ export function BranchManagementPage() {
         data={filtered}
         rowKey={(b) => b.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Building2} title="No branches found" />}
       />

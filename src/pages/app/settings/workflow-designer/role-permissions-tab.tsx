@@ -6,6 +6,7 @@ import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { EmptyState } from '@/components/shared/empty-state'
 import { RouteFallback } from '@/components/shared/route-fallback'
+import { ErrorState } from '@/components/shared/error-state'
 import { useRoles, type RoleWithId } from '@/hooks/use-roles'
 import {
   useWorkflowConfig,
@@ -39,9 +40,13 @@ const HOW_IT_WORKS = [
 ]
 
 export function RolePermissionsTab() {
-  const { data: allRoles = [], isLoading: rolesLoading } = useRoles()
+  const { data: allRoles = [], isLoading: rolesLoading, error: rolesError, refetch: refetchRoles } = useRoles()
   const { data: configuredRoles = [] } = useWorkflowConfigs()
   const [selectedRoleId, setSelectedRoleId] = useState<string | null>(null)
+
+  if (rolesError) {
+    return <ErrorState error={rolesError} onRetry={() => void refetchRoles()} title="Couldn't load your roles" />
+  }
 
   if (rolesLoading) return <RouteFallback />
 
@@ -143,7 +148,7 @@ function SelectedRolePanel({
   onBack: () => void
 }) {
   const role = allRoles.find((r) => r.id === roleId)
-  const { data: existingConfig, isLoading } = useWorkflowConfig(roleId)
+  const { data: existingConfig, isLoading, error: loadError, refetch } = useWorkflowConfig(roleId)
   const saveConfig = useSaveWorkflowConfig()
 
   const [draft, setDraft] = useState<WorkflowConfigDraft | null>(null)
@@ -158,6 +163,13 @@ function SelectedRolePanel({
   if (!isLoading && baseline && seededForRoleId !== roleId) {
     setSeededForRoleId(roleId)
     setDraft(draftFromConfig(baseline))
+  }
+
+  // Before the draft guard, for the same reason as the Form Builder tab: a failed read leaves
+  // `existingConfig` undefined and `baseline` falls back to `blankWorkflowConfig()`, so the
+  // matrix would render as "this role has no permissions" and a Save would make that true.
+  if (loadError) {
+    return <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this role's workflow config" />
   }
 
   if (isLoading || !draft || !baseline || !role) return <RouteFallback />

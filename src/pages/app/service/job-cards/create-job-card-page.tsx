@@ -9,6 +9,7 @@ import { FormError } from '@/components/shared/form-error'
 import { SearchSelect } from '@/components/shared/search-select'
 import { MultiSelectPopover } from '@/components/shared/multi-select-popover'
 import { RouteFallback } from '@/components/shared/route-fallback'
+import { ErrorState } from '@/components/shared/error-state'
 import { PatternLockPicker, PatternLockPreview, PatternReplayPopover } from '@/components/shared/pattern-lock'
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -75,10 +76,16 @@ export function CreateJobCardPage() {
   useBreadcrumbExtra('Create')
   const navigate = useNavigate()
   const { user, profile } = useAuth()
-  const { data: schema, isLoading: schemaLoading } = useFormSchema('jobCard')
+  const { data: schema, isLoading: schemaLoading, error: schemaError, refetch: refetchSchema } =
+    useFormSchema('jobCard')
   const { data: parties = [] } = useParties()
   const { data: items = [] } = useItems()
-  const { data: options, isLoading: optionsLoading } = useAllServiceOptions()
+  const {
+    data: options,
+    isLoading: optionsLoading,
+    error: optionsError,
+    refetch: refetchOptions,
+  } = useAllServiceOptions()
   const { data: users = [] } = useUsers()
   const createParty = useCreateParty()
   const createItem = useCreateItem()
@@ -208,6 +215,23 @@ export function CreateJobCardPage() {
     setItemsReturned([])
     setAssignedToId(null)
     setRemark('')
+  }
+
+  // This form is *generated from* the stored schema, and its every picker is populated from the
+  // service-options catalogue. If either read failed, the form would still render — just with
+  // default fields and empty Brand/Model/Problem dropdowns — and the job card it produced would
+  // be quietly wrong. Refuse rather than take an intake on bad data.
+  const setupError = schemaError ?? optionsError
+  if (setupError) {
+    return (
+      <div className="p-4 sm:p-6">
+        <ErrorState
+          error={setupError}
+          onRetry={() => void (schemaError ? refetchSchema() : refetchOptions())}
+          title="Couldn't load the Create Job Card form"
+        />
+      </div>
+    )
   }
 
   if (schemaLoading || optionsLoading) return <RouteFallback />

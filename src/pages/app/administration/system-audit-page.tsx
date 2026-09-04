@@ -22,7 +22,7 @@ const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
 }
 
 export function SystemAuditPage() {
-  const { data: events = [], isLoading } = useAuditLog()
+  const { data: events = [], isLoading, error: loadError, refetch } = useAuditLog()
   const [search, setSearch] = useState('')
   const [moduleFilter, setModuleFilter] = useState('all')
   const [resultFilter, setResultFilter] = useState<'all' | AuditResult>('all')
@@ -129,6 +129,8 @@ export function SystemAuditPage() {
         data={filtered}
         rowKey={(e) => e.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={ClipboardList} title="No audit events yet" description="Every write your team makes will show up here." />}
       />

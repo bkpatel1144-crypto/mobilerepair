@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { RouteFallback } from '@/components/shared/route-fallback'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
 import { FileQuestion } from 'lucide-react'
 import { useJobCard } from '@/hooks/use-job-cards'
 import { JobCardDetailContent } from './job-card-detail-content'
@@ -13,9 +14,19 @@ import { JobCardDetailContent } from './job-card-detail-content'
 export function JobCardDetailPage() {
   const { jobId } = useParams<{ jobId: string }>()
   const navigate = useNavigate()
-  const { data: job, isLoading } = useJobCard(jobId)
+  const { data: job, isLoading, error: loadError, refetch } = useJobCard(jobId)
 
   if (isLoading) return <RouteFallback />
+  // Before the not-found branch: a failed read also yields no `job`, and telling someone their
+  // job card "may have been removed" when the read merely failed would send them looking for a
+  // deletion that never happened.
+  if (loadError) {
+    return (
+      <div className="p-4 sm:p-6">
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this job card" />
+      </div>
+    )
+  }
   if (!job) {
     return (
       <div className="p-4 sm:p-6">

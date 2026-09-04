@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { RouteFallback } from '@/components/shared/route-fallback'
+import { ErrorState } from '@/components/shared/error-state'
 import { EmptyState } from '@/components/shared/empty-state'
 import { useRole, useRoles, useUpdateRole } from '@/hooks/use-roles'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -45,7 +46,7 @@ function draftsEqual(a: RoleDraft, b: RoleDraft): boolean {
 export function RoleConfigurePage() {
   const { roleId } = useParams<{ roleId: string }>()
   const navigate = useNavigate()
-  const { data: role, isLoading } = useRole(roleId)
+  const { data: role, isLoading, error: loadError, refetch } = useRole(roleId)
   useBreadcrumbExtra(role?.name ?? null)
   const { data: allRoles = [] } = useRoles()
   const { isOwner } = usePermissions()
@@ -62,6 +63,14 @@ export function RoleConfigurePage() {
   if (role && seededForRoleId !== role.id) {
     setSeededForRoleId(role.id)
     setDraft(draftFromRole(role))
+  }
+
+  if (loadError) {
+    return (
+      <div className="p-4 sm:p-6">
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this role" />
+      </div>
+    )
   }
 
   if (isLoading || !draft || !role) return <RouteFallback />

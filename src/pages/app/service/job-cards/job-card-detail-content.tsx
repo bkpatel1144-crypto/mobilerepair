@@ -42,7 +42,7 @@ function Panel({ icon: Icon, title, children }: { icon: React.ComponentType<{ cl
  */
 export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; onExpand?: () => void }) {
   const { profile } = useAuth()
-  const { data: timeline = [] } = useJobTimeline(job.id)
+  const { data: timeline = [], error: timelineError, refetch: refetchTimeline } = useJobTimeline(job.id)
   const { canPerform, canViewMoney } = useJobActionGating(job)
   const applyAction = useApplyJobAction(job)
   const { data: items = [] } = useItems()
@@ -298,7 +298,7 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
         </div>
 
         <div>
-          <TimelinePanel events={timeline} />
+          <TimelinePanel events={timeline} error={timelineError} onRetry={() => void refetchTimeline()} />
         </div>
       </div>
 

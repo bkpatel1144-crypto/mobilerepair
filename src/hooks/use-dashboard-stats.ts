@@ -35,7 +35,7 @@ export function useDashboardStats(
   customFrom?: string,
   customTo?: string
 ) {
-  const { data: allJobs = [], isLoading } = useJobCards()
+  const { data: allJobs = [], isLoading, error, refetch } = useJobCards()
 
   const data = useMemo<DashboardStats>(() => {
     const bounds = dateRangeBounds(range, customFrom, customTo)
@@ -106,5 +106,5 @@ export function useDashboardStats(
     }
   }, [allJobs, range, customFrom, customTo])
 
-  return { data, isLoading }
+  return { data, isLoading, error, refetch }
 }

@@ -5,6 +5,7 @@ import { FilterBar } from '@/components/shared/filter-bar'
 import { FormModal } from '@/components/shared/form-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -19,7 +20,7 @@ import type { PrintDocumentType } from '@/types/firestore'
 /** `preview (1)`/`(2)` — "Bill & Label Designer": the 11 document types grouped, each showing
  * its own format count + default name, expand to a card per template. */
 export function PrintFormatsPage() {
-  const { data: templates = [], isLoading } = usePrintTemplates()
+  const { data: templates = [], isLoading, error: loadError, refetch } = usePrintTemplates()
   const [search, setSearch] = useState('')
   const [expanded, setExpanded] = useState<Set<PrintDocumentType>>(new Set())
   const [creating, setCreating] = useState(false)
@@ -79,6 +80,8 @@ export function PrintFormatsPage() {
             <Skeleton key={i} className="h-14 w-full rounded-lg" />
           ))}
         </div>
+      ) : loadError ? (
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your print templates" />
       ) : (
         <div className="space-y-2">
           {filteredTypes.map((docType) => {

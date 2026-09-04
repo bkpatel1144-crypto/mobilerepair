@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { Button } from '@/components/ui/button'
@@ -28,7 +29,7 @@ function balanceLabel(balance: number) {
 }
 
 export function PartyLedgerPage() {
-  const { data: summaries = [], isLoading } = usePartyLedgerSummaries()
+  const { data: summaries = [], isLoading, error: loadError, refetch } = usePartyLedgerSummaries()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
 
@@ -116,6 +117,8 @@ export function PartyLedgerPage() {
         rowKey={(s) => s.party.id}
         onRowClick={setSelected}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Search} title="No parties yet" description="Parties appear here once a job card is created for them." />}
       />
 
@@ -133,7 +136,7 @@ function PartyLedgerDetailSheet({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  const { data, isLoading } = usePartyLedgerDetail(party?.party.id)
+  const { data, isLoading, error: loadError, refetch } = usePartyLedgerDetail(party?.party.id)
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -167,6 +170,8 @@ function PartyLedgerDetailSheet({
             <div className="overflow-x-auto px-4 pb-4">
               {isLoading ? (
                 <p className="p-4 text-sm text-muted-foreground">Loading…</p>
+              ) : loadError ? (
+                <ErrorState error={loadError} onRetry={() => void refetch()} />
               ) : !data || data.rows.length === 0 ? (
                 <EmptyState icon={BookOpen} title="No activity yet" description="This party's job cards and payments will appear here." />
               ) : (

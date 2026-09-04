@@ -39,9 +39,19 @@ function deviceLabel(job: JobCardWithId) {
  * doesn't record a separate `billGeneratedAt` timestamp, so it's the closest real timestamp
  * available rather than a fabricated one. */
 export function usePartyLedgerDetail(partyId: string | undefined) {
-  const { data: jobs = [], isLoading: jobsLoading } = useJobCards()
-  const { data: receipts = [], isLoading: receiptsLoading } = useReceipts()
-  const { data: parties = [], isLoading: partiesLoading } = useParties()
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError, refetch: refetchJobs } = useJobCards()
+  const {
+    data: receipts = [],
+    isLoading: receiptsLoading,
+    error: receiptsError,
+    refetch: refetchReceipts,
+  } = useReceipts()
+  const {
+    data: parties = [],
+    isLoading: partiesLoading,
+    error: partiesError,
+    refetch: refetchParties,
+  } = useParties()
 
   const data = useMemo(() => {
     if (!partyId) return null
@@ -116,15 +126,30 @@ export function usePartyLedgerDetail(partyId: string | undefined) {
     return { party, rows, totalBilled, totalPaid, closingBalance: running }
   }, [partyId, jobs, receipts, parties])
 
-  return { data, isLoading: jobsLoading || receiptsLoading || partiesLoading }
+  return {
+    data,
+    isLoading: jobsLoading || receiptsLoading || partiesLoading,
+    error: jobsError ?? receiptsError ?? partiesError,
+    refetch: () => Promise.all([refetchJobs(), refetchReceipts(), refetchParties()]),
+  }
 }
 
 /** The Party Ledger *list* page's own summary row per party — same underlying data as the
  * detail view above, just aggregated instead of itemized. */
 export function usePartyLedgerSummaries() {
-  const { data: jobs = [], isLoading: jobsLoading } = useJobCards()
-  const { data: receipts = [], isLoading: receiptsLoading } = useReceipts()
-  const { data: parties = [], isLoading: partiesLoading } = useParties()
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError, refetch: refetchJobs } = useJobCards()
+  const {
+    data: receipts = [],
+    isLoading: receiptsLoading,
+    error: receiptsError,
+    refetch: refetchReceipts,
+  } = useReceipts()
+  const {
+    data: parties = [],
+    isLoading: partiesLoading,
+    error: partiesError,
+    refetch: refetchParties,
+  } = useParties()
 
   const data = useMemo<PartyLedgerSummary[]>(() => {
     return parties
@@ -147,5 +172,10 @@ export function usePartyLedgerSummaries() {
       .filter((s) => s.jobsCount > 0 || s.paid !== 0)
   }, [parties, jobs, receipts])
 
-  return { data, isLoading: jobsLoading || receiptsLoading || partiesLoading }
+  return {
+    data,
+    isLoading: jobsLoading || receiptsLoading || partiesLoading,
+    error: jobsError ?? receiptsError ?? partiesError,
+    refetch: () => Promise.all([refetchJobs(), refetchReceipts(), refetchParties()]),
+  }
 }

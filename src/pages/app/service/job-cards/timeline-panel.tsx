@@ -4,6 +4,7 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { StatusBadge } from '@/components/shared/status-badge'
+import { ErrorState } from '@/components/shared/error-state'
 import { formatTimestamp } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import type { TimelineEventWithId } from '@/hooks/use-job-cards'
@@ -31,14 +32,27 @@ function statusLabel(key?: string) {
 
 /** The right-hand vertical Timeline in `preview (72)` — every entry here was written by a real
  * action at the moment it happened (`use-job-actions.ts`), never synthesized after the fact. */
-export function TimelinePanel({ events }: { events: TimelineEventWithId[] }) {
+export function TimelinePanel({
+  events,
+  error,
+  onRetry,
+}: {
+  events: TimelineEventWithId[]
+  error?: unknown
+  onRetry?: () => void
+}) {
   return (
     <div className="space-y-1">
       <div className="flex items-center gap-1.5 text-sm font-semibold">
         <Clock className="size-4 text-muted-foreground" />
         Timeline
       </div>
-      {events.length === 0 ? (
+      {error ? (
+        // Every job card has at least a "Created" event written at intake, so an empty timeline
+        // is only ever truthful when the read succeeded — "No activity yet" on a failed read
+        // would claim a history that demonstrably exists never happened.
+        <ErrorState error={error} onRetry={onRetry} title="Couldn't load the timeline" className="py-6" />
+      ) : events.length === 0 ? (
         <p className="text-sm text-muted-foreground">No activity yet.</p>
       ) : (
         <ol className="space-y-4 border-l pl-4">

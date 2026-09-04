@@ -40,7 +40,7 @@ const SHOP_EXPENSES = 0
  * calendar month (`monthKey`) — both off `CostedJobRow.date` (a job's `closedAt`), same as every
  * other profit report. */
 export function PeriodSummaryPage() {
-  const { data: rows, isLoading } = useCostedJobs()
+  const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [granularity, setGranularity] = useState<'daily' | 'monthly'>('daily')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -163,6 +163,8 @@ export function PeriodSummaryPage() {
         data={filtered}
         rowKey={(g) => g.key}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Calendar} title="No costed jobs yet" description="Period totals appear once jobs have recorded costing." />}
         renderExpanded={(g) => {
           const netAfterExpenses = g.grossProfit - SHOP_EXPENSES

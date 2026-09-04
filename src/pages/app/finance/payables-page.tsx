@@ -4,6 +4,7 @@ import { HandCoins, RefreshCw, Search, ChevronDown, ChevronUp } from 'lucide-rea
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { Button } from '@/components/ui/button'
@@ -17,7 +18,7 @@ type Tab = 'all' | 'refundDue' | 'unusedAdvance'
 export function PayablesPage() {
   const { profile } = useAuth()
   const queryClient = useQueryClient()
-  const { data, isLoading } = usePayables()
+  const { data, isLoading, error: loadError, refetch } = usePayables()
   const [search, setSearch] = useState('')
   const [tab, setTab] = useState<Tab>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
@@ -44,6 +45,13 @@ export function PayablesPage() {
         }
       />
 
+      {/* On a failed load `data` is still a well-formed object of zeros, so the stat cards would
+       * happily report "₹0 Total Payable" — a real number, confidently wrong. Suppress the whole
+       * body rather than pair fabricated totals with an error message. */}
+      {loadError ? (
+        <ErrorState error={loadError} onRetry={() => void refetch()} />
+      ) : (
+        <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatCard label="Total Payable" value={`₹${data.totalPayable}`} tone="danger" />
         <StatCard label="Refund Due" value={`₹${data.refundDueTotal}`} tone="warning" />
@@ -108,6 +116,8 @@ export function PayablesPage() {
             )
           })}
         </div>
+      )}
+        </>
       )}
     </div>
   )

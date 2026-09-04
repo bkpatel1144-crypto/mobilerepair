@@ -28,7 +28,7 @@ function statusFor(session: SessionWithId): { label: string; tone: 'success' | '
 }
 
 export function ActiveSessionsPage() {
-  const { data: sessions = [], isLoading } = useSessions()
+  const { data: sessions = [], isLoading, error: loadError, refetch } = useSessions()
   const [search, setSearch] = useState('')
   const [viewing, setViewing] = useState<SessionWithId | null>(null)
   const [techDetailsOpen, setTechDetailsOpen] = useState(false)
@@ -90,6 +90,8 @@ export function ActiveSessionsPage() {
         data={filtered}
         rowKey={(s) => s.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={(s) => { setViewing(s); setTechDetailsOpen(false) }}
         emptyState={<EmptyState icon={Monitor} title="No sessions yet" description="Sessions appear here as your team signs in." />}
       />

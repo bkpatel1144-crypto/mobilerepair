@@ -20,6 +20,7 @@ import { useAuth } from '@/hooks/use-auth'
 import { useRoles } from '@/hooks/use-roles'
 import { useCreateTeammate } from '@/hooks/use-users'
 import { getAuthErrorMessage } from '@/lib/auth'
+import { errorMessage } from '@/lib/error-message'
 import { buildPath } from '@/config/nav'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 
@@ -41,7 +42,7 @@ export function CreateUserPage() {
   useBreadcrumbExtra('Create')
   const navigate = useNavigate()
   const { profile } = useAuth()
-  const { data: roles = [] } = useRoles()
+  const { data: roles = [], error: rolesError, refetch: refetchRoles } = useRoles()
   const createTeammate = useCreateTeammate()
 
   const [showPassword, setShowPassword] = useState(false)
@@ -234,6 +235,17 @@ export function CreateUserPage() {
               </Select>
             )}
           />
+          {rolesError && (
+            // An empty Role dropdown reads as "this company has no roles", which is impossible —
+            // signup seeds five. Say the list failed to load instead of letting the Owner hunt
+            // for a role that is actually still there.
+            <p className="flex flex-wrap items-center gap-1.5 text-xs text-red-600">
+              {errorMessage(rolesError)}
+              <button type="button" onClick={() => void refetchRoles()} className="underline underline-offset-2">
+                Retry
+              </button>
+            </p>
+          )}
           {errors.roleId ? (
             <p className="text-xs text-red-600">{errors.roleId.message}</p>
           ) : (

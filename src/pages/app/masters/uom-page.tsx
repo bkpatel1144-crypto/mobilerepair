@@ -33,7 +33,7 @@ import { crudKey } from '@/config/permission-schema'
 const TYPE_OPTIONS = ['Quantity', 'Length', 'Weight', 'Volume', 'Time', 'Other']
 
 export function UomPage() {
-  const { data: uoms = [], isLoading } = useUoms()
+  const { data: uoms = [], isLoading, error: loadError, refetch } = useUoms()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'uom', 'update'))
   const setStatus = useSetUomStatus()
@@ -152,6 +152,8 @@ export function UomPage() {
         data={filtered}
         rowKey={(u) => u.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Ruler} title="No units of measure yet" description="Add your first UOM above." />}
       />
 

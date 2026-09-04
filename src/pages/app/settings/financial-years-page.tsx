@@ -23,7 +23,7 @@ import { getNextFinancialYear, formatFinancialYearDuration } from '@/lib/financi
 import { formatTimestamp } from '@/lib/utils'
 
 export function FinancialYearsPage() {
-  const { data: fys = [], isLoading } = useFinancialYears()
+  const { data: fys = [], isLoading, error: loadError, refetch } = useFinancialYears()
   const [search, setSearch] = useState('')
   const [viewing, setViewing] = useState<FinancialYearWithId | null>(null)
   const [confirming, setConfirming] = useState<'activate' | 'lock' | null>(null)
@@ -115,6 +115,8 @@ export function FinancialYearsPage() {
         data={filtered}
         rowKey={(f) => f.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Calendar} title="No financial years found" />}
       />

@@ -28,7 +28,7 @@ type StatusFilter = 'active' | 'disabled' | 'deleted' | null
 
 export function RoleManagementPage() {
   const navigate = useNavigate()
-  const { data: roles = [], isLoading } = useRoles()
+  const { data: roles = [], isLoading, error: loadError, refetch } = useRoles()
   const createRole = useCreateRole()
 
   const [search, setSearch] = useState('')
@@ -157,6 +157,8 @@ export function RoleManagementPage() {
         rowKey={(r) => r.id}
         onRowClick={setSelectedRole}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={
           <EmptyState
             icon={ShieldCheck}

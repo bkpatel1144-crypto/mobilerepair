@@ -76,7 +76,17 @@ export function useAllServiceOptions() {
     Object.entries(all).map(([type, q]) => [type, q.data ?? []])
   ) as Record<ServiceOptionType, ServiceOptionWithId[]>
 
-  return { data, isLoading }
+  // Each of the 8 catalogues is its own query, and any one of them failing leaves that key as
+  // `[]` — indistinguishable from "this shop has no brands yet" downstream. Surface the first
+  // real failure so callers can say so instead.
+  const error = Object.values(all).find((q) => q.error)?.error ?? null
+
+  return {
+    data,
+    isLoading,
+    error,
+    refetch: () => Promise.all(Object.values(all).map((q) => q.refetch())),
+  }
 }
 
 export function useCreateServiceOption(type: ServiceOptionType) {

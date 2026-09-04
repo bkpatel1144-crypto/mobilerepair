@@ -33,9 +33,19 @@ export interface PayablesData {
  *    its own total rather than recomputed a second way.
  */
 export function usePayables() {
-  const { data: jobs = [], isLoading: jobsLoading } = useJobCards()
-  const { data: receipts = [], isLoading: receiptsLoading } = useReceipts()
-  const { data: partySummaries, isLoading: summariesLoading } = usePartyLedgerSummaries()
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError, refetch: refetchJobs } = useJobCards()
+  const {
+    data: receipts = [],
+    isLoading: receiptsLoading,
+    error: receiptsError,
+    refetch: refetchReceipts,
+  } = useReceipts()
+  const {
+    data: partySummaries,
+    isLoading: summariesLoading,
+    error: summariesError,
+    refetch: refetchSummaries,
+  } = usePartyLedgerSummaries()
 
   const data = useMemo<PayablesData>(() => {
     const rows: PayableRow[] = []
@@ -76,5 +86,10 @@ export function usePayables() {
     }
   }, [jobs, receipts, partySummaries])
 
-  return { data, isLoading: jobsLoading || receiptsLoading || summariesLoading }
+  return {
+    data,
+    isLoading: jobsLoading || receiptsLoading || summariesLoading,
+    error: jobsError ?? receiptsError ?? summariesError,
+    refetch: () => Promise.all([refetchJobs(), refetchReceipts(), refetchSummaries()]),
+  }
 }

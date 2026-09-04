@@ -16,7 +16,7 @@ import { RecordCostingModal } from './job-costing/record-costing-modal'
 type Tab = 'all' | 'pending' | 'done'
 
 export function JobCostingPage() {
-  const { data: jobs = [], isLoading } = useJobCards()
+  const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { data: costings = [] } = useJobCostingList()
 
   const [tab, setTab] = useState<Tab>('all')
@@ -99,6 +99,8 @@ export function JobCostingPage() {
         rowKey={(j) => j.id}
         onRowClick={setSelectedJob}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Calculator} title="No closed jobs yet" description="Closed job cards ready for costing will show up here." />}
       />
 

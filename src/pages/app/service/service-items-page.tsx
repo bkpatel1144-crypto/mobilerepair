@@ -24,7 +24,7 @@ import { useItems, itemsQueryKey, useCreateItem, useUpdateItem, nextItemCode, ty
 export function ServiceItemsPage() {
   const { profile } = useAuth()
   const queryClient = useQueryClient()
-  const { data: items = [], isLoading } = useItems()
+  const { data: items = [], isLoading, error: loadError, refetch } = useItems()
   const createItem = useCreateItem()
   const updateItem = useUpdateItem()
 
@@ -158,6 +158,8 @@ export function ServiceItemsPage() {
         data={filtered}
         rowKey={(i) => i.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         emptyState={<EmptyState icon={Wrench} title="No service items yet" description="Add one to get started." />}
       />
 

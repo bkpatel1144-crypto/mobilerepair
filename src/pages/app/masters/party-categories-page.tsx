@@ -24,7 +24,7 @@ import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 
 export function PartyCategoriesPage() {
-  const { data: categories = [], isLoading } = usePartyCategories()
+  const { data: categories = [], isLoading, error: loadError, refetch } = usePartyCategories()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'partyCategories', 'update'))
 
@@ -91,6 +91,8 @@ export function PartyCategoriesPage() {
         data={categories}
         rowKey={(c) => c.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={Users} title="No party categories yet" description="Add your first category above." />}
       />

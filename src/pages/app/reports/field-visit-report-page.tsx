@@ -40,7 +40,7 @@ interface JobVisitGroup {
  * doc comment). Genuinely, honestly empty for a company that's never logged one — there's no
  * fabricated data behind the zero-state, same as the reference's own screenshot. */
 export function FieldVisitReportPage() {
-  const { data: visits = [], isLoading } = useFieldVisits()
+  const { data: visits = [], isLoading, error: loadError, refetch } = useFieldVisits()
   const [view, setView] = useState<'technician' | 'jobCard'>('technician')
   const [search, setSearch] = useState('')
   const [technicianFilter, setTechnicianFilter] = useState('all')
@@ -239,6 +239,8 @@ export function FieldVisitReportPage() {
           data={technicianGroups}
           rowKey={(g) => g.technicianId}
           isLoading={isLoading}
+          error={loadError}
+          onRetry={() => void refetch()}
           emptyState={<EmptyState icon={MapPin} title="No field visits logged in this period" description="Log a Field Visit from a job card to see it here." />}
         />
       ) : (
@@ -247,6 +249,8 @@ export function FieldVisitReportPage() {
           data={jobGroups}
           rowKey={(g) => g.jobCardId}
           isLoading={isLoading}
+          error={loadError}
+          onRetry={() => void refetch()}
           emptyState={<EmptyState icon={MapPin} title="No field visits logged in this period" description="Log a Field Visit from a job card to see it here." />}
         />
       )}

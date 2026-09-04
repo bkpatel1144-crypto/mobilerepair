@@ -20,7 +20,7 @@ export interface CashBookData {
  * "Today" doesn't reset the running total to zero, matching how a real cash book works), not
  * just a fixed 0. */
 export function useCashBook(range: DateRangeKey | 'all' = 'all', customFrom?: string, customTo?: string) {
-  const { data: allReceipts = [], isLoading } = useReceipts()
+  const { data: allReceipts = [], isLoading, error, refetch } = useReceipts()
 
   const data = useMemo<CashBookData>(() => {
     const active = [...allReceipts].filter((r) => !r.voided).sort((a, b) => {
@@ -57,5 +57,5 @@ export function useCashBook(range: DateRangeKey | 'all' = 'all', customFrom?: st
     return { opening, totalCredit, totalDebit, closing: running, rows }
   }, [allReceipts, range, customFrom, customTo])
 
-  return { data, isLoading }
+  return { data, isLoading, error, refetch }
 }

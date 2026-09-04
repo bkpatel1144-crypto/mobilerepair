@@ -28,7 +28,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { purchaseDetailSections, purchaseTimeline } from './purchase-detail-sections'
 
 export function DeviceSalePage() {
-  const { data: purchases = [], isLoading } = useSecondHandPurchases()
+  const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { data: sales = [] } = useSecondHandSales()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -97,6 +97,8 @@ export function DeviceSalePage() {
         data={filtered}
         rowKey={(p) => p.id}
         isLoading={isLoading}
+        error={loadError}
+        onRetry={() => void refetch()}
         onRowClick={setViewing}
         emptyState={<EmptyState icon={ShoppingBag} title="Nothing available to sell" description="Devices you purchase show up here once in stock." />}
       />
