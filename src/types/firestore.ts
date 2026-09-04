@@ -704,12 +704,14 @@ export type PrintDocumentType =
   | 'barcodeLabel'
   | 'customerLabel'
 
-/** One positioned line in a template — "positioned" here means *ordered top-to-bottom*, not
- * pixel-coordinates; see `record-costing-modal` precedent (Phase 5's reorder-by-arrows, not
- * drag-and-drop) for the same "functional, not pixel-perfect" call applied to this builder.
- * `fieldKey` looks up `src/config/print-fields.ts`'s per-document-type field list; `label` is
- * denormalized so an existing template still renders sanely even if that config later renames
- * or removes the field it once pointed at. */
+/** One positioned line in a *v1* template — kept only so `migratePrintTemplate()` can read
+ * documents written before the canvas designer existed. Nothing writes this shape any more.
+ *
+ * The original doc comment said "positioned here means *ordered top-to-bottom*, not
+ * pixel-coordinates … the same functional, not pixel-perfect call". v2 reverses that call: the
+ * designer places elements at real mm coordinates inside a band. See `PrintElement`.
+ * @deprecated read-only; migrated to `PrintElement[]` on load.
+ */
 export interface PrintTemplateBlock {
   id: string
   kind: 'field' | 'text' | 'divider'
@@ -721,19 +723,154 @@ export interface PrintTemplateBlock {
   fontSize: 'sm' | 'md' | 'lg'
 }
 
-/** `companies/{companyId}/printTemplates/{id}` (`preview (1)`/`(2)`) — one company can have
- * several templates per `documentType` (e.g. an 80mm and a 58mm Job Card Bill), exactly one of
- * which is `isDefault` at a time. Seeded with one `protected` default per document type at
- * signup (`addDefaultPrintTemplatesToBatch`) so no company ever hits a real print action with
- * nothing to render — matches every other "seed real usable defaults, not an empty shelf"
- * decision already made for Service Options/Masters. */
+/** Bill-like documents flow Header → Detail → Footer down a roll; labels are a single fixed
+ * area. `category` drives which chrome the designer shows (a label has no bands to switch). */
+export type PrintTemplateCategory = 'bill' | 'label'
+
+/** The three stacked areas of a bill template. A label template uses `detail` only. */
+export type PrintBand = 'header' | 'detail' | 'footer'
+
+export const PRINT_BANDS: PrintBand[] = ['header', 'detail', 'footer']
+
+/** Element palette, matching the designer's own "Add Element" buttons. `field` is the one type
+ * bound to live record data — everything else is static chrome the user draws. */
+export type PrintElementType =
+  | 'field'
+  | 'text'
+  | 'image'
+  | 'logo'
+  | 'barcode'
+  | 'qrcode'
+  | 'line'
+  | 'shape'
+
+export interface PrintElementStyle {
+  /** Points, like every other print tool — converted to mm only at render time. */
+  fontSize: number
+  bold: boolean
+  italic: boolean
+  align: 'left' | 'center' | 'right'
+  /** Hex. Thermal printers are monochrome, so anything non-black renders as a grey on paper. */
+  color: string
+  /** `line`/`shape` only. */
+  strokeWidth: number
+  fill: string | null
+  borderStyle: 'solid' | 'dashed' | 'none'
+}
+
+/**
+ * One element on the canvas, positioned in **millimetres relative to its band's content box**
+ * (paper width minus left/right margins) — not pixels, and not relative to the page. Storing mm
+ * is what lets one template render identically at 100% zoom on screen and at real size on a
+ * 58mm roll; a pixel coordinate would silently depend on whatever zoom it was drawn at.
+ */
+export interface PrintElement {
+  id: string
+  band: PrintBand
+  type: PrintElementType
+  x: number
+  y: number
+  w: number
+  h: number
+  /** Stacking order within the band. The Layers panel reorders by rewriting this. */
+  z: number
+  /** `field` only — a key from `src/config/print-fields.ts`. */
+  fieldKey: string | null
+  /** Literal content for `text`; the caption for a `field` when `showLabel` is on. Also holds
+   * the source url for `image`. */
+  text: string | null
+  /** `field` only. The reference prints rows as "Name        Rahul Sharma" — one element with a
+   * muted caption pinned left and the live value right — rather than two elements the user has
+   * to keep aligned by hand. */
+  showLabel: boolean
+  /** `barcode`/`qrcode` only. */
+  symbology: string | null
+  style: PrintElementStyle
+  locked: boolean
+  hidden: boolean
+}
+
+export interface PrintPaper {
+  width: number
+  height: number
+  unit: 'mm'
+  orientation: 'portrait' | 'landscape'
+}
+
+export interface PrintMargins {
+  top: number
+  right: number
+  bottom: number
+  left: number
+}
+
+/**
+ * Output settings.
+ *
+ * `copies`, `duplicateCopy` and `duplicateCopyDirection` are honoured by the renderer — they
+ * only affect what HTML gets produced. `ups`, `gapMm`, `printSpeed` and `printDensity` are
+ * **stored but not applied**: they are ESC-POS/ZPL commands sent to a thermal printer over a
+ * local connection, and this app prints through `window.open()` + `window.print()`, i.e. the
+ * browser's own dialog, which has no channel to a printer's firmware. They are kept so a
+ * template carries the same configuration the shop's printer is set to, and so a future local
+ * print bridge could consume them without a migration. The designer labels them as such rather
+ * than implying they take effect — same treatment as the advisory-only IP whitelist and the
+ * self-triggering-backup limits already documented in PROGRESS.md.
+ */
+export interface PrintSettings {
+  copies: number
+  duplicateCopy: boolean
+  duplicateCopyDirection: 'stacked' | 'side-by-side'
+  ups: number
+  gapMm: number
+  printSpeed: number
+  printDensity: number
+}
+
+/** `companies/{companyId}/printTemplates/{id}` — one company can have several templates per
+ * `documentType` (a 58mm, an 80mm and an A4 Job Card Bill), exactly one of which is `isDefault`
+ * at a time. Seeded at signup so no company ever hits a real print action with nothing to
+ * render, matching the "seed real usable defaults, not an empty shelf" call already made for
+ * Service Options and Masters.
+ *
+ * `schemaVersion` is read by `migratePrintTemplate()`: v1 documents (a flat `blocks` array, no
+ * `elements`) are converted on read rather than in a migration script, because this app has no
+ * server to run one — see that function's doc comment. */
 export interface PrintTemplateDoc {
+  schemaVersion: 2
+  name: string
+  documentType: PrintDocumentType
+  category: PrintTemplateCategory
+  /** Which stock this template was created for — `'58mm'`, `'80mm'`, `'a4'`, `'a4-duplicate'`,
+   * or null for label stock, which has no preset family. Purely informational: `paper` is the
+   * authority on actual dimensions. */
+  presetKey: string | null
+  paper: PrintPaper
+  margins: PrintMargins
+  settings: PrintSettings
+  /** Band heights in mm. A label template still carries all three; only `detail` is used. */
+  bandHeights: Record<PrintBand, number>
+  elements: PrintElement[]
+  isDefault: boolean
+  isActive: boolean
+  /** Bumped on every save, so a print run can record which revision produced it. */
+  version: number
+  protected: boolean // a seeded default — cannot be deleted
+  createdById: string
+  createdByName: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+/** What a v1 document looks like on disk, for the migration path only. */
+export interface PrintTemplateDocV1 {
+  schemaVersion?: undefined
   name: string
   documentType: PrintDocumentType
   paperWidth: '58mm' | '80mm' | 'a4'
   blocks: PrintTemplateBlock[]
   isDefault: boolean
-  protected: boolean // the seeded default for this documentType — cannot be deleted
+  protected: boolean
   createdById: string
   createdByName: string
   createdAt: Timestamp

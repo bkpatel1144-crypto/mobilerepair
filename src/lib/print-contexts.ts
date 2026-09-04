@@ -5,7 +5,7 @@ import type { ReceiptWithId } from '@/hooks/use-receipts'
 import type { CompanyWithId } from '@/hooks/use-company'
 import { formatCurrency, formatTimestamp } from '@/lib/utils'
 
-type PrintContext = Record<string, string | number | null | undefined>
+export type PrintContext = Record<string, string | number | null | undefined>
 
 function shopFields(company: CompanyWithId | null | undefined): PrintContext {
   return {
