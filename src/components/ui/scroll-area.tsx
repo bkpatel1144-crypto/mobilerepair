@@ -34,17 +34,16 @@ function ScrollBar({
       data-orientation={orientation}
       orientation={orientation}
       className={cn(
-        // 8px rail to match the native scrollbars styled in index.css — the visible 2px comes
-        // from the thumb's own inset below, so the grabbable area stays a full 8px here too.
-        'flex touch-none select-none transition-colors data-horizontal:h-2 data-horizontal:flex-col data-vertical:h-full data-vertical:w-2',
+        // 3px rail, matching the native scrollbars styled in index.css.
+        'flex touch-none select-none transition-colors data-horizontal:h-[3px] data-horizontal:flex-col data-vertical:h-full data-vertical:w-[3px]',
         className
       )}
       {...props}
     >
       <ScrollAreaPrimitive.Thumb
         data-slot="scroll-area-thumb"
-        // Inset to a 2px painted thumb, thickening on hover exactly like the native ones.
-        className="relative flex-1 rounded-full bg-border transition-colors group-hover:bg-border data-horizontal:my-[3px] data-vertical:mx-[3px] hover:bg-muted-foreground"
+        // Fills the 3px rail solid, darkening on hover exactly like the native ones.
+        className="relative flex-1 rounded-full bg-border transition-colors hover:bg-muted-foreground"
       />
     </ScrollAreaPrimitive.Scrollbar>
   )

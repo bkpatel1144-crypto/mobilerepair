@@ -185,12 +185,15 @@
  * and read as a seam down the side of the app) with a 2px thumb in the theme's own `--border`
  * colour, so it flips with light/dark like everything else.
  *
- * The 2px is the *visible* width, not the hit area. The thumb sits in an 8px-wide track with a
- * 3px transparent border and `background-clip: content-box`, which paints only the middle 2px
- * while leaving a full 8px of grabbable surface — a literal `width: 2px` scrollbar renders at
- * the requested size but is close to impossible to drag with a mouse. Hovering thickens the
- * thumb to 4px (by shrinking the border, so nothing reflows) and darkens it, so it's findable
- * when you go looking for it and near-invisible when you're not.
+ * The rail is 3px and the thumb fills it solid. At this size the usual trick — a wider track
+ * with a transparent border insetting a thinner painted thumb — is dropped deliberately: it
+ * would need a 0.5px border, which browsers round inconsistently, so it buys fragility rather
+ * than precision. A solid 3px thumb renders crisply and predictably instead.
+ *
+ * Hover only darkens (`--border` to `--muted-foreground`) rather than thickening, so nothing
+ * reflows and the rail stays exactly 3px in every state. Note this is narrow enough that
+ * dragging it is fiddly — it is meant to be read as a position indicator, with the wheel and
+ * trackpad doing the actual scrolling.
  *
  * Applies to every scroll container in the app, not just the page: `overflow-x-auto` tables,
  * sheets, drawers, dropdown menus and command palettes all inherit it.
@@ -203,8 +206,8 @@
   }
 
   *::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 3px;
+    height: 3px;
   }
 
   *::-webkit-scrollbar-track,
@@ -214,15 +217,11 @@
 
   *::-webkit-scrollbar-thumb {
     background-color: var(--border);
-    /* 8px track − 3px border each side = a 2px painted thumb. */
-    border: 3px solid transparent;
-    background-clip: content-box;
     border-radius: 9999px;
   }
 
   *::-webkit-scrollbar-thumb:hover {
     background-color: var(--muted-foreground);
-    border-width: 2px;
   }
 
   /* Never paint a scrollbar over the page's own chrome. */
