@@ -121,20 +121,32 @@ export function DataTable<T>({
     return String((row as Record<string, unknown>)[col.key] ?? '')
   }
 
-  const caption = title ? (
-    <div className="flex items-center gap-2 text-sm font-semibold">
-      {TitleIcon && <TitleIcon className="size-4 text-muted-foreground" />}
-      {title}
-    </div>
-  ) : null
+  // `bordered` is false for the standalone mobile strip, where the wrapper already draws the
+  // bottom edge and a second border would read as a double line.
+  const renderCaption = (bordered: boolean) =>
+    title ? (
+      <div
+        className={cn(
+          'flex items-center gap-2 bg-muted/30 px-4 py-3 text-sm font-semibold',
+          bordered && 'border-b'
+        )}
+      >
+        {TitleIcon && <TitleIcon className="size-4 text-muted-foreground" />}
+        {title}
+      </div>
+    ) : null
+
+  const caption = renderCaption(true)
 
   if (isLoading) {
     return (
-      <div className={cn('space-y-2', className)}>
+      <div className={cn('overflow-hidden rounded-lg border', className)}>
         {caption}
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-12 w-full" />
-        ))}
+        <div className="space-y-2 p-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Skeleton key={i} className="h-12 w-full" />
+          ))}
+        </div>
       </div>
     )
   }
@@ -143,7 +155,7 @@ export function DataTable<T>({
   // empty branch or the failure is silently reported as "nothing here yet".
   if (error) {
     return (
-      <div className={cn('space-y-3', className)}>
+      <div className={cn('overflow-hidden rounded-lg border', className)}>
         {caption}
         <ErrorState error={error} onRetry={onRetry} />
       </div>
@@ -152,7 +164,7 @@ export function DataTable<T>({
 
   if (data.length === 0) {
     return (
-      <div className={cn('space-y-3', className)}>
+      <div className={cn('overflow-hidden rounded-lg border', className)}>
         {caption}
         {emptyState}
       </div>
@@ -161,57 +173,62 @@ export function DataTable<T>({
 
   return (
     <div className={cn('space-y-3', className)}>
-      {caption}
       {/* Desktop / tablet: real table */}
-      <div className="hidden overflow-x-auto rounded-lg border md:block">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {columns.map((col) => (
-                <TableHead key={col.key} className={col.className}>
-                  {col.sortValue ? (
-                    <button
-                      type="button"
-                      onClick={() => toggleSort(col)}
-                      className="inline-flex items-center gap-1 hover:text-foreground"
-                    >
-                      {col.header}
-                      {sort?.key === col.key ? (
-                        sort.direction === 'asc' ? (
-                          <ArrowUp className="size-3.5" />
-                        ) : (
-                          <ArrowDown className="size-3.5" />
-                        )
-                      ) : (
-                        <ArrowUpDown className="size-3.5 text-muted-foreground/50" />
-                      )}
-                    </button>
-                  ) : (
-                    col.header
-                  )}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {pageRows.map((row) => (
-              <TableRow
-                key={rowKey(row)}
-                onClick={() => onRowClick?.(row)}
-                className={cn(onRowClick && 'cursor-pointer', rowClassName?.(row))}
-              >
+      <div className="hidden overflow-hidden rounded-lg border md:block">
+        {caption}
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
                 {columns.map((col) => (
-                  <TableCell key={col.key} className={col.className}>
-                    {cellValue(col, row)}
-                  </TableCell>
+                  <TableHead key={col.key} className={col.className}>
+                    {col.sortValue ? (
+                      <button
+                        type="button"
+                        onClick={() => toggleSort(col)}
+                        className="inline-flex items-center gap-1 hover:text-foreground"
+                      >
+                        {col.header}
+                        {sort?.key === col.key ? (
+                          sort.direction === 'asc' ? (
+                            <ArrowUp className="size-3.5" />
+                          ) : (
+                            <ArrowDown className="size-3.5" />
+                          )
+                        ) : (
+                          <ArrowUpDown className="size-3.5 text-muted-foreground/50" />
+                        )}
+                      </button>
+                    ) : (
+                      col.header
+                    )}
+                  </TableHead>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {pageRows.map((row) => (
+                <TableRow
+                  key={rowKey(row)}
+                  onClick={() => onRowClick?.(row)}
+                  className={cn(onRowClick && 'cursor-pointer', rowClassName?.(row))}
+                >
+                  {columns.map((col) => (
+                    <TableCell key={col.key} className={col.className}>
+                      {cellValue(col, row)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       {/* Mobile: stacked cards — first column is the card title, the rest are label/value rows. */}
+      {title && (
+        <div className="overflow-hidden rounded-lg border md:hidden">{renderCaption(false)}</div>
+      )}
       <div className="space-y-2 md:hidden">
         {pageRows.map((row) => {
           const [titleCol, ...restCols] = columns
