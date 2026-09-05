@@ -25,6 +25,14 @@ export interface CompanyDoc {
   timezone: string // e.g. "Asia/Kolkata"
   protected: boolean // the default company created at signup — cannot be disabled/deleted
   status: EntityStatus
+  /**
+   * Who created it. Absent on companies made before multi-company existed.
+   *
+   * Load-bearing, not informational: `firestore.rules` uses it to decide whether a user may add
+   * this company's id to their own `companyIds`. Without it a user could write any company id
+   * into their profile and `belongsToCompany()` would then wave them into another shop's data.
+   */
+  createdById?: string
   createdAt: Timestamp
   updatedAt: Timestamp
 }
@@ -85,7 +93,41 @@ export interface RoleDoc {
 }
 
 export interface UserDoc {
+  /**
+   * The company this account was created under, and the fallback for everything below. Never
+   * changes; it is what `firestore.rules` can always fall back to when `companyIds` is absent.
+   */
   companyId: string
+  /**
+   * Every company this user can open. Optional and absent on accounts created before
+   * multi-company existed, where it reads as `[companyId]` — the same set, written differently.
+   * Adding a company appends here; there is no removal path yet, deliberately, because a user
+   * dropped from a company mid-session would keep a stale `activeCompanyId`.
+   */
+  companyIds?: string[]
+  /**
+   * Per-company role and branch, keyed by company id.
+   *
+   * Necessary because `roleId`/`branchId` below are single values that belong to exactly one
+   * company: a role document lives at `companies/{id}/roles/{roleId}`, so carrying one across a
+   * switch would resolve against a company that has no such role and leave the user with no
+   * permissions at all. `auth-provider.tsx` swaps these in when it resolves the active company.
+   *
+   * Absent on single-company accounts, where the top-level `roleId`/`branchId` are already
+   * correct for the only company there is.
+   */
+  memberships?: Record<string, { roleId: string; roleName: string; roleCode: RoleCode; branchId: string }>
+  /**
+   * Which of `companyIds` the app is currently showing. Absent means `companyId`.
+   *
+   * Resolved once in `auth-provider.tsx`, which overwrites the `companyId` it hands to the rest
+   * of the app with this value. That is the whole switcher: every hook, path helper and audit
+   * entry already reads `profile.companyId`, so none of them needed to learn about switching.
+   */
+  activeCompanyId?: string
+  /** Set by `auth-provider.tsx` when it resolves the active company — the original
+   * `companyId` before it was overwritten. Never persisted. */
+  homeCompanyId?: string
   branchId: string
   roleId: string
   /** Denormalized so the top bar / any list can render the role without a second read. Kept in

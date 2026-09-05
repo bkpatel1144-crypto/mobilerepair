@@ -67,12 +67,29 @@ service cloud.firestore {
     // read their *own* profile doc regardless (see `users/{uid}`'s own `allow get` below, which
     // checks `request.auth.uid == uid` directly, never through this function) — the one exception
     // that has to stay open for the disabled banner/sign-out flow to work at all.
+    // Multi-company: a user may belong to several. `companyIds` is the authority where present;
+    // `companyId` remains the fallback for accounts created before multi-company existed, where
+    // the two describe the same single membership. Checking both means no backfill is needed and
+    // an old profile keeps working untouched.
+    function myCompanyIds() {
+      return myUserDoc().data.get('companyIds', [myUserDoc().data.companyId]);
+    }
+
     function belongsToCompany(companyId) {
-      return hasUserDoc() && myCompanyId() == companyId && myUserDoc().data.status == 'active';
+      return hasUserDoc() &&
+        (myCompanyId() == companyId || companyId in myCompanyIds()) &&
+        myUserDoc().data.status == 'active';
+    }
+
+    // The role id is per company — see `UserDoc.memberships`. Using the top-level `roleId` for a
+    // company the user switched into would look up a role document that does not exist there and
+    // deny everything, so prefer the membership entry and fall back for single-company accounts.
+    function myRoleIdFor(companyId) {
+      return myUserDoc().data.get('memberships', {}).get(companyId, {'roleId': myUserDoc().data.roleId}).roleId;
     }
 
     function myRoleDoc(companyId) {
-      return get(/databases/$(database)/documents/companies/$(companyId)/roles/$(myUserDoc().data.roleId));
+      return get(/databases/$(database)/documents/companies/$(companyId)/roles/$(myRoleIdFor(companyId)));
     }
 
     // Coarse, menu-level gate — Phase 3 tightens this to real per-action checks once the Role
@@ -119,6 +136,28 @@ service cloud.firestore {
         (request.auth.uid == uid &&
           request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['fullName', 'email', 'updatedAt'])) ||
+        // Switching which company is being shown. Only to one already joined — otherwise this
+        // would be a way to point the whole app at a company the user is not a member of.
+        (request.auth.uid == uid &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['activeCompanyId', 'updatedAt']) &&
+          request.resource.data.activeCompanyId in
+            resource.data.get('companyIds', [resource.data.companyId])) ||
+        // Joining a company you just created (`useCreateCompany`, same batch as the company doc).
+        //
+        // This is the dangerous one: `belongsToCompany()` trusts `companyIds`, so an unchecked
+        // write here is a way into any other shop's data. Exactly one id may be added per write,
+        // and that company's `createdById` must be this user — which only holds for a company
+        // created in this very batch.
+        (request.auth.uid == uid &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['companyIds', 'memberships', 'activeCompanyId', 'updatedAt']) &&
+          request.resource.data.companyIds
+            .removeAll(resource.data.get('companyIds', [resource.data.companyId])).size() == 1 &&
+          get(/databases/$(database)/documents/companies/$(
+            request.resource.data.companyIds
+              .removeAll(resource.data.get('companyIds', [resource.data.companyId]))[0]
+          )).data.createdById == request.auth.uid) ||
         // Or a User-Management-permitted teammate manages another user's status/role.
         (belongsToCompany(resource.data.companyId) &&
           hasMenuAccess(resource.data.companyId, 'administration/users'))
@@ -129,7 +168,11 @@ service cloud.firestore {
     // ---- companies/{companyId} ---------------------------------------------------------------
     match /companies/{companyId} {
       allow get: if belongsToCompany(companyId);
-      allow create: if isBootstrapping();
+      // Either the signup bootstrap, or an existing active user adding another company
+      // (`useCreateCompany`). The same batch adds the id to their own `companyIds`, and the
+      // `users/{uid}` update rule is what actually authorises that half.
+      allow create: if isBootstrapping() ||
+        (hasUserDoc() && myUserDoc().data.status == 'active');
       // The seeded default company is `protected` — Settings > Company Settings enforces "can't
       // disable/delete" client-side (BUILD_PLAN Phase 10); the rule backs that up server-side.
       allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/company') &&

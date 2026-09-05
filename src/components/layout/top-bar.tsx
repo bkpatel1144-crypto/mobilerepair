@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Building2,
   CreditCard,
+  Check,
 } from 'lucide-react'
 import {
   Breadcrumb,
@@ -41,6 +42,7 @@ import { useTheme } from '@/hooks/use-theme'
 import { useAuth } from '@/hooks/use-auth'
 import { findNavEntry, buildPath } from '@/config/nav'
 import { useCompany } from '@/hooks/use-company'
+import { useCompanies, useSwitchCompany } from '@/hooks/use-companies'
 import { usePermissions } from '@/hooks/use-permissions'
 import { ProfileDrawer } from '@/components/layout/profile-drawer'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -58,6 +60,8 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const { data: company } = useCompany()
+  const { data: companies = [] } = useCompanies()
+  const switchCompany = useSwitchCompany()
   const { canView } = usePermissions()
 
   const entry = findNavEntry(location.pathname)
@@ -258,12 +262,35 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
                   <p className="text-[0.65rem] font-medium tracking-wide text-muted-foreground uppercase">
                     Organization
                   </p>
-                  <p className="flex items-center gap-2 pt-0.5">
-                    <Building2 className="size-4 shrink-0 text-muted-foreground" />
-                    <span className="truncate font-medium">{company?.name ?? '—'}</span>
-                  </p>
                 </DropdownMenuLabel>
               </DropdownMenuGroup>
+              {/* The switcher lives here rather than in the sidebar because this is already
+                * where the account's identity is shown, and switching company is an
+                * account-level act, not navigation. With one company it is just a label. */}
+              {companies.length <= 1 ? (
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="font-normal">
+                    <p className="flex items-center gap-2">
+                      <Building2 className="size-4 shrink-0 text-muted-foreground" />
+                      <span className="truncate font-medium">{company?.name ?? '—'}</span>
+                    </p>
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
+              ) : (
+                companies.map((c) => (
+                  <DropdownMenuItem
+                    key={c.id}
+                    disabled={c.id === profile.companyId || switchCompany.isPending}
+                    onClick={() => switchCompany.mutate(c.id)}
+                  >
+                    <Building2 />
+                    <span className="truncate">{c.name}</span>
+                    {c.id === profile.companyId && (
+                      <Check className="ml-auto size-4 text-teal-600 dark:text-teal-400" />
+                    )}
+                  </DropdownMenuItem>
+                ))
+              )}
 
               <DropdownMenuSeparator />
 

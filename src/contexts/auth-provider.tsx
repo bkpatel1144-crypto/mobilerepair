@@ -17,6 +17,45 @@ import type { UserDoc } from '@/types/firestore'
 const PROFILE_NOT_FOUND_MAX_RETRIES = 12
 const PROFILE_NOT_FOUND_RETRY_DELAY_MS = 800
 
+
+/**
+ * Resolves which company the app should be showing, and rewrites `companyId` to it.
+ *
+ * This is the entire company switcher. Every hook, path helper, mutation and audit entry in the
+ * app already reads `profile.companyId`; overwriting it here means none of them had to learn
+ * that more than one company can exist. `homeCompanyId` keeps the original, which is what
+ * firestore.rules can always fall back to.
+ *
+ * Guarded rather than trusting: an `activeCompanyId` pointing at a company no longer in
+ * `companyIds` is ignored, so a stale value left behind by a removed membership can't send every
+ * subsequent read at a company this user cannot open.
+ */
+function withActiveCompany(data: UserDoc): UserDoc {
+  const memberships = data.companyIds?.length ? data.companyIds : [data.companyId]
+  const active =
+    data.activeCompanyId && memberships.includes(data.activeCompanyId)
+      ? data.activeCompanyId
+      : data.companyId
+  // Role and branch are per company — see `UserDoc.memberships`. Without this swap a switch
+  // would leave `roleId` pointing at a role document in the company just left, and
+  // `usePermissions()` would resolve it to nothing and lock the user out of their own shop.
+  const membership = data.memberships?.[active]
+  return {
+    ...data,
+    companyId: active,
+    companyIds: memberships,
+    homeCompanyId: data.companyId,
+    ...(membership
+      ? {
+          roleId: membership.roleId,
+          roleName: membership.roleName,
+          roleCode: membership.roleCode,
+          branchId: membership.branchId,
+        }
+      : {}),
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<FirebaseUser | null>(null)
   const [profile, setProfile] = useState<UserDoc | null>(null)
@@ -86,7 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const snap = await getDoc(doc(db, userDoc(uid)))
           if (cancelled) return
           if (snap.exists()) {
-            const data = snap.data() as UserDoc
+            const data = withActiveCompany(snap.data() as UserDoc)
             setProfile(data)
             setProfileFetching(false)
             cacheProfile(uid, data)
@@ -106,7 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       doc(db, userDoc(uid)),
       (snap) => {
         if (snap.exists()) {
-          const data = snap.data() as UserDoc
+          const data = withActiveCompany(snap.data() as UserDoc)
           setProfile(data)
           setProfileFetching(false)
           cacheProfile(uid, data)

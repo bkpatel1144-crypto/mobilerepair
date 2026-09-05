@@ -1,243 +1,583 @@
 import { useState } from 'react'
-import { Store, Pencil } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import {
+  Store,
+  Plus,
+  RefreshCw,
+  Crown,
+  Star,
+  Eye,
+  MoreVertical,
+  Pencil,
+  Shield,
+  CheckCircle2,
+  XCircle,
+  Trash2,
+  Settings as SettingsIcon,
+  ShieldCheck,
+  Wallet,
+  Clock,
+  ArrowLeftRight,
+  Check,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
-import { StatCard } from '@/components/shared/stat-card'
-import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
-import { FormModal } from '@/components/shared/form-modal'
-import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
+import { ErrorState } from '@/components/shared/error-state'
+import { StatusBadge } from '@/components/shared/status-badge'
+import { FormModal } from '@/components/shared/form-modal'
+import { FormError } from '@/components/shared/form-error'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useCompany, useUpdateCompany, type CompanyWithId, type UpdateCompanyInput } from '@/hooks/use-company'
-import { formatTimestamp } from '@/lib/utils'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useCompany, useUpdateCompany } from '@/hooks/use-company'
+import { useCompanies, useCreateCompany, useSwitchCompany } from '@/hooks/use-companies'
+import { useAuth } from '@/hooks/use-auth'
+import { buildPath } from '@/config/nav'
+import { formatTimestamp, getInitials } from '@/lib/utils'
+import { cn } from '@/lib/utils'
+import { CompanyForm } from './company-form'
+import {
+  BLANK_COMPANY,
+  validateCompany,
+  type CompanyFormValues,
+} from '@/lib/company-validation'
+import type { CompanyWithId } from '@/hooks/use-company'
 
-const CURRENCIES = [{ v: 'INR', l: 'INR - Indian Rupee (₹)' }, { v: 'USD', l: 'USD - US Dollar ($)' }]
-const TIMEZONES = [{ v: 'Asia/Kolkata', l: 'Asia/Kolkata (IST)' }]
+/** The UI says "Inactive" (matching the reference) while the stored value is `disabled` —
+ * `EntityStatus` is shared across every entity in the app, so it is the label that bends here,
+ * not the data. */
+type StatusFilter = 'active' | 'disabled' | 'deleted'
 
-function blankForm(company: CompanyWithId): UpdateCompanyInput {
+const STATUS_LABEL: Record<StatusFilter, string> = {
+  active: 'Active',
+  disabled: 'Inactive',
+  deleted: 'Deleted',
+}
+
+function formValuesFrom(c: CompanyWithId): CompanyFormValues {
   return {
-    name: company.name,
-    code: company.code,
-    legalName: company.legalName,
-    gstRegistration: company.gstRegistration,
-    gstin: company.gstin,
-    pan: company.pan,
-    email: company.email,
-    phone: company.phone,
-    currency: company.currency,
-    timezone: company.timezone,
+    name: c.name,
+    code: c.code,
+    legalName: c.legalName,
+    gstRegistration: c.gstRegistration,
+    gstin: c.gstin ?? '',
+    pan: c.pan ?? '',
+    email: c.email,
+    phone: c.phone,
+    currency: c.currency,
+    timezone: c.timezone,
   }
 }
 
-/** `preview (5)`/`(6)` — this app has exactly one company per tenant (see `useCompany()`'s own
- * doc comment), so this manages *the* company rather than a real multi-company list; the "table"
- * below always has exactly one row, matching the reference's own screenshot for the same
- * underlying reason. No "Create Company" — see BUILD_PLAN.md's Phase 10 deviations. */
+function DetailBlock({
+  icon: Icon,
+  title,
+  tone,
+  children,
+}: {
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  tone: 'purple' | 'teal' | 'amber'
+  children: React.ReactNode
+}) {
+  const tones = {
+    purple: 'bg-purple-50 dark:bg-purple-500/10',
+    teal: 'bg-teal-50 dark:bg-teal-500/10',
+    amber: 'bg-amber-50 dark:bg-amber-500/10',
+  }
+  const iconTones = {
+    purple: 'text-purple-600 dark:text-purple-400',
+    teal: 'text-teal-600 dark:text-teal-400',
+    amber: 'text-amber-600 dark:text-amber-400',
+  }
+  return (
+    <section className="space-y-2">
+      <h3 className="flex items-center gap-2 text-sm font-semibold">
+        <Icon className={cn('size-4', iconTones[tone])} />
+        {title}
+      </h3>
+      <div className={cn('space-y-3 rounded-xl p-4', tones[tone])}>{children}</div>
+    </section>
+  )
+}
+
+function DetailValue({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div>
+      <p className="text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">{label}</p>
+      <p className="mt-0.5 font-medium">{value}</p>
+    </div>
+  )
+}
+
 export function CompanySettingsPage() {
-  const { data: company, isLoading, error: loadError, refetch } = useCompany()
-  const [viewing, setViewing] = useState(false)
-  const [editing, setEditing] = useState(false)
-  const [form, setForm] = useState<UpdateCompanyInput | null>(null)
+  const navigate = useNavigate()
+  const { profile } = useAuth()
+  const { data: active } = useCompany()
+  const { data: companies = [], isLoading, error: loadError, refetch } = useCompanies()
+  const createCompany = useCreateCompany()
+  const switchCompany = useSwitchCompany()
   const updateCompany = useUpdateCompany()
+
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('active')
+  const [viewing, setViewing] = useState<CompanyWithId | null>(null)
+  const [creating, setCreating] = useState(false)
+  const [editing, setEditing] = useState<CompanyWithId | null>(null)
+  const [form, setForm] = useState<CompanyFormValues>(BLANK_COMPANY)
+  const [error, setError] = useState<string | null>(null)
+
+  const counts = {
+    active: companies.filter((c) => c.status === 'active').length,
+    disabled: companies.filter((c) => c.status === 'disabled').length,
+    deleted: companies.filter((c) => c.status === 'deleted').length,
+  }
+
+  const filtered = companies
+    .filter((c) => c.status === statusFilter)
+    .filter((c) =>
+      search.trim()
+        ? `${c.name} ${c.code} ${c.email}`.toLowerCase().includes(search.toLowerCase())
+        : true
+    )
+
+  function startCreate() {
+    setForm(BLANK_COMPANY)
+    setError(null)
+    setCreating(true)
+  }
+
+  function startEdit(c: CompanyWithId) {
+    setForm(formValuesFrom(c))
+    setError(null)
+    setEditing(c)
+    setViewing(null)
+  }
+
+  async function submitCreate() {
+    const problem = validateCompany(form)
+    if (problem) {
+      setError(problem)
+      return
+    }
+    try {
+      await createCompany.mutateAsync({
+        ...form,
+        gstin: form.gstin.trim() || null,
+        pan: form.pan.trim() || null,
+      })
+      setCreating(false)
+      // The new company is now active and the whole cache was cleared — land on the dashboard so
+      // nothing on screen is left showing the company that was just switched away from.
+      navigate('/app/dashboard')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not create this company.')
+    }
+  }
+
+  async function submitEdit() {
+    if (!editing) return
+    const problem = validateCompany(form)
+    if (problem) {
+      setError(problem)
+      return
+    }
+    try {
+      await updateCompany.mutateAsync({
+        ...form,
+        gstin: form.gstin.trim() || null,
+        pan: form.pan.trim() || null,
+      })
+      setEditing(null)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save these changes.')
+    }
+  }
 
   const columns: DataTableColumn<CompanyWithId>[] = [
     {
       key: 'name',
       header: 'Company Name',
+      sortValue: (c) => c.name,
       render: (c) => (
-        <span className="inline-flex items-center gap-2">
-          <span className="flex size-7 items-center justify-center rounded-full bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
-            <Store className="size-3.5" />
+        <div className="flex items-center gap-3">
+          <span
+            className={cn(
+              'flex size-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold',
+              c.protected
+                ? 'bg-amber-400 text-amber-950'
+                : 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400'
+            )}
+          >
+            {c.protected ? <Crown className="size-4" /> : getInitials(c.name)}
           </span>
-          <span>
-            <p className="font-medium">{c.name}</p>
-            <p className="text-xs text-muted-foreground">{c.name}</p>
-          </span>
-          {c.protected && <StatusBadge status="Default" tone="warning" />}
-        </span>
+          <div className="min-w-0">
+            <p className="flex flex-wrap items-center gap-1.5 font-medium">
+              <span className="truncate">{c.name}</span>
+              {c.protected && (
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-300 px-1.5 py-0.5 text-[0.65rem] font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">
+                  Default
+                </span>
+              )}
+              {c.id === profile?.companyId && (
+                <span className="shrink-0 rounded-full bg-teal-100 px-1.5 py-0.5 text-[0.65rem] font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+                  Active
+                </span>
+              )}
+            </p>
+            <p className="truncate text-xs text-muted-foreground">{c.legalName}</p>
+          </div>
+        </div>
       ),
     },
-    { key: 'code', header: 'Code', render: (c) => c.code },
-    { key: 'gstin', header: 'GSTIN', hideOnMobile: true, render: (c) => c.gstin ?? c.gstRegistration },
-    { key: 'contact', header: 'Contact', hideOnMobile: true, render: (c) => <><p>{c.email}</p><p className="text-xs text-muted-foreground">{c.phone || '—'}</p></> },
+    {
+      key: 'code',
+      header: 'Code',
+      hideOnMobile: true,
+      sortValue: (c) => c.code,
+      render: (c) => (
+        <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{c.code}</code>
+      ),
+    },
+    {
+      key: 'gstin',
+      header: 'GSTIN',
+      hideOnMobile: true,
+      render: (c) =>
+        c.gstRegistration === 'Unregistered' || !c.gstin ? (
+          <span className="text-sm text-muted-foreground italic">Unregistered</span>
+        ) : (
+          <span className="font-mono text-xs">{c.gstin}</span>
+        ),
+    },
+    {
+      key: 'contact',
+      header: 'Contact',
+      hideOnMobile: true,
+      render: (c) => (
+        <div>
+          <p className="truncate">{c.email}</p>
+          <p className="text-xs text-muted-foreground">{c.phone || '—'}</p>
+        </div>
+      ),
+    },
+    {
+      key: 'actions',
+      header: 'Actions',
+      render: (c) => (
+        <div className="flex items-center gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label={`View ${c.name}`}
+            className="text-teal-600 dark:text-teal-400"
+            onClick={(e) => {
+              e.stopPropagation()
+              setViewing(c)
+            }}
+          >
+            <Eye className="size-4" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={`Actions for ${c.name}`}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              }
+            >
+              <MoreVertical className="size-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {c.protected && (
+                <>
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="flex items-center gap-2 font-normal text-amber-700 dark:text-amber-400">
+                      <Crown className="size-4" />
+                      Default Company
+                    </DropdownMenuLabel>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+              {c.id !== profile?.companyId && (
+                <DropdownMenuItem onClick={() => switchCompany.mutate(c.id)}>
+                  <ArrowLeftRight />
+                  Switch to this company
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={() => startEdit(c)}>
+                <Pencil />
+                Edit Company
+              </DropdownMenuItem>
+              {c.protected && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem disabled>
+                    <Shield />
+                    Protected: Cannot disable/delete
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      ),
+    },
   ]
 
-  function startEdit() {
-    if (!company) return
-    setForm(blankForm(company))
-    setEditing(true)
-  }
-
-  async function handleSave(e: React.FormEvent) {
-    e.preventDefault()
-    if (!form) return
-    if (form.gstRegistration !== 'Unregistered' && !form.gstin?.trim()) return
-    await updateCompany.mutateAsync(form)
-    setEditing(false)
-  }
+  const statusCards: { key: StatusFilter; label: string; count: number; icon: typeof CheckCircle2; tone: string }[] = [
+    { key: 'active', label: 'Active', count: counts.active, icon: CheckCircle2, tone: 'text-teal-600 dark:text-teal-400' },
+    { key: 'disabled', label: 'Inactive', count: counts.disabled, icon: XCircle, tone: 'text-red-600' },
+    { key: 'deleted', label: 'Deleted', count: counts.deleted, icon: Trash2, tone: 'text-red-600' },
+  ]
 
   return (
     <div className="space-y-4 p-4 sm:p-6">
-      <PageHeader icon={Store} title="Company Management" subtitle="Manage company information and settings" />
-
-      <StatCardGrid>
-        <StatCard label="Active" value={company ? 1 : 0} tone="success" selected />
-        <StatCard label="Inactive" value={0} />
-        <StatCard label="Deleted" value={0} />
-      </StatCardGrid>
-
-      <DataTable
-        columns={columns}
-        data={company ? [company] : []}
-        rowKey={(c) => c.id}
-        isLoading={isLoading}
-        error={loadError}
-        onRetry={() => void refetch()}
-        onRowClick={() => setViewing(true)}
-        emptyState={<EmptyState icon={Store} title="No company found" />}
+      <PageHeader
+        icon={Store}
+        title="Company Management"
+        subtitle="Manage company information and settings"
+        actions={
+          <>
+            <Button type="button" variant="outline" onClick={() => void refetch()}>
+              <RefreshCw className="size-4" />
+              Refresh
+            </Button>
+            <Button type="button" onClick={startCreate}>
+              <Plus className="size-4" />
+              Add Company
+            </Button>
+          </>
+        }
       />
 
-      {viewing && company && (
-        <DetailDrawer
-          open
-          onOpenChange={setViewing}
-          icon={Store}
-          title={company.name}
-          subtitle={company.legalName}
-          badges={
-            <>
-              {company.protected && <StatusBadge status="Default" tone="warning" />}
-              <StatusBadge status={company.status === 'active' ? 'Active' : 'Disabled'} dot />
-            </>
+      <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(12rem,1fr))]">
+        {statusCards.map((s) => {
+          const selected = statusFilter === s.key
+          return (
+            <button
+              key={s.key}
+              type="button"
+              data-slot="button"
+              aria-pressed={selected}
+              onClick={() => setStatusFilter(s.key)}
+              className={cn(
+                'flex items-center gap-2.5 rounded-xl border p-4 text-left transition-colors',
+                selected ? 'border-teal-600 bg-teal-50/60 dark:bg-teal-500/10' : 'hover:bg-muted/50'
+              )}
+            >
+              <s.icon className={cn('size-5 shrink-0', s.tone)} />
+              <span className="font-medium">{s.label}</span>
+              <span className="ml-auto text-lg font-bold tabular-nums">{s.count}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="flex justify-end">
+        <Button
+          type="button"
+          variant="link"
+          className="text-teal-600 dark:text-teal-400"
+          render={<a href={buildPath('settings', 'branches')} />}
+        >
+          <SettingsIcon className="size-4" />
+          Company Preferences (active company)
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 border-t pt-4">
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by name, code, or email..."
+          className="h-10 max-w-md flex-1 rounded-full"
+        />
+      </div>
+
+      <p className="flex items-center gap-2 text-sm">
+        <span className="text-muted-foreground">Viewing:</span>
+        <span className="rounded-full border px-2.5 py-0.5 text-xs font-medium">
+          {STATUS_LABEL[statusFilter]} Companies ({filtered.length})
+        </span>
+      </p>
+
+      {loadError ? (
+        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your companies" />
+      ) : (
+        <DataTable
+          columns={columns}
+          data={filtered}
+          rowKey={(c) => c.id}
+          onRowClick={setViewing}
+          isLoading={isLoading}
+          emptyState={
+            <EmptyState
+              icon={Store}
+              title={`No ${STATUS_LABEL[statusFilter].toLowerCase()} companies`}
+              description={
+                statusFilter === 'active'
+                  ? 'Add a company to manage a second shop from this account.'
+                  : 'Nothing here right now.'
+              }
+            />
           }
-          actions={
-            <Button type="button" variant="outline" size="sm" onClick={startEdit}>
-              <Pencil className="size-3.5" />
-              Edit
-            </Button>
-          }
-          sections={[
-            ...(company.protected
-              ? [{ title: '', children: <p className="rounded-lg bg-amber-50 p-2.5 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">Default company — cannot be disabled or deleted.</p> }]
-              : []),
-            {
-              title: 'COMPANY INFORMATION',
-              rows: [
-                { label: 'Display Name', value: company.name },
-                { label: 'Legal Name', value: company.legalName },
-                { label: 'Company Code', value: company.code },
-              ],
-            },
-            {
-              title: 'CONTACT DETAILS',
-              rows: [
-                { label: 'Email', value: company.email || '—' },
-                { label: 'Phone', value: company.phone || '—' },
-              ],
-            },
-            {
-              title: 'TAX & REGISTRATION',
-              rows: [
-                { label: 'GST Registration', value: company.gstRegistration === 'Unregistered' ? 'Unregistered (No GST)' : company.gstRegistration },
-                ...(company.gstin ? [{ label: 'GSTIN', value: company.gstin }] : []),
-                ...(company.pan ? [{ label: 'PAN', value: company.pan }] : []),
-              ],
-            },
-            {
-              title: 'FINANCIAL SETTINGS',
-              rows: [
-                { label: 'Currency', value: company.currency },
-                { label: 'Timezone', value: company.timezone },
-              ],
-            },
-          ]}
-          timeline={[
-            { title: 'Created', timestamp: formatTimestamp(company.createdAt) },
-            { title: 'Last Updated', timestamp: formatTimestamp(company.updatedAt) },
-          ]}
         />
       )}
 
-      {editing && form && (
-        <FormModal
-          open
-          onOpenChange={(o) => !o && setEditing(false)}
-          title="Edit Company"
-          description="Update your company information"
-          onSubmit={handleSave}
-          submitLabel="Save Changes"
-          isSubmitting={updateCompany.isPending}
-          className="sm:max-w-2xl"
-        >
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="space-y-1.5">
-              <Label>Company Name *</Label>
-              <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+      {/* ---- Details drawer ---- */}
+      <DetailDrawer
+        open={!!viewing}
+        onOpenChange={(o) => !o && setViewing(null)}
+        icon={Store}
+        title="Company Details"
+      >
+        {viewing && (
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <span
+                className={cn(
+                  'flex size-14 shrink-0 items-center justify-center rounded-full text-lg font-semibold',
+                  viewing.protected
+                    ? 'bg-amber-400 text-amber-950'
+                    : 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400'
+                )}
+              >
+                {getInitials(viewing.name)}
+              </span>
+              <div className="min-w-0">
+                <p className="flex flex-wrap items-center gap-2">
+                  {viewing.protected && <Crown className="size-4 text-amber-600 dark:text-amber-400" />}
+                  <span className="text-lg font-semibold">{viewing.name}</span>
+                  {viewing.protected && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-amber-300 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">
+                      <Star className="size-3 fill-current" />
+                      Default
+                    </span>
+                  )}
+                </p>
+                <p className="text-sm text-muted-foreground">{viewing.legalName}</p>
+                <div className="mt-1">
+                  <StatusBadge
+                    status={viewing.status === 'active' ? 'Active' : 'Inactive'}
+                    tone={viewing.status === 'active' ? 'success' : 'neutral'}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="space-y-1.5">
-              <Label>Company Code *</Label>
-              <Input value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })} required />
+
+            <div className="flex flex-wrap gap-2">
+              <Button type="button" variant="outline" size="sm" onClick={() => startEdit(viewing)}>
+                <Pencil className="size-3.5" />
+                Edit
+              </Button>
+              {viewing.id !== profile?.companyId && (
+                <Button type="button" size="sm" onClick={() => switchCompany.mutate(viewing.id)}>
+                  <ArrowLeftRight className="size-3.5" />
+                  Switch to this company
+                </Button>
+              )}
+              {viewing.id === profile?.companyId && (
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+                  <Check className="size-3.5" />
+                  Currently active
+                </span>
+              )}
             </div>
-            <div className="space-y-1.5">
-              <Label>Legal Name *</Label>
-              <Input value={form.legalName} onChange={(e) => setForm({ ...form, legalName: e.target.value })} required />
-            </div>
+
+            {viewing.protected && (
+              <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
+                Default company — cannot be disabled or deleted.
+              </p>
+            )}
+
+            <DetailBlock icon={ShieldCheck} title="GST Registration" tone="purple">
+              <DetailValue
+                label="GST Registration"
+                value={
+                  viewing.gstRegistration === 'Unregistered'
+                    ? 'Unregistered (No GST)'
+                    : `${viewing.gstRegistration} — ${viewing.gstin ?? '—'}`
+                }
+              />
+              {viewing.pan && <DetailValue label="PAN" value={viewing.pan} />}
+            </DetailBlock>
+
+            <DetailBlock icon={Wallet} title="Financial Settings" tone="teal">
+              <DetailValue label="Currency" value={viewing.currency} />
+              <DetailValue label="Timezone" value={viewing.timezone} />
+            </DetailBlock>
+
+            <DetailBlock icon={Clock} title="Timeline" tone="amber">
+              <DetailValue label="Created" value={formatTimestamp(viewing.createdAt)} />
+              <DetailValue label="Last updated" value={formatTimestamp(viewing.updatedAt)} />
+            </DetailBlock>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="space-y-1.5">
-              <Label>GST Registration *</Label>
-              <Select value={form.gstRegistration} onValueChange={(v) => v && setForm({ ...form, gstRegistration: v as UpdateCompanyInput['gstRegistration'] })}>
-                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Regular">Regular</SelectItem>
-                  <SelectItem value="Composition">Composition</SelectItem>
-                  <SelectItem value="Unregistered">Unregistered</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1.5">
-              <Label>GSTIN {form.gstRegistration !== 'Unregistered' && '*'}</Label>
-              <Input value={form.gstin ?? ''} onChange={(e) => setForm({ ...form, gstin: e.target.value || null })} disabled={form.gstRegistration === 'Unregistered'} />
-            </div>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="space-y-1.5">
-              <Label>PAN</Label>
-              <Input value={form.pan ?? ''} onChange={(e) => setForm({ ...form, pan: e.target.value || null })} />
-            </div>
-            <div className="space-y-1.5">
-              <Label>Email *</Label>
-              <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-            </div>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="space-y-1.5">
-              <Label>Phone</Label>
-              <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="10-digit mobile" />
-            </div>
-            <div className="space-y-1.5">
-              <Label>Currency *</Label>
-              <Select value={form.currency} onValueChange={(v) => v && setForm({ ...form, currency: v })}>
-                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>{CURRENCIES.map((c) => <SelectItem key={c.v} value={c.v}>{c.l}</SelectItem>)}</SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1.5">
-              <Label>Timezone *</Label>
-              <Select value={form.timezone} onValueChange={(v) => v && setForm({ ...form, timezone: v })}>
-                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>{TIMEZONES.map((t) => <SelectItem key={t.v} value={t.v}>{t.l}</SelectItem>)}</SelectContent>
-              </Select>
-            </div>
-          </div>
-          <p className="rounded-lg bg-blue-50 p-2.5 text-xs text-blue-800 dark:bg-blue-500/10 dark:text-blue-400">
-            Note: GSTIN is only required for registered companies (Regular/Composition) — pick "Unregistered" if this company isn't GST-registered. Ensure GSTIN and PAN match correctly.
-          </p>
-        </FormModal>
+        )}
+      </DetailDrawer>
+
+      {/* ---- Create ---- */}
+      <FormModal
+        open={creating}
+        onOpenChange={(o) => {
+          if (!o) setError(null)
+          setCreating(o)
+        }}
+        title="Create Company"
+        description="A second shop under this account. It gets its own roles, branch, financial year, masters and print templates."
+        submitLabel={createCompany.isPending ? 'Creating…' : 'Create Company'}
+        isSubmitting={createCompany.isPending}
+        onSubmit={submitCreate}
+        className="sm:max-w-3xl"
+      >
+        <CompanyForm value={form} onChange={setForm} />
+        {error && <FormError message={error} />}
+      </FormModal>
+
+      {/* ---- Edit ---- */}
+      <FormModal
+        open={!!editing}
+        onOpenChange={(o) => {
+          if (!o) {
+            setEditing(null)
+            setError(null)
+          }
+        }}
+        title="Edit Company"
+        description={
+          editing && editing.id !== profile?.companyId
+            ? 'Note: only the active company can be edited — switch to it first.'
+            : 'Company information and settings.'
+        }
+        submitLabel={updateCompany.isPending ? 'Saving…' : 'Save Changes'}
+        isSubmitting={updateCompany.isPending}
+        submitDisabled={!!editing && editing.id !== profile?.companyId}
+        onSubmit={submitEdit}
+        className="sm:max-w-3xl"
+      >
+        <CompanyForm value={form} onChange={setForm} />
+        {error && <FormError message={error} />}
+      </FormModal>
+
+      {/* Kept so the page still reflects the active company even before the list resolves. */}
+      {!isLoading && companies.length === 0 && active && (
+        <p className="text-sm text-muted-foreground">Active company: {active.name}</p>
       )}
     </div>
   )
