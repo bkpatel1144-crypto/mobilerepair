@@ -437,6 +437,18 @@ export interface ReceiptDoc {
   jobCardNumber: string | null
   against: 'jobCard' | 'manualAdvance'
   purpose: 'advance' | 'final' | 'other'
+  /**
+   * What kind of cash movement this is, for the cash-basis Profit & Loss.
+   *
+   * Optional, and absent on every receipt written before Expenses and Supplier Payables existed
+   * — which is correct rather than a gap: all of those are customer money (job advances, final
+   * payments, refunds), so `undefined` reads as `'customer'`. Only the two new writers set it.
+   *
+   * P&L needs this because a cash-basis report has to split `direction: 'out'` three ways
+   * (operating expense, payment to a supplier, refund to a customer) and they land in different
+   * lines. Deriving it from the note text would work until someone edited a note.
+   */
+  kind?: 'customer' | 'expense' | 'supplierPayment'
   amount: number
   mode: 'cash' | 'upi' | 'card'
   notes: string | null

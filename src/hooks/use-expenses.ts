@@ -115,6 +115,7 @@ export function useCreateExpense() {
         jobCardNumber: null,
         against: 'manualAdvance',
         purpose: 'other',
+        kind: 'expense',
         amount: input.amount,
         mode: input.mode,
         notes: `Expense ${expense.expenseNumber}${input.notes ? ` — ${input.notes}` : ''}`,

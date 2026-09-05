@@ -292,6 +292,7 @@ export function useRecordSupplierPayment() {
         jobCardNumber: null,
         against: 'manualAdvance',
         purpose: 'other',
+        kind: 'supplierPayment',
         amount: input.amount,
         mode: input.mode,
         notes: `Payment for ${payable.reference}${input.notes ? ` — ${input.notes}` : ''}`,

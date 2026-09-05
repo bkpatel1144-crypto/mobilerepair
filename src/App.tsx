@@ -168,6 +168,9 @@ const SaleRegisterPage = lazy(() =>
 const ServiceReportsPage = lazy(() =>
   import('@/pages/app/reports/service-reports-page').then((m) => ({ default: m.ServiceReportsPage }))
 )
+const ProfitLossPage = lazy(() =>
+  import('@/pages/app/reports/profit-loss-page').then((m) => ({ default: m.ProfitLossPage }))
+)
 const JobWiseProfitPage = lazy(() =>
   import('@/pages/app/reports/job-wise-profit-page').then((m) => ({ default: m.JobWiseProfitPage }))
 )
@@ -241,6 +244,7 @@ const LEAF_PAGE_OVERRIDES: Record<string, React.ComponentType> = {
   'second-hand-device/purchase-register': PurchaseRegisterPage,
   'second-hand-device/sale-register': SaleRegisterPage,
   'reports/service': ServiceReportsPage,
+  'reports/pnl': ProfitLossPage,
   'reports/job-profit': JobWiseProfitPage,
   'reports/supplier': SupplierReportPage,
   'reports/technician': TechnicianReportPage,

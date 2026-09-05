@@ -11,6 +11,7 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
 import { useCostedJobs, type CostedJobRow } from '@/hooks/use-reports'
 import { dateRangeBounds } from '@/lib/date-range'
+import { useExpenses } from '@/hooks/use-expenses'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatCurrency, formatPercent, cn } from '@/lib/utils'
 import { dayKey, monthKey, formatMonthLabel, marginPct } from '@/lib/reports'
@@ -29,12 +30,6 @@ interface PeriodGroup {
   grossProfit: number
 }
 
-// Shop Expenses is a genuinely locked feature in this build (Settings > Finance > Expenses,
-// `nav.ts` marks it `locked: true` — never built, per BUILD_PLAN.md's own phase scope) — there is
-// nowhere in the app a shop expense could ever be recorded, so this is honestly always ₹0, not a
-// shortcut. Kept as a named constant (not a bare `0` scattered through the JSX) so the one place
-// this changes, once Expenses is eventually built, is obvious.
-const SHOP_EXPENSES = 0
 
 /** `preview (33)` — the only Phase 9 report grouped by *time period* rather than by job/
  * technician/supplier. Daily groups by the job's own local calendar date (`dayKey`), Monthly by
@@ -47,6 +42,8 @@ export function PeriodSummaryPage() {
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
+
+  const { data: expenses = [] } = useExpenses()
 
   const bounds = dateRangeBounds(dateRange, customFrom, customTo)
   const dateFiltered = rows.filter((r) => !bounds || (r.date >= bounds.from && r.date <= bounds.to))
@@ -76,6 +73,16 @@ export function PeriodSummaryPage() {
   const totalRevenue = filtered.reduce((s, g) => s + g.revenue, 0)
   const totalJobCost = filtered.reduce((s, g) => s + g.jobCost, 0)
   const totalGrossProfit = filtered.reduce((s, g) => s + g.grossProfit, 0)
+  // Real now. This was a hardcoded ₹0 while Expenses was a locked feature; it reads the same
+  // `expenses` collection Profit & Loss does, over the same period, so the two reports agree.
+  const SHOP_EXPENSES = expenses
+    .filter((e) => !e.voided)
+    .filter((e) => {
+      const d = e.expenseDate?.toDate?.()
+      return !bounds || (!!d && d >= bounds.from && d <= bounds.to)
+    })
+    .reduce((sum, e) => sum + e.amount, 0)
+
   const totalNetProfit = totalGrossProfit - SHOP_EXPENSES
   const totals = {
     jobs: totalJobs,

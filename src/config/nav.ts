@@ -113,7 +113,7 @@ export const NAV_SECTIONS: NavSection[] = [
     phase: 'Phase 9 — Reports',
     children: [
       { label: 'Service Reports', slug: 'service' },
-      { label: 'Profit & Loss', slug: 'pnl', locked: true },
+      { label: 'Profit & Loss', slug: 'pnl' },
       { label: 'Job-wise Profit', slug: 'job-profit' },
       { label: 'Supplier Report', slug: 'supplier' },
       { label: 'Technician Report', slug: 'technician' },

@@ -112,6 +112,7 @@ export const PERMISSION_SCHEMA: ModulePermissionSchema[] = [
     sectionKey: 'reports',
     entities: [
       { key: 'serviceReports', label: 'Service Reports' },
+      { key: 'profitLoss', label: 'Profit & Loss' },
       { key: 'jobWiseProfit', label: 'Job-wise Profit' },
       { key: 'supplierReport', label: 'Supplier Report' },
       { key: 'technicianReport', label: 'Technician Report' },
