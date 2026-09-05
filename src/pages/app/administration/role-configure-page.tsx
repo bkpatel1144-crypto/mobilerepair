@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Crown, ShieldCheck } from 'lucide-react'
+import {
+  ArrowLeft,
+  Crown,
+  ShieldCheck,
+  LayoutGrid,
+  KeyRound,
+  User as UserIcon,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -9,6 +16,7 @@ import { ErrorState } from '@/components/shared/error-state'
 import { EmptyState } from '@/components/shared/empty-state'
 import { useRole, useRoles, useUpdateRole } from '@/hooks/use-roles'
 import { usePermissions } from '@/hooks/use-permissions'
+import { useAuth } from '@/hooks/use-auth'
 import { MenusPermissionsTab } from './role-configure/menus-permissions-tab'
 import { DashboardLandingTab } from './role-configure/dashboard-landing-tab'
 import type { RoleDraft } from './role-configure/types'
@@ -50,6 +58,7 @@ export function RoleConfigurePage() {
   useBreadcrumbExtra(role?.name ?? null)
   const { data: allRoles = [] } = useRoles()
   const { isOwner } = usePermissions()
+  const { profile } = useAuth()
   const updateRole = useUpdateRole()
 
   const [draft, setDraft] = useState<RoleDraft | null>(null)
@@ -116,11 +125,20 @@ export function RoleConfigurePage() {
             <ShieldCheck className="size-5 text-teal-600" />
           )}
           <h1 className="text-lg font-bold">{role.name}</h1>
-          <StatusBadge
-            status={role.type === 'owner' ? 'Owner' : 'Custom'}
-            tone={role.type === 'owner' ? 'warning' : 'neutral'}
-          />
+          <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{role.code}</span>
           {role.protected && <StatusBadge status="System" tone="neutral" />}
+
+          {/* Who is doing the editing, matching the reference. On a screen that hands out
+            * permissions it is worth being explicit about whose account is making the change —
+            * the audit entry records the same name. */}
+          {profile && (
+            <span className="ml-auto flex items-center gap-2 text-sm">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted">
+                <UserIcon className="size-3.5 text-muted-foreground" />
+              </span>
+              <span className="max-w-40 truncate font-medium">{profile.fullName}</span>
+            </span>
+          )}
         </div>
 
         {!canEdit && (
@@ -163,9 +181,21 @@ export function RoleConfigurePage() {
 
       {canEdit && (
         <div className="sticky bottom-0 mt-auto flex flex-wrap items-center gap-3 border-t bg-background p-3 sm:px-6">
-          <span className="text-xs text-muted-foreground">
-            ⊞ {checkedMenus}/{ALL_LEAF_KEYS.length} menus · ⚿ {checkedPermissions}/
-            {ALL_ACTION_KEYS.length} permissions · {checkedWidgets} widgets
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1">
+              <LayoutGrid className="size-3.5" />
+              {checkedMenus}/{ALL_LEAF_KEYS.length} menus
+            </span>
+            <span className="text-border">|</span>
+            <span className="inline-flex items-center gap-1">
+              <KeyRound className="size-3.5" />
+              {checkedPermissions}/{ALL_ACTION_KEYS.length} permissions
+            </span>
+            <span className="text-border">|</span>
+            <span className="inline-flex items-center gap-1">
+              <LayoutGrid className="size-3.5" />
+              {checkedWidgets} widgets
+            </span>
           </span>
           {isDirty && (
             <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">

@@ -56,6 +56,9 @@ const RoleManagementPage = lazy(() =>
     default: m.RoleManagementPage,
   }))
 )
+const CreateRolePage = lazy(() =>
+  import('@/pages/app/administration/create-role-page').then((m) => ({ default: m.CreateRolePage }))
+)
 const RoleConfigurePage = lazy(() =>
   import('@/pages/app/administration/role-configure-page').then((m) => ({
     default: m.RoleConfigurePage,
@@ -337,6 +340,14 @@ function App() {
                       )}
                       {/* Sub-pages reached by drilling into a specific role/user, not by their
                        * own sidebar leaf — gated by the same menu key as their parent list. */}
+                      <Route
+                        path="administration/roles/create"
+                        element={
+                          <RequireMenuAccess menuKey="administration/roles">
+                            <CreateRolePage />
+                          </RequireMenuAccess>
+                        }
+                      />
                       <Route
                         path="administration/roles/:roleId/configure"
                         element={

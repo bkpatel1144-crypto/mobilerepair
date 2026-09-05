@@ -8,7 +8,7 @@ import { roleQueryKey } from '@/hooks/use-permissions'
 import { allWidgetsEnabled } from '@/config/dashboard-widgets'
 import { DASHBOARD_MENU_KEY } from '@/config/nav'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
-import type { RoleDoc } from '@/types/firestore'
+import type { RoleDoc , EntityStatus} from '@/types/firestore'
 
 export interface RoleWithId extends RoleDoc {
   id: string
@@ -131,5 +131,76 @@ export function useUpdateRole() {
       queryClient.invalidateQueries({ queryKey: rolesQueryKey(companyId) })
       queryClient.invalidateQueries({ queryKey: roleQueryKey(companyId, variables.roleId) })
     },
+  })
+}
+
+/**
+ * Renames a role, or corrects its code.
+ *
+ * Separate from `useUpdateRole`, which writes the permission matrix. Splitting them keeps the
+ * Edit dialog from having to send a whole permission set it never touched — a rename that
+ * round-trips the matrix would overwrite a change someone else made in Configure in between.
+ */
+export function useRenameRole() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (input: { roleId: string; name: string; code: string }) => {
+      const batch = writeBatch(db)
+      batch.update(doc(db, roleDoc(companyId, input.roleId)), {
+        name: input.name.trim(),
+        code: input.code.trim().toUpperCase(),
+        updatedAt: serverTimestamp(),
+      })
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: 'Rename',
+        module: 'administration',
+        entityType: 'Role',
+        entityId: input.roleId,
+        entityLabel: input.name.trim(),
+        critical: true, // anything touching who-can-do-what
+      })
+      await batch.commit()
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: rolesQueryKey(companyId) }),
+  })
+}
+
+/**
+ * Disables or re-enables a role.
+ *
+ * A disabled role keeps its permissions and its users — it simply stops granting anything. That
+ * is why this is a status change and not a delete: re-enabling has to restore exactly what was
+ * there, and a deleted-then-recreated role would come back with an empty matrix and silently
+ * lock out everyone who held it.
+ */
+export function useSetRoleStatus() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (input: { role: RoleWithId; status: EntityStatus }) => {
+      if (input.role.protected) {
+        throw new Error('The Owner role is protected and cannot be disabled or deleted.')
+      }
+      const batch = writeBatch(db)
+      batch.update(doc(db, roleDoc(companyId, input.role.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: input.status === 'active' ? 'Enable' : input.status === 'deleted' ? 'Delete' : 'Disable',
+        module: 'administration',
+        entityType: 'Role',
+        entityId: input.role.id,
+        entityLabel: input.role.name,
+        critical: true,
+      })
+      await batch.commit()
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: rolesQueryKey(companyId) }),
   })
 }

@@ -1,12 +1,34 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { ShieldCheck, Crown, Circle, Settings2 } from 'lucide-react'
+import {
+  ShieldCheck,
+  Crown,
+  Shield,
+  Settings2,
+  Plus,
+  RefreshCw,
+  Filter,
+  MoreVertical,
+  Eye,
+  Pencil,
+  EyeOff,
+  Trash2,
+  ListChecks,
+  CircleCheck,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
-import { StatCard } from '@/components/shared/stat-card'
-import { FilterBar } from '@/components/shared/filter-bar'
+import { StatPill, StatPillRow } from '@/components/shared/stat-pill'
+import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
@@ -15,35 +37,40 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { useRoles, useCreateRole, type RoleWithId } from '@/hooks/use-roles'
+import {
+  useRoles,
+  useRenameRole,
+  useSetRoleStatus,
+  type RoleWithId,
+} from '@/hooks/use-roles'
 import { slugifyCode, formatTimestamp } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
 
-const addRoleSchema = z.object({
-  name: z.string().min(2, 'Role name must be at least 2 characters').max(40),
-})
-type AddRoleInput = z.infer<typeof addRoleSchema>
 
-type StatusFilter = 'active' | 'disabled' | 'deleted' | null
+type StatusFilter = 'active' | 'disabled' | 'deleted'
+
+const STATUS_LABEL: Record<StatusFilter, string> = {
+  active: 'Active Roles',
+  disabled: 'Disabled Roles',
+  deleted: 'Deleted Roles',
+}
 
 export function RoleManagementPage() {
   const navigate = useNavigate()
   const { data: roles = [], isLoading, error: loadError, refetch } = useRoles()
-  const createRole = useCreateRole()
 
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('active')
   const [selectedRole, setSelectedRole] = useState<RoleWithId | null>(null)
-  const [addOpen, setAddOpen] = useState(false)
+  const [editing, setEditing] = useState<RoleWithId | null>(null)
+  const [editName, setEditName] = useState('')
+  const [editCode, setEditCode] = useState('')
+  const [confirmAction, setConfirmAction] = useState<{ role: RoleWithId; kind: 'disable' | 'enable' | 'delete' } | null>(null)
+  const [showOwnerOnly, setShowOwnerOnly] = useState(false)
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<AddRoleInput>({ resolver: zodResolver(addRoleSchema) })
-  const watchedName = watch('name') ?? ''
+  const renameRole = useRenameRole()
+  const setRoleStatus = useSetRoleStatus()
+
 
   const counts = {
     total: roles.length,
@@ -53,106 +80,256 @@ export function RoleManagementPage() {
   }
 
   const filtered = roles
-    .filter((r) => !statusFilter || r.status === statusFilter)
+    .filter((r) => r.status === statusFilter)
+    .filter((r) => (showOwnerOnly ? r.type === 'owner' : true))
     .filter((r) => `${r.name} ${r.code}`.toLowerCase().includes(search.toLowerCase()))
 
-  async function onAddRole(data: AddRoleInput) {
-    const roleId = await createRole.mutateAsync({ name: data.name, code: slugifyCode(data.name) })
-    setAddOpen(false)
-    reset()
-    // Every new role starts fully locked down — send the creator straight into Configure so
-    // the role is never left silently inaccessible-but-existing.
-    navigate(`${buildPath('administration', 'roles')}/${roleId}/configure`)
-  }
 
   const columns: DataTableColumn<RoleWithId>[] = [
     {
       key: 'name',
-      header: 'Role Name',
+      header: 'ROLE NAME',
       sortValue: (r) => r.name,
       render: (r) => (
-        <span className="flex items-center gap-2 font-medium">
+        <span className="flex items-center gap-2.5">
           {r.type === 'owner' ? (
-            <Crown className="size-4 text-amber-500" />
+            <Crown className="size-4 shrink-0 text-amber-500" />
           ) : (
-            <Circle className="size-3 text-muted-foreground/40" />
+            <Shield className="size-4 shrink-0 text-muted-foreground" />
           )}
-          {r.name}
+          <span className={cn('font-semibold', r.type === 'owner' && 'text-amber-700 dark:text-amber-400')}>
+            {r.name}
+          </span>
         </span>
       ),
     },
     {
       key: 'code',
-      header: 'Code',
+      header: 'CODE',
       render: (r) => (
-        <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{r.code}</span>
+        <span
+          className={cn(
+            'rounded px-1.5 py-0.5 font-mono text-xs',
+            r.type === 'owner'
+              ? 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-400'
+              : 'bg-muted'
+          )}
+        >
+          {r.code}
+        </span>
       ),
     },
     {
       key: 'type',
-      header: 'Type',
+      header: 'TYPE',
+      render: (r) =>
+        r.type === 'owner' ? (
+          <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-medium text-white">
+            Owner
+          </span>
+        ) : (
+          <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+            Custom
+          </span>
+        ),
+    },
+    {
+      key: 'status',
+      header: 'STATUS',
+      render: (r) =>
+        r.status === 'active' ? (
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+            <CircleCheck className="size-3.5" />
+            Active
+          </span>
+        ) : (
+          <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground capitalize">
+            {r.status}
+          </span>
+        ),
+    },
+    {
+      key: 'actions',
+      header: '',
       render: (r) => (
-        <StatusBadge
-          status={r.type === 'owner' ? 'Owner' : 'Custom'}
-          tone={r.type === 'owner' ? 'warning' : 'neutral'}
-        />
+        <div className="flex items-center justify-end gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label={`View ${r.name}`}
+            className="text-teal-600 dark:text-teal-400"
+            onClick={(e) => {
+              e.stopPropagation()
+              setSelectedRole(r)
+            }}
+          >
+            <Eye className="size-4" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={`Actions for ${r.name}`}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              }
+            >
+              <MoreVertical className="size-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-52">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              </DropdownMenuGroup>
+              <DropdownMenuItem
+                onClick={() => navigate(`${buildPath('administration', 'roles')}/${r.id}/configure`)}
+              >
+                <ShieldCheck />
+                <span className="font-medium text-teal-700 dark:text-teal-400">Configure Role</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setEditing(r)
+                  setEditName(r.name)
+                  setEditCode(r.code)
+                }}
+              >
+                <Pencil />
+                Edit
+              </DropdownMenuItem>
+              {/* The Owner role is protected in firestore.rules as well as here — it is the only
+                * role that can edit itself, so disabling it would lock the shop out of its own
+                * permissions with no way back. */}
+              {!r.protected && (
+                <>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      setConfirmAction({ role: r, kind: r.status === 'active' ? 'disable' : 'enable' })
+                    }
+                  >
+                    <EyeOff />
+                    {r.status === 'active' ? 'Disable Role' : 'Enable Role'}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onClick={() => setConfirmAction({ role: r, kind: 'delete' })}
+                  >
+                    <Trash2 />
+                    Delete
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       ),
     },
-    { key: 'status', header: 'Status', render: (r) => <StatusBadge status={r.status} /> },
   ]
 
   return (
     <div className="space-y-6 p-4 sm:p-6">
       <PageHeader
         icon={ShieldCheck}
-        title="Role Management"
+        title="Roles Management"
         subtitle="Manage user roles, permissions, and menu access"
         actions={
-          <Button onClick={() => setAddOpen(true)}>
-            <Settings2 />
-            Add Role
-          </Button>
+          <>
+            <Button type="button" variant="outline" onClick={() => void refetch()}>
+              <RefreshCw className="size-4" />
+              Refresh
+            </Button>
+            <Button
+              type="button"
+              onClick={() => navigate(`${buildPath('administration', 'roles')}/create`)}
+            >
+              <Plus className="size-4" />
+              Add Role
+            </Button>
+          </>
         }
       />
 
-      <div className="flex flex-wrap gap-3">
-        <StatCard
-          label="Total Roles"
-          value={counts.total}
-          onClick={() => setStatusFilter(null)}
-          selected={statusFilter === null}
-        />
-        <StatCard
+      <StatPillRow>
+        <StatPill label="Total Roles" count={counts.total} />
+        <StatPill
+          icon={ShieldCheck}
           label="Active Roles"
-          value={counts.active}
+          count={counts.active}
           tone="success"
-          onClick={() => setStatusFilter('active')}
           selected={statusFilter === 'active'}
+          onClick={() => setStatusFilter('active')}
         />
-        <StatCard
+        <StatPill
+          icon={EyeOff}
           label="Disabled Roles"
-          value={counts.disabled}
+          count={counts.disabled}
           tone="warning"
-          onClick={() => setStatusFilter('disabled')}
           selected={statusFilter === 'disabled'}
+          onClick={() => setStatusFilter('disabled')}
         />
-        <StatCard
+        <StatPill
+          icon={Trash2}
           label="Deleted Roles"
-          value={counts.deleted}
+          count={counts.deleted}
           tone="danger"
-          onClick={() => setStatusFilter('deleted')}
           selected={statusFilter === 'deleted'}
+          onClick={() => setStatusFilter('deleted')}
         />
+      </StatPillRow>
+
+      <div className="flex flex-wrap items-center gap-2 border-t pt-4">
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by role name or code..."
+          className="h-10 max-w-md flex-1 rounded-full"
+        />
+        <Button
+          type="button"
+          variant={showOwnerOnly ? 'secondary' : 'outline'}
+          className="h-10"
+          aria-pressed={showOwnerOnly}
+          onClick={() => setShowOwnerOnly((v) => !v)}
+        >
+          <Filter className="size-4" />
+          Filters
+        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger render={<Button type="button" variant="outline" className="h-10" />}>
+            <MoreVertical className="size-4" />
+            More Actions
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setStatusFilter('active')}>
+              <ListChecks />
+              Show active roles
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => void refetch()}>
+              <RefreshCw />
+              Reload from server
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
-      <FilterBar
-        searchValue={search}
-        onSearchChange={setSearch}
-        searchPlaceholder="Search by role name or code..."
-      />
+      <p className="flex items-center gap-2 text-sm">
+        <span className="text-muted-foreground">Viewing:</span>
+        <span className="rounded-full border px-2.5 py-0.5 text-xs font-medium">
+          {STATUS_LABEL[statusFilter]} ({filtered.length})
+        </span>
+      </p>
 
       <DataTable
         columns={columns}
+        rowClassName={(r) =>
+          r.type === 'owner'
+            ? 'bg-amber-50/70 border-l-4 border-l-amber-400 dark:bg-amber-500/10'
+            : undefined
+        }
         data={filtered}
         rowKey={(r) => r.id}
         onRowClick={setSelectedRole}
@@ -237,30 +414,86 @@ export function RoleManagementPage() {
       />
 
       <FormModal
-        open={addOpen}
-        onOpenChange={setAddOpen}
-        title="Add Role"
-        description="Create a custom role — it starts with no access until you configure it."
-        onSubmit={handleSubmit(onAddRole)}
-        submitLabel="Create & Configure"
-        isSubmitting={isSubmitting}
+        open={!!editing}
+        onOpenChange={(open) => !open && setEditing(null)}
+        title="Edit Role"
+        description="Rename this role or change its code. Permissions are edited in Configure."
+        submitLabel={renameRole.isPending ? 'Saving…' : 'Save Changes'}
+        isSubmitting={renameRole.isPending}
+        onSubmit={async () => {
+          if (!editing || !editName.trim()) return
+          await renameRole.mutateAsync({
+            roleId: editing.id,
+            name: editName,
+            code: editCode || slugifyCode(editName),
+          })
+          setEditing(null)
+        }}
       >
         <div className="space-y-1.5">
-          <Label htmlFor="roleName">Role Name *</Label>
+          <Label htmlFor="edit-role-name">
+            Role Name <span className="text-red-600">*</span>
+          </Label>
           <Input
-            id="roleName"
-            placeholder="e.g. Front Desk"
-            aria-invalid={!!errors.name}
-            {...register('name')}
+            id="edit-role-name"
+            value={editName}
+            onChange={(e) => setEditName(e.target.value)}
+            placeholder="e.g. SalesManager"
           />
-          {errors.name && <p className="text-xs text-red-600">{errors.name.message}</p>}
-          {watchedName && (
-            <p className="text-xs text-muted-foreground">
-              Code: <span className="font-mono">{slugifyCode(watchedName)}</span>
-            </p>
-          )}
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="edit-role-code">
+            Role Code <span className="text-red-600">*</span>
+          </Label>
+          <Input
+            id="edit-role-code"
+            value={editCode}
+            onChange={(e) => setEditCode(e.target.value.toUpperCase())}
+            placeholder="e.g. SALES_MANAGER"
+          />
+          <p className="text-xs text-muted-foreground">Unique identifier (auto-generated from name)</p>
         </div>
       </FormModal>
+
+      <ConfirmDialog
+        open={!!confirmAction}
+        onOpenChange={(open) => !open && setConfirmAction(null)}
+        title={
+          confirmAction?.kind === 'delete'
+            ? 'Delete this role?'
+            : confirmAction?.kind === 'disable'
+              ? 'Disable this role?'
+              : 'Enable this role?'
+        }
+        message={
+          confirmAction
+            ? confirmAction.kind === 'delete'
+              ? `"${confirmAction.role.name}" is removed from the list. Anyone still holding it keeps the role on their profile but gains nothing from it — reassign those users first.`
+              : confirmAction.kind === 'disable'
+                ? `"${confirmAction.role.name}" keeps its permissions and its users but stops granting anything. Enabling it later restores exactly what is there now.`
+                : `"${confirmAction.role.name}" starts granting its permissions again.`
+            : ''
+        }
+        confirmLabel={
+          confirmAction?.kind === 'delete' ? 'Delete' : confirmAction?.kind === 'disable' ? 'Disable' : 'Enable'
+        }
+        destructive={confirmAction?.kind !== 'enable'}
+        isPending={setRoleStatus.isPending}
+        onConfirm={async () => {
+          if (!confirmAction) return
+          await setRoleStatus.mutateAsync({
+            role: confirmAction.role,
+            status:
+              confirmAction.kind === 'delete'
+                ? 'deleted'
+                : confirmAction.kind === 'disable'
+                  ? 'disabled'
+                  : 'active',
+          })
+          setConfirmAction(null)
+        }}
+      />
+
     </div>
   )
 }
