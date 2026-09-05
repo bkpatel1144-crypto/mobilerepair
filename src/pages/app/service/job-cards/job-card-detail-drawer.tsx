@@ -23,7 +23,9 @@ export function JobCardDetailDrawer({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent size="2xl" className="flex w-full flex-col gap-0 p-0">
-        <ScrollArea className="flex-1">
+        {/* `min-h-0` is load-bearing: a flex child's `min-height` defaults to `auto`, so
+          * `flex-1` alone lets this grow past the sheet instead of scrolling inside it. */}
+        <ScrollArea className="min-h-0 flex-1">
           <div className="p-5 pr-8">
             {job && (
               <JobCardDetailContent

@@ -13,7 +13,10 @@ function ScrollArea({ className, children, ...props }: ScrollAreaPrimitive.Root.
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
-        className="size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1"
+        // `overflow-y-auto` explicitly: the viewport is the element that actually scrolls, and
+        // `size-full` only sizes it. Without this it simply grows to fit its content and the
+        // overflow spills out of whatever contains it.
+        className="size-full overflow-y-auto rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1"
       >
         {children}
       </ScrollAreaPrimitive.Viewport>

@@ -71,7 +71,9 @@ export function DetailDrawer({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent size="lg" className={cn('flex w-full flex-col gap-0 p-0', className)}>
-        <ScrollArea className="flex-1">
+        {/* `min-h-0` is load-bearing: a flex child's `min-height` defaults to `auto`, so
+          * `flex-1` alone lets this grow past the sheet instead of scrolling inside it. */}
+        <ScrollArea className="min-h-0 flex-1">
           <div className="space-y-5 p-5 pr-8">
             <div>
               <div className="flex items-center gap-2">
