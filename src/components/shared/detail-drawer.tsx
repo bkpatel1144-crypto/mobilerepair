@@ -42,6 +42,14 @@ interface DetailDrawerProps {
   title: React.ReactNode
   subtitle?: React.ReactNode
   badges?: React.ReactNode
+  /** Replaces the default icon/title/subtitle/badges block outright, for a header that doesn't
+   * fit that shape (a large icon tile, chips on their own line). `title` is still used as the
+   * accessible name, so pass it either way. */
+  header?: React.ReactNode
+  /** Keeps the header and action row fixed while only the sections scroll. Worth it on a drawer
+   * whose actions are the point of opening it — scrolling to read the details shouldn't push
+   * Configure/Delete out of reach. */
+  pinHeader?: boolean
   /** Buttons row rendered right under the header (Edit/Delete/Print/etc.) */
   actions?: React.ReactNode
   sections?: DetailSection[]
@@ -62,93 +70,112 @@ export function DetailDrawer({
   title,
   subtitle,
   badges,
+  header,
+  pinHeader,
   actions,
   sections,
   timeline,
   children,
   className,
 }: DetailDrawerProps) {
+  const headerNode = header ?? (
+    <div>
+      <div className="flex items-center gap-2">
+        {Icon && (
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+            <Icon className="size-4" />
+          </span>
+        )}
+        <h2 className="text-lg font-semibold">{title}</h2>
+      </div>
+      {subtitle && <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>}
+      {badges && <div className="mt-2 flex flex-wrap gap-1.5">{badges}</div>}
+    </div>
+  )
+
+  const actionsNode = actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null
+
+  const bodyNode = (
+    <>
+      {sections?.map((section, i) => (
+        <div key={i} className={cn('space-y-2', section.className)}>
+          <div className="flex items-center gap-1.5 text-sm font-semibold">
+            {section.icon && <section.icon className="size-4 text-muted-foreground" />}
+            {section.title}
+          </div>
+          {section.rows && (
+            <dl className="grid grid-cols-2 gap-x-3 gap-y-2 rounded-lg bg-muted/40 p-3 text-sm">
+              {section.rows.map((row, j) => (
+                <div key={j} className="contents">
+                  <dt className="text-muted-foreground">{row.label}</dt>
+                  <dd className={cn('text-right font-medium', row.tone && ROW_TONE_STYLES[row.tone])}>
+                    {row.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {section.children}
+        </div>
+      ))}
+
+      {children}
+
+      {timeline && timeline.length > 0 && (
+        <div className="space-y-3">
+          <div className="text-sm font-semibold">Timeline</div>
+          <Separator />
+          <ol className="space-y-4">
+            {timeline.map((event, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+                  {event.icon ? (
+                    <event.icon className="size-3.5" />
+                  ) : (
+                    <span className="size-1.5 rounded-full bg-current" />
+                  )}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium">{event.title}</p>
+                  {event.description && (
+                    <p className="text-sm text-muted-foreground">{event.description}</p>
+                  )}
+                  {event.timestamp && (
+                    <p className="mt-0.5 text-xs text-muted-foreground">{event.timestamp}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </>
+  )
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent size="lg" className={cn('flex w-full flex-col gap-0 p-0', className)}>
-        {/* `min-h-0` is load-bearing: a flex child's `min-height` defaults to `auto`, so
-          * `flex-1` alone lets this grow past the sheet instead of scrolling inside it. */}
-        <ScrollArea className="min-h-0 flex-1">
-          <div className="space-y-5 p-5 pr-8">
-            <div>
-              <div className="flex items-center gap-2">
-                {Icon && (
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
-                    <Icon className="size-4" />
-                  </span>
-                )}
-                <h2 className="text-lg font-semibold">{title}</h2>
-              </div>
-              {subtitle && <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>}
-              {badges && <div className="mt-2 flex flex-wrap gap-1.5">{badges}</div>}
+        {pinHeader ? (
+          <>
+            <div className="space-y-4 border-b p-5 pr-12">
+              {headerNode}
+              {actionsNode}
             </div>
-
-            {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
-
-            {sections?.map((section, i) => (
-              <div key={i} className={cn('space-y-2', section.className)}>
-                <div className="flex items-center gap-1.5 text-sm font-semibold">
-                  {section.icon && <section.icon className="size-4 text-muted-foreground" />}
-                  {section.title}
-                </div>
-                {section.rows && (
-                  <dl className="grid grid-cols-2 gap-x-3 gap-y-2 rounded-lg bg-muted/40 p-3 text-sm">
-                    {section.rows.map((row, j) => (
-                      <div key={j} className="contents">
-                        <dt className="text-muted-foreground">{row.label}</dt>
-                        <dd
-                          className={cn(
-                            'text-right font-medium',
-                            row.tone && ROW_TONE_STYLES[row.tone]
-                          )}
-                        >
-                          {row.value}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-                {section.children}
-              </div>
-            ))}
-
-            {children}
-
-            {timeline && timeline.length > 0 && (
-              <div className="space-y-3">
-                <div className="text-sm font-semibold">Timeline</div>
-                <Separator />
-                <ol className="space-y-4">
-                  {timeline.map((event, i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
-                        {event.icon ? (
-                          <event.icon className="size-3.5" />
-                        ) : (
-                          <span className="size-1.5 rounded-full bg-current" />
-                        )}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium">{event.title}</p>
-                        {event.description && (
-                          <p className="text-sm text-muted-foreground">{event.description}</p>
-                        )}
-                        {event.timestamp && (
-                          <p className="mt-0.5 text-xs text-muted-foreground">{event.timestamp}</p>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </div>
-        </ScrollArea>
+            {/* `min-h-0` is load-bearing: a flex child's `min-height` defaults to `auto`, so
+              * `flex-1` alone lets this grow past the sheet instead of scrolling inside it. */}
+            <ScrollArea className="min-h-0 flex-1">
+              <div className="space-y-5 p-5 pr-8">{bodyNode}</div>
+            </ScrollArea>
+          </>
+        ) : (
+          <ScrollArea className="min-h-0 flex-1">
+            <div className="space-y-5 p-5 pr-8">
+              {headerNode}
+              {actionsNode}
+              {bodyNode}
+            </div>
+          </ScrollArea>
+        )}
       </SheetContent>
     </Sheet>
   )

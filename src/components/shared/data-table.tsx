@@ -8,6 +8,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -54,6 +55,11 @@ interface DataTableProps<T> {
    * year, the default company). Applied to both the desktop row and the mobile card, so the two
    * views can't disagree about which row is highlighted. */
   rowClassName?: (row: T) => string | undefined
+  /** Caption bar above the table — the name of what's listed, plus its count. Rendered on the
+   * empty and error branches too, so a list that fails or comes back empty still says what it
+   * was meant to be showing rather than becoming an unlabelled box. */
+  title?: React.ReactNode
+  titleIcon?: LucideIcon
   emptyState?: React.ReactNode
   pageSizeOptions?: number[]
   defaultPageSize?: number
@@ -71,6 +77,8 @@ export function DataTable<T>({
   error,
   onRetry,
   rowClassName,
+  title,
+  titleIcon: TitleIcon,
   emptyState,
   pageSizeOptions = [10, 20, 50],
   defaultPageSize = 10,
@@ -113,9 +121,17 @@ export function DataTable<T>({
     return String((row as Record<string, unknown>)[col.key] ?? '')
   }
 
+  const caption = title ? (
+    <div className="flex items-center gap-2 text-sm font-semibold">
+      {TitleIcon && <TitleIcon className="size-4 text-muted-foreground" />}
+      {title}
+    </div>
+  ) : null
+
   if (isLoading) {
     return (
       <div className={cn('space-y-2', className)}>
+        {caption}
         {Array.from({ length: 5 }).map((_, i) => (
           <Skeleton key={i} className="h-12 w-full" />
         ))}
@@ -127,18 +143,25 @@ export function DataTable<T>({
   // empty branch or the failure is silently reported as "nothing here yet".
   if (error) {
     return (
-      <div className={className}>
+      <div className={cn('space-y-3', className)}>
+        {caption}
         <ErrorState error={error} onRetry={onRetry} />
       </div>
     )
   }
 
   if (data.length === 0) {
-    return <div className={className}>{emptyState}</div>
+    return (
+      <div className={cn('space-y-3', className)}>
+        {caption}
+        {emptyState}
+      </div>
+    )
   }
 
   return (
     <div className={cn('space-y-3', className)}>
+      {caption}
       {/* Desktop / tablet: real table */}
       <div className="hidden overflow-x-auto rounded-lg border md:block">
         <Table>

@@ -15,6 +15,7 @@ import {
   Trash2,
   ListChecks,
   CircleCheck,
+  Clock,
 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatPill, StatPillRow } from '@/components/shared/stat-pill'
@@ -30,8 +31,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
-import { StatusBadge } from '@/components/shared/status-badge'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
+import { DetailBlock, DetailValue, DetailNote } from '@/components/shared/detail-block'
 import { FormModal } from '@/components/shared/form-modal'
 import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
@@ -43,7 +44,7 @@ import {
   useSetRoleStatus,
   type RoleWithId,
 } from '@/hooks/use-roles'
-import { slugifyCode, formatTimestamp } from '@/lib/utils'
+import { slugifyCode, formatDateTimeLong } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
 
 
@@ -324,6 +325,8 @@ export function RoleManagementPage() {
       </p>
 
       <DataTable
+        title={`${STATUS_LABEL[statusFilter]} (${filtered.length})`}
+        titleIcon={ShieldCheck}
         columns={columns}
         rowClassName={(r) =>
           r.type === 'owner'
@@ -348,70 +351,154 @@ export function RoleManagementPage() {
       <DetailDrawer
         open={!!selectedRole}
         onOpenChange={(open) => !open && setSelectedRole(null)}
-        icon={selectedRole?.type === 'owner' ? Crown : ShieldCheck}
-        title={selectedRole?.name}
-        badges={
+        title="Role Details"
+        pinHeader
+        header={
           selectedRole && (
-            <>
-              <StatusBadge
-                status={selectedRole.type === 'owner' ? 'Owner' : 'Custom'}
-                tone={selectedRole.type === 'owner' ? 'warning' : 'neutral'}
-              />
-              <StatusBadge status={selectedRole.status} />
-            </>
+            <div className="space-y-3">
+              <h2 className="text-xl font-bold">Role Details</h2>
+              <div className="flex items-start gap-3">
+                <span
+                  className={cn(
+                    'flex size-14 shrink-0 items-center justify-center rounded-2xl text-white',
+                    selectedRole.type === 'owner' ? 'bg-amber-500' : 'bg-purple-500'
+                  )}
+                >
+                  {selectedRole.type === 'owner' ? (
+                    <Crown className="size-7" />
+                  ) : (
+                    <Shield className="size-7" />
+                  )}
+                </span>
+                <div className="min-w-0 space-y-2">
+                  <p className="truncate text-xl font-bold">{selectedRole.name}</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-md bg-muted px-2 py-1 font-mono text-xs">
+                      {selectedRole.code}
+                    </span>
+                    <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                      {selectedRole.type === 'owner' ? 'Owner' : 'Custom'}
+                    </span>
+                  </div>
+                  {selectedRole.status === 'active' ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+                      <CircleCheck className="size-3.5" />
+                      Active
+                    </span>
+                  ) : (
+                    <span className="inline-flex rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground capitalize">
+                      {selectedRole.status}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
           )
         }
         actions={
           selectedRole && (
-            <Button
-              onClick={() =>
-                navigate(`${buildPath('administration', 'roles')}/${selectedRole.id}/configure`)
-              }
-            >
-              <Settings2 />
-              Configure
-            </Button>
+            <>
+              <Button
+                variant="outline"
+                className="border-teal-500 text-teal-700 dark:text-teal-400"
+                onClick={() =>
+                  navigate(`${buildPath('administration', 'roles')}/${selectedRole.id}/configure`)
+                }
+              >
+                <Settings2 />
+                Configure
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setEditing(selectedRole)
+                  setEditName(selectedRole.name)
+                  setEditCode(selectedRole.code)
+                }}
+              >
+                <Pencil />
+                Edit
+              </Button>
+              {/* Same guard as the row kebab: the Owner role can't be disabled or deleted, since
+                * it is the only role that can restore permissions once they are gone. */}
+              {!selectedRole.protected && (
+                <>
+                  <Button
+                    variant="outline"
+                    className="border-amber-400 text-amber-700 dark:text-amber-400"
+                    onClick={() =>
+                      setConfirmAction({
+                        role: selectedRole,
+                        kind: selectedRole.status === 'active' ? 'disable' : 'enable',
+                      })
+                    }
+                  >
+                    <EyeOff />
+                    {selectedRole.status === 'active' ? 'Disable' : 'Enable'}
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => setConfirmAction({ role: selectedRole, kind: 'delete' })}
+                  >
+                    <Trash2 />
+                    Delete
+                  </Button>
+                </>
+              )}
+            </>
           )
         }
-        sections={
-          selectedRole
-            ? [
-                {
-                  title: 'Role Information',
-                  icon: ShieldCheck,
-                  rows: [
-                    { label: 'Role Name', value: selectedRole.name },
-                    { label: 'Role Code', value: selectedRole.code },
-                    {
-                      label: 'Role Type',
-                      value: selectedRole.type === 'owner' ? 'Owner Role' : 'Custom Role',
-                    },
-                  ],
-                },
-                ...(selectedRole.protected
-                  ? [
-                      {
-                        title: 'Owner Role',
-                        children: (
-                          <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-                            This is the Owner role. It has full access and can only be managed by
-                            another Owner.
-                          </p>
-                        ),
-                      },
-                    ]
-                  : []),
-                {
-                  title: 'Timeline',
-                  rows: [
-                    { label: 'Created', value: formatTimestamp(selectedRole.createdAt) },
-                    { label: 'Last Updated', value: formatTimestamp(selectedRole.updatedAt) },
-                  ],
-                },
-              ]
-            : []
-        }
-      />
+      >
+        {selectedRole && (
+          <>
+            <DetailBlock
+              icon={selectedRole.type === 'owner' ? Crown : Shield}
+              title="Role Information"
+              tone={selectedRole.type === 'owner' ? 'amber' : 'purple'}
+            >
+              <DetailValue label="Role Name" value={selectedRole.name} divider />
+              <DetailValue
+                label="Role Code"
+                value={
+                  <span className="inline-block rounded-md border bg-background px-2 py-1 font-mono text-sm">
+                    {selectedRole.code}
+                  </span>
+                }
+                divider
+              />
+              <DetailValue
+                label="Role Type"
+                value={
+                  <span className="inline-flex items-center gap-1.5">
+                    {selectedRole.type === 'owner' ? (
+                      <Crown className="size-4 text-amber-500" />
+                    ) : (
+                      <Shield className="size-4 text-purple-500" />
+                    )}
+                    {selectedRole.type === 'owner' ? 'Owner Role' : 'Custom Role'}
+                  </span>
+                }
+              />
+            </DetailBlock>
+
+            <DetailBlock icon={Clock} title="Timeline" tone="blue">
+              <DetailValue
+                label="Created"
+                value={formatDateTimeLong(selectedRole.createdAt)}
+                divider
+              />
+              <DetailValue label="Last Updated" value={formatDateTimeLong(selectedRole.updatedAt)} />
+            </DetailBlock>
+
+            {selectedRole.protected && (
+              <DetailNote icon={Crown} title="Owner Role" tone="amber">
+                This role has full access by definition and can only be managed by another Owner,
+                so it can't be disabled or deleted.
+              </DetailNote>
+            )}
+          </>
+        )}
+      </DetailDrawer>
 
       <FormModal
         open={!!editing}
