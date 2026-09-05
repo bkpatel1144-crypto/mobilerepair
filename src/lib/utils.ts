@@ -38,6 +38,30 @@ export function formatTimestamp(
   return ts.toDate().toLocaleString('en-IN', withTime ? { dateStyle: 'medium', timeStyle: 'short' } : { dateStyle: 'medium' })
 }
 
+/**
+ * `04 Sep 2026` — two-digit day, three-letter month, four-digit year.
+ *
+ * Month names are spelled out here rather than left to `Intl`, which is not stable across
+ * environments: the same `month: 'short'` gives "Sep" in some ICU builds and "Sept" in others,
+ * so a date column would read differently depending on the user's browser and OS. Table columns
+ * also align better with a fixed-width day.
+ */
+const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+export function formatDateShort(ts: { toDate?: () => Date } | Date | null | undefined): string {
+  const d = ts instanceof Date ? ts : ts?.toDate?.()
+  if (!d) return '—'
+  return `${String(d.getDate()).padStart(2, '0')} ${MONTHS_SHORT[d.getMonth()]} ${d.getFullYear()}`
+}
+
+/** `Sep 04, 2026 • 11:58 AM` — the long form used in detail drawers' Timeline blocks. */
+export function formatDateTimeLong(ts: { toDate?: () => Date } | Date | null | undefined): string {
+  const d = ts instanceof Date ? ts : ts?.toDate?.()
+  if (!d) return '—'
+  const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+  return `${MONTHS_SHORT[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()} • ${time}`
+}
+
 /** `₹6,200` — thousands-separated rupee display, matching the `₹{amt.toLocaleString('en-IN')}`
  * pattern already used ad hoc in a few earlier pages, now a shared helper for Phase 9's reports
  * (which need it in many more places than any earlier phase did). Rounds to whole rupees —

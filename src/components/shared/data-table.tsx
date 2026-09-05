@@ -50,6 +50,10 @@ interface DataTableProps<T> {
   error?: unknown
   /** Usually the query's `refetch`. */
   onRetry?: () => void
+  /** Per-row classes — for a row that needs to stand out on its own terms (the current financial
+   * year, the default company). Applied to both the desktop row and the mobile card, so the two
+   * views can't disagree about which row is highlighted. */
+  rowClassName?: (row: T) => string | undefined
   emptyState?: React.ReactNode
   pageSizeOptions?: number[]
   defaultPageSize?: number
@@ -66,6 +70,7 @@ export function DataTable<T>({
   isLoading,
   error,
   onRetry,
+  rowClassName,
   emptyState,
   pageSizeOptions = [10, 20, 50],
   defaultPageSize = 10,
@@ -170,7 +175,7 @@ export function DataTable<T>({
               <TableRow
                 key={rowKey(row)}
                 onClick={() => onRowClick?.(row)}
-                className={onRowClick ? 'cursor-pointer' : undefined}
+                className={cn(onRowClick && 'cursor-pointer', rowClassName?.(row))}
               >
                 {columns.map((col) => (
                   <TableCell key={col.key} className={col.className}>
@@ -194,7 +199,8 @@ export function DataTable<T>({
               onClick={() => onRowClick?.(row)}
               className={cn(
                 'rounded-lg border bg-card p-3',
-                onRowClick && 'cursor-pointer active:bg-muted/50'
+                onRowClick && 'cursor-pointer active:bg-muted/50',
+                rowClassName?.(row)
               )}
             >
               <div className="font-medium">{cellValue(titleCol, row)}</div>

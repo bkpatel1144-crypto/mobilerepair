@@ -73,6 +73,50 @@ export function useCreateFinancialYear() {
   })
 }
 
+/**
+ * Renames a financial year or corrects its dates.
+ *
+ * Only those three fields. `isActive`/`isCurrent`/`isLocked` are state transitions with their own
+ * invariants — "only one active at a time" is enforced atomically by `useActivateFinancialYear`,
+ * and letting a plain edit set them would route around that.
+ *
+ * A locked year is refused: closing a period is the point at which its figures stop moving, and
+ * shifting its dates afterwards would silently re-scope every report that reads them.
+ */
+export function useUpdateFinancialYear() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (input: { id: string; name: string; startDate: Date; endDate: Date; isLocked: boolean }) => {
+      if (input.isLocked) {
+        throw new Error('This financial year is closed. Reopen it before editing its dates.')
+      }
+      if (input.endDate <= input.startDate) {
+        throw new Error('The end date must be after the start date.')
+      }
+      const batch = writeBatch(db)
+      batch.update(doc(db, financialYearDoc(companyId, input.id)), {
+        name: input.name,
+        startDate: Timestamp.fromDate(input.startDate),
+        endDate: Timestamp.fromDate(input.endDate),
+        updatedAt: serverTimestamp(),
+      })
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: 'Update',
+        module: 'settings',
+        entityType: 'Financial Year',
+        entityId: input.id,
+        entityLabel: input.name,
+        critical: true,
+      })
+      await batch.commit()
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: financialYearsQueryKey(companyId) }),
+  })
+}
+
 /** Deactivates whichever FY is currently `isCurrent`/`isActive` and activates the target one, in
  * one atomic batch — the only way `isActive`/`isCurrent` ever change, so "only one financial year
  * can be active at a time" (`preview (4)`'s own copy) is a real invariant, not just a UI

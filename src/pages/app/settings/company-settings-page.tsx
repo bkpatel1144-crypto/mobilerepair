@@ -43,7 +43,7 @@ import { useCompany, useUpdateCompany } from '@/hooks/use-company'
 import { useCompanies, useCreateCompany, useSwitchCompany } from '@/hooks/use-companies'
 import { useAuth } from '@/hooks/use-auth'
 import { buildPath } from '@/config/nav'
-import { formatTimestamp, getInitials } from '@/lib/utils'
+import { formatDateTimeLong, getInitials } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { CompanyForm } from './company-form'
 import {
@@ -426,6 +426,7 @@ export function CompanySettingsPage() {
           data={filtered}
           rowKey={(c) => c.id}
           onRowClick={setViewing}
+          rowClassName={(c) => (c.protected ? 'bg-amber-50/70 dark:bg-amber-500/10' : undefined)}
           isLoading={isLoading}
           emptyState={
             <EmptyState
@@ -525,8 +526,8 @@ export function CompanySettingsPage() {
             </DetailBlock>
 
             <DetailBlock icon={Clock} title="Timeline" tone="amber">
-              <DetailValue label="Created" value={formatTimestamp(viewing.createdAt)} />
-              <DetailValue label="Last updated" value={formatTimestamp(viewing.updatedAt)} />
+              <DetailValue label="Created" value={formatDateTimeLong(viewing.createdAt)} />
+              <DetailValue label="Last updated" value={formatDateTimeLong(viewing.updatedAt)} />
             </DetailBlock>
           </div>
         )}
