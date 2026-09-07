@@ -12,6 +12,8 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Skeleton } from '@/components/ui/skeleton'
 import { usePermissions } from '@/hooks/use-permissions'
+import { useTranslation } from 'react-i18next'
+import { useNavLabels } from '@/hooks/use-nav-labels'
 import { cn } from '@/lib/utils'
 
 interface SidebarNavProps {
@@ -38,6 +40,8 @@ interface SidebarNavProps {
 export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: SidebarNavProps) {
   const location = useLocation()
   const { canView, isLoading } = usePermissions()
+  const { t } = useTranslation()
+  const navLabel = useNavLabels()
   const initialOpen = NAV_SECTIONS.find((s) =>
     s.children.some((c) => location.pathname === buildPath(s.key, c.slug))
   )?.key
@@ -49,8 +53,10 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
   // While searching, a section shows if it matches by name (all its leaves stay visible, so you
   // can see what's in it) or if any leaf matches (only the matching leaves show). Sections are
   // force-expanded so results are actually readable without a second click on each one.
-  const leafMatches = (section: NavSection, leafLabel: string) =>
-    !filtering || matches(section.label) || matches(leafLabel)
+  const leafMatches = (section: NavSection, leaf: { slug: string; label: string }) =>
+    !filtering ||
+    matches(navLabel.section(section.key, section.label)) ||
+    matches(navLabel.item(section.key, leaf.slug, leaf.label))
 
   function handleSectionClick(section: NavSection) {
     if (collapsed) {
@@ -73,11 +79,11 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
 
   return (
     <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
-      {canView(DASHBOARD_MENU_KEY) && (!filtering || matches(DASHBOARD_NAV.label)) && (
+      {canView(DASHBOARD_MENU_KEY) && (!filtering || matches(navLabel.dashboard)) && (
         <NavItem
           to="/app/dashboard"
           icon={DASHBOARD_NAV.icon}
-          label={DASHBOARD_NAV.label}
+          label={navLabel.dashboard}
           collapsed={collapsed}
           onNavigate={onNavigate}
         />
@@ -99,7 +105,7 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
                 (leaf) => leaf.locked || canView(menuKey(section.key, leaf.slug))
               )
             : []
-        ).filter((leaf) => leafMatches(section, leaf.label))
+        ).filter((leaf) => leafMatches(section, leaf))
         if (visibleChildren.length === 0) return null
 
         // Searching forces every surviving section open — a list of collapsed section headers
@@ -119,7 +125,9 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
             <Icon className="size-5 shrink-0" />
             {!collapsed && (
               <>
-                <span className="flex-1 truncate text-left">{section.label}</span>
+                <span className="flex-1 truncate text-left">
+                  {navLabel.section(section.key, section.label)}
+                </span>
                 <ChevronDown
                   className={cn('size-4 shrink-0 transition-transform', isOpen && 'rotate-180')}
                 />
@@ -133,7 +141,9 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
             {collapsed ? (
               <Tooltip>
                 <TooltipTrigger render={sectionButton} />
-                <TooltipContent side="right">{section.label}</TooltipContent>
+                <TooltipContent side="right">
+                  {navLabel.section(section.key, section.label)}
+                </TooltipContent>
               </Tooltip>
             ) : (
               sectionButton
@@ -145,16 +155,18 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
                     <div
                       key={leaf.slug}
                       className="flex cursor-not-allowed items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-muted-foreground/60"
-                      title="Not available yet"
+                      title={t('nav.notAvailableYet')}
                     >
                       <Lock className="size-3.5 shrink-0" />
-                      <span className="truncate">{leaf.label}</span>
+                      <span className="truncate">
+                        {navLabel.item(section.key, leaf.slug, leaf.label)}
+                      </span>
                     </div>
                   ) : (
                     <NavLeafLink
                       key={leaf.slug}
                       to={buildPath(section.key, leaf.slug)}
-                      label={leaf.label}
+                      label={navLabel.item(section.key, leaf.slug, leaf.label)}
                       onNavigate={onNavigate}
                     />
                   )

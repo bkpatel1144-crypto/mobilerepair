@@ -27,7 +27,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useBreadcrumbExtraValue } from '@/contexts/breadcrumb-context'
-import { getInitials } from '@/lib/utils'
+import { getInitials, cn } from '@/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,6 +39,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useTheme } from '@/hooks/use-theme'
+import { useTranslation } from 'react-i18next'
+import { useLanguage } from '@/hooks/use-language'
+import { LANGUAGES } from '@/lib/i18n'
 import { useAuth } from '@/hooks/use-auth'
 import { findNavEntry, buildPath } from '@/config/nav'
 import { useCompany } from '@/hooks/use-company'
@@ -53,6 +56,8 @@ interface TopBarProps {
 }
 
 export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
+  const { t } = useTranslation()
+  const { language, setLanguage } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
@@ -177,7 +182,12 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           {isFullscreen ? <Minimize className="size-4.5" /> : <Maximize className="size-4.5" />}
         </Button>
 
-        <Button variant="ghost" size="icon-sm" onClick={toggleTheme} aria-label="Toggle theme">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={toggleTheme}
+          aria-label={t('shell.toggleTheme')}
+        >
           {theme === 'dark' ? <Sun className="size-4.5" /> : <Moon className="size-4.5" />}
         </Button>
 
@@ -188,14 +198,32 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
                 variant="ghost"
                 size="icon-sm"
                 className="hidden sm:inline-flex"
-                aria-label="Language"
+                aria-label={t('shell.language')}
               />
             }
           >
             <Languages className="size-4.5" />
           </PopoverTrigger>
-          <PopoverContent align="end" className="w-64 text-sm text-muted-foreground">
-            Multi-language support is coming soon.
+          <PopoverContent align="end" className="w-56 p-1">
+            <p className="px-2 py-1.5 text-xs text-muted-foreground">{t('shell.languageHint')}</p>
+            {LANGUAGES.map((l) => (
+              <button
+                key={l.code}
+                type="button"
+                onClick={() => void setLanguage(l.code)}
+                className={cn(
+                  'flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm hover:bg-accent',
+                  language === l.code && 'bg-accent font-medium'
+                )}
+              >
+                {/* Each language is named in its own script: someone who has landed in the wrong
+                 * language cannot read "Gujarati" to get back out of it, but can read
+                 * "ગુજરાતી". */}
+                <span className="flex-1">{l.nativeLabel}</span>
+                <span className="text-xs text-muted-foreground">{l.label}</span>
+                {language === l.code && <Check className="size-4 shrink-0" />}
+              </button>
+            ))}
           </PopoverContent>
         </Popover>
 
