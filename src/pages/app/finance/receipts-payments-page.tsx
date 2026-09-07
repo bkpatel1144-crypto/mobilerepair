@@ -146,7 +146,8 @@ export function ReceiptsPaymentsPage() {
     { key: 'date', header: 'Date', sortValue: (r) => r.createdAt?.toDate?.()?.getTime() ?? 0, render: (r) => formatTimestamp(r.createdAt) },
     {
       key: 'actions',
-      header: '',
+      header: 'Actions',
+      className: 'text-right',
       render: (r) =>
         !r.voided && canVoid ? (
           <DropdownMenu>

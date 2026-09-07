@@ -85,7 +85,8 @@ export function UomPage() {
     { key: 'status', header: 'Status', render: (u) => <StatusBadge status={u.status === 'active' ? 'Active' : 'Inactive'} /> },
     {
       key: 'actions',
-      header: '',
+      header: 'Actions',
+      className: 'text-right',
       render: (u) =>
         canManage ? (
           <DropdownMenu>

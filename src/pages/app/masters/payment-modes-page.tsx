@@ -68,7 +68,8 @@ export function PaymentModesPage() {
     { key: 'status', header: 'Status', render: (m) => <StatusBadge status={m.status === 'active' ? 'Active' : 'Inactive'} /> },
     {
       key: 'actions',
-      header: '',
+      header: 'Actions',
+      className: 'text-right',
       render: (m) =>
         canManage ? (
           <DropdownMenu>

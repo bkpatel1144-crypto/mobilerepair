@@ -51,7 +51,8 @@ export function IpWhitelistPage() {
     { key: 'created', header: 'Created', hideOnMobile: true, render: (e) => formatTimestamp(e.createdAt, false) },
     {
       key: 'actions',
-      header: '',
+      header: 'Actions',
+      className: 'text-right',
       render: (e) =>
         canManage ? (
           <DropdownMenu>

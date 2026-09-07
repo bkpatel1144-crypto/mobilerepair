@@ -55,7 +55,8 @@ export function DeviceSalePage() {
     { key: 'expectedSalePrice', header: 'Expected Sale Price', render: (p) => (p.expectedSalePrice != null ? `₹${p.expectedSalePrice}` : '—') },
     {
       key: 'actions',
-      header: '',
+      header: 'Actions',
+      className: 'text-right',
       render: (p) => (
         <Button type="button" size="sm" onClick={(e) => { e.stopPropagation(); setSelling(p) }}>
           Sell

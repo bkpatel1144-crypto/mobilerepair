@@ -151,7 +151,8 @@ export function RoleManagementPage() {
     },
     {
       key: 'actions',
-      header: '',
+      header: 'ACTIONS',
+      className: 'text-right',
       render: (r) => (
         <div className="flex items-center justify-end gap-1">
           <Button
@@ -325,8 +326,6 @@ export function RoleManagementPage() {
       </p>
 
       <DataTable
-        title={`${STATUS_LABEL[statusFilter]} (${filtered.length})`}
-        titleIcon={ShieldCheck}
         columns={columns}
         rowClassName={(r) =>
           r.type === 'owner'

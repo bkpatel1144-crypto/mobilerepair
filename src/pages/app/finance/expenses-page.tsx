@@ -297,7 +297,8 @@ export function ExpensesPage() {
     },
     {
       key: 'actions',
-      header: '',
+      header: 'Actions',
+      className: 'text-right',
       render: (e) =>
         e.voided ? null : (
           <Button
