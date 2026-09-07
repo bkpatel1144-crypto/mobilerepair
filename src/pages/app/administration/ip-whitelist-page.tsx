@@ -41,14 +41,34 @@ export function IpWhitelistPage() {
   const [editing, setEditing] = useState<IpWhitelistWithId | 'new' | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<IpWhitelistWithId | null>(null)
 
-  const filtered = entries.filter((e) => `${e.label} ${e.ipOrCidr}`.toLowerCase().includes(search.toLowerCase()))
+  const filtered = entries.filter((e) =>
+    `${e.label} ${e.ipOrCidr}`.toLowerCase().includes(search.toLowerCase())
+  )
 
   const columns: DataTableColumn<IpWhitelistWithId>[] = [
-    { key: 'label', header: 'Label', sortValue: (e) => e.label, render: (e) => <span className="font-medium">{e.label}</span> },
-    { key: 'ip', header: 'IP / CIDR', render: (e) => <span className="font-mono text-xs">{e.ipOrCidr}</span> },
+    {
+      key: 'label',
+      header: 'Label',
+      sortValue: (e) => e.label,
+      render: (e) => <span className="font-medium">{e.label}</span>,
+    },
+    {
+      key: 'ip',
+      header: 'IP / CIDR',
+      render: (e) => <span className="font-mono text-xs">{e.ipOrCidr}</span>,
+    },
     { key: 'notes', header: 'Notes', hideOnMobile: true, render: (e) => e.notes || '—' },
-    { key: 'status', header: 'Status', render: (e) => <StatusBadge status={e.active ? 'Active' : 'Inactive'} /> },
-    { key: 'created', header: 'Created', hideOnMobile: true, render: (e) => formatTimestamp(e.createdAt, false) },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (e) => <StatusBadge status={e.active ? 'Active' : 'Inactive'} />,
+    },
+    {
+      key: 'created',
+      header: 'Created',
+      hideOnMobile: true,
+      render: (e) => formatTimestamp(e.createdAt, false),
+    },
     {
       key: 'actions',
       header: 'Actions',
@@ -58,18 +78,34 @@ export function IpWhitelistPage() {
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <Button type="button" variant="ghost" size="icon-sm" onClick={(ev) => ev.stopPropagation()}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={(ev) => ev.stopPropagation()}
+                >
                   <MoreVertical className="size-4" />
                 </Button>
               }
             />
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={(ev) => { ev.stopPropagation(); setEditing(e) }}>
+              <DropdownMenuItem
+                onClick={(ev) => {
+                  ev.stopPropagation()
+                  setEditing(e)
+                }}
+              >
                 <Pencil className="size-4" />
                 Edit
               </DropdownMenuItem>
               <ToggleActiveItem entry={e} />
-              <DropdownMenuItem variant="destructive" onClick={(ev) => { ev.stopPropagation(); setDeleteTarget(e) }}>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={(ev) => {
+                  ev.stopPropagation()
+                  setDeleteTarget(e)
+                }}
+              >
                 <Trash2 className="size-4" />
                 Delete
               </DropdownMenuItem>
@@ -100,10 +136,19 @@ export function IpWhitelistPage() {
 
       <StatCardGrid>
         <StatCard label="Total" value={entries.length} icon={ShieldCheck} />
-        <StatCard label="Active" icon={CheckCircle2} value={entries.filter((e) => e.active).length} tone="success" />
+        <StatCard
+          label="Active"
+          icon={CheckCircle2}
+          value={entries.filter((e) => e.active).length}
+          tone="success"
+        />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search by label or IP..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search by label or IP..."
+      />
 
       <DataTable
         columns={columns}
@@ -135,7 +180,9 @@ export function IpWhitelistPage() {
           }
           confirmLabel="Delete"
           isPending={deleteEntry.isPending}
-          onConfirm={() => deleteEntry.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })}
+          onConfirm={() =>
+            deleteEntry.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })
+          }
         />
       )}
     </div>
@@ -147,7 +194,12 @@ function ToggleActiveItem({ entry }: { entry: IpWhitelistWithId }) {
   const [confirming, setConfirming] = useState(false)
   return (
     <>
-      <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setConfirming(true) }}>
+      <DropdownMenuItem
+        onClick={(e) => {
+          e.stopPropagation()
+          setConfirming(true)
+        }}
+      >
         {entry.active ? <Ban className="size-4" /> : <CheckCircle2 className="size-4" />}
         {entry.active ? 'Deactivate' : 'Activate'}
       </DropdownMenuItem>
@@ -165,7 +217,13 @@ function ToggleActiveItem({ entry }: { entry: IpWhitelistWithId }) {
         isPending={update.isPending}
         onConfirm={() =>
           update.mutate(
-            { id: entry.id, label: entry.label, ipOrCidr: entry.ipOrCidr, notes: entry.notes, active: !entry.active },
+            {
+              id: entry.id,
+              label: entry.label,
+              ipOrCidr: entry.ipOrCidr,
+              notes: entry.notes,
+              active: !entry.active,
+            },
             { onSuccess: () => setConfirming(false) }
           )
         }
@@ -174,7 +232,13 @@ function ToggleActiveItem({ entry }: { entry: IpWhitelistWithId }) {
   )
 }
 
-function IpWhitelistModal({ editing, onClose }: { editing: IpWhitelistWithId | 'new'; onClose: () => void }) {
+function IpWhitelistModal({
+  editing,
+  onClose,
+}: {
+  editing: IpWhitelistWithId | 'new'
+  onClose: () => void
+}) {
   const isNew = editing === 'new'
   const { data: myIp } = useMyIp()
   const createEntry = useCreateIpWhitelistEntry()
@@ -182,7 +246,7 @@ function IpWhitelistModal({ editing, onClose }: { editing: IpWhitelistWithId | '
 
   const [label, setLabel] = useState(isNew ? '' : editing.label)
   const [ipOrCidr, setIpOrCidr] = useState(isNew ? '' : editing.ipOrCidr)
-  const [notes, setNotes] = useState(isNew ? '' : editing.notes ?? '')
+  const [notes, setNotes] = useState(isNew ? '' : (editing.notes ?? ''))
   const [active, setActive] = useState(isNew ? true : editing.active)
 
   const isPending = createEntry.isPending || updateEntry.isPending
@@ -190,7 +254,12 @@ function IpWhitelistModal({ editing, onClose }: { editing: IpWhitelistWithId | '
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!label.trim() || !ipOrCidr.trim()) return
-    const input = { label: label.trim(), ipOrCidr: ipOrCidr.trim(), notes: notes.trim() || null, active }
+    const input = {
+      label: label.trim(),
+      ipOrCidr: ipOrCidr.trim(),
+      notes: notes.trim() || null,
+      active,
+    }
     if (isNew) await createEntry.mutateAsync(input)
     else await updateEntry.mutateAsync({ ...input, id: editing.id })
     onClose()
@@ -207,11 +276,21 @@ function IpWhitelistModal({ editing, onClose }: { editing: IpWhitelistWithId | '
     >
       <div className="space-y-1.5">
         <Label>Label *</Label>
-        <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="e.g. Shop Office WiFi" autoFocus />
+        <Input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          placeholder="e.g. Shop Office WiFi"
+          autoFocus
+        />
       </div>
       <div className="space-y-1.5">
         <Label>IP / CIDR *</Label>
-        <Input value={ipOrCidr} onChange={(e) => setIpOrCidr(e.target.value)} placeholder="e.g. 103.21.244.10 or 103.21.244.0/24" className="font-mono" />
+        <Input
+          value={ipOrCidr}
+          onChange={(e) => setIpOrCidr(e.target.value)}
+          placeholder="e.g. 103.21.244.10 or 103.21.244.0/24"
+          className="font-mono"
+        />
         {myIp && (
           <button
             type="button"
@@ -224,7 +303,12 @@ function IpWhitelistModal({ editing, onClose }: { editing: IpWhitelistWithId | '
       </div>
       <div className="space-y-1.5">
         <Label>Notes</Label>
-        <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Optional" rows={2} />
+        <Textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Optional"
+          rows={2}
+        />
       </div>
       <label className="flex items-center gap-2 text-sm">
         <Checkbox checked={active} onCheckedChange={(v) => setActive(v === true)} />

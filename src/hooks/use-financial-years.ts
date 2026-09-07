@@ -26,8 +26,7 @@ export function useFinancialYears() {
     companyId ? collection(db, financialYearsCollection(companyId)) : null,
     (docs) => {
       const rows = docs as (FinancialYearDoc & { id: string })[]
-      return ((rows) => rows
-        .sort((a, b) => b.startDate.toMillis() - a.startDate.toMillis()))(rows)
+      return ((rows) => rows.sort((a, b) => b.startDate.toMillis() - a.startDate.toMillis()))(rows)
     },
     !!companyId
   )
@@ -89,7 +88,13 @@ export function useUpdateFinancialYear() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: { id: string; name: string; startDate: Date; endDate: Date; isLocked: boolean }) => {
+    mutationFn: async (input: {
+      id: string
+      name: string
+      startDate: Date
+      endDate: Date
+      isLocked: boolean
+    }) => {
       if (input.isLocked) {
         throw new Error('This financial year is closed. Reopen it before editing its dates.')
       }
@@ -133,9 +138,17 @@ export function useActivateFinancialYear() {
       const batch = writeBatch(db)
       for (const fy of input.allFYs) {
         if (fy.id === input.target.id || !fy.isCurrent) continue
-        batch.update(doc(db, financialYearDoc(companyId, fy.id)), { isActive: false, isCurrent: false, updatedAt: serverTimestamp() })
+        batch.update(doc(db, financialYearDoc(companyId, fy.id)), {
+          isActive: false,
+          isCurrent: false,
+          updatedAt: serverTimestamp(),
+        })
       }
-      batch.update(doc(db, financialYearDoc(companyId, input.target.id)), { isActive: true, isCurrent: true, updatedAt: serverTimestamp() })
+      batch.update(doc(db, financialYearDoc(companyId, input.target.id)), {
+        isActive: true,
+        isCurrent: true,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: 'Activate',
         module: 'settings',
@@ -158,7 +171,10 @@ export function useSetFinancialYearLock() {
   return useMutation({
     mutationFn: async (input: { id: string; isLocked: boolean; name: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, financialYearDoc(companyId, input.id)), { isLocked: input.isLocked, updatedAt: serverTimestamp() })
+      batch.update(doc(db, financialYearDoc(companyId, input.id)), {
+        isLocked: input.isLocked,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.isLocked ? 'Lock' : 'Unlock',
         module: 'settings',

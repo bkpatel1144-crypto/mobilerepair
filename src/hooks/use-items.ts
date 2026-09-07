@@ -172,7 +172,10 @@ export function useSetItemStatus() {
   return useMutation({
     mutationFn: async (input: { id: string; status: EntityStatus; itemName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, itemDoc(companyId, input.id)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, itemDoc(companyId, input.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Activate' : 'Deactivate',
         module: 'masters',

@@ -39,7 +39,13 @@ export function PayablesPage() {
         title="Payables"
         subtitle="Refunds due and unused advances the shop is currently holding"
         actions={
-          <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
+            }
+          >
             <RefreshCw className="size-4" />
             Refresh
           </Button>
@@ -53,71 +59,94 @@ export function PayablesPage() {
         <ErrorState error={loadError} onRetry={() => void refetch()} />
       ) : (
         <>
-      <StatCardGrid>
-        <StatCard label="Total Payable" value={`₹${data.totalPayable}`} tone="danger" />
-        <StatCard label="Refund Due" value={`₹${data.refundDueTotal}`} tone="warning" />
-        <StatCard label="Unused Advance" value={`₹${data.unusedAdvanceTotal}`} tone="info" />
-        <StatCard label="Advance Credit" value={`₹${data.advanceCreditTotal}`} tone="purple" />
-      </StatCardGrid>
+          <StatCardGrid>
+            <StatCard label="Total Payable" value={`₹${data.totalPayable}`} tone="danger" />
+            <StatCard label="Refund Due" value={`₹${data.refundDueTotal}`} tone="warning" />
+            <StatCard label="Unused Advance" value={`₹${data.unusedAdvanceTotal}`} tone="info" />
+            <StatCard label="Advance Credit" value={`₹${data.advanceCreditTotal}`} tone="purple" />
+          </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search job card, customer...">
-        <div className="flex gap-1">
-          {(['all', 'refundDue', 'unusedAdvance'] as const).map((t) => (
-            <Button key={t} type="button" size="sm" variant={tab === t ? 'default' : 'outline'} onClick={() => setTab(t)}>
-              {t === 'all' ? 'All' : t === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
-            </Button>
-          ))}
-        </div>
-      </FilterBar>
-
-      {isLoading ? (
-        <p className="p-6 text-center text-sm text-muted-foreground">Loading…</p>
-      ) : filtered.length === 0 ? (
-        <EmptyState icon={Search} title="Nothing payable right now" description="Refunds due and unused advances will appear here." />
-      ) : (
-        <div className="divide-y rounded-lg border">
-          {filtered.map((row) => {
-            const isOpen = expandedId === row.job.id
-            return (
-              <div key={row.job.id}>
-                <button
+          <FilterBar
+            searchValue={search}
+            onSearchChange={setSearch}
+            searchPlaceholder="Search job card, customer..."
+          >
+            <div className="flex gap-1">
+              {(['all', 'refundDue', 'unusedAdvance'] as const).map((t) => (
+                <Button
+                  key={t}
                   type="button"
-                  onClick={() => setExpandedId(isOpen ? null : row.job.id)}
-                  className="flex w-full items-center gap-3 p-3 text-left hover:bg-muted/40"
+                  size="sm"
+                  variant={tab === t ? 'default' : 'outline'}
+                  onClick={() => setTab(t)}
                 >
-                  {isOpen ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
-                  <div className="min-w-0 flex-1">
-                    <p className="font-medium">{row.job.customerName}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {row.job.jobNumber} · {formatTimestamp(row.job.createdAt, false)}
-                    </p>
+                  {t === 'all' ? 'All' : t === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                </Button>
+              ))}
+            </div>
+          </FilterBar>
+
+          {isLoading ? (
+            <p className="p-6 text-center text-sm text-muted-foreground">Loading…</p>
+          ) : filtered.length === 0 ? (
+            <EmptyState
+              icon={Search}
+              title="Nothing payable right now"
+              description="Refunds due and unused advances will appear here."
+            />
+          ) : (
+            <div className="divide-y rounded-lg border">
+              {filtered.map((row) => {
+                const isOpen = expandedId === row.job.id
+                return (
+                  <div key={row.job.id}>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedId(isOpen ? null : row.job.id)}
+                      className="flex w-full items-center gap-3 p-3 text-left hover:bg-muted/40"
+                    >
+                      {isOpen ? (
+                        <ChevronUp className="size-4 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="size-4 text-muted-foreground" />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium">{row.job.customerName}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {row.job.jobNumber} · {formatTimestamp(row.job.createdAt, false)}
+                        </p>
+                      </div>
+                      <StatusBadge
+                        status={row.kind === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                        tone={row.kind === 'refundDue' ? 'warning' : 'info'}
+                      />
+                      <span className="font-semibold text-red-600">₹{row.amountDue}</span>
+                    </button>
+                    {isOpen && (
+                      <div className="grid grid-cols-3 gap-3 border-t bg-muted/20 p-3 text-sm">
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase">Total Received</p>
+                          <p className="font-medium">₹{row.totalReceived}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase">
+                            Already Refunded
+                          </p>
+                          <p className="font-medium">₹{row.alreadyRefunded}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase">
+                            {row.kind === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                          </p>
+                          <p className="font-medium text-red-600">₹{row.amountDue}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <StatusBadge status={row.kind === 'refundDue' ? 'Refund Due' : 'Unused Advance'} tone={row.kind === 'refundDue' ? 'warning' : 'info'} />
-                  <span className="font-semibold text-red-600">₹{row.amountDue}</span>
-                </button>
-                {isOpen && (
-                  <div className="grid grid-cols-3 gap-3 border-t bg-muted/20 p-3 text-sm">
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase">Total Received</p>
-                      <p className="font-medium">₹{row.totalReceived}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase">Already Refunded</p>
-                      <p className="font-medium">₹{row.alreadyRefunded}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase">
-                        {row.kind === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
-                      </p>
-                      <p className="font-medium text-red-600">₹{row.amountDue}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      )}
+                )
+              })}
+            </div>
+          )}
         </>
       )}
     </div>

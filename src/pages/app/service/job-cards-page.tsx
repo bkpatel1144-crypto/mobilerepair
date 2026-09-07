@@ -49,10 +49,16 @@ export function JobCardsPage() {
 
   const counts: Record<StatusPill, number> = {
     total: jobs.length,
-    ...(Object.fromEntries(JOB_STATUSES.map((s) => [s.key, jobs.filter((j) => j.status === s.key).length])) as Record<string, number>),
+    ...(Object.fromEntries(
+      JOB_STATUSES.map((s) => [s.key, jobs.filter((j) => j.status === s.key).length])
+    ) as Record<string, number>),
   }
 
-  const myCompletedCount = jobs.filter((j) => j.assignedToId === user?.uid && ['techDone', 'ready', 'delivered', 'closed'].includes(j.status)).length
+  const myCompletedCount = jobs.filter(
+    (j) =>
+      j.assignedToId === user?.uid &&
+      ['techDone', 'ready', 'delivered', 'closed'].includes(j.status)
+  ).length
   const myReceivedCount = jobs.filter((j) => j.receivedById === user?.uid).length
 
   const bounds = dateRangeBounds(dateRange)
@@ -61,7 +67,9 @@ export function JobCardsPage() {
     .filter((j) => statusFilter === 'total' || j.status === statusFilter)
     .filter((j) =>
       search.trim()
-        ? `${j.jobNumber} ${j.customerName} ${j.customerMobile}`.toLowerCase().includes(search.toLowerCase())
+        ? `${j.jobNumber} ${j.customerName} ${j.customerMobile}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
         : true
     )
     .filter((j) => {
@@ -69,13 +77,27 @@ export function JobCardsPage() {
       const created = j.createdAt?.toDate?.()
       return !!created && created >= bounds.from && created <= bounds.to
     })
-    .filter((j) => assignedToFilter.length === 0 || (j.assignedToId && assignedToFilter.includes(j.assignedToId)))
-    .filter((j) => !myCompletedOnly || (j.assignedToId === user?.uid && ['techDone', 'ready', 'delivered', 'closed'].includes(j.status)))
+    .filter(
+      (j) =>
+        assignedToFilter.length === 0 ||
+        (j.assignedToId && assignedToFilter.includes(j.assignedToId))
+    )
+    .filter(
+      (j) =>
+        !myCompletedOnly ||
+        (j.assignedToId === user?.uid &&
+          ['techDone', 'ready', 'delivered', 'closed'].includes(j.status))
+    )
     .filter((j) => !myReceivedOnly || j.receivedById === user?.uid)
 
   const columns: DataTableColumn<JobCardWithId>[] = [
     { key: 'created', header: 'Created', render: (j) => formatTimestamp(j.createdAt) },
-    { key: 'jobNumber', header: 'Job Card', sortValue: (j) => j.jobNumber, render: (j) => <span className="font-semibold">{j.jobNumber}</span> },
+    {
+      key: 'jobNumber',
+      header: 'Job Card',
+      sortValue: (j) => j.jobNumber,
+      render: (j) => <span className="font-semibold">{j.jobNumber}</span>,
+    },
     {
       key: 'customer',
       header: 'Customer',
@@ -96,10 +118,30 @@ export function JobCardsPage() {
         </div>
       ),
     },
-    { key: 'receivedBy', header: 'Received By', hideOnMobile: true, render: (j) => j.receivedByName },
-    { key: 'assignedTo', header: 'Assigned To', hideOnMobile: true, render: (j) => j.assignedToName ?? '—' },
-    { key: 'estCost', header: 'Est. Cost', hideOnMobile: true, render: (j) => `₹${j.estimatedCost}` },
-    { key: 'finalAmt', header: 'Final Amt', hideOnMobile: true, render: (j) => (j.finalAmount != null ? `₹${j.finalAmount}` : '—') },
+    {
+      key: 'receivedBy',
+      header: 'Received By',
+      hideOnMobile: true,
+      render: (j) => j.receivedByName,
+    },
+    {
+      key: 'assignedTo',
+      header: 'Assigned To',
+      hideOnMobile: true,
+      render: (j) => j.assignedToName ?? '—',
+    },
+    {
+      key: 'estCost',
+      header: 'Est. Cost',
+      hideOnMobile: true,
+      render: (j) => `₹${j.estimatedCost}`,
+    },
+    {
+      key: 'finalAmt',
+      header: 'Final Amt',
+      hideOnMobile: true,
+      render: (j) => (j.finalAmount != null ? `₹${j.finalAmount}` : '—'),
+    },
     { key: 'paid', header: 'Paid', render: (j) => `₹${j.paidAmount}` },
     {
       key: 'due',
@@ -109,9 +151,23 @@ export function JobCardsPage() {
         return due > 0 ? `₹${due}` : '—'
       },
     },
-    { key: 'status', header: 'Status', render: (j) => <StatusBadge status={statusLabel(j.status)} dot /> },
-    { key: 'deliveredBy', header: 'Delivered / Returned By', hideOnMobile: true, render: (j) => j.deliveredByName ?? j.returnedByName ?? '—' },
-    { key: 'cancelledBy', header: 'Cancelled By', hideOnMobile: true, render: (j) => j.cancelledByName ?? '—' },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (j) => <StatusBadge status={statusLabel(j.status)} dot />,
+    },
+    {
+      key: 'deliveredBy',
+      header: 'Delivered / Returned By',
+      hideOnMobile: true,
+      render: (j) => j.deliveredByName ?? j.returnedByName ?? '—',
+    },
+    {
+      key: 'cancelledBy',
+      header: 'Cancelled By',
+      hideOnMobile: true,
+      render: (j) => j.cancelledByName ?? '—',
+    },
   ]
 
   return (
@@ -121,12 +177,21 @@ export function JobCardsPage() {
         subtitle="Click a status card to filter"
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
+              }
+            >
               <RefreshCw className="size-4" />
               Refresh
             </Button>
             {canDo(crudKey('service', 'jobCards', 'create')) && (
-              <Button type="button" onClick={() => navigate(`${buildPath('service', 'job-cards')}/create`)}>
+              <Button
+                type="button"
+                onClick={() => navigate(`${buildPath('service', 'job-cards')}/create`)}
+              >
                 <Plus className="size-4" />
                 Create Job Card
               </Button>
@@ -136,7 +201,13 @@ export function JobCardsPage() {
       />
 
       <div className="flex flex-wrap gap-2">
-        <StatusPill statusKey="total" label="Total" value={counts.total} selected={statusFilter === 'total'} onClick={() => setStatusFilter('total')} />
+        <StatusPill
+          statusKey="total"
+          label="Total"
+          value={counts.total}
+          selected={statusFilter === 'total'}
+          onClick={() => setStatusFilter('total')}
+        />
         {JOB_STATUSES.map((s) => (
           <StatusPill
             key={s.key}
@@ -156,14 +227,24 @@ export function JobCardsPage() {
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >
-        <Button type="button" size="icon" variant="outline" onClick={() => setScanOpen(true)} aria-label="Scan Job Card">
+        <Button
+          type="button"
+          size="icon"
+          variant="outline"
+          onClick={() => setScanOpen(true)}
+          aria-label="Scan Job Card"
+        >
           <ScanLine className="size-4" />
         </Button>
 
         <Popover open={filtersOpen} onOpenChange={setFiltersOpen}>
           <PopoverTrigger
             render={
-              <Button type="button" size="sm" variant={assignedToFilter.length > 0 ? 'default' : 'outline'}>
+              <Button
+                type="button"
+                size="sm"
+                variant={assignedToFilter.length > 0 ? 'default' : 'outline'}
+              >
                 <SlidersHorizontal className="size-3.5" />
                 Filters{assignedToFilter.length > 0 ? ` (${assignedToFilter.length})` : ''}
               </Button>
@@ -195,18 +276,34 @@ export function JobCardsPage() {
               })}
             </div>
             {assignedToFilter.length > 0 && (
-              <Button type="button" size="sm" variant="ghost" className="mt-2 w-full" onClick={() => setAssignedToFilter([])}>
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                className="mt-2 w-full"
+                onClick={() => setAssignedToFilter([])}
+              >
                 Clear
               </Button>
             )}
           </PopoverContent>
         </Popover>
 
-        <Button type="button" size="sm" variant={myCompletedOnly ? 'default' : 'outline'} onClick={() => setMyCompletedOnly((v) => !v)}>
+        <Button
+          type="button"
+          size="sm"
+          variant={myCompletedOnly ? 'default' : 'outline'}
+          onClick={() => setMyCompletedOnly((v) => !v)}
+        >
           <ClipboardCheck className="size-3.5" />
           My Completed Jobs ({myCompletedCount})
         </Button>
-        <Button type="button" size="sm" variant={myReceivedOnly ? 'default' : 'outline'} onClick={() => setMyReceivedOnly((v) => !v)}>
+        <Button
+          type="button"
+          size="sm"
+          variant={myReceivedOnly ? 'default' : 'outline'}
+          onClick={() => setMyReceivedOnly((v) => !v)}
+        >
           <Inbox className="size-3.5" />
           My Received Jobs ({myReceivedCount})
         </Button>
@@ -229,7 +326,11 @@ export function JobCardsPage() {
         }
       />
 
-      <JobCardDetailDrawer job={selectedJob} open={!!selectedJob} onOpenChange={(open) => !open && setSelectedJob(null)} />
+      <JobCardDetailDrawer
+        job={selectedJob}
+        open={!!selectedJob}
+        onOpenChange={(open) => !open && setSelectedJob(null)}
+      />
       <ScanJobCardModal open={scanOpen} onOpenChange={setScanOpen} />
     </div>
   )

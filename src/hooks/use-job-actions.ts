@@ -1,12 +1,28 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { jobCardDoc, jobTimelineCollection, receiptsCollection, fieldVisitsCollection } from '@/lib/firestore-paths'
+import {
+  jobCardDoc,
+  jobTimelineCollection,
+  receiptsCollection,
+  fieldVisitsCollection,
+} from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { formatReceiptId, getNextSequence } from '@/lib/sequences'
-import { jobCardQueryKey, jobCardsQueryKey, jobTimelineQueryKey, type JobCardWithId } from '@/hooks/use-job-cards'
+import {
+  jobCardQueryKey,
+  jobCardsQueryKey,
+  jobTimelineQueryKey,
+  type JobCardWithId,
+} from '@/hooks/use-job-cards'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
-import type { FieldVisitDoc, JobCardDoc, JobTimelineEventDoc, PartUsed, ReceiptDoc } from '@/types/firestore'
+import type {
+  FieldVisitDoc,
+  JobCardDoc,
+  JobTimelineEventDoc,
+  PartUsed,
+  ReceiptDoc,
+} from '@/types/firestore'
 
 /**
  * Every status-transition/data-mutating button on the Job Card detail page funnels through
@@ -180,7 +196,13 @@ function buildActionPatch(
     case 'addImage':
       return {
         patch: { imageUrls: [...job.imageUrls, input.url] },
-        event: { type: 'note', title: 'Add Image', description: 'Image added', userId: uid, userName },
+        event: {
+          type: 'note',
+          title: 'Add Image',
+          description: 'Image added',
+          userId: uid,
+          userName,
+        },
       }
     case 'addPart': {
       const part: PartUsed = {
@@ -191,7 +213,10 @@ function buildActionPatch(
         qty: input.qty,
       }
       return {
-        patch: { partsUsed: [...job.partsUsed, part], partsCost: job.partsCost + input.rate * input.qty },
+        patch: {
+          partsUsed: [...job.partsUsed, part],
+          partsCost: job.partsCost + input.rate * input.qty,
+        },
         event: {
           type: 'partAdded',
           title: 'Part Added',
@@ -207,7 +232,11 @@ function buildActionPatch(
         event: {
           type: 'fieldVisit',
           title: 'Field Visit',
-          description: input.note || (input.durationMinutes ? `Field visit logged (${input.durationMinutes}m)` : 'Field visit logged'),
+          description:
+            input.note ||
+            (input.durationMinutes
+              ? `Field visit logged (${input.durationMinutes}m)`
+              : 'Field visit logged'),
           durationMinutes: input.durationMinutes ?? null,
           userId: uid,
           userName,
@@ -225,7 +254,13 @@ function buildActionPatch(
         },
       }
     case 'note': {
-      const note = { id: crypto.randomUUID(), text: input.text, userId: uid, userName, createdAt: serverTimestamp() as never }
+      const note = {
+        id: crypto.randomUUID(),
+        text: input.text,
+        userId: uid,
+        userName,
+        createdAt: serverTimestamp() as never,
+      }
       return {
         patch: { notes: [...job.notes, note] },
         event: { type: 'note', title: 'Note', description: input.text, userId: uid, userName },
@@ -356,7 +391,11 @@ export function useRecordPayment(job: JobCardWithId) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: { amount: number; mode: 'cash' | 'upi' | 'card'; purpose?: 'advance' | 'final' | 'other' }) => {
+    mutationFn: async (input: {
+      amount: number
+      mode: 'cash' | 'upi' | 'card'
+      purpose?: 'advance' | 'final' | 'other'
+    }) => {
       const seq = await getNextSequence(companyId, 'receipts')
       const now = serverTimestamp()
       const receiptRef = doc(collection(db, receiptsCollection(companyId)))
@@ -414,4 +453,3 @@ export function useRecordPayment(job: JobCardWithId) {
     },
   })
 }
-

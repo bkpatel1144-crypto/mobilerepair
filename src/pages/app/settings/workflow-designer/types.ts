@@ -14,10 +14,7 @@ export function draftFromConfig(config: WorkflowConfigDoc): WorkflowConfigDraft 
     jobAccess: config.jobAccess,
     statusFilter: [...config.statusFilter],
     statusActionMatrix: Object.fromEntries(
-      Object.entries(config.statusActionMatrix).map(([status, actions]) => [
-        status,
-        { ...actions },
-      ])
+      Object.entries(config.statusActionMatrix).map(([status, actions]) => [status, { ...actions }])
     ),
     assignment: { ...config.assignment },
     whoDidIt: { ...config.whoDidIt },

@@ -14,7 +14,9 @@ import type {
   SecondHandPurchaseStatus,
 } from '@/types/firestore'
 
-export interface SecondHandPurchaseWithId extends SecondHandPurchaseDoc { id: string }
+export interface SecondHandPurchaseWithId extends SecondHandPurchaseDoc {
+  id: string
+}
 
 export function secondHandPurchasesQueryKey(companyId: string | undefined) {
   return ['secondHandPurchases', companyId] as const
@@ -35,16 +37,21 @@ export function useSecondHandPurchases() {
     (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return (docs as SecondHandPurchaseWithId[]).sort(
-        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+        (a, b) =>
+          (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId
   )
 }
 
-export function deviceLabel(p: Pick<SecondHandPurchaseDoc, 'brandName' | 'model' | 'deviceTypeName'>) {
+export function deviceLabel(
+  p: Pick<SecondHandPurchaseDoc, 'brandName' | 'model' | 'deviceTypeName'>
+) {
   const base = [p.brandName, p.model].filter(Boolean).join(' ')
-  return base ? `${base}${p.deviceTypeName ? ` (${p.deviceTypeName})` : ''}` : (p.deviceTypeName ?? 'Device')
+  return base
+    ? `${base}${p.deviceTypeName ? ` (${p.deviceTypeName})` : ''}`
+    : (p.deviceTypeName ?? 'Device')
 }
 
 export interface CreateSecondHandPurchaseInput {
@@ -105,7 +112,9 @@ export function useCreateSecondHandPurchase() {
         purchaseNumber: formatSecondHandPurchaseId(fy.name, seq),
         status: 'inStock',
         ...input,
-        originalInvoiceDate: input.originalInvoiceDate ? Timestamp.fromDate(input.originalInvoiceDate) : null,
+        originalInvoiceDate: input.originalInvoiceDate
+          ? Timestamp.fromDate(input.originalInvoiceDate)
+          : null,
         purchaseDate: Timestamp.fromDate(input.purchaseDate),
         refurbCost: 0,
         createdById: user!.uid,
@@ -128,7 +137,8 @@ export function useCreateSecondHandPurchase() {
       await batch.commit()
       return { id: ref.id, ...data }
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(companyId) }),
   })
 }
 
@@ -171,7 +181,8 @@ export function useUpdateSecondHandPurchase() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(companyId) }),
   })
 }
 
@@ -188,7 +199,11 @@ export function useSetSecondHandPurchaseStatus() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: { id: string; status: SecondHandPurchaseStatus; purchaseNumber: string }) => {
+    mutationFn: async (input: {
+      id: string
+      status: SecondHandPurchaseStatus
+      purchaseNumber: string
+    }) => {
       const batch = writeBatch(db)
       batch.update(doc(db, secondHandPurchaseDoc(companyId, input.id)), {
         status: input.status,
@@ -203,6 +218,7 @@ export function useSetSecondHandPurchaseStatus() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(companyId) }),
   })
 }

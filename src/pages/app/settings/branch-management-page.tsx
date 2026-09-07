@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Building2, Crown, Pencil, CheckCircle2, XCircle} from 'lucide-react'
+import { Building2, Crown, Pencil, CheckCircle2, XCircle } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -44,7 +44,9 @@ export function BranchManagementPage() {
 
   const filtered = branches
     .filter((b) => statusFilter === 'all' || b.status === statusFilter)
-    .filter((b) => (search.trim() ? `${b.name} ${b.code}`.toLowerCase().includes(search.toLowerCase()) : true))
+    .filter((b) =>
+      search.trim() ? `${b.name} ${b.code}`.toLowerCase().includes(search.toLowerCase()) : true
+    )
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault()
@@ -78,9 +80,23 @@ export function BranchManagementPage() {
         </span>
       ),
     },
-    { key: 'status', header: 'Status', render: (b) => <StatusBadge status={b.status === 'active' ? 'Active' : 'Disabled'} dot /> },
-    { key: 'type', header: 'Type', hideOnMobile: true, render: (b) => (b.type === 'system' ? 'System' : 'Custom') },
-    { key: 'created', header: 'Created', hideOnMobile: true, render: (b) => formatTimestamp(b.createdAt, false) },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (b) => <StatusBadge status={b.status === 'active' ? 'Active' : 'Disabled'} dot />,
+    },
+    {
+      key: 'type',
+      header: 'Type',
+      hideOnMobile: true,
+      render: (b) => (b.type === 'system' ? 'System' : 'Custom'),
+    },
+    {
+      key: 'created',
+      header: 'Created',
+      hideOnMobile: true,
+      render: (b) => formatTimestamp(b.createdAt, false),
+    },
   ]
 
   return (
@@ -99,14 +115,16 @@ export function BranchManagementPage() {
       <StatCardGrid>
         <StatCard label="Total Branches" value={branches.length} icon={Building2} />
         <StatCard
-          label="Active" icon={CheckCircle2}
+          label="Active"
+          icon={CheckCircle2}
           value={branches.filter((b) => b.status === 'active').length}
           tone="success"
           selected={statusFilter === 'active'}
           onClick={() => setStatusFilter((f) => (f === 'active' ? 'all' : 'active'))}
         />
         <StatCard
-          label="Inactive" icon={XCircle}
+          label="Inactive"
+          icon={XCircle}
           value={branches.filter((b) => b.status === 'disabled').length}
           tone="warning"
           selected={statusFilter === 'disabled'}
@@ -114,7 +132,11 @@ export function BranchManagementPage() {
         />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search branches by name or code..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search branches by name or code..."
+      />
 
       <DataTable
         columns={columns}
@@ -187,12 +209,29 @@ export function BranchManagementPage() {
             {
               title: 'STATUS & TYPE',
               rows: [
-                { label: 'Current Status', value: viewing.status === 'active' ? 'Active' : 'Disabled', tone: viewing.status === 'active' ? 'success' : 'warning' },
-                { label: 'Branch Type', value: viewing.type === 'system' ? 'System Branch' : 'Custom Branch', tone: viewing.type === 'system' ? 'purple' : 'default' },
+                {
+                  label: 'Current Status',
+                  value: viewing.status === 'active' ? 'Active' : 'Disabled',
+                  tone: viewing.status === 'active' ? 'success' : 'warning',
+                },
+                {
+                  label: 'Branch Type',
+                  value: viewing.type === 'system' ? 'System Branch' : 'Custom Branch',
+                  tone: viewing.type === 'system' ? 'purple' : 'default',
+                },
               ],
             },
             ...(viewing.protected
-              ? [{ title: '', children: <p className="text-xs text-muted-foreground">Protected system branch — cannot be deleted.</p> }]
+              ? [
+                  {
+                    title: '',
+                    children: (
+                      <p className="text-xs text-muted-foreground">
+                        Protected system branch — cannot be deleted.
+                      </p>
+                    ),
+                  },
+                ]
               : []),
           ]}
           timeline={[
@@ -216,8 +255,15 @@ export function BranchManagementPage() {
       >
         <div className="space-y-1.5">
           <Label>Branch Name</Label>
-          <Input value={nameInput} onChange={(e) => setNameInput(e.target.value)} placeholder="Enter branch name" autoFocus />
-          <p className="text-xs text-muted-foreground">A unique branch code will be auto-generated from the name.</p>
+          <Input
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            placeholder="Enter branch name"
+            autoFocus
+          />
+          <p className="text-xs text-muted-foreground">
+            A unique branch code will be auto-generated from the name.
+          </p>
         </div>
       </FormModal>
 
@@ -256,16 +302,36 @@ export function BranchManagementPage() {
                 ? 'Deactivated branches no longer appear as a selectable option for new job cards or transactions.'
                 : 'This branch will become selectable again.'
           }
-          confirmLabel={confirmAction === 'delete' ? 'Delete' : viewing.status === 'active' ? 'Deactivate' : 'Activate'}
+          confirmLabel={
+            confirmAction === 'delete'
+              ? 'Delete'
+              : viewing.status === 'active'
+                ? 'Deactivate'
+                : 'Activate'
+          }
           destructive={confirmAction === 'delete' || viewing.status === 'active'}
           isPending={confirmAction === 'delete' ? deleteBranch.isPending : setStatus.isPending}
           onConfirm={() => {
             if (confirmAction === 'delete') {
-              deleteBranch.mutate(viewing, { onSuccess: () => { setConfirmAction(null); setViewing(null) } })
+              deleteBranch.mutate(viewing, {
+                onSuccess: () => {
+                  setConfirmAction(null)
+                  setViewing(null)
+                },
+              })
             } else {
               setStatus.mutate(
-                { id: viewing.id, status: viewing.status === 'active' ? 'disabled' : 'active', branchName: viewing.name },
-                { onSuccess: () => { setConfirmAction(null); setViewing(null) } }
+                {
+                  id: viewing.id,
+                  status: viewing.status === 'active' ? 'disabled' : 'active',
+                  branchName: viewing.name,
+                },
+                {
+                  onSuccess: () => {
+                    setConfirmAction(null)
+                    setViewing(null)
+                  },
+                }
               )
             }
           }}

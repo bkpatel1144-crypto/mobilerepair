@@ -17,7 +17,11 @@ export async function findJobCardIdByNumber(
   if (!trimmed) return null
 
   const snap = await getDocs(
-    query(collection(db, jobCardsCollection(companyId)), where('jobNumber', '==', trimmed), limit(1))
+    query(
+      collection(db, jobCardsCollection(companyId)),
+      where('jobNumber', '==', trimmed),
+      limit(1)
+    )
   )
   if (snap.empty) return null
   return snap.docs[0].id

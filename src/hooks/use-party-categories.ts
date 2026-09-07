@@ -8,7 +8,9 @@ import { slugifyCode } from '@/lib/utils'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { EntityStatus, PartyCategoryDoc } from '@/types/firestore'
 
-export interface PartyCategoryWithId extends PartyCategoryDoc { id: string }
+export interface PartyCategoryWithId extends PartyCategoryDoc {
+  id: string
+}
 
 export function partyCategoriesQueryKey(companyId: string | undefined) {
   return ['partyCategories', companyId] as const
@@ -20,7 +22,9 @@ export function usePartyCategories() {
 
   return useLiveQuery<(PartyCategoryDoc & { id: string })[]>(
     partyCategoriesQueryKey(companyId),
-    companyId ? query(collection(db, partyCategoriesCollection(companyId)), orderBy('name', 'asc')) : null,
+    companyId
+      ? query(collection(db, partyCategoriesCollection(companyId)), orderBy('name', 'asc'))
+      : null,
     (docs) => {
       const rows = docs as (PartyCategoryDoc & { id: string })[]
       return ((rows) => rows)(rows)
@@ -52,7 +56,10 @@ function clearOtherDefaults(
     if (input.isDefaultForCustomer && cat.isDefaultForCustomer) patch.isDefaultForCustomer = false
     if (input.isDefaultForSupplier && cat.isDefaultForSupplier) patch.isDefaultForSupplier = false
     if (Object.keys(patch).length) {
-      batch.update(doc(db, partyCategoryDoc(companyId, cat.id)), { ...patch, updatedAt: serverTimestamp() })
+      batch.update(doc(db, partyCategoryDoc(companyId, cat.id)), {
+        ...patch,
+        updatedAt: serverTimestamp(),
+      })
     }
   }
 }
@@ -90,7 +97,8 @@ export function useCreatePartyCategory(existing: PartyCategoryWithId[]) {
       await batch.commit()
       return { id: ref.id, ...data }
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
   })
 }
 
@@ -119,7 +127,8 @@ export function useUpdatePartyCategory(existing: PartyCategoryWithId[]) {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
   })
 }
 
@@ -131,7 +140,10 @@ export function useSetPartyCategoryStatus() {
   return useMutation({
     mutationFn: async (input: { id: string; status: EntityStatus; categoryName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, partyCategoryDoc(companyId, input.id)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, partyCategoryDoc(companyId, input.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Activate' : 'Deactivate',
         module: 'masters',
@@ -141,7 +153,8 @@ export function useSetPartyCategoryStatus() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
   })
 }
 
@@ -163,6 +176,7 @@ export function useDeletePartyCategory() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: partyCategoriesQueryKey(companyId) }),
   })
 }

@@ -1,5 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, increment, serverTimestamp, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  increment,
+  serverTimestamp,
+  writeBatch,
+} from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { printTemplatesCollection, printTemplateDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
@@ -149,10 +156,21 @@ export function useSetDefaultPrintTemplate() {
     mutationFn: async (input: { target: PrintTemplateWithId; siblings: PrintTemplateWithId[] }) => {
       const batch = writeBatch(db)
       for (const t of input.siblings) {
-        if (t.id === input.target.id || t.documentType !== input.target.documentType || !t.isDefault) continue
-        batch.update(doc(db, printTemplateDoc(companyId, t.id)), { isDefault: false, updatedAt: serverTimestamp() })
+        if (
+          t.id === input.target.id ||
+          t.documentType !== input.target.documentType ||
+          !t.isDefault
+        )
+          continue
+        batch.update(doc(db, printTemplateDoc(companyId, t.id)), {
+          isDefault: false,
+          updatedAt: serverTimestamp(),
+        })
       }
-      batch.update(doc(db, printTemplateDoc(companyId, input.target.id)), { isDefault: true, updatedAt: serverTimestamp() })
+      batch.update(doc(db, printTemplateDoc(companyId, input.target.id)), {
+        isDefault: true,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: 'Set Default',
         module: 'settings',
@@ -229,7 +247,9 @@ export function useAddMissingDefaults() {
       const missing = missingPresets(existing)
       if (missing.length === 0) return 0
 
-      const typesWithDefault = new Set(existing.filter((t) => t.isDefault).map((t) => t.documentType))
+      const typesWithDefault = new Set(
+        existing.filter((t) => t.isDefault).map((t) => t.documentType)
+      )
       const batch = writeBatch(db)
       const now = serverTimestamp()
 

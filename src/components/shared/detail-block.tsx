@@ -1,11 +1,17 @@
 import { cn } from '@/lib/utils'
 
 const TONES = {
-  purple: { bg: 'bg-purple-50 dark:bg-purple-500/10', icon: 'text-purple-600 dark:text-purple-400' },
+  purple: {
+    bg: 'bg-purple-50 dark:bg-purple-500/10',
+    icon: 'text-purple-600 dark:text-purple-400',
+  },
   teal: { bg: 'bg-teal-50 dark:bg-teal-500/10', icon: 'text-teal-600 dark:text-teal-400' },
   amber: { bg: 'bg-amber-50 dark:bg-amber-500/10', icon: 'text-amber-600 dark:text-amber-400' },
   blue: { bg: 'bg-blue-50 dark:bg-blue-500/10', icon: 'text-blue-600 dark:text-blue-400' },
-  green: { bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: 'text-emerald-600 dark:text-emerald-400' },
+  green: {
+    bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+    icon: 'text-emerald-600 dark:text-emerald-400',
+  },
 } as const
 
 export type DetailBlockTone = keyof typeof TONES
@@ -47,9 +53,16 @@ export function DetailValue({
   divider?: boolean
 }) {
   return (
-    <div className={cn('flex items-center gap-3 py-2', divider && 'border-b border-black/5 dark:border-white/10')}>
+    <div
+      className={cn(
+        'flex items-center gap-3 py-2',
+        divider && 'border-b border-black/5 dark:border-white/10'
+      )}
+    >
       <div className="min-w-0 flex-1">
-        <p className="text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">{label}</p>
+        <p className="text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">
+          {label}
+        </p>
         <p className="mt-0.5 font-medium">{value}</p>
       </div>
       {trailing}

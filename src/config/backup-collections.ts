@@ -30,7 +30,11 @@ import {
  * not one path). `jobCards` gets its own `timeline` subcollection folded in per-document at
  * backup/restore time rather than listed here as a flat collection.
  */
-export const BACKUP_COLLECTIONS: { key: string; label: string; path: (companyId: string) => string }[] = [
+export const BACKUP_COLLECTIONS: {
+  key: string
+  label: string
+  path: (companyId: string) => string
+}[] = [
   { key: 'branches', label: 'Branches', path: branchesCollection },
   { key: 'financialYears', label: 'Financial Years', path: financialYearsCollection },
   { key: 'roles', label: 'Roles', path: rolesCollection },
@@ -45,7 +49,11 @@ export const BACKUP_COLLECTIONS: { key: string; label: string; path: (companyId:
   { key: 'jobCards', label: 'Job Cards', path: jobCardsCollection },
   { key: 'jobCosting', label: 'Job Costing', path: jobCostingCollection },
   { key: 'receipts', label: 'Receipts & Payments', path: receiptsCollection },
-  { key: 'secondHandPurchases', label: 'Second Hand Purchases', path: secondHandPurchasesCollection },
+  {
+    key: 'secondHandPurchases',
+    label: 'Second Hand Purchases',
+    path: secondHandPurchasesCollection,
+  },
   { key: 'secondHandSales', label: 'Second Hand Sales', path: secondHandSalesCollection },
   { key: 'printTemplates', label: 'Print Templates', path: printTemplatesCollection },
   { key: 'fieldVisits', label: 'Field Visits', path: fieldVisitsCollection },

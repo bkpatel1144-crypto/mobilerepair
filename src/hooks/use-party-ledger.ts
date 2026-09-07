@@ -40,7 +40,12 @@ function deviceLabel(job: JobCardWithId) {
  * doesn't record a separate `billGeneratedAt` timestamp, so it's the closest real timestamp
  * available rather than a fabricated one. */
 export function usePartyLedgerDetail(partyId: string | undefined) {
-  const { data: jobs = [], isLoading: jobsLoading, error: jobsError, refetch: refetchJobs } = useJobCards()
+  const {
+    data: jobs = [],
+    isLoading: jobsLoading,
+    error: jobsError,
+    refetch: refetchJobs,
+  } = useJobCards()
   const {
     data: receipts = [],
     isLoading: receiptsLoading,
@@ -136,7 +141,12 @@ export function usePartyLedgerDetail(partyId: string | undefined) {
 /** The Party Ledger *list* page's own summary row per party — same underlying data as the
  * detail view above, just aggregated instead of itemized. */
 export function usePartyLedgerSummaries() {
-  const { data: jobs = [], isLoading: jobsLoading, error: jobsError, refetch: refetchJobs } = useJobCards()
+  const {
+    data: jobs = [],
+    isLoading: jobsLoading,
+    error: jobsError,
+    refetch: refetchJobs,
+  } = useJobCards()
   const {
     data: receipts = [],
     isLoading: receiptsLoading,

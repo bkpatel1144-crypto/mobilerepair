@@ -8,7 +8,9 @@ import { slugifyCode } from '@/lib/utils'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { EntityStatus, ItemCategoryDoc } from '@/types/firestore'
 
-export interface ItemCategoryWithId extends ItemCategoryDoc { id: string }
+export interface ItemCategoryWithId extends ItemCategoryDoc {
+  id: string
+}
 
 export function itemCategoriesQueryKey(companyId: string | undefined) {
   return ['itemCategories', companyId] as const
@@ -20,7 +22,9 @@ export function useItemCategories() {
 
   return useLiveQuery<(ItemCategoryDoc & { id: string })[]>(
     itemCategoriesQueryKey(companyId),
-    companyId ? query(collection(db, itemCategoriesCollection(companyId)), orderBy('name', 'asc')) : null,
+    companyId
+      ? query(collection(db, itemCategoriesCollection(companyId)), orderBy('name', 'asc'))
+      : null,
     (docs) => {
       const rows = docs as (ItemCategoryDoc & { id: string })[]
       return ((rows) => rows)(rows)
@@ -30,7 +34,10 @@ export function useItemCategories() {
 }
 
 /** "Root" vs "Under: {parent}" — matches `preview (58)`'s own Level column. */
-export function categoryLevel(cat: ItemCategoryWithId, all: ItemCategoryWithId[]): { level: 'Root' | 'Sub'; parentName: string | null } {
+export function categoryLevel(
+  cat: ItemCategoryWithId,
+  all: ItemCategoryWithId[]
+): { level: 'Root' | 'Sub'; parentName: string | null } {
   if (!cat.parentId) return { level: 'Root', parentName: null }
   return { level: 'Sub', parentName: all.find((c) => c.id === cat.parentId)?.name ?? null }
 }
@@ -115,7 +122,10 @@ export function useSetItemCategoryStatus() {
   return useMutation({
     mutationFn: async (input: { id: string; status: EntityStatus; categoryName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, itemCategoryDoc(companyId, input.id)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, itemCategoryDoc(companyId, input.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Activate' : 'Deactivate',
         module: 'masters',

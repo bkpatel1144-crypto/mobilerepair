@@ -1,6 +1,16 @@
 import {
-  FolderOpen, Clock, ListOrdered, Wrench, Pause, CheckCircle2,
-  BookOpen, Truck, Lock, XCircle, Undo2, type LucideIcon,
+  FolderOpen,
+  Clock,
+  ListOrdered,
+  Wrench,
+  Pause,
+  CheckCircle2,
+  BookOpen,
+  Truck,
+  Lock,
+  XCircle,
+  Undo2,
+  type LucideIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -12,7 +22,10 @@ import { cn } from '@/lib/utils'
 const PILL_STYLE: Record<string, { icon: LucideIcon; tone: string }> = {
   total: { icon: FolderOpen, tone: 'text-foreground border-border' },
   pending: { icon: Clock, tone: 'text-amber-600 border-amber-200 dark:border-amber-500/30' },
-  inQueue: { icon: ListOrdered, tone: 'text-orange-600 border-orange-200 dark:border-orange-500/30' },
+  inQueue: {
+    icon: ListOrdered,
+    tone: 'text-orange-600 border-orange-200 dark:border-orange-500/30',
+  },
   inProgress: { icon: Wrench, tone: 'text-blue-600 border-blue-200 dark:border-blue-500/30' },
   onHold: { icon: Pause, tone: 'text-yellow-600 border-yellow-200 dark:border-yellow-500/30' },
   techDone: { icon: CheckCircle2, tone: 'text-teal-600 border-teal-200 dark:border-teal-500/30' },

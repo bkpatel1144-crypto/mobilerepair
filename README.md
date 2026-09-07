@@ -25,16 +25,16 @@ npm run dev
 Every value below comes from Firebase Console → Project Settings → your web app's config
 snippet, except `VITE_FIREBASE_DATABASE_ID`.
 
-| Variable | Where it comes from |
-| --- | --- |
-| `VITE_FIREBASE_API_KEY` | Web app config |
-| `VITE_FIREBASE_AUTH_DOMAIN` | Web app config |
-| `VITE_FIREBASE_PROJECT_ID` | Web app config |
-| `VITE_FIREBASE_STORAGE_BUCKET` | Web app config |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Web app config |
-| `VITE_FIREBASE_APP_ID` | Web app config |
-| `VITE_FIREBASE_MEASUREMENT_ID` | Web app config (optional — Analytics) |
-| `VITE_FIREBASE_DATABASE_ID` | **Only if your Firestore uses a named database, not `(default)`** |
+| Variable                            | Where it comes from                                               |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| `VITE_FIREBASE_API_KEY`             | Web app config                                                    |
+| `VITE_FIREBASE_AUTH_DOMAIN`         | Web app config                                                    |
+| `VITE_FIREBASE_PROJECT_ID`          | Web app config                                                    |
+| `VITE_FIREBASE_STORAGE_BUCKET`      | Web app config                                                    |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Web app config                                                    |
+| `VITE_FIREBASE_APP_ID`              | Web app config                                                    |
+| `VITE_FIREBASE_MEASUREMENT_ID`      | Web app config (optional — Analytics)                             |
+| `VITE_FIREBASE_DATABASE_ID`         | **Only if your Firestore uses a named database, not `(default)`** |
 
 **The named-database gotcha**: check Firebase Console → Firestore Database → the database
 selector dropdown at the top. If it shows anything other than the literal word `(default)` —
@@ -138,6 +138,6 @@ Documented in full in `PROGRESS.md`'s per-phase "decisions" sections; the headli
 - **No real payment gateway, SMS, or email sending** — this is a client-SDK-only Firebase app;
   WhatsApp messages open `wa.me` links for the user to send manually, and there is no billing
   tier to pay for (the app is free, by design — see Settings → Billing & Subscription).
-#   m o b i l e r e p a i r 
- 
- 
+  #   m o b i l e r e p a i r 
+   
+   

@@ -7,7 +7,9 @@ import { useAuth } from '@/hooks/use-auth'
 import { getCurrentSessionId, heartbeatCurrentSession } from '@/lib/session-lifecycle'
 import type { SessionDoc } from '@/types/firestore'
 
-export interface SessionWithId extends SessionDoc { id: string }
+export interface SessionWithId extends SessionDoc {
+  id: string
+}
 
 /** "Online" = active within the last 5 minutes and not explicitly signed out — matches the
  * heartbeat interval below closely enough that a genuinely open tab never flickers in and out of
@@ -39,7 +41,11 @@ export function useSessions() {
       const snap = await getDocs(collection(db, sessionsCollection(companyId!)))
       const sessions = snap.docs.map((d) => ({ id: d.id, ...(d.data() as SessionDoc) }))
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
-      return sessions.sort((a, b) => (b.signedInAt?.toDate?.()?.getTime() ?? now) - (a.signedInAt?.toDate?.()?.getTime() ?? now))
+      return sessions.sort(
+        (a, b) =>
+          (b.signedInAt?.toDate?.()?.getTime() ?? now) -
+          (a.signedInAt?.toDate?.()?.getTime() ?? now)
+      )
     },
     enabled: !!companyId,
     // Sessions change on their own (heartbeats, expiry) even with nobody clicking anything on
@@ -63,11 +69,15 @@ export function isSessionActive(session: SessionDoc): boolean {
 }
 
 export function isSessionOnline(session: SessionDoc): boolean {
-  return isSessionActive(session) && minutesSince(session.lastActivityAt) * 60_000 < ONLINE_WINDOW_MS
+  return (
+    isSessionActive(session) && minutesSince(session.lastActivityAt) * 60_000 < ONLINE_WINDOW_MS
+  )
 }
 
 export function isSessionIdle(session: SessionDoc): boolean {
-  return isSessionActive(session) && minutesSince(session.lastActivityAt) * 60_000 >= IDLE_THRESHOLD_MS
+  return (
+    isSessionActive(session) && minutesSince(session.lastActivityAt) * 60_000 >= IDLE_THRESHOLD_MS
+  )
 }
 
 export function isCurrentSession(session: SessionWithId): boolean {

@@ -64,9 +64,10 @@ export function useDashboardStats(
       ? formatDurationLabel(turnarounds.reduce((a, b) => a + b, 0) / turnarounds.length)
       : null
 
-    const jobCardsByStatus = JOB_STATUSES.map((s) => ({ status: s.label, count: countBy(s.key) })).filter(
-      (s) => s.count > 0
-    )
+    const jobCardsByStatus = JOB_STATUSES.map((s) => ({
+      status: s.label,
+      count: countBy(s.key),
+    })).filter((s) => s.count > 0)
 
     // Revenue trend: bucket paid amounts by day across the jobs actually in range (falls back to
     // each job's own createdAt day when range is 'all', so "All Time" still draws a real trend).

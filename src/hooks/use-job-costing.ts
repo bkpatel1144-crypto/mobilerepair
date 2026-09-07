@@ -56,7 +56,9 @@ export function useSaveJobCosting() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: Omit<JobCostingDoc, 'createdById' | 'createdByName' | 'createdAt' | 'updatedAt'>) => {
+    mutationFn: async (
+      input: Omit<JobCostingDoc, 'createdById' | 'createdByName' | 'createdAt' | 'updatedAt'>
+    ) => {
       const now = serverTimestamp()
       const data: JobCostingDoc = {
         ...input,

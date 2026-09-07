@@ -70,10 +70,30 @@ export function DashboardPage() {
   const { profile } = useAuth()
 
   const quickActions = [
-    { label: 'Scan Job Card', icon: ScanLine, tone: 'bg-muted text-foreground', onClick: () => setScanOpen(true) },
-    { label: 'New Job Card', icon: Plus, tone: 'bg-teal-600 text-white', to: '/app/service/job-cards/create' },
-    { label: 'New Party', icon: UserPlus, tone: 'bg-blue-600 text-white', to: '/app/masters/parties' },
-    { label: 'New Item', icon: PackagePlus, tone: 'bg-purple-600 text-white', to: '/app/masters/items' },
+    {
+      label: 'Scan Job Card',
+      icon: ScanLine,
+      tone: 'bg-muted text-foreground',
+      onClick: () => setScanOpen(true),
+    },
+    {
+      label: 'New Job Card',
+      icon: Plus,
+      tone: 'bg-teal-600 text-white',
+      to: '/app/service/job-cards/create',
+    },
+    {
+      label: 'New Party',
+      icon: UserPlus,
+      tone: 'bg-blue-600 text-white',
+      to: '/app/masters/parties',
+    },
+    {
+      label: 'New Item',
+      icon: PackagePlus,
+      tone: 'bg-purple-600 text-white',
+      to: '/app/masters/items',
+    },
   ] as const
 
   return (
@@ -101,7 +121,9 @@ export function DashboardPage() {
               to={action.to}
               className="flex items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
             >
-              <span className={`flex size-7 shrink-0 items-center justify-center rounded-full ${action.tone}`}>
+              <span
+                className={`flex size-7 shrink-0 items-center justify-center rounded-full ${action.tone}`}
+              >
                 <action.icon className="size-4" />
               </span>
               <span className="truncate">{action.label}</span>
@@ -113,7 +135,9 @@ export function DashboardPage() {
               onClick={action.onClick}
               className="flex items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-sm font-medium transition-colors hover:bg-muted"
             >
-              <span className={`flex size-7 shrink-0 items-center justify-center rounded-full ${action.tone}`}>
+              <span
+                className={`flex size-7 shrink-0 items-center justify-center rounded-full ${action.tone}`}
+              >
                 <action.icon className="size-4" />
               </span>
               <span className="truncate">{action.label}</span>
@@ -138,124 +162,155 @@ export function DashboardPage() {
        * yet" empty state, i.e. a confident, fabricated "your shop did nothing". BUILD_PLAN's
        * "no fake numbers" bar means showing the failure instead. */}
       {loadError ? (
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your dashboard" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load your dashboard"
+        />
       ) : (
         <>
-      <StatCardGrid>
-        <StatCard label="Total Job Cards" value={stats.totalJobCards} icon={FileText} />
-        <StatCard
-          label="Total in Pipeline"
-          value={stats.totalInPipeline}
-          icon={Activity}
-          tone="info"
-        />
-        <StatCard label="All Job Cards" value={stats.allJobCards} icon={Wrench} tone="purple" />
-        <StatCard label="Revenue" value={`₹${stats.revenue}`} icon={IndianRupee} tone="success" />
-        <StatCard
-          label="Outstanding"
-          value={`₹${stats.outstanding}`}
-          icon={AlertTriangle}
-          tone="warning"
-        />
-        <StatCard label="In Progress" value={stats.inProgress} icon={Activity} tone="info" />
-
-        <StatCard label="Pending" value={stats.pending} icon={Clock} tone="warning" />
-        <StatCard label="Avg Turnaround" value={stats.avgTurnaroundLabel ?? '—'} icon={Clock} />
-        <StatCard label="Cancelled" value={stats.cancelled} icon={XCircle} tone="danger" />
-        <StatCard label="In Queue" value={stats.inQueue} icon={ListOrdered} tone="warning" />
-        <StatCard label="On Hold" value={stats.onHold} icon={PauseCircle} tone="warning" />
-        <StatCard label="Tech Done" value={stats.techDone} icon={CheckCircle2} tone="success" />
-
-        <StatCard label="Ready" value={stats.ready} icon={PackageCheck} tone="success" />
-        <StatCard label="Delivered" value={stats.delivered} icon={Truck} tone="purple" />
-        <StatCard label="Closed" value={stats.closed} icon={Lock} />
-        <StatCard label="Pending Return" value={stats.pendingReturn} icon={Undo2} tone="warning" />
-      </StatCardGrid>
-
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-lg border p-4">
-          <h2 className="mb-2 text-sm font-semibold">Job Cards by Status</h2>
-          {stats.jobCardsByStatus.length === 0 ? (
-            <EmptyState
-              icon={FileText}
-              title="No job cards yet"
-              description="This chart fills in once job cards start moving through your workflow."
+          <StatCardGrid>
+            <StatCard label="Total Job Cards" value={stats.totalJobCards} icon={FileText} />
+            <StatCard
+              label="Total in Pipeline"
+              value={stats.totalInPipeline}
+              icon={Activity}
+              tone="info"
             />
-          ) : (
-            <div className="relative h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={stats.jobCardsByStatus}
-                    dataKey="count"
-                    nameKey="status"
-                    innerRadius="65%"
-                    outerRadius="90%"
-                    paddingAngle={2}
-                    strokeWidth={0}
-                  >
-                    {stats.jobCardsByStatus.map((entry) => (
-                      <Cell key={entry.status} fill={CHART_TONE_HEX[toneFromStatus(entry.status)]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold tabular-nums">
-                  {stats.jobCardsByStatus.reduce((sum, s) => sum + s.count, 0)}
-                </span>
-                <span className="text-xs text-muted-foreground">total</span>
-              </div>
-              <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs">
-                {stats.jobCardsByStatus.map((s) => (
-                  <span key={s.status} className="flex items-center gap-1.5">
-                    <span
-                      className="size-2 rounded-full"
-                      style={{ backgroundColor: CHART_TONE_HEX[toneFromStatus(s.status)] }}
-                    />
-                    {s.status} ({s.count})
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="rounded-lg border p-4">
-          <h2 className="mb-2 text-sm font-semibold">Revenue Trend</h2>
-          {stats.revenueTrend.length === 0 ? (
-            <EmptyState
+            <StatCard label="All Job Cards" value={stats.allJobCards} icon={Wrench} tone="purple" />
+            <StatCard
+              label="Revenue"
+              value={`₹${stats.revenue}`}
               icon={IndianRupee}
-              title="No revenue yet"
-              description="This chart fills in once bills start getting generated."
+              tone="success"
             />
-          ) : (
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={stats.revenueTrend} margin={{ left: 8, right: 8, top: 8, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-border" />
-                  <XAxis dataKey="date" tick={{ fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <YAxis
-                    tick={{ fontSize: 12 }}
-                    axisLine={false}
-                    tickLine={false}
-                    tickFormatter={(v: number) => `₹${v}`}
-                    width={56}
-                  />
-                  <Tooltip formatter={(v: unknown) => [`₹${String(v)}`, 'Revenue'] as [string, string]} />
-                  <Line
-                    type="monotone"
-                    dataKey="revenue"
-                    stroke="#059669"
-                    strokeWidth={2}
-                    dot={{ r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <StatCard
+              label="Outstanding"
+              value={`₹${stats.outstanding}`}
+              icon={AlertTriangle}
+              tone="warning"
+            />
+            <StatCard label="In Progress" value={stats.inProgress} icon={Activity} tone="info" />
+
+            <StatCard label="Pending" value={stats.pending} icon={Clock} tone="warning" />
+            <StatCard label="Avg Turnaround" value={stats.avgTurnaroundLabel ?? '—'} icon={Clock} />
+            <StatCard label="Cancelled" value={stats.cancelled} icon={XCircle} tone="danger" />
+            <StatCard label="In Queue" value={stats.inQueue} icon={ListOrdered} tone="warning" />
+            <StatCard label="On Hold" value={stats.onHold} icon={PauseCircle} tone="warning" />
+            <StatCard label="Tech Done" value={stats.techDone} icon={CheckCircle2} tone="success" />
+
+            <StatCard label="Ready" value={stats.ready} icon={PackageCheck} tone="success" />
+            <StatCard label="Delivered" value={stats.delivered} icon={Truck} tone="purple" />
+            <StatCard label="Closed" value={stats.closed} icon={Lock} />
+            <StatCard
+              label="Pending Return"
+              value={stats.pendingReturn}
+              icon={Undo2}
+              tone="warning"
+            />
+          </StatCardGrid>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="rounded-lg border p-4">
+              <h2 className="mb-2 text-sm font-semibold">Job Cards by Status</h2>
+              {stats.jobCardsByStatus.length === 0 ? (
+                <EmptyState
+                  icon={FileText}
+                  title="No job cards yet"
+                  description="This chart fills in once job cards start moving through your workflow."
+                />
+              ) : (
+                <div className="relative h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={stats.jobCardsByStatus}
+                        dataKey="count"
+                        nameKey="status"
+                        innerRadius="65%"
+                        outerRadius="90%"
+                        paddingAngle={2}
+                        strokeWidth={0}
+                      >
+                        {stats.jobCardsByStatus.map((entry) => (
+                          <Cell
+                            key={entry.status}
+                            fill={CHART_TONE_HEX[toneFromStatus(entry.status)]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-2xl font-bold tabular-nums">
+                      {stats.jobCardsByStatus.reduce((sum, s) => sum + s.count, 0)}
+                    </span>
+                    <span className="text-xs text-muted-foreground">total</span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs">
+                    {stats.jobCardsByStatus.map((s) => (
+                      <span key={s.status} className="flex items-center gap-1.5">
+                        <span
+                          className="size-2 rounded-full"
+                          style={{ backgroundColor: CHART_TONE_HEX[toneFromStatus(s.status)] }}
+                        />
+                        {s.status} ({s.count})
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+            <div className="rounded-lg border p-4">
+              <h2 className="mb-2 text-sm font-semibold">Revenue Trend</h2>
+              {stats.revenueTrend.length === 0 ? (
+                <EmptyState
+                  icon={IndianRupee}
+                  title="No revenue yet"
+                  description="This chart fills in once bills start getting generated."
+                />
+              ) : (
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      data={stats.revenueTrend}
+                      margin={{ left: 8, right: 8, top: 8, bottom: 0 }}
+                    >
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        className="stroke-border"
+                      />
+                      <XAxis
+                        dataKey="date"
+                        tick={{ fontSize: 12 }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        tick={{ fontSize: 12 }}
+                        axisLine={false}
+                        tickLine={false}
+                        tickFormatter={(v: number) => `₹${v}`}
+                        width={56}
+                      />
+                      <Tooltip
+                        formatter={(v: unknown) => [`₹${String(v)}`, 'Revenue'] as [string, string]}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="revenue"
+                        stroke="#059669"
+                        strokeWidth={2}
+                        dot={{ r: 3 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
+            </div>
+          </div>
         </>
       )}
 

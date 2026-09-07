@@ -7,7 +7,9 @@ import { getClientIp, addAuditLogToBatch, auditContextFrom } from '@/lib/audit-l
 import { isIpAllowed } from '@/lib/ip-enforcement'
 import type { IpWhitelistDoc } from '@/types/firestore'
 
-export interface IpWhitelistWithId extends IpWhitelistDoc { id: string }
+export interface IpWhitelistWithId extends IpWhitelistDoc {
+  id: string
+}
 
 export function ipWhitelistQueryKey(companyId: string | undefined) {
   return ['ipWhitelist', companyId] as const
@@ -28,7 +30,11 @@ export function useIpWhitelist() {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return snap.docs
         .map((d) => ({ id: d.id, ...(d.data() as IpWhitelistDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+        .sort(
+          (a, b) =>
+            (b.createdAt?.toDate?.()?.getTime() ?? now) -
+            (a.createdAt?.toDate?.()?.getTime() ?? now)
+        )
     },
     enabled: !!companyId,
   })

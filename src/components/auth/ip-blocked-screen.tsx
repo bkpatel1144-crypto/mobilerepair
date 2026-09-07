@@ -18,7 +18,9 @@ export function IpBlockedScreen({ ip }: { ip: string | null }) {
         <h1 className="text-lg font-semibold">Access blocked from this network</h1>
         <p className="max-w-sm text-sm text-muted-foreground">
           Your account's role requires signing in from a whitelisted IP address.
-          {ip ? ` Your current IP (${ip}) isn't on the list.` : ' Your current IP could not be detected.'}
+          {ip
+            ? ` Your current IP (${ip}) isn't on the list.`
+            : ' Your current IP could not be detected.'}
         </p>
         <p className="max-w-sm text-xs text-muted-foreground">
           Ask an Owner to add your IP under Administration → IP Whitelist, or connect from an

@@ -4,7 +4,8 @@
  * and `formSchemas/lead`.
  */
 
-export type LeadFieldType = 'search' | 'text' | 'select' | 'userPicker' | 'tags' | 'date' | 'textarea'
+export type LeadFieldType =
+  'search' | 'text' | 'select' | 'userPicker' | 'tags' | 'date' | 'textarea'
 
 export interface LeadFieldSpec {
   key: string

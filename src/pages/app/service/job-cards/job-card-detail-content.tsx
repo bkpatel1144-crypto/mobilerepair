@@ -1,7 +1,19 @@
 import { useState } from 'react'
 import {
-  Wrench, Phone, ClipboardList, Smartphone, AlertTriangle, UserRound, IndianRupee,
-  Cog, Image as ImageIcon, StickyNote, Plus, ChevronDown, ChevronUp, Expand,
+  Wrench,
+  Phone,
+  ClipboardList,
+  Smartphone,
+  AlertTriangle,
+  UserRound,
+  IndianRupee,
+  Cog,
+  Image as ImageIcon,
+  StickyNote,
+  Plus,
+  ChevronDown,
+  ChevronUp,
+  Expand,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -23,7 +35,15 @@ function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
 }
 
-function Panel({ icon: Icon, title, children }: { icon: React.ComponentType<{ className?: string }>; title: string; children: React.ReactNode }) {
+function Panel({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  children: React.ReactNode
+}) {
   return (
     <div className="space-y-2 rounded-lg border p-4">
       <div className="flex items-center gap-1.5 text-sm font-semibold">
@@ -40,9 +60,19 @@ function Panel({ icon: Icon, title, children }: { icon: React.ComponentType<{ cl
  * exact same markup, just constrained by a narrower container in the drawer. Matches
  * `preview (71)`/`(72)` panel-for-panel.
  */
-export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; onExpand?: () => void }) {
+export function JobCardDetailContent({
+  job,
+  onExpand,
+}: {
+  job: JobCardWithId
+  onExpand?: () => void
+}) {
   const { profile } = useAuth()
-  const { data: timeline = [], error: timelineError, refetch: refetchTimeline } = useJobTimeline(job.id)
+  const {
+    data: timeline = [],
+    error: timelineError,
+    refetch: refetchTimeline,
+  } = useJobTimeline(job.id)
   const { canPerform, canViewMoney } = useJobActionGating(job)
   const applyAction = useApplyJobAction(job)
   const { data: items = [] } = useItems()
@@ -74,7 +104,13 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
             <StatusBadge status={statusLabel(job.status)} dot />
             <span className="text-sm text-muted-foreground">{formatDateOnly(job)}</span>
             {onExpand && (
-              <Button type="button" variant="ghost" size="icon" className="size-7" onClick={onExpand}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="size-7"
+                onClick={onExpand}
+              >
                 <Expand className="size-4" />
               </Button>
             )}
@@ -101,7 +137,9 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
               <div>
                 <p className="mb-1 text-xs text-muted-foreground uppercase">Received at Intake</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {job.itemsReceived.length === 0 && <span className="text-sm text-muted-foreground">—</span>}
+                  {job.itemsReceived.length === 0 && (
+                    <span className="text-sm text-muted-foreground">—</span>
+                  )}
                   {job.itemsReceived.map((label) => (
                     <StatusBadge key={label} status={label} tone="warning" />
                   ))}
@@ -110,7 +148,9 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
               <div>
                 <p className="mb-1 text-xs text-muted-foreground uppercase">Returned at Intake</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {job.itemsReturned.length === 0 && <span className="text-sm text-muted-foreground">—</span>}
+                  {job.itemsReturned.length === 0 && (
+                    <span className="text-sm text-muted-foreground">—</span>
+                  )}
                   {job.itemsReturned.map((label) => (
                     <StatusBadge key={label} status={label} tone="success" />
                   ))}
@@ -121,12 +161,27 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
 
           <Panel icon={Smartphone} title="Device">
             <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-              <div><dt className="text-xs text-muted-foreground uppercase">Type</dt><dd>{job.deviceTypeName ?? '—'}</dd></div>
-              <div><dt className="text-xs text-muted-foreground uppercase">Brand</dt><dd>{job.brandName ?? '—'}</dd></div>
-              <div><dt className="text-xs text-muted-foreground uppercase">Model</dt><dd>{job.model ?? '—'}</dd></div>
-              <div><dt className="text-xs text-muted-foreground uppercase">IMEI</dt><dd>{job.imei ?? '—'}</dd></div>
+              <div>
+                <dt className="text-xs text-muted-foreground uppercase">Type</dt>
+                <dd>{job.deviceTypeName ?? '—'}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground uppercase">Brand</dt>
+                <dd>{job.brandName ?? '—'}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground uppercase">Model</dt>
+                <dd>{job.model ?? '—'}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground uppercase">IMEI</dt>
+                <dd>{job.imei ?? '—'}</dd>
+              </div>
               {job.devicePinPattern && (
-                <div><dt className="text-xs text-muted-foreground uppercase">PIN / Pattern</dt><dd>{job.devicePinPattern}</dd></div>
+                <div>
+                  <dt className="text-xs text-muted-foreground uppercase">PIN / Pattern</dt>
+                  <dd>{job.devicePinPattern}</dd>
+                </div>
               )}
             </dl>
           </Panel>
@@ -134,7 +189,10 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
           <Panel icon={AlertTriangle} title="Problem Reported">
             <div className="flex flex-wrap gap-1.5">
               {job.problemLabels.map((label) => (
-                <span key={label} className="rounded-md bg-amber-50 px-2 py-1 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
+                <span
+                  key={label}
+                  className="rounded-md bg-amber-50 px-2 py-1 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400"
+                >
                   {label}
                 </span>
               ))}
@@ -158,12 +216,21 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
               </div>
             </div>
             <dl className="space-y-1 pt-2 text-sm">
-              <div className="flex justify-between"><dt className="text-muted-foreground">Received By</dt><dd>{job.receivedByName}</dd></div>
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Received By</dt>
+                <dd>{job.receivedByName}</dd>
+              </div>
               {job.deliveredByName && (
-                <div className="flex justify-between"><dt className="text-muted-foreground">Delivered By</dt><dd>{job.deliveredByName}</dd></div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Delivered By</dt>
+                  <dd>{job.deliveredByName}</dd>
+                </div>
               )}
               {job.cancelledByName && (
-                <div className="flex justify-between"><dt className="text-muted-foreground">Cancelled By</dt><dd>{job.cancelledByName}</dd></div>
+                <div className="flex justify-between">
+                  <dt className="text-muted-foreground">Cancelled By</dt>
+                  <dd>{job.cancelledByName}</dd>
+                </div>
               )}
             </dl>
           </Panel>
@@ -173,12 +240,25 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
           {canViewMoney && (
             <Panel icon={IndianRupee} title="Payment">
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-                <div><dt className="text-xs text-muted-foreground uppercase">Estimated</dt><dd>₹{job.estimatedCost}</dd></div>
-                <div><dt className="text-xs text-muted-foreground uppercase">Advance</dt><dd>₹{job.advanceReceived}</dd></div>
-                <div><dt className="text-xs text-muted-foreground uppercase">Paid</dt><dd>₹{job.paidAmount}</dd></div>
+                <div>
+                  <dt className="text-xs text-muted-foreground uppercase">Estimated</dt>
+                  <dd>₹{job.estimatedCost}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground uppercase">Advance</dt>
+                  <dd>₹{job.advanceReceived}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground uppercase">Paid</dt>
+                  <dd>₹{job.paidAmount}</dd>
+                </div>
                 <div>
                   <dt className="text-xs text-muted-foreground uppercase">Balance</dt>
-                  <dd className={balance <= 0 ? 'font-medium text-teal-600' : 'font-medium text-amber-600'}>
+                  <dd
+                    className={
+                      balance <= 0 ? 'font-medium text-teal-600' : 'font-medium text-amber-600'
+                    }
+                  >
                     {balance <= 0 ? 'Paid ✓' : `₹${balance}`}
                   </dd>
                 </div>
@@ -199,18 +279,31 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
           <Panel icon={Cog} title={`Parts Used (${job.partsUsed.length})`}>
             <div className="space-y-1.5">
               {job.partsUsed.map((p) => (
-                <div key={p.id} className="flex items-center justify-between rounded-md border px-2.5 py-1.5 text-sm">
+                <div
+                  key={p.id}
+                  className="flex items-center justify-between rounded-md border px-2.5 py-1.5 text-sm"
+                >
                   <span>{p.itemName}</span>
-                  {canViewMoney && <span className="text-muted-foreground">₹{p.rate} · {p.qty}</span>}
+                  {canViewMoney && (
+                    <span className="text-muted-foreground">
+                      ₹{p.rate} · {p.qty}
+                    </span>
+                  )}
                 </div>
               ))}
-              {job.partsUsed.length === 0 && <p className="text-sm text-muted-foreground">No parts used yet.</p>}
+              {job.partsUsed.length === 0 && (
+                <p className="text-sm text-muted-foreground">No parts used yet.</p>
+              )}
             </div>
-            {canPerform('addPart') && (
-              addPartOpen ? (
+            {canPerform('addPart') &&
+              (addPartOpen ? (
                 <div className="space-y-2 rounded-md border border-dashed p-2">
                   <SearchSelect
-                    options={partOptions.map((i) => ({ id: i.id, label: i.name, helper: i.sellingPrice ? `₹${i.sellingPrice}` : undefined }))}
+                    options={partOptions.map((i) => ({
+                      id: i.id,
+                      label: i.name,
+                      helper: i.sellingPrice ? `₹${i.sellingPrice}` : undefined,
+                    }))}
                     value={partItemId}
                     onChange={(id) => {
                       setPartItemId(id)
@@ -226,8 +319,22 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
                     }
                   />
                   <div className="flex gap-2">
-                    <input type="number" min={0} value={partRate} onChange={(e) => setPartRate(Number(e.target.value) || 0)} placeholder="Rate" className="w-24 rounded-md border px-2 py-1 text-sm" />
-                    <input type="number" min={1} value={partQty} onChange={(e) => setPartQty(Number(e.target.value) || 1)} placeholder="Qty" className="w-20 rounded-md border px-2 py-1 text-sm" />
+                    <input
+                      type="number"
+                      min={0}
+                      value={partRate}
+                      onChange={(e) => setPartRate(Number(e.target.value) || 0)}
+                      placeholder="Rate"
+                      className="w-24 rounded-md border px-2 py-1 text-sm"
+                    />
+                    <input
+                      type="number"
+                      min={1}
+                      value={partQty}
+                      onChange={(e) => setPartQty(Number(e.target.value) || 1)}
+                      placeholder="Qty"
+                      className="w-20 rounded-md border px-2 py-1 text-sm"
+                    />
                     <Button
                       type="button"
                       size="sm"
@@ -235,7 +342,13 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
                       onClick={() => {
                         const item = partOptions.find((i) => i.id === partItemId)
                         if (!item) return
-                        applyAction.mutate({ action: 'addPart', itemId: item.id, itemName: item.name, rate: partRate, qty: partQty })
+                        applyAction.mutate({
+                          action: 'addPart',
+                          itemId: item.id,
+                          itemName: item.name,
+                          rate: partRate,
+                          qty: partQty,
+                        })
                         setAddPartOpen(false)
                         setPartItemId(null)
                         setPartRate(0)
@@ -244,16 +357,26 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
                     >
                       Add
                     </Button>
-                    <Button type="button" size="sm" variant="outline" onClick={() => setAddPartOpen(false)}>Cancel</Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setAddPartOpen(false)}
+                    >
+                      Cancel
+                    </Button>
                   </div>
                 </div>
               ) : (
-                <button type="button" onClick={() => setAddPartOpen(true)} className="flex items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400">
+                <button
+                  type="button"
+                  onClick={() => setAddPartOpen(true)}
+                  className="flex items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400"
+                >
                   <Plus className="size-3.5" />
                   Add Part
                 </button>
-              )
-            )}
+              ))}
           </Panel>
 
           <Panel icon={ImageIcon} title="Images">
@@ -262,7 +385,12 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
             ) : (
               <div className="grid grid-cols-3 gap-2">
                 {job.imageUrls.map((url) => (
-                  <img key={url} src={url} alt="Job" className="aspect-square rounded-md object-cover" />
+                  <img
+                    key={url}
+                    src={url}
+                    alt="Job"
+                    className="aspect-square rounded-md object-cover"
+                  />
                 ))}
               </div>
             )}
@@ -270,15 +398,31 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
               <label className="flex cursor-pointer items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400">
                 <Plus className="size-3.5" />
                 Add Image
-                <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleAddImage(f) }} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0]
+                    if (f) handleAddImage(f)
+                  }}
+                />
               </label>
             )}
           </Panel>
 
           <Panel icon={StickyNote} title={`Notes (${job.notes.length})`}>
-            <button type="button" onClick={() => setNotesOpen((o) => !o)} className="flex w-full items-center justify-between text-sm">
+            <button
+              type="button"
+              onClick={() => setNotesOpen((o) => !o)}
+              className="flex w-full items-center justify-between text-sm"
+            >
               <span className="sr-only">Toggle notes</span>
-              {notesOpen ? <ChevronUp className="ml-auto size-4" /> : <ChevronDown className="ml-auto size-4" />}
+              {notesOpen ? (
+                <ChevronUp className="ml-auto size-4" />
+              ) : (
+                <ChevronDown className="ml-auto size-4" />
+              )}
             </button>
             {notesOpen && (
               <div className="space-y-2">
@@ -288,7 +432,11 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
                     <p className="text-xs text-muted-foreground">{n.userName}</p>
                   </div>
                 ))}
-                <button type="button" onClick={() => setNoteOpen(true)} className="flex items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400">
+                <button
+                  type="button"
+                  onClick={() => setNoteOpen(true)}
+                  className="flex items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400"
+                >
                   <Plus className="size-3.5" />
                   Add Note
                 </button>
@@ -298,13 +446,20 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
         </div>
 
         <div>
-          <TimelinePanel events={timeline} error={timelineError} onRetry={() => void refetchTimeline()} />
+          <TimelinePanel
+            events={timeline}
+            error={timelineError}
+            onRetry={() => void refetchTimeline()}
+          />
         </div>
       </div>
 
       <FormModal
         open={noteOpen}
-        onOpenChange={(o) => { setNoteOpen(o); if (!o) setNoteText('') }}
+        onOpenChange={(o) => {
+          setNoteOpen(o)
+          if (!o) setNoteText('')
+        }}
         title="Add Note"
         submitLabel="Add Note"
         isSubmitting={applyAction.isPending}
@@ -318,7 +473,12 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
       >
         <div className="space-y-1.5">
           <Label>Note</Label>
-          <Textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} rows={3} autoFocus />
+          <Textarea
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+            rows={3}
+            autoFocus
+          />
         </div>
       </FormModal>
     </div>
@@ -326,5 +486,7 @@ export function JobCardDetailContent({ job, onExpand }: { job: JobCardWithId; on
 }
 
 function formatDateOnly(job: JobCardWithId) {
-  return job.createdAt?.toDate ? job.createdAt.toDate().toLocaleDateString('en-IN', { dateStyle: 'medium' }) : ''
+  return job.createdAt?.toDate
+    ? job.createdAt.toDate().toLocaleDateString('en-IN', { dateStyle: 'medium' })
+    : ''
 }

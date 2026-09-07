@@ -1,8 +1,20 @@
-import { collection, doc, getDocs, query, where, writeBatch, type DocumentData } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  where,
+  writeBatch,
+  type DocumentData,
+} from 'firebase/firestore'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import { db, storage } from '@/lib/firebase'
 import { BACKUP_COLLECTIONS, SERVICE_OPTION_TYPES } from '@/config/backup-collections'
-import { jobTimelineCollection, serviceOptionsCollection, usersCollection } from '@/lib/firestore-paths'
+import {
+  jobTimelineCollection,
+  serviceOptionsCollection,
+  usersCollection,
+} from '@/lib/firestore-paths'
 
 export const BACKUP_FORMAT_VERSION = 1
 
@@ -27,7 +39,9 @@ export interface BackupSnapshot {
  * a cached/estimated one — fetches every collection exactly once, same cost as an actual backup
  * would, since there's no cheaper way to get an exact count without a maintained counter doc per
  * collection (which nothing in this app keeps for most of these). */
-export async function getDatabaseStats(companyId: string): Promise<{ dataSets: number; records: number; approxSizeBytes: number }> {
+export async function getDatabaseStats(
+  companyId: string
+): Promise<{ dataSets: number; records: number; approxSizeBytes: number }> {
   const snapshot = await buildBackupSnapshot(companyId, 'Stats')
   const json = JSON.stringify(snapshot)
   const dataSets = Object.keys(snapshot._meta.collectionCounts).length
@@ -40,7 +54,10 @@ export async function getDatabaseStats(companyId: string): Promise<{ dataSets: n
  * subcollection (folded onto that job's own record as `__timeline`) — see
  * `src/config/backup-collections.ts`'s own doc comment for exactly what's deliberately excluded
  * and why. */
-export async function buildBackupSnapshot(companyId: string, companyName: string): Promise<BackupSnapshot> {
+export async function buildBackupSnapshot(
+  companyId: string,
+  companyName: string
+): Promise<BackupSnapshot> {
   const collections: Record<string, DocumentData[]> = {}
   const collectionCounts: Record<string, number> = {}
 
@@ -56,8 +73,13 @@ export async function buildBackupSnapshot(companyId: string, companyName: string
       if (c.key === 'jobCards') {
         await Promise.all(
           docs.map(async (jobDoc) => {
-            const timelineSnap = await getDocs(collection(db, jobTimelineCollection(companyId, jobDoc.id as string)))
-            ;(jobDoc as DocumentData).__timeline = timelineSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+            const timelineSnap = await getDocs(
+              collection(db, jobTimelineCollection(companyId, jobDoc.id as string))
+            )
+            ;(jobDoc as DocumentData).__timeline = timelineSnap.docs.map((d) => ({
+              id: d.id,
+              ...d.data(),
+            }))
           })
         )
       }
@@ -76,7 +98,9 @@ export async function buildBackupSnapshot(companyId: string, companyName: string
     })
   )
 
-  const usersSnap = await getDocs(query(collection(db, usersCollection()), where('companyId', '==', companyId)))
+  const usersSnap = await getDocs(
+    query(collection(db, usersCollection()), where('companyId', '==', companyId))
+  )
   const users = usersSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
   collectionCounts.users = users.length
 
@@ -145,7 +169,10 @@ export function isValidBackupShape(data: unknown): data is BackupSnapshot {
  * much larger, riskier promise than what "restore my data" usually means). Chunked into batches
  * of ≤450 writes (Firestore's own limit is 500; kept under it since each job card write is
  * followed by its own timeline sub-writes in the same batch). */
-export async function restoreOverwriteLive(companyId: string, snapshot: BackupSnapshot): Promise<number> {
+export async function restoreOverwriteLive(
+  companyId: string,
+  snapshot: BackupSnapshot
+): Promise<number> {
   let writeCount = 0
   let batch = writeBatch(db)
 
@@ -160,7 +187,10 @@ export async function restoreOverwriteLive(companyId: string, snapshot: BackupSn
   for (const c of BACKUP_COLLECTIONS) {
     const docs = snapshot.collections[c.key] ?? []
     for (const docData of docs) {
-      const { id, __timeline, ...rest } = docData as DocumentData & { id: string; __timeline?: DocumentData[] }
+      const { id, __timeline, ...rest } = docData as DocumentData & {
+        id: string
+        __timeline?: DocumentData[]
+      }
       batch.set(doc(db, c.path(companyId), id), rest)
       writeCount++
       await flushIfNeeded()

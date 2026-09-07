@@ -1,6 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Smartphone, Plus, RefreshCw, Printer, Pencil, Wrench, Undo2, ChevronDown, Package, Truck} from 'lucide-react'
+import {
+  Smartphone,
+  Plus,
+  RefreshCw,
+  Printer,
+  Pencil,
+  Wrench,
+  Undo2,
+  ChevronDown,
+  Package,
+  Truck,
+} from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
@@ -16,7 +27,13 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,11 +56,20 @@ import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { useCompany } from '@/hooks/use-company'
 import { usePrintTemplatesFor } from '@/hooks/use-print-templates'
 import { renderPrintHtml, openPrintWindow } from '@/lib/print-render'
-import { secondHandPurchaseReceiptContext, secondHandSaleInvoiceContext, secondHandDeviceLabelContext } from '@/lib/print-contexts'
+import {
+  secondHandPurchaseReceiptContext,
+  secondHandSaleInvoiceContext,
+  secondHandDeviceLabelContext,
+} from '@/lib/print-contexts'
 import { formatTimestamp } from '@/lib/utils'
 import { dateRangeBounds } from '@/lib/date-range'
 import { buildPath } from '@/config/nav'
-import { purchaseDetailSections, purchaseTimeline, PURCHASE_STATUS_LABEL, PURCHASE_STATUS_TONE } from './purchase-detail-sections'
+import {
+  purchaseDetailSections,
+  purchaseTimeline,
+  PURCHASE_STATUS_LABEL,
+  PURCHASE_STATUS_TONE,
+} from './purchase-detail-sections'
 
 export function DevicePurchasePage() {
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
@@ -61,10 +87,17 @@ export function DevicePurchasePage() {
 
   const bounds = dateRangeBounds(dateRange)
   const filtered = purchases
-    .filter((p) => !bounds || ((p.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from && (p.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to))
+    .filter(
+      (p) =>
+        !bounds ||
+        ((p.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from &&
+          (p.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to)
+    )
     .filter((p) =>
       search.trim()
-        ? `${p.purchaseNumber} ${p.brandName ?? ''} ${p.model ?? ''} ${p.sellerName}`.toLowerCase().includes(search.toLowerCase())
+        ? `${p.purchaseNumber} ${p.brandName ?? ''} ${p.model ?? ''} ${p.sellerName}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
         : true
     )
 
@@ -86,8 +119,22 @@ export function DevicePurchasePage() {
     },
     { key: 'device', header: 'Device', render: (p) => deviceLabel(p) },
     { key: 'seller', header: 'Seller', hideOnMobile: true, render: (p) => p.sellerName },
-    { key: 'price', header: 'Purchase Price', sortValue: (p) => p.purchasePrice, render: (p) => `₹${p.purchasePrice}` },
-    { key: 'status', header: 'Status', render: (p) => <StatusBadge status={PURCHASE_STATUS_LABEL[p.status]} tone={PURCHASE_STATUS_TONE[p.status]} /> },
+    {
+      key: 'price',
+      header: 'Purchase Price',
+      sortValue: (p) => p.purchasePrice,
+      render: (p) => `₹${p.purchasePrice}`,
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (p) => (
+        <StatusBadge
+          status={PURCHASE_STATUS_LABEL[p.status]}
+          tone={PURCHASE_STATUS_TONE[p.status]}
+        />
+      ),
+    },
   ]
 
   return (
@@ -98,12 +145,23 @@ export function DevicePurchasePage() {
         subtitle="Buy used mobiles, laptops & other devices from sellers"
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(profile?.companyId) })}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                queryClient.invalidateQueries({
+                  queryKey: secondHandPurchasesQueryKey(profile?.companyId),
+                })
+              }
+            >
               <RefreshCw className="size-4" />
               Refresh
             </Button>
             {canCreate && (
-              <Button type="button" onClick={() => navigate(`${buildPath('second-hand-device', 'purchase')}/create`)}>
+              <Button
+                type="button"
+                onClick={() => navigate(`${buildPath('second-hand-device', 'purchase')}/create`)}
+              >
                 <Plus className="size-4" />
                 New Purchase
               </Button>
@@ -114,10 +172,30 @@ export function DevicePurchasePage() {
 
       <StatCardGrid>
         <StatCard label="Total Purchased" value={purchases.length} icon={Smartphone} />
-        <StatCard label="In Stock" icon={Package} value={purchases.filter((p) => p.status === 'inStock').length} tone="success" />
-        <StatCard label="In Refurb" icon={Wrench} value={purchases.filter((p) => p.status === 'inRefurb').length} tone="warning" />
-        <StatCard label="Sold" icon={Truck} value={purchases.filter((p) => p.status === 'sold').length} tone="info" />
-        <StatCard label="Returned" icon={Undo2} value={purchases.filter((p) => p.status === 'returnedToSeller').length} tone="danger" />
+        <StatCard
+          label="In Stock"
+          icon={Package}
+          value={purchases.filter((p) => p.status === 'inStock').length}
+          tone="success"
+        />
+        <StatCard
+          label="In Refurb"
+          icon={Wrench}
+          value={purchases.filter((p) => p.status === 'inRefurb').length}
+          tone="warning"
+        />
+        <StatCard
+          label="Sold"
+          icon={Truck}
+          value={purchases.filter((p) => p.status === 'sold').length}
+          tone="info"
+        />
+        <StatCard
+          label="Returned"
+          icon={Undo2}
+          value={purchases.filter((p) => p.status === 'returnedToSeller').length}
+          tone="danger"
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -136,7 +214,13 @@ export function DevicePurchasePage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={Smartphone} title="No purchases yet" description="Record your first device purchase above." />}
+        emptyState={
+          <EmptyState
+            icon={Smartphone}
+            title="No purchases yet"
+            description="Record your first device purchase above."
+          />
+        }
       />
 
       {viewing && (
@@ -146,17 +230,38 @@ export function DevicePurchasePage() {
           icon={Smartphone}
           title={viewing.purchaseNumber}
           subtitle={deviceLabel(viewing)}
-          badges={<StatusBadge status={PURCHASE_STATUS_LABEL[viewing.status]} tone={PURCHASE_STATUS_TONE[viewing.status]} />}
+          badges={
+            <StatusBadge
+              status={PURCHASE_STATUS_LABEL[viewing.status]}
+              tone={PURCHASE_STATUS_TONE[viewing.status]}
+            />
+          }
           actions={
             <>
               {canEdit && viewing.status !== 'sold' && viewing.status !== 'returnedToSeller' && (
-                <Button type="button" variant="outline" size="sm" onClick={() => setEditing(viewing)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditing(viewing)}
+                >
                   <Pencil className="size-3.5" />
                   Edit
                 </Button>
               )}
               {canRefurb && viewing.status === 'inStock' && (
-                <Button type="button" variant="outline" size="sm" onClick={() => setStatus.mutate({ id: viewing.id, status: 'inRefurb', purchaseNumber: viewing.purchaseNumber })}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setStatus.mutate({
+                      id: viewing.id,
+                      status: 'inRefurb',
+                      purchaseNumber: viewing.purchaseNumber,
+                    })
+                  }
+                >
                   <Wrench className="size-3.5" />
                   Send to Refurb
                 </Button>
@@ -193,7 +298,11 @@ export function DevicePurchasePage() {
           isPending={setStatus.isPending}
           onConfirm={() =>
             setStatus.mutate(
-              { id: viewing.id, status: 'returnedToSeller', purchaseNumber: viewing.purchaseNumber },
+              {
+                id: viewing.id,
+                status: 'returnedToSeller',
+                purchaseNumber: viewing.purchaseNumber,
+              },
               { onSuccess: () => setConfirmingReturn(false) }
             )
           }
@@ -205,12 +314,20 @@ export function DevicePurchasePage() {
 
 /** Deliberately a smaller field set than Create — see `useUpdateSecondHandPurchase`'s own doc
  * comment for why device identity/seller/purchase-price terms aren't re-editable here. */
-function EditPurchaseModal({ purchase, onClose }: { purchase: SecondHandPurchaseWithId; onClose: () => void }) {
+function EditPurchaseModal({
+  purchase,
+  onClose,
+}: {
+  purchase: SecondHandPurchaseWithId
+  onClose: () => void
+}) {
   const updatePurchase = useUpdateSecondHandPurchase()
   const [conditionGrade, setConditionGrade] = useState<ConditionGrade>(purchase.conditionGrade)
   const [conditionNotes, setConditionNotes] = useState(purchase.conditionNotes ?? '')
   const [accessoriesIncluded, setAccessoriesIncluded] = useState(purchase.accessoriesIncluded ?? '')
-  const [expectedSalePrice, setExpectedSalePrice] = useState<number | ''>(purchase.expectedSalePrice ?? '')
+  const [expectedSalePrice, setExpectedSalePrice] = useState<number | ''>(
+    purchase.expectedSalePrice ?? ''
+  )
   const [refurbCost, setRefurbCost] = useState(purchase.refurbCost)
   const [notes, setNotes] = useState(purchase.notes ?? '')
 
@@ -241,8 +358,13 @@ function EditPurchaseModal({ purchase, onClose }: { purchase: SecondHandPurchase
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <Label>Condition Grade</Label>
-          <Select value={conditionGrade} onValueChange={(v) => v && setConditionGrade(v as ConditionGrade)}>
-            <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+          <Select
+            value={conditionGrade}
+            onValueChange={(v) => v && setConditionGrade(v as ConditionGrade)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="A">A — Excellent</SelectItem>
               <SelectItem value="B">B — Good</SelectItem>
@@ -253,25 +375,53 @@ function EditPurchaseModal({ purchase, onClose }: { purchase: SecondHandPurchase
         </div>
         <div className="space-y-1.5">
           <Label>Expected Sale Price</Label>
-          <Input type="number" min={0} value={expectedSalePrice} onChange={(e) => setExpectedSalePrice(e.target.value === '' ? '' : Number(e.target.value))} />
+          <Input
+            type="number"
+            min={0}
+            value={expectedSalePrice}
+            onChange={(e) =>
+              setExpectedSalePrice(e.target.value === '' ? '' : Number(e.target.value))
+            }
+          />
         </div>
       </div>
       <div className="space-y-1.5">
         <Label>Refurb Cost</Label>
-        <Input type="number" min={0} value={refurbCost} onChange={(e) => setRefurbCost(Number(e.target.value) || 0)} />
-        <p className="text-xs text-muted-foreground">Spent so far getting this device sale-ready — subtracted from profit at sale time.</p>
+        <Input
+          type="number"
+          min={0}
+          value={refurbCost}
+          onChange={(e) => setRefurbCost(Number(e.target.value) || 0)}
+        />
+        <p className="text-xs text-muted-foreground">
+          Spent so far getting this device sale-ready — subtracted from profit at sale time.
+        </p>
       </div>
       <div className="space-y-1.5">
         <Label>Accessories Included</Label>
-        <Input value={accessoriesIncluded} onChange={(e) => setAccessoriesIncluded(e.target.value)} placeholder="Charger, box, cable..." />
+        <Input
+          value={accessoriesIncluded}
+          onChange={(e) => setAccessoriesIncluded(e.target.value)}
+          placeholder="Charger, box, cable..."
+        />
       </div>
       <div className="space-y-1.5">
         <Label>Condition Notes</Label>
-        <Textarea value={conditionNotes} onChange={(e) => setConditionNotes(e.target.value)} placeholder="e.g. Minor scratches on back panel" rows={2} />
+        <Textarea
+          value={conditionNotes}
+          onChange={(e) => setConditionNotes(e.target.value)}
+          placeholder="e.g. Minor scratches on back panel"
+          rows={2}
+        />
       </div>
       <div className="space-y-1.5">
         <Label>Notes</Label>
-        <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Optional notes" rows={2} />
+        <Textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Optional notes"
+          rows={2}
+        />
       </div>
     </FormModal>
   )
@@ -281,25 +431,55 @@ function EditPurchaseModal({ purchase, onClose }: { purchase: SecondHandPurchase
  * pair — now a real print pipeline (Phase 10's Print Formats), not the honest-but-fake disabled
  * stub this replaces. Takes either a purchase or a sale (its one caller in each of the three
  * pages that render this always has exactly one of the two on hand). */
-export function PrintButtonGroup({ purchase, sale }: { purchase?: SecondHandPurchaseWithId; sale?: SecondHandSaleWithId }) {
+export function PrintButtonGroup({
+  purchase,
+  sale,
+}: {
+  purchase?: SecondHandPurchaseWithId
+  sale?: SecondHandSaleWithId
+}) {
   const { data: company } = useCompany()
-  const { defaultTemplate: purchaseReceiptTemplate } = usePrintTemplatesFor('secondHandPurchaseReceipt')
+  const { defaultTemplate: purchaseReceiptTemplate } = usePrintTemplatesFor(
+    'secondHandPurchaseReceipt'
+  )
   const { defaultTemplate: saleInvoiceTemplate } = usePrintTemplatesFor('secondHandSaleInvoice')
   const { defaultTemplate: labelTemplate } = usePrintTemplatesFor('secondHandDeviceLabel')
 
   function handlePrintReceiptOrInvoice() {
     if (purchase && purchaseReceiptTemplate) {
-      openPrintWindow(renderPrintHtml(purchaseReceiptTemplate, secondHandPurchaseReceiptContext(purchase, company)))
+      openPrintWindow(
+        renderPrintHtml(
+          purchaseReceiptTemplate,
+          secondHandPurchaseReceiptContext(purchase, company)
+        )
+      )
     } else if (sale && saleInvoiceTemplate) {
-      openPrintWindow(renderPrintHtml(saleInvoiceTemplate, secondHandSaleInvoiceContext(sale, company)))
+      openPrintWindow(
+        renderPrintHtml(saleInvoiceTemplate, secondHandSaleInvoiceContext(sale, company))
+      )
     }
   }
   function handlePrintLabel() {
     if (!labelTemplate) return
     const device = purchase
-      ? { deviceTypeName: purchase.deviceTypeName, brandName: purchase.brandName, model: purchase.model, imei: purchase.imei, conditionGrade: purchase.conditionGrade, purchaseNumber: purchase.purchaseNumber, price: purchase.purchasePrice }
+      ? {
+          deviceTypeName: purchase.deviceTypeName,
+          brandName: purchase.brandName,
+          model: purchase.model,
+          imei: purchase.imei,
+          conditionGrade: purchase.conditionGrade,
+          purchaseNumber: purchase.purchaseNumber,
+          price: purchase.purchasePrice,
+        }
       : sale
-        ? { deviceTypeName: null, brandName: null, model: sale.deviceLabel, imei: null, purchaseNumber: sale.purchaseNumber, price: sale.salePrice }
+        ? {
+            deviceTypeName: null,
+            brandName: null,
+            model: sale.deviceLabel,
+            imei: null,
+            purchaseNumber: sale.purchaseNumber,
+            price: sale.salePrice,
+          }
         : null
     if (!device) return
     openPrintWindow(renderPrintHtml(labelTemplate, secondHandDeviceLabelContext(device, company)))
@@ -317,7 +497,10 @@ export function PrintButtonGroup({ purchase, sale }: { purchase?: SecondHandPurc
         }
       />
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={handlePrintReceiptOrInvoice} disabled={purchase ? !purchaseReceiptTemplate : !saleInvoiceTemplate}>
+        <DropdownMenuItem
+          onClick={handlePrintReceiptOrInvoice}
+          disabled={purchase ? !purchaseReceiptTemplate : !saleInvoiceTemplate}
+        >
           Print {purchase ? 'Receipt' : 'Invoice'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handlePrintLabel} disabled={!labelTemplate}>

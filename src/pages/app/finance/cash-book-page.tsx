@@ -22,22 +22,38 @@ export function CashBookPage() {
 
   const filtered = data.rows.filter((r) =>
     search.trim()
-      ? `${r.receiptNumber} ${r.partyName} ${r.jobCardNumber ?? ''}`.toLowerCase().includes(search.toLowerCase())
+      ? `${r.receiptNumber} ${r.partyName} ${r.jobCardNumber ?? ''}`
+          .toLowerCase()
+          .includes(search.toLowerCase())
       : true
   )
 
   const columns: DataTableColumn<CashBookRow>[] = [
     { key: 'date', header: 'Date', render: (r) => formatTimestamp(r.createdAt) },
-    { key: 'particulars', header: 'Particulars', render: (r) => (
-      <div>
-        <p className="font-medium">{r.partyName}</p>
-        <p className="text-xs text-muted-foreground">
-          {r.receiptNumber} · {r.jobCardNumber ?? 'Manual entry'} · {r.mode.toUpperCase()}
-        </p>
-      </div>
-    ) },
-    { key: 'in', header: 'Credit (IN)', render: (r) => (r.direction === 'in' ? <span className="text-emerald-600">₹{r.amount}</span> : '') },
-    { key: 'out', header: 'Debit (OUT)', render: (r) => (r.direction === 'out' ? <span className="text-red-600">₹{r.amount}</span> : '') },
+    {
+      key: 'particulars',
+      header: 'Particulars',
+      render: (r) => (
+        <div>
+          <p className="font-medium">{r.partyName}</p>
+          <p className="text-xs text-muted-foreground">
+            {r.receiptNumber} · {r.jobCardNumber ?? 'Manual entry'} · {r.mode.toUpperCase()}
+          </p>
+        </div>
+      ),
+    },
+    {
+      key: 'in',
+      header: 'Credit (IN)',
+      render: (r) =>
+        r.direction === 'in' ? <span className="text-emerald-600">₹{r.amount}</span> : '',
+    },
+    {
+      key: 'out',
+      header: 'Debit (OUT)',
+      render: (r) =>
+        r.direction === 'out' ? <span className="text-red-600">₹{r.amount}</span> : '',
+    },
     { key: 'balance', header: 'Balance', render: (r) => `₹${r.runningBalance}` },
   ]
 
@@ -49,7 +65,13 @@ export function CashBookPage() {
         subtitle="Running cash position across every receipt and payment"
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })
+              }
+            >
               <RefreshCw className="size-4" />
               Refresh
             </Button>
@@ -68,7 +90,13 @@ export function CashBookPage() {
         <StatCard label="Closing" value={`₹${data.closing}`} tone="info" />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search receipt, party..." dateRange={dateRange === 'all' ? undefined : dateRange} onDateRangeChange={setDateRange} />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search receipt, party..."
+        dateRange={dateRange === 'all' ? undefined : dateRange}
+        onDateRangeChange={setDateRange}
+      />
 
       <DataTable
         columns={columns}
@@ -77,12 +105,19 @@ export function CashBookPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Search} title="No entries in this range" description="Receipts and payments recorded here will appear in the cash book." />}
+        emptyState={
+          <EmptyState
+            icon={Search}
+            title="No entries in this range"
+            description="Receipts and payments recorded here will appear in the cash book."
+          />
+        }
       />
 
       {filtered.length > 0 && (
         <p className="text-right text-sm font-medium text-muted-foreground">
-          Closing Balance ({filtered.length} entry total): <span className="text-foreground">₹{data.closing}</span>
+          Closing Balance ({filtered.length} entry total):{' '}
+          <span className="text-foreground">₹{data.closing}</span>
         </p>
       )}
     </div>

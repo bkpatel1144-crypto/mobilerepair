@@ -1,11 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-  writeBatch,
-} from 'firebase/firestore'
+import { collection, doc, getDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { useLiveQuery } from '@/hooks/use-live-query'
 import {
@@ -55,7 +49,8 @@ export function useJobCards() {
     (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return (docs as JobCardWithId[]).sort(
-        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+        (a, b) =>
+          (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId
@@ -70,7 +65,9 @@ export function useJobCard(jobId: string | undefined) {
     queryKey: jobCardQueryKey(companyId, jobId),
     queryFn: async () => {
       const snap = await getDoc(doc(db, jobCardDoc(companyId!, jobId!)))
-      return snap.exists() ? ({ id: snap.id, ...(snap.data() as JobCardDoc) } as JobCardWithId) : null
+      return snap.exists()
+        ? ({ id: snap.id, ...(snap.data() as JobCardDoc) } as JobCardWithId)
+        : null
     },
     enabled: !!companyId && !!jobId,
   })
@@ -90,7 +87,8 @@ export function useJobTimeline(jobId: string | undefined) {
     (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return (docs as TimelineEventWithId[]).sort(
-        (a, b) => (a.createdAt?.toDate?.()?.getTime() ?? now) - (b.createdAt?.toDate?.()?.getTime() ?? now)
+        (a, b) =>
+          (a.createdAt?.toDate?.()?.getTime() ?? now) - (b.createdAt?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId && !!jobId
@@ -278,7 +276,11 @@ export function useCreateJobCard() {
         entityId: jobRef.id,
         entityLabel: jobNumber,
         targetLabel: input.customerName,
-        details: { customer: input.customerName, device: input.deviceTypeName, advance: input.advanceReceived },
+        details: {
+          customer: input.customerName,
+          device: input.deviceTypeName,
+          advance: input.advanceReceived,
+        },
       })
       await batch.commit()
       return { id: jobRef.id, jobNumber }

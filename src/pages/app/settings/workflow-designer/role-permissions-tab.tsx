@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { Check, Crown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -40,12 +46,23 @@ const HOW_IT_WORKS = [
 ]
 
 export function RolePermissionsTab() {
-  const { data: allRoles = [], isLoading: rolesLoading, error: rolesError, refetch: refetchRoles } = useRoles()
+  const {
+    data: allRoles = [],
+    isLoading: rolesLoading,
+    error: rolesError,
+    refetch: refetchRoles,
+  } = useRoles()
   const { data: configuredRoles = [] } = useWorkflowConfigs()
   const [selectedRoleId, setSelectedRoleId] = useState<string | null>(null)
 
   if (rolesError) {
-    return <ErrorState error={rolesError} onRetry={() => void refetchRoles()} title="Couldn't load your roles" />
+    return (
+      <ErrorState
+        error={rolesError}
+        onRetry={() => void refetchRoles()}
+        title="Couldn't load your roles"
+      />
+    )
   }
 
   if (rolesLoading) return <RouteFallback />
@@ -169,7 +186,13 @@ function SelectedRolePanel({
   // `existingConfig` undefined and `baseline` falls back to `blankWorkflowConfig()`, so the
   // matrix would render as "this role has no permissions" and a Save would make that true.
   if (loadError) {
-    return <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this role's workflow config" />
+    return (
+      <ErrorState
+        error={loadError}
+        onRetry={() => void refetch()}
+        title="Couldn't load this role's workflow config"
+      />
+    )
   }
 
   if (isLoading || !draft || !baseline || !role) return <RouteFallback />
@@ -224,7 +247,11 @@ function SelectedRolePanel({
 
         <div className="ml-auto flex items-center gap-3">
           <span className="flex items-center gap-2 text-sm">
-            <span className={draft.active ? 'text-teal-700 dark:text-teal-400' : 'text-muted-foreground'}>
+            <span
+              className={
+                draft.active ? 'text-teal-700 dark:text-teal-400' : 'text-muted-foreground'
+              }
+            >
               {draft.active ? 'Active' : 'Inactive'}
             </span>
             <Switch

@@ -44,7 +44,8 @@ function Row({
         className={cn(
           'tabular-nums',
           negative && amount > 0 && 'text-red-600',
-          emphasis === 'grand' && (amount >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600')
+          emphasis === 'grand' &&
+            (amount >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600')
         )}
       >
         {negative && amount > 0 ? '−' : ''}₹{Math.abs(amount).toLocaleString('en-IN')}
@@ -65,9 +66,14 @@ export function ProfitLossPage() {
   const rangeLabel =
     range === 'all'
       ? 'All time'
-      : { today: 'Today', yesterday: 'Yesterday', week: 'This week', month: 'This month', year: 'This year', custom: 'Custom' }[
-          range
-        ]
+      : {
+          today: 'Today',
+          yesterday: 'Yesterday',
+          week: 'This week',
+          month: 'This month',
+          year: 'This year',
+          custom: 'Custom',
+        }[range]
 
   return (
     <div className="space-y-4 p-4 sm:p-6">
@@ -87,7 +93,10 @@ export function ProfitLossPage() {
                 { Line: 'Net revenue', Amount: data.netRevenue },
                 { Line: 'Less: direct cost (supplier payments)', Amount: -data.directCost },
                 { Line: 'Gross profit', Amount: data.grossProfit },
-                ...data.expenseLines.map((l) => ({ Line: `Expense — ${l.label}`, Amount: -l.amount })),
+                ...data.expenseLines.map((l) => ({
+                  Line: `Expense — ${l.label}`,
+                  Amount: -l.amount,
+                })),
                 { Line: 'Total operating expenses', Amount: -data.operatingExpenses },
                 { Line: 'Net profit', Amount: data.netProfit },
               ])
@@ -126,7 +135,12 @@ export function ProfitLossPage() {
       ) : (
         <>
           <StatCardGrid>
-            <StatCard label="Net Revenue" value={`₹${data.netRevenue}`} icon={IndianRupee} tone="success" />
+            <StatCard
+              label="Net Revenue"
+              value={`₹${data.netRevenue}`}
+              icon={IndianRupee}
+              tone="success"
+            />
             <StatCard
               label="Gross Profit"
               value={`₹${data.grossProfit}`}
@@ -159,7 +173,9 @@ export function ProfitLossPage() {
 
             <div className="divide-y-0 px-4 pb-4">
               <Row label="Revenue received" amount={data.revenue} />
-              {data.refunds > 0 && <Row label="Less: refunds to customers" amount={data.refunds} negative indent />}
+              {data.refunds > 0 && (
+                <Row label="Less: refunds to customers" amount={data.refunds} negative indent />
+              )}
               <Row label="Net revenue" amount={data.netRevenue} emphasis="total" />
 
               <Row
@@ -202,9 +218,9 @@ export function ProfitLossPage() {
           <p className="flex gap-2 rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground">
             <Info className="mt-0.5 size-4 shrink-0" />
             <span>
-              Cash basis: a job billed but not yet paid is not revenue here until the money
-              arrives, and a supplier bill entered but unpaid is not a cost until it is settled.
-              Outstanding amounts on both sides live on Receivables and Supplier Payables.
+              Cash basis: a job billed but not yet paid is not revenue here until the money arrives,
+              and a supplier bill entered but unpaid is not a cost until it is settled. Outstanding
+              amounts on both sides live on Receivables and Supplier Payables.
             </span>
           </p>
         </>

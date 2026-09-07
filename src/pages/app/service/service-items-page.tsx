@@ -12,7 +12,14 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/use-auth'
-import { useItems, itemsQueryKey, useCreateItem, useUpdateItem, nextItemCode, type ItemWithId } from '@/hooks/use-items'
+import {
+  useItems,
+  itemsQueryKey,
+  useCreateItem,
+  useUpdateItem,
+  nextItemCode,
+  type ItemWithId,
+} from '@/hooks/use-items'
 
 /**
  * Read-only-by-design view of Item Master, filtered to `type === 'service'` — matches
@@ -95,7 +102,11 @@ export function ServiceItemsPage() {
     { key: 'category', header: 'Category', render: (i) => i.categoryName ?? '—' },
     { key: 'type', header: 'Type', render: () => <StatusBadge status="Services" tone="success" /> },
     { key: 'uom', header: 'UOM', hideOnMobile: true, render: (i) => i.uom },
-    { key: 'price', header: 'Selling Price', render: (i) => (i.sellingPrice != null ? `₹${i.sellingPrice}` : '—') },
+    {
+      key: 'price',
+      header: 'Selling Price',
+      render: (i) => (i.sellingPrice != null ? `₹${i.sellingPrice}` : '—'),
+    },
     {
       key: 'edit',
       header: '',
@@ -122,7 +133,13 @@ export function ServiceItemsPage() {
         subtitle="Items and services used in job cards — managed via Item Master"
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: itemsQueryKey(profile?.companyId) })}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                queryClient.invalidateQueries({ queryKey: itemsQueryKey(profile?.companyId) })
+              }
+            >
               <RefreshCw className="size-4" />
               Refresh
             </Button>
@@ -145,13 +162,23 @@ export function ServiceItemsPage() {
           Service items are managed in Item Master. Items with Services type appear here
           automatically. To add or edit items, use Item Master.
         </span>
-        <Button type="button" size="sm" variant="outline" disabled title="Item Master ships in Phase 7">
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled
+          title="Item Master ships in Phase 7"
+        >
           <ExternalLink className="size-3.5" />
           Item Master
         </Button>
       </p>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search service items..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search service items..."
+      />
 
       <DataTable
         columns={columns}
@@ -160,7 +187,13 @@ export function ServiceItemsPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Wrench} title="No service items yet" description="Add one to get started." />}
+        emptyState={
+          <EmptyState
+            icon={Wrench}
+            title="No service items yet"
+            description="Add one to get started."
+          />
+        }
       />
 
       <FormModal
@@ -182,7 +215,14 @@ export function ServiceItemsPage() {
             </div>
             <div className="space-y-1.5">
               <Label>Selling Price</Label>
-              <Input type="number" min={0} value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value === '' ? '' : Number(e.target.value))} />
+              <Input
+                type="number"
+                min={0}
+                value={sellingPrice}
+                onChange={(e) =>
+                  setSellingPrice(e.target.value === '' ? '' : Number(e.target.value))
+                }
+              />
             </div>
           </div>
         </div>

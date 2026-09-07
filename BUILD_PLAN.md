@@ -374,7 +374,7 @@ Close, Cancel, Return & Close, Add Image, Add Part, Field Visit, Handover`
 
 - [x] Verify: flip a field required→optional in the builder, confirm its own live-preview pane
       updates instantly and the change persists after a reload — done, 20/20 automated checks.
-      The second half of this line ("confirm the *real* Create Job Card form changes live") isn't
+      The second half of this line ("confirm the _real_ Create Job Card form changes live") isn't
       checkable yet — that form doesn't exist until Phase 5 — but it's built to read from this
       exact same `formSchemas/jobCard` doc, not a hardcoded copy; Phase 5's own verify step
       closes the loop.
@@ -427,7 +427,7 @@ Progress, On Hold, Tech Done, Ready, Delivered, Closed, Cancelled, Pending Retur
 - [x] Verify: ran one job card fully through intake → take job → parts added → job done → bill
       generated → delivered → closed → costing recorded, live against the real Firebase project,
       twice consecutively (19/19 checks both times). Separately verified the actual point of
-      this phase + Phase 4 together: a fresh Technician with no workflow config sees *zero*
+      this phase + Phase 4 together: a fresh Technician with no workflow config sees _zero_
       status-action buttons on a job card; after the Owner grants only "Take Job" for the
       Pending status via the Workflow Designer, the Technician sees exactly that one button and
       no others (8/8 checks). Dashboard confirmed to reflect the created job with no manual
@@ -465,7 +465,7 @@ Receipts & Payments).
       four separate un-atomic writes that can partially fail. Confirmed live: a job-card advance
       writes the receipt + `paidAmount` patch in one batch (already true since Phase 5); the new
       standalone "New Entry" does the same; Void Receipt reverses both in one batch too. Party
-      Ledger, Cash Book, and Receivables all read the *same* `receipts`+`jobCards` collections
+      Ledger, Cash Book, and Receivables all read the _same_ `receipts`+`jobCards` collections
       live (no denormalized copy to drift) — see PROGRESS.md for the exact verification run.
 
 ---
@@ -517,8 +517,7 @@ Reference: `preview (39)`–`(48)` (Second Hand Device), `preview (51)`–`(59)`
 - [x] Verify: buy → sell one device end to end; confirm profit math and every stat tile
       (Purchase Register, Sale Register, Device Stock, Device Sale) agree with each other.
       Confirmed live, 28/28 checks twice consecutively: signed up → all 6 Masters pages loaded
-      with their seeded defaults (UOM 15, Payment Modes 3, Party Categories 3, Item Categories
-      10) → created a custom UOM, a custom Item, and a "Both" customer+supplier Party → bought a
+      with their seeded defaults (UOM 15, Payment Modes 3, Party Categories 3, Item Categories 10) → created a custom UOM, a custom Item, and a "Both" customer+supplier Party → bought a
       Samsung Galaxy A15 for ₹2,000 through the full Create Purchase form (Device Details/Seller
       & ID Verification/Purchase Details, real seller quick-add) → confirmed it appeared In Stock
       on both Device Purchase and Device Stock (₹2,000 invested) → sold it for ₹2,500 through
@@ -640,7 +639,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
 - [x] Loading skeletons on every data-fetching view (no blank-white flash, ever) — same, the
       only pages without one are create-forms and static pages, which have nothing to skeleton.
 - [x] **Error states** — not in the original checklist, but the quality bar's own
-      "skeleton → empty → error → populated" line called for them and *no* view had one.
+      "skeleton → empty → error → populated" line called for them and _no_ view had one.
       All 43 query call sites discarded `isError`, so a failed read rendered the empty state.
       See PROGRESS.md's Phase 11 notes.
 - [x] 375px pass — fixed a real horizontal-overflow bug (StatCard's `min-w-[9.5rem]` on
@@ -685,7 +684,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
    siblings of "Role Permissions" at the top level, with no role selector in scope for either —
    only "Role Permissions" (statuses/actions/assignment/behavior) is actually nested under a
    selected role. A single shared form shape per company also makes more practical sense than a
-   different Create Job Card *layout* per role. `workflowConfig/{roleId}` still holds everything
+   different Create Job Card _layout_ per role. `workflowConfig/{roleId}` still holds everything
    that genuinely is per-role.
 7. Phase 5 (Service module) needs a customer to attach a job card to and a catalog to pick
    parts/service items from — both are properly "Masters" (Phase 7) concerns, but Phase 5 comes
@@ -696,7 +695,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
    themselves.
 8. Job Cards' advance/payment recording writes to a real `receipts` collection now (`ReceiptDoc`
    in `src/types/firestore.ts`), ahead of Phase 6 (Finance) actually building the Receipts &
-   Payments *page*. Phase 6 builds its UI on this same collection, not a second one — matches
+   Payments _page_. Phase 6 builds its UI on this same collection, not a second one — matches
    this roadmap's own Phase 6 instruction that a receipt-against-a-job-card update everywhere
    "from one write path," which is only possible if that one path already exists.
 9. Default Service Options for a new company now seed from `src/data/default-service-options.json`
@@ -716,7 +715,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
 11. Phase 6's "Payables" is customer-side, not a traditional accounts-payable-to-suppliers
     screen — this app has no supplier-purchase flow yet (that's Phase 7+), and the reference's
     own card set (Refund Due / Unused Advance / Advance Credit) describes money the shop is
-    *holding from customers* that isn't confirmed revenue, not money owed *to* suppliers. Built
+    _holding from customers_ that isn't confirmed revenue, not money owed _to_ suppliers. Built
     exactly that: Refund Due = a cancelled/returned job whose collected amount hasn't been fully
     refunded; Unused Advance = an active, not-yet-billed job holding a paid amount not yet
     recognized against a final bill; Advance Credit = a party whose combined ledger balance
@@ -732,11 +731,11 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
     since the other 18 categories were never actually captured in `SCREENS_NOTES.md`. Padding the
     count with invented category names would be exactly the "fake data" BUILD_PLAN's quality bar
     forbids; a company can add its own the same way it adds anything else on this page.
-14. Second Hand Device Purchase reuses the *exact same* `serviceOptions` Device Type/Brand/Model
+14. Second Hand Device Purchase reuses the _exact same_ `serviceOptions` Device Type/Brand/Model
     catalog Job Cards already picks from (`preview (50)`'s combos are visually identical to the
     Job Card form's own) — one shared catalog company-wide, not a second one seeded separately
     for second-hand devices.
-15. Parties' `type: 'customer' | 'supplier'` field (Phase 5) is kept as a *derived* field, not
+15. Parties' `type: 'customer' | 'supplier'` field (Phase 5) is kept as a _derived_ field, not
     replaced, once Phase 7 introduces the real `partyTypes: ('customer' | 'supplier')[]` array
     the reference's own checkboxes require (a party can be Customer, Supplier, or **Both** —
     `preview (51)`'s own "Both" filter pill proves this isn't a mutually-exclusive radio). Every
@@ -753,36 +752,36 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
 17. Found and fixed a real, pre-existing bug while reviewing this phase's own screenshots: every
     leaf page's breadcrumb (`components/layout/top-bar.tsx`) rendered a stray "0" after the page
     title whenever it had no extra crumb segment — a classic React footgun
-    (`entry.extraCrumbs.length` is the *number* `0` on nearly every page, and `0 && x` in a JSX
+    (`entry.extraCrumbs.length` is the _number_ `0` on nearly every page, and `0 && x` in a JSX
     expression evaluates to `0` itself rather than `false`, which React then renders as a literal
     "0" text node instead of nothing). Wrapped the condition in `Boolean(...)`. Present since
     whichever earlier phase built the breadcrumb — not a Phase 7 regression — but only actually
-    *noticed* now, via this phase's own side-by-side screenshot review; re-ran the full
+    _noticed_ now, via this phase's own side-by-side screenshot review; re-ran the full
     Phase 5/6/gating regression suite afterward to confirm the fix touched nothing else.
 18. **Found and fixed a broad, previously-latent Firestore correctness bug while building Phase
     8's own audit trail**, dating back at least to Phase 5: a document field written via
     `serverTimestamp()` reads back as `null` locally until the server acknowledges it, and
-    Firestore's query engine *excludes* (not just mis-sorts) a document from a server-side
+    Firestore's query engine _excludes_ (not just mis-sorts) a document from a server-side
     `orderBy()`-sorted result set while its sort field is still `null`. This silently made a
     freshly-created row (job card, receipt, session, audit entry, second-hand purchase/sale, IP
-    whitelist entry) invisible in its own list until a server round trip completed *and*
+    whitelist entry) invisible in its own list until a server round trip completed _and_
     something triggered a refetch — not a Phase 8 regression, a bug every list-with-`orderBy`
     hook in the app had carried since it was first written. Fixed everywhere by removing the
     server-side `orderBy()` and sorting client-side instead, falling back to "now"
     (`new Date().getTime()`, not the bare `Date.now()` this project's React Compiler flags) for
     an unresolved timestamp rather than treating it as smaller/older than everything else. The
-    exact same class of bug also showed up in a *date-range filter* (Login Report's own
+    exact same class of bug also showed up in a _date-range filter_ (Login Report's own
     "is this today" check), where the honest fallback is the same "treat unresolved as now,"
     never "treat unresolved as epoch."
 19. **Found and fixed two real races between Firebase Auth's own global state change and this
     app's async post-auth checks**, both entirely new discoveries this phase, neither a Phase 8
     regression so much as a structural gap Phase 8 was the first thing to actually exercise:
-    - *Signup*: `GuestOnlyRoute` redirects reactively the instant a profile doc becomes visible —
+    - _Signup_: `GuestOnlyRoute` redirects reactively the instant a profile doc becomes visible —
       independent of whatever `signUp()`'s own JS does next. The session + audit-log docs used to
-      be written as a separate `await` *after* the main bootstrap batch committed, landing 1-3s
-      after that redirect already fired. Fixed by folding both into the *same* atomic bootstrap
+      be written as a separate `await` _after_ the main bootstrap batch committed, landing 1-3s
+      after that redirect already fired. Fixed by folding both into the _same_ atomic bootstrap
       batch (using a `getClientIp()` promise kicked off in parallel with the rest of signup).
-    - *Login rejection*: `signInWithEmailAndPassword` flips Firebase's global auth state (and
+    - _Login rejection_: `signInWithEmailAndPassword` flips Firebase's global auth state (and
       `GuestOnlyRoute`'s reactive redirect) the instant credentials check out — before `logIn()`'s
       own async profile-status/IP-whitelist checks (a Firestore round trip) can reject the
       attempt. Fixed with a `ProtectedRoute`-level backstop (`AccountDisabledScreen`/
@@ -791,18 +790,18 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
       Also removed `logIn()`'s own `firebaseSignOut()` call on rejection, since that auto-signout
       was dismissing the backstop screen moments later (bouncing back to a bare login form) —
       each backstop screen now has its own manual "Sign Out" button as the stable end state.
-    - A *third*, deeper variant of the second race surfaced only once the "blocked"/"unauthorized"
+    - A _third_, deeper variant of the second race surfaced only once the "blocked"/"unauthorized"
       audit-log write itself was checked, not just the rejection message: a user (or, at machine
       speed, an automated test) clicking that manual "Sign Out" button can fire before `logIn()`'s
       own audit write has reached the server — `firebaseSignOut()` invalidates the token that
       write needs mid-flight, silently turning a security-relevant rejection into one that never
       gets logged. Fixed by having `logOut()` await a "pending audit write" tracked from the
-      *moment `logIn()` is called* (`trackPendingAuditWrite`/`flushPendingAuditWrite` in
+      _moment `logIn()` is called_ (`trackPendingAuditWrite`/`flushPendingAuditWrite` in
       `src/lib/audit-log.ts`), not just from whichever point inside `logIn()` the write itself
       starts — closing the race regardless of which stage it lands in.
 20. **A real server-side security gap found and fixed**: `firestore.rules`' `belongsToCompany()`
     helper — the gate nearly every rule in the file goes through — never checked account `status`
-    at all, meaning a `status: 'disabled'` account had *zero* server-side enforcement (only a
+    at all, meaning a `status: 'disabled'` account had _zero_ server-side enforcement (only a
     client-side UI nicety, defeatable by anyone calling the SDK directly). Fixed by baking
     `myUserDoc().data.status == 'active'` into `belongsToCompany()` itself, so a disabled account
     is now correctly denied everything except reading their own profile doc (still allowed via
@@ -815,7 +814,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
     reachable through the UI, not just exercisable by hand-editing Firestore.
 22. **A real, pre-existing gap found while building Supplier Report**: `record-costing-modal.tsx`
     (built in Phase 5) declared a `supplier: string | null` field on every cost item but never
-    actually rendered anything to *set* it — every cost item's supplier was permanently `null`,
+    actually rendered anything to _set_ it — every cost item's supplier was permanently `null`,
     silently, since the day that modal was written. Added a real `SearchSelect` per cost item
     (autocompletes against existing supplier-type Parties, quick-adds a new one via
     `useCreateParty()` for anything typed that doesn't exist yet — the same call the Second Hand
@@ -833,7 +832,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
 24. **Every profit-based report (Job-wise Profit, Technician Report, Supplier Report, Period
     Summary) reads `jobCosting` docs joined against `jobCards`, not `jobCards` alone** —
     `useCostedJobs()` (`src/hooks/use-reports.ts`). A job only has a real profit number once
-    Closed *and* actually costed (`JobCostingDoc.billAmount`/`totalCost`/`profit`, snapshotted at
+    Closed _and_ actually costed (`JobCostingDoc.billAmount`/`totalCost`/`profit`, snapshotted at
     costing time); a Closed-but-not-yet-costed job has no cost to report against and is correctly
     absent from these four reports' own counts, matching the reference's own screenshots (which
     show "Jobs: 1" reflecting only the one costed job in that test data, not every job ever
@@ -853,7 +852,7 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
     six Phase 9 reports need chevron-expandable rows with a rich sub-panel (`preview (33)`/`(34)`/
     `(35)`/`(38)`), a pattern no earlier phase's pages used. Kept separate from `DataTable` itself
     rather than bolting expand support onto a component a dozen+ existing pages already depend on.
-28. **Company Settings manages *the* one company, not a real multi-company list** — this app's
+28. **Company Settings manages _the_ one company, not a real multi-company list** — this app's
     data model ties `UserDoc.companyId` to exactly one company with no company-switcher anywhere,
     so a genuine "Create Company" (a second company doc nothing could ever point at) would create
     a permanently unreachable orphan. `useCompany()` does a single `get()` on the known
@@ -862,8 +861,8 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
     and behaves like the reference's list+drawer pattern; only "Create Company" itself is
     intentionally not built. `firestore.rules`' own `companies/{companyId}` `create` rule is
     unchanged (`isBootstrapping()`-only) — nothing in this phase needed it to allow more.
-29. **Financial Year *documents* (Settings → Financial Years) are administrative/informational,
-    deliberately independent of the FY *string* Job/Receipt/Party sequence numbers embed** —
+29. **Financial Year _documents_ (Settings → Financial Years) are administrative/informational,
+    deliberately independent of the FY _string_ Job/Receipt/Party sequence numbers embed** —
     `getCurrentFinancialYear()` (used by `getNextSequence()` since Phase 2) still derives its
     answer purely from the real calendar date, never from which `FinancialYearDoc` a company has
     marked "Current" here. Making the two the same thing would have meant either a risky refactor
@@ -883,10 +882,10 @@ Reference: `preview (1)`–`(6)` (Print Formats, Company, Financial Years), `pre
     ("doesn't need pixel-perfect drag-drop, just functional and bound to live data"), and it's the
     same "simpler real mechanism over the reference's own fancier one" call already made for
     Service Options' own reorder-by-arrows in Phase 5. The live preview pane renders through the
-    *exact same* `renderPrintHtml()` every real "Print X" button in the app calls — not a
+    _exact same_ `renderPrintHtml()` every real "Print X" button in the app calls — not a
     decorative mockup — so what a template author sees while editing is genuinely what prints.
 32. **Every pre-existing "Print X" stub this phase replaces (Job Card's Print Label/Job Card/Bill,
-    Second Hand Device's Print Receipt/Label) now renders the company's own *default* template
+    Second Hand Device's Print Receipt/Label) now renders the company's own _default_ template
     for that document type against the real record** — not a hardcoded receipt layout. A company
     can have several templates per document type (`preview (2)`'s own "80mm"/"58mm" pairs); which
     one a button uses is whichever the company has marked default, changeable from Print Formats

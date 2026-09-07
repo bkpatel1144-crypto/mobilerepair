@@ -36,7 +36,8 @@ export function useReceipts() {
     (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return (docs as ReceiptWithId[]).sort(
-        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+        (a, b) =>
+          (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId

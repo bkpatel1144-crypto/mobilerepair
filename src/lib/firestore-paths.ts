@@ -45,7 +45,8 @@ export const partyCategoryDoc = (companyId: string, id: string) =>
   `${partyCategoriesCollection(companyId)}/${id}`
 
 export const itemsCollection = (companyId: string) => `companies/${companyId}/items`
-export const itemDoc = (companyId: string, itemId: string) => `${itemsCollection(companyId)}/${itemId}`
+export const itemDoc = (companyId: string, itemId: string) =>
+  `${itemsCollection(companyId)}/${itemId}`
 export const itemCategoriesCollection = (companyId: string) =>
   `companies/${companyId}/itemCategories`
 export const itemCategoryDoc = (companyId: string, id: string) =>
@@ -101,16 +102,17 @@ export const expensesCollection = (companyId: string) => `companies/${companyId}
 export const expenseDoc = (companyId: string, id: string) =>
   `${expensesCollection(companyId)}/${id}`
 
-export const supplierBillsCollection = (companyId: string) =>
-  `companies/${companyId}/supplierBills`
+export const supplierBillsCollection = (companyId: string) => `companies/${companyId}/supplierBills`
 export const supplierBillDoc = (companyId: string, id: string) =>
   `${supplierBillsCollection(companyId)}/${id}`
 
 export const auditLogCollection = (companyId: string) => `companies/${companyId}/auditLog`
 export const sessionsCollection = (companyId: string) => `companies/${companyId}/sessions`
-export const sessionDoc = (companyId: string, id: string) => `${sessionsCollection(companyId)}/${id}`
+export const sessionDoc = (companyId: string, id: string) =>
+  `${sessionsCollection(companyId)}/${id}`
 export const ipWhitelistCollection = (companyId: string) => `companies/${companyId}/ipWhitelist`
-export const ipWhitelistDoc = (companyId: string, id: string) => `${ipWhitelistCollection(companyId)}/${id}`
+export const ipWhitelistDoc = (companyId: string, id: string) =>
+  `${ipWhitelistCollection(companyId)}/${id}`
 export const printTemplatesCollection = (companyId: string) =>
   `companies/${companyId}/printTemplates`
 export const printTemplateDoc = (companyId: string, id: string) =>
@@ -118,12 +120,15 @@ export const printTemplateDoc = (companyId: string, id: string) =>
 export const backupsCollection = (companyId: string) => `companies/${companyId}/backups`
 export const backupDoc = (companyId: string, id: string) => `${backupsCollection(companyId)}/${id}`
 export const archivesCollection = (companyId: string) => `companies/${companyId}/archives`
-export const archiveDoc = (companyId: string, id: string) => `${archivesCollection(companyId)}/${id}`
+export const archiveDoc = (companyId: string, id: string) =>
+  `${archivesCollection(companyId)}/${id}`
 
 // Single fixed-id docs — same "one company-wide doc, not a collection" pattern as
 // `formSchemaDoc`'s `jobCard`/`lead` — no separate collection helper needed for either.
-export const whatsappConfigDoc = (companyId: string) => `companies/${companyId}/whatsappConfig/config`
-export const backupSettingsDoc = (companyId: string) => `companies/${companyId}/backupSettings/config`
+export const whatsappConfigDoc = (companyId: string) =>
+  `companies/${companyId}/whatsappConfig/config`
+export const backupSettingsDoc = (companyId: string) =>
+  `companies/${companyId}/backupSettings/config`
 /** Paired print agents — one doc per shop PC running the agent. See `PrintDeviceDoc`. */
 export const printDevicesCollection = (companyId: string) => `companies/${companyId}/printDevices`
 export const printDeviceDoc = (companyId: string, id: string) =>
@@ -136,4 +141,5 @@ export const counterDoc = (companyId: string, docType: string) =>
   `${countersCollection(companyId)}/${docType}`
 
 export const fieldVisitsCollection = (companyId: string) => `companies/${companyId}/fieldVisits`
-export const fieldVisitDoc = (companyId: string, id: string) => `${fieldVisitsCollection(companyId)}/${id}`
+export const fieldVisitDoc = (companyId: string, id: string) =>
+  `${fieldVisitsCollection(companyId)}/${id}`

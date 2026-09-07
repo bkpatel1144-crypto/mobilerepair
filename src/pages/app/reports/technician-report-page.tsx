@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Users, Download, TrendingDown, TrendingUp, FileText, IndianRupee} from 'lucide-react'
+import { Users, Download, TrendingDown, TrendingUp, FileText, IndianRupee } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -9,7 +9,13 @@ import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useCostedJobs, type CostedJobRow } from '@/hooks/use-reports'
 import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
@@ -39,7 +45,17 @@ function groupByTechnician(rows: CostedJobRow[]): TechnicianGroup[] {
     const name = row.job.assignedToName ?? 'Unassigned'
     let group = map.get(id)
     if (!group) {
-      group = { technicianId: id, technicianName: name, jobs: [], revenue: 0, cost: 0, profit: 0, marginPct: 0, avgPerJob: 0, winRate: 0 }
+      group = {
+        technicianId: id,
+        technicianName: name,
+        jobs: [],
+        revenue: 0,
+        cost: 0,
+        profit: 0,
+        marginPct: 0,
+        avgPerJob: 0,
+        winRate: 0,
+      }
       map.set(id, group)
     }
     group.jobs.push(row)
@@ -50,7 +66,10 @@ function groupByTechnician(rows: CostedJobRow[]): TechnicianGroup[] {
   for (const group of map.values()) {
     group.marginPct = group.revenue > 0 ? (group.profit / group.revenue) * 100 : 0
     group.avgPerJob = group.jobs.length > 0 ? group.profit / group.jobs.length : 0
-    group.winRate = group.jobs.length > 0 ? (group.jobs.filter((j) => j.profit >= 0).length / group.jobs.length) * 100 : 0
+    group.winRate =
+      group.jobs.length > 0
+        ? (group.jobs.filter((j) => j.profit >= 0).length / group.jobs.length) * 100
+        : 0
   }
   return Array.from(map.values())
 }
@@ -69,11 +88,15 @@ export function TechnicianReportPage() {
   const bounds = dateRangeBounds(dateRange, customFrom, customTo)
   const dateFiltered = rows.filter((r) => !bounds || (r.date >= bounds.from && r.date <= bounds.to))
   const groups = groupByTechnician(dateFiltered)
-  const allTechnicians = Array.from(new Set(dateFiltered.map((r) => r.job.assignedToName ?? 'Unassigned'))).sort()
+  const allTechnicians = Array.from(
+    new Set(dateFiltered.map((r) => r.job.assignedToName ?? 'Unassigned'))
+  ).sort()
 
   const filtered = groups
     .filter((g) => technicianFilter === 'all' || g.technicianName === technicianFilter)
-    .filter((g) => (search.trim() ? g.technicianName.toLowerCase().includes(search.toLowerCase()) : true))
+    .filter((g) =>
+      search.trim() ? g.technicianName.toLowerCase().includes(search.toLowerCase()) : true
+    )
     .sort((a, b) => b.jobs.length - a.jobs.length)
 
   const totalRevenue = filtered.reduce((s, g) => s + g.revenue, 0)
@@ -88,13 +111,41 @@ export function TechnicianReportPage() {
   }
 
   const columns: ExpandableTableColumn<TechnicianGroup>[] = [
-    { key: 'technician', header: 'Technician', render: (g) => <span className="font-medium">{g.technicianName}</span> },
+    {
+      key: 'technician',
+      header: 'Technician',
+      render: (g) => <span className="font-medium">{g.technicianName}</span>,
+    },
     { key: 'jobs', header: 'Jobs', render: (g) => g.jobs.length },
     { key: 'revenue', header: 'Revenue', render: (g) => formatCurrency(g.revenue) },
     { key: 'cost', header: 'Cost', render: (g) => formatCurrency(g.cost) },
-    { key: 'profit', header: 'Profit', render: (g) => <span className={g.profit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'}>{formatCurrency(g.profit)}</span> },
-    { key: 'margin', header: 'Margin', hideOnMobile: true, render: (g) => <span className={g.marginPct < 0 ? 'text-red-600' : 'text-emerald-600'}>{formatPercent(g.marginPct)}</span> },
-    { key: 'avgPerJob', header: 'Avg/Job', hideOnMobile: true, render: (g) => formatCurrency(g.avgPerJob) },
+    {
+      key: 'profit',
+      header: 'Profit',
+      render: (g) => (
+        <span
+          className={g.profit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'}
+        >
+          {formatCurrency(g.profit)}
+        </span>
+      ),
+    },
+    {
+      key: 'margin',
+      header: 'Margin',
+      hideOnMobile: true,
+      render: (g) => (
+        <span className={g.marginPct < 0 ? 'text-red-600' : 'text-emerald-600'}>
+          {formatPercent(g.marginPct)}
+        </span>
+      ),
+    },
+    {
+      key: 'avgPerJob',
+      header: 'Avg/Job',
+      hideOnMobile: true,
+      render: (g) => formatCurrency(g.avgPerJob),
+    },
     {
       key: 'performance',
       header: 'Performance',
@@ -142,9 +193,24 @@ export function TechnicianReportPage() {
       <StatCardGrid>
         <StatCard label="Technicians" value={totals.technicians} icon={Users} tone="purple" />
         <StatCard label="Jobs" icon={FileText} value={totals.jobs} />
-        <StatCard label="Revenue" icon={IndianRupee} value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Cost" icon={TrendingDown} value={formatCurrency(totals.cost)} tone="warning" />
-        <StatCard label="Profit" icon={TrendingUp} value={formatCurrency(totals.profit)} tone={totals.profit < 0 ? 'danger' : 'success'} />
+        <StatCard
+          label="Revenue"
+          icon={IndianRupee}
+          value={formatCurrency(totals.revenue)}
+          tone="success"
+        />
+        <StatCard
+          label="Cost"
+          icon={TrendingDown}
+          value={formatCurrency(totals.cost)}
+          tone="warning"
+        />
+        <StatCard
+          label="Profit"
+          icon={TrendingUp}
+          value={formatCurrency(totals.profit)}
+          tone={totals.profit < 0 ? 'danger' : 'success'}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -160,10 +226,16 @@ export function TechnicianReportPage() {
         onCustomToChange={setCustomTo}
       >
         <Select value={technicianFilter} onValueChange={(v) => v && setTechnicianFilter(v)}>
-          <SelectTrigger className="w-44"><SelectValue placeholder="All Technicians" /></SelectTrigger>
+          <SelectTrigger className="w-44">
+            <SelectValue placeholder="All Technicians" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Technicians</SelectItem>
-            {allTechnicians.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+            {allTechnicians.map((t) => (
+              <SelectItem key={t} value={t}>
+                {t}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </FilterBar>
@@ -175,11 +247,19 @@ export function TechnicianReportPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Users} title="No costed jobs yet" description="Technician performance appears once jobs have recorded costing." />}
+        emptyState={
+          <EmptyState
+            icon={Users}
+            title="No costed jobs yet"
+            description="Technician performance appears once jobs have recorded costing."
+          />
+        }
         renderExpanded={(g) => (
           <div className="space-y-3 p-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">{g.jobs.length} jobs - {g.technicianName}</p>
+              <p className="text-sm font-medium">
+                {g.jobs.length} jobs - {g.technicianName}
+              </p>
               <Button
                 type="button"
                 variant="outline"
@@ -206,10 +286,30 @@ export function TechnicianReportPage() {
               </Button>
             </div>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-6">
-              <StatCard label="Revenue" value={formatCurrency(g.revenue)} tone="success" className="min-w-0" />
-              <StatCard label="Cost" value={formatCurrency(g.cost)} tone="warning" className="min-w-0" />
-              <StatCard label="Profit" value={formatCurrency(g.profit)} tone={g.profit < 0 ? 'danger' : 'success'} className="min-w-0" />
-              <StatCard label="Avg Margin" value={formatPercent(g.marginPct)} tone={g.marginPct < 0 ? 'danger' : 'default'} className="min-w-0" />
+              <StatCard
+                label="Revenue"
+                value={formatCurrency(g.revenue)}
+                tone="success"
+                className="min-w-0"
+              />
+              <StatCard
+                label="Cost"
+                value={formatCurrency(g.cost)}
+                tone="warning"
+                className="min-w-0"
+              />
+              <StatCard
+                label="Profit"
+                value={formatCurrency(g.profit)}
+                tone={g.profit < 0 ? 'danger' : 'success'}
+                className="min-w-0"
+              />
+              <StatCard
+                label="Avg Margin"
+                value={formatPercent(g.marginPct)}
+                tone={g.marginPct < 0 ? 'danger' : 'default'}
+                className="min-w-0"
+              />
               <StatCard label="Win Rate" value={`${g.winRate.toFixed(0)}%`} className="min-w-0" />
               <StatCard label="Avg / Job" value={formatCurrency(g.avgPerJob)} className="min-w-0" />
             </div>
@@ -232,17 +332,40 @@ export function TechnicianReportPage() {
                   {g.jobs.map((r) => (
                     <tr key={r.job.id} className="border-t">
                       <td className="p-2">
-                        <Link to={`/app/service/job-cards/${r.job.id}`} className="font-medium text-teal-700 hover:underline dark:text-teal-400">
+                        <Link
+                          to={`/app/service/job-cards/${r.job.id}`}
+                          className="font-medium text-teal-700 hover:underline dark:text-teal-400"
+                        >
                           {r.job.jobNumber}
                         </Link>
                       </td>
                       <td className="p-2">{r.job.customerName}</td>
-                      <td className="p-2">{[r.job.brandName, r.job.model].filter(Boolean).join(' ') || '—'}</td>
-                      <td className="p-2"><StatusBadge status={statusLabel(r.job.status)} /></td>
+                      <td className="p-2">
+                        {[r.job.brandName, r.job.model].filter(Boolean).join(' ') || '—'}
+                      </td>
+                      <td className="p-2">
+                        <StatusBadge status={statusLabel(r.job.status)} />
+                      </td>
                       <td className="p-2 text-right">{formatCurrency(r.revenue)}</td>
                       <td className="p-2 text-right">{formatCurrency(r.cost)}</td>
-                      <td className={r.profit < 0 ? 'p-2 text-right font-medium text-red-600' : 'p-2 text-right font-medium text-emerald-600'}>{formatCurrency(r.profit)}</td>
-                      <td className={r.marginPct < 0 ? 'p-2 text-right text-red-600' : 'p-2 text-right text-emerald-600'}>{formatPercent(r.marginPct)}</td>
+                      <td
+                        className={
+                          r.profit < 0
+                            ? 'p-2 text-right font-medium text-red-600'
+                            : 'p-2 text-right font-medium text-emerald-600'
+                        }
+                      >
+                        {formatCurrency(r.profit)}
+                      </td>
+                      <td
+                        className={
+                          r.marginPct < 0
+                            ? 'p-2 text-right text-red-600'
+                            : 'p-2 text-right text-emerald-600'
+                        }
+                      >
+                        {formatPercent(r.marginPct)}
+                      </td>
                       <td className="p-2">{formatTimestamp(r.job.closedAt, false)}</td>
                     </tr>
                   ))}

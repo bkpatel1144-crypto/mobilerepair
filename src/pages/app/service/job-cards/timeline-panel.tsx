@@ -1,6 +1,19 @@
 import {
-  Plus, UserPlus, IndianRupee, PackagePlus, ArrowRightLeft, StickyNote,
-  Wrench, Receipt, CreditCard, Truck, Ban, Users, MapPin, Undo2, Clock,
+  Plus,
+  UserPlus,
+  IndianRupee,
+  PackagePlus,
+  ArrowRightLeft,
+  StickyNote,
+  Wrench,
+  Receipt,
+  CreditCard,
+  Truck,
+  Ban,
+  Users,
+  MapPin,
+  Undo2,
+  Clock,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -51,7 +64,12 @@ export function TimelinePanel({
         // Every job card has at least a "Created" event written at intake, so an empty timeline
         // is only ever truthful when the read succeeded — "No activity yet" on a failed read
         // would claim a history that demonstrably exists never happened.
-        <ErrorState error={error} onRetry={onRetry} title="Couldn't load the timeline" className="py-6" />
+        <ErrorState
+          error={error}
+          onRetry={onRetry}
+          title="Couldn't load the timeline"
+          className="py-6"
+        />
       ) : events.length === 0 ? (
         <p className="text-sm text-muted-foreground">No activity yet.</p>
       ) : (

@@ -1,7 +1,13 @@
 import { Check, Info } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import type { CompanyDoc } from '@/types/firestore'
 import { CURRENCIES, TIMEZONES, type CompanyFormValues } from '@/lib/company-validation'
 
@@ -179,8 +185,8 @@ export function CompanyForm({
           <p className="font-semibold text-blue-900 dark:text-blue-300">Note:</p>
           <p className="mt-0.5 text-blue-900/80 dark:text-blue-300/80">
             All fields marked with * are required. GSTIN is only required for registered companies
-            (Regular/Composition) — pick "Unregistered" if this company isn't GST-registered.
-            Ensure GSTIN and PAN match correctly.
+            (Regular/Composition) — pick "Unregistered" if this company isn't GST-registered. Ensure
+            GSTIN and PAN match correctly.
           </p>
         </div>
       </div>

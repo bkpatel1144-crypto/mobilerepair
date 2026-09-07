@@ -92,17 +92,15 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
         <div>
           <h3 className="text-sm font-semibold">Auto-Open Popups</h3>
           <p className="text-xs text-muted-foreground">
-            Which popup opens automatically after an action completes — no extra click. All OFF
-            by default.
+            Which popup opens automatically after an action completes — no extra click. All OFF by
+            default.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-3 rounded-lg border p-3">
             <div>
               <p className="text-sm font-medium">After Job Done</p>
-              <p className="text-xs text-muted-foreground">
-                Technician marks the repair complete
-              </p>
+              <p className="text-xs text-muted-foreground">Technician marks the repair complete</p>
             </div>
             <div className="flex items-center justify-between gap-4">
               <div>
@@ -111,7 +109,9 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
               </div>
               <Switch
                 checked={draft.behavior.autoOpenPopups.afterJobDone.openGenerateBill}
-                onCheckedChange={(checked) => setAutoOpen('afterJobDone', { openGenerateBill: checked })}
+                onCheckedChange={(checked) =>
+                  setAutoOpen('afterJobDone', { openGenerateBill: checked })
+                }
                 disabled={disabled}
               />
             </div>
@@ -122,7 +122,9 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
               </div>
               <Switch
                 checked={draft.behavior.autoOpenPopups.afterJobDone.openHandover}
-                onCheckedChange={(checked) => setAutoOpen('afterJobDone', { openHandover: checked })}
+                onCheckedChange={(checked) =>
+                  setAutoOpen('afterJobDone', { openHandover: checked })
+                }
                 disabled={disabled}
               />
             </div>

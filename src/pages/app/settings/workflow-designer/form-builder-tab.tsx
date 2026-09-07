@@ -2,7 +2,13 @@ import { useRef, useState } from 'react'
 import { Download, FileUp, Bookmark, RotateCcw, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { RouteFallback } from '@/components/shared/route-fallback'
 import { ErrorState } from '@/components/shared/error-state'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -93,7 +99,13 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
   // default schema. Saving that would overwrite the company's real stored form with defaults —
   // so refuse to render an editor at all until we know what we are editing.
   if (loadError) {
-    return <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this form's saved layout" />
+    return (
+      <ErrorState
+        error={loadError}
+        onRetry={() => void refetch()}
+        title="Couldn't load this form's saved layout"
+      />
+    )
   }
 
   if (isLoading || !draft) return <RouteFallback />
@@ -112,7 +124,10 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
   function toggleSectionExpanded(key: string) {
     setDraft((prev) =>
       prev
-        ? { ...prev, expandedSections: { ...prev.expandedSections, [key]: !prev.expandedSections[key] } }
+        ? {
+            ...prev,
+            expandedSections: { ...prev.expandedSections, [key]: !prev.expandedSections[key] },
+          }
         : prev
     )
   }
@@ -178,7 +193,9 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
               </SelectTrigger>
               <SelectContent>
                 {Object.keys(templates).length === 0 ? (
-                  <div className="px-2 py-1.5 text-sm text-muted-foreground">No templates saved yet</div>
+                  <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                    No templates saved yet
+                  </div>
                 ) : (
                   Object.keys(templates).map((name) => (
                     <SelectItem key={name} value={name}>
@@ -193,7 +210,9 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
             <p className="text-xs font-medium text-muted-foreground">Layout</p>
             <Select
               value={draft.layout}
-              onValueChange={(v) => v && setDraft((prev) => (prev ? { ...prev, layout: v as FormLayout } : prev))}
+              onValueChange={(v) =>
+                v && setDraft((prev) => (prev ? { ...prev, layout: v as FormLayout } : prev))
+              }
             >
               <SelectTrigger className="w-64">
                 <SelectValue />
@@ -221,7 +240,12 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
               e.target.value = ''
             }}
           />
-          <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+          >
             <FileUp className="size-3.5" />
             Import
           </Button>
@@ -244,7 +268,12 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
             Discard changes
           </Button>
           <span className="text-xs text-muted-foreground">{isDirty ? '' : 'Saved'}</span>
-          <Button type="button" size="sm" onClick={handleSave} disabled={!isDirty || saveSchema.isPending}>
+          <Button
+            type="button"
+            size="sm"
+            onClick={handleSave}
+            disabled={!isDirty || saveSchema.isPending}
+          >
             <Check className="size-3.5" />
             {saveSchema.isPending ? 'Saving…' : 'Save'}
           </Button>
@@ -252,7 +281,9 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">Use the icons on each field below to configure it.</p>
+        <p className="text-sm text-muted-foreground">
+          Use the icons on each field below to configure it.
+        </p>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           {sections.map((section) => (
             <label key={section.key} className="flex items-center gap-2 text-sm">

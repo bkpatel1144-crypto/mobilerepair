@@ -92,8 +92,8 @@ export function BillingPage() {
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Every feature in this app is free, forever. No plan tiers, no upgrade
-                    prompts, nothing to pay for.
+                    Every feature in this app is free, forever. No plan tiers, no upgrade prompts,
+                    nothing to pay for.
                   </p>
                 </div>
                 <div className="text-right">

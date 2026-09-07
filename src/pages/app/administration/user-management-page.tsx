@@ -170,8 +170,17 @@ export function UserManagementPage() {
           !selectedUser.protected &&
           selectedUser.id !== currentUser?.uid &&
           selectedUser.status !== 'deleted' && (
-            <Button type="button" variant="outline" size="sm" onClick={() => setConfirmingToggle(true)}>
-              {selectedUser.status === 'active' ? <Ban className="size-3.5" /> : <CheckCircle2 className="size-3.5" />}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setConfirmingToggle(true)}
+            >
+              {selectedUser.status === 'active' ? (
+                <Ban className="size-3.5" />
+              ) : (
+                <CheckCircle2 className="size-3.5" />
+              )}
               {selectedUser.status === 'active' ? 'Disable User' : 'Enable User'}
             </Button>
           )
@@ -194,7 +203,9 @@ export function UserManagementPage() {
                 },
                 {
                   title: 'Timeline',
-                  rows: [{ label: 'Created', value: formatTimestamp(selectedUser.createdAt, false) }],
+                  rows: [
+                    { label: 'Created', value: formatTimestamp(selectedUser.createdAt, false) },
+                  ],
                 },
               ]
             : []
@@ -216,7 +227,11 @@ export function UserManagementPage() {
           isPending={setStatus.isPending}
           onConfirm={() =>
             setStatus.mutate(
-              { uid: selectedUser.id, status: selectedUser.status === 'active' ? 'disabled' : 'active', userName: selectedUser.fullName },
+              {
+                uid: selectedUser.id,
+                status: selectedUser.status === 'active' ? 'disabled' : 'active',
+                userName: selectedUser.fullName,
+              },
               { onSuccess: () => setConfirmingToggle(false) }
             )
           }

@@ -1,9 +1,35 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
-  ArrowLeft, Save, Eye, Printer, Undo2, Redo2, Copy, Trash2, Grid3x3, ZoomIn, ZoomOut,
-  AlignLeft, AlignCenter, AlignRight, AlignStartVertical, Type, Image as ImageIcon, Barcode,
-  QrCode, Minus, Square, Lock, LockOpen, EyeOff, Download, MoreVertical, Star, Ruler, RotateCcw,
+  ArrowLeft,
+  Save,
+  Eye,
+  Printer,
+  Undo2,
+  Redo2,
+  Copy,
+  Trash2,
+  Grid3x3,
+  ZoomIn,
+  ZoomOut,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignStartVertical,
+  Type,
+  Image as ImageIcon,
+  Barcode,
+  QrCode,
+  Minus,
+  Square,
+  Lock,
+  LockOpen,
+  EyeOff,
+  Download,
+  MoreVertical,
+  Star,
+  Ruler,
+  RotateCcw,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,7 +42,10 @@ import { ErrorState } from '@/components/shared/error-state'
 import { EmptyState } from '@/components/shared/empty-state'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
   usePrintTemplates,
@@ -24,7 +53,13 @@ import {
   useSetDefaultPrintTemplate,
   useDuplicatePrintTemplate,
 } from '@/hooks/use-print-templates'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { buildDefaultLayout } from '@/config/print-layouts'
 import { PRINT_PRESETS } from '@/config/print-presets'
@@ -81,7 +116,24 @@ export function PrintTemplateDesignerPage() {
   const [confirmReset, setConfirmReset] = useState(false)
 
   const state = useDesignerState(
-    template ? draftFromTemplate(template) : { name: '', paper: { width: 80, height: 120, unit: 'mm', orientation: 'portrait' }, margins: { top: 3, right: 3, bottom: 3, left: 3 }, settings: { copies: 1, duplicateCopy: false, duplicateCopyDirection: 'stacked', ups: 1, gapMm: 2, printSpeed: 4, printDensity: 8 }, bandHeights: { header: 0, detail: 0, footer: 0 }, elements: [] }
+    template
+      ? draftFromTemplate(template)
+      : {
+          name: '',
+          paper: { width: 80, height: 120, unit: 'mm', orientation: 'portrait' },
+          margins: { top: 3, right: 3, bottom: 3, left: 3 },
+          settings: {
+            copies: 1,
+            duplicateCopy: false,
+            duplicateCopyDirection: 'stacked',
+            ups: 1,
+            gapMm: 2,
+            printSpeed: 4,
+            printDensity: 8,
+          },
+          bandHeights: { header: 0, detail: 0, footer: 0 },
+          elements: [],
+        }
   )
 
   // Seed the draft once the template arrives — "adjust state during render", the same pattern
@@ -96,7 +148,11 @@ export function PrintTemplateDesignerPage() {
   if (loadError) {
     return (
       <div className="p-6">
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this template" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load this template"
+        />
       </div>
     )
   }
@@ -104,7 +160,11 @@ export function PrintTemplateDesignerPage() {
   if (!template) {
     return (
       <div className="p-6">
-        <EmptyState icon={Printer} title="Template not found" description="It may have been deleted." />
+        <EmptyState
+          icon={Printer}
+          title="Template not found"
+          description="It may have been deleted."
+        />
       </div>
     )
   }
@@ -158,9 +218,13 @@ export function PrintTemplateDesignerPage() {
           className="h-9 w-56"
           aria-label="Template name"
         />
-        <span className="text-sm text-muted-foreground">{printDocumentTypeLabel(template.documentType)}</span>
+        <span className="text-sm text-muted-foreground">
+          {printDocumentTypeLabel(template.documentType)}
+        </span>
         {state.isDirty && (
-          <span className="text-sm font-medium text-amber-600 dark:text-amber-400">Unsaved changes</span>
+          <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
+            Unsaved changes
+          </span>
         )}
         <div className="ml-auto flex flex-wrap items-center gap-2">
           <Button type="button" variant="outline" onClick={() => setPreviewOpen(true)}>
@@ -176,7 +240,9 @@ export function PrintTemplateDesignerPage() {
             {update.isPending ? 'Saving…' : 'Save'}
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger render={<Button type="button" variant="ghost" size="icon" aria-label="More" />}>
+            <DropdownMenuTrigger
+              render={<Button type="button" variant="ghost" size="icon" aria-label="More" />}
+            >
               <MoreVertical className="size-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -240,37 +306,93 @@ export function PrintTemplateDesignerPage() {
               onClick={() => setActiveBand(b)}
               className={cn(
                 'rounded-md px-3 py-1.5 text-sm font-medium capitalize',
-                activeBand === b ? 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400' : 'text-muted-foreground hover:bg-muted'
+                activeBand === b
+                  ? 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400'
+                  : 'text-muted-foreground hover:bg-muted'
               )}
             >
               {b}
             </button>
           ))}
         <span className="mx-1 h-5 w-px bg-border" />
-        <Button type="button" variant="ghost" size="icon-sm" aria-label="Undo" disabled={!state.canUndo} onClick={state.undo}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Undo"
+          disabled={!state.canUndo}
+          onClick={state.undo}
+        >
           <Undo2 className="size-4" />
         </Button>
-        <Button type="button" variant="ghost" size="icon-sm" aria-label="Redo" disabled={!state.canRedo} onClick={state.redo}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Redo"
+          disabled={!state.canRedo}
+          onClick={state.redo}
+        >
           <Redo2 className="size-4" />
         </Button>
         <span className="mx-1 h-5 w-px bg-border" />
-        <Button type="button" variant="ghost" size="icon-sm" aria-label="Duplicate" disabled={!state.selectedIds.length} onClick={state.duplicateSelected}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Duplicate"
+          disabled={!state.selectedIds.length}
+          onClick={state.duplicateSelected}
+        >
           <Copy className="size-4" />
         </Button>
-        <Button type="button" variant="ghost" size="icon-sm" aria-label="Delete" disabled={!state.selectedIds.length} onClick={state.removeSelected} className="text-red-600">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Delete"
+          disabled={!state.selectedIds.length}
+          onClick={state.removeSelected}
+          className="text-red-600"
+        >
           <Trash2 className="size-4" />
         </Button>
         <span className="mx-1 h-5 w-px bg-border" />
-        {([
-          ['Align left', AlignLeft, () => patchEl({ x: 0 })],
-          ['Align centre', AlignCenter, () => state.updateElements(state.selectedIds, (el) => ({ ...el, x: Math.max(0, (contentWidth - el.w) / 2) }))],
-          ['Align right', AlignRight, () => state.updateElements(state.selectedIds, (el) => ({ ...el, x: Math.max(0, contentWidth - el.w) }))],
-          ['Align top', AlignStartVertical, () => patchEl({ y: 0 })],
-        ] as const).map(([label, Icon, fn]) => (
+        {(
+          [
+            ['Align left', AlignLeft, () => patchEl({ x: 0 })],
+            [
+              'Align centre',
+              AlignCenter,
+              () =>
+                state.updateElements(state.selectedIds, (el) => ({
+                  ...el,
+                  x: Math.max(0, (contentWidth - el.w) / 2),
+                })),
+            ],
+            [
+              'Align right',
+              AlignRight,
+              () =>
+                state.updateElements(state.selectedIds, (el) => ({
+                  ...el,
+                  x: Math.max(0, contentWidth - el.w),
+                })),
+            ],
+            ['Align top', AlignStartVertical, () => patchEl({ y: 0 })],
+          ] as const
+        ).map(([label, Icon, fn]) => (
           <Tooltip key={label}>
             <TooltipTrigger
               render={
-                <Button type="button" variant="ghost" size="icon-sm" aria-label={label} disabled={!state.selectedIds.length} onClick={fn} />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={label}
+                  disabled={!state.selectedIds.length}
+                  onClick={fn}
+                />
               }
             >
               <Icon className="size-4" />
@@ -279,14 +401,34 @@ export function PrintTemplateDesignerPage() {
           </Tooltip>
         ))}
         <span className="mx-1 h-5 w-px bg-border" />
-        <Button type="button" variant={showGrid ? 'secondary' : 'ghost'} size="icon-sm" aria-label="Toggle grid" onClick={() => setShowGrid((g) => !g)}>
+        <Button
+          type="button"
+          variant={showGrid ? 'secondary' : 'ghost'}
+          size="icon-sm"
+          aria-label="Toggle grid"
+          onClick={() => setShowGrid((g) => !g)}
+        >
           <Grid3x3 className="size-4" />
         </Button>
-        <Button type="button" variant="ghost" size="icon-sm" aria-label="Zoom out" onClick={() => setZoom((z) => ZOOMS[Math.max(0, ZOOMS.indexOf(z) - 1)] ?? z)}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Zoom out"
+          onClick={() => setZoom((z) => ZOOMS[Math.max(0, ZOOMS.indexOf(z) - 1)] ?? z)}
+        >
           <ZoomOut className="size-4" />
         </Button>
         <span className="w-12 text-center text-sm tabular-nums">{zoom}%</span>
-        <Button type="button" variant="ghost" size="icon-sm" aria-label="Zoom in" onClick={() => setZoom((z) => ZOOMS[Math.min(ZOOMS.length - 1, ZOOMS.indexOf(z) + 1)] ?? z)}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Zoom in"
+          onClick={() =>
+            setZoom((z) => ZOOMS[Math.min(ZOOMS.length - 1, ZOOMS.indexOf(z) + 1)] ?? z)
+          }
+        >
           <ZoomIn className="size-4" />
         </Button>
       </div>
@@ -294,10 +436,27 @@ export function PrintTemplateDesignerPage() {
       {/* Body: fields/layers | canvas | properties */}
       <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[16rem_minmax(0,1fr)_17rem]">
         <div className="hidden min-h-0 flex-col border-r lg:flex">
-          <Tabs value={leftTab} onValueChange={(v) => v && setLeftTab(v as 'fields' | 'layers')} className="flex min-h-0 flex-1 flex-col">
-            <TabsList variant="line" className="h-auto w-full shrink-0 justify-start gap-4 rounded-none border-b px-3">
-              <TabsTrigger value="fields" className="flex-none px-0 pb-2 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400">Fields</TabsTrigger>
-              <TabsTrigger value="layers" className="flex-none px-0 pb-2 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400">Layers</TabsTrigger>
+          <Tabs
+            value={leftTab}
+            onValueChange={(v) => v && setLeftTab(v as 'fields' | 'layers')}
+            className="flex min-h-0 flex-1 flex-col"
+          >
+            <TabsList
+              variant="line"
+              className="h-auto w-full shrink-0 justify-start gap-4 rounded-none border-b px-3"
+            >
+              <TabsTrigger
+                value="fields"
+                className="flex-none px-0 pb-2 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
+              >
+                Fields
+              </TabsTrigger>
+              <TabsTrigger
+                value="layers"
+                className="flex-none px-0 pb-2 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
+              >
+                Layers
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="fields" className="min-h-0 flex-1 overflow-y-auto p-3">
@@ -324,7 +483,9 @@ export function PrintTemplateDesignerPage() {
                     key={f.key}
                     type="button"
                     data-slot="button"
-                    onClick={() => state.addElement(newElement('field', activeBand, contentWidth, f))}
+                    onClick={() =>
+                      state.addElement(newElement('field', activeBand, contentWidth, f))
+                    }
                     className="flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted"
                   >
                     <span className="truncate">{f.label}</span>
@@ -344,16 +505,38 @@ export function PrintTemplateDesignerPage() {
                       key={el.id}
                       className={cn(
                         'flex items-center gap-1 rounded-md px-2 py-1.5 text-sm',
-                        state.selectedIds.includes(el.id) ? 'bg-teal-100 dark:bg-teal-500/15' : 'hover:bg-muted'
+                        state.selectedIds.includes(el.id)
+                          ? 'bg-teal-100 dark:bg-teal-500/15'
+                          : 'hover:bg-muted'
                       )}
                     >
-                      <button type="button" onClick={() => state.setSelectedIds([el.id])} className="min-w-0 flex-1 truncate text-left">
+                      <button
+                        type="button"
+                        onClick={() => state.setSelectedIds([el.id])}
+                        className="min-w-0 flex-1 truncate text-left"
+                      >
                         {el.text || el.fieldKey || el.type}
                       </button>
-                      <Button type="button" variant="ghost" size="icon-xs" aria-label="Toggle visibility" onClick={() => state.updateElements([el.id], (x) => ({ ...x, hidden: !x.hidden }))}>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-xs"
+                        aria-label="Toggle visibility"
+                        onClick={() =>
+                          state.updateElements([el.id], (x) => ({ ...x, hidden: !x.hidden }))
+                        }
+                      >
                         {el.hidden ? <EyeOff className="size-3" /> : <Eye className="size-3" />}
                       </Button>
-                      <Button type="button" variant="ghost" size="icon-xs" aria-label="Toggle lock" onClick={() => state.updateElements([el.id], (x) => ({ ...x, locked: !x.locked }))}>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-xs"
+                        aria-label="Toggle lock"
+                        onClick={() =>
+                          state.updateElements([el.id], (x) => ({ ...x, locked: !x.locked }))
+                        }
+                      >
                         {el.locked ? <Lock className="size-3" /> : <LockOpen className="size-3" />}
                       </Button>
                     </div>
@@ -392,19 +575,33 @@ export function PrintTemplateDesignerPage() {
             </p>
           ) : (
             <div className="space-y-3">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{one.type}</p>
+              <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                {one.type}
+              </p>
 
-              {(one.type === 'text' || one.type === 'field' || one.type === 'barcode' || one.type === 'qrcode' || one.type === 'image') && (
+              {(one.type === 'text' ||
+                one.type === 'field' ||
+                one.type === 'barcode' ||
+                one.type === 'qrcode' ||
+                one.type === 'image') && (
                 <div className="space-y-1.5">
-                  <Label className="text-xs">{one.type === 'field' ? 'Caption' : one.type === 'image' ? 'Image URL' : 'Text'}</Label>
-                  <Input value={one.text ?? ''} onChange={(e) => patchEl({ text: e.target.value })} />
+                  <Label className="text-xs">
+                    {one.type === 'field' ? 'Caption' : one.type === 'image' ? 'Image URL' : 'Text'}
+                  </Label>
+                  <Input
+                    value={one.text ?? ''}
+                    onChange={(e) => patchEl({ text: e.target.value })}
+                  />
                 </div>
               )}
 
               {one.type === 'field' && (
                 <label className="flex items-center justify-between gap-2 text-sm">
                   Show caption
-                  <Switch checked={one.showLabel} onCheckedChange={(v) => patchEl({ showLabel: v })} />
+                  <Switch
+                    checked={one.showLabel}
+                    onCheckedChange={(v) => patchEl({ showLabel: v })}
+                  />
                 </label>
               )}
 
@@ -416,7 +613,9 @@ export function PrintTemplateDesignerPage() {
                       type="number"
                       step="0.5"
                       value={one[k]}
-                      onChange={(e) => patchEl({ [k]: Number(e.target.value) || 0 } as Partial<PrintElement>)}
+                      onChange={(e) =>
+                        patchEl({ [k]: Number(e.target.value) || 0 } as Partial<PrintElement>)
+                      }
                     />
                   </div>
                 ))}
@@ -424,17 +623,43 @@ export function PrintTemplateDesignerPage() {
 
               <div className="space-y-1">
                 <Label className="text-xs">Font size (pt)</Label>
-                <Input type="number" step="0.5" value={one.style.fontSize} onChange={(e) => patchStyle({ fontSize: Number(e.target.value) || 8 })} />
+                <Input
+                  type="number"
+                  step="0.5"
+                  value={one.style.fontSize}
+                  onChange={(e) => patchStyle({ fontSize: Number(e.target.value) || 8 })}
+                />
               </div>
 
               <div className="flex flex-wrap gap-1">
-                <Button type="button" size="sm" variant={one.style.bold ? 'secondary' : 'outline'} onClick={() => patchStyle({ bold: !one.style.bold })}>Bold</Button>
-                <Button type="button" size="sm" variant={one.style.italic ? 'secondary' : 'outline'} onClick={() => patchStyle({ italic: !one.style.italic })}>Italic</Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant={one.style.bold ? 'secondary' : 'outline'}
+                  onClick={() => patchStyle({ bold: !one.style.bold })}
+                >
+                  Bold
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant={one.style.italic ? 'secondary' : 'outline'}
+                  onClick={() => patchStyle({ italic: !one.style.italic })}
+                >
+                  Italic
+                </Button>
               </div>
 
               <div className="flex gap-1">
                 {(['left', 'center', 'right'] as const).map((a) => (
-                  <Button key={a} type="button" size="sm" variant={one.style.align === a ? 'secondary' : 'outline'} onClick={() => patchStyle({ align: a })} className="flex-1 capitalize">
+                  <Button
+                    key={a}
+                    type="button"
+                    size="sm"
+                    variant={one.style.align === a ? 'secondary' : 'outline'}
+                    onClick={() => patchStyle({ align: a })}
+                    className="flex-1 capitalize"
+                  >
                     {a}
                   </Button>
                 ))}
@@ -481,7 +706,12 @@ export function PrintTemplateDesignerPage() {
 
               <div className="space-y-1">
                 <Label className="text-xs">Colour</Label>
-                <Input type="color" value={one.style.color} onChange={(e) => patchStyle({ color: e.target.value })} className="h-9 p-1" />
+                <Input
+                  type="color"
+                  value={one.style.color}
+                  onChange={(e) => patchStyle({ color: e.target.value })}
+                  className="h-9 p-1"
+                />
               </div>
             </div>
           )}
@@ -489,10 +719,13 @@ export function PrintTemplateDesignerPage() {
       </div>
 
       {/* Preview renders the *real* print HTML in a sandboxed iframe rather than opening a print
-        * window — you can check a layout without dismissing a printer dialog every time. It is
-        * the identical output `Print` produces; nothing preview-only is injected. */}
+       * window — you can check a layout without dismissing a printer dialog every time. It is
+       * the identical output `Print` produces; nothing preview-only is injected. */}
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent size="xl" className="flex max-h-[calc(100dvh-2rem)] flex-col gap-3 overflow-hidden">
+        <DialogContent
+          size="xl"
+          className="flex max-h-[calc(100dvh-2rem)] flex-col gap-3 overflow-hidden"
+        >
           <DialogTitle className="flex items-baseline gap-2">
             Preview
             <span className="text-sm font-normal text-muted-foreground">— sample data</span>
@@ -533,7 +766,8 @@ export function PrintTemplateDesignerPage() {
         onConfirm={() => {
           const preset =
             PRINT_PRESETS.find(
-              (p) => p.documentType === template!.documentType && p.presetKey === template!.presetKey
+              (p) =>
+                p.documentType === template!.documentType && p.presetKey === template!.presetKey
             ) ?? PRINT_PRESETS.find((p) => p.documentType === template!.documentType)
           if (!preset) return
           const layout = buildDefaultLayout(preset)

@@ -15,15 +15,32 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useItems, useCreateItem, useUpdateItem, useSetItemStatus, nextItemCode, type ItemWithId } from '@/hooks/use-items'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
+  useItems,
+  useCreateItem,
+  useUpdateItem,
+  useSetItemStatus,
+  nextItemCode,
+  type ItemWithId,
+} from '@/hooks/use-items'
 import { useItemCategories } from '@/hooks/use-item-categories'
 import { useUoms } from '@/hooks/use-uom'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 import type { ItemType } from '@/types/firestore'
 
-const TYPE_LABEL: Record<ItemType, string> = { service: 'Service', part: 'Part', product: 'Product' }
+const TYPE_LABEL: Record<ItemType, string> = {
+  service: 'Service',
+  part: 'Part',
+  product: 'Product',
+}
 
 export function ItemMasterPage() {
   const { data: items = [], isLoading, error: loadError, refetch } = useItems()
@@ -57,7 +74,12 @@ export function ItemMasterPage() {
         </div>
       ),
     },
-    { key: 'category', header: 'Category', hideOnMobile: true, render: (i) => i.categoryName ?? '—' },
+    {
+      key: 'category',
+      header: 'Category',
+      hideOnMobile: true,
+      render: (i) => i.categoryName ?? '—',
+    },
     {
       key: 'type',
       header: 'Type',
@@ -76,7 +98,11 @@ export function ItemMasterPage() {
     },
     { key: 'nature', header: 'Nature', hideOnMobile: true, render: (i) => i.nature },
     { key: 'uom', header: 'UOM', hideOnMobile: true, render: (i) => i.uom },
-    { key: 'status', header: 'Status', render: (i) => <StatusBadge status={i.status === 'active' ? 'Active' : 'Inactive'} /> },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (i) => <StatusBadge status={i.status === 'active' ? 'Active' : 'Inactive'} />,
+    },
   ]
 
   return (
@@ -97,13 +123,31 @@ export function ItemMasterPage() {
 
       <StatCardGrid>
         <StatCard label="Total" value={items.length} icon={Package} />
-        <StatCard label="Active" icon={CheckCircle2} value={items.filter((i) => i.status === 'active').length} tone="success" />
-        <StatCard label="Services" icon={Wrench} value={items.filter((i) => i.type === 'service').length} />
+        <StatCard
+          label="Active"
+          icon={CheckCircle2}
+          value={items.filter((i) => i.status === 'active').length}
+          tone="success"
+        />
+        <StatCard
+          label="Services"
+          icon={Wrench}
+          value={items.filter((i) => i.type === 'service').length}
+        />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search items...">
-        <Select value={typeFilter} onValueChange={(v) => v && setTypeFilter(v as typeof typeFilter)}>
-          <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search items..."
+      >
+        <Select
+          value={typeFilter}
+          onValueChange={(v) => v && setTypeFilter(v as typeof typeFilter)}
+        >
+          <SelectTrigger className="w-36">
+            <SelectValue />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Types</SelectItem>
             <SelectItem value="service">Service</SelectItem>
@@ -121,10 +165,23 @@ export function ItemMasterPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={Package} title="No items yet" description="Add your first item above." />}
+        emptyState={
+          <EmptyState
+            icon={Package}
+            title="No items yet"
+            description="Add your first item above."
+          />
+        }
       />
 
-      {editing && <ItemModal editing={editing} existing={items} categories={categories} onClose={() => setEditing(null)} />}
+      {editing && (
+        <ItemModal
+          editing={editing}
+          existing={items}
+          categories={categories}
+          onClose={() => setEditing(null)}
+        />
+      )}
 
       {viewing && (
         <DetailDrawer
@@ -137,7 +194,15 @@ export function ItemMasterPage() {
           actions={
             canManage && (
               <>
-                <Button type="button" variant="outline" size="sm" onClick={() => { setEditing(viewing); setViewing(null) }}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditing(viewing)
+                    setViewing(null)
+                  }}
+                >
                   <Pencil className="size-3.5" />
                   Edit
                 </Button>
@@ -159,13 +224,25 @@ export function ItemMasterPage() {
               title: 'PRICING',
               rows: [
                 { label: 'Tax', value: `GST ${viewing.gstPercent}%` },
-                { label: 'GST', value: `CGST ${viewing.cgstPercent}% + SGST ${viewing.sgstPercent}%` },
-                { label: 'Selling Price', value: viewing.sellingPrice != null ? `₹${viewing.sellingPrice}` : '—' },
-                { label: 'Purchase Price', value: viewing.purchasePrice != null ? `₹${viewing.purchasePrice}` : '—' },
+                {
+                  label: 'GST',
+                  value: `CGST ${viewing.cgstPercent}% + SGST ${viewing.sgstPercent}%`,
+                },
+                {
+                  label: 'Selling Price',
+                  value: viewing.sellingPrice != null ? `₹${viewing.sellingPrice}` : '—',
+                },
+                {
+                  label: 'Purchase Price',
+                  value: viewing.purchasePrice != null ? `₹${viewing.purchasePrice}` : '—',
+                },
                 { label: 'MRP', value: viewing.mrp != null ? `₹${viewing.mrp}` : '—' },
               ],
             },
-            { title: 'INVENTORY', rows: [{ label: 'Stock Tracked', value: viewing.stockTracked ? 'Yes' : 'No' }] },
+            {
+              title: 'INVENTORY',
+              rows: [{ label: 'Stock Tracked', value: viewing.stockTracked ? 'Yes' : 'No' }],
+            },
             {
               title: 'ENABLED IN',
               children: (
@@ -192,7 +269,14 @@ export function ItemMasterPage() {
               ),
             },
             ...(viewing.description
-              ? [{ title: 'DESCRIPTION', children: <p className="text-sm text-muted-foreground">{viewing.description}</p> }]
+              ? [
+                  {
+                    title: 'DESCRIPTION',
+                    children: (
+                      <p className="text-sm text-muted-foreground">{viewing.description}</p>
+                    ),
+                  },
+                ]
               : []),
           ]}
         />
@@ -253,17 +337,25 @@ function ItemModal({
 
   const [name, setName] = useState(isNew ? '' : editing.name)
   const [type, setType] = useState<ItemType>(isNew ? 'part' : editing.type)
-  const [categoryId, setCategoryId] = useState(isNew ? 'none' : editing.categoryId ?? 'none')
+  const [categoryId, setCategoryId] = useState(isNew ? 'none' : (editing.categoryId ?? 'none'))
   const [uom, setUom] = useState(isNew ? 'nos' : editing.uom)
   const [gstPercent, setGstPercent] = useState(isNew ? 18 : editing.gstPercent)
-  const [sellingPrice, setSellingPrice] = useState<number | ''>(isNew ? '' : editing.sellingPrice ?? '')
-  const [purchasePrice, setPurchasePrice] = useState<number | ''>(isNew ? '' : editing.purchasePrice ?? '')
-  const [mrp, setMrp] = useState<number | ''>(isNew ? '' : editing.mrp ?? '')
+  const [sellingPrice, setSellingPrice] = useState<number | ''>(
+    isNew ? '' : (editing.sellingPrice ?? '')
+  )
+  const [purchasePrice, setPurchasePrice] = useState<number | ''>(
+    isNew ? '' : (editing.purchasePrice ?? '')
+  )
+  const [mrp, setMrp] = useState<number | ''>(isNew ? '' : (editing.mrp ?? ''))
   const [stockTracked, setStockTracked] = useState(isNew ? true : editing.stockTracked)
   const [enabledInSales, setEnabledInSales] = useState(isNew ? true : editing.enabledInSales)
-  const [enabledInPurchase, setEnabledInPurchase] = useState(isNew ? true : editing.enabledInPurchase)
-  const [enabledInServicePos, setEnabledInServicePos] = useState(isNew ? true : editing.enabledInServicePos)
-  const [description, setDescription] = useState(isNew ? '' : editing.description ?? '')
+  const [enabledInPurchase, setEnabledInPurchase] = useState(
+    isNew ? true : editing.enabledInPurchase
+  )
+  const [enabledInServicePos, setEnabledInServicePos] = useState(
+    isNew ? true : editing.enabledInServicePos
+  )
+  const [description, setDescription] = useState(isNew ? '' : (editing.description ?? ''))
 
   const isPending = createItem.isPending || updateItem.isPending
   const category = (categories ?? []).find((c) => c.id === categoryId)
@@ -307,12 +399,19 @@ function ItemModal({
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2 space-y-1.5">
           <Label>Item Name *</Label>
-          <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Screen Replacement" autoFocus />
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Screen Replacement"
+            autoFocus
+          />
         </div>
         <div className="space-y-1.5">
           <Label>Type *</Label>
           <Select value={type} onValueChange={(v) => v && setType(v as ItemType)}>
-            <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="service">Service</SelectItem>
               <SelectItem value="part">Part</SelectItem>
@@ -323,40 +422,76 @@ function ItemModal({
         <div className="space-y-1.5">
           <Label>Category</Label>
           <Select value={categoryId} onValueChange={(v) => v && setCategoryId(v)}>
-            <SelectTrigger className="w-full"><SelectValue placeholder="None" /></SelectTrigger>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="None" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">None</SelectItem>
-              {(categories ?? []).map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+              {(categories ?? []).map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-1.5">
           <Label>Primary UOM</Label>
           <Select value={uom} onValueChange={(v) => v && setUom(v)}>
-            <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
-              {uoms.map((u) => <SelectItem key={u.id} value={u.symbol ?? u.code.toLowerCase()}>{u.name}</SelectItem>)}
+              {uoms.map((u) => (
+                <SelectItem key={u.id} value={u.symbol ?? u.code.toLowerCase()}>
+                  {u.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-1.5">
           <Label>GST %</Label>
-          <Input type="number" min={0} max={28} value={gstPercent} onChange={(e) => setGstPercent(Number(e.target.value) || 0)} />
+          <Input
+            type="number"
+            min={0}
+            max={28}
+            value={gstPercent}
+            onChange={(e) => setGstPercent(Number(e.target.value) || 0)}
+          />
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
         <div className="space-y-1.5">
           <Label>Selling Price</Label>
-          <Input type="number" min={0} value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value === '' ? '' : Number(e.target.value))} placeholder="—" />
+          <Input
+            type="number"
+            min={0}
+            value={sellingPrice}
+            onChange={(e) => setSellingPrice(e.target.value === '' ? '' : Number(e.target.value))}
+            placeholder="—"
+          />
         </div>
         <div className="space-y-1.5">
           <Label>Purchase Price</Label>
-          <Input type="number" min={0} value={purchasePrice} onChange={(e) => setPurchasePrice(e.target.value === '' ? '' : Number(e.target.value))} placeholder="—" />
+          <Input
+            type="number"
+            min={0}
+            value={purchasePrice}
+            onChange={(e) => setPurchasePrice(e.target.value === '' ? '' : Number(e.target.value))}
+            placeholder="—"
+          />
         </div>
         <div className="space-y-1.5">
           <Label>MRP</Label>
-          <Input type="number" min={0} value={mrp} onChange={(e) => setMrp(e.target.value === '' ? '' : Number(e.target.value))} placeholder="—" />
+          <Input
+            type="number"
+            min={0}
+            value={mrp}
+            onChange={(e) => setMrp(e.target.value === '' ? '' : Number(e.target.value))}
+            placeholder="—"
+          />
         </div>
       </div>
 
@@ -368,15 +503,24 @@ function ItemModal({
             Stock Tracked
           </label>
           <label className="flex items-center gap-1.5">
-            <Checkbox checked={enabledInSales} onCheckedChange={(v) => setEnabledInSales(v === true)} />
+            <Checkbox
+              checked={enabledInSales}
+              onCheckedChange={(v) => setEnabledInSales(v === true)}
+            />
             Sales
           </label>
           <label className="flex items-center gap-1.5">
-            <Checkbox checked={enabledInPurchase} onCheckedChange={(v) => setEnabledInPurchase(v === true)} />
+            <Checkbox
+              checked={enabledInPurchase}
+              onCheckedChange={(v) => setEnabledInPurchase(v === true)}
+            />
             Purchase
           </label>
           <label className="flex items-center gap-1.5">
-            <Checkbox checked={enabledInServicePos} onCheckedChange={(v) => setEnabledInServicePos(v === true)} />
+            <Checkbox
+              checked={enabledInServicePos}
+              onCheckedChange={(v) => setEnabledInServicePos(v === true)}
+            />
             Service / POS
           </label>
         </div>
@@ -384,7 +528,12 @@ function ItemModal({
 
       <div className="space-y-1.5">
         <Label>Description</Label>
-        <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Optional" rows={2} />
+        <Textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Optional"
+          rows={2}
+        />
       </div>
     </FormModal>
   )

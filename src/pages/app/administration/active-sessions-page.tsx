@@ -21,7 +21,10 @@ import { rawUserAgent } from '@/lib/user-agent'
 import { formatTimestamp } from '@/lib/utils'
 import { formatDurationLabel } from '@/lib/date-range'
 
-function statusFor(session: SessionWithId): { label: string; tone: 'success' | 'warning' | 'neutral' } {
+function statusFor(session: SessionWithId): {
+  label: string
+  tone: 'success' | 'warning' | 'neutral'
+} {
   if (!isSessionActive(session)) return { label: 'Ended', tone: 'neutral' }
   if (isSessionOnline(session)) return { label: 'Online', tone: 'success' }
   if (isSessionIdle(session)) return { label: 'Idle', tone: 'warning' }
@@ -39,7 +42,9 @@ export function ActiveSessionsPage() {
   const uniqueUsers = new Set(sessions.filter(isSessionActive).map((s) => s.userId)).size
 
   const filtered = sessions.filter((s) =>
-    search.trim() ? `${s.userName} ${s.ip ?? ''} ${s.deviceLabel}`.toLowerCase().includes(search.toLowerCase()) : true
+    search.trim()
+      ? `${s.userName} ${s.ip ?? ''} ${s.deviceLabel}`.toLowerCase().includes(search.toLowerCase())
+      : true
   )
 
   const columns: DataTableColumn<SessionWithId>[] = [
@@ -63,7 +68,11 @@ export function ActiveSessionsPage() {
     },
     { key: 'device', header: 'Device', hideOnMobile: true, render: (s) => s.deviceLabel },
     { key: 'ip', header: 'IP', hideOnMobile: true, render: (s) => s.ip ?? '—' },
-    { key: 'lastActivity', header: 'Last Activity', render: (s) => formatTimestamp(s.lastActivityAt) },
+    {
+      key: 'lastActivity',
+      header: 'Last Activity',
+      render: (s) => formatTimestamp(s.lastActivityAt),
+    },
     {
       key: 'status',
       header: 'Status',
@@ -76,15 +85,28 @@ export function ActiveSessionsPage() {
 
   return (
     <div className="space-y-4 p-4 sm:p-6">
-      <PageHeader icon={Monitor} title="Active Sessions" subtitle="Signed-in devices across your team" />
+      <PageHeader
+        icon={Monitor}
+        title="Active Sessions"
+        subtitle="Signed-in devices across your team"
+      />
 
       <StatCardGrid>
         <StatCard label="Currently Online" value={online.length} icon={Wifi} tone="success" />
         <StatCard label="Unique Users" value={uniqueUsers} icon={Users} />
-        <StatCard label="Idle (30m+)" value={idle.length} icon={Clock} tone={idle.length > 0 ? 'warning' : 'default'} />
+        <StatCard
+          label="Idle (30m+)"
+          value={idle.length}
+          icon={Clock}
+          tone={idle.length > 0 ? 'warning' : 'default'}
+        />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search by user, device, IP..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search by user, device, IP..."
+      />
 
       <DataTable
         columns={columns}
@@ -93,8 +115,17 @@ export function ActiveSessionsPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        onRowClick={(s) => { setViewing(s); setTechDetailsOpen(false) }}
-        emptyState={<EmptyState icon={Monitor} title="No sessions yet" description="Sessions appear here as your team signs in." />}
+        onRowClick={(s) => {
+          setViewing(s)
+          setTechDetailsOpen(false)
+        }}
+        emptyState={
+          <EmptyState
+            icon={Monitor}
+            title="No sessions yet"
+            description="Sessions appear here as your team signs in."
+          />
+        }
       />
 
       {viewing && (
@@ -107,7 +138,9 @@ export function ActiveSessionsPage() {
           badges={
             <>
               <StatusBadge status={statusFor(viewing).label} tone={statusFor(viewing).tone} dot />
-              {isCurrentSession(viewing) && <StatusBadge status="This is your current session" tone="info" />}
+              {isCurrentSession(viewing) && (
+                <StatusBadge status="This is your current session" tone="info" />
+              )}
             </>
           }
           sections={[
@@ -120,15 +153,23 @@ export function ActiveSessionsPage() {
                   label: 'Signed in for',
                   // `new Date().getTime()`, not the bare `Date.now()` call — see this project's
                   // own established fix for this exact React Compiler purity flag (Phase 6/7).
-                  value: formatDurationLabel(new Date().getTime() - (viewing.signedInAt?.toDate?.()?.getTime() ?? new Date().getTime())),
+                  value: formatDurationLabel(
+                    new Date().getTime() -
+                      (viewing.signedInAt?.toDate?.()?.getTime() ?? new Date().getTime())
+                  ),
                 },
                 { label: 'Auto-expires on', value: formatTimestamp(viewing.expiresAt) },
                 ...(isSessionActive(viewing) && !isSessionOnline(viewing)
-                  ? [{
-                      label: 'Inactive for',
-                      value: formatDurationLabel(new Date().getTime() - (viewing.lastActivityAt?.toDate?.()?.getTime() ?? new Date().getTime())),
-                      tone: 'warning' as const,
-                    }]
+                  ? [
+                      {
+                        label: 'Inactive for',
+                        value: formatDurationLabel(
+                          new Date().getTime() -
+                            (viewing.lastActivityAt?.toDate?.()?.getTime() ?? new Date().getTime())
+                        ),
+                        tone: 'warning' as const,
+                      },
+                    ]
                   : []),
               ],
             },
@@ -145,7 +186,9 @@ export function ActiveSessionsPage() {
         >
           <Collapsible open={techDetailsOpen} onOpenChange={setTechDetailsOpen}>
             <CollapsibleTrigger className="flex w-full items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground">
-              <ChevronRight className={`size-4 transition-transform ${techDetailsOpen ? 'rotate-90' : ''}`} />
+              <ChevronRight
+                className={`size-4 transition-transform ${techDetailsOpen ? 'rotate-90' : ''}`}
+              />
               Technical details
             </CollapsibleTrigger>
             <CollapsibleContent>

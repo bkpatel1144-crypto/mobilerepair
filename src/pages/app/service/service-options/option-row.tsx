@@ -18,7 +18,15 @@ interface OptionRowProps {
 /** One reorderable row inside a Service Options section/group — matches `preview (73)`'s
  * "⠿ Samsung #1 ✎ 🗑" row pattern. The drag-handle icon is purely visual; reordering is done via
  * the up/down arrows next to it (see `useReorderServiceOption`'s own doc comment for why). */
-export function OptionRow({ option, index, onRename, onDelete, onMove, canMoveUp, canMoveDown }: OptionRowProps) {
+export function OptionRow({
+  option,
+  index,
+  onRename,
+  onDelete,
+  onMove,
+  canMoveUp,
+  canMoveDown,
+}: OptionRowProps) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(option.label)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
@@ -63,10 +71,22 @@ export function OptionRow({ option, index, onRename, onDelete, onMove, canMoveUp
             autoFocus
             className="h-7 flex-1 text-sm"
           />
-          <Button type="button" variant="ghost" size="icon" className="size-7" onClick={commitRename}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-7"
+            onClick={commitRename}
+          >
             <Check className="size-3.5 text-teal-600" />
           </Button>
-          <Button type="button" variant="ghost" size="icon" className="size-7" onClick={() => setEditing(false)}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-7"
+            onClick={() => setEditing(false)}
+          >
             <X className="size-3.5" />
           </Button>
         </>
@@ -74,10 +94,22 @@ export function OptionRow({ option, index, onRename, onDelete, onMove, canMoveUp
         <>
           <span className="flex-1 text-sm">{option.label}</span>
           <span className="text-xs text-muted-foreground/60">#{index + 1}</span>
-          <Button type="button" variant="ghost" size="icon" className="size-7" onClick={() => setEditing(true)}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-7"
+            onClick={() => setEditing(true)}
+          >
             <Pencil className="size-3.5" />
           </Button>
-          <Button type="button" variant="ghost" size="icon" className="size-7" onClick={() => setConfirmingDelete(true)}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-7"
+            onClick={() => setConfirmingDelete(true)}
+          >
             <Trash2 className="size-3.5 text-red-600" />
           </Button>
         </>

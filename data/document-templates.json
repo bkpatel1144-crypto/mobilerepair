@@ -1,709 +1,709 @@
 {
-    "success": true,
-    "message": "Success",
-    "data": [
-        {
-            "paper": {
-                "width": 40,
-                "height": 20,
-                "unit": "mm",
-                "orientation": "landscape"
-            },
-            "margins": {
-                "top": 1,
-                "right": 1,
-                "bottom": 1,
-                "left": 1
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c737c",
-            "name": "Default Barcode Label",
-            "docType": "barcode_label",
-            "category": "label",
-            "presetKey": null,
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.143Z",
-            "updatedAt": "2026-09-04T06:28:06.143Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 50,
-                "height": 25,
-                "unit": "mm",
-                "orientation": "landscape"
-            },
-            "margins": {
-                "top": 1,
-                "right": 1,
-                "bottom": 1,
-                "left": 1
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c737e",
-            "name": "Default Customer Label",
-            "docType": "customer_label",
-            "category": "label",
-            "presetKey": null,
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.150Z",
-            "updatedAt": "2026-09-04T06:28:06.150Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 50,
-                "height": 25,
-                "unit": "mm",
-                "orientation": "landscape"
-            },
-            "margins": {
-                "top": 1,
-                "right": 1,
-                "bottom": 1,
-                "left": 1
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7380",
-            "name": "Default Device Tag Label",
-            "docType": "device_tag_label",
-            "category": "label",
-            "presetKey": null,
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.157Z",
-            "updatedAt": "2026-09-04T06:28:06.157Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 210,
-                "height": 297,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 15,
-                "right": 15,
-                "bottom": 15,
-                "left": 15
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7378",
-            "name": "Default Job Card Bill (A4)",
-            "docType": "job_card_bill",
-            "category": "bill",
-            "presetKey": "a4",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.114Z",
-            "updatedAt": "2026-09-04T06:28:06.114Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 80,
-                "height": 190,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c7366",
-            "name": "Default Job Card Bill (80mm)",
-            "docType": "job_card_bill",
-            "category": "bill",
-            "presetKey": "80mm",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.898Z",
-            "updatedAt": "2026-09-04T06:28:05.898Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 58,
-                "height": 190,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c7360",
-            "name": "Default Job Card Bill (58mm)",
-            "docType": "job_card_bill",
-            "category": "bill",
-            "presetKey": "58mm",
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.827Z",
-            "updatedAt": "2026-09-04T06:28:05.827Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 80,
-                "height": 120,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c7364",
-            "name": "Default Job Card (80mm)",
-            "docType": "job_card_intake",
-            "category": "bill",
-            "presetKey": "80mm",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.873Z",
-            "updatedAt": "2026-09-04T06:28:05.873Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 58,
-                "height": 120,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c735e",
-            "name": "Default Job Card (58mm)",
-            "docType": "job_card_intake",
-            "category": "bill",
-            "presetKey": "58mm",
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.772Z",
-            "updatedAt": "2026-09-04T06:28:05.772Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 80,
-                "height": 90,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c7368",
-            "name": "Default Payment Receipt (80mm)",
-            "docType": "payment_receipt",
-            "category": "bill",
-            "presetKey": "80mm",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.920Z",
-            "updatedAt": "2026-09-04T06:28:05.920Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 58,
-                "height": 90,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c7362",
-            "name": "Default Payment Receipt (58mm)",
-            "docType": "payment_receipt",
-            "category": "bill",
-            "presetKey": "58mm",
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.856Z",
-            "updatedAt": "2026-09-04T06:28:05.856Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 50,
-                "height": 25,
-                "unit": "mm",
-                "orientation": "landscape"
-            },
-            "margins": {
-                "top": 1,
-                "right": 1,
-                "bottom": 1,
-                "left": 1
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c737a",
-            "name": "Default Product Label",
-            "docType": "product_label",
-            "category": "label",
-            "presetKey": null,
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.132Z",
-            "updatedAt": "2026-09-04T06:28:06.132Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 80,
-                "height": 130,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c736c",
-            "name": "Default Purchase Receipt (80mm)",
-            "docType": "purchase_receipt",
-            "category": "bill",
-            "presetKey": "80mm",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.963Z",
-            "updatedAt": "2026-09-04T06:28:05.963Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 58,
-                "height": 130,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c736a",
-            "name": "Default Purchase Receipt (58mm)",
-            "docType": "purchase_receipt",
-            "category": "bill",
-            "presetKey": "58mm",
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.939Z",
-            "updatedAt": "2026-09-04T06:28:05.939Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 50,
-                "height": 25,
-                "unit": "mm",
-                "orientation": "landscape"
-            },
-            "margins": {
-                "top": 1,
-                "right": 1,
-                "bottom": 1,
-                "left": 1
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7382",
-            "name": "Default Second Hand Device Label",
-            "docType": "second_hand_device_label",
-            "category": "label",
-            "presetKey": null,
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.166Z",
-            "updatedAt": "2026-09-04T06:28:06.166Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 80,
-                "height": 130,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7370",
-            "name": "Default Second Hand Device Purchase Receipt (80mm)",
-            "docType": "second_hand_device_purchase_receipt",
-            "category": "bill",
-            "presetKey": "80mm",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.022Z",
-            "updatedAt": "2026-09-04T06:28:06.022Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 58,
-                "height": 130,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f52228cb48cf9c736e",
-            "name": "Default Second Hand Device Purchase Receipt (58mm)",
-            "docType": "second_hand_device_purchase_receipt",
-            "category": "bill",
-            "presetKey": "58mm",
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:05.994Z",
-            "updatedAt": "2026-09-04T06:28:05.994Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 210,
-                "height": 148.5,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 8,
-                "right": 8,
-                "bottom": 8,
-                "left": 8
-            },
-            "settings": {
-                "duplicateCopy": true,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7376",
-            "name": "Default Second Hand Device Sale Invoice (A4, Duplicate Copy)",
-            "docType": "second_hand_device_sale_invoice",
-            "category": "bill",
-            "presetKey": "a4-duplicate",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.092Z",
-            "updatedAt": "2026-09-04T06:28:06.092Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 80,
-                "height": 130,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7374",
-            "name": "Default Second Hand Device Sale Invoice (80mm)",
-            "docType": "second_hand_device_sale_invoice",
-            "category": "bill",
-            "presetKey": "80mm",
-            "isDefault": false,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.073Z",
-            "updatedAt": "2026-09-04T06:28:06.073Z",
-            "__v": 0
-        },
-        {
-            "paper": {
-                "width": 58,
-                "height": 130,
-                "unit": "mm",
-                "orientation": "portrait"
-            },
-            "margins": {
-                "top": 3,
-                "right": 3,
-                "bottom": 3,
-                "left": 3
-            },
-            "settings": {
-                "duplicateCopy": false,
-                "duplicateCopyDirection": "stacked",
-                "ups": 1,
-                "gapMm": 2,
-                "printSpeed": 4,
-                "printDensity": 8,
-                "copies": 1
-            },
-            "_id": "6a9a64f62228cb48cf9c7372",
-            "name": "Default Second Hand Device Sale Invoice (58mm)",
-            "docType": "second_hand_device_sale_invoice",
-            "category": "bill",
-            "presetKey": "58mm",
-            "isDefault": true,
-            "isActive": true,
-            "version": 1,
-            "createdBy": null,
-            "updatedBy": null,
-            "extraSlots": [],
-            "createdAt": "2026-09-04T06:28:06.056Z",
-            "updatedAt": "2026-09-04T06:28:06.056Z",
-            "__v": 0
-        }
-    ]
+  "success": true,
+  "message": "Success",
+  "data": [
+    {
+      "paper": {
+        "width": 40,
+        "height": 20,
+        "unit": "mm",
+        "orientation": "landscape"
+      },
+      "margins": {
+        "top": 1,
+        "right": 1,
+        "bottom": 1,
+        "left": 1
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c737c",
+      "name": "Default Barcode Label",
+      "docType": "barcode_label",
+      "category": "label",
+      "presetKey": null,
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.143Z",
+      "updatedAt": "2026-09-04T06:28:06.143Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 50,
+        "height": 25,
+        "unit": "mm",
+        "orientation": "landscape"
+      },
+      "margins": {
+        "top": 1,
+        "right": 1,
+        "bottom": 1,
+        "left": 1
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c737e",
+      "name": "Default Customer Label",
+      "docType": "customer_label",
+      "category": "label",
+      "presetKey": null,
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.150Z",
+      "updatedAt": "2026-09-04T06:28:06.150Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 50,
+        "height": 25,
+        "unit": "mm",
+        "orientation": "landscape"
+      },
+      "margins": {
+        "top": 1,
+        "right": 1,
+        "bottom": 1,
+        "left": 1
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7380",
+      "name": "Default Device Tag Label",
+      "docType": "device_tag_label",
+      "category": "label",
+      "presetKey": null,
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.157Z",
+      "updatedAt": "2026-09-04T06:28:06.157Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 210,
+        "height": 297,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 15,
+        "right": 15,
+        "bottom": 15,
+        "left": 15
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7378",
+      "name": "Default Job Card Bill (A4)",
+      "docType": "job_card_bill",
+      "category": "bill",
+      "presetKey": "a4",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.114Z",
+      "updatedAt": "2026-09-04T06:28:06.114Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 80,
+        "height": 190,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c7366",
+      "name": "Default Job Card Bill (80mm)",
+      "docType": "job_card_bill",
+      "category": "bill",
+      "presetKey": "80mm",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.898Z",
+      "updatedAt": "2026-09-04T06:28:05.898Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 58,
+        "height": 190,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c7360",
+      "name": "Default Job Card Bill (58mm)",
+      "docType": "job_card_bill",
+      "category": "bill",
+      "presetKey": "58mm",
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.827Z",
+      "updatedAt": "2026-09-04T06:28:05.827Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 80,
+        "height": 120,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c7364",
+      "name": "Default Job Card (80mm)",
+      "docType": "job_card_intake",
+      "category": "bill",
+      "presetKey": "80mm",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.873Z",
+      "updatedAt": "2026-09-04T06:28:05.873Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 58,
+        "height": 120,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c735e",
+      "name": "Default Job Card (58mm)",
+      "docType": "job_card_intake",
+      "category": "bill",
+      "presetKey": "58mm",
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.772Z",
+      "updatedAt": "2026-09-04T06:28:05.772Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 80,
+        "height": 90,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c7368",
+      "name": "Default Payment Receipt (80mm)",
+      "docType": "payment_receipt",
+      "category": "bill",
+      "presetKey": "80mm",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.920Z",
+      "updatedAt": "2026-09-04T06:28:05.920Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 58,
+        "height": 90,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c7362",
+      "name": "Default Payment Receipt (58mm)",
+      "docType": "payment_receipt",
+      "category": "bill",
+      "presetKey": "58mm",
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.856Z",
+      "updatedAt": "2026-09-04T06:28:05.856Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 50,
+        "height": 25,
+        "unit": "mm",
+        "orientation": "landscape"
+      },
+      "margins": {
+        "top": 1,
+        "right": 1,
+        "bottom": 1,
+        "left": 1
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c737a",
+      "name": "Default Product Label",
+      "docType": "product_label",
+      "category": "label",
+      "presetKey": null,
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.132Z",
+      "updatedAt": "2026-09-04T06:28:06.132Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 80,
+        "height": 130,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c736c",
+      "name": "Default Purchase Receipt (80mm)",
+      "docType": "purchase_receipt",
+      "category": "bill",
+      "presetKey": "80mm",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.963Z",
+      "updatedAt": "2026-09-04T06:28:05.963Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 58,
+        "height": 130,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c736a",
+      "name": "Default Purchase Receipt (58mm)",
+      "docType": "purchase_receipt",
+      "category": "bill",
+      "presetKey": "58mm",
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.939Z",
+      "updatedAt": "2026-09-04T06:28:05.939Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 50,
+        "height": 25,
+        "unit": "mm",
+        "orientation": "landscape"
+      },
+      "margins": {
+        "top": 1,
+        "right": 1,
+        "bottom": 1,
+        "left": 1
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7382",
+      "name": "Default Second Hand Device Label",
+      "docType": "second_hand_device_label",
+      "category": "label",
+      "presetKey": null,
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.166Z",
+      "updatedAt": "2026-09-04T06:28:06.166Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 80,
+        "height": 130,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7370",
+      "name": "Default Second Hand Device Purchase Receipt (80mm)",
+      "docType": "second_hand_device_purchase_receipt",
+      "category": "bill",
+      "presetKey": "80mm",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.022Z",
+      "updatedAt": "2026-09-04T06:28:06.022Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 58,
+        "height": 130,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f52228cb48cf9c736e",
+      "name": "Default Second Hand Device Purchase Receipt (58mm)",
+      "docType": "second_hand_device_purchase_receipt",
+      "category": "bill",
+      "presetKey": "58mm",
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:05.994Z",
+      "updatedAt": "2026-09-04T06:28:05.994Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 210,
+        "height": 148.5,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 8,
+        "right": 8,
+        "bottom": 8,
+        "left": 8
+      },
+      "settings": {
+        "duplicateCopy": true,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7376",
+      "name": "Default Second Hand Device Sale Invoice (A4, Duplicate Copy)",
+      "docType": "second_hand_device_sale_invoice",
+      "category": "bill",
+      "presetKey": "a4-duplicate",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.092Z",
+      "updatedAt": "2026-09-04T06:28:06.092Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 80,
+        "height": 130,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7374",
+      "name": "Default Second Hand Device Sale Invoice (80mm)",
+      "docType": "second_hand_device_sale_invoice",
+      "category": "bill",
+      "presetKey": "80mm",
+      "isDefault": false,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.073Z",
+      "updatedAt": "2026-09-04T06:28:06.073Z",
+      "__v": 0
+    },
+    {
+      "paper": {
+        "width": 58,
+        "height": 130,
+        "unit": "mm",
+        "orientation": "portrait"
+      },
+      "margins": {
+        "top": 3,
+        "right": 3,
+        "bottom": 3,
+        "left": 3
+      },
+      "settings": {
+        "duplicateCopy": false,
+        "duplicateCopyDirection": "stacked",
+        "ups": 1,
+        "gapMm": 2,
+        "printSpeed": 4,
+        "printDensity": 8,
+        "copies": 1
+      },
+      "_id": "6a9a64f62228cb48cf9c7372",
+      "name": "Default Second Hand Device Sale Invoice (58mm)",
+      "docType": "second_hand_device_sale_invoice",
+      "category": "bill",
+      "presetKey": "58mm",
+      "isDefault": true,
+      "isActive": true,
+      "version": 1,
+      "createdBy": null,
+      "updatedBy": null,
+      "extraSlots": [],
+      "createdAt": "2026-09-04T06:28:06.056Z",
+      "updatedAt": "2026-09-04T06:28:06.056Z",
+      "__v": 0
+    }
+  ]
 }

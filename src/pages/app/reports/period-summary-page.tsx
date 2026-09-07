@@ -30,7 +30,6 @@ interface PeriodGroup {
   grossProfit: number
 }
 
-
 /** `preview (33)` — the only Phase 9 report grouped by *time period* rather than by job/
  * technician/supplier. Daily groups by the job's own local calendar date (`dayKey`), Monthly by
  * calendar month (`monthKey`) — both off `CostedJobRow.date` (a job's `closedAt`), same as every
@@ -52,7 +51,10 @@ export function PeriodSummaryPage() {
     const map = new Map<string, PeriodGroup>()
     for (const row of dateFiltered) {
       const key = granularity === 'daily' ? dayKey(row.date) : monthKey(row.date)
-      const label = granularity === 'daily' ? row.date.toLocaleDateString('en-IN', { dateStyle: 'medium' }) : formatMonthLabel(key)
+      const label =
+        granularity === 'daily'
+          ? row.date.toLocaleDateString('en-IN', { dateStyle: 'medium' })
+          : formatMonthLabel(key)
       let group = map.get(key)
       if (!group) {
         group = { key, label, jobs: [], revenue: 0, jobCost: 0, grossProfit: 0 }
@@ -67,7 +69,9 @@ export function PeriodSummaryPage() {
   }
   const groups = buildGroups()
 
-  const filtered = groups.filter((g) => (search.trim() ? g.label.toLowerCase().includes(search.toLowerCase()) : true))
+  const filtered = groups.filter((g) =>
+    search.trim() ? g.label.toLowerCase().includes(search.toLowerCase()) : true
+  )
 
   const totalJobs = filtered.reduce((s, g) => s + g.jobs.length, 0)
   const totalRevenue = filtered.reduce((s, g) => s + g.revenue, 0)
@@ -99,8 +103,28 @@ export function PeriodSummaryPage() {
     { key: 'revenue', header: 'Revenue', render: (g) => formatCurrency(g.revenue) },
     { key: 'jobCost', header: 'Job Cost', render: (g) => formatCurrency(g.jobCost) },
     { key: 'shopExpenses', header: 'Shop Expenses', hideOnMobile: true, render: () => '—' },
-    { key: 'netProfit', header: 'Net Profit', render: (g) => <span className={g.grossProfit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'}>{formatCurrency(g.grossProfit)}</span> },
-    { key: 'margin', header: 'Margin', render: (g) => <span className={g.grossProfit < 0 ? 'text-red-600' : 'text-emerald-600'}>{formatPercent(marginPct(g.grossProfit, g.revenue))}</span> },
+    {
+      key: 'netProfit',
+      header: 'Net Profit',
+      render: (g) => (
+        <span
+          className={
+            g.grossProfit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'
+          }
+        >
+          {formatCurrency(g.grossProfit)}
+        </span>
+      ),
+    },
+    {
+      key: 'margin',
+      header: 'Margin',
+      render: (g) => (
+        <span className={g.grossProfit < 0 ? 'text-red-600' : 'text-emerald-600'}>
+          {formatPercent(marginPct(g.grossProfit, g.revenue))}
+        </span>
+      ),
+    },
   ]
 
   return (
@@ -138,10 +162,22 @@ export function PeriodSummaryPage() {
         <StatCard label="Jobs" value={totals.jobs} />
         <StatCard label="Revenue" value={formatCurrency(totals.revenue)} tone="success" />
         <StatCard label="Job Cost" value={formatCurrency(totals.jobCost)} tone="warning" />
-        <StatCard label="Gross Profit" value={formatCurrency(totals.grossProfit)} tone={totals.grossProfit < 0 ? 'danger' : 'success'} />
+        <StatCard
+          label="Gross Profit"
+          value={formatCurrency(totals.grossProfit)}
+          tone={totals.grossProfit < 0 ? 'danger' : 'success'}
+        />
         <StatCard label="Shop Expenses" value={formatCurrency(SHOP_EXPENSES)} />
-        <StatCard label="Net Profit" value={formatCurrency(totals.netProfit)} tone={totals.netProfit < 0 ? 'danger' : 'success'} />
-        <StatCard label="Net Margin" value={formatPercent(totals.netMargin)} tone={totals.netMargin < 0 ? 'danger' : 'default'} />
+        <StatCard
+          label="Net Profit"
+          value={formatCurrency(totals.netProfit)}
+          tone={totals.netProfit < 0 ? 'danger' : 'success'}
+        />
+        <StatCard
+          label="Net Margin"
+          value={formatPercent(totals.netMargin)}
+          tone={totals.netMargin < 0 ? 'danger' : 'default'}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -157,10 +193,20 @@ export function PeriodSummaryPage() {
         onCustomToChange={setCustomTo}
       >
         <div className="flex gap-1 rounded-lg border p-0.5">
-          <Button type="button" size="sm" variant={granularity === 'daily' ? 'default' : 'ghost'} onClick={() => setGranularity('daily')}>
+          <Button
+            type="button"
+            size="sm"
+            variant={granularity === 'daily' ? 'default' : 'ghost'}
+            onClick={() => setGranularity('daily')}
+          >
             Daily
           </Button>
-          <Button type="button" size="sm" variant={granularity === 'monthly' ? 'default' : 'ghost'} onClick={() => setGranularity('monthly')}>
+          <Button
+            type="button"
+            size="sm"
+            variant={granularity === 'monthly' ? 'default' : 'ghost'}
+            onClick={() => setGranularity('monthly')}
+          >
             Monthly
           </Button>
         </div>
@@ -173,7 +219,13 @@ export function PeriodSummaryPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Calendar} title="No costed jobs yet" description="Period totals appear once jobs have recorded costing." />}
+        emptyState={
+          <EmptyState
+            icon={Calendar}
+            title="No costed jobs yet"
+            description="Period totals appear once jobs have recorded costing."
+          />
+        }
         renderExpanded={(g) => {
           const netAfterExpenses = g.grossProfit - SHOP_EXPENSES
           return (
@@ -182,7 +234,15 @@ export function PeriodSummaryPage() {
                 <p className="text-sm">
                   <span className="font-medium">{g.jobs.length} jobs</span> on {g.label} ·{' '}
                   <span className="font-medium">{formatCurrency(g.revenue)}</span> revenue ·{' '}
-                  <span className={cn('font-medium', g.grossProfit < 0 ? 'text-red-600' : 'text-emerald-600')}>{formatCurrency(g.grossProfit)}</span> profit
+                  <span
+                    className={cn(
+                      'font-medium',
+                      g.grossProfit < 0 ? 'text-red-600' : 'text-emerald-600'
+                    )}
+                  >
+                    {formatCurrency(g.grossProfit)}
+                  </span>{' '}
+                  profit
                 </p>
                 <Button
                   type="button"
@@ -229,27 +289,60 @@ export function PeriodSummaryPage() {
                     {g.jobs.map((r) => (
                       <tr key={r.job.id} className="border-t">
                         <td className="p-2">
-                          <Link to={`/app/service/job-cards/${r.job.id}`} className="font-medium text-teal-700 hover:underline dark:text-teal-400">
+                          <Link
+                            to={`/app/service/job-cards/${r.job.id}`}
+                            className="font-medium text-teal-700 hover:underline dark:text-teal-400"
+                          >
                             {r.job.jobNumber}
                           </Link>
                         </td>
                         <td className="p-2">{r.job.customerName}</td>
                         <td className="p-2">{r.job.assignedToName ?? '—'}</td>
-                        <td className="p-2">{[r.job.brandName, r.job.model].filter(Boolean).join(' ') || '—'}</td>
-                        <td className="p-2"><StatusBadge status={statusLabel(r.job.status)} /></td>
+                        <td className="p-2">
+                          {[r.job.brandName, r.job.model].filter(Boolean).join(' ') || '—'}
+                        </td>
+                        <td className="p-2">
+                          <StatusBadge status={statusLabel(r.job.status)} />
+                        </td>
                         <td className="p-2 text-right">{formatCurrency(r.revenue)}</td>
                         <td className="p-2 text-right">{formatCurrency(r.cost)}</td>
-                        <td className={r.profit < 0 ? 'p-2 text-right font-medium text-red-600' : 'p-2 text-right font-medium text-emerald-600'}>{formatCurrency(r.profit)}</td>
-                        <td className={r.marginPct < 0 ? 'p-2 text-right text-red-600' : 'p-2 text-right text-emerald-600'}>{formatPercent(r.marginPct)}</td>
+                        <td
+                          className={
+                            r.profit < 0
+                              ? 'p-2 text-right font-medium text-red-600'
+                              : 'p-2 text-right font-medium text-emerald-600'
+                          }
+                        >
+                          {formatCurrency(r.profit)}
+                        </td>
+                        <td
+                          className={
+                            r.marginPct < 0
+                              ? 'p-2 text-right text-red-600'
+                              : 'p-2 text-right text-emerald-600'
+                          }
+                        >
+                          {formatPercent(r.marginPct)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
                     <tr className="border-t bg-muted/20 font-medium">
-                      <td className="p-2" colSpan={5}>Page Total</td>
+                      <td className="p-2" colSpan={5}>
+                        Page Total
+                      </td>
                       <td className="p-2 text-right">{formatCurrency(g.revenue)}</td>
                       <td className="p-2 text-right">{formatCurrency(g.jobCost)}</td>
-                      <td className={g.grossProfit < 0 ? 'p-2 text-right text-red-600' : 'p-2 text-right text-emerald-600'}>{formatCurrency(g.grossProfit)}</td>
+                      <td
+                        className={
+                          g.grossProfit < 0
+                            ? 'p-2 text-right text-red-600'
+                            : 'p-2 text-right text-emerald-600'
+                        }
+                      >
+                        {formatCurrency(g.grossProfit)}
+                      </td>
                       <td />
                     </tr>
                   </tfoot>
@@ -259,18 +352,29 @@ export function PeriodSummaryPage() {
               <div className="flex items-start gap-2 rounded-lg bg-amber-50 p-3 text-sm dark:bg-amber-500/10">
                 <FileText className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-400" />
                 <div className="flex-1">
-                  <p className="font-medium text-amber-900 dark:text-amber-300">Shop expenses in this period</p>
+                  <p className="font-medium text-amber-900 dark:text-amber-300">
+                    Shop expenses in this period
+                  </p>
                   <p className="text-xs text-amber-800/80 dark:text-amber-400/80">
-                    Rent, electricity, wages — the shop's own costs. They belong to the period, not to any one repair.
+                    Rent, electricity, wages — the shop's own costs. They belong to the period, not
+                    to any one repair.
                   </p>
                 </div>
-                <span className="font-medium text-amber-900 dark:text-amber-300">- {formatCurrency(SHOP_EXPENSES)}</span>
+                <span className="font-medium text-amber-900 dark:text-amber-300">
+                  - {formatCurrency(SHOP_EXPENSES)}
+                </span>
               </div>
-              {SHOP_EXPENSES === 0 && <p className="text-xs text-muted-foreground">No shop expenses recorded in this period.</p>}
+              {SHOP_EXPENSES === 0 && (
+                <p className="text-xs text-muted-foreground">
+                  No shop expenses recorded in this period.
+                </p>
+              )}
 
               <div className="flex items-center justify-between border-t pt-2 text-sm font-medium">
                 <span>Net after shop expenses</span>
-                <span className={netAfterExpenses < 0 ? 'text-red-600' : 'text-emerald-600'}>{formatCurrency(netAfterExpenses)}</span>
+                <span className={netAfterExpenses < 0 ? 'text-red-600' : 'text-emerald-600'}>
+                  {formatCurrency(netAfterExpenses)}
+                </span>
               </div>
             </div>
           )

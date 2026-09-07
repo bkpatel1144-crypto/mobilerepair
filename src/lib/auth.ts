@@ -5,7 +5,15 @@ import {
   signOut as firebaseSignOut,
   updateProfile,
 } from 'firebase/auth'
-import { collection, doc, getDoc, getDocs, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  serverTimestamp,
+  Timestamp,
+  writeBatch,
+} from 'firebase/firestore'
 import { auth, db } from '@/lib/firebase'
 import { DEFAULT_ROLE_SEEDS } from '@/config/default-roles'
 import { getCurrentFinancialYear } from '@/lib/financial-year'
@@ -24,10 +32,23 @@ import {
 } from '@/lib/firestore-paths'
 import { slugifyCode } from '@/lib/utils'
 import { cacheProfile, clearProfileCache } from '@/lib/profile-cache'
-import { getClientIp, logLoginEvent, addLoginAuditToBatch, trackPendingAuditWrite, flushPendingAuditWrite } from '@/lib/audit-log'
+import {
+  getClientIp,
+  logLoginEvent,
+  addLoginAuditToBatch,
+  trackPendingAuditWrite,
+  flushPendingAuditWrite,
+} from '@/lib/audit-log'
 import { endCurrentSession, startSession, addSessionToBatch } from '@/lib/session-lifecycle'
 import { isIpAllowed } from '@/lib/ip-enforcement'
-import type { BranchDoc, CompanyDoc, FinancialYearDoc, IpWhitelistDoc, RoleDoc, UserDoc } from '@/types/firestore'
+import type {
+  BranchDoc,
+  CompanyDoc,
+  FinancialYearDoc,
+  IpWhitelistDoc,
+  RoleDoc,
+  UserDoc,
+} from '@/types/firestore'
 
 export interface SignUpInput {
   companyName: string
@@ -194,7 +215,13 @@ async function seedTenantForUser(
   // the way `startSession()`'s own standalone version needs one for a later login.
   const ip = await ipPromise
   addLoginAuditToBatch(batch, companyId, uid, userData, ip)
-  addSessionToBatch(batch, companyId, { userId: uid, userName: fullName, roleName: 'Owner', branchName: branchData.name, ip })
+  addSessionToBatch(batch, companyId, {
+    userId: uid,
+    userName: fullName,
+    roleName: 'Owner',
+    branchName: branchData.name,
+    ip,
+  })
 
   await batch.commit()
 
@@ -263,7 +290,9 @@ export async function completeAccountSetup(
     cacheProfile(uid, data)
     await Promise.all([
       logLoginEvent(data.companyId, uid, data, 'success').catch(() => {}),
-      startSession(data.companyId, uid, data.fullName, data.roleName, data.branchId).catch(() => {}),
+      startSession(data.companyId, uid, data.fullName, data.roleName, data.branchId).catch(
+        () => {}
+      ),
     ])
     return { uid, companyId: data.companyId, branchId: data.branchId }
   }
@@ -336,7 +365,13 @@ async function performLogIn(email: string, password: string): Promise<void> {
   const companyId = profile.companyId
 
   if (profile.status !== 'active') {
-    await logLoginEvent(companyId, uid, profile, 'unauthorized', `Account status: ${profile.status}`)
+    await logLoginEvent(
+      companyId,
+      uid,
+      profile,
+      'unauthorized',
+      `Account status: ${profile.status}`
+    )
     throw new Error('This account has been disabled. Contact your Owner or Administrator.')
   }
 
@@ -347,8 +382,16 @@ async function performLogIn(email: string, password: string): Promise<void> {
     ])
     const entries = whitelistSnap.docs.map((d) => d.data() as IpWhitelistDoc)
     if (!isIpAllowed(ip, entries)) {
-      await logLoginEvent(companyId, uid, profile, 'blocked', `IP ${ip ?? 'unknown'} not on the whitelist`)
-      throw new Error('Access blocked from this network. Ask an Owner to whitelist your IP address.')
+      await logLoginEvent(
+        companyId,
+        uid,
+        profile,
+        'blocked',
+        `IP ${ip ?? 'unknown'} not on the whitelist`
+      )
+      throw new Error(
+        'Access blocked from this network. Ask an Owner to whitelist your IP address.'
+      )
     }
   }
 
@@ -364,7 +407,9 @@ export async function logOut() {
     // Best-effort — a session that fails to close here just ages out on its own once
     // `lastActivityAt` stops advancing (see `endCurrentSession`'s own doc comment).
     await getDoc(doc(db, userDoc(uid)))
-      .then((snap) => (snap.exists() ? endCurrentSession((snap.data() as UserDoc).companyId) : undefined))
+      .then((snap) =>
+        snap.exists() ? endCurrentSession((snap.data() as UserDoc).companyId) : undefined
+      )
       .catch(() => {})
   }
   // Give a still-in-flight `logIn()` attempt (see its own doc comment) a chance to actually reach

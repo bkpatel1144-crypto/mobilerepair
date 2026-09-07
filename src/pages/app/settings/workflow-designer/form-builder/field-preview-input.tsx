@@ -139,7 +139,10 @@ export function FieldPreviewInput({
           {quickDates && (
             <div className="flex flex-wrap gap-1">
               {quickDates.map((d) => (
-                <span key={d} className="rounded-full border px-2 py-0.5 text-xs text-muted-foreground">
+                <span
+                  key={d}
+                  className="rounded-full border px-2 py-0.5 text-xs text-muted-foreground"
+                >
                   {d}
                 </span>
               ))}

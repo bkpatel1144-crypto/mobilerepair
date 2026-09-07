@@ -1,5 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDoc, getDocs, serverTimestamp, setDoc, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+  writeBatch,
+} from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { archivesCollection, backupsCollection, backupSettingsDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
@@ -54,7 +62,11 @@ export function useBackups() {
       const now = new Date().getTime()
       return snap.docs
         .map((d) => ({ id: d.id, ...(d.data() as BackupDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+        .sort(
+          (a, b) =>
+            (b.createdAt?.toDate?.()?.getTime() ?? now) -
+            (a.createdAt?.toDate?.()?.getTime() ?? now)
+        )
     },
     enabled: !!companyId,
   })
@@ -73,7 +85,11 @@ export function useArchives() {
       const now = new Date().getTime()
       return snap.docs
         .map((d) => ({ id: d.id, ...(d.data() as ArchiveDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+        .sort(
+          (a, b) =>
+            (b.createdAt?.toDate?.()?.getTime() ?? now) -
+            (a.createdAt?.toDate?.()?.getTime() ?? now)
+        )
     },
     enabled: !!companyId,
   })
@@ -89,7 +105,12 @@ export function useBackupSettings() {
     queryKey: backupSettingsQueryKey(companyId),
     queryFn: async () => {
       const snap = await getDoc(doc(db, backupSettingsDoc(companyId!)))
-      if (!snap.exists()) return { dailyAutoBackupEnabled: false, timeOfDay: '02:00', keepForDays: 7 } as BackupSettingsDoc
+      if (!snap.exists())
+        return {
+          dailyAutoBackupEnabled: false,
+          timeOfDay: '02:00',
+          keepForDays: 7,
+        } as BackupSettingsDoc
       return snap.data() as BackupSettingsDoc
     },
     enabled: !!companyId,
@@ -100,8 +121,13 @@ export function useUpdateBackupSettings() {
   const companyId = profile!.companyId
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async (input: Pick<BackupSettingsDoc, 'dailyAutoBackupEnabled' | 'timeOfDay' | 'keepForDays'>) => {
-      await setDoc(doc(db, backupSettingsDoc(companyId)), { ...input, updatedAt: serverTimestamp() })
+    mutationFn: async (
+      input: Pick<BackupSettingsDoc, 'dailyAutoBackupEnabled' | 'timeOfDay' | 'keepForDays'>
+    ) => {
+      await setDoc(doc(db, backupSettingsDoc(companyId)), {
+        ...input,
+        updatedAt: serverTimestamp(),
+      })
       // Advisory-preference-only write (see `BackupSettingsDoc`'s own doc comment) — not routed
       // through `addAuditLogToBatch` since it never touches real business data, same "noise
       // avoidance" call already made for a couple of other low-stakes preference toggles.
@@ -187,11 +213,17 @@ export function useRestoreAsArchive() {
       } catch {
         throw new Error('That file is not valid JSON.')
       }
-      if (!isValidBackupShape(parsed)) throw new Error('That file does not look like a real backup export.')
+      if (!isValidBackupShape(parsed))
+        throw new Error('That file does not look like a real backup export.')
       const snapshot = parsed
 
       const fileName = `archive_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`
-      const { storagePath, sizeBytes } = await uploadBackupJson(companyId, fileName, snapshot, 'archives')
+      const { storagePath, sizeBytes } = await uploadBackupJson(
+        companyId,
+        fileName,
+        snapshot,
+        'archives'
+      )
 
       const ref = doc(collection(db, archivesCollection(companyId)))
       const now = serverTimestamp()
@@ -240,10 +272,13 @@ export function useRestoreOverwriteLive() {
       } catch {
         throw new Error('That file is not valid JSON.')
       }
-      if (!isValidBackupShape(parsed)) throw new Error('That file does not look like a real backup export.')
+      if (!isValidBackupShape(parsed))
+        throw new Error('That file does not look like a real backup export.')
       const snapshot: BackupSnapshot = parsed
       if (snapshot._meta.companyId !== companyId) {
-        throw new Error('This backup was exported from a different company and cannot be restored here.')
+        throw new Error(
+          'This backup was exported from a different company and cannot be restored here.'
+        )
       }
 
       const restoredCount = await restoreOverwriteLive(companyId, snapshot)
@@ -256,7 +291,11 @@ export function useRestoreOverwriteLive() {
         entityId: null,
         entityLabel: 'Live data restore',
         critical: true,
-        details: { sourceFileName: 'uploaded file', restoredDocumentCount: restoredCount, collectionCounts: snapshot._meta.collectionCounts },
+        details: {
+          sourceFileName: 'uploaded file',
+          restoredDocumentCount: restoredCount,
+          collectionCounts: snapshot._meta.collectionCounts,
+        },
       })
       await batch.commit()
       return restoredCount

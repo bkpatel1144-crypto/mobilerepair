@@ -187,13 +187,14 @@ export function useCreateCompany() {
         ...(profile!.memberships ?? {}),
         // Preserve what the existing company's role was; on a single-company account that lives
         // on the top-level fields rather than in this map.
-        [profile!.homeCompanyId ?? profile!.companyId]:
-          profile!.memberships?.[profile!.homeCompanyId ?? profile!.companyId] ?? {
-            roleId: profile!.roleId,
-            roleName: profile!.roleName,
-            roleCode: profile!.roleCode,
-            branchId: profile!.branchId,
-          },
+        [profile!.homeCompanyId ?? profile!.companyId]: profile!.memberships?.[
+          profile!.homeCompanyId ?? profile!.companyId
+        ] ?? {
+          roleId: profile!.roleId,
+          roleName: profile!.roleName,
+          roleCode: profile!.roleCode,
+          branchId: profile!.branchId,
+        },
         [companyId]: {
           roleId: ownerRoleId,
           roleName: 'Owner',

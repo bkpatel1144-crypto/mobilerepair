@@ -171,7 +171,12 @@ export function PatternLockPicker({
           </p>
 
           <div className="flex gap-2">
-            <Button type="button" variant="outline" onClick={handleClear} disabled={draft.length === 0}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClear}
+              disabled={draft.length === 0}
+            >
               <RotateCcw className="size-3.5" />
               Clear
             </Button>
@@ -198,7 +203,13 @@ export function PatternLockPicker({
  * "Pattern drawn" confirmation text itself (not the "Draw" button beside it, which re-opens
  * editing). A little live redraw of what was actually saved, cycling on a timer while open;
  * purely a nice touch, no state it owns needs to persist anywhere. */
-export function PatternReplayPopover({ value, children }: { value: string; children: React.ReactNode }) {
+export function PatternReplayPopover({
+  value,
+  children,
+}: {
+  value: string
+  children: React.ReactNode
+}) {
   const [open, setOpen] = useState(false)
   const dots = parsePattern(value)
 
@@ -206,7 +217,9 @@ export function PatternReplayPopover({ value, children }: { value: string; child
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger render={<button type="button" className="text-left" />}>{children}</PopoverTrigger>
+      <PopoverTrigger render={<button type="button" className="text-left" />}>
+        {children}
+      </PopoverTrigger>
       <PopoverContent className="w-56 p-4" align="start">
         {/* Mounted fresh each time the popover opens, so `step` naturally starts at 1 with no
          * "reset on reopen" effect needed — the same pattern used by the scanner modals. */}
@@ -260,11 +273,27 @@ function PatternReplayBody({ dots, onClose }: { dots: number[]; onClose: () => v
           return (
             <g key={dot}>
               {isCurrent && (
-                <circle cx={cx} cy={cy} r={13} className="fill-none stroke-amber-400" strokeWidth={2} />
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={13}
+                  className="fill-none stroke-amber-400"
+                  strokeWidth={2}
+                />
               )}
-              <circle cx={cx} cy={cy} r={isRevealed ? 9 : 5} className={isRevealed ? 'fill-amber-500' : 'fill-muted-foreground/25'} />
+              <circle
+                cx={cx}
+                cy={cy}
+                r={isRevealed ? 9 : 5}
+                className={isRevealed ? 'fill-amber-500' : 'fill-muted-foreground/25'}
+              />
               {isRevealed && (
-                <text x={cx} y={cy + 3.5} textAnchor="middle" className="fill-white text-[9px] font-bold">
+                <text
+                  x={cx}
+                  y={cy + 3.5}
+                  textAnchor="middle"
+                  className="fill-white text-[9px] font-bold"
+                >
                   {revealedIndex + 1}
                 </text>
               )}
@@ -288,7 +317,10 @@ export function PatternLockPreview({ value }: { value: string }) {
       {DOTS.map((d) => (
         <span
           key={d}
-          className={cn('size-1.5 rounded-full', dots.includes(d) ? 'bg-amber-500' : 'bg-muted-foreground/25')}
+          className={cn(
+            'size-1.5 rounded-full',
+            dots.includes(d) ? 'bg-amber-500' : 'bg-muted-foreground/25'
+          )}
         />
       ))}
     </span>

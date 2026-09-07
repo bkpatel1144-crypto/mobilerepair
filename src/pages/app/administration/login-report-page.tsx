@@ -16,7 +16,8 @@ import { dateRangeBounds } from '@/lib/date-range'
 import type { AuditLogWithId } from '@/hooks/use-audit-log'
 import type { AuditResult } from '@/types/firestore'
 
-type CardFilter = 'all' | 'online' | 'today' | 'users' | 'ips' | 'failed' | 'unauthorized' | 'blocked'
+type CardFilter =
+  'all' | 'online' | 'today' | 'users' | 'ips' | 'failed' | 'unauthorized' | 'blocked'
 
 // 'failed' is only ever written by crash reporting, which is not a login event — it is
 // listed here because `AuditResult` is shared, not because this report can show it.
@@ -47,7 +48,12 @@ export function LoginReportPage() {
 
   const bounds = dateRangeBounds(dateRange)
   const filtered = data.loginEvents
-    .filter((e) => !bounds || ((e.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from && (e.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to))
+    .filter(
+      (e) =>
+        !bounds ||
+        ((e.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from &&
+          (e.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to)
+    )
     .filter((e) => !ipFilter.trim() || (e.ip ?? '').includes(ipFilter.trim()))
     .filter((e) => {
       const isToday = (e.createdAt?.toDate?.() ?? new Date(0)) >= startOfToday
@@ -70,25 +76,93 @@ export function LoginReportPage() {
     })
 
   const columns: DataTableColumn<AuditLogWithId>[] = [
-    { key: 'time', header: 'Time', sortValue: (e) => e.createdAt?.toDate?.()?.getTime() ?? 0, render: (e) => formatTimestamp(e.createdAt) },
-    { key: 'user', header: 'User', render: (e) => <><p className="font-medium">{e.performedByName}</p><p className="text-xs text-muted-foreground">{e.entityLabel}</p></> },
+    {
+      key: 'time',
+      header: 'Time',
+      sortValue: (e) => e.createdAt?.toDate?.()?.getTime() ?? 0,
+      render: (e) => formatTimestamp(e.createdAt),
+    },
+    {
+      key: 'user',
+      header: 'User',
+      render: (e) => (
+        <>
+          <p className="font-medium">{e.performedByName}</p>
+          <p className="text-xs text-muted-foreground">{e.entityLabel}</p>
+        </>
+      ),
+    },
     { key: 'role', header: 'Role', hideOnMobile: true, render: (e) => e.performedByRole },
     { key: 'ip', header: 'IP', hideOnMobile: true, render: (e) => e.ip ?? '—' },
-    { key: 'result', header: 'Result', render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} /> },
+    {
+      key: 'result',
+      header: 'Result',
+      render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} />,
+    },
   ]
 
   return (
     <div className="space-y-4 p-4 sm:p-6">
-      <PageHeader icon={LogIn} title="Login Report" subtitle="Every account sign-in across your company" />
+      <PageHeader
+        icon={LogIn}
+        title="Login Report"
+        subtitle="Every account sign-in across your company"
+      />
 
       <StatCardGrid>
-        <StatCard label="Online Right Now" value={data.onlineRightNow} icon={Wifi} tone="success" selected={cardFilter === 'online'} onClick={() => setCardFilter(cardFilter === 'online' ? 'all' : 'online')} />
-        <StatCard label="Logins Today" value={data.loginsToday} icon={LogIn} selected={cardFilter === 'today'} onClick={() => setCardFilter(cardFilter === 'today' ? 'all' : 'today')} />
-        <StatCard label="Users Today" value={data.usersToday} icon={Users} selected={cardFilter === 'users'} onClick={() => setCardFilter(cardFilter === 'users' ? 'all' : 'users')} />
-        <StatCard label="IP Addresses" value={data.ipAddressesToday} icon={Globe} selected={cardFilter === 'ips'} onClick={() => setCardFilter(cardFilter === 'ips' ? 'all' : 'ips')} />
-        <StatCard label="Failed Attempts" value={data.failedAttemptsToday} icon={ShieldAlert} tone="warning" selected={cardFilter === 'failed'} onClick={() => setCardFilter(cardFilter === 'failed' ? 'all' : 'failed')} />
-        <StatCard label="Unauthorized" value={data.unauthorizedToday} icon={ShieldX} tone="danger" selected={cardFilter === 'unauthorized'} onClick={() => setCardFilter(cardFilter === 'unauthorized' ? 'all' : 'unauthorized')} />
-        <StatCard label="Blocked IPs" value={data.blockedIpsToday} icon={Ban} tone="danger" selected={cardFilter === 'blocked'} onClick={() => setCardFilter(cardFilter === 'blocked' ? 'all' : 'blocked')} />
+        <StatCard
+          label="Online Right Now"
+          value={data.onlineRightNow}
+          icon={Wifi}
+          tone="success"
+          selected={cardFilter === 'online'}
+          onClick={() => setCardFilter(cardFilter === 'online' ? 'all' : 'online')}
+        />
+        <StatCard
+          label="Logins Today"
+          value={data.loginsToday}
+          icon={LogIn}
+          selected={cardFilter === 'today'}
+          onClick={() => setCardFilter(cardFilter === 'today' ? 'all' : 'today')}
+        />
+        <StatCard
+          label="Users Today"
+          value={data.usersToday}
+          icon={Users}
+          selected={cardFilter === 'users'}
+          onClick={() => setCardFilter(cardFilter === 'users' ? 'all' : 'users')}
+        />
+        <StatCard
+          label="IP Addresses"
+          value={data.ipAddressesToday}
+          icon={Globe}
+          selected={cardFilter === 'ips'}
+          onClick={() => setCardFilter(cardFilter === 'ips' ? 'all' : 'ips')}
+        />
+        <StatCard
+          label="Failed Attempts"
+          value={data.failedAttemptsToday}
+          icon={ShieldAlert}
+          tone="warning"
+          selected={cardFilter === 'failed'}
+          onClick={() => setCardFilter(cardFilter === 'failed' ? 'all' : 'failed')}
+        />
+        <StatCard
+          label="Unauthorized"
+          value={data.unauthorizedToday}
+          icon={ShieldX}
+          tone="danger"
+          selected={cardFilter === 'unauthorized'}
+          onClick={() => setCardFilter(cardFilter === 'unauthorized' ? 'all' : 'unauthorized')}
+        />
+        <StatCard
+          label="Blocked IPs"
+          value={data.blockedIpsToday}
+          icon={Ban}
+          tone="danger"
+          selected={cardFilter === 'blocked'}
+          onClick={() => setCardFilter(cardFilter === 'blocked' ? 'all' : 'blocked')}
+        />
         <StatCard label="Busiest Time Today" value={data.busiestHourLabel ?? '—'} icon={Clock} />
       </StatCardGrid>
 
@@ -96,7 +170,12 @@ export function LoginReportPage() {
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >
-        <Input value={ipFilter} onChange={(e) => setIpFilter(e.target.value)} placeholder="Filter by IP..." className="w-40" />
+        <Input
+          value={ipFilter}
+          onChange={(e) => setIpFilter(e.target.value)}
+          placeholder="Filter by IP..."
+          className="w-40"
+        />
       </FilterBar>
 
       <DataTable
@@ -107,7 +186,13 @@ export function LoginReportPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={LogIn} title="No logins found" description="Sign-ins will appear here as your team logs in." />}
+        emptyState={
+          <EmptyState
+            icon={LogIn}
+            title="No logins found"
+            description="Sign-ins will appear here as your team logs in."
+          />
+        }
       />
 
       {viewing && (
@@ -117,7 +202,9 @@ export function LoginReportPage() {
           icon={LogIn}
           title={viewing.performedByName}
           subtitle={viewing.entityLabel}
-          badges={<StatusBadge status={RESULT_LABEL[viewing.result]} tone={RESULT_TONE[viewing.result]} />}
+          badges={
+            <StatusBadge status={RESULT_LABEL[viewing.result]} tone={RESULT_TONE[viewing.result]} />
+          }
           sections={[
             {
               title: 'SESSION INFO',
@@ -129,7 +216,16 @@ export function LoginReportPage() {
               ],
             },
             ...(Object.keys(viewing.details).length > 0
-              ? [{ title: 'DETAILS', children: <p className="text-sm text-muted-foreground">{String(viewing.details.note ?? JSON.stringify(viewing.details))}</p> }]
+              ? [
+                  {
+                    title: 'DETAILS',
+                    children: (
+                      <p className="text-sm text-muted-foreground">
+                        {String(viewing.details.note ?? JSON.stringify(viewing.details))}
+                      </p>
+                    ),
+                  },
+                ]
               : []),
           ]}
         />

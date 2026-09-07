@@ -31,7 +31,16 @@ export const SERVICE_OPTION_SECTIONS: ServiceOptionSectionSpec[] = [
   { type: 'problems', label: 'Problems', addLabel: 'Add problem' },
 ]
 
-import { Smartphone, Phone, Tablet, Watch, Headphones, Laptop, Package, type LucideIcon } from 'lucide-react'
+import {
+  Smartphone,
+  Phone,
+  Tablet,
+  Watch,
+  Headphones,
+  Laptop,
+  Package,
+  type LucideIcon,
+} from 'lucide-react'
 
 /** Which icon a Device Type's own search/select dropdown shows next to it (`preview (9)`'s
  * Device Type combobox) — purely presentational, matched by label since `ServiceOptionDoc`

@@ -1,6 +1,16 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BarChart3, Download, SlidersHorizontal, Package, Activity, AlertTriangle, CheckCircle2, Clock, IndianRupee} from 'lucide-react'
+import {
+  BarChart3,
+  Download,
+  SlidersHorizontal,
+  Package,
+  Activity,
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  IndianRupee,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -9,7 +19,13 @@ import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useJobCards, useJobTimeline, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useJobCosting } from '@/hooks/use-job-costing'
 import { useUsers } from '@/hooks/use-users'
@@ -32,7 +48,9 @@ function outstandingOf(job: JobCardWithId): number {
 function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
   const { data: timeline = [] } = useJobTimeline(job.id)
   const { data: costing } = useJobCosting(job.id)
-  const supplierByItemId = new Map((costing?.costItems ?? []).filter((c) => c.linked).map((c) => [c.itemId, c.supplier]))
+  const supplierByItemId = new Map(
+    (costing?.costItems ?? []).filter((c) => c.linked).map((c) => [c.itemId, c.supplier])
+  )
   const outstanding = outstandingOf(job)
   const deliveredOrReturnedBy = job.deliveredByName ?? job.returnedByName ?? null
 
@@ -40,17 +58,31 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
     <div className="grid gap-4 p-4 lg:grid-cols-3">
       <div className="space-y-3">
         <div>
-          <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Details</p>
+          <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            Details
+          </p>
           <div className="mt-1.5 space-y-1 text-sm">
             <p>IMEI: {job.imei ?? '—'}</p>
-            {deliveredOrReturnedBy && <p className="text-muted-foreground">Delivered By: {deliveredOrReturnedBy}</p>}
-            {job.cancelledByName && <p className="text-muted-foreground">Cancelled By: {job.cancelledByName}</p>}
+            {deliveredOrReturnedBy && (
+              <p className="text-muted-foreground">Delivered By: {deliveredOrReturnedBy}</p>
+            )}
+            {job.cancelledByName && (
+              <p className="text-muted-foreground">Cancelled By: {job.cancelledByName}</p>
+            )}
           </div>
         </div>
         <div className="space-y-1 rounded-lg border p-3 text-sm">
-          <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Payment</p>
-          <div className="flex justify-between"><span className="text-muted-foreground">Final Amount</span><span className="font-medium">{formatCurrency(job.finalAmount ?? 0)}</span></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">Total Paid</span><span className="font-medium">{formatCurrency(job.paidAmount)}</span></div>
+          <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            Payment
+          </p>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Final Amount</span>
+            <span className="font-medium">{formatCurrency(job.finalAmount ?? 0)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Total Paid</span>
+            <span className="font-medium">{formatCurrency(job.paidAmount)}</span>
+          </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Outstanding</span>
             {outstanding === 0 ? (
@@ -94,7 +126,9 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
               </tbody>
               <tfoot>
                 <tr className="border-t bg-muted/20 font-medium">
-                  <td className="p-2" colSpan={4}>Total Parts Cost</td>
+                  <td className="p-2" colSpan={4}>
+                    Total Parts Cost
+                  </td>
                   <td className="p-2 text-right">{formatCurrency(job.partsCost)}</td>
                 </tr>
               </tfoot>
@@ -129,11 +163,18 @@ export function ServiceReportsPage() {
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
 
-  const deviceTypes = Array.from(new Set(jobs.map((j) => j.deviceTypeName).filter((v): v is string => !!v))).sort()
+  const deviceTypes = Array.from(
+    new Set(jobs.map((j) => j.deviceTypeName).filter((v): v is string => !!v))
+  ).sort()
 
   const bounds = dateRangeBounds(dateRange, customFrom, customTo)
   const filtered = jobs
-    .filter((j) => !bounds || ((j.createdAt?.toDate?.() ?? new Date()) >= bounds.from && (j.createdAt?.toDate?.() ?? new Date()) <= bounds.to))
+    .filter(
+      (j) =>
+        !bounds ||
+        ((j.createdAt?.toDate?.() ?? new Date()) >= bounds.from &&
+          (j.createdAt?.toDate?.() ?? new Date()) <= bounds.to)
+    )
     .filter((j) => statusFilter === 'all' || j.status === statusFilter)
     .filter((j) => assignedToFilter === 'all' || j.assignedToId === assignedToFilter)
     .filter((j) => receivedByFilter === 'all' || j.receivedById === receivedByFilter)
@@ -142,7 +183,9 @@ export function ServiceReportsPage() {
     .filter((j) => cancelledByFilter === 'all' || j.cancelledById === cancelledByFilter)
     .filter((j) =>
       search.trim()
-        ? `${j.jobNumber} ${j.customerName} ${j.brandName ?? ''} ${j.model ?? ''}`.toLowerCase().includes(search.toLowerCase())
+        ? `${j.jobNumber} ${j.customerName} ${j.brandName ?? ''} ${j.model ?? ''}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
         : true
     )
 
@@ -161,22 +204,92 @@ export function ServiceReportsPage() {
       key: 'job',
       header: 'Job Card',
       render: (j) => (
-        <Link to={`/app/service/job-cards/${j.id}`} className="font-medium text-teal-700 hover:underline dark:text-teal-400">
+        <Link
+          to={`/app/service/job-cards/${j.id}`}
+          className="font-medium text-teal-700 hover:underline dark:text-teal-400"
+        >
           {j.jobNumber}
         </Link>
       ),
     },
-    { key: 'customer', header: 'Customer', render: (j) => <><p>{j.customerName}</p><p className="text-xs text-muted-foreground">{j.customerMobile}</p></> },
-    { key: 'device', header: 'Device', hideOnMobile: true, render: (j) => <>{[j.brandName, j.model].filter(Boolean).join(' ') || '—'}{j.deviceTypeName && <p className="text-xs text-muted-foreground">{j.deviceTypeName}</p>}</> },
-    { key: 'receivedBy', header: 'Received By', hideOnMobile: true, render: (j) => j.receivedByName },
-    { key: 'assignedTo', header: 'Assigned To', hideOnMobile: true, render: (j) => j.assignedToName ?? '—' },
-    { key: 'estCost', header: 'Est. Cost', hideOnMobile: true, render: (j) => formatCurrency(j.estimatedCost) },
-    { key: 'finalAmt', header: 'Final Amt', render: (j) => (j.finalAmount != null ? formatCurrency(j.finalAmount) : '—') },
-    { key: 'paid', header: 'Paid', render: (j) => <span className="text-teal-700 dark:text-teal-400">{formatCurrency(j.paidAmount)}</span> },
-    { key: 'due', header: 'Due', hideOnMobile: true, render: (j) => formatCurrency(outstandingOf(j)) },
-    { key: 'status', header: 'Status', render: (j) => <StatusBadge status={statusLabel(j.status)} /> },
-    { key: 'deliveredBy', header: 'Delivered/Returned By', hideOnMobile: true, render: (j) => <span className="text-purple-700 dark:text-purple-400">{j.deliveredByName ?? j.returnedByName ?? '—'}</span> },
-    { key: 'cancelledBy', header: 'Cancelled By', hideOnMobile: true, render: (j) => j.cancelledByName ?? '—' },
+    {
+      key: 'customer',
+      header: 'Customer',
+      render: (j) => (
+        <>
+          <p>{j.customerName}</p>
+          <p className="text-xs text-muted-foreground">{j.customerMobile}</p>
+        </>
+      ),
+    },
+    {
+      key: 'device',
+      header: 'Device',
+      hideOnMobile: true,
+      render: (j) => (
+        <>
+          {[j.brandName, j.model].filter(Boolean).join(' ') || '—'}
+          {j.deviceTypeName && <p className="text-xs text-muted-foreground">{j.deviceTypeName}</p>}
+        </>
+      ),
+    },
+    {
+      key: 'receivedBy',
+      header: 'Received By',
+      hideOnMobile: true,
+      render: (j) => j.receivedByName,
+    },
+    {
+      key: 'assignedTo',
+      header: 'Assigned To',
+      hideOnMobile: true,
+      render: (j) => j.assignedToName ?? '—',
+    },
+    {
+      key: 'estCost',
+      header: 'Est. Cost',
+      hideOnMobile: true,
+      render: (j) => formatCurrency(j.estimatedCost),
+    },
+    {
+      key: 'finalAmt',
+      header: 'Final Amt',
+      render: (j) => (j.finalAmount != null ? formatCurrency(j.finalAmount) : '—'),
+    },
+    {
+      key: 'paid',
+      header: 'Paid',
+      render: (j) => (
+        <span className="text-teal-700 dark:text-teal-400">{formatCurrency(j.paidAmount)}</span>
+      ),
+    },
+    {
+      key: 'due',
+      header: 'Due',
+      hideOnMobile: true,
+      render: (j) => formatCurrency(outstandingOf(j)),
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (j) => <StatusBadge status={statusLabel(j.status)} />,
+    },
+    {
+      key: 'deliveredBy',
+      header: 'Delivered/Returned By',
+      hideOnMobile: true,
+      render: (j) => (
+        <span className="text-purple-700 dark:text-purple-400">
+          {j.deliveredByName ?? j.returnedByName ?? '—'}
+        </span>
+      ),
+    },
+    {
+      key: 'cancelledBy',
+      header: 'Cancelled By',
+      hideOnMobile: true,
+      render: (j) => j.cancelledByName ?? '—',
+    },
   ]
 
   return (
@@ -227,8 +340,18 @@ export function ServiceReportsPage() {
         <StatCard label="Pending" icon={Clock} value={totals.pending} tone="warning" />
         <StatCard label="In Progress" icon={Activity} value={totals.inProgress} tone="info" />
         <StatCard label="Completed" icon={CheckCircle2} value={totals.completed} tone="success" />
-        <StatCard label="Revenue" icon={IndianRupee} value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Outstanding" icon={AlertTriangle} value={formatCurrency(totals.outstanding)} tone={totals.outstanding > 0 ? 'danger' : 'default'} />
+        <StatCard
+          label="Revenue"
+          icon={IndianRupee}
+          value={formatCurrency(totals.revenue)}
+          tone="success"
+        />
+        <StatCard
+          label="Outstanding"
+          icon={AlertTriangle}
+          value={formatCurrency(totals.outstanding)}
+          tone={totals.outstanding > 0 ? 'danger' : 'default'}
+        />
       </StatCardGrid>
 
       <div className="space-y-2">
@@ -242,47 +365,87 @@ export function ServiceReportsPage() {
           onCustomToChange={setCustomTo}
         />
         {showAdvanced && (
-          <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Job no, customer, brand, model...">
+          <FilterBar
+            searchValue={search}
+            onSearchChange={setSearch}
+            searchPlaceholder="Job no, customer, brand, model..."
+          >
             <Select value={statusFilter} onValueChange={(v) => v && setStatusFilter(v)}>
-              <SelectTrigger className="w-36"><SelectValue placeholder="All Statuses" /></SelectTrigger>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Statuses</SelectItem>
-                {JOB_STATUSES.map((s) => <SelectItem key={s.key} value={s.key}>{s.label}</SelectItem>)}
+                {JOB_STATUSES.map((s) => (
+                  <SelectItem key={s.key} value={s.key}>
+                    {s.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Select value={assignedToFilter} onValueChange={(v) => v && setAssignedToFilter(v)}>
-              <SelectTrigger className="w-36"><SelectValue placeholder="All Users" /></SelectTrigger>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="All Users" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Users</SelectItem>
-                {users.map((u) => <SelectItem key={u.id} value={u.id}>{u.fullName}</SelectItem>)}
+                {users.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.fullName}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Select value={receivedByFilter} onValueChange={(v) => v && setReceivedByFilter(v)}>
-              <SelectTrigger className="w-32"><SelectValue placeholder="Received By: All" /></SelectTrigger>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Received By: All" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Received By: All</SelectItem>
-                {users.map((u) => <SelectItem key={u.id} value={u.id}>{u.fullName}</SelectItem>)}
+                {users.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.fullName}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Select value={deviceTypeFilter} onValueChange={(v) => v && setDeviceTypeFilter(v)}>
-              <SelectTrigger className="w-32"><SelectValue placeholder="All Types" /></SelectTrigger>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="All Types" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
-                {deviceTypes.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+                {deviceTypes.map((t) => (
+                  <SelectItem key={t} value={t}>
+                    {t}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Select value={deliveredByFilter} onValueChange={(v) => v && setDeliveredByFilter(v)}>
-              <SelectTrigger className="w-32"><SelectValue placeholder="Delivered By: All" /></SelectTrigger>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Delivered By: All" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Delivered By: All</SelectItem>
-                {users.map((u) => <SelectItem key={u.id} value={u.id}>{u.fullName}</SelectItem>)}
+                {users.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.fullName}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <Select value={cancelledByFilter} onValueChange={(v) => v && setCancelledByFilter(v)}>
-              <SelectTrigger className="w-32"><SelectValue placeholder="Cancelled By: All" /></SelectTrigger>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Cancelled By: All" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Cancelled By: All</SelectItem>
-                {users.map((u) => <SelectItem key={u.id} value={u.id}>{u.fullName}</SelectItem>)}
+                {users.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.fullName}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </FilterBar>
@@ -296,7 +459,13 @@ export function ServiceReportsPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={BarChart3} title="No job cards found" description="Try widening your filters or date range." />}
+        emptyState={
+          <EmptyState
+            icon={BarChart3}
+            title="No job cards found"
+            description="Try widening your filters or date range."
+          />
+        }
         renderExpanded={(j) => <ServiceReportRowDetail job={j} />}
       />
     </div>

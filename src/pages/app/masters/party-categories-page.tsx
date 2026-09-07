@@ -56,16 +56,41 @@ export function PartyCategoriesPage() {
       key: 'customer',
       header: 'Default (Customer)',
       hideOnMobile: true,
-      render: (c) => <Star className={c.isDefaultForCustomer ? 'size-4 fill-amber-400 text-amber-400' : 'size-4 text-muted-foreground/40'} />,
+      render: (c) => (
+        <Star
+          className={
+            c.isDefaultForCustomer
+              ? 'size-4 fill-amber-400 text-amber-400'
+              : 'size-4 text-muted-foreground/40'
+          }
+        />
+      ),
     },
     {
       key: 'supplier',
       header: 'Default (Supplier)',
       hideOnMobile: true,
-      render: (c) => <Star className={c.isDefaultForSupplier ? 'size-4 fill-blue-500 text-blue-500' : 'size-4 text-muted-foreground/40'} />,
+      render: (c) => (
+        <Star
+          className={
+            c.isDefaultForSupplier
+              ? 'size-4 fill-blue-500 text-blue-500'
+              : 'size-4 text-muted-foreground/40'
+          }
+        />
+      ),
     },
-    { key: 'status', header: 'Status', render: (c) => <StatusBadge status={c.status === 'active' ? 'Active' : 'Inactive'} /> },
-    { key: 'created', header: 'Created', hideOnMobile: true, render: (c) => formatTimestamp(c.createdAt, false) },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (c) => <StatusBadge status={c.status === 'active' ? 'Active' : 'Inactive'} />,
+    },
+    {
+      key: 'created',
+      header: 'Created',
+      hideOnMobile: true,
+      render: (c) => formatTimestamp(c.createdAt, false),
+    },
   ]
 
   return (
@@ -94,10 +119,22 @@ export function PartyCategoriesPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={Users} title="No party categories yet" description="Add your first category above." />}
+        emptyState={
+          <EmptyState
+            icon={Users}
+            title="No party categories yet"
+            description="Add your first category above."
+          />
+        }
       />
 
-      {editing && <PartyCategoryModal editing={editing} existing={categories} onClose={() => setEditing(null)} />}
+      {editing && (
+        <PartyCategoryModal
+          editing={editing}
+          existing={categories}
+          onClose={() => setEditing(null)}
+        />
+      )}
 
       {viewing && (
         <DetailDrawer
@@ -110,7 +147,15 @@ export function PartyCategoriesPage() {
           actions={
             canManage && (
               <>
-                <Button type="button" variant="outline" size="sm" onClick={() => { setEditing(viewing); setViewing(null) }}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditing(viewing)
+                    setViewing(null)
+                  }}
+                >
                   <Pencil className="size-3.5" />
                   Edit
                 </Button>
@@ -139,7 +184,13 @@ export function PartyCategoriesPage() {
   )
 }
 
-function DeletePartyCategoryButton({ category, onDeleted }: { category: PartyCategoryWithId; onDeleted: () => void }) {
+function DeletePartyCategoryButton({
+  category,
+  onDeleted,
+}: {
+  category: PartyCategoryWithId
+  onDeleted: () => void
+}) {
   const deleteCategory = useDeletePartyCategory()
   const [confirming, setConfirming] = useState(false)
   return (
@@ -161,7 +212,14 @@ function DeletePartyCategoryButton({ category, onDeleted }: { category: PartyCat
         message="Parties already assigned to this category will keep a reference to a category that no longer exists. This cannot be undone."
         confirmLabel="Delete"
         isPending={deleteCategory.isPending}
-        onConfirm={() => deleteCategory.mutate(category, { onSuccess: () => { setConfirming(false); onDeleted() } })}
+        onConfirm={() =>
+          deleteCategory.mutate(category, {
+            onSuccess: () => {
+              setConfirming(false)
+              onDeleted()
+            },
+          })
+        }
       />
     </>
   )
@@ -182,15 +240,24 @@ function PartyCategoryModal({
 
   const [name, setName] = useState(isNew ? '' : editing.name)
   const [creditDays, setCreditDays] = useState(isNew ? 0 : editing.defaultCreditDays)
-  const [isDefaultForCustomer, setIsDefaultForCustomer] = useState(isNew ? false : editing.isDefaultForCustomer)
-  const [isDefaultForSupplier, setIsDefaultForSupplier] = useState(isNew ? false : editing.isDefaultForSupplier)
+  const [isDefaultForCustomer, setIsDefaultForCustomer] = useState(
+    isNew ? false : editing.isDefaultForCustomer
+  )
+  const [isDefaultForSupplier, setIsDefaultForSupplier] = useState(
+    isNew ? false : editing.isDefaultForSupplier
+  )
 
   const isPending = createCategory.isPending || updateCategory.isPending
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim()) return
-    const input = { name: name.trim(), defaultCreditDays: creditDays, isDefaultForCustomer, isDefaultForSupplier }
+    const input = {
+      name: name.trim(),
+      defaultCreditDays: creditDays,
+      isDefaultForCustomer,
+      isDefaultForSupplier,
+    }
     if (isNew) await createCategory.mutateAsync(input)
     else await updateCategory.mutateAsync({ ...input, id: editing.id })
     onClose()
@@ -212,23 +279,38 @@ function PartyCategoryModal({
           placeholder="Enter category name (e.g. Retail Customer)"
           autoFocus
         />
-        <p className="text-xs text-muted-foreground">This name will be visible in parties and reports.</p>
+        <p className="text-xs text-muted-foreground">
+          This name will be visible in parties and reports.
+        </p>
       </div>
       <div className="space-y-1.5">
         <Input value={isNew ? 'Auto-generated code' : editing.code} disabled />
-        <p className="text-xs text-muted-foreground">Unique system identifier. Auto-generated but editable.</p>
+        <p className="text-xs text-muted-foreground">
+          Unique system identifier. Auto-generated but editable.
+        </p>
       </div>
       <div className="space-y-1.5">
         <Label>Default Credit Days</Label>
-        <Input type="number" min={0} value={creditDays} onChange={(e) => setCreditDays(Number(e.target.value) || 0)} />
+        <Input
+          type="number"
+          min={0}
+          value={creditDays}
+          onChange={(e) => setCreditDays(Number(e.target.value) || 0)}
+        />
       </div>
       <div className="flex flex-wrap gap-4 text-sm">
         <label className="flex items-center gap-1.5">
-          <Checkbox checked={isDefaultForCustomer} onCheckedChange={(v) => setIsDefaultForCustomer(v === true)} />
+          <Checkbox
+            checked={isDefaultForCustomer}
+            onCheckedChange={(v) => setIsDefaultForCustomer(v === true)}
+          />
           Default for Customer
         </label>
         <label className="flex items-center gap-1.5">
-          <Checkbox checked={isDefaultForSupplier} onCheckedChange={(v) => setIsDefaultForSupplier(v === true)} />
+          <Checkbox
+            checked={isDefaultForSupplier}
+            onCheckedChange={(v) => setIsDefaultForSupplier(v === true)}
+          />
           Default for Supplier
         </label>
       </div>

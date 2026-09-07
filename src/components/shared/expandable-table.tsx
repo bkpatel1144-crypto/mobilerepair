@@ -191,8 +191,8 @@ export function ExpandableTable<T>({
       {/* Pagination footer — same shape as DataTable's own, for visual consistency. */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
         <span>
-          Showing {data.length === 0 ? 0 : start + 1}–{Math.min(start + rowsPerPage, data.length)} of{' '}
-          {data.length}
+          Showing {data.length === 0 ? 0 : start + 1}–{Math.min(start + rowsPerPage, data.length)}{' '}
+          of {data.length}
         </span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
@@ -217,7 +217,13 @@ export function ExpandableTable<T>({
             </Select>
           </div>
           <div className="flex items-center gap-1">
-            <Button type="button" variant="outline" size="sm" disabled={clampedPage <= 1} onClick={() => setPage((p) => p - 1)}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={clampedPage <= 1}
+              onClick={() => setPage((p) => p - 1)}
+            >
               Prev
             </Button>
             <span className="px-1 tabular-nums">

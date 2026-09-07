@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ImagePlus, X, UserPlus, Plus, ScanLine, UserX, Clock, Trash2 } from 'lucide-react'
+import {
+  ArrowLeft,
+  ImagePlus,
+  X,
+  UserPlus,
+  Plus,
+  ScanLine,
+  UserX,
+  Clock,
+  Trash2,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,7 +20,11 @@ import { SearchSelect } from '@/components/shared/search-select'
 import { MultiSelectPopover } from '@/components/shared/multi-select-popover'
 import { RouteFallback } from '@/components/shared/route-fallback'
 import { ErrorState } from '@/components/shared/error-state'
-import { PatternLockPicker, PatternLockPreview, PatternReplayPopover } from '@/components/shared/pattern-lock'
+import {
+  PatternLockPicker,
+  PatternLockPreview,
+  PatternReplayPopover,
+} from '@/components/shared/pattern-lock'
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
@@ -90,8 +104,12 @@ export function CreateJobCardPage() {
   useBreadcrumbExtra('Create')
   const navigate = useNavigate()
   const { user, profile } = useAuth()
-  const { data: schema, isLoading: schemaLoading, error: schemaError, refetch: refetchSchema } =
-    useFormSchema('jobCard')
+  const {
+    data: schema,
+    isLoading: schemaLoading,
+    error: schemaError,
+    refetch: refetchSchema,
+  } = useFormSchema('jobCard')
   const { data: parties = [] } = useParties()
   const { data: items = [] } = useItems()
   const {
@@ -128,7 +146,9 @@ export function CreateJobCardPage() {
   const [draft] = useState<Partial<JobCardDraft>>(readDraft)
 
   const [customerId, setCustomerId] = useState<string | null>(draft.customerId ?? null)
-  const [quickAddCustomer, setQuickAddCustomer] = useState<{ name: string; mobile: string } | null>(null)
+  const [quickAddCustomer, setQuickAddCustomer] = useState<{ name: string; mobile: string } | null>(
+    null
+  )
   const [alternativeMobile, setAlternativeMobile] = useState(draft.alternativeMobile ?? '')
 
   const [deviceTypeId, setDeviceTypeId] = useState<string | undefined>(draft.deviceTypeId)
@@ -142,9 +162,9 @@ export function CreateJobCardPage() {
   const [scanningField, setScanningField] = useState<'imei' | 'serialNo' | null>(null)
 
   const [problemIds, setProblemIds] = useState<string[]>(draft.problemIds ?? [])
-  const [serviceItemsSelected, setServiceItemsSelected] = useState<{ itemId: string; itemName: string; price: number }[]>(
-    draft.serviceItemsSelected ?? []
-  )
+  const [serviceItemsSelected, setServiceItemsSelected] = useState<
+    { itemId: string; itemName: string; price: number }[]
+  >(draft.serviceItemsSelected ?? [])
   const [estimatedCost, setEstimatedCost] = useState(draft.estimatedCost ?? 0)
   const [advanceReceived, setAdvanceReceived] = useState(draft.advanceReceived ?? 0)
   const [itemsReceived, setItemsReceived] = useState<string[]>(draft.itemsReceived ?? [])
@@ -278,7 +298,7 @@ export function CreateJobCardPage() {
 
     if (!finalCustomerId && quickAddCustomer) {
       if (!quickAddCustomer.name.trim() || !/^\d{10}$/.test(quickAddCustomer.mobile)) {
-        setFormError('Enter the new customer\'s name and a valid 10-digit mobile number.')
+        setFormError("Enter the new customer's name and a valid 10-digit mobile number.")
         return
       }
     } else if (!finalCustomerId) {
@@ -305,7 +325,10 @@ export function CreateJobCardPage() {
     setSubmitting(true)
     try {
       if (!finalCustomerId && quickAddCustomer) {
-        const created = await createParty.mutateAsync({ name: quickAddCustomer.name, mobile: quickAddCustomer.mobile })
+        const created = await createParty.mutateAsync({
+          name: quickAddCustomer.name,
+          mobile: quickAddCustomer.mobile,
+        })
         finalCustomerId = created.id
         finalCustomerName = created.name
         finalCustomerMobile = created.mobile
@@ -341,13 +364,19 @@ export function CreateJobCardPage() {
         serialNo: serialNo || null,
         devicePinPattern: devicePinPattern || null,
         problemIds,
-        problemLabels: options.problems.filter((p) => problemIds.includes(p.id)).map((p) => p.label),
+        problemLabels: options.problems
+          .filter((p) => problemIds.includes(p.id))
+          .map((p) => p.label),
         remark: remark || null,
         serviceItems: serviceItemsSelected,
         estimatedCost,
         advanceReceived,
-        itemsReceived: options.customerItems.filter((c) => itemsReceived.includes(c.id)).map((c) => c.label),
-        itemsReturned: options.customerItems.filter((c) => itemsReturned.includes(c.id)).map((c) => c.label),
+        itemsReceived: options.customerItems
+          .filter((c) => itemsReceived.includes(c.id))
+          .map((c) => c.label),
+        itemsReturned: options.customerItems
+          .filter((c) => itemsReturned.includes(c.id))
+          .map((c) => c.label),
         assignedToId: assignedToId ?? null,
         assignedToName: assignedUser?.fullName ?? null,
         imageUrls,
@@ -379,7 +408,12 @@ export function CreateJobCardPage() {
             </span>
           )}
           {savedAt && (
-            <Button type="button" variant="outline" size="sm" onClick={() => setConfirmingClear(true)}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setConfirmingClear(true)}
+            >
               <Trash2 className="size-3.5" />
               Clear Draft
             </Button>
@@ -394,581 +428,744 @@ export function CreateJobCardPage() {
       <FormError message={formError} />
 
       <div className="rounded-lg border bg-card p-4 sm:p-6">
-      <div className="grid gap-x-4 gap-y-4 lg:grid-cols-2">
-        {/* LEFT COLUMN — Customer / Device / Repair info (job-card-form-fields.ts sections
-         * `customerInformation` + `deviceInformation` + `repairInformation`). Its own
-         * independent vertical stack, not row-paired with the right column — matches the
-         * reference exactly: the left column simply ends after Service Items, with the right
-         * column continuing further down on its own. */}
-        <div className="space-y-4">
-        <div className="space-y-1.5">
-          <Label>
-            Customer <span className="text-red-600">*</span>
-          </Label>
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <SearchSelect
-                options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
-                value={customerId}
-                onChange={(id) => {
-                  setCustomerId(id)
-                  if (id) setQuickAddCustomer(null)
-                }}
-                placeholder="Search customer by name or mobile..."
-                onCreateNew={(query) => setQuickAddCustomer({ name: query, mobile: '' })}
-                open={customerOpen}
-                onOpenChange={setCustomerOpen}
-              />
-            </div>
-            <Button type="button" variant="outline" size="icon" className="shrink-0" onClick={() => setCustomerOpen(true)}>
-              <UserPlus className="size-4" />
-            </Button>
-          </div>
-          {quickAddCustomer && !customerId && (
-            <div className="flex gap-2 rounded-md border border-dashed p-2">
-              <Input
-                value={quickAddCustomer.name}
-                onChange={(e) => setQuickAddCustomer({ ...quickAddCustomer, name: e.target.value })}
-                placeholder="Customer name"
-                className="h-8 text-sm"
-              />
-              <Input
-                value={quickAddCustomer.mobile}
-                onChange={(e) => setQuickAddCustomer({ ...quickAddCustomer, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
-                placeholder="10-digit mobile"
-                className="h-8 text-sm"
-              />
-              <Button type="button" variant="ghost" size="icon" className="size-8" onClick={() => setQuickAddCustomer(null)}>
-                <X className="size-4" />
-              </Button>
-            </div>
-          )}
-        </div>
-
-        {isVisible('alternativeMobile') && (
-          <div className="space-y-1.5">
-            <Label>
-              Alternative Mobile <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-            </Label>
-            <Input
-              value={alternativeMobile}
-              onChange={(e) => setAlternativeMobile(e.target.value)}
-              placeholder="Alternate number (optional)"
-            />
-          </div>
-        )}
-
-        <div className={FIELD_ROW}>
-          <div className="space-y-1.5">
-            <Label>
-              Device Type <span className="text-red-600">*</span>
-            </Label>
-            <div className="flex gap-2">
-              <div className="flex-1">
-                <SearchSelect
-                  options={options.deviceTypes.map((dt) => ({ id: dt.id, label: dt.label, icon: deviceTypeIcon(dt.label) }))}
-                  value={deviceTypeId ?? null}
-                  onChange={(id) => {
-                    setDeviceTypeId(id ?? undefined)
-                    setBrandId(null)
-                  }}
-                  placeholder="Search device type..."
-                  open={deviceTypeOpen}
-                  onOpenChange={setDeviceTypeOpen}
-                />
-              </div>
-              <Button type="button" variant="outline" size="icon" className="shrink-0" onClick={() => setDeviceTypeOpen(true)}>
-                <Plus className="size-4" />
-              </Button>
-            </div>
-          </div>
-
-          {isVisible('brand') && (
+        <div className="grid gap-x-4 gap-y-4 lg:grid-cols-2">
+          {/* LEFT COLUMN — Customer / Device / Repair info (job-card-form-fields.ts sections
+           * `customerInformation` + `deviceInformation` + `repairInformation`). Its own
+           * independent vertical stack, not row-paired with the right column — matches the
+           * reference exactly: the left column simply ends after Service Items, with the right
+           * column continuing further down on its own. */}
+          <div className="space-y-4">
             <div className="space-y-1.5">
               <Label>
-                Brand{' '}
-                {isRequired('brand') ? (
-                  <span className="text-red-600">*</span>
-                ) : (
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-                )}
+                Customer <span className="text-red-600">*</span>
               </Label>
               <div className="flex gap-2">
                 <div className="flex-1">
                   <SearchSelect
-                    options={brandsForDeviceType.map((b) => ({ id: b.id, label: b.label }))}
-                    value={brandId}
+                    options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
+                    value={customerId}
                     onChange={(id) => {
-                      setBrandId(id)
-                      setModel('')
+                      setCustomerId(id)
+                      if (id) setQuickAddCustomer(null)
                     }}
-                    placeholder={deviceTypeId ? 'Select brand...' : 'Pick a device type first'}
-                    disabled={!deviceTypeId}
-                    open={brandOpen}
-                    onOpenChange={setBrandOpen}
-                    onCreateNew={
-                      deviceTypeId
-                        ? (label) =>
-                            createBrand.mutate(
-                              { label, deviceTypeIds: [deviceTypeId], existingCount: options.brands.length },
-                              { onSuccess: (id) => setBrandId(id) }
-                            )
-                        : undefined
-                    }
+                    placeholder="Search customer by name or mobile..."
+                    onCreateNew={(query) => setQuickAddCustomer({ name: query, mobile: '' })}
+                    open={customerOpen}
+                    onOpenChange={setCustomerOpen}
                   />
                 </div>
-                <Button type="button" variant="outline" size="icon" className="shrink-0" disabled={!deviceTypeId} onClick={() => setBrandOpen(true)}>
-                  <Plus className="size-4" />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="shrink-0"
+                  onClick={() => setCustomerOpen(true)}
+                >
+                  <UserPlus className="size-4" />
                 </Button>
               </div>
-            </div>
-          )}
-        </div>
-
-        <div className={FIELD_ROW}>
-          {isVisible('model') && (
-            <div className="space-y-1.5">
-              <Label>
-                Model{' '}
-                {isRequired('model') ? (
-                  <span className="text-red-600">*</span>
-                ) : (
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-                )}
-              </Label>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <SearchSelect
-                    options={modelsForBrand.map((m) => ({ id: m.id, label: m.label }))}
-                    value={selectedModelOption?.id ?? null}
-                    onChange={(id) => {
-                      const m = modelsForBrand.find((x) => x.id === id)
-                      setModel(m?.label ?? '')
-                    }}
-                    placeholder={brandId ? 'Enter model name...' : 'Pick a brand first'}
-                    disabled={!brandId}
-                    open={modelOpen}
-                    onOpenChange={setModelOpen}
-                    onCreateNew={
-                      brandId
-                        ? (label) =>
-                            createModel.mutate(
-                              { label, brandId, existingCount: options.models.length },
-                              { onSuccess: () => setModel(label) }
-                            )
-                        : undefined
+              {quickAddCustomer && !customerId && (
+                <div className="flex gap-2 rounded-md border border-dashed p-2">
+                  <Input
+                    value={quickAddCustomer.name}
+                    onChange={(e) =>
+                      setQuickAddCustomer({ ...quickAddCustomer, name: e.target.value })
                     }
+                    placeholder="Customer name"
+                    className="h-8 text-sm"
                   />
+                  <Input
+                    value={quickAddCustomer.mobile}
+                    onChange={(e) =>
+                      setQuickAddCustomer({
+                        ...quickAddCustomer,
+                        mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
+                      })
+                    }
+                    placeholder="10-digit mobile"
+                    className="h-8 text-sm"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="size-8"
+                    onClick={() => setQuickAddCustomer(null)}
+                  >
+                    <X className="size-4" />
+                  </Button>
                 </div>
-                <Button type="button" variant="outline" size="icon" className="shrink-0" disabled={!brandId} onClick={() => setModelOpen(true)}>
-                  <Plus className="size-4" />
-                </Button>
-              </div>
+              )}
             </div>
-          )}
 
-          {isVisible('imei') && (
-            <div className="space-y-1.5">
-              <Label>
-                IMEI <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-              </Label>
-              <div className="flex gap-2">
-                <Input id="imei" value={imei} onChange={(e) => setImei(e.target.value)} placeholder="15-digit IMEI (optional)" className="flex-1" />
-                <Button type="button" variant="outline" size="icon" className="shrink-0" title="Scan IMEI" onClick={() => setScanningField('imei')}>
-                  <ScanLine className="size-4" />
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {(isVisible('imei2') || isVisible('serialNo')) && (
-          <div className={FIELD_ROW}>
-            {isVisible('imei2') && (
+            {isVisible('alternativeMobile') && (
               <div className="space-y-1.5">
                 <Label>
-                  IMEI 2 <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  Alternative Mobile{' '}
+                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
                 </Label>
-                <Input value={imei2} onChange={(e) => setImei2(e.target.value)} placeholder="Second IMEI (optional)" />
+                <Input
+                  value={alternativeMobile}
+                  onChange={(e) => setAlternativeMobile(e.target.value)}
+                  placeholder="Alternate number (optional)"
+                />
               </div>
             )}
 
-            {isVisible('serialNo') && (
+            <div className={FIELD_ROW}>
               <div className="space-y-1.5">
                 <Label>
-                  Serial No <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  Device Type <span className="text-red-600">*</span>
                 </Label>
                 <div className="flex gap-2">
-                  <Input id="serialNo" value={serialNo} onChange={(e) => setSerialNo(e.target.value)} placeholder="Serial number (optional)" className="flex-1" />
-                  <Button type="button" variant="outline" size="icon" className="shrink-0" title="Scan Serial No" onClick={() => setScanningField('serialNo')}>
-                    <ScanLine className="size-4" />
+                  <div className="flex-1">
+                    <SearchSelect
+                      options={options.deviceTypes.map((dt) => ({
+                        id: dt.id,
+                        label: dt.label,
+                        icon: deviceTypeIcon(dt.label),
+                      }))}
+                      value={deviceTypeId ?? null}
+                      onChange={(id) => {
+                        setDeviceTypeId(id ?? undefined)
+                        setBrandId(null)
+                      }}
+                      placeholder="Search device type..."
+                      open={deviceTypeOpen}
+                      onOpenChange={setDeviceTypeOpen}
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    onClick={() => setDeviceTypeOpen(true)}
+                  >
+                    <Plus className="size-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {isVisible('brand') && (
+                <div className="space-y-1.5">
+                  <Label>
+                    Brand{' '}
+                    {isRequired('brand') ? (
+                      <span className="text-red-600">*</span>
+                    ) : (
+                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    )}
+                  </Label>
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <SearchSelect
+                        options={brandsForDeviceType.map((b) => ({ id: b.id, label: b.label }))}
+                        value={brandId}
+                        onChange={(id) => {
+                          setBrandId(id)
+                          setModel('')
+                        }}
+                        placeholder={deviceTypeId ? 'Select brand...' : 'Pick a device type first'}
+                        disabled={!deviceTypeId}
+                        open={brandOpen}
+                        onOpenChange={setBrandOpen}
+                        onCreateNew={
+                          deviceTypeId
+                            ? (label) =>
+                                createBrand.mutate(
+                                  {
+                                    label,
+                                    deviceTypeIds: [deviceTypeId],
+                                    existingCount: options.brands.length,
+                                  },
+                                  { onSuccess: (id) => setBrandId(id) }
+                                )
+                            : undefined
+                        }
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      className="shrink-0"
+                      disabled={!deviceTypeId}
+                      onClick={() => setBrandOpen(true)}
+                    >
+                      <Plus className="size-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className={FIELD_ROW}>
+              {isVisible('model') && (
+                <div className="space-y-1.5">
+                  <Label>
+                    Model{' '}
+                    {isRequired('model') ? (
+                      <span className="text-red-600">*</span>
+                    ) : (
+                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    )}
+                  </Label>
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <SearchSelect
+                        options={modelsForBrand.map((m) => ({ id: m.id, label: m.label }))}
+                        value={selectedModelOption?.id ?? null}
+                        onChange={(id) => {
+                          const m = modelsForBrand.find((x) => x.id === id)
+                          setModel(m?.label ?? '')
+                        }}
+                        placeholder={brandId ? 'Enter model name...' : 'Pick a brand first'}
+                        disabled={!brandId}
+                        open={modelOpen}
+                        onOpenChange={setModelOpen}
+                        onCreateNew={
+                          brandId
+                            ? (label) =>
+                                createModel.mutate(
+                                  { label, brandId, existingCount: options.models.length },
+                                  { onSuccess: () => setModel(label) }
+                                )
+                            : undefined
+                        }
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      className="shrink-0"
+                      disabled={!brandId}
+                      onClick={() => setModelOpen(true)}
+                    >
+                      <Plus className="size-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {isVisible('imei') && (
+                <div className="space-y-1.5">
+                  <Label>
+                    IMEI{' '}
+                    <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  </Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="imei"
+                      value={imei}
+                      onChange={(e) => setImei(e.target.value)}
+                      placeholder="15-digit IMEI (optional)"
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      className="shrink-0"
+                      title="Scan IMEI"
+                      onClick={() => setScanningField('imei')}
+                    >
+                      <ScanLine className="size-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {(isVisible('imei2') || isVisible('serialNo')) && (
+              <div className={FIELD_ROW}>
+                {isVisible('imei2') && (
+                  <div className="space-y-1.5">
+                    <Label>
+                      IMEI 2{' '}
+                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    </Label>
+                    <Input
+                      value={imei2}
+                      onChange={(e) => setImei2(e.target.value)}
+                      placeholder="Second IMEI (optional)"
+                    />
+                  </div>
+                )}
+
+                {isVisible('serialNo') && (
+                  <div className="space-y-1.5">
+                    <Label>
+                      Serial No{' '}
+                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    </Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="serialNo"
+                        value={serialNo}
+                        onChange={(e) => setSerialNo(e.target.value)}
+                        placeholder="Serial number (optional)"
+                        className="flex-1"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        className="shrink-0"
+                        title="Scan Serial No"
+                        onClick={() => setScanningField('serialNo')}
+                      >
+                        <ScanLine className="size-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {isVisible('devicePinPattern') && (
+              <div className="space-y-1.5">
+                <Label>
+                  Device PIN / Pattern{' '}
+                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                </Label>
+                <div className="flex gap-2">
+                  {pinIsPattern && devicePinPattern ? (
+                    <div className="flex h-8 flex-1 items-center gap-2 rounded-lg border bg-muted/30 px-2.5 text-sm">
+                      <PatternReplayPopover value={devicePinPattern}>
+                        <span className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:underline">
+                          <PatternLockPreview value={devicePinPattern} />
+                          Pattern drawn
+                        </span>
+                      </PatternReplayPopover>
+                      <button
+                        type="button"
+                        className="ml-auto font-medium text-red-600 hover:underline dark:text-red-400"
+                        onClick={() => {
+                          setDevicePinPattern('')
+                          setPinIsPattern(false)
+                        }}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  ) : (
+                    <Input
+                      value={devicePinPattern}
+                      onChange={(e) => {
+                        setDevicePinPattern(e.target.value)
+                        setPinIsPattern(false)
+                      }}
+                      placeholder="e.g. 1234 or tap Draw"
+                      className="flex-1"
+                    />
+                  )}
+                  <PatternLockPicker
+                    value={pinIsPattern ? devicePinPattern : ''}
+                    onChange={(v) => {
+                      setDevicePinPattern(v)
+                      setPinIsPattern(!!v)
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-1.5">
+              <Label>
+                Problems <span className="text-red-600">*</span>
+              </Label>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <MultiSelectPopover
+                    options={options.problems.map((p) => ({ id: p.id, label: p.label }))}
+                    selectedIds={problemIds}
+                    onChange={setProblemIds}
+                    placeholder="Select problems..."
+                    open={problemsOpen}
+                    onOpenChange={setProblemsOpen}
+                    onCreateNew={(label) =>
+                      createServiceOption.mutate(
+                        { label, existingCount: options.problems.length },
+                        { onSuccess: (id) => setProblemIds((prev) => [...prev, id]) }
+                      )
+                    }
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="shrink-0"
+                  onClick={() => setProblemsOpen(true)}
+                >
+                  <Plus className="size-4" />
+                </Button>
+              </div>
+            </div>
+
+            {isVisible('serviceItems') && (
+              <div className="space-y-1.5">
+                <Label>
+                  Service Items{' '}
+                  <span className="text-xs font-normal text-muted-foreground">
+                    (Optional — adds to estimated cost)
+                  </span>
+                </Label>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <SearchSelect
+                      options={serviceItemOptions.map((i) => ({
+                        id: i.id,
+                        label: i.name,
+                        helper: i.sellingPrice ? `₹${i.sellingPrice}` : undefined,
+                      }))}
+                      value={null}
+                      onChange={(id) => {
+                        const item = serviceItemOptions.find((i) => i.id === id)
+                        if (!item) return
+                        setServiceItemsSelected((prev) => [
+                          ...prev,
+                          { itemId: item.id, itemName: item.name, price: item.sellingPrice ?? 0 },
+                        ])
+                        setEstimatedCost((prev) => prev + (item.sellingPrice ?? 0))
+                      }}
+                      placeholder="Add items from catalog"
+                      open={serviceItemsOpen}
+                      onOpenChange={setServiceItemsOpen}
+                      onCreateNew={(name) =>
+                        createItem.mutate(
+                          { name, type: 'service', itemCode: nextItemCode(items, 'service') },
+                          {
+                            onSuccess: (item) =>
+                              setServiceItemsSelected((prev) => [
+                                ...prev,
+                                { itemId: item.id!, itemName: item.name, price: 0 },
+                              ]),
+                          }
+                        )
+                      }
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    onClick={() => setServiceItemsOpen(true)}
+                  >
+                    <Plus className="size-4" />
+                  </Button>
+                </div>
+                {serviceItemsSelected.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {serviceItemsSelected.map((si, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center gap-1 rounded-full bg-secondary py-0.5 pr-1 pl-2 text-xs"
+                      >
+                        {si.itemName} · ₹{si.price}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setServiceItemsSelected((prev) => prev.filter((_, idx) => idx !== i))
+                            setEstimatedCost((prev) => Math.max(0, prev - si.price))
+                          }}
+                          className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
+                        >
+                          <X className="size-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* RIGHT COLUMN — Financial / Accessories / Internal details / Images (sections
+           * `financial` + `accessories` + `internalDetails` + `images`). Independent stack, same
+           * reasoning as the left column above. The vertical rule lives here as a plain
+           * `border-left` (not the parent's `divide-x`, which applies its border via a
+           * negative-margin trick meant for gap-less flex/block layouts — inside a CSS Grid that
+           * already has its own `gap-x-8`, that negative margin pulled this column left into the
+           * gap, visually overlapping the left column's own inputs/buttons). A grid's `gap` is
+           * real empty space, so a plain border here — no margin compensation needed — sits
+           * cleanly in the middle of it instead. */}
+          <div className="space-y-4 lg:border-l lg:border-border lg:pl-6">
+            {/* Stacked, not a 2-up grid. Side by side, each field got ~half of an already-half-width
+             * column, so the 7 cost chips wrapped to three rows against the advance field's two and
+             * the block ended ragged — with a lone "₹1,000" sitting level with "₹1,500 ₹2,000
+             * ₹3,000" as if the two sets were one pool. Full width fits each set on one row.
+             * SCREENS_NOTES.md lists these as consecutive fields anyway, not a pair. */}
+            {(isVisible('estimatedCost') || isVisible('advanceReceived')) && (
+              <div className="space-y-4">
+                {isVisible('estimatedCost') && (
+                  <div className="space-y-1.5">
+                    <Label>
+                      Estimated Cost{' '}
+                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    </Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={estimatedCost}
+                      onChange={(e) => setEstimatedCost(Number(e.target.value) || 0)}
+                    />
+                    <div className="flex flex-wrap gap-1.5">
+                      {COST_QUICK_AMOUNTS.map((amt) => (
+                        <button
+                          key={amt}
+                          type="button"
+                          data-slot="button"
+                          onClick={() => setEstimatedCost(amt)}
+                          aria-pressed={estimatedCost === amt}
+                          className={
+                            'rounded-full border px-2.5 py-1 text-xs transition-colors ' +
+                            // Was the only quick-pick row in the form with no selected state, so
+                            // clicking a chip gave no feedback beyond the number changing.
+                            (estimatedCost === amt
+                              ? 'border-teal-600 bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-400'
+                              : 'text-muted-foreground hover:bg-muted')
+                          }
+                        >
+                          ₹{amt.toLocaleString('en-IN')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {isVisible('advanceReceived') && (
+                  <div className="space-y-1.5">
+                    <Label>
+                      Advance Received{' '}
+                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    </Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={advanceReceived}
+                      onChange={(e) => setAdvanceReceived(Number(e.target.value) || 0)}
+                    />
+                    <div className="flex flex-wrap gap-1.5">
+                      {ADVANCE_QUICK_AMOUNTS.map((amt) => (
+                        <button
+                          key={amt}
+                          type="button"
+                          data-slot="button"
+                          onClick={() => setAdvanceReceived(amt)}
+                          aria-pressed={advanceReceived === amt}
+                          className={
+                            'rounded-full border px-2.5 py-1 text-xs transition-colors ' +
+                            (advanceReceived === amt
+                              ? 'border-teal-600 bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-400'
+                              : 'text-muted-foreground hover:bg-muted')
+                          }
+                        >
+                          ₹{amt.toLocaleString('en-IN')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {isVisible('itemsReceived') && (
+              <div className="space-y-1.5">
+                <Label>
+                  Items received{' '}
+                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                </Label>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <MultiSelectPopover
+                      options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
+                      selectedIds={itemsReceived}
+                      onChange={setItemsReceived}
+                      placeholder="Select items received with device..."
+                      open={itemsReceivedOpen}
+                      onOpenChange={setItemsReceivedOpen}
+                      onCreateNew={(label) =>
+                        createCustomerItem.mutate(
+                          { label, existingCount: options.customerItems.length },
+                          { onSuccess: (id) => setItemsReceived((prev) => [...prev, id]) }
+                        )
+                      }
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    onClick={() => setItemsReceivedOpen(true)}
+                  >
+                    <Plus className="size-4" />
                   </Button>
                 </div>
               </div>
             )}
-          </div>
-        )}
 
-        {isVisible('devicePinPattern') && (
-          <div className="space-y-1.5">
-            <Label>
-              Device PIN / Pattern <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-            </Label>
-            <div className="flex gap-2">
-              {pinIsPattern && devicePinPattern ? (
-                <div className="flex h-8 flex-1 items-center gap-2 rounded-lg border bg-muted/30 px-2.5 text-sm">
-                  <PatternReplayPopover value={devicePinPattern}>
-                    <span className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:underline">
-                      <PatternLockPreview value={devicePinPattern} />
-                      Pattern drawn
-                    </span>
-                  </PatternReplayPopover>
-                  <button
+            {isVisible('itemsReturned') && (
+              <div className="space-y-1.5">
+                <Label>
+                  Items returned{' '}
+                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                </Label>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <MultiSelectPopover
+                      options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
+                      selectedIds={itemsReturned}
+                      onChange={setItemsReturned}
+                      placeholder="Select items returned to customer..."
+                      open={itemsReturnedOpen}
+                      onOpenChange={setItemsReturnedOpen}
+                      onCreateNew={(label) =>
+                        createCustomerItem.mutate(
+                          { label, existingCount: options.customerItems.length },
+                          { onSuccess: (id) => setItemsReturned((prev) => [...prev, id]) }
+                        )
+                      }
+                    />
+                  </div>
+                  <Button
                     type="button"
-                    className="ml-auto font-medium text-red-600 hover:underline dark:text-red-400"
-                    onClick={() => {
-                      setDevicePinPattern('')
-                      setPinIsPattern(false)
-                    }}
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    onClick={() => setItemsReturnedOpen(true)}
                   >
-                    Clear
-                  </button>
+                    <Plus className="size-4" />
+                  </Button>
                 </div>
-              ) : (
-                <Input
-                  value={devicePinPattern}
-                  onChange={(e) => {
-                    setDevicePinPattern(e.target.value)
-                    setPinIsPattern(false)
-                  }}
-                  placeholder="e.g. 1234 or tap Draw"
-                  className="flex-1"
-                />
-              )}
-              <PatternLockPicker
-                value={pinIsPattern ? devicePinPattern : ''}
-                onChange={(v) => {
-                  setDevicePinPattern(v)
-                  setPinIsPattern(!!v)
-                }}
-              />
-            </div>
-          </div>
-        )}
+              </div>
+            )}
 
-        <div className="space-y-1.5">
-          <Label>
-            Problems <span className="text-red-600">*</span>
-          </Label>
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <MultiSelectPopover
-                options={options.problems.map((p) => ({ id: p.id, label: p.label }))}
-                selectedIds={problemIds}
-                onChange={setProblemIds}
-                placeholder="Select problems..."
-                open={problemsOpen}
-                onOpenChange={setProblemsOpen}
-                onCreateNew={(label) =>
-                  createServiceOption.mutate(
-                    { label, existingCount: options.problems.length },
-                    { onSuccess: (id) => setProblemIds((prev) => [...prev, id]) }
-                  )
-                }
-              />
-            </div>
-            <Button type="button" variant="outline" size="icon" className="shrink-0" onClick={() => setProblemsOpen(true)}>
-              <Plus className="size-4" />
-            </Button>
-          </div>
-        </div>
-
-        {isVisible('serviceItems') && (
-          <div className="space-y-1.5">
-            <Label>
-              Service Items <span className="text-xs font-normal text-muted-foreground">(Optional — adds to estimated cost)</span>
-            </Label>
-            <div className="flex gap-2">
-              <div className="flex-1">
+            <div className={FIELD_ROW}>
+              <div className="space-y-1.5">
+                <Label>
+                  Received By <span className="text-red-600">*</span>
+                </Label>
                 <SearchSelect
-                  options={serviceItemOptions.map((i) => ({ id: i.id, label: i.name, helper: i.sellingPrice ? `₹${i.sellingPrice}` : undefined }))}
-                  value={null}
-                  onChange={(id) => {
-                    const item = serviceItemOptions.find((i) => i.id === id)
-                    if (!item) return
-                    setServiceItemsSelected((prev) => [...prev, { itemId: item.id, itemName: item.name, price: item.sellingPrice ?? 0 }])
-                    setEstimatedCost((prev) => prev + (item.sellingPrice ?? 0))
-                  }}
-                  placeholder="Add items from catalog"
-                  open={serviceItemsOpen}
-                  onOpenChange={setServiceItemsOpen}
-                  onCreateNew={(name) =>
-                    createItem.mutate(
-                      { name, type: 'service', itemCode: nextItemCode(items, 'service') },
-                      {
-                        onSuccess: (item) =>
-                          setServiceItemsSelected((prev) => [...prev, { itemId: item.id!, itemName: item.name, price: 0 }]),
-                      }
-                    )
+                  options={
+                    profile
+                      ? [
+                          {
+                            id: user?.uid ?? 'me',
+                            label: profile.fullName,
+                            avatarLabel: getInitials(profile.fullName),
+                          },
+                        ]
+                      : []
                   }
+                  value={profile ? (user?.uid ?? 'me') : null}
+                  onChange={() => {}}
+                  placeholder="—"
+                  disabled
                 />
               </div>
-              <Button type="button" variant="outline" size="icon" className="shrink-0" onClick={() => setServiceItemsOpen(true)}>
-                <Plus className="size-4" />
-              </Button>
-            </div>
-            {serviceItemsSelected.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {serviceItemsSelected.map((si, i) => (
-                  <span key={i} className="inline-flex items-center gap-1 rounded-full bg-secondary py-0.5 pr-1 pl-2 text-xs">
-                    {si.itemName} · ₹{si.price}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setServiceItemsSelected((prev) => prev.filter((_, idx) => idx !== i))
-                        setEstimatedCost((prev) => Math.max(0, prev - si.price))
-                      }}
-                      className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
-                    >
-                      <X className="size-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-        </div>
 
-        {/* RIGHT COLUMN — Financial / Accessories / Internal details / Images (sections
-         * `financial` + `accessories` + `internalDetails` + `images`). Independent stack, same
-         * reasoning as the left column above. The vertical rule lives here as a plain
-         * `border-left` (not the parent's `divide-x`, which applies its border via a
-         * negative-margin trick meant for gap-less flex/block layouts — inside a CSS Grid that
-         * already has its own `gap-x-8`, that negative margin pulled this column left into the
-         * gap, visually overlapping the left column's own inputs/buttons). A grid's `gap` is
-         * real empty space, so a plain border here — no margin compensation needed — sits
-         * cleanly in the middle of it instead. */}
-        <div className="space-y-4 lg:border-l lg:border-border lg:pl-6">
-        {/* Stacked, not a 2-up grid. Side by side, each field got ~half of an already-half-width
-         * column, so the 7 cost chips wrapped to three rows against the advance field's two and
-         * the block ended ragged — with a lone "₹1,000" sitting level with "₹1,500 ₹2,000
-         * ₹3,000" as if the two sets were one pool. Full width fits each set on one row.
-         * SCREENS_NOTES.md lists these as consecutive fields anyway, not a pair. */}
-        {(isVisible('estimatedCost') || isVisible('advanceReceived')) && (
-          <div className="space-y-4">
-            {isVisible('estimatedCost') && (
+              {isVisible('assignTo') && (
+                <div className="space-y-1.5">
+                  <Label>
+                    Assign To{' '}
+                    <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  </Label>
+                  <SearchSelect
+                    options={[
+                      { id: '__unassigned__', label: '— Not Assigned —', icon: UserX },
+                      ...users.map((u) => ({
+                        id: u.id,
+                        label: u.fullName,
+                        helper: u.roleName,
+                        avatarLabel: getInitials(u.fullName),
+                      })),
+                    ]}
+                    value={assignedToId ?? '__unassigned__'}
+                    onChange={(id) => setAssignedToId(id === '__unassigned__' || !id ? null : id)}
+                    placeholder="Search user..."
+                  />
+                </div>
+              )}
+            </div>
+
+            {isVisible('remark') && (
               <div className="space-y-1.5">
                 <Label>
-                  Estimated Cost <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  Remark{' '}
+                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
                 </Label>
-                <Input type="number" min={0} value={estimatedCost} onChange={(e) => setEstimatedCost(Number(e.target.value) || 0)} />
-                <div className="flex flex-wrap gap-1.5">
-                  {COST_QUICK_AMOUNTS.map((amt) => (
-                    <button
-                      key={amt}
-                      type="button"
-                      data-slot="button"
-                      onClick={() => setEstimatedCost(amt)}
-                      aria-pressed={estimatedCost === amt}
-                      className={
-                        'rounded-full border px-2.5 py-1 text-xs transition-colors ' +
-                        // Was the only quick-pick row in the form with no selected state, so
-                        // clicking a chip gave no feedback beyond the number changing.
-                        (estimatedCost === amt
-                          ? 'border-teal-600 bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-400'
-                          : 'text-muted-foreground hover:bg-muted')
-                      }
-                    >
-                      ₹{amt.toLocaleString('en-IN')}
-                    </button>
-                  ))}
-                </div>
+                <Textarea
+                  value={remark}
+                  onChange={(e) => setRemark(e.target.value)}
+                  placeholder="Any additional note about the device / job..."
+                  rows={3}
+                />
               </div>
             )}
 
-            {isVisible('advanceReceived') && (
+            {isVisible('images') && (
               <div className="space-y-1.5">
-                <Label>
-                  Advance Received <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-                </Label>
-                <Input type="number" min={0} value={advanceReceived} onChange={(e) => setAdvanceReceived(Number(e.target.value) || 0)} />
-                <div className="flex flex-wrap gap-1.5">
-                  {ADVANCE_QUICK_AMOUNTS.map((amt) => (
-                    <button
-                      key={amt}
-                      type="button"
-                      data-slot="button"
-                      onClick={() => setAdvanceReceived(amt)}
-                      aria-pressed={advanceReceived === amt}
-                      className={
-                        'rounded-full border px-2.5 py-1 text-xs transition-colors ' +
-                        (advanceReceived === amt
-                          ? 'border-teal-600 bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-400'
-                          : 'text-muted-foreground hover:bg-muted')
-                      }
-                    >
-                      ₹{amt.toLocaleString('en-IN')}
-                    </button>
-                  ))}
-                </div>
+                <Label>Add Images</Label>
+                <p className="text-xs text-muted-foreground">
+                  They will be uploaded when you create the job card.
+                </p>
+                <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
+                  <ImagePlus className="size-5" />
+                  <span className="text-sm">Add Images</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={(e) =>
+                      setPendingImages((prev) => [...prev, ...Array.from(e.target.files ?? [])])
+                    }
+                  />
+                </label>
+                {pendingImages.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {pendingImages.map((f, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center gap-1 rounded-full bg-secondary py-0.5 pr-1 pl-2 text-xs"
+                      >
+                        {f.name}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setPendingImages((prev) => prev.filter((_, idx) => idx !== i))
+                          }
+                          className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
+                        >
+                          <X className="size-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
-        )}
-
-        {isVisible('itemsReceived') && (
-          <div className="space-y-1.5">
-            <Label>
-              Items received <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-            </Label>
-            <div className="flex gap-2">
-              <div className="flex-1">
-                <MultiSelectPopover
-                  options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
-                  selectedIds={itemsReceived}
-                  onChange={setItemsReceived}
-                  placeholder="Select items received with device..."
-                  open={itemsReceivedOpen}
-                  onOpenChange={setItemsReceivedOpen}
-                  onCreateNew={(label) =>
-                    createCustomerItem.mutate(
-                      { label, existingCount: options.customerItems.length },
-                      { onSuccess: (id) => setItemsReceived((prev) => [...prev, id]) }
-                    )
-                  }
-                />
-              </div>
-              <Button type="button" variant="outline" size="icon" className="shrink-0" onClick={() => setItemsReceivedOpen(true)}>
-                <Plus className="size-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {isVisible('itemsReturned') && (
-          <div className="space-y-1.5">
-            <Label>
-              Items returned <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-            </Label>
-            <div className="flex gap-2">
-              <div className="flex-1">
-                <MultiSelectPopover
-                  options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
-                  selectedIds={itemsReturned}
-                  onChange={setItemsReturned}
-                  placeholder="Select items returned to customer..."
-                  open={itemsReturnedOpen}
-                  onOpenChange={setItemsReturnedOpen}
-                  onCreateNew={(label) =>
-                    createCustomerItem.mutate(
-                      { label, existingCount: options.customerItems.length },
-                      { onSuccess: (id) => setItemsReturned((prev) => [...prev, id]) }
-                    )
-                  }
-                />
-              </div>
-              <Button type="button" variant="outline" size="icon" className="shrink-0" onClick={() => setItemsReturnedOpen(true)}>
-                <Plus className="size-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        <div className={FIELD_ROW}>
-          <div className="space-y-1.5">
-            <Label>
-              Received By <span className="text-red-600">*</span>
-            </Label>
-            <SearchSelect
-              options={
-                profile
-                  ? [{ id: user?.uid ?? 'me', label: profile.fullName, avatarLabel: getInitials(profile.fullName) }]
-                  : []
-              }
-              value={profile ? (user?.uid ?? 'me') : null}
-              onChange={() => {}}
-              placeholder="—"
-              disabled
-            />
-          </div>
-
-          {isVisible('assignTo') && (
-            <div className="space-y-1.5">
-              <Label>
-                Assign To <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-              </Label>
-              <SearchSelect
-                options={[
-                  { id: '__unassigned__', label: '— Not Assigned —', icon: UserX },
-                  ...users.map((u) => ({
-                    id: u.id,
-                    label: u.fullName,
-                    helper: u.roleName,
-                    avatarLabel: getInitials(u.fullName),
-                  })),
-                ]}
-                value={assignedToId ?? '__unassigned__'}
-                onChange={(id) => setAssignedToId(id === '__unassigned__' || !id ? null : id)}
-                placeholder="Search user..."
-              />
-            </div>
-          )}
         </div>
 
-        {isVisible('remark') && (
-          <div className="space-y-1.5">
-            <Label>
-              Remark <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
-            </Label>
-            <Textarea value={remark} onChange={(e) => setRemark(e.target.value)} placeholder="Any additional note about the device / job..." rows={3} />
-          </div>
-        )}
-
-        {isVisible('images') && (
-          <div className="space-y-1.5">
-            <Label>Add Images</Label>
-            <p className="text-xs text-muted-foreground">They will be uploaded when you create the job card.</p>
-            <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
-              <ImagePlus className="size-5" />
-              <span className="text-sm">Add Images</span>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                className="hidden"
-                onChange={(e) => setPendingImages((prev) => [...prev, ...Array.from(e.target.files ?? [])])}
-              />
-            </label>
-            {pendingImages.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {pendingImages.map((f, i) => (
-                  <span key={i} className="inline-flex items-center gap-1 rounded-full bg-secondary py-0.5 pr-1 pl-2 text-xs">
-                    {f.name}
-                    <button
-                      type="button"
-                      onClick={() => setPendingImages((prev) => prev.filter((_, idx) => idx !== i))}
-                      className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
-                    >
-                      <X className="size-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        <div className="mt-5 flex justify-end gap-2 border-t pt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate(-1)}
+            disabled={submitting}
+          >
+            Cancel
+          </Button>
+          <Button type="button" onClick={handleSubmit} disabled={submitting || !user}>
+            {submitting ? 'Creating…' : 'Create Job Card'}
+          </Button>
         </div>
-      </div>
-
-      <div className="mt-5 flex justify-end gap-2 border-t pt-4">
-        <Button type="button" variant="outline" onClick={() => navigate(-1)} disabled={submitting}>
-          Cancel
-        </Button>
-        <Button type="button" onClick={handleSubmit} disabled={submitting || !user}>
-          {submitting ? 'Creating…' : 'Create Job Card'}
-        </Button>
-      </div>
       </div>
 
       <ScanTextModal

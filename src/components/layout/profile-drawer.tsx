@@ -7,11 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { FormError } from '@/components/shared/form-error'
 import { useAuth } from '@/hooks/use-auth'
-import {
-  useUpdateMyProfile,
-  useChangePassword,
-  passwordErrorMessage,
-} from '@/hooks/use-my-profile'
+import { useUpdateMyProfile, useChangePassword, passwordErrorMessage } from '@/hooks/use-my-profile'
 import { getInitials } from '@/lib/utils'
 
 /** A field the user can see but not edit from here — role and mobile are administrative (see
@@ -273,9 +269,7 @@ export function ProfileDrawer({
               <Button
                 type="submit"
                 form="profile-password-form"
-                variant={
-                  currentPassword && newPassword && confirmPassword ? 'default' : 'outline'
-                }
+                variant={currentPassword && newPassword && confirmPassword ? 'default' : 'outline'}
                 className="w-full"
                 disabled={
                   !currentPassword || !newPassword || !confirmPassword || changePassword.isPending

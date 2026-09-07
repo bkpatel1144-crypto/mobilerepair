@@ -241,7 +241,11 @@ export function CreateUserPage() {
             // for a role that is actually still there.
             <p className="flex flex-wrap items-center gap-1.5 text-xs text-red-600">
               {errorMessage(rolesError)}
-              <button type="button" onClick={() => void refetchRoles()} className="underline underline-offset-2">
+              <button
+                type="button"
+                onClick={() => void refetchRoles()}
+                className="underline underline-offset-2"
+              >
                 Retry
               </button>
             </p>

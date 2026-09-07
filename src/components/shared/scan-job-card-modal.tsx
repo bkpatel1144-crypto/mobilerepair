@@ -92,7 +92,12 @@ export function ScanJobCardModal({ open, onOpenChange }: ScanJobCardModalProps) 
           </div>
         )}
 
-        <Button type="button" variant="outline" className="w-full" onClick={() => onOpenChange(false)}>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={() => onOpenChange(false)}
+        >
           <X className="size-4" />
           Close
         </Button>

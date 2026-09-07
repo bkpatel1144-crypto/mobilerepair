@@ -23,7 +23,8 @@ export function useWhatsAppConfig() {
     queryKey: whatsappConfigQueryKey(companyId),
     queryFn: async () => {
       const snap = await getDoc(doc(db, whatsappConfigDoc(companyId!)))
-      if (!snap.exists()) return { countryCode: '91', templates: DEFAULT_WHATSAPP_TEMPLATES } as WhatsAppConfigDoc
+      if (!snap.exists())
+        return { countryCode: '91', templates: DEFAULT_WHATSAPP_TEMPLATES } as WhatsAppConfigDoc
       return snap.data() as WhatsAppConfigDoc
     },
     enabled: !!companyId,

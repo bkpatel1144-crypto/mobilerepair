@@ -100,7 +100,11 @@ export function addDefaultServiceOptionsToBatch(
   }
 
   const flatGroups: RawGroup['group'][] = [
-    'cancel_reason', 'customer_item', 'hold_reason', 'outstanding_reason', 'problems',
+    'cancel_reason',
+    'customer_item',
+    'hold_reason',
+    'outstanding_reason',
+    'problems',
   ]
   for (const rawGroup of flatGroups) {
     const type = RAW_GROUP_TO_TYPE[rawGroup]

@@ -30,8 +30,12 @@ function formatHourRange(hour: number): string {
  * which login outcomes actually get a row here (`'success'`/`'unauthorized'`/`'blocked'`) and
  * which can't be (a genuinely wrong password/no-such-account attempt). */
 export function useLoginReport() {
-  const { data: auditLog = [], isLoading: auditLoading, error: auditError, refetch: refetchAudit } =
-    useAuditLog()
+  const {
+    data: auditLog = [],
+    isLoading: auditLoading,
+    error: auditError,
+    refetch: refetchAudit,
+  } = useAuditLog()
   const {
     data: sessions = [],
     isLoading: sessionsLoading,
@@ -50,7 +54,9 @@ export function useLoginReport() {
     // that happened seconds ago (definitely "today") out of every stat on this page the instant
     // it's created. Falling back to "now" instead means a brand-new event is always counted as
     // today, which is the only fallback that can't be wrong.
-    const todayEvents = loginEvents.filter((e) => (e.createdAt?.toDate?.() ?? new Date()) >= startOfToday)
+    const todayEvents = loginEvents.filter(
+      (e) => (e.createdAt?.toDate?.() ?? new Date()) >= startOfToday
+    )
 
     const successToday = todayEvents.filter((e) => e.result === 'success')
     const unauthorizedToday = todayEvents.filter((e) => e.result === 'unauthorized')
@@ -82,7 +88,8 @@ export function useLoginReport() {
       ipAddressesToday: ipSetToday.size,
       failedAttemptsToday: unauthorizedToday.length + blockedToday.length,
       unauthorizedToday: unauthorizedToday.length,
-      blockedIpsToday: new Set(blockedToday.map((e) => e.ip).filter((ip): ip is string => !!ip)).size,
+      blockedIpsToday: new Set(blockedToday.map((e) => e.ip).filter((ip): ip is string => !!ip))
+        .size,
       busiestHourLabel: busiestHour == null ? null : formatHourRange(busiestHour),
     }
   }, [auditLog, sessions])

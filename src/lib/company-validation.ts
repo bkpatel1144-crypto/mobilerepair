@@ -72,7 +72,8 @@ export function validateCompany(v: CompanyFormValues): string | null {
     if (v.gstin.trim().length !== 15) return 'A GSTIN is 15 characters.'
     if (!v.pan.trim()) return 'PAN is required for a registered company.'
     if (v.pan.trim().length !== 10) return 'A PAN is 10 characters.'
-    if (!gstinContainsPan(v.gstin, v.pan)) return 'The GSTIN does not contain that PAN — check both.'
+    if (!gstinContainsPan(v.gstin, v.pan))
+      return 'The GSTIN does not contain that PAN — check both.'
   }
   return null
 }

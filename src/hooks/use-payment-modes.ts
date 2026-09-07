@@ -8,7 +8,9 @@ import { slugifyCode } from '@/lib/utils'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { EntityStatus, PaymentModeDoc } from '@/types/firestore'
 
-export interface PaymentModeWithId extends PaymentModeDoc { id: string }
+export interface PaymentModeWithId extends PaymentModeDoc {
+  id: string
+}
 
 export function paymentModesQueryKey(companyId: string | undefined) {
   return ['paymentModes', companyId] as const
@@ -20,7 +22,9 @@ export function usePaymentModes() {
 
   return useLiveQuery<(PaymentModeDoc & { id: string })[]>(
     paymentModesQueryKey(companyId),
-    companyId ? query(collection(db, paymentModesCollection(companyId)), orderBy('name', 'asc')) : null,
+    companyId
+      ? query(collection(db, paymentModesCollection(companyId)), orderBy('name', 'asc'))
+      : null,
     (docs) => {
       const rows = docs as (PaymentModeDoc & { id: string })[]
       return ((rows) => rows)(rows)
@@ -39,10 +43,18 @@ export interface PaymentModeInput {
 
 /** Clears any other row's `isDefault` in the same batch — at most one payment mode may be the
  * default at a time (same "only one active FY" single-flag pattern as Phase 2/10). */
-function clearOtherDefaults(batch: ReturnType<typeof writeBatch>, companyId: string, existing: PaymentModeWithId[], exceptId?: string) {
+function clearOtherDefaults(
+  batch: ReturnType<typeof writeBatch>,
+  companyId: string,
+  existing: PaymentModeWithId[],
+  exceptId?: string
+) {
   for (const mode of existing) {
     if (mode.isDefault && mode.id !== exceptId) {
-      batch.update(doc(db, paymentModeDoc(companyId, mode.id)), { isDefault: false, updatedAt: serverTimestamp() })
+      batch.update(doc(db, paymentModeDoc(companyId, mode.id)), {
+        isDefault: false,
+        updatedAt: serverTimestamp(),
+      })
     }
   }
 }
@@ -121,7 +133,10 @@ export function useSetPaymentModeStatus() {
   return useMutation({
     mutationFn: async (input: { id: string; status: EntityStatus; modeName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, paymentModeDoc(companyId, input.id)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, paymentModeDoc(companyId, input.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Activate' : 'Deactivate',
         module: 'masters',

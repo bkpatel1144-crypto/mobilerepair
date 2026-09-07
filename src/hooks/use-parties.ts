@@ -1,5 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, getDocs, orderBy, query, serverTimestamp, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  serverTimestamp,
+  writeBatch,
+} from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { partiesCollection, partyDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
@@ -69,7 +77,9 @@ export function useCreateParty() {
       const seq = await getNextSequence(companyId, 'parties')
       const ref = doc(collection(db, partiesCollection(companyId)))
       const now = serverTimestamp()
-      const partyTypes: ('customer' | 'supplier')[] = input.partyTypes?.length ? input.partyTypes : ['customer']
+      const partyTypes: ('customer' | 'supplier')[] = input.partyTypes?.length
+        ? input.partyTypes
+        : ['customer']
       const data: PartyDoc = {
         partyNumber: formatPartyId(fy.name, seq),
         name: input.name,
@@ -121,7 +131,9 @@ export function useUpdateParty() {
 
   return useMutation({
     mutationFn: async (input: UpdatePartyInput) => {
-      const partyTypes: ('customer' | 'supplier')[] = input.partyTypes?.length ? input.partyTypes : ['customer']
+      const partyTypes: ('customer' | 'supplier')[] = input.partyTypes?.length
+        ? input.partyTypes
+        : ['customer']
       const batch = writeBatch(db)
       batch.update(doc(db, partyDoc(companyId, input.id)), {
         name: input.name,
@@ -172,7 +184,12 @@ export function useSetPartyStatus() {
         updatedAt: serverTimestamp(),
       })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
-        action: input.status === 'deleted' ? 'Delete' : input.status === 'active' ? 'Activate' : 'Deactivate',
+        action:
+          input.status === 'deleted'
+            ? 'Delete'
+            : input.status === 'active'
+              ? 'Activate'
+              : 'Deactivate',
         module: 'masters',
         entityType: 'Party',
         entityId: input.id,

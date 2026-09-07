@@ -141,7 +141,12 @@ export function FinancialYearsPage() {
       ),
     },
     { key: 'start', header: 'Start Date', render: (f) => formatDateShort(f.startDate) },
-    { key: 'end', header: 'End Date', hideOnMobile: true, render: (f) => formatDateShort(f.endDate) },
+    {
+      key: 'end',
+      header: 'End Date',
+      hideOnMobile: true,
+      render: (f) => formatDateShort(f.endDate),
+    },
     {
       key: 'status',
       header: 'Status',
@@ -163,7 +168,12 @@ export function FinancialYearsPage() {
           </span>
         ),
     },
-    { key: 'created', header: 'Created', hideOnMobile: true, render: (f) => formatDateShort(f.createdAt) },
+    {
+      key: 'created',
+      header: 'Created',
+      hideOnMobile: true,
+      render: (f) => formatDateShort(f.createdAt),
+    },
     {
       key: 'actions',
       header: 'Actions',
@@ -198,8 +208,8 @@ export function FinancialYearsPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               {/* "Close" is the accounting sense of the word — lock the year so nothing further
-                * can be posted into it. Named as the reference names it, with Unlock shown when
-                * it is already closed so the action is never a one-way door. */}
+               * can be posted into it. Named as the reference names it, with Unlock shown when
+               * it is already closed so the action is never a one-way door. */}
               <DropdownMenuItem
                 onClick={() => {
                   setViewing(f)
@@ -286,7 +296,7 @@ export function FinancialYearsPage() {
           {createFy.isPending ? 'Creating…' : 'Create Next FY'}
         </Button>
         {/* The reference shows this hint whenever nothing is marked current; it explains why
-          * Create Next FY has nothing to count forward from. */}
+         * Create Next FY has nothing to count forward from. */}
         <p className="text-sm text-muted-foreground">
           {currentFy ? `Current: ${currentFy.name}` : 'Activate a financial year first'}
         </p>
@@ -335,18 +345,32 @@ export function FinancialYearsPage() {
           badges={
             <>
               {viewing.isCurrent && <StatusBadge status="Current" tone="warning" />}
-              <StatusBadge status={viewing.isActive ? 'Active' : 'Inactive'} tone={viewing.isActive ? 'success' : 'neutral'} dot />
+              <StatusBadge
+                status={viewing.isActive ? 'Active' : 'Inactive'}
+                tone={viewing.isActive ? 'success' : 'neutral'}
+                dot
+              />
               {viewing.isLocked && <StatusBadge status="Locked" icon={Lock} />}
             </>
           }
           actions={
             <>
               {!viewing.isCurrent && (
-                <Button type="button" size="sm" onClick={() => setConfirming('activate')} disabled={activateFy.isPending || viewing.isLocked}>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => setConfirming('activate')}
+                  disabled={activateFy.isPending || viewing.isLocked}
+                >
                   Activate
                 </Button>
               )}
-              <Button type="button" variant="outline" size="sm" onClick={() => setConfirming('lock')}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setConfirming('lock')}
+              >
                 {viewing.isLocked ? 'Unlock' : 'Lock'}
               </Button>
             </>
@@ -388,8 +412,8 @@ export function FinancialYearsPage() {
 
             {viewing.isLocked && (
               <DetailNote icon={Lock} title="Closed Period" tone="amber">
-                This year is closed. Existing records stay readable; it is reopened from the
-                Actions menu.
+                This year is closed. Existing records stay readable; it is reopened from the Actions
+                menu.
               </DetailNote>
             )}
 
@@ -399,7 +423,10 @@ export function FinancialYearsPage() {
               <DetailValue label="End Date" value={formatDateShort(viewing.endDate)} divider />
               <DetailValue
                 label="Duration"
-                value={formatFinancialYearDuration(viewing.startDate.toDate(), viewing.endDate.toDate())}
+                value={formatFinancialYearDuration(
+                  viewing.startDate.toDate(),
+                  viewing.endDate.toDate()
+                )}
               />
             </DetailBlock>
 
@@ -431,7 +458,12 @@ export function FinancialYearsPage() {
       >
         <div className="space-y-1.5">
           <Label>Name *</Label>
-          <Input value={nameInput} onChange={(e) => setNameInput(e.target.value.slice(0, 20))} placeholder="e.g., FY 2025-26" autoFocus />
+          <Input
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value.slice(0, 20))}
+            placeholder="e.g., FY 2025-26"
+            autoFocus
+          />
           <p className="text-xs text-muted-foreground">{nameInput.length}/20 characters</p>
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -466,14 +498,32 @@ export function FinancialYearsPage() {
                 ? 'Unlocking reopens this period — a closed accounting period becomes editable again.'
                 : 'Locking this period is advisory in this build — no other feature currently checks it before posting a new transaction.'
           }
-          confirmLabel={confirming === 'activate' ? 'Activate' : viewing.isLocked ? 'Unlock' : 'Lock'}
+          confirmLabel={
+            confirming === 'activate' ? 'Activate' : viewing.isLocked ? 'Unlock' : 'Lock'
+          }
           destructive={confirming === 'activate' || viewing.isLocked}
           isPending={confirming === 'activate' ? activateFy.isPending : setLock.isPending}
           onConfirm={() => {
             if (confirming === 'activate') {
-              activateFy.mutate({ target: viewing, allFYs: fys }, { onSuccess: () => { setConfirming(null); setViewing(null) } })
+              activateFy.mutate(
+                { target: viewing, allFYs: fys },
+                {
+                  onSuccess: () => {
+                    setConfirming(null)
+                    setViewing(null)
+                  },
+                }
+              )
             } else {
-              setLock.mutate({ id: viewing.id, isLocked: !viewing.isLocked, name: viewing.name }, { onSuccess: () => { setConfirming(null); setViewing(null) } })
+              setLock.mutate(
+                { id: viewing.id, isLocked: !viewing.isLocked, name: viewing.name },
+                {
+                  onSuccess: () => {
+                    setConfirming(null)
+                    setViewing(null)
+                  },
+                }
+              )
             }
           }}
         />

@@ -28,12 +28,18 @@ export function ReceivablesPage() {
 
   const filtered = data.rows.filter((r) =>
     search.trim()
-      ? `${r.job.jobNumber} ${r.job.customerName} ${r.job.customerMobile}`.toLowerCase().includes(search.toLowerCase())
+      ? `${r.job.jobNumber} ${r.job.customerName} ${r.job.customerMobile}`
+          .toLowerCase()
+          .includes(search.toLowerCase())
       : true
   )
 
   const columns: DataTableColumn<ReceivableRow>[] = [
-    { key: 'job', header: 'Job Card', render: (r) => <span className="font-semibold">{r.job.jobNumber}</span> },
+    {
+      key: 'job',
+      header: 'Job Card',
+      render: (r) => <span className="font-semibold">{r.job.jobNumber}</span>,
+    },
     {
       key: 'customer',
       header: 'Customer',
@@ -44,10 +50,31 @@ export function ReceivablesPage() {
         </div>
       ),
     },
-    { key: 'device', header: 'Device', hideOnMobile: true, render: (r) => [r.job.brandName, r.job.model].filter(Boolean).join(' ') || r.job.deviceTypeName },
-    { key: 'created', header: 'Created', hideOnMobile: true, render: (r) => formatTimestamp(r.job.createdAt) },
-    { key: 'aging', header: 'Aging', sortValue: (r) => r.daysOld, render: (r) => `${r.daysOld}d (${BUCKET_LABELS[r.bucket]})` },
-    { key: 'outstanding', header: 'Outstanding', sortValue: (r) => r.outstanding, render: (r) => <span className="font-medium text-red-600">₹{r.outstanding}</span> },
+    {
+      key: 'device',
+      header: 'Device',
+      hideOnMobile: true,
+      render: (r) =>
+        [r.job.brandName, r.job.model].filter(Boolean).join(' ') || r.job.deviceTypeName,
+    },
+    {
+      key: 'created',
+      header: 'Created',
+      hideOnMobile: true,
+      render: (r) => formatTimestamp(r.job.createdAt),
+    },
+    {
+      key: 'aging',
+      header: 'Aging',
+      sortValue: (r) => r.daysOld,
+      render: (r) => `${r.daysOld}d (${BUCKET_LABELS[r.bucket]})`,
+    },
+    {
+      key: 'outstanding',
+      header: 'Outstanding',
+      sortValue: (r) => r.outstanding,
+      render: (r) => <span className="font-medium text-red-600">₹{r.outstanding}</span>,
+    },
   ]
 
   return (
@@ -57,7 +84,13 @@ export function ReceivablesPage() {
         title="Receivables"
         subtitle="Outstanding amounts across every active job card"
         actions={
-          <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
+            }
+          >
             <RefreshCw className="size-4" />
             Refresh
           </Button>
@@ -73,11 +106,20 @@ export function ReceivablesPage() {
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {(Object.keys(BUCKET_LABELS) as AgingBucket[]).map((b) => (
-          <StatCard key={b} label={BUCKET_LABELS[b]} value={`₹${data.buckets[b]}`} tone={b === '90+' ? 'danger' : b === '60-90' ? 'warning' : 'default'} />
+          <StatCard
+            key={b}
+            label={BUCKET_LABELS[b]}
+            value={`₹${data.buckets[b]}`}
+            tone={b === '90+' ? 'danger' : b === '60-90' ? 'warning' : 'default'}
+          />
         ))}
       </div>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search job card, customer, mobile..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search job card, customer, mobile..."
+      />
 
       <DataTable
         columns={columns}

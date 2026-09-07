@@ -8,7 +8,9 @@ import { slugifyCode } from '@/lib/utils'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { EntityStatus, UomDoc } from '@/types/firestore'
 
-export interface UomWithId extends UomDoc { id: string }
+export interface UomWithId extends UomDoc {
+  id: string
+}
 
 export function uomQueryKey(companyId: string | undefined) {
   return ['uom', companyId] as const
@@ -20,7 +22,9 @@ export function useUoms() {
 
   return useLiveQuery<(UomDoc & { id: string })[]>(
     uomQueryKey(companyId),
-    companyId ? query(collection(db, uomCollection(companyId)), orderBy('displayOrder', 'asc')) : null,
+    companyId
+      ? query(collection(db, uomCollection(companyId)), orderBy('displayOrder', 'asc'))
+      : null,
     (docs) => {
       const rows = docs as (UomDoc & { id: string })[]
       return ((rows) => rows)(rows)
@@ -121,7 +125,10 @@ export function useSetUomStatus() {
   return useMutation({
     mutationFn: async (input: { id: string; status: EntityStatus; uomName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, uomDoc(companyId, input.id)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, uomDoc(companyId, input.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Activate' : 'Deactivate',
         module: 'masters',

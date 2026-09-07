@@ -2,7 +2,13 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import type { ServiceOptionWithId } from '@/hooks/use-service-options'
 
 interface AddOptionFormProps {
@@ -29,7 +35,9 @@ export function AddOptionForm({
   onSubmit,
 }: AddOptionFormProps) {
   const [label, setLabel] = useState('')
-  const [deviceTypeIds, setDeviceTypeIds] = useState<string[]>(defaultScopeId ? [defaultScopeId] : [])
+  const [deviceTypeIds, setDeviceTypeIds] = useState<string[]>(
+    defaultScopeId ? [defaultScopeId] : []
+  )
   const [brandId, setBrandId] = useState<string | undefined>(defaultScopeId)
 
   function handleSubmit() {
@@ -56,7 +64,9 @@ export function AddOptionForm({
 
       {deviceTypeOptions && (
         <div className="space-y-1">
-          <p className="text-xs text-muted-foreground">Device type(s) — check more than one to share this brand</p>
+          <p className="text-xs text-muted-foreground">
+            Device type(s) — check more than one to share this brand
+          </p>
           <div className="flex flex-wrap gap-x-4 gap-y-1">
             {deviceTypeOptions.map((dt) => (
               <label key={dt.id} className="flex items-center gap-1.5 text-sm">

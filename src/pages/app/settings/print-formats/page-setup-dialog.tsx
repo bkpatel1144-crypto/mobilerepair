@@ -3,7 +3,13 @@ import { FormModal } from '@/components/shared/form-modal'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import type { DesignerDraft } from './use-designer-state'
 
 /** Paper, margins and output settings for one template. Everything here is undoable through the
@@ -42,7 +48,9 @@ export function PageSetupDialog({
               type="number"
               value={draft.paper.width}
               onChange={(e) =>
-                onChange({ paper: { ...draft.paper, width: num(e.target.value, draft.paper.width) } })
+                onChange({
+                  paper: { ...draft.paper, width: num(e.target.value, draft.paper.width) },
+                })
               }
             />
           </div>
@@ -52,7 +60,9 @@ export function PageSetupDialog({
               type="number"
               value={draft.paper.height}
               onChange={(e) =>
-                onChange({ paper: { ...draft.paper, height: num(e.target.value, draft.paper.height) } })
+                onChange({
+                  paper: { ...draft.paper, height: num(e.target.value, draft.paper.height) },
+                })
               }
             />
           </div>
@@ -61,7 +71,8 @@ export function PageSetupDialog({
             <Select
               value={draft.paper.orientation}
               onValueChange={(v) =>
-                v && onChange({ paper: { ...draft.paper, orientation: v as 'portrait' | 'landscape' } })
+                v &&
+                onChange({ paper: { ...draft.paper, orientation: v as 'portrait' | 'landscape' } })
               }
             >
               <SelectTrigger className="w-full">
@@ -87,7 +98,9 @@ export function PageSetupDialog({
                 step="0.5"
                 value={draft.margins[side]}
                 onChange={(e) =>
-                  onChange({ margins: { ...draft.margins, [side]: num(e.target.value, draft.margins[side]) } })
+                  onChange({
+                    margins: { ...draft.margins, [side]: num(e.target.value, draft.margins[side]) },
+                  })
                 }
               />
             </div>
@@ -105,7 +118,9 @@ export function PageSetupDialog({
               min={1}
               value={draft.settings.copies}
               onChange={(e) =>
-                onChange({ settings: { ...draft.settings, copies: Math.max(1, num(e.target.value, 1)) } })
+                onChange({
+                  settings: { ...draft.settings, copies: Math.max(1, num(e.target.value, 1)) },
+                })
               }
             />
           </div>
@@ -116,7 +131,9 @@ export function PageSetupDialog({
               step="0.5"
               value={draft.settings.gapMm}
               onChange={(e) =>
-                onChange({ settings: { ...draft.settings, gapMm: num(e.target.value, draft.settings.gapMm) } })
+                onChange({
+                  settings: { ...draft.settings, gapMm: num(e.target.value, draft.settings.gapMm) },
+                })
               }
             />
           </div>
@@ -161,8 +178,8 @@ export function PageSetupDialog({
         <p className="flex gap-2 text-xs text-amber-800 dark:text-amber-400">
           <Info className="mt-0.5 size-4 shrink-0" />
           <span>
-            Saved with the template, but only applied by the Print Agent. These are printer
-            firmware commands — printing from this browser uses its own dialog and ignores them.
+            Saved with the template, but only applied by the Print Agent. These are printer firmware
+            commands — printing from this browser uses its own dialog and ignores them.
           </span>
         </p>
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(7rem,1fr))]">
@@ -180,7 +197,12 @@ export function PageSetupDialog({
                 min={1}
                 value={draft.settings[key]}
                 onChange={(e) =>
-                  onChange({ settings: { ...draft.settings, [key]: num(e.target.value, draft.settings[key]) } })
+                  onChange({
+                    settings: {
+                      ...draft.settings,
+                      [key]: num(e.target.value, draft.settings[key]),
+                    },
+                  })
                 }
               />
             </div>

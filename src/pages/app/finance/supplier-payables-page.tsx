@@ -28,7 +28,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   useSupplierPayables,
   useSupplierBills,
@@ -44,7 +50,11 @@ import { downloadCsv } from '@/lib/csv-export'
 import { cn } from '@/lib/utils'
 import type { ReceiptDoc } from '@/types/firestore'
 
-const BUCKET_LABELS: { key: SupplierPayable['bucket']; label: string; tone: 'success' | 'warning' | 'danger' }[] = [
+const BUCKET_LABELS: {
+  key: SupplierPayable['bucket']
+  label: string
+  tone: 'success' | 'warning' | 'danger'
+}[] = [
   { key: 'current', label: 'Current', tone: 'success' },
   { key: '1-30', label: '1–30 days', tone: 'warning' },
   { key: '31-60', label: '31–60 days', tone: 'warning' },
@@ -53,11 +63,18 @@ const BUCKET_LABELS: { key: SupplierPayable['bucket']; label: string; tone: 'suc
 
 function agingBadge(p: SupplierPayable) {
   if (p.daysOverdue <= 0) return <StatusBadge status="Current" tone="success" />
-  if (p.daysOverdue <= 30) return <StatusBadge status={`${p.daysOverdue}d overdue`} tone="warning" />
+  if (p.daysOverdue <= 30)
+    return <StatusBadge status={`${p.daysOverdue}d overdue`} tone="warning" />
   return <StatusBadge status={`${p.daysOverdue}d overdue`} tone="danger" />
 }
 
-function NewBillModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+function NewBillModal({
+  open,
+  onOpenChange,
+}: {
+  open: boolean
+  onOpenChange: (o: boolean) => void
+}) {
   const create = useCreateSupplierBill()
   const { data: parties = [] } = useParties()
   const createParty = useCreateParty()
@@ -73,7 +90,9 @@ function NewBillModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o:
 
   // Same rule the Job Costing supplier picker uses: a party with no types set is still
   // offerable, since plenty of parties were created before types were being recorded.
-  const suppliers = parties.filter((p) => p.partyTypes.includes('supplier') || p.partyTypes.length === 0)
+  const suppliers = parties.filter(
+    (p) => p.partyTypes.includes('supplier') || p.partyTypes.length === 0
+  )
   const supplier = parties.find((p) => p.id === supplierId)
 
   function reset() {
@@ -136,7 +155,11 @@ function NewBillModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o:
           Supplier <span className="text-red-600">*</span>
         </Label>
         <SearchSelect
-          options={suppliers.map((p) => ({ id: p.id, label: p.name, helper: p.mobile || undefined }))}
+          options={suppliers.map((p) => ({
+            id: p.id,
+            label: p.name,
+            helper: p.mobile || undefined,
+          }))}
           value={supplierId}
           onChange={setSupplierId}
           placeholder="Search supplier..."
@@ -152,7 +175,8 @@ function NewBillModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o:
       <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))]">
         <div className="space-y-1.5">
           <Label htmlFor="sb-ref">
-            Their invoice # <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+            Their invoice #{' '}
+            <span className="text-xs font-normal text-muted-foreground">(optional)</span>
           </Label>
           <Input
             id="sb-ref"
@@ -182,14 +206,26 @@ function NewBillModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o:
           <Label htmlFor="sb-date">
             Bill date <span className="text-red-600">*</span>
           </Label>
-          <Input id="sb-date" type="date" value={billDate} onChange={(e) => setBillDate(e.target.value)} />
+          <Input
+            id="sb-date"
+            type="date"
+            value={billDate}
+            onChange={(e) => setBillDate(e.target.value)}
+          />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="sb-due">
             Due date <span className="text-xs font-normal text-muted-foreground">(optional)</span>
           </Label>
-          <Input id="sb-due" type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
-          <p className="text-xs text-muted-foreground">Left empty, the bill ages from its bill date.</p>
+          <Input
+            id="sb-due"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+          />
+          <p className="text-xs text-muted-foreground">
+            Left empty, the bill ages from its bill date.
+          </p>
         </div>
       </div>
 
@@ -301,7 +337,12 @@ function PaymentModal({
         <Label htmlFor="pay-notes">
           Notes <span className="text-xs font-normal text-muted-foreground">(optional)</span>
         </Label>
-        <Textarea id="pay-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
+        <Textarea
+          id="pay-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+        />
       </div>
 
       <p className="text-xs text-muted-foreground">
@@ -330,7 +371,9 @@ export function SupplierPayablesPage() {
       bucketFilter === 'all' ? g : { ...g, items: g.items.filter((i) => i.bucket === bucketFilter) }
     )
     .filter((g) => g.items.length > 0)
-    .filter((g) => (search.trim() ? g.supplierName.toLowerCase().includes(search.toLowerCase()) : true))
+    .filter((g) =>
+      search.trim() ? g.supplierName.toLowerCase().includes(search.toLowerCase()) : true
+    )
     .map((g) => ({
       ...g,
       outstanding: g.items.reduce((s, i) => s + i.outstanding, 0),
@@ -380,7 +423,11 @@ export function SupplierPayablesPage() {
           />
         ),
     },
-    { key: 'go', header: '', render: () => <ChevronRight className="size-4 text-muted-foreground" /> },
+    {
+      key: 'go',
+      header: '',
+      render: () => <ChevronRight className="size-4 text-muted-foreground" />,
+    },
   ]
 
   return (
@@ -445,7 +492,7 @@ export function SupplierPayablesPage() {
           </StatCardGrid>
 
           {/* Aging buckets double as the filter — clicking one is how you get to "show me only
-            * what's badly overdue", which is the question this page is opened to answer. */}
+           * what's badly overdue", which is the question this page is opened to answer. */}
           <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))]">
             {BUCKET_LABELS.map((b) => {
               const selected = bucketFilter === b.key
@@ -458,7 +505,9 @@ export function SupplierPayablesPage() {
                   onClick={() => setBucketFilter(selected ? 'all' : b.key)}
                   className={cn(
                     'rounded-xl border p-4 text-left transition-colors',
-                    selected ? 'border-teal-600 bg-teal-50 dark:bg-teal-500/10' : 'hover:bg-muted/50'
+                    selected
+                      ? 'border-teal-600 bg-teal-50 dark:bg-teal-500/10'
+                      : 'hover:bg-muted/50'
                   )}
                 >
                   <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
@@ -484,7 +533,12 @@ export function SupplierPayablesPage() {
             searchPlaceholder="Search supplier..."
           >
             {bucketFilter !== 'all' && (
-              <Button type="button" variant="ghost" size="sm" onClick={() => setBucketFilter('all')}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setBucketFilter('all')}
+              >
                 Clear age filter
               </Button>
             )}
@@ -518,7 +572,11 @@ export function SupplierPayablesPage() {
         onOpenChange={(o) => !o && setViewing(null)}
         icon={Truck}
         title={viewing?.supplierName ?? ''}
-        subtitle={viewing ? `₹${viewing.outstanding} outstanding across ${viewing.items.length} item(s)` : ''}
+        subtitle={
+          viewing
+            ? `₹${viewing.outstanding} outstanding across ${viewing.items.length} item(s)`
+            : ''
+        }
       >
         <div className="space-y-2">
           {viewing?.items
@@ -552,7 +610,9 @@ export function SupplierPayablesPage() {
                     </div>
                     <div>
                       <dt className="text-xs text-muted-foreground uppercase">Paid</dt>
-                      <dd className="font-medium text-teal-600 dark:text-teal-400">₹{item.amountPaid}</dd>
+                      <dd className="font-medium text-teal-600 dark:text-teal-400">
+                        ₹{item.amountPaid}
+                      </dd>
                     </div>
                     <div>
                       <dt className="text-xs text-muted-foreground uppercase">Due</dt>
@@ -566,7 +626,7 @@ export function SupplierPayablesPage() {
                       Record Payment
                     </Button>
                     {/* Only a bill can be voided — a device purchase is voided from its own
-                      * register, where the device's status lives. */}
+                     * register, where the device's status lives. */}
                     {item.kind === 'bill' && bill && (
                       <Button
                         type="button"

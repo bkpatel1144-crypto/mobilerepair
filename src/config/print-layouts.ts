@@ -1,4 +1,9 @@
-import type { PrintBand, PrintDocumentType, PrintElement, PrintElementStyle } from '@/types/firestore'
+import type {
+  PrintBand,
+  PrintDocumentType,
+  PrintElement,
+  PrintElementStyle,
+} from '@/types/firestore'
 import type { PrintPresetDef } from '@/config/print-presets'
 
 /**
@@ -39,8 +44,21 @@ export function makeStyle(patch: Partial<PrintElementStyle> = {}): PrintElementS
 /** A declarative row, resolved into a positioned `PrintElement` by `buildBand()`. */
 type Row =
   | { kind: 'field'; fieldKey: string; label: string; bold?: boolean; size?: number }
-  | { kind: 'value'; fieldKey: string; bold?: boolean; size?: number; align?: 'left' | 'center' | 'right' }
-  | { kind: 'text'; text: string; bold?: boolean; size?: number; align?: 'left' | 'center' | 'right'; muted?: boolean }
+  | {
+      kind: 'value'
+      fieldKey: string
+      bold?: boolean
+      size?: number
+      align?: 'left' | 'center' | 'right'
+    }
+  | {
+      kind: 'text'
+      text: string
+      bold?: boolean
+      size?: number
+      align?: 'left' | 'center' | 'right'
+      muted?: boolean
+    }
   | { kind: 'section'; text: string }
   | { kind: 'rule' }
   | { kind: 'space'; mm: number }
@@ -53,7 +71,11 @@ function nextId(): string {
 
 /** Stacks `rows` down a band of `contentWidth` mm, returning positioned elements plus the total
  * height consumed — the caller uses that height to size the band itself. */
-function buildBand(band: PrintBand, rows: Row[], contentWidth: number): { elements: PrintElement[]; height: number } {
+function buildBand(
+  band: PrintBand,
+  rows: Row[],
+  contentWidth: number
+): { elements: PrintElement[]; height: number } {
   const elements: PrintElement[] = []
   let y = 0
   let z = 0
@@ -94,7 +116,11 @@ function buildBand(band: PrintBand, rows: Row[], contentWidth: number): { elemen
           ...base(
             'field',
             LINE_H,
-            makeStyle({ fontSize: row.size ?? 8, bold: row.bold ?? false, align: row.align ?? 'left' })
+            makeStyle({
+              fontSize: row.size ?? 8,
+              bold: row.bold ?? false,
+              align: row.align ?? 'left',
+            })
           ),
           fieldKey: row.fieldKey,
           showLabel: false,
@@ -146,7 +172,13 @@ const SHOP_HEADER: Row[] = [
 
 const THANKS_FOOTER: Row[] = [
   { kind: 'text', text: 'Thank you for choosing us!', bold: true, size: 8.5, align: 'center' },
-  { kind: 'text', text: 'Please keep this receipt for reference.', size: 6.5, align: 'center', muted: true },
+  {
+    kind: 'text',
+    text: 'Please keep this receipt for reference.',
+    size: 6.5,
+    align: 'center',
+    muted: true,
+  },
 ]
 
 /** Per-document-type detail content. Keys not listed fall back to `GENERIC_DETAIL`. */
@@ -253,13 +285,14 @@ export function buildDefaultLayout(preset: PrintPresetDef): BuiltLayout {
   const header = buildBand('header', SHOP_HEADER, contentWidth)
   const detail = buildBand(
     'detail',
-    [
-      { kind: 'space', mm: GAP_MD },
-      ...(DETAIL_ROWS[preset.documentType] ?? GENERIC_DETAIL),
-    ],
+    [{ kind: 'space', mm: GAP_MD }, ...(DETAIL_ROWS[preset.documentType] ?? GENERIC_DETAIL)],
     contentWidth
   )
-  const footer = buildBand('footer', [{ kind: 'space', mm: GAP_MD }, ...THANKS_FOOTER], contentWidth)
+  const footer = buildBand(
+    'footer',
+    [{ kind: 'space', mm: GAP_MD }, ...THANKS_FOOTER],
+    contentWidth
+  )
 
   return {
     elements: [...header.elements, ...detail.elements, ...footer.elements],

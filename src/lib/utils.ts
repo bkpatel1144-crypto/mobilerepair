@@ -10,7 +10,8 @@ export function cn(...inputs: ClassValue[]) {
  * circle in the app (people pickers like Assign To / Handover To). */
 export function getInitials(name: string) {
   const parts = name.trim().split(/\s+/)
-  const initials = parts.length === 1 ? parts[0].slice(0, 2) : parts[0][0] + parts[parts.length - 1][0]
+  const initials =
+    parts.length === 1 ? parts[0].slice(0, 2) : parts[0][0] + parts[parts.length - 1][0]
   return initials.toUpperCase()
 }
 
@@ -35,7 +36,12 @@ export function formatTimestamp(
   withTime = true
 ): string {
   if (!ts?.toDate) return '—'
-  return ts.toDate().toLocaleString('en-IN', withTime ? { dateStyle: 'medium', timeStyle: 'short' } : { dateStyle: 'medium' })
+  return ts
+    .toDate()
+    .toLocaleString(
+      'en-IN',
+      withTime ? { dateStyle: 'medium', timeStyle: 'short' } : { dateStyle: 'medium' }
+    )
 }
 
 /**
@@ -46,7 +52,20 @@ export function formatTimestamp(
  * so a date column would read differently depending on the user's browser and OS. Table columns
  * also align better with a fixed-width day.
  */
-const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const MONTHS_SHORT = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
 
 export function formatDateShort(ts: { toDate?: () => Date } | Date | null | undefined): string {
   const d = ts instanceof Date ? ts : ts?.toDate?.()

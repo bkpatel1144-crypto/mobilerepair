@@ -155,7 +155,11 @@ export const PRINT_FIELDS: Record<PrintDocumentType, PrintFieldDef[]> = {
  * never a real record, since the builder has no specific entity to bind to until something is
  * actually printed. */
 export function samplePrintContext(type: PrintDocumentType): Record<string, string> {
-  const base: Record<string, string> = { shopName: 'Your Shop Name', shopPhone: '98765 43210', printedAt: new Date().toLocaleString('en-IN') }
+  const base: Record<string, string> = {
+    shopName: 'Your Shop Name',
+    shopPhone: '98765 43210',
+    printedAt: new Date().toLocaleString('en-IN'),
+  }
   for (const field of PRINT_FIELDS[type]) {
     if (!(field.key in base)) base[field.key] = `Sample ${field.label}`
   }

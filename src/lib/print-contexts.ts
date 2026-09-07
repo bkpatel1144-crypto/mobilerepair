@@ -18,7 +18,10 @@ function shopFields(company: CompanyWithId | null | undefined): PrintContext {
 /** Backs the Job Card detail page's "Print Job Card"/"Print Label" buttons (`jobCard`/
  * `deviceTagLabel` templates) — real field values, not the honest-but-fake `window.print()` stub
  * this replaces. */
-export function jobCardPrintContext(job: JobCardWithId, company: CompanyWithId | null | undefined): PrintContext {
+export function jobCardPrintContext(
+  job: JobCardWithId,
+  company: CompanyWithId | null | undefined
+): PrintContext {
   return {
     ...shopFields(company),
     jobNumber: job.jobNumber,
@@ -38,7 +41,10 @@ export function jobCardPrintContext(job: JobCardWithId, company: CompanyWithId |
 }
 
 /** Backs "Print Bill" (`jobCardBill` template). */
-export function jobCardBillPrintContext(job: JobCardWithId, company: CompanyWithId | null | undefined): PrintContext {
+export function jobCardBillPrintContext(
+  job: JobCardWithId,
+  company: CompanyWithId | null | undefined
+): PrintContext {
   const partsSummary = [
     ...job.partsUsed.map((p) => `${p.itemName} x${p.qty} - ${formatCurrency(p.rate * p.qty)}`),
     ...job.serviceItems.map((s) => `${s.itemName} - ${formatCurrency(s.price)}`),
@@ -60,7 +66,10 @@ export function jobCardBillPrintContext(job: JobCardWithId, company: CompanyWith
   }
 }
 
-export function secondHandPurchaseReceiptContext(purchase: SecondHandPurchaseWithId, company: CompanyWithId | null | undefined): PrintContext {
+export function secondHandPurchaseReceiptContext(
+  purchase: SecondHandPurchaseWithId,
+  company: CompanyWithId | null | undefined
+): PrintContext {
   return {
     ...shopFields(company),
     purchaseNumber: purchase.purchaseNumber,
@@ -77,7 +86,15 @@ export function secondHandPurchaseReceiptContext(purchase: SecondHandPurchaseWit
 }
 
 export function secondHandDeviceLabelContext(
-  device: { deviceTypeName: string | null; brandName: string | null; model: string | null; imei: string | null; conditionGrade?: string; purchaseNumber?: string; price?: number },
+  device: {
+    deviceTypeName: string | null
+    brandName: string | null
+    model: string | null
+    imei: string | null
+    conditionGrade?: string
+    purchaseNumber?: string
+    price?: number
+  },
   company: CompanyWithId | null | undefined
 ): PrintContext {
   return {
@@ -92,7 +109,10 @@ export function secondHandDeviceLabelContext(
   }
 }
 
-export function secondHandSaleInvoiceContext(sale: SecondHandSaleWithId, company: CompanyWithId | null | undefined): PrintContext {
+export function secondHandSaleInvoiceContext(
+  sale: SecondHandSaleWithId,
+  company: CompanyWithId | null | undefined
+): PrintContext {
   return {
     ...shopFields(company),
     saleNumber: sale.saleNumber,
@@ -105,7 +125,10 @@ export function secondHandSaleInvoiceContext(sale: SecondHandSaleWithId, company
   }
 }
 
-export function paymentReceiptContext(receipt: ReceiptWithId, company: CompanyWithId | null | undefined): PrintContext {
+export function paymentReceiptContext(
+  receipt: ReceiptWithId,
+  company: CompanyWithId | null | undefined
+): PrintContext {
   return {
     ...shopFields(company),
     receiptNumber: receipt.receiptNumber,

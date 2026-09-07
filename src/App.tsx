@@ -73,16 +73,24 @@ const CreateUserPage = lazy(() =>
   import('@/pages/app/administration/create-user-page').then((m) => ({ default: m.CreateUserPage }))
 )
 const ActiveSessionsPage = lazy(() =>
-  import('@/pages/app/administration/active-sessions-page').then((m) => ({ default: m.ActiveSessionsPage }))
+  import('@/pages/app/administration/active-sessions-page').then((m) => ({
+    default: m.ActiveSessionsPage,
+  }))
 )
 const IpWhitelistPage = lazy(() =>
-  import('@/pages/app/administration/ip-whitelist-page').then((m) => ({ default: m.IpWhitelistPage }))
+  import('@/pages/app/administration/ip-whitelist-page').then((m) => ({
+    default: m.IpWhitelistPage,
+  }))
 )
 const LoginReportPage = lazy(() =>
-  import('@/pages/app/administration/login-report-page').then((m) => ({ default: m.LoginReportPage }))
+  import('@/pages/app/administration/login-report-page').then((m) => ({
+    default: m.LoginReportPage,
+  }))
 )
 const SystemAuditPage = lazy(() =>
-  import('@/pages/app/administration/system-audit-page').then((m) => ({ default: m.SystemAuditPage }))
+  import('@/pages/app/administration/system-audit-page').then((m) => ({
+    default: m.SystemAuditPage,
+  }))
 )
 const WorkflowDesignerPage = lazy(() =>
   import('@/pages/app/settings/workflow-designer-page').then((m) => ({
@@ -103,7 +111,9 @@ const JobCardDetailPage = lazy(() =>
   }))
 )
 const ServiceOptionsPage = lazy(() =>
-  import('@/pages/app/service/service-options-page').then((m) => ({ default: m.ServiceOptionsPage }))
+  import('@/pages/app/service/service-options-page').then((m) => ({
+    default: m.ServiceOptionsPage,
+  }))
 )
 const JobCostingPage = lazy(() =>
   import('@/pages/app/service/job-costing-page').then((m) => ({ default: m.JobCostingPage }))
@@ -112,7 +122,9 @@ const ServiceItemsPage = lazy(() =>
   import('@/pages/app/service/service-items-page').then((m) => ({ default: m.ServiceItemsPage }))
 )
 const ReceiptsPaymentsPage = lazy(() =>
-  import('@/pages/app/finance/receipts-payments-page').then((m) => ({ default: m.ReceiptsPaymentsPage }))
+  import('@/pages/app/finance/receipts-payments-page').then((m) => ({
+    default: m.ReceiptsPaymentsPage,
+  }))
 )
 const PartyLedgerPage = lazy(() =>
   import('@/pages/app/finance/party-ledger-page').then((m) => ({ default: m.PartyLedgerPage }))
@@ -134,9 +146,13 @@ const SupplierPayablesPage = lazy(() =>
 const ExpensesPage = lazy(() =>
   import('@/pages/app/finance/expenses-page').then((m) => ({ default: m.ExpensesPage }))
 )
-const UomPage = lazy(() => import('@/pages/app/masters/uom-page').then((m) => ({ default: m.UomPage })))
+const UomPage = lazy(() =>
+  import('@/pages/app/masters/uom-page').then((m) => ({ default: m.UomPage }))
+)
 const ItemCategoriesPage = lazy(() =>
-  import('@/pages/app/masters/item-categories-page').then((m) => ({ default: m.ItemCategoriesPage }))
+  import('@/pages/app/masters/item-categories-page').then((m) => ({
+    default: m.ItemCategoriesPage,
+  }))
 )
 const ItemMasterPage = lazy(() =>
   import('@/pages/app/masters/item-master-page').then((m) => ({ default: m.ItemMasterPage }))
@@ -145,11 +161,17 @@ const PaymentModesPage = lazy(() =>
   import('@/pages/app/masters/payment-modes-page').then((m) => ({ default: m.PaymentModesPage }))
 )
 const PartyCategoriesPage = lazy(() =>
-  import('@/pages/app/masters/party-categories-page').then((m) => ({ default: m.PartyCategoriesPage }))
+  import('@/pages/app/masters/party-categories-page').then((m) => ({
+    default: m.PartyCategoriesPage,
+  }))
 )
-const PartiesPage = lazy(() => import('@/pages/app/masters/parties-page').then((m) => ({ default: m.PartiesPage })))
+const PartiesPage = lazy(() =>
+  import('@/pages/app/masters/parties-page').then((m) => ({ default: m.PartiesPage }))
+)
 const DevicePurchasePage = lazy(() =>
-  import('@/pages/app/second-hand-device/device-purchase-page').then((m) => ({ default: m.DevicePurchasePage }))
+  import('@/pages/app/second-hand-device/device-purchase-page').then((m) => ({
+    default: m.DevicePurchasePage,
+  }))
 )
 const CreateSecondHandPurchasePage = lazy(() =>
   import('@/pages/app/second-hand-device/create-purchase-page').then((m) => ({
@@ -157,19 +179,29 @@ const CreateSecondHandPurchasePage = lazy(() =>
   }))
 )
 const DeviceStockPage = lazy(() =>
-  import('@/pages/app/second-hand-device/device-stock-page').then((m) => ({ default: m.DeviceStockPage }))
+  import('@/pages/app/second-hand-device/device-stock-page').then((m) => ({
+    default: m.DeviceStockPage,
+  }))
 )
 const DeviceSalePage = lazy(() =>
-  import('@/pages/app/second-hand-device/device-sale-page').then((m) => ({ default: m.DeviceSalePage }))
+  import('@/pages/app/second-hand-device/device-sale-page').then((m) => ({
+    default: m.DeviceSalePage,
+  }))
 )
 const PurchaseRegisterPage = lazy(() =>
-  import('@/pages/app/second-hand-device/purchase-register-page').then((m) => ({ default: m.PurchaseRegisterPage }))
+  import('@/pages/app/second-hand-device/purchase-register-page').then((m) => ({
+    default: m.PurchaseRegisterPage,
+  }))
 )
 const SaleRegisterPage = lazy(() =>
-  import('@/pages/app/second-hand-device/sale-register-page').then((m) => ({ default: m.SaleRegisterPage }))
+  import('@/pages/app/second-hand-device/sale-register-page').then((m) => ({
+    default: m.SaleRegisterPage,
+  }))
 )
 const ServiceReportsPage = lazy(() =>
-  import('@/pages/app/reports/service-reports-page').then((m) => ({ default: m.ServiceReportsPage }))
+  import('@/pages/app/reports/service-reports-page').then((m) => ({
+    default: m.ServiceReportsPage,
+  }))
 )
 const ProfitLossPage = lazy(() =>
   import('@/pages/app/reports/profit-loss-page').then((m) => ({ default: m.ProfitLossPage }))
@@ -178,27 +210,41 @@ const JobWiseProfitPage = lazy(() =>
   import('@/pages/app/reports/job-wise-profit-page').then((m) => ({ default: m.JobWiseProfitPage }))
 )
 const SupplierReportPage = lazy(() =>
-  import('@/pages/app/reports/supplier-report-page').then((m) => ({ default: m.SupplierReportPage }))
+  import('@/pages/app/reports/supplier-report-page').then((m) => ({
+    default: m.SupplierReportPage,
+  }))
 )
 const TechnicianReportPage = lazy(() =>
-  import('@/pages/app/reports/technician-report-page').then((m) => ({ default: m.TechnicianReportPage }))
+  import('@/pages/app/reports/technician-report-page').then((m) => ({
+    default: m.TechnicianReportPage,
+  }))
 )
 const PeriodSummaryPage = lazy(() =>
   import('@/pages/app/reports/period-summary-page').then((m) => ({ default: m.PeriodSummaryPage }))
 )
 const FieldVisitReportPage = lazy(() =>
-  import('@/pages/app/reports/field-visit-report-page').then((m) => ({ default: m.FieldVisitReportPage }))
+  import('@/pages/app/reports/field-visit-report-page').then((m) => ({
+    default: m.FieldVisitReportPage,
+  }))
 )
 const BranchManagementPage = lazy(() =>
-  import('@/pages/app/settings/branch-management-page').then((m) => ({ default: m.BranchManagementPage }))
+  import('@/pages/app/settings/branch-management-page').then((m) => ({
+    default: m.BranchManagementPage,
+  }))
 )
 const CompanySettingsPage = lazy(() =>
-  import('@/pages/app/settings/company-settings-page').then((m) => ({ default: m.CompanySettingsPage }))
+  import('@/pages/app/settings/company-settings-page').then((m) => ({
+    default: m.CompanySettingsPage,
+  }))
 )
 const FinancialYearsPage = lazy(() =>
-  import('@/pages/app/settings/financial-years-page').then((m) => ({ default: m.FinancialYearsPage }))
+  import('@/pages/app/settings/financial-years-page').then((m) => ({
+    default: m.FinancialYearsPage,
+  }))
 )
-const BillingPage = lazy(() => import('@/pages/app/settings/billing-page').then((m) => ({ default: m.BillingPage })))
+const BillingPage = lazy(() =>
+  import('@/pages/app/settings/billing-page').then((m) => ({ default: m.BillingPage }))
+)
 const PrintFormatsPage = lazy(() =>
   import('@/pages/app/settings/print-formats-page').then((m) => ({ default: m.PrintFormatsPage }))
 )
@@ -207,7 +253,9 @@ const PrintTemplateDesignerPage = lazy(() =>
     default: m.PrintTemplateDesignerPage,
   }))
 )
-const WhatsAppPage = lazy(() => import('@/pages/app/settings/whatsapp-page').then((m) => ({ default: m.WhatsAppPage })))
+const WhatsAppPage = lazy(() =>
+  import('@/pages/app/settings/whatsapp-page').then((m) => ({ default: m.WhatsAppPage }))
+)
 const BackupRestorePage = lazy(() =>
   import('@/pages/app/settings/backup-restore-page').then((m) => ({ default: m.BackupRestorePage }))
 )

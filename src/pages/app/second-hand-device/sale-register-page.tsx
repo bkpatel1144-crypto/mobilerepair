@@ -36,9 +36,18 @@ export function SaleRegisterPage() {
 
   const bounds = dateRangeBounds(dateRange)
   const filtered = sales
-    .filter((s) => !bounds || ((s.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from && (s.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to))
+    .filter(
+      (s) =>
+        !bounds ||
+        ((s.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from &&
+          (s.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to)
+    )
     .filter((s) =>
-      search.trim() ? `${s.saleNumber} ${s.deviceLabel} ${s.buyerName}`.toLowerCase().includes(search.toLowerCase()) : true
+      search.trim()
+        ? `${s.saleNumber} ${s.deviceLabel} ${s.buyerName}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        : true
     )
 
   const totalSales = filtered.reduce((sum, s) => sum + s.salePrice, 0)
@@ -59,13 +68,25 @@ export function SaleRegisterPage() {
     },
     { key: 'device', header: 'Device', render: (s) => s.deviceLabel },
     { key: 'buyer', header: 'Buyer', hideOnMobile: true, render: (s) => s.buyerName },
-    { key: 'invested', header: 'Invested', hideOnMobile: true, render: (s) => `₹${s.purchasePrice + s.refurbCost}` },
-    { key: 'salePrice', header: 'Sale Price', sortValue: (s) => s.salePrice, render: (s) => `₹${s.salePrice}` },
+    {
+      key: 'invested',
+      header: 'Invested',
+      hideOnMobile: true,
+      render: (s) => `₹${s.purchasePrice + s.refurbCost}`,
+    },
+    {
+      key: 'salePrice',
+      header: 'Sale Price',
+      sortValue: (s) => s.salePrice,
+      render: (s) => `₹${s.salePrice}`,
+    },
     {
       key: 'profit',
       header: 'Profit',
       sortValue: (s) => s.profit,
-      render: (s) => <span className={s.profit >= 0 ? 'text-emerald-600' : 'text-red-600'}>₹{s.profit}</span>,
+      render: (s) => (
+        <span className={s.profit >= 0 ? 'text-emerald-600' : 'text-red-600'}>₹{s.profit}</span>
+      ),
     },
   ]
 
@@ -97,7 +118,15 @@ export function SaleRegisterPage() {
               <Download className="size-4" />
               Export CSV
             </Button>
-            <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: secondHandSalesQueryKey(profile?.companyId) })}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                queryClient.invalidateQueries({
+                  queryKey: secondHandSalesQueryKey(profile?.companyId),
+                })
+              }
+            >
               <RefreshCw className="size-4" />
               Refresh
             </Button>
@@ -107,7 +136,11 @@ export function SaleRegisterPage() {
 
       <StatCardGrid>
         <StatCard label="Sales (₹)" value={`₹${totalSales}`} />
-        <StatCard label="Profit (₹)" value={`₹${totalProfit}`} tone={totalProfit >= 0 ? 'success' : 'danger'} />
+        <StatCard
+          label="Profit (₹)"
+          value={`₹${totalProfit}`}
+          tone={totalProfit >= 0 ? 'success' : 'danger'}
+        />
         <StatCard label="Sales" value={filtered.length} />
       </StatCardGrid>
       {totalInvested > 0 && (
@@ -130,25 +163,32 @@ export function SaleRegisterPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={Receipt} title="No sales yet" description="Devices sold from Device Sale will appear here." />}
+        emptyState={
+          <EmptyState
+            icon={Receipt}
+            title="No sales yet"
+            description="Devices sold from Device Sale will appear here."
+          />
+        }
       />
 
-      {viewing && (() => {
-        const { purchase } = joinSaleWithPurchase(viewing, purchases)
-        return (
-          <DetailDrawer
-            open
-            onOpenChange={(open) => !open && setViewing(null)}
-            icon={Receipt}
-            title={viewing.saleNumber}
-            subtitle={viewing.deviceLabel}
-            badges={<StatusBadge status="Sold" tone="info" />}
-            actions={<PrintButtonGroup sale={viewing} />}
-            sections={purchase ? purchaseDetailSections(purchase, viewing) : []}
-            timeline={purchase ? purchaseTimeline(purchase, viewing) : undefined}
-          />
-        )
-      })()}
+      {viewing &&
+        (() => {
+          const { purchase } = joinSaleWithPurchase(viewing, purchases)
+          return (
+            <DetailDrawer
+              open
+              onOpenChange={(open) => !open && setViewing(null)}
+              icon={Receipt}
+              title={viewing.saleNumber}
+              subtitle={viewing.deviceLabel}
+              badges={<StatusBadge status="Sold" tone="info" />}
+              actions={<PrintButtonGroup sale={viewing} />}
+              sections={purchase ? purchaseDetailSections(purchase, viewing) : []}
+              timeline={purchase ? purchaseTimeline(purchase, viewing) : undefined}
+            />
+          )
+        })()}
     </div>
   )
 }

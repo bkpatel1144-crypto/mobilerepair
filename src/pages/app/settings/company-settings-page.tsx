@@ -46,11 +46,7 @@ import { buildPath } from '@/config/nav'
 import { formatDateTimeLong, getInitials } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { CompanyForm } from './company-form'
-import {
-  BLANK_COMPANY,
-  validateCompany,
-  type CompanyFormValues,
-} from '@/lib/company-validation'
+import { BLANK_COMPANY, validateCompany, type CompanyFormValues } from '@/lib/company-validation'
 import type { CompanyWithId } from '@/hooks/use-company'
 
 /** The UI says "Inactive" (matching the reference) while the stored value is `disabled` —
@@ -114,7 +110,9 @@ function DetailBlock({
 function DetailValue({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div>
-      <p className="text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">{label}</p>
+      <p className="text-[0.7rem] font-medium tracking-wide text-muted-foreground uppercase">
+        {label}
+      </p>
       <p className="mt-0.5 font-medium">{value}</p>
     </div>
   )
@@ -341,9 +339,27 @@ export function CompanySettingsPage() {
     },
   ]
 
-  const statusCards: { key: StatusFilter; label: string; count: number; icon: typeof CheckCircle2; tone: string }[] = [
-    { key: 'active', label: 'Active', count: counts.active, icon: CheckCircle2, tone: 'text-teal-600 dark:text-teal-400' },
-    { key: 'disabled', label: 'Inactive', count: counts.disabled, icon: XCircle, tone: 'text-red-600' },
+  const statusCards: {
+    key: StatusFilter
+    label: string
+    count: number
+    icon: typeof CheckCircle2
+    tone: string
+  }[] = [
+    {
+      key: 'active',
+      label: 'Active',
+      count: counts.active,
+      icon: CheckCircle2,
+      tone: 'text-teal-600 dark:text-teal-400',
+    },
+    {
+      key: 'disabled',
+      label: 'Inactive',
+      count: counts.disabled,
+      icon: XCircle,
+      tone: 'text-red-600',
+    },
     { key: 'deleted', label: 'Deleted', count: counts.deleted, icon: Trash2, tone: 'text-red-600' },
   ]
 
@@ -419,7 +435,11 @@ export function CompanySettingsPage() {
       </p>
 
       {loadError ? (
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your companies" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load your companies"
+        />
       ) : (
         <DataTable
           columns={columns}
@@ -464,7 +484,9 @@ export function CompanySettingsPage() {
               </span>
               <div className="min-w-0">
                 <p className="flex flex-wrap items-center gap-2">
-                  {viewing.protected && <Crown className="size-4 text-amber-600 dark:text-amber-400" />}
+                  {viewing.protected && (
+                    <Crown className="size-4 text-amber-600 dark:text-amber-400" />
+                  )}
                   <span className="text-lg font-semibold">{viewing.name}</span>
                   {viewing.protected && (
                     <span className="inline-flex items-center gap-1 rounded-full border border-amber-300 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">

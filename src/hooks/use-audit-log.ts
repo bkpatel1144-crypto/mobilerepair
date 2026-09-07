@@ -5,7 +5,9 @@ import { auditLogCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import type { AuditLogDoc } from '@/types/firestore'
 
-export interface AuditLogWithId extends AuditLogDoc { id: string }
+export interface AuditLogWithId extends AuditLogDoc {
+  id: string
+}
 
 export function auditLogQueryKey(companyId: string | undefined) {
   return ['auditLog', companyId] as const
@@ -34,7 +36,11 @@ export function useAuditLog() {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return snap.docs
         .map((d) => ({ id: d.id, ...(d.data() as AuditLogDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+        .sort(
+          (a, b) =>
+            (b.createdAt?.toDate?.()?.getTime() ?? now) -
+            (a.createdAt?.toDate?.()?.getTime() ?? now)
+        )
         .slice(0, 500)
     },
     enabled: !!companyId,

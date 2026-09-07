@@ -1,5 +1,13 @@
 import { useMemo, useState } from 'react'
-import { ChevronRight, Search, LayoutGrid, KeyRound, ShieldCheck, ShieldAlert, Check } from 'lucide-react'
+import {
+  ChevronRight,
+  Search,
+  LayoutGrid,
+  KeyRound,
+  ShieldCheck,
+  ShieldAlert,
+  Check,
+} from 'lucide-react'
 import { NAV_SECTIONS, menuKey, type NavSection } from '@/config/nav'
 import {
   PERMISSION_SCHEMA,
@@ -401,9 +409,8 @@ export function MenusPermissionsTab({
                         <div className="grid gap-2 sm:grid-cols-3">
                           {schema.specialActions.map((action) => {
                             const checked =
-                              draft.actionPermissions[
-                                specialActionKey(section.key, action.key)
-                              ] === true
+                              draft.actionPermissions[specialActionKey(section.key, action.key)] ===
+                              true
                             return (
                               <label
                                 key={action.key}

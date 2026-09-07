@@ -1,4 +1,12 @@
-import { collection, doc, getDoc, serverTimestamp, Timestamp, writeBatch, type WriteBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  Timestamp,
+  writeBatch,
+  type WriteBatch,
+} from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { branchDoc, sessionDoc, sessionsCollection } from '@/lib/firestore-paths'
 import { getClientIp } from '@/lib/audit-log'
@@ -45,7 +53,13 @@ function persistCurrentSessionId(id: string) {
 export function addSessionToBatch(
   batch: WriteBatch,
   companyId: string,
-  input: { userId: string; userName: string; roleName: string; branchName: string; ip: string | null }
+  input: {
+    userId: string
+    userName: string
+    roleName: string
+    branchName: string
+    ip: string | null
+  }
 ): string {
   const ua = typeof navigator !== 'undefined' ? navigator.userAgent : ''
   const ref = doc(collection(db, sessionsCollection(companyId)))

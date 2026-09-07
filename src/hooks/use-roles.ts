@@ -8,7 +8,7 @@ import { roleQueryKey } from '@/hooks/use-permissions'
 import { allWidgetsEnabled } from '@/config/dashboard-widgets'
 import { DASHBOARD_MENU_KEY } from '@/config/nav'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
-import type { RoleDoc , EntityStatus} from '@/types/firestore'
+import type { RoleDoc, EntityStatus } from '@/types/firestore'
 
 export interface RoleWithId extends RoleDoc {
   id: string
@@ -192,7 +192,8 @@ export function useSetRoleStatus() {
         updatedAt: serverTimestamp(),
       })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
-        action: input.status === 'active' ? 'Enable' : input.status === 'deleted' ? 'Delete' : 'Disable',
+        action:
+          input.status === 'active' ? 'Enable' : input.status === 'deleted' ? 'Delete' : 'Disable',
         module: 'administration',
         entityType: 'Role',
         entityId: input.role.id,

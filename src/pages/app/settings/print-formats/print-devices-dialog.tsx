@@ -39,7 +39,9 @@ function PairingCode({ code, expiresAt }: { code: string; expiresAt: number | nu
 
   return (
     <div className="rounded-xl border border-dashed p-4 text-center">
-      <p className="text-sm text-muted-foreground">Enter this code in the Print Agent on the shop PC:</p>
+      <p className="text-sm text-muted-foreground">
+        Enter this code in the Print Agent on the shop PC:
+      </p>
       <div className="mt-3 flex items-center justify-center gap-2">
         <code className="rounded-lg bg-teal-50 px-4 py-2 font-mono text-lg font-semibold tracking-wide text-foreground dark:bg-teal-500/10">
           {code}
@@ -79,7 +81,8 @@ function DeviceRow({
   const expired = isCodeExpired(device, now)
   // An agent heartbeats while it runs; two missed minutes means the shop PC is off or the
   // agent isn't running, which is the thing the user actually needs to see.
-  const online = device.status === 'paired' && (device.lastSeenAt?.toMillis?.() ?? 0) > now - 2 * 60_000
+  const online =
+    device.status === 'paired' && (device.lastSeenAt?.toMillis?.() ?? 0) > now - 2 * 60_000
 
   // Inline confirmation rather than a second dialog stacked on this one — the row itself turns
   // into the question, so the device being removed is never ambiguous.
@@ -93,7 +96,13 @@ function DeviceRow({
             It will stop printing the next time it connects. You can pair it again with a new code.
           </p>
         </div>
-        <Button type="button" variant="ghost" size="sm" disabled={removing} onClick={() => setConfirming(false)}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          disabled={removing}
+          onClick={() => setConfirming(false)}
+        >
           Cancel
         </Button>
         <Button
@@ -140,7 +149,13 @@ function DeviceRow({
               : 'bg-muted text-muted-foreground'
         )}
       >
-        {device.status === 'paired' ? (online ? 'Online' : 'Offline') : expired ? 'Expired' : 'Pending'}
+        {device.status === 'paired'
+          ? online
+            ? 'Online'
+            : 'Offline'
+          : expired
+            ? 'Expired'
+            : 'Pending'}
       </span>
       <Button
         type="button"
@@ -183,7 +198,10 @@ export function PrintDevicesDialog({
         </div>
 
         {pending && (
-          <PairingCode code={pending.pairingCode} expiresAt={pending.codeExpiresAt?.toMillis?.() ?? null} />
+          <PairingCode
+            code={pending.pairingCode}
+            expiresAt={pending.codeExpiresAt?.toMillis?.() ?? null}
+          />
         )}
 
         {isLoading ? (
@@ -191,9 +209,15 @@ export function PrintDevicesDialog({
             <Skeleton className="h-16 w-full rounded-xl" />
           </div>
         ) : loadError ? (
-          <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your print devices" />
+          <ErrorState
+            error={loadError}
+            onRetry={() => void refetch()}
+            title="Couldn't load your print devices"
+          />
         ) : devices.length === 0 ? (
-          <p className="py-6 text-center text-sm text-muted-foreground">No print device paired yet.</p>
+          <p className="py-6 text-center text-sm text-muted-foreground">
+            No print device paired yet.
+          </p>
         ) : (
           <div className="space-y-2">
             {devices.map((d) => (
@@ -220,7 +244,11 @@ export function PrintDevicesDialog({
           disabled={createCode.isPending}
           onClick={() => createCode.mutate()}
         >
-          {createCode.isPending ? <Loader2 className="size-4 animate-spin" /> : <Plus className="size-4" />}
+          {createCode.isPending ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            <Plus className="size-4" />
+          )}
           Add device
         </Button>
       </DialogContent>

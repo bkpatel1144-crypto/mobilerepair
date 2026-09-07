@@ -49,7 +49,10 @@ export function ipMatchesEntry(ip: string, ipOrCidr: string): boolean {
  * "nothing has been configured yet" — treated as "allow everyone," matching `preview (19)`'s own
  * framing of this as an opt-in feature, not a default-deny one a company must set up before its
  * first login works. */
-export function isIpAllowed(ip: string | null, entries: { ipOrCidr: string; active: boolean }[]): boolean {
+export function isIpAllowed(
+  ip: string | null,
+  entries: { ipOrCidr: string; active: boolean }[]
+): boolean {
   const activeEntries = entries.filter((e) => e.active)
   if (activeEntries.length === 0) return true
   if (!ip) return false // can't prove membership in a non-empty whitelist without a detected IP

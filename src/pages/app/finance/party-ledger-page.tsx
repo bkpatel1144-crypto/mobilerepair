@@ -17,7 +17,11 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet'
-import { usePartyLedgerSummaries, usePartyLedgerDetail, type PartyLedgerSummary } from '@/hooks/use-party-ledger'
+import {
+  usePartyLedgerSummaries,
+  usePartyLedgerDetail,
+  type PartyLedgerSummary,
+} from '@/hooks/use-party-ledger'
 import { partiesQueryKey } from '@/hooks/use-parties'
 import { receiptsQueryKey } from '@/hooks/use-receipts'
 import { jobCardsQueryKey } from '@/hooks/use-job-cards'
@@ -25,7 +29,8 @@ import { useAuth } from '@/hooks/use-auth'
 
 function balanceLabel(balance: number) {
   if (balance === 0) return <span className="font-medium text-emerald-600">Settled ✓</span>
-  if (balance < 0) return <span className="font-medium text-emerald-600">₹{Math.abs(balance)} Cr</span>
+  if (balance < 0)
+    return <span className="font-medium text-emerald-600">₹{Math.abs(balance)} Cr</span>
   return <span className="font-medium text-red-600">₹{balance}</span>
 }
 
@@ -57,7 +62,9 @@ export function PartyLedgerPage() {
       render: (s) => (
         <div>
           <p className="font-medium">{s.party.name}</p>
-          <p className="text-xs text-muted-foreground">{s.party.mobile} · {s.party.partyNumber}</p>
+          <p className="text-xs text-muted-foreground">
+            {s.party.mobile} · {s.party.partyNumber}
+          </p>
         </div>
       ),
     },
@@ -67,10 +74,31 @@ export function PartyLedgerPage() {
       render: (s) => <StatusBadge status={s.party.type === 'customer' ? 'Customer' : 'Supplier'} />,
     },
     { key: 'jobs', header: 'Jobs', sortValue: (s) => s.jobsCount, render: (s) => s.jobsCount },
-    { key: 'billed', header: 'Billed', hideOnMobile: true, sortValue: (s) => s.billed, render: (s) => `₹${s.billed}` },
-    { key: 'paid', header: 'Paid', hideOnMobile: true, sortValue: (s) => s.paid, render: (s) => `₹${s.paid}` },
-    { key: 'balance', header: 'Balance', sortValue: (s) => s.balance, render: (s) => balanceLabel(s.balance) },
-    { key: 'chevron', header: '', render: () => <ChevronRight className="size-4 text-muted-foreground" /> },
+    {
+      key: 'billed',
+      header: 'Billed',
+      hideOnMobile: true,
+      sortValue: (s) => s.billed,
+      render: (s) => `₹${s.billed}`,
+    },
+    {
+      key: 'paid',
+      header: 'Paid',
+      hideOnMobile: true,
+      sortValue: (s) => s.paid,
+      render: (s) => `₹${s.paid}`,
+    },
+    {
+      key: 'balance',
+      header: 'Balance',
+      sortValue: (s) => s.balance,
+      render: (s) => balanceLabel(s.balance),
+    },
+    {
+      key: 'chevron',
+      header: '',
+      render: () => <ChevronRight className="size-4 text-muted-foreground" />,
+    },
   ]
 
   return (
@@ -96,16 +124,45 @@ export function PartyLedgerPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Parties" value={summaries.length} sublabel="With job card activity" />
-        <StatCard label="Total Billed" value={`₹${totalBilled}`} sublabel="Active jobs only" tone="purple" />
-        <StatCard label="Total Collected" value={`₹${totalCollected}`} sublabel="Incl. advance on unbilled jobs" tone="success" />
-        <StatCard label="Total Outstanding" value={`₹${totalOutstanding}`} sublabel="Pending collection" tone="danger" />
+        <StatCard
+          label="Total Parties"
+          value={summaries.length}
+          sublabel="With job card activity"
+        />
+        <StatCard
+          label="Total Billed"
+          value={`₹${totalBilled}`}
+          sublabel="Active jobs only"
+          tone="purple"
+        />
+        <StatCard
+          label="Total Collected"
+          value={`₹${totalCollected}`}
+          sublabel="Incl. advance on unbilled jobs"
+          tone="success"
+        />
+        <StatCard
+          label="Total Outstanding"
+          value={`₹${totalOutstanding}`}
+          sublabel="Pending collection"
+          tone="danger"
+        />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search party name, mobile, code...">
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search party name, mobile, code..."
+      >
         <div className="flex gap-1">
           {(['all', 'customer', 'supplier'] as const).map((t) => (
-            <Button key={t} type="button" size="sm" variant={typeFilter === t ? 'default' : 'outline'} onClick={() => setTypeFilter(t)}>
+            <Button
+              key={t}
+              type="button"
+              size="sm"
+              variant={typeFilter === t ? 'default' : 'outline'}
+              onClick={() => setTypeFilter(t)}
+            >
               {t === 'all' ? 'All' : t === 'customer' ? 'Customers' : 'Suppliers'}
             </Button>
           ))}
@@ -120,10 +177,20 @@ export function PartyLedgerPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Search} title="No parties yet" description="Parties appear here once a job card is created for them." />}
+        emptyState={
+          <EmptyState
+            icon={Search}
+            title="No parties yet"
+            description="Parties appear here once a job card is created for them."
+          />
+        }
       />
 
-      <PartyLedgerDetailSheet party={selected} open={!!selected} onOpenChange={(open) => !open && setSelected(null)} />
+      <PartyLedgerDetailSheet
+        party={selected}
+        open={!!selected}
+        onOpenChange={(open) => !open && setSelected(null)}
+      />
     </div>
   )
 }
@@ -174,7 +241,11 @@ function PartyLedgerDetailSheet({
               ) : loadError ? (
                 <ErrorState error={loadError} onRetry={() => void refetch()} />
               ) : !data || data.rows.length === 0 ? (
-                <EmptyState icon={BookOpen} title="No activity yet" description="This party's job cards and payments will appear here." />
+                <EmptyState
+                  icon={BookOpen}
+                  title="No activity yet"
+                  description="This party's job cards and payments will appear here."
+                />
               ) : (
                 <table className="w-full min-w-[600px] text-sm">
                   <thead className="border-b text-xs text-muted-foreground uppercase">
@@ -190,7 +261,10 @@ function PartyLedgerDetailSheet({
                     {data.rows.map((row) => (
                       <tr key={row.id} className="border-b last:border-0">
                         <td className="p-2 align-top whitespace-nowrap text-muted-foreground">
-                          {row.date.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
+                          {row.date.toLocaleString('en-IN', {
+                            dateStyle: 'medium',
+                            timeStyle: 'short',
+                          })}
                         </td>
                         <td className="p-2 align-top">
                           <p className="font-medium">{row.title}</p>
@@ -199,9 +273,15 @@ function PartyLedgerDetailSheet({
                             <p className="text-xs text-teal-600">{row.jobCardNumber}</p>
                           )}
                         </td>
-                        <td className="p-2 text-right align-top text-red-600">{row.debit > 0 ? `₹${row.debit}` : ''}</td>
-                        <td className="p-2 text-right align-top text-emerald-600">{row.credit > 0 ? `₹${row.credit}` : ''}</td>
-                        <td className="p-2 text-right align-top">{balanceLabel(row.runningBalance)}</td>
+                        <td className="p-2 text-right align-top text-red-600">
+                          {row.debit > 0 ? `₹${row.debit}` : ''}
+                        </td>
+                        <td className="p-2 text-right align-top text-emerald-600">
+                          {row.credit > 0 ? `₹${row.credit}` : ''}
+                        </td>
+                        <td className="p-2 text-right align-top">
+                          {balanceLabel(row.runningBalance)}
+                        </td>
                       </tr>
                     ))}
                     <tr className="border-t-2 font-semibold">

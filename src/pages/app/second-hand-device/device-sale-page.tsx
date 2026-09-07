@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ShoppingBag, RefreshCw, DollarSign, Truck, Wrench} from 'lucide-react'
+import { ShoppingBag, RefreshCw, DollarSign, Truck, Wrench } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -14,7 +14,13 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { SearchSelect } from '@/components/shared/search-select'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
   useSecondHandPurchases,
@@ -22,7 +28,11 @@ import {
   deviceLabel,
   type SecondHandPurchaseWithId,
 } from '@/hooks/use-second-hand-purchases'
-import { useSecondHandSales, useCreateSecondHandSale, secondHandSalesQueryKey } from '@/hooks/use-second-hand-sales'
+import {
+  useSecondHandSales,
+  useCreateSecondHandSale,
+  secondHandSalesQueryKey,
+} from '@/hooks/use-second-hand-sales'
 import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { useAuth } from '@/hooks/use-auth'
 import { dateRangeBounds } from '@/lib/date-range'
@@ -46,19 +56,50 @@ export function DeviceSalePage() {
 
   const bounds = dateRangeBounds(dateRange)
   const filtered = availableToSell
-    .filter((p) => !bounds || ((p.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from && (p.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to))
-    .filter((p) => (search.trim() ? `${p.purchaseNumber} ${deviceLabel(p)} ${p.imei ?? ''}`.toLowerCase().includes(search.toLowerCase()) : true))
+    .filter(
+      (p) =>
+        !bounds ||
+        ((p.createdAt?.toDate?.() ?? new Date(0)) >= bounds.from &&
+          (p.createdAt?.toDate?.() ?? new Date(0)) <= bounds.to)
+    )
+    .filter((p) =>
+      search.trim()
+        ? `${p.purchaseNumber} ${deviceLabel(p)} ${p.imei ?? ''}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        : true
+    )
 
   const columns: DataTableColumn<SecondHandPurchaseWithId>[] = [
     { key: 'purchaseNumber', header: 'Purchase #', render: (p) => p.purchaseNumber },
-    { key: 'device', header: 'Device', render: (p) => <><p className="font-medium">{deviceLabel(p)}</p><p className="text-xs text-muted-foreground">Grade {p.conditionGrade}</p></> },
-    { key: 'expectedSalePrice', header: 'Expected Sale Price', render: (p) => (p.expectedSalePrice != null ? `₹${p.expectedSalePrice}` : '—') },
+    {
+      key: 'device',
+      header: 'Device',
+      render: (p) => (
+        <>
+          <p className="font-medium">{deviceLabel(p)}</p>
+          <p className="text-xs text-muted-foreground">Grade {p.conditionGrade}</p>
+        </>
+      ),
+    },
+    {
+      key: 'expectedSalePrice',
+      header: 'Expected Sale Price',
+      render: (p) => (p.expectedSalePrice != null ? `₹${p.expectedSalePrice}` : '—'),
+    },
     {
       key: 'actions',
       header: 'Actions',
       className: 'text-right',
       render: (p) => (
-        <Button type="button" size="sm" onClick={(e) => { e.stopPropagation(); setSelling(p) }}>
+        <Button
+          type="button"
+          size="sm"
+          onClick={(e) => {
+            e.stopPropagation()
+            setSelling(p)
+          }}
+        >
           Sell
         </Button>
       ),
@@ -72,7 +113,15 @@ export function DeviceSalePage() {
         title="Device Sale"
         subtitle="Sell devices from stock to a buyer"
         actions={
-          <Button type="button" variant="outline" onClick={() => queryClient.invalidateQueries({ queryKey: secondHandPurchasesQueryKey(profile?.companyId) })}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: secondHandPurchasesQueryKey(profile?.companyId),
+              })
+            }
+          >
             <RefreshCw className="size-4" />
             Refresh
           </Button>
@@ -80,10 +129,20 @@ export function DeviceSalePage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Available to Sell" value={availableToSell.length} icon={ShoppingBag} tone="success" />
+        <StatCard
+          label="Available to Sell"
+          value={availableToSell.length}
+          icon={ShoppingBag}
+          tone="success"
+        />
         <StatCard label="In Refurb" icon={Wrench} value={inRefurb.length} tone="warning" />
         <StatCard label="Sold" icon={Truck} value={sold.length} tone="info" />
-        <StatCard label="Total Profit" value={`₹${totalProfit}`} icon={DollarSign} tone={totalProfit >= 0 ? 'success' : 'danger'} />
+        <StatCard
+          label="Total Profit"
+          value={`₹${totalProfit}`}
+          icon={DollarSign}
+          tone={totalProfit >= 0 ? 'success' : 'danger'}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -102,7 +161,13 @@ export function DeviceSalePage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={ShoppingBag} title="Nothing available to sell" description="Devices you purchase show up here once in stock." />}
+        emptyState={
+          <EmptyState
+            icon={ShoppingBag}
+            title="Nothing available to sell"
+            description="Devices you purchase show up here once in stock."
+          />
+        }
       />
 
       {viewing && (
@@ -123,7 +188,13 @@ export function DeviceSalePage() {
   )
 }
 
-function SellDeviceModal({ purchase, onClose }: { purchase: SecondHandPurchaseWithId; onClose: () => void }) {
+function SellDeviceModal({
+  purchase,
+  onClose,
+}: {
+  purchase: SecondHandPurchaseWithId
+  onClose: () => void
+}) {
   const { data: parties = [] } = useParties()
   const createParty = useCreateParty()
   const createSale = useCreateSecondHandSale()
@@ -154,7 +225,10 @@ function SellDeviceModal({ purchase, onClose }: { purchase: SecondHandPurchaseWi
     }
     try {
       if (!finalBuyerId && quickAddBuyer) {
-        const created = await createParty.mutateAsync({ name: quickAddBuyer.name, mobile: quickAddBuyer.mobile })
+        const created = await createParty.mutateAsync({
+          name: quickAddBuyer.name,
+          mobile: quickAddBuyer.mobile,
+        })
         finalBuyerId = created.id
         finalBuyerName = created.name
       } else {
@@ -200,22 +274,41 @@ function SellDeviceModal({ purchase, onClose }: { purchase: SecondHandPurchaseWi
             <SearchSelect
               options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
               value={buyerId}
-              onChange={(id) => { setBuyerId(id); if (id) setQuickAddBuyer(null) }}
+              onChange={(id) => {
+                setBuyerId(id)
+                if (id) setQuickAddBuyer(null)
+              }}
               placeholder="Search buyer..."
               onCreateNew={(query) => setQuickAddBuyer({ name: query, mobile: '' })}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="salePrice">Sale Price *</Label>
-            <Input id="salePrice" type="number" min={0} value={salePrice} onChange={(e) => setSalePrice(Number(e.target.value) || 0)} />
+            <Input
+              id="salePrice"
+              type="number"
+              min={0}
+              value={salePrice}
+              onChange={(e) => setSalePrice(Number(e.target.value) || 0)}
+            />
           </div>
         </div>
         {quickAddBuyer && !buyerId && (
           <div className="flex gap-2 rounded-md border border-dashed p-2">
-            <Input value={quickAddBuyer.name} onChange={(e) => setQuickAddBuyer({ ...quickAddBuyer, name: e.target.value })} placeholder="Buyer name" className="h-8 text-sm" />
+            <Input
+              value={quickAddBuyer.name}
+              onChange={(e) => setQuickAddBuyer({ ...quickAddBuyer, name: e.target.value })}
+              placeholder="Buyer name"
+              className="h-8 text-sm"
+            />
             <Input
               value={quickAddBuyer.mobile}
-              onChange={(e) => setQuickAddBuyer({ ...quickAddBuyer, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+              onChange={(e) =>
+                setQuickAddBuyer({
+                  ...quickAddBuyer,
+                  mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
+                })
+              }
               placeholder="10-digit mobile"
               className="h-8 text-sm"
             />
@@ -225,8 +318,13 @@ function SellDeviceModal({ purchase, onClose }: { purchase: SecondHandPurchaseWi
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
             <Label>Payment Mode</Label>
-            <Select value={paymentMode} onValueChange={(v) => v && setPaymentMode(v as typeof paymentMode)}>
-              <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+            <Select
+              value={paymentMode}
+              onValueChange={(v) => v && setPaymentMode(v as typeof paymentMode)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="cash">Cash</SelectItem>
                 <SelectItem value="upi">UPI</SelectItem>
@@ -236,24 +334,43 @@ function SellDeviceModal({ purchase, onClose }: { purchase: SecondHandPurchaseWi
           </div>
           <div className="space-y-1.5">
             <Label>Warranty (Days)</Label>
-            <Input type="number" min={0} value={warrantyDays} onChange={(e) => setWarrantyDays(Number(e.target.value) || 0)} />
+            <Input
+              type="number"
+              min={0}
+              value={warrantyDays}
+              onChange={(e) => setWarrantyDays(Number(e.target.value) || 0)}
+            />
           </div>
         </div>
 
         <div className="space-y-1.5">
           <Label>Accessories Given to Buyer</Label>
-          <Input value={accessoriesGiven} onChange={(e) => setAccessoriesGiven(e.target.value)} placeholder="Charger, box, cable..." />
-          <p className="text-xs text-muted-foreground">Defaults to what was purchased with the device — edit if you're keeping anything back or adding something new.</p>
+          <Input
+            value={accessoriesGiven}
+            onChange={(e) => setAccessoriesGiven(e.target.value)}
+            placeholder="Charger, box, cable..."
+          />
+          <p className="text-xs text-muted-foreground">
+            Defaults to what was purchased with the device — edit if you're keeping anything back or
+            adding something new.
+          </p>
         </div>
         <div className="space-y-1.5">
           <Label>Notes (Optional)</Label>
-          <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="e.g. Screen protector applied before handover" rows={2} />
+          <Textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="e.g. Screen protector applied before handover"
+            rows={2}
+          />
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <div className="flex justify-end gap-2 border-t pt-3">
-          <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+          <Button type="button" variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
           <Button type="button" onClick={handleConfirm} disabled={createSale.isPending}>
             {createSale.isPending ? 'Saving…' : 'Confirm Sale'}
           </Button>

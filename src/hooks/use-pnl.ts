@@ -64,7 +64,11 @@ function pct(part: number, whole: number): number {
  * customer bucket, which is correct — every one of them is a job advance, final payment or
  * refund.
  */
-export function usePnl(range: DateRangeKey | 'all' = 'month', customFrom?: string, customTo?: string) {
+export function usePnl(
+  range: DateRangeKey | 'all' = 'month',
+  customFrom?: string,
+  customTo?: string
+) {
   const receipts = useReceipts()
   const expenses = useExpenses()
 

@@ -74,9 +74,10 @@ export function PrintFormatsPage() {
       !q ||
       docType.label.toLowerCase().includes(q) ||
       all.some((t) => t.name.toLowerCase().includes(q))
-    const formats = q && !docType.label.toLowerCase().includes(q)
-      ? all.filter((t) => t.name.toLowerCase().includes(q))
-      : all
+    const formats =
+      q && !docType.label.toLowerCase().includes(q)
+        ? all.filter((t) => t.name.toLowerCase().includes(q))
+        : all
     return { docType, formats, visible: matches }
   }).filter((g) => g.visible)
 
@@ -152,9 +153,17 @@ export function PrintFormatsPage() {
           ))}
         </div>
       ) : loadError ? (
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your print templates" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load your print templates"
+        />
       ) : groups.length === 0 ? (
-        <EmptyState icon={Printer} title="No matches" description="No document type or template matches that search." />
+        <EmptyState
+          icon={Printer}
+          title="No matches"
+          description="No document type or template matches that search."
+        />
       ) : (
         <div className="overflow-hidden rounded-xl border">
           {groups.map(({ docType, formats }, i) => {
@@ -237,7 +246,9 @@ export function PrintFormatsPage() {
                               <DropdownMenuContent align="end">
                                 {!t.isDefault && (
                                   <DropdownMenuItem
-                                    onClick={() => setDefault.mutate({ target: t, siblings: formats })}
+                                    onClick={() =>
+                                      setDefault.mutate({ target: t, siblings: formats })
+                                    }
                                   >
                                     <Star />
                                     Set as Default
@@ -248,9 +259,9 @@ export function PrintFormatsPage() {
                                   Duplicate
                                 </DropdownMenuItem>
                                 {/* Any format can be deleted, seeded ones included — Add Missing
-                                  * Defaults puts a seed back. The one case that is refused is the
-                                  * last format for a document type, which would leave that type's
-                                  * print buttons with nothing to render. */}
+                                 * Defaults puts a seed back. The one case that is refused is the
+                                 * last format for a document type, which would leave that type's
+                                 * print buttons with nothing to render. */}
                                 <DropdownMenuItem
                                   variant="destructive"
                                   disabled={formats.length <= 1}

@@ -108,7 +108,9 @@ export function DetailDrawer({
               {section.rows.map((row, j) => (
                 <div key={j} className="contents">
                   <dt className="text-muted-foreground">{row.label}</dt>
-                  <dd className={cn('text-right font-medium', row.tone && ROW_TONE_STYLES[row.tone])}>
+                  <dd
+                    className={cn('text-right font-medium', row.tone && ROW_TONE_STYLES[row.tone])}
+                  >
                     {row.value}
                   </dd>
                 </div>
@@ -162,7 +164,7 @@ export function DetailDrawer({
               {actionsNode}
             </div>
             {/* `min-h-0` is load-bearing: a flex child's `min-height` defaults to `auto`, so
-              * `flex-1` alone lets this grow past the sheet instead of scrolling inside it. */}
+             * `flex-1` alone lets this grow past the sheet instead of scrolling inside it. */}
             <ScrollArea className="min-h-0 flex-1">
               <div className="space-y-5 p-5 pr-8">{bodyNode}</div>
             </ScrollArea>

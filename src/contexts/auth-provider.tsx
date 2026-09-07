@@ -17,7 +17,6 @@ import type { UserDoc } from '@/types/firestore'
 const PROFILE_NOT_FOUND_MAX_RETRIES = 12
 const PROFILE_NOT_FOUND_RETRY_DELAY_MS = 800
 
-
 /**
  * Resolves which company the app should be showing, and rewrites `companyId` to it.
  *
@@ -171,7 +170,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const profileLoading = !!user && profileFetching
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, profileLoading, logOut: firebaseLogOut }}>
+    <AuthContext.Provider
+      value={{ user, profile, loading, profileLoading, logOut: firebaseLogOut }}
+    >
       {children}
     </AuthContext.Provider>
   )

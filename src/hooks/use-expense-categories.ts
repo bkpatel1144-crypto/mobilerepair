@@ -22,7 +22,10 @@ export function useExpenseCategories() {
   return useLiveQuery<ExpenseCategoryWithId[]>(
     expenseCategoriesQueryKey(companyId),
     companyId
-      ? query(collection(db, expenseCategoriesCollection(companyId)), orderBy('displayOrder', 'asc'))
+      ? query(
+          collection(db, expenseCategoriesCollection(companyId)),
+          orderBy('displayOrder', 'asc')
+        )
       : null,
     (docs) => docs as ExpenseCategoryWithId[],
     !!companyId
@@ -61,6 +64,7 @@ export function useCreateExpenseCategory() {
       await batch.commit()
       return ref.id
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: expenseCategoriesQueryKey(companyId) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: expenseCategoriesQueryKey(companyId) }),
   })
 }

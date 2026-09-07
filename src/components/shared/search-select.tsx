@@ -99,7 +99,9 @@ export function SearchSelect({
             ) : (
               <Search className="size-4 shrink-0" />
             )}
-            <span className="flex-1 truncate text-left">{selected ? selected.label : placeholder}</span>
+            <span className="flex-1 truncate text-left">
+              {selected ? selected.label : placeholder}
+            </span>
             {selected && !disabled && (
               <span
                 role="button"
@@ -144,7 +146,9 @@ export function SearchSelect({
                   <span
                     className={cn(
                       'flex size-6 shrink-0 items-center justify-center rounded-md border',
-                      isSelected ? 'border-teal-600 bg-teal-600 text-white' : 'border-input text-muted-foreground'
+                      isSelected
+                        ? 'border-teal-600 bg-teal-600 text-white'
+                        : 'border-input text-muted-foreground'
                     )}
                   >
                     {isSelected ? <Check className="size-3.5" /> : <Icon className="size-3.5" />}
@@ -152,9 +156,15 @@ export function SearchSelect({
                 )}
                 <span className="min-w-0 flex-1">
                   <span className="block truncate">{opt.label}</span>
-                  {opt.helper && <span className="block truncate text-xs text-muted-foreground">{opt.helper}</span>}
+                  {opt.helper && (
+                    <span className="block truncate text-xs text-muted-foreground">
+                      {opt.helper}
+                    </span>
+                  )}
                 </span>
-                {opt.avatarLabel && isSelected && <Check className="size-4 shrink-0 text-teal-600" />}
+                {opt.avatarLabel && isSelected && (
+                  <Check className="size-4 shrink-0 text-teal-600" />
+                )}
               </button>
             )
           })}

@@ -8,31 +8,36 @@ export const DEFAULT_WHATSAPP_TEMPLATES: WhatsAppTemplateDoc[] = [
     event: 'jobCreated',
     label: 'Job Card Created',
     enabled: true,
-    message: 'Hi {{customerName}}, your job card {{jobNumber}} has been created at {{shopName}}. We will keep you updated on the progress.',
+    message:
+      'Hi {{customerName}}, your job card {{jobNumber}} has been created at {{shopName}}. We will keep you updated on the progress.',
   },
   {
     event: 'statusChanged',
     label: 'Status Update',
     enabled: true,
-    message: 'Hi {{customerName}}, an update on your job {{jobNumber}}: status is now "{{status}}".',
+    message:
+      'Hi {{customerName}}, an update on your job {{jobNumber}}: status is now "{{status}}".',
   },
   {
     event: 'billGenerated',
     label: 'Bill Generated',
     enabled: true,
-    message: 'Hi {{customerName}}, the bill for your job {{jobNumber}} is ready. Amount: {{amount}}. Please visit {{shopName}} to collect your device.',
+    message:
+      'Hi {{customerName}}, the bill for your job {{jobNumber}} is ready. Amount: {{amount}}. Please visit {{shopName}} to collect your device.',
   },
   {
     event: 'delivered',
     label: 'Device Delivered',
     enabled: true,
-    message: 'Hi {{customerName}}, your device for job {{jobNumber}} has been delivered. Thank you for choosing {{shopName}}!',
+    message:
+      'Hi {{customerName}}, your device for job {{jobNumber}} has been delivered. Thank you for choosing {{shopName}}!',
   },
   {
     event: 'paymentReceived',
     label: 'Payment Received',
     enabled: true,
-    message: 'Hi {{customerName}}, we have received your payment of {{amount}} for job {{jobNumber}}. Thank you!',
+    message:
+      'Hi {{customerName}}, we have received your payment of {{amount}} for job {{jobNumber}}. Thank you!',
   },
 ]
 

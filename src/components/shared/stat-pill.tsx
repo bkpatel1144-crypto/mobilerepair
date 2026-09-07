@@ -47,7 +47,13 @@ export function StatPill({
   if (!onClick) return <div className={className}>{content}</div>
 
   return (
-    <button type="button" data-slot="button" aria-pressed={selected} onClick={onClick} className={className}>
+    <button
+      type="button"
+      data-slot="button"
+      aria-pressed={selected}
+      onClick={onClick}
+      className={className}
+    >
       {content}
     </button>
   )
@@ -56,6 +62,8 @@ export function StatPill({
 /** The row these sit in. Auto-fit so four tiles wrap rather than crush on a narrow screen. */
 export function StatPillRow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">{children}</div>
+    <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
+      {children}
+    </div>
   )
 }

@@ -7,7 +7,13 @@ import {
   partyCategoriesCollection,
   uomCollection,
 } from '@/lib/firestore-paths'
-import type { ItemCategoryDoc, PartyCategoryDoc, PaymentModeDoc, UomDoc , ExpenseCategoryDoc} from '@/types/firestore'
+import type {
+  ItemCategoryDoc,
+  PartyCategoryDoc,
+  PaymentModeDoc,
+  UomDoc,
+  ExpenseCategoryDoc,
+} from '@/types/firestore'
 
 /**
  * The default Masters dataset every new company starts with, seeded in the same signup batch as
@@ -21,23 +27,158 @@ import type { ItemCategoryDoc, PartyCategoryDoc, PaymentModeDoc, UomDoc , Expens
  */
 
 const UOM_SEED: Omit<UomDoc, 'source' | 'status' | 'createdAt' | 'updatedAt' | 'baseUomId'>[] = [
-  { name: 'Pieces', code: 'PCS', type: 'Quantity', symbol: 'pcs', decimalPlaces: 0, displayOrder: 0, conversionFactor: null, description: null },
-  { name: 'Numbers', code: 'NOS', type: 'Quantity', symbol: 'nos', decimalPlaces: 0, displayOrder: 1, conversionFactor: null, description: null },
-  { name: 'Set', code: 'SET', type: 'Quantity', symbol: 'set', decimalPlaces: 0, displayOrder: 2, conversionFactor: null, description: null },
-  { name: 'Pair', code: 'PAIR', type: 'Quantity', symbol: 'pair', decimalPlaces: 0, displayOrder: 3, conversionFactor: null, description: null },
-  { name: 'Box', code: 'BOX', type: 'Quantity', symbol: 'box', decimalPlaces: 0, displayOrder: 4, conversionFactor: null, description: null },
-  { name: 'Pack', code: 'PACK', type: 'Quantity', symbol: 'pack', decimalPlaces: 0, displayOrder: 5, conversionFactor: null, description: null },
-  { name: 'Roll', code: 'ROLL', type: 'Quantity', symbol: 'roll', decimalPlaces: 0, displayOrder: 6, conversionFactor: null, description: null },
-  { name: 'Dozen', code: 'DZN', type: 'Quantity', symbol: 'dzn', decimalPlaces: 0, displayOrder: 7, conversionFactor: null, description: null },
-  { name: 'Meter', code: 'M', type: 'Length', symbol: 'm', decimalPlaces: 2, displayOrder: 8, conversionFactor: null, description: null },
-  { name: 'Centimeter', code: 'CM', type: 'Length', symbol: 'cm', decimalPlaces: 2, displayOrder: 9, conversionFactor: null, description: null },
+  {
+    name: 'Pieces',
+    code: 'PCS',
+    type: 'Quantity',
+    symbol: 'pcs',
+    decimalPlaces: 0,
+    displayOrder: 0,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Numbers',
+    code: 'NOS',
+    type: 'Quantity',
+    symbol: 'nos',
+    decimalPlaces: 0,
+    displayOrder: 1,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Set',
+    code: 'SET',
+    type: 'Quantity',
+    symbol: 'set',
+    decimalPlaces: 0,
+    displayOrder: 2,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Pair',
+    code: 'PAIR',
+    type: 'Quantity',
+    symbol: 'pair',
+    decimalPlaces: 0,
+    displayOrder: 3,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Box',
+    code: 'BOX',
+    type: 'Quantity',
+    symbol: 'box',
+    decimalPlaces: 0,
+    displayOrder: 4,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Pack',
+    code: 'PACK',
+    type: 'Quantity',
+    symbol: 'pack',
+    decimalPlaces: 0,
+    displayOrder: 5,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Roll',
+    code: 'ROLL',
+    type: 'Quantity',
+    symbol: 'roll',
+    decimalPlaces: 0,
+    displayOrder: 6,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Dozen',
+    code: 'DZN',
+    type: 'Quantity',
+    symbol: 'dzn',
+    decimalPlaces: 0,
+    displayOrder: 7,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Meter',
+    code: 'M',
+    type: 'Length',
+    symbol: 'm',
+    decimalPlaces: 2,
+    displayOrder: 8,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Centimeter',
+    code: 'CM',
+    type: 'Length',
+    symbol: 'cm',
+    decimalPlaces: 2,
+    displayOrder: 9,
+    conversionFactor: null,
+    description: null,
+  },
   // "Inch" carries a real base-UOM conversion (→ Meter) — matches `preview (59)`'s "LENGTH" pill
   // + "Base unit" annotation on this exact row; resolved to `baseUomId` after Meter is created.
-  { name: 'Inch', code: 'INCH', type: 'Length', symbol: 'in', decimalPlaces: 2, displayOrder: 10, conversionFactor: 0.0254, description: null },
-  { name: 'Kilogram', code: 'KG', type: 'Weight', symbol: 'kg', decimalPlaces: 3, displayOrder: 11, conversionFactor: null, description: null },
-  { name: 'Gram', code: 'GM', type: 'Weight', symbol: 'gm', decimalPlaces: 0, displayOrder: 12, conversionFactor: null, description: null },
-  { name: 'Litre', code: 'LTR', type: 'Volume', symbol: 'ltr', decimalPlaces: 2, displayOrder: 13, conversionFactor: null, description: null },
-  { name: 'Millilitre', code: 'ML', type: 'Volume', symbol: 'ml', decimalPlaces: 0, displayOrder: 14, conversionFactor: null, description: null },
+  {
+    name: 'Inch',
+    code: 'INCH',
+    type: 'Length',
+    symbol: 'in',
+    decimalPlaces: 2,
+    displayOrder: 10,
+    conversionFactor: 0.0254,
+    description: null,
+  },
+  {
+    name: 'Kilogram',
+    code: 'KG',
+    type: 'Weight',
+    symbol: 'kg',
+    decimalPlaces: 3,
+    displayOrder: 11,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Gram',
+    code: 'GM',
+    type: 'Weight',
+    symbol: 'gm',
+    decimalPlaces: 0,
+    displayOrder: 12,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Litre',
+    code: 'LTR',
+    type: 'Volume',
+    symbol: 'ltr',
+    decimalPlaces: 2,
+    displayOrder: 13,
+    conversionFactor: null,
+    description: null,
+  },
+  {
+    name: 'Millilitre',
+    code: 'ML',
+    type: 'Volume',
+    symbol: 'ml',
+    decimalPlaces: 0,
+    displayOrder: 14,
+    conversionFactor: null,
+    description: null,
+  },
 ]
 
 const PAYMENT_MODE_SEED: Omit<PaymentModeDoc, 'source' | 'status' | 'createdAt' | 'updatedAt'>[] = [
@@ -46,10 +187,31 @@ const PAYMENT_MODE_SEED: Omit<PaymentModeDoc, 'source' | 'status' | 'createdAt' 
   { name: 'Card', code: 'CARD', type: 'Card', description: null, isDefault: false },
 ]
 
-const PARTY_CATEGORY_SEED: Omit<PartyCategoryDoc, 'source' | 'status' | 'createdAt' | 'updatedAt'>[] = [
-  { name: 'General Supplier', code: 'GENERAL_SUPPLIER', defaultCreditDays: 15, isDefaultForCustomer: false, isDefaultForSupplier: true },
-  { name: 'Regular Customer', code: 'REGULAR_CUSTOMER', defaultCreditDays: 0, isDefaultForCustomer: false, isDefaultForSupplier: false },
-  { name: 'Walk-in Customer', code: 'WALKIN_CUSTOMER', defaultCreditDays: 0, isDefaultForCustomer: true, isDefaultForSupplier: false },
+const PARTY_CATEGORY_SEED: Omit<
+  PartyCategoryDoc,
+  'source' | 'status' | 'createdAt' | 'updatedAt'
+>[] = [
+  {
+    name: 'General Supplier',
+    code: 'GENERAL_SUPPLIER',
+    defaultCreditDays: 15,
+    isDefaultForCustomer: false,
+    isDefaultForSupplier: true,
+  },
+  {
+    name: 'Regular Customer',
+    code: 'REGULAR_CUSTOMER',
+    defaultCreditDays: 0,
+    isDefaultForCustomer: false,
+    isDefaultForSupplier: false,
+  },
+  {
+    name: 'Walk-in Customer',
+    code: 'WALKIN_CUSTOMER',
+    defaultCreditDays: 0,
+    isDefaultForCustomer: true,
+    isDefaultForSupplier: false,
+  },
 ]
 
 // Root "Spare Parts" + the 8 sub-categories `preview (58)` documents under it — the reference
@@ -89,7 +251,9 @@ const EXPENSE_CATEGORY_SEED = [
 export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, now: unknown) {
   // Refs (not just ids) are pre-created in one pass so Inch's `baseUomId` can resolve to Meter's
   // real id regardless of seed order, then every doc is `batch.set()` in a second pass.
-  const uomRefByCode = new Map(UOM_SEED.map((s) => [s.code, doc(collection(db, uomCollection(companyId)))]))
+  const uomRefByCode = new Map(
+    UOM_SEED.map((s) => [s.code, doc(collection(db, uomCollection(companyId)))])
+  )
   for (const seed of UOM_SEED) {
     const data: UomDoc = {
       ...seed,

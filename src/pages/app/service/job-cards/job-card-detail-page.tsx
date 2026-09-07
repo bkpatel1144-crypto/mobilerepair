@@ -23,14 +23,22 @@ export function JobCardDetailPage() {
   if (loadError) {
     return (
       <div className="p-4 sm:p-6">
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this job card" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load this job card"
+        />
       </div>
     )
   }
   if (!job) {
     return (
       <div className="p-4 sm:p-6">
-        <EmptyState icon={FileQuestion} title="Job card not found" description="It may have been removed." />
+        <EmptyState
+          icon={FileQuestion}
+          title="Job card not found"
+          description="It may have been removed."
+        />
       </div>
     )
   }

@@ -62,7 +62,8 @@ function ElementView({ el, values }: { el: PrintElement; values: PrintContext })
       )
     case 'logo':
     case 'image': {
-      const src = el.type === 'logo' ? String(values.shopLogo ?? '') || (el.text ?? '') : (el.text ?? '')
+      const src =
+        el.type === 'logo' ? String(values.shopLogo ?? '') || (el.text ?? '') : (el.text ?? '')
       if (!src) {
         return (
           <div className="flex size-full items-center justify-center border border-dashed border-muted-foreground/40 text-[8px] text-muted-foreground">
@@ -70,7 +71,9 @@ function ElementView({ el, values }: { el: PrintElement; values: PrintContext })
           </div>
         )
       }
-      return <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      return (
+        <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      )
     }
     case 'barcode':
     case 'qrcode':
@@ -85,7 +88,15 @@ function ElementView({ el, values }: { el: PrintElement; values: PrintContext })
     case 'field':
       if (el.showLabel) {
         return (
-          <div style={{ ...base, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 4 }}>
+          <div
+            style={{
+              ...base,
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              gap: 4,
+            }}
+          >
             <span style={{ color: '#555', fontWeight: 400 }}>{el.text}</span>
             <span style={{ textAlign: 'right' }}>{text}</span>
           </div>
@@ -129,7 +140,12 @@ export function DesignerCanvas({
   const scale = (zoom / 100) * PX_PER_MM
   const contentWidth = draft.paper.width - draft.margins.left - draft.margins.right
   const bands = isLabel ? (['detail'] as PrintBand[]) : PRINT_BANDS
-  const dragRef = useRef<{ startX: number; startY: number; mode: 'move' | 'resize'; origin: PrintElement[] } | null>(null)
+  const dragRef = useRef<{
+    startX: number
+    startY: number
+    mode: 'move' | 'resize'
+    origin: PrintElement[]
+  } | null>(null)
 
   function beginDrag(e: React.PointerEvent, mode: 'move' | 'resize', el: PrintElement) {
     if (el.locked) return
@@ -273,8 +289,8 @@ export function DesignerCanvas({
                         >
                           <ElementView el={el} values={values} />
                           {/* A condition is invisible on paper by design, so the canvas has to
-                            * say so — otherwise a row that will vanish at print time looks
-                            * identical to one that won't. */}
+                           * say so — otherwise a row that will vanish at print time looks
+                           * identical to one that won't. */}
                           {el.visibleWhen && (
                             <span
                               title={`Hidden when ${el.visibleWhen.fieldKey} is ${el.visibleWhen.op === 'notEmpty' ? 'empty' : 'set'}`}

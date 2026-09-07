@@ -46,7 +46,7 @@ export function useWorkflowConfig(roleId: string | undefined) {
     queryKey: workflowConfigQueryKey(companyId, roleId),
     queryFn: async () => {
       const snap = await getDoc(doc(db, workflowConfigDoc(companyId!, roleId!)))
-      return snap.exists() ? ({ id: snap.id, ...(snap.data() as WorkflowConfigDoc) }) : null
+      return snap.exists() ? { id: snap.id, ...(snap.data() as WorkflowConfigDoc) } : null
     },
     enabled: !!companyId && !!roleId,
   })
@@ -64,8 +64,16 @@ export function blankWorkflowConfig(roleId: string, roleName: string): WorkflowC
     active: true,
     jobAccess: 'all',
     statusFilter: [
-      'pending', 'inQueue', 'inProgress', 'onHold', 'techDone',
-      'ready', 'delivered', 'closed', 'cancelled', 'pendingReturn',
+      'pending',
+      'inQueue',
+      'inProgress',
+      'onHold',
+      'techDone',
+      'ready',
+      'delivered',
+      'closed',
+      'cancelled',
+      'pendingReturn',
     ],
     statusActionMatrix: emptyStatusActionMatrix(),
     assignment: { assignToRoles: 'all', handoverRoles: 'all', defaultHandover: null },

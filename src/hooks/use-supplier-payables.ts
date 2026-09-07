@@ -1,6 +1,13 @@
 import { useMemo } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, increment, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  increment,
+  serverTimestamp,
+  Timestamp,
+  writeBatch,
+} from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { useLiveQuery } from '@/hooks/use-live-query'
 import {
@@ -36,7 +43,8 @@ export function useSupplierBills() {
     (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` — this project's purity fix
       return (docs as SupplierBillWithId[]).sort(
-        (a, b) => (b.billDate?.toDate?.()?.getTime() ?? now) - (a.billDate?.toDate?.()?.getTime() ?? now)
+        (a, b) =>
+          (b.billDate?.toDate?.()?.getTime() ?? now) - (a.billDate?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId

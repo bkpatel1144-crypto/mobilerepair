@@ -82,7 +82,11 @@ export function BackupRestorePage() {
   const schedulerDirty = dailyEnabled !== null || timeOfDay !== null || keepForDays !== null
 
   async function handleSaveScheduler() {
-    await updateSettings.mutateAsync({ dailyAutoBackupEnabled: effectiveDaily, timeOfDay: effectiveTime, keepForDays: effectiveKeepDays })
+    await updateSettings.mutateAsync({
+      dailyAutoBackupEnabled: effectiveDaily,
+      timeOfDay: effectiveTime,
+      keepForDays: effectiveKeepDays,
+    })
     setDailyEnabled(null)
     setTimeOfDay(null)
     setKeepForDays(null)
@@ -151,7 +155,9 @@ export function BackupRestorePage() {
               <p className="text-xs text-muted-foreground">Records</p>
             </div>
             <div className="rounded-lg border p-3">
-              <p className="text-2xl font-bold tabular-nums">{stats.data ? formatBytes(stats.data.approxSizeBytes) : '—'}</p>
+              <p className="text-2xl font-bold tabular-nums">
+                {stats.data ? formatBytes(stats.data.approxSizeBytes) : '—'}
+              </p>
               <p className="text-xs text-muted-foreground">Data Size</p>
             </div>
           </div>
@@ -159,7 +165,9 @@ export function BackupRestorePage() {
 
         <div className="space-y-3 rounded-xl border bg-card p-4">
           <p className="text-sm font-semibold">Create Backup</p>
-          <p className="text-sm text-muted-foreground">A backup contains your complete company data as a JSON snapshot.</p>
+          <p className="text-sm text-muted-foreground">
+            A backup contains your complete company data as a JSON snapshot.
+          </p>
           <div className="flex flex-wrap gap-2">
             <Button
               type="button"
@@ -181,36 +189,69 @@ export function BackupRestorePage() {
           </div>
           {createBackup.isError && (
             <p className="text-sm text-red-600">
-              Backup failed: {createBackup.error instanceof Error ? createBackup.error.message : 'Something went wrong.'} Please try again.
+              Backup failed:{' '}
+              {createBackup.error instanceof Error
+                ? createBackup.error.message
+                : 'Something went wrong.'}{' '}
+              Please try again.
             </p>
           )}
           {downloadBackup.isError && (
             <p className="text-sm text-red-600">
-              Download failed: {downloadBackup.error instanceof Error ? downloadBackup.error.message : 'Something went wrong.'} Please try again.
+              Download failed:{' '}
+              {downloadBackup.error instanceof Error
+                ? downloadBackup.error.message
+                : 'Something went wrong.'}{' '}
+              Please try again.
             </p>
           )}
 
           <div className="space-y-2 border-t pt-3">
             <label className="flex items-center gap-2 text-sm">
-              <Checkbox checked={effectiveDaily} onCheckedChange={(v) => setDailyEnabled(v === true)} />
+              <Checkbox
+                checked={effectiveDaily}
+                onCheckedChange={(v) => setDailyEnabled(v === true)}
+              />
               <Clock className="size-3.5 text-muted-foreground" />
               Daily automatic backup
             </label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
               <div className="space-y-1">
                 <Label className="text-xs">Time</Label>
-                <Input type="time" value={effectiveTime} onChange={(e) => setTimeOfDay(e.target.value)} disabled={!effectiveDaily} className="h-8" />
+                <Input
+                  type="time"
+                  value={effectiveTime}
+                  onChange={(e) => setTimeOfDay(e.target.value)}
+                  disabled={!effectiveDaily}
+                  className="h-8"
+                />
               </div>
               <div className="space-y-1">
                 <Label className="text-xs">Keep for (days)</Label>
-                <Input type="number" min={1} value={effectiveKeepDays} onChange={(e) => setKeepForDays(Number(e.target.value) || 1)} disabled={!effectiveDaily} className="h-8" />
+                <Input
+                  type="number"
+                  min={1}
+                  value={effectiveKeepDays}
+                  onChange={(e) => setKeepForDays(Number(e.target.value) || 1)}
+                  disabled={!effectiveDaily}
+                  className="h-8"
+                />
               </div>
-              <Button type="button" size="sm" variant="outline" onClick={handleSaveScheduler} disabled={!schedulerDirty || updateSettings.isPending} className="col-span-2 sm:col-span-1">
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={handleSaveScheduler}
+                disabled={!schedulerDirty || updateSettings.isPending}
+                className="col-span-2 sm:col-span-1"
+              >
                 Save
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
-              Persists your preference, but can't fire itself unattended — this project has no server/Cloud Function/cron to run a schedule. Use "Backup Now" for a real backup today.
+              Persists your preference, but can't fire itself unattended — this project has no
+              server/Cloud Function/cron to run a schedule. Use "Backup Now" for a real backup
+              today.
             </p>
           </div>
         </div>
@@ -231,9 +272,17 @@ export function BackupRestorePage() {
             ))}
           </div>
         ) : backupsError ? (
-          <ErrorState error={backupsError} onRetry={() => void refetchBackups()} title="Couldn't load your backups" />
+          <ErrorState
+            error={backupsError}
+            onRetry={() => void refetchBackups()}
+            title="Couldn't load your backups"
+          />
         ) : backups.length === 0 ? (
-          <EmptyState icon={Clock} title="No backups yet." description="Create your first backup above." />
+          <EmptyState
+            icon={Clock}
+            title="No backups yet."
+            description="Create your first backup above."
+          />
         ) : (
           <div className="overflow-x-auto rounded-lg border">
             <table className="w-full min-w-[560px] text-sm whitespace-nowrap">
@@ -267,12 +316,24 @@ export function BackupRestorePage() {
             Restore from File
           </p>
           <p className="text-sm text-muted-foreground">
-            Upload a previously downloaded backup file (.json). You can restore it as a separate read-only archive (safe) or replace your live data (dangerous).
+            Upload a previously downloaded backup file (.json). You can restore it as a separate
+            read-only archive (safe) or replace your live data (dangerous).
           </p>
-          <input ref={fileInputRef} type="file" accept="application/json,.json" onChange={handleFileChange} className="text-sm" />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json,.json"
+            onChange={handleFileChange}
+            className="text-sm"
+          />
           {restoreError && <p className="text-sm text-red-600">{restoreError}</p>}
           <div className="flex flex-wrap gap-2">
-            <Button type="button" variant="outline" onClick={handleRestoreAsArchive} disabled={!selectedFile || restoreAsArchive.isPending}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleRestoreAsArchive}
+              disabled={!selectedFile || restoreAsArchive.isPending}
+            >
               <ArchiveIcon className="size-4" />
               {restoreAsArchive.isPending ? 'Restoring…' : 'Restore as Archive (Safe)'}
             </Button>
@@ -304,7 +365,11 @@ export function BackupRestorePage() {
               ))}
             </div>
           ) : archivesError ? (
-            <ErrorState error={archivesError} onRetry={() => void refetchArchives()} title="Couldn't load your archives" />
+            <ErrorState
+              error={archivesError}
+              onRetry={() => void refetchArchives()}
+              title="Couldn't load your archives"
+            />
           ) : archives.length === 0 ? (
             <EmptyState
               icon={ArchiveIcon}
@@ -314,12 +379,19 @@ export function BackupRestorePage() {
           ) : (
             <div className="space-y-2">
               {archives.map((a) => (
-                <div key={a.id} className="flex items-center justify-between rounded-lg border p-2.5 text-sm">
+                <div
+                  key={a.id}
+                  className="flex items-center justify-between rounded-lg border p-2.5 text-sm"
+                >
                   <div>
                     <p className="font-medium">{a.label}</p>
-                    <p className="text-xs text-muted-foreground">{formatTimestamp(a.createdAt)} · {formatBytes(a.sizeBytes)}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {formatTimestamp(a.createdAt)} · {formatBytes(a.sizeBytes)}
+                    </p>
                   </div>
-                  <span className="text-xs text-muted-foreground">{Object.values(a.collectionCounts).reduce((s, n) => s + n, 0)} records</span>
+                  <span className="text-xs text-muted-foreground">
+                    {Object.values(a.collectionCounts).reduce((s, n) => s + n, 0)} records
+                  </span>
                 </div>
               ))}
             </div>

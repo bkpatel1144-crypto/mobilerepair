@@ -102,7 +102,18 @@ describe('formatDateShort', () => {
   it('covers every month', () => {
     const names = Array.from({ length: 12 }, (_, m) => formatDateShort(new Date(2026, m, 15)))
     expect(names.map((n) => n.split(' ')[1])).toEqual([
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ])
   })
 })

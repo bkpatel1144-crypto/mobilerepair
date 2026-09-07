@@ -95,7 +95,9 @@ export function SidebarNav({ collapsed, onExpandRequest, onNavigate, filter }: S
         )
         const visibleChildren = (
           hasRealAccess
-            ? section.children.filter((leaf) => leaf.locked || canView(menuKey(section.key, leaf.slug)))
+            ? section.children.filter(
+                (leaf) => leaf.locked || canView(menuKey(section.key, leaf.slug))
+              )
             : []
         ).filter((leaf) => leafMatches(section, leaf.label))
         if (visibleChildren.length === 0) return null

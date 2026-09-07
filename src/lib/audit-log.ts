@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, getDoc, serverTimestamp, type WriteBatch } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  type WriteBatch,
+} from 'firebase/firestore'
 import type { User as FirebaseUser } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { auditLogCollection, branchDoc } from '@/lib/firestore-paths'
@@ -107,7 +114,10 @@ export async function addAuditLogToBatch(
   ctx: AuditContext,
   input: AuditInput
 ): Promise<void> {
-  const [ip, branchName] = await Promise.all([getClientIp(), getBranchName(ctx.companyId, ctx.branchId)])
+  const [ip, branchName] = await Promise.all([
+    getClientIp(),
+    getBranchName(ctx.companyId, ctx.branchId),
+  ])
   const ref = doc(collection(db, auditLogCollection(ctx.companyId)))
   const data: AuditLogDoc = {
     action: input.action,
@@ -130,7 +140,13 @@ export async function addAuditLogToBatch(
   batch.set(ref, data)
 }
 
-function buildLoginAuditData(uid: string, profile: UserDoc, result: AuditResult, ip: string | null, note?: string): AuditLogDoc {
+function buildLoginAuditData(
+  uid: string,
+  profile: UserDoc,
+  result: AuditResult,
+  ip: string | null,
+  note?: string
+): AuditLogDoc {
   return {
     action: 'Login',
     module: 'auth',
@@ -176,7 +192,10 @@ export async function logLoginEvent(
 ): Promise<void> {
   const write = (async () => {
     const ip = await getClientIp()
-    await addDoc(collection(db, auditLogCollection(companyId)), buildLoginAuditData(uid, profile, result, ip, note))
+    await addDoc(
+      collection(db, auditLogCollection(companyId)),
+      buildLoginAuditData(uid, profile, result, ip, note)
+    )
   })()
   trackPendingAuditWrite(write)
   await write
@@ -206,7 +225,13 @@ export async function flushPendingAuditWrite(): Promise<void> {
  * *same* atomic write as their profile doc, not a separate `await` afterward — `GuestOnlyRoute`
  * redirects the instant that profile doc's own listener fires, a completely independent code
  * path from whatever `signUp()` does next, and consistently won that race. */
-export function addLoginAuditToBatch(batch: WriteBatch, companyId: string, uid: string, profile: UserDoc, ip: string | null): void {
+export function addLoginAuditToBatch(
+  batch: WriteBatch,
+  companyId: string,
+  uid: string,
+  profile: UserDoc,
+  ip: string | null
+): void {
   const ref = doc(collection(db, auditLogCollection(companyId)))
   batch.set(ref, buildLoginAuditData(uid, profile, 'success', ip))
 }

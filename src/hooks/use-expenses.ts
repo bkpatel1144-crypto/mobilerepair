@@ -38,7 +38,8 @@ export function useExpenses() {
       const now = new Date().getTime() // not the bare `Date.now()` — this project's React Compiler purity fix
       return (docs as ExpenseWithId[]).sort(
         (a, b) =>
-          (b.expenseDate?.toDate?.()?.getTime() ?? now) - (a.expenseDate?.toDate?.()?.getTime() ?? now)
+          (b.expenseDate?.toDate?.()?.getTime() ?? now) -
+          (a.expenseDate?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId

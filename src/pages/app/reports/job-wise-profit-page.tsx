@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BarChart3, Download, IndianRupee, Percent, TrendingDown, TrendingUp} from 'lucide-react'
+import { BarChart3, Download, IndianRupee, Percent, TrendingDown, TrendingUp } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -35,7 +35,9 @@ export function JobWiseProfitPage() {
     .filter((r) => !bounds || (r.date >= bounds.from && r.date <= bounds.to))
     .filter((r) =>
       search.trim()
-        ? `${r.job.jobNumber} ${r.job.customerName} ${r.job.assignedToName ?? ''}`.toLowerCase().includes(search.toLowerCase())
+        ? `${r.job.jobNumber} ${r.job.customerName} ${r.job.assignedToName ?? ''}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
         : true
     )
 
@@ -56,28 +58,65 @@ export function JobWiseProfitPage() {
       header: 'Job',
       sortValue: (r) => r.job.jobNumber,
       render: (r) => (
-        <Link to={`/app/service/job-cards/${r.job.id}`} className="font-medium text-teal-700 hover:underline dark:text-teal-400">
+        <Link
+          to={`/app/service/job-cards/${r.job.id}`}
+          className="font-medium text-teal-700 hover:underline dark:text-teal-400"
+        >
           {r.job.jobNumber}
         </Link>
       ),
     },
-    { key: 'customer', header: 'Customer', sortValue: (r) => r.job.customerName, render: (r) => r.job.customerName },
-    { key: 'assignedTo', header: 'Assigned To', hideOnMobile: true, render: (r) => r.job.assignedToName ?? '—' },
-    { key: 'revenue', header: 'Revenue', sortValue: (r) => r.revenue, render: (r) => formatCurrency(r.revenue) },
-    { key: 'cost', header: 'Cost', sortValue: (r) => r.cost, render: (r) => formatCurrency(r.cost) },
+    {
+      key: 'customer',
+      header: 'Customer',
+      sortValue: (r) => r.job.customerName,
+      render: (r) => r.job.customerName,
+    },
+    {
+      key: 'assignedTo',
+      header: 'Assigned To',
+      hideOnMobile: true,
+      render: (r) => r.job.assignedToName ?? '—',
+    },
+    {
+      key: 'revenue',
+      header: 'Revenue',
+      sortValue: (r) => r.revenue,
+      render: (r) => formatCurrency(r.revenue),
+    },
+    {
+      key: 'cost',
+      header: 'Cost',
+      sortValue: (r) => r.cost,
+      render: (r) => formatCurrency(r.cost),
+    },
     {
       key: 'profit',
       header: 'Profit',
       sortValue: (r) => r.profit,
-      render: (r) => <span className={r.profit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'}>{formatCurrency(r.profit)}</span>,
+      render: (r) => (
+        <span
+          className={r.profit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'}
+        >
+          {formatCurrency(r.profit)}
+        </span>
+      ),
     },
     {
       key: 'margin',
       header: 'Margin',
       sortValue: (r) => r.marginPct,
-      render: (r) => <span className={r.marginPct < 0 ? 'text-red-600' : 'text-emerald-600'}>{formatPercent(r.marginPct)}</span>,
+      render: (r) => (
+        <span className={r.marginPct < 0 ? 'text-red-600' : 'text-emerald-600'}>
+          {formatPercent(r.marginPct)}
+        </span>
+      ),
     },
-    { key: 'status', header: 'Status', render: (r) => <StatusBadge status={statusLabel(r.job.status)} /> },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (r) => <StatusBadge status={statusLabel(r.job.status)} />,
+    },
   ]
 
   return (
@@ -114,10 +153,30 @@ export function JobWiseProfitPage() {
 
       <StatCardGrid>
         <StatCard label="Jobs" value={totals.jobs} icon={BarChart3} />
-        <StatCard label="Revenue" icon={IndianRupee} value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Cost" icon={TrendingDown} value={formatCurrency(totals.cost)} tone="warning" />
-        <StatCard label="Profit" icon={TrendingUp} value={formatCurrency(totals.profit)} tone={totals.profit < 0 ? 'danger' : 'success'} />
-        <StatCard label="Avg Margin" icon={Percent} value={formatPercent(totals.avgMargin)} tone={totals.avgMargin < 0 ? 'danger' : 'default'} />
+        <StatCard
+          label="Revenue"
+          icon={IndianRupee}
+          value={formatCurrency(totals.revenue)}
+          tone="success"
+        />
+        <StatCard
+          label="Cost"
+          icon={TrendingDown}
+          value={formatCurrency(totals.cost)}
+          tone="warning"
+        />
+        <StatCard
+          label="Profit"
+          icon={TrendingUp}
+          value={formatCurrency(totals.profit)}
+          tone={totals.profit < 0 ? 'danger' : 'success'}
+        />
+        <StatCard
+          label="Avg Margin"
+          icon={Percent}
+          value={formatPercent(totals.avgMargin)}
+          tone={totals.avgMargin < 0 ? 'danger' : 'default'}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -140,7 +199,13 @@ export function JobWiseProfitPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={BarChart3} title="No costed jobs yet" description="Record actual costing on a closed job to see its profit here." />}
+        emptyState={
+          <EmptyState
+            icon={BarChart3}
+            title="No costed jobs yet"
+            description="Record actual costing on a closed job to see its profit here."
+          />
+        }
       />
     </div>
   )

@@ -120,7 +120,12 @@ function BrandsSection({
                 onClick={() => toggleGroup(dt.id)}
                 className="flex flex-1 items-center gap-2 text-left text-sm font-medium"
               >
-                <ChevronRight className={cn('size-3.5 text-muted-foreground transition-transform', isOpen && 'rotate-90')} />
+                <ChevronRight
+                  className={cn(
+                    'size-3.5 text-muted-foreground transition-transform',
+                    isOpen && 'rotate-90'
+                  )}
+                />
                 {dt.label}
               </button>
               <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
@@ -136,7 +141,9 @@ function BrandsSection({
                     index={i}
                     canMoveUp={i > 0}
                     canMoveDown={i < brandsForType.length - 1}
-                    onMove={(direction) => reorder.mutate({ currentList: brandsForType, id: brand.id, direction })}
+                    onMove={(direction) =>
+                      reorder.mutate({ currentList: brandsForType, id: brand.id, direction })
+                    }
                     onRename={(label) => update.mutate({ id: brand.id, label })}
                     onDelete={() => del.mutate(brand)}
                   />
@@ -226,7 +233,9 @@ function ModelsSection({
   return (
     <div>
       {brandsWithModels.map((brand) => {
-        const modelsForBrand = models.filter((m) => m.brandId === brand.id).sort((a, b) => a.order - b.order)
+        const modelsForBrand = models
+          .filter((m) => m.brandId === brand.id)
+          .sort((a, b) => a.order - b.order)
         const isOpen = openGroups.has(brand.id)
         return (
           <div key={brand.id} className="border-b pl-6 last:border-0">
@@ -236,7 +245,12 @@ function ModelsSection({
                 onClick={() => toggleGroup(brand.id)}
                 className="flex flex-1 items-center gap-2 text-left text-sm font-medium"
               >
-                <ChevronRight className={cn('size-3.5 text-muted-foreground transition-transform', isOpen && 'rotate-90')} />
+                <ChevronRight
+                  className={cn(
+                    'size-3.5 text-muted-foreground transition-transform',
+                    isOpen && 'rotate-90'
+                  )}
+                />
                 {brand.label}
               </button>
               <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
@@ -252,7 +266,9 @@ function ModelsSection({
                     index={i}
                     canMoveUp={i > 0}
                     canMoveDown={i < modelsForBrand.length - 1}
-                    onMove={(direction) => reorder.mutate({ currentList: modelsForBrand, id: model.id, direction })}
+                    onMove={(direction) =>
+                      reorder.mutate({ currentList: modelsForBrand, id: model.id, direction })
+                    }
                     onRename={(label) => update.mutate({ id: model.id, label })}
                     onDelete={() => del.mutate(model)}
                   />
@@ -300,7 +316,11 @@ export function ServiceOptionsPage() {
   if (loadError) {
     return (
       <div className="p-4 sm:p-6">
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load service options" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load service options"
+        />
       </div>
     )
   }
@@ -357,10 +377,19 @@ export function ServiceOptionsPage() {
           const options = data[section.type]
           const isOpen = openSections.has(section.type)
           return (
-            <Collapsible key={section.type} open={isOpen} onOpenChange={() => toggleSection(section.type)}>
+            <Collapsible
+              key={section.type}
+              open={isOpen}
+              onOpenChange={() => toggleSection(section.type)}
+            >
               <div className="border-b last:border-0">
                 <CollapsibleTrigger className="flex w-full items-center gap-2 p-3 text-left">
-                  <ChevronRight className={cn('size-4 text-muted-foreground transition-transform', isOpen && 'rotate-90')} />
+                  <ChevronRight
+                    className={cn(
+                      'size-4 text-muted-foreground transition-transform',
+                      isOpen && 'rotate-90'
+                    )}
+                  />
                   <span className="font-medium">{section.label}</span>
                   {section.type === 'brands' && (
                     <span className="flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">
@@ -398,7 +427,9 @@ export function ServiceOptionsPage() {
                       type={section.type}
                       options={options}
                       addOpen={addingIn === section.type}
-                      onToggleAdd={() => setAddingIn(addingIn === section.type ? null : section.type)}
+                      onToggleAdd={() =>
+                        setAddingIn(addingIn === section.type ? null : section.type)
+                      }
                     />
                   )}
                 </div>
@@ -415,7 +446,9 @@ export function ServiceOptionsPage() {
         message={`This creates one independent copy of each of the ${sharedBrandCount} shared brand(s) per device type it applies to, and deletes the original shared brand doc. This is a one-way migration — it cannot be undone.`}
         confirmLabel="Split"
         isPending={splitSharedBrands.isPending}
-        onConfirm={() => splitSharedBrands.mutate(data.brands, { onSuccess: () => setConfirmingSplit(false) })}
+        onConfirm={() =>
+          splitSharedBrands.mutate(data.brands, { onSuccess: () => setConfirmingSplit(false) })
+        }
       />
     </div>
   )

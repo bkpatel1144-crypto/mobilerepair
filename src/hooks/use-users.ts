@@ -24,7 +24,9 @@ export function useUsers() {
     usersQueryKey(companyId),
     // Company-scoped filter — required by firestore.rules' `list` rule on `users/{uid}` (see
     // its comment there), not just a client-side nicety: an unscoped listen is rejected outright.
-    companyId ? query(collection(db, usersCollection()), where('companyId', '==', companyId)) : null,
+    companyId
+      ? query(collection(db, usersCollection()), where('companyId', '==', companyId))
+      : null,
     (docs) => {
       const rows = docs as (UserDoc & { id: string })[]
       return ((rows) => rows)(rows)
@@ -59,7 +61,10 @@ export function useSetUserStatus() {
   return useMutation({
     mutationFn: async (input: { uid: string; status: EntityStatus; userName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, userDoc(input.uid)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, userDoc(input.uid)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Enable User' : 'Disable User',
         module: 'administration',

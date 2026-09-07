@@ -6,11 +6,17 @@ import { secondHandPurchaseDoc, secondHandSalesCollection } from '@/lib/firestor
 import { useAuth } from '@/hooks/use-auth'
 import { getCurrentFinancialYear } from '@/lib/financial-year'
 import { formatSecondHandSaleId, getNextSequence } from '@/lib/sequences'
-import { secondHandPurchasesQueryKey, type SecondHandPurchaseWithId, deviceLabel } from '@/hooks/use-second-hand-purchases'
+import {
+  secondHandPurchasesQueryKey,
+  type SecondHandPurchaseWithId,
+  deviceLabel,
+} from '@/hooks/use-second-hand-purchases'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { SecondHandSaleDoc } from '@/types/firestore'
 
-export interface SecondHandSaleWithId extends SecondHandSaleDoc { id: string }
+export interface SecondHandSaleWithId extends SecondHandSaleDoc {
+  id: string
+}
 
 export function secondHandSalesQueryKey(companyId: string | undefined) {
   return ['secondHandSales', companyId] as const
@@ -28,7 +34,8 @@ export function useSecondHandSales() {
     (docs) => {
       const now = new Date().getTime() // not the bare `Date.now()` call — see this project's own established React Compiler purity fix
       return (docs as SecondHandSaleWithId[]).sort(
-        (a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
+        (a, b) =>
+          (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now)
       )
     },
     !!companyId
@@ -110,6 +117,9 @@ export function useCreateSecondHandSale() {
 
 /** Joins a sale back to its purchase for the Sale Register's combined drawer (`preview (39)`) —
  * pass both lists already fetched elsewhere rather than a second round-trip. */
-export function joinSaleWithPurchase(sale: SecondHandSaleWithId, purchases: SecondHandPurchaseWithId[]) {
+export function joinSaleWithPurchase(
+  sale: SecondHandSaleWithId,
+  purchases: SecondHandPurchaseWithId[]
+) {
   return { sale, purchase: purchases.find((p) => p.id === sale.purchaseId) }
 }

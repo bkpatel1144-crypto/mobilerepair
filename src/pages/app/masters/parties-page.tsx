@@ -1,5 +1,15 @@
 import { useState } from 'react'
-import { Users, User, Truck, UserCog, Plus, Pencil, Trash2, ChevronDown, ChevronUp } from 'lucide-react'
+import {
+  Users,
+  User,
+  Truck,
+  UserCog,
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -13,7 +23,13 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   useParties,
   useCreateParty,
@@ -51,7 +67,9 @@ export function PartiesPage() {
     })
     .filter((p) => categoryFilter === 'all' || p.categoryId === categoryFilter)
     .filter((p) =>
-      search.trim() ? `${p.name} ${p.mobile} ${p.partyNumber}`.toLowerCase().includes(search.toLowerCase()) : true
+      search.trim()
+        ? `${p.name} ${p.mobile} ${p.partyNumber}`.toLowerCase().includes(search.toLowerCase())
+        : true
     )
 
   function typeLabel(p: PartyWithId) {
@@ -72,9 +90,18 @@ export function PartiesPage() {
       ),
     },
     { key: 'mobile', header: 'Mobile', render: (p) => p.mobile },
-    { key: 'category', header: 'Category', hideOnMobile: true, render: (p) => p.categoryName ?? '—' },
+    {
+      key: 'category',
+      header: 'Category',
+      hideOnMobile: true,
+      render: (p) => p.categoryName ?? '—',
+    },
     { key: 'type', header: 'Type', hideOnMobile: true, render: (p) => typeLabel(p) },
-    { key: 'status', header: 'Status', render: (p) => <StatusBadge status={p.status === 'active' ? 'Active' : 'Inactive'} /> },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (p) => <StatusBadge status={p.status === 'active' ? 'Active' : 'Inactive'} />,
+    },
   ]
 
   return (
@@ -93,7 +120,11 @@ export function PartiesPage() {
         }
       />
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search by name, mobile, or party code..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search by name, mobile, or party code..."
+      />
 
       <div className="space-y-2">
         <div className="flex flex-wrap gap-1.5">
@@ -105,17 +136,34 @@ export function PartiesPage() {
               ['both', 'Both'],
             ] as [PartyTypeFilter, string][]
           ).map(([key, label]) => (
-            <Button key={key} type="button" size="sm" variant={typeFilter === key ? 'default' : 'outline'} onClick={() => setTypeFilter(key)}>
+            <Button
+              key={key}
+              type="button"
+              size="sm"
+              variant={typeFilter === key ? 'default' : 'outline'}
+              onClick={() => setTypeFilter(key)}
+            >
               {label}
             </Button>
           ))}
         </div>
         <div className="flex flex-wrap gap-1.5">
-          <Button type="button" size="sm" variant={categoryFilter === 'all' ? 'default' : 'outline'} onClick={() => setCategoryFilter('all')}>
+          <Button
+            type="button"
+            size="sm"
+            variant={categoryFilter === 'all' ? 'default' : 'outline'}
+            onClick={() => setCategoryFilter('all')}
+          >
             All
           </Button>
           {categories.map((c) => (
-            <Button key={c.id} type="button" size="sm" variant={categoryFilter === c.id ? 'default' : 'outline'} onClick={() => setCategoryFilter(c.id)}>
+            <Button
+              key={c.id}
+              type="button"
+              size="sm"
+              variant={categoryFilter === c.id ? 'default' : 'outline'}
+              onClick={() => setCategoryFilter(c.id)}
+            >
               {c.name}
             </Button>
           ))}
@@ -130,23 +178,47 @@ export function PartiesPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={Users} title="No parties found" description="Add your first customer or supplier above." />}
+        emptyState={
+          <EmptyState
+            icon={Users}
+            title="No parties found"
+            description="Add your first customer or supplier above."
+          />
+        }
       />
 
-      {editing && <PartyModal editing={editing} categories={categories} onClose={() => setEditing(null)} />}
+      {editing && (
+        <PartyModal editing={editing} categories={categories} onClose={() => setEditing(null)} />
+      )}
 
       {viewing && (
         <DetailDrawer
           open
           onOpenChange={(open) => !open && setViewing(null)}
-          icon={viewing.partyTypes.includes('supplier') && !viewing.partyTypes.includes('customer') ? Truck : User}
+          icon={
+            viewing.partyTypes.includes('supplier') && !viewing.partyTypes.includes('customer')
+              ? Truck
+              : User
+          }
           title={viewing.name}
-          subtitle={<>{viewing.partyNumber} · 📞 {viewing.mobile}</>}
+          subtitle={
+            <>
+              {viewing.partyNumber} · 📞 {viewing.mobile}
+            </>
+          }
           badges={<StatusBadge status={viewing.status === 'active' ? 'Active' : 'Inactive'} />}
           actions={
             canManage && (
               <>
-                <Button type="button" variant="outline" size="sm" onClick={() => { setEditing(viewing); setViewing(null) }}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditing(viewing)
+                    setViewing(null)
+                  }}
+                >
                   <Pencil className="size-3.5" />
                   Edit
                 </Button>
@@ -207,7 +279,17 @@ function PartyDeleteButton({ party, onDone }: { party: PartyWithId; onDone: () =
         message="This removes the party from every picker (job cards, receipts, purchases). There is no undo screen for this in the app — recovering it would mean editing Firestore directly."
         confirmLabel="Delete"
         isPending={setStatus.isPending}
-        onConfirm={() => setStatus.mutate({ id: party.id, status: 'deleted', partyName: party.name }, { onSuccess: () => { setConfirming(false); onDone() } })}
+        onConfirm={() =>
+          setStatus.mutate(
+            { id: party.id, status: 'deleted', partyName: party.name },
+            {
+              onSuccess: () => {
+                setConfirming(false)
+                onDone()
+              },
+            }
+          )
+        }
       />
     </>
   )
@@ -228,19 +310,23 @@ function PartyModal({
 
   const [name, setName] = useState(isNew ? '' : editing.name)
   const [mobile, setMobile] = useState(isNew ? '' : editing.mobile)
-  const [categoryId, setCategoryId] = useState(isNew ? 'none' : editing.categoryId ?? 'none')
-  const [isCustomer, setIsCustomer] = useState(isNew ? true : editing.partyTypes.includes('customer'))
-  const [isSupplier, setIsSupplier] = useState(isNew ? false : editing.partyTypes.includes('supplier'))
+  const [categoryId, setCategoryId] = useState(isNew ? 'none' : (editing.categoryId ?? 'none'))
+  const [isCustomer, setIsCustomer] = useState(
+    isNew ? true : editing.partyTypes.includes('customer')
+  )
+  const [isSupplier, setIsSupplier] = useState(
+    isNew ? false : editing.partyTypes.includes('supplier')
+  )
   const [showExtra, setShowExtra] = useState(!isNew)
-  const [address, setAddress] = useState(isNew ? '' : editing.address ?? '')
-  const [email, setEmail] = useState(isNew ? '' : editing.email ?? '')
-  const [gstNumber, setGstNumber] = useState(isNew ? '' : editing.gstNumber ?? '')
-  const [panNumber, setPanNumber] = useState(isNew ? '' : editing.panNumber ?? '')
-  const [area, setArea] = useState(isNew ? '' : editing.area ?? '')
-  const [village, setVillage] = useState(isNew ? '' : editing.village ?? '')
-  const [taluka, setTaluka] = useState(isNew ? '' : editing.taluka ?? '')
-  const [district, setDistrict] = useState(isNew ? '' : editing.district ?? '')
-  const [pincode, setPincode] = useState(isNew ? '' : editing.pincode ?? '')
+  const [address, setAddress] = useState(isNew ? '' : (editing.address ?? ''))
+  const [email, setEmail] = useState(isNew ? '' : (editing.email ?? ''))
+  const [gstNumber, setGstNumber] = useState(isNew ? '' : (editing.gstNumber ?? ''))
+  const [panNumber, setPanNumber] = useState(isNew ? '' : (editing.panNumber ?? ''))
+  const [area, setArea] = useState(isNew ? '' : (editing.area ?? ''))
+  const [village, setVillage] = useState(isNew ? '' : (editing.village ?? ''))
+  const [taluka, setTaluka] = useState(isNew ? '' : (editing.taluka ?? ''))
+  const [district, setDistrict] = useState(isNew ? '' : (editing.district ?? ''))
+  const [pincode, setPincode] = useState(isNew ? '' : (editing.pincode ?? ''))
 
   const isPending = createParty.isPending || updateParty.isPending
   const category = (categories ?? []).find((c) => c.id === categoryId)
@@ -288,7 +374,12 @@ function PartyModal({
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <Label>Party Name *</Label>
-          <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Rajesh Kumar" autoFocus />
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Rajesh Kumar"
+            autoFocus
+          />
         </div>
         <div className="space-y-1.5">
           <Label>Mobile *</Label>
@@ -303,10 +394,16 @@ function PartyModal({
         <div className="space-y-1.5">
           <Label>Category</Label>
           <Select value={categoryId} onValueChange={(v) => v && setCategoryId(v)}>
-            <SelectTrigger className="w-full"><SelectValue placeholder="Select Category" /></SelectTrigger>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Category" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">None</SelectItem>
-              {(categories ?? []).map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+              {(categories ?? []).map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -338,43 +435,81 @@ function PartyModal({
         <div className="space-y-3 rounded-md border border-dashed p-3">
           <div className="space-y-1.5">
             <Label>Address</Label>
-            <Textarea value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Shop / house, area, city, pincode" rows={2} />
+            <Textarea
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Shop / house, area, city, pincode"
+              rows={2}
+            />
           </div>
           <div className="space-y-1.5">
             <Label>Email</Label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="name@example.com"
+            />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label>GST number</Label>
-              <Input value={gstNumber} onChange={(e) => setGstNumber(e.target.value.toUpperCase())} placeholder="27ABCDE1234F1Z5" />
+              <Input
+                value={gstNumber}
+                onChange={(e) => setGstNumber(e.target.value.toUpperCase())}
+                placeholder="27ABCDE1234F1Z5"
+              />
             </div>
             <div className="space-y-1.5">
               <Label>PAN number</Label>
-              <Input value={panNumber} onChange={(e) => setPanNumber(e.target.value.toUpperCase())} placeholder="ABCDE1234F" />
+              <Input
+                value={panNumber}
+                onChange={(e) => setPanNumber(e.target.value.toUpperCase())}
+                placeholder="ABCDE1234F"
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="space-y-1.5">
               <Label>Area</Label>
-              <Input value={area} onChange={(e) => setArea(e.target.value)} placeholder="Locality / area" />
+              <Input
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+                placeholder="Locality / area"
+              />
             </div>
             <div className="space-y-1.5">
               <Label>Village</Label>
-              <Input value={village} onChange={(e) => setVillage(e.target.value)} placeholder="Village" />
+              <Input
+                value={village}
+                onChange={(e) => setVillage(e.target.value)}
+                placeholder="Village"
+              />
             </div>
             <div className="space-y-1.5">
               <Label>Taluka</Label>
-              <Input value={taluka} onChange={(e) => setTaluka(e.target.value)} placeholder="Taluka" />
+              <Input
+                value={taluka}
+                onChange={(e) => setTaluka(e.target.value)}
+                placeholder="Taluka"
+              />
             </div>
             <div className="space-y-1.5">
               <Label>District</Label>
-              <Input value={district} onChange={(e) => setDistrict(e.target.value)} placeholder="District" />
+              <Input
+                value={district}
+                onChange={(e) => setDistrict(e.target.value)}
+                placeholder="District"
+              />
             </div>
           </div>
           <div className="space-y-1.5">
             <Label>Pincode</Label>
-            <Input value={pincode} onChange={(e) => setPincode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="6-digit PIN" />
+            <Input
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+              placeholder="6-digit PIN"
+            />
           </div>
         </div>
       )}

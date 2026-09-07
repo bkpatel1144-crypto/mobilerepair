@@ -9,7 +9,13 @@ import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useAuditLog, type AuditLogWithId } from '@/hooks/use-audit-log'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
@@ -40,7 +46,9 @@ export function SystemAuditPage() {
 
   const startOfToday = new Date()
   startOfToday.setHours(0, 0, 0, 0)
-  const todayCount = events.filter((e) => (e.createdAt?.toDate?.() ?? new Date(0)) >= startOfToday).length
+  const todayCount = events.filter(
+    (e) => (e.createdAt?.toDate?.() ?? new Date(0)) >= startOfToday
+  ).length
   const criticalCount = events.filter((e) => e.critical).length
 
   const filtered = events
@@ -56,7 +64,12 @@ export function SystemAuditPage() {
     )
 
   const columns: DataTableColumn<AuditLogWithId>[] = [
-    { key: 'time', header: 'Time', sortValue: (e) => e.createdAt?.toDate?.()?.getTime() ?? 0, render: (e) => formatTimestamp(e.createdAt) },
+    {
+      key: 'time',
+      header: 'Time',
+      sortValue: (e) => e.createdAt?.toDate?.()?.getTime() ?? 0,
+      render: (e) => formatTimestamp(e.createdAt),
+    },
     {
       key: 'action',
       header: 'Action',
@@ -67,10 +80,28 @@ export function SystemAuditPage() {
         </span>
       ),
     },
-    { key: 'entity', header: 'Entity', render: (e) => <><p>{e.entityType}</p><p className="text-xs text-muted-foreground">{e.entityLabel}</p></> },
-    { key: 'performedBy', header: 'Performed By', hideOnMobile: true, render: (e) => e.performedByName },
+    {
+      key: 'entity',
+      header: 'Entity',
+      render: (e) => (
+        <>
+          <p>{e.entityType}</p>
+          <p className="text-xs text-muted-foreground">{e.entityLabel}</p>
+        </>
+      ),
+    },
+    {
+      key: 'performedBy',
+      header: 'Performed By',
+      hideOnMobile: true,
+      render: (e) => e.performedByName,
+    },
     { key: 'target', header: 'Target', hideOnMobile: true, render: (e) => e.targetLabel },
-    { key: 'result', header: 'Result', render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} /> },
+    {
+      key: 'result',
+      header: 'Result',
+      render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} />,
+    },
     { key: 'ip', header: 'IP', hideOnMobile: true, render: (e) => e.ip ?? '—' },
   ]
 
@@ -108,20 +139,42 @@ export function SystemAuditPage() {
 
       <StatCardGrid>
         <StatCard label="Total Events" value={events.length} icon={ClipboardList} />
-        <StatCard label="Critical" value={criticalCount} icon={AlertTriangle} tone={criticalCount > 0 ? 'danger' : 'default'} selected={criticalOnly} onClick={() => setCriticalOnly((v) => !v)} />
+        <StatCard
+          label="Critical"
+          value={criticalCount}
+          icon={AlertTriangle}
+          tone={criticalCount > 0 ? 'danger' : 'default'}
+          selected={criticalOnly}
+          onClick={() => setCriticalOnly((v) => !v)}
+        />
         <StatCard label="Today" value={todayCount} icon={Calendar} />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search action, entity, user...">
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search action, entity, user..."
+      >
         <Select value={moduleFilter} onValueChange={(v) => v && setModuleFilter(v)}>
-          <SelectTrigger className="w-36"><SelectValue placeholder="All Modules" /></SelectTrigger>
+          <SelectTrigger className="w-36">
+            <SelectValue placeholder="All Modules" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Modules</SelectItem>
-            {modules.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+            {modules.map((m) => (
+              <SelectItem key={m} value={m}>
+                {m}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-        <Select value={resultFilter} onValueChange={(v) => v && setResultFilter(v as typeof resultFilter)}>
-          <SelectTrigger className="w-36"><SelectValue placeholder="All Results" /></SelectTrigger>
+        <Select
+          value={resultFilter}
+          onValueChange={(v) => v && setResultFilter(v as typeof resultFilter)}
+        >
+          <SelectTrigger className="w-36">
+            <SelectValue placeholder="All Results" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Results</SelectItem>
             <SelectItem value="success">Success</SelectItem>
@@ -140,7 +193,13 @@ export function SystemAuditPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={ClipboardList} title="No audit events yet" description="Every write your team makes will show up here." />}
+        emptyState={
+          <EmptyState
+            icon={ClipboardList}
+            title="No audit events yet"
+            description="Every write your team makes will show up here."
+          />
+        }
       />
 
       {viewing && (
@@ -152,8 +211,13 @@ export function SystemAuditPage() {
           subtitle={`${viewing.entityType} · ${viewing.entityLabel}`}
           badges={
             <>
-              <StatusBadge status={RESULT_LABEL[viewing.result]} tone={RESULT_TONE[viewing.result]} />
-              {viewing.critical && <StatusBadge status="Critical" tone="danger" icon={AlertTriangle} />}
+              <StatusBadge
+                status={RESULT_LABEL[viewing.result]}
+                tone={RESULT_TONE[viewing.result]}
+              />
+              {viewing.critical && (
+                <StatusBadge status="Critical" tone="danger" icon={AlertTriangle} />
+              )}
             </>
           }
           sections={[

@@ -24,7 +24,11 @@ export const PAIRING_CODE_TTL_MS = 10 * 60_000
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
 
 export function generatePairingCode(companyCode: string): string {
-  const prefix = (companyCode || 'shop').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 6) || 'shop'
+  const prefix =
+    (companyCode || 'shop')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '')
+      .slice(0, 6) || 'shop'
   const bytes = crypto.getRandomValues(new Uint8Array(6))
   const body = Array.from(bytes, (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('')
   return `${prefix}pa-${body}`

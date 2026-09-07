@@ -130,14 +130,18 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
            * of nothing, since `0` (unlike `false`/`null`/`undefined`) is a valid JSX child. This
            * silently put a stray "0" after the page title in the breadcrumb of nearly every
            * screen in the app — caught only now, via a side-by-side screenshot review. */}
-          {Boolean(breadcrumbExtra || entry?.extraCrumbs?.length) && entry?.leaf && entry.section && (
-            <>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{breadcrumbExtra ?? entry.extraCrumbs.join(' / ')}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </>
-          )}
+          {Boolean(breadcrumbExtra || entry?.extraCrumbs?.length) &&
+            entry?.leaf &&
+            entry.section && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>
+                    {breadcrumbExtra ?? entry.extraCrumbs.join(' / ')}
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            )}
         </BreadcrumbList>
       </Breadcrumb>
 
@@ -265,8 +269,8 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
                 </DropdownMenuLabel>
               </DropdownMenuGroup>
               {/* The switcher lives here rather than in the sidebar because this is already
-                * where the account's identity is shown, and switching company is an
-                * account-level act, not navigation. With one company it is just a label. */}
+               * where the account's identity is shown, and switching company is an
+               * account-level act, not navigation. With one company it is just a label. */}
               {companies.length <= 1 ? (
                 <DropdownMenuGroup>
                   <DropdownMenuLabel className="font-normal">

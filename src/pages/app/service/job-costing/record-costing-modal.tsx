@@ -3,7 +3,14 @@ import { Plus, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { SearchSelect } from '@/components/shared/search-select'
 import { useSaveJobCosting } from '@/hooks/use-job-costing'
 import { useParties, useCreateParty } from '@/hooks/use-parties'
@@ -45,7 +52,9 @@ export function RecordCostingModal({
   existing: JobCostingDoc | null
   onClose: () => void
 }) {
-  const [costItems, setCostItems] = useState<CostItem[]>(existing?.costItems ?? costItemsFromJob(job))
+  const [costItems, setCostItems] = useState<CostItem[]>(
+    existing?.costItems ?? costItemsFromJob(job)
+  )
   const [notes, setNotes] = useState(existing?.notes ?? '')
   const saveCosting = useSaveJobCosting()
   const { data: parties = [] } = useParties()
@@ -53,7 +62,9 @@ export function RecordCostingModal({
   // Same "no strict type set yet still counts" fallback the Second Hand Device seller picker
   // uses — Supplier Report (Phase 9) reads this same free-text name, not a partyId reference, so
   // picking an existing party here is a convenience/autocomplete, never a hard link.
-  const suppliers = parties.filter((p) => p.partyTypes.includes('supplier') || p.partyTypes.length === 0)
+  const suppliers = parties.filter(
+    (p) => p.partyTypes.includes('supplier') || p.partyTypes.length === 0
+  )
 
   // A typed-in supplier name becomes a real Party (same call the Second Hand Device seller
   // quick-add makes) rather than just a bare string nowhere else can find — otherwise it could
@@ -62,7 +73,11 @@ export function RecordCostingModal({
   // as its own empty placeholder the instant this closes and reopens.
   async function handleCreateSupplier(itemId: string, name: string) {
     if (!name.trim()) return
-    const created = await createParty.mutateAsync({ name: name.trim(), mobile: '', partyTypes: ['supplier'] })
+    const created = await createParty.mutateAsync({
+      name: name.trim(),
+      mobile: '',
+      partyTypes: ['supplier'],
+    })
     updateItem(itemId, { supplier: created.name })
   }
 
@@ -79,7 +94,17 @@ export function RecordCostingModal({
   function addCostItem() {
     setCostItems((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), type: 'labor', itemId: null, itemName: '', supplier: null, rate: null, cost: 0, qty: 1, linked: false },
+      {
+        id: crypto.randomUUID(),
+        type: 'labor',
+        itemId: null,
+        itemName: '',
+        supplier: null,
+        rate: null,
+        cost: 0,
+        qty: 1,
+        linked: false,
+      },
     ])
   }
 
@@ -104,7 +129,9 @@ export function RecordCostingModal({
         <div className="mb-4 flex shrink-0 items-center justify-between">
           <div>
             <h2 className="flex items-center gap-2 text-lg font-semibold">
-              <span className="flex size-8 items-center justify-center rounded-full bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">₹</span>
+              <span className="flex size-8 items-center justify-center rounded-full bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">
+                ₹
+              </span>
               Record Actual Costing
             </h2>
           </div>
@@ -154,7 +181,10 @@ export function RecordCostingModal({
               return (
                 <div
                   key={item.id}
-                  className={cn('space-y-2 rounded-lg border p-3', requiresCost ? 'border-red-300' : 'border-border')}
+                  className={cn(
+                    'space-y-2 rounded-lg border p-3',
+                    requiresCost ? 'border-red-300' : 'border-border'
+                  )}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex gap-1">
@@ -165,7 +195,9 @@ export function RecordCostingModal({
                           onClick={() => updateItem(item.id, { type: t.key })}
                           className={cn(
                             'rounded-full px-2 py-0.5 text-xs',
-                            item.type === t.key ? 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400' : 'text-muted-foreground hover:bg-muted'
+                            item.type === t.key
+                              ? 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400'
+                              : 'text-muted-foreground hover:bg-muted'
                           )}
                         >
                           {t.label}
@@ -192,7 +224,11 @@ export function RecordCostingModal({
                     disabled={item.linked}
                   />
                   <SearchSelect
-                    options={suppliers.map((p) => ({ id: p.name, label: p.name, helper: p.mobile }))}
+                    options={suppliers.map((p) => ({
+                      id: p.name,
+                      label: p.name,
+                      helper: p.mobile,
+                    }))}
                     value={item.supplier}
                     onChange={(name) => updateItem(item.id, { supplier: name })}
                     placeholder="Search supplier..."
@@ -213,13 +249,19 @@ export function RecordCostingModal({
                       value={item.qty}
                       onChange={(e) => updateItem(item.id, { qty: Number(e.target.value) || 1 })}
                     />
-                    <span className="text-right text-sm font-medium">= ₹{item.cost * item.qty}</span>
+                    <span className="text-right text-sm font-medium">
+                      = ₹{item.cost * item.qty}
+                    </span>
                   </div>
                 </div>
               )
             })}
 
-            <button type="button" onClick={addCostItem} className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed py-2 text-sm text-teal-700 hover:bg-muted/40 dark:text-teal-400">
+            <button
+              type="button"
+              onClick={addCostItem}
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed py-2 text-sm text-teal-700 hover:bg-muted/40 dark:text-teal-400"
+            >
               <Plus className="size-4" />
               Add Cost Item
             </button>
@@ -229,11 +271,19 @@ export function RecordCostingModal({
             <div className="rounded-lg border p-3 text-sm">
               <p className="font-medium">Job Card: {job.jobNumber}</p>
               <p className="text-muted-foreground">Technician: {job.assignedToName ?? '—'}</p>
-              <p className="text-muted-foreground">Device: {[job.brandName, job.model].filter(Boolean).join(' ')}</p>
+              <p className="text-muted-foreground">
+                Device: {[job.brandName, job.model].filter(Boolean).join(' ')}
+              </p>
             </div>
             <div className="space-y-1.5 rounded-lg border p-3 text-sm">
-              <div className="flex justify-between"><span className="text-muted-foreground">Bill Amount</span><span className="font-medium">₹{billAmount}</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">Total Cost</span><span className="font-medium">₹{totalCost}</span></div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Bill Amount</span>
+                <span className="font-medium">₹{billAmount}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Total Cost</span>
+                <span className="font-medium">₹{totalCost}</span>
+              </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Profit</span>
                 <span className={cn('font-medium', profit < 0 ? 'text-red-600' : 'text-teal-600')}>
@@ -248,12 +298,26 @@ export function RecordCostingModal({
             )}
             <div className="space-y-1.5">
               <label className="text-sm text-muted-foreground">Notes (Optional)</label>
-              <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any notes..." rows={2} />
+              <Textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Any notes..."
+                rows={2}
+              />
             </div>
-            <Button type="button" className="w-full bg-purple-600 hover:bg-purple-700" onClick={handleSave} disabled={saveCosting.isPending}>
+            <Button
+              type="button"
+              className="w-full bg-purple-600 hover:bg-purple-700"
+              onClick={handleSave}
+              disabled={saveCosting.isPending}
+            >
               {saveCosting.isPending ? 'Saving…' : 'Save Costing'}
             </Button>
-            <button type="button" onClick={onClose} className="w-full text-center text-sm text-muted-foreground hover:underline">
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full text-center text-sm text-muted-foreground hover:underline"
+            >
               Cancel
             </button>
           </div>

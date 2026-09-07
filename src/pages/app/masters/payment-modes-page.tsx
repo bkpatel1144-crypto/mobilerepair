@@ -1,5 +1,14 @@
 import { useState } from 'react'
-import { CreditCard, Plus, Star, MoreVertical, Pencil, Ban, CheckCircle2, Trash2 } from 'lucide-react'
+import {
+  CreditCard,
+  Plus,
+  Star,
+  MoreVertical,
+  Pencil,
+  Ban,
+  CheckCircle2,
+  Trash2,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -13,7 +22,13 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,10 +77,21 @@ export function PaymentModesPage() {
     {
       key: 'type',
       header: 'Type',
-      render: (m) => <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">{m.type}</span>,
+      render: (m) => (
+        <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">{m.type}</span>
+      ),
     },
-    { key: 'description', header: 'Description', hideOnMobile: true, render: (m) => m.description || '—' },
-    { key: 'status', header: 'Status', render: (m) => <StatusBadge status={m.status === 'active' ? 'Active' : 'Inactive'} /> },
+    {
+      key: 'description',
+      header: 'Description',
+      hideOnMobile: true,
+      render: (m) => m.description || '—',
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      render: (m) => <StatusBadge status={m.status === 'active' ? 'Active' : 'Inactive'} />,
+    },
     {
       key: 'actions',
       header: 'Actions',
@@ -75,22 +101,47 @@ export function PaymentModesPage() {
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <Button type="button" variant="ghost" size="icon-sm" onClick={(e) => e.stopPropagation()}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <MoreVertical className="size-4" />
                 </Button>
               }
             />
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setEditing(m) }}>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setEditing(m)
+                }}
+              >
                 <Pencil className="size-4" />
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setToggleTarget(m) }}>
-                {m.status === 'active' ? <Ban className="size-4" /> : <CheckCircle2 className="size-4" />}
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setToggleTarget(m)
+                }}
+              >
+                {m.status === 'active' ? (
+                  <Ban className="size-4" />
+                ) : (
+                  <CheckCircle2 className="size-4" />
+                )}
                 {m.status === 'active' ? 'Deactivate' : 'Activate'}
               </DropdownMenuItem>
               {m.source === 'custom' && (
-                <DropdownMenuItem variant="destructive" onClick={(e) => { e.stopPropagation(); setDeleteTarget(m) }}>
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setDeleteTarget(m)
+                  }}
+                >
                   <Trash2 className="size-4" />
                   Delete
                 </DropdownMenuItem>
@@ -119,10 +170,19 @@ export function PaymentModesPage() {
 
       <StatCardGrid>
         <StatCard label="Total" value={modes.length} icon={CreditCard} />
-        <StatCard label="Active" icon={CheckCircle2} value={modes.filter((m) => m.status === 'active').length} tone="success" />
+        <StatCard
+          label="Active"
+          icon={CheckCircle2}
+          value={modes.filter((m) => m.status === 'active').length}
+          tone="success"
+        />
       </StatCardGrid>
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search payment modes..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search payment modes..."
+      />
 
       <DataTable
         columns={columns}
@@ -131,10 +191,18 @@ export function PaymentModesPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={CreditCard} title="No payment modes yet" description="Add your first payment mode above." />}
+        emptyState={
+          <EmptyState
+            icon={CreditCard}
+            title="No payment modes yet"
+            description="Add your first payment mode above."
+          />
+        }
       />
 
-      {editing && <PaymentModeModal editing={editing} existing={modes} onClose={() => setEditing(null)} />}
+      {editing && (
+        <PaymentModeModal editing={editing} existing={modes} onClose={() => setEditing(null)} />
+      )}
 
       {toggleTarget && (
         <ConfirmDialog
@@ -151,7 +219,11 @@ export function PaymentModesPage() {
           isPending={setStatus.isPending}
           onConfirm={() =>
             setStatus.mutate(
-              { id: toggleTarget.id, status: toggleTarget.status === 'active' ? 'disabled' : 'active', modeName: toggleTarget.name },
+              {
+                id: toggleTarget.id,
+                status: toggleTarget.status === 'active' ? 'disabled' : 'active',
+                modeName: toggleTarget.name,
+              },
               { onSuccess: () => setToggleTarget(null) }
             )
           }
@@ -165,7 +237,9 @@ export function PaymentModesPage() {
           message="Receipts already recorded under this payment mode will keep a reference to a mode that no longer exists. This cannot be undone."
           confirmLabel="Delete"
           isPending={deleteMode.isPending}
-          onConfirm={() => deleteMode.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })}
+          onConfirm={() =>
+            deleteMode.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })
+          }
         />
       )}
     </div>
@@ -187,7 +261,7 @@ function PaymentModeModal({
 
   const [name, setName] = useState(isNew ? '' : editing.name)
   const [type, setType] = useState(isNew ? 'Cash' : editing.type)
-  const [description, setDescription] = useState(isNew ? '' : editing.description ?? '')
+  const [description, setDescription] = useState(isNew ? '' : (editing.description ?? ''))
   const [isDefault, setIsDefault] = useState(isNew ? false : editing.isDefault)
 
   const isPending = createMode.isPending || updateMode.isPending
@@ -212,7 +286,12 @@ function PaymentModeModal({
     >
       <div className="space-y-1.5">
         <Label>Name *</Label>
-        <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Cash, PhonePe UPI" autoFocus />
+        <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="e.g. Cash, PhonePe UPI"
+          autoFocus
+        />
       </div>
       <div className="space-y-1.5">
         <Label>Code *</Label>
@@ -221,20 +300,31 @@ function PaymentModeModal({
       <div className="space-y-1.5">
         <Label>Type *</Label>
         <Select value={type} onValueChange={(v) => v && setType(v)}>
-          <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
           <SelectContent>
-            {TYPE_OPTIONS.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+            {TYPE_OPTIONS.map((t) => (
+              <SelectItem key={t} value={t}>
+                {t}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
       <div className="space-y-1.5">
         <Label>Description</Label>
-        <Input value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Optional" />
+        <Input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Optional"
+        />
       </div>
       <label className="flex items-center gap-2 text-sm">
         <Checkbox checked={isDefault} onCheckedChange={(v) => setIsDefault(v === true)} />
         <span>
-          Set as default <span className="text-muted-foreground">— Auto-select this mode during billing</span>
+          Set as default{' '}
+          <span className="text-muted-foreground">— Auto-select this mode during billing</span>
         </span>
       </label>
     </FormModal>

@@ -28,8 +28,7 @@ export function useBranches() {
     companyId ? collection(db, branchesCollection(companyId)) : null,
     (docs) => {
       const rows = docs as (BranchDoc & { id: string })[]
-      return ((rows) => rows
-        .sort((a, b) => a.name.localeCompare(b.name)))(rows)
+      return ((rows) => rows.sort((a, b) => a.name.localeCompare(b.name)))(rows)
     },
     !!companyId
   )
@@ -82,7 +81,10 @@ export function useUpdateBranch() {
   return useMutation({
     mutationFn: async (input: { id: string; name: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, branchDoc(companyId, input.id)), { name: input.name, updatedAt: serverTimestamp() })
+      batch.update(doc(db, branchDoc(companyId, input.id)), {
+        name: input.name,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: 'Update',
         module: 'settings',
@@ -104,7 +106,10 @@ export function useSetBranchStatus() {
   return useMutation({
     mutationFn: async (input: { id: string; status: EntityStatus; branchName: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, branchDoc(companyId, input.id)), { status: input.status, updatedAt: serverTimestamp() })
+      batch.update(doc(db, branchDoc(companyId, input.id)), {
+        status: input.status,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: input.status === 'active' ? 'Activate' : 'Deactivate',
         module: 'settings',

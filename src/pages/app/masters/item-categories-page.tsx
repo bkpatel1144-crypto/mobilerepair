@@ -12,7 +12,13 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   useItemCategories,
   useCreateItemCategory,
@@ -55,7 +61,10 @@ export function ItemCategoriesPage() {
         return (
           <div>
             <p className="font-medium">{c.name}</p>
-            <p className="text-xs text-muted-foreground">{c.code}{level === 'Sub' && parentName ? ` · Under: ${parentName}` : ''}</p>
+            <p className="text-xs text-muted-foreground">
+              {c.code}
+              {level === 'Sub' && parentName ? ` · Under: ${parentName}` : ''}
+            </p>
           </div>
         )
       },
@@ -77,7 +86,12 @@ export function ItemCategoriesPage() {
         </span>
       ),
     },
-    { key: 'level', header: 'Level', hideOnMobile: true, render: (c) => categoryLevel(c, categories).level },
+    {
+      key: 'level',
+      header: 'Level',
+      hideOnMobile: true,
+      render: (c) => categoryLevel(c, categories).level,
+    },
     { key: 'items', header: 'Items', render: (c) => itemCountFor(c) },
   ]
 
@@ -99,7 +113,11 @@ export function ItemCategoriesPage() {
 
       <StatCard label="Total" value={categories.length} icon={FolderTree} className="sm:max-w-48" />
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search categories..." />
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search categories..."
+      />
 
       <DataTable
         columns={columns}
@@ -109,10 +127,22 @@ export function ItemCategoriesPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={FolderTree} title="No item categories yet" description="Add your first category above." />}
+        emptyState={
+          <EmptyState
+            icon={FolderTree}
+            title="No item categories yet"
+            description="Add your first category above."
+          />
+        }
       />
 
-      {editing && <ItemCategoryModal editing={editing} existing={categories} onClose={() => setEditing(null)} />}
+      {editing && (
+        <ItemCategoryModal
+          editing={editing}
+          existing={categories}
+          onClose={() => setEditing(null)}
+        />
+      )}
 
       {viewing && (
         <DetailDrawer
@@ -127,14 +157,24 @@ export function ItemCategoriesPage() {
                 {viewing.status === 'active' ? 'Active' : 'Inactive'}
               </span>
               {viewing.source === 'system' && (
-                <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">System</span>
+                <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">
+                  System
+                </span>
               )}
             </>
           }
           actions={
             canManage && (
               <>
-                <Button type="button" variant="outline" size="sm" onClick={() => { setEditing(viewing); setViewing(null) }}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditing(viewing)
+                    setViewing(null)
+                  }}
+                >
                   <Pencil className="size-3.5" />
                   Edit
                 </Button>
@@ -175,7 +215,14 @@ export function ItemCategoriesPage() {
               ),
             },
             ...(viewing.description
-              ? [{ title: 'DESCRIPTION', children: <p className="text-sm text-muted-foreground">{viewing.description}</p> }]
+              ? [
+                  {
+                    title: 'DESCRIPTION',
+                    children: (
+                      <p className="text-sm text-muted-foreground">{viewing.description}</p>
+                    ),
+                  },
+                ]
               : []),
           ]}
         />
@@ -209,7 +256,11 @@ function ItemCategoryStatusButton({ category }: { category: ItemCategoryWithId }
         isPending={setStatus.isPending}
         onConfirm={() =>
           setStatus.mutate(
-            { id: category.id, status: willDeactivate ? 'disabled' : 'active', categoryName: category.name },
+            {
+              id: category.id,
+              status: willDeactivate ? 'disabled' : 'active',
+              categoryName: category.name,
+            },
             { onSuccess: () => setConfirming(false) }
           )
         }
@@ -256,7 +307,14 @@ function ItemCategoryDeleteButton({
         }
         confirmLabel="Delete"
         isPending={deleteCategory.isPending}
-        onConfirm={() => deleteCategory.mutate(category, { onSuccess: () => { setConfirming(false); onDeleted() } })}
+        onConfirm={() =>
+          deleteCategory.mutate(category, {
+            onSuccess: () => {
+              setConfirming(false)
+              onDeleted()
+            },
+          })
+        }
       />
     </>
   )
@@ -276,9 +334,11 @@ function ItemCategoryModal({
   const updateCategory = useUpdateItemCategory()
 
   const [name, setName] = useState(isNew ? '' : editing.name)
-  const [type, setType] = useState<'Raw Material' | 'Service'>(isNew ? 'Raw Material' : editing.type)
-  const [parentId, setParentId] = useState(isNew ? 'none' : editing.parentId ?? 'none')
-  const [description, setDescription] = useState(isNew ? '' : editing.description ?? '')
+  const [type, setType] = useState<'Raw Material' | 'Service'>(
+    isNew ? 'Raw Material' : editing.type
+  )
+  const [parentId, setParentId] = useState(isNew ? 'none' : (editing.parentId ?? 'none'))
+  const [description, setDescription] = useState(isNew ? '' : (editing.description ?? ''))
 
   const isPending = createCategory.isPending || updateCategory.isPending
   const parentOptions = existing.filter((c) => !c.parentId && (isNew || c.id !== editing.id))
@@ -286,7 +346,12 @@ function ItemCategoryModal({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim()) return
-    const input = { name: name.trim(), type, parentId: parentId === 'none' ? null : parentId, description: description.trim() || null }
+    const input = {
+      name: name.trim(),
+      type,
+      parentId: parentId === 'none' ? null : parentId,
+      description: description.trim() || null,
+    }
     if (isNew) await createCategory.mutateAsync(input)
     else await updateCategory.mutateAsync({ ...input, id: editing.id })
     onClose()
@@ -303,13 +368,20 @@ function ItemCategoryModal({
     >
       <div className="space-y-1.5">
         <Label>Category Name *</Label>
-        <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Screens & Displays" autoFocus />
+        <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="e.g. Screens & Displays"
+          autoFocus
+        />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <Label>Type *</Label>
           <Select value={type} onValueChange={(v) => v && setType(v as typeof type)}>
-            <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="Raw Material">Raw Material</SelectItem>
               <SelectItem value="Service">Service</SelectItem>
@@ -319,17 +391,28 @@ function ItemCategoryModal({
         <div className="space-y-1.5">
           <Label>Parent Category</Label>
           <Select value={parentId} onValueChange={(v) => v && setParentId(v)}>
-            <SelectTrigger className="w-full"><SelectValue placeholder="None (Root)" /></SelectTrigger>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="None (Root)" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">None (Root)</SelectItem>
-              {parentOptions.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+              {parentOptions.map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
       </div>
       <div className="space-y-1.5">
         <Label>Description</Label>
-        <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Optional" rows={2} />
+        <Textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Optional"
+          rows={2}
+        />
       </div>
     </FormModal>
   )

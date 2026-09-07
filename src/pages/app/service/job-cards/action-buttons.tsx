@@ -6,7 +6,13 @@ import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { useApplyJobAction, useRecordPayment, useUndoLastAction } from '@/hooks/use-job-actions'
@@ -41,7 +47,8 @@ const ACTION_APPLICABLE_STATUSES: Record<string, string[]> = {
   handover: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone', 'ready'],
 }
 
-type DialogKind = 'hold' | 'cancel' | 'jobDone' | 'generateBill' | 'payment' | 'handover' | 'fieldVisit' | null
+type DialogKind =
+  'hold' | 'cancel' | 'jobDone' | 'generateBill' | 'payment' | 'handover' | 'fieldVisit' | null
 
 export function ActionButtons({ job }: { job: JobCardWithId }) {
   const navigate = useNavigate()
@@ -71,7 +78,9 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
     openPrintWindow(renderPrintHtml(jobCardBillTemplate, jobCardBillPrintContext(job, company)))
   }
 
-  const whatsAppTemplate = whatsAppConfig?.templates.find((t) => t.event === whatsAppEventForStatus(job.status) && t.enabled)
+  const whatsAppTemplate = whatsAppConfig?.templates.find(
+    (t) => t.event === whatsAppEventForStatus(job.status) && t.enabled
+  )
   const whatsAppMessage = whatsAppTemplate
     ? resolveWhatsAppMessage(whatsAppTemplate.message, {
         customerName: job.customerName,
@@ -81,11 +90,17 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         shopName: company?.name ?? '',
       })
     : `Hi ${job.customerName}, update on your job card ${job.jobNumber}.`
-  const whatsAppLink = buildWhatsAppLink(job.customerMobile, whatsAppConfig?.countryCode ?? '91', whatsAppMessage)
+  const whatsAppLink = buildWhatsAppLink(
+    job.customerMobile,
+    whatsAppConfig?.countryCode ?? '91',
+    whatsAppMessage
+  )
 
   const [dialog, setDialog] = useState<DialogKind>(null)
   const [confirmingUndo, setConfirmingUndo] = useState(false)
-  const [confirmingTerminal, setConfirmingTerminal] = useState<'close' | 'returnAndClose' | null>(null)
+  const [confirmingTerminal, setConfirmingTerminal] = useState<'close' | 'returnAndClose' | null>(
+    null
+  )
   const [reasonInput, setReasonInput] = useState('')
   const [descriptionInput, setDescriptionInput] = useState('')
   const [amountInput, setAmountInput] = useState(0)
@@ -119,7 +134,10 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
     } else if (dialog === 'jobDone') {
       const requireDescription = workflowConfig?.behavior.requireDescriptionOnJobDone
       if (requireDescription && !descriptionInput.trim()) return
-      await applyAction.mutateAsync({ action: 'jobDone', description: descriptionInput.trim() || undefined })
+      await applyAction.mutateAsync({
+        action: 'jobDone',
+        description: descriptionInput.trim() || undefined,
+      })
     } else if (dialog === 'generateBill') {
       await applyAction.mutateAsync({ action: 'generateBill', finalAmount: amountInput })
       if (collectPayment && amountInput > 0) {
@@ -131,7 +149,11 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
     } else if (dialog === 'handover') {
       const toUser = users.find((u) => u.id === handoverToId)
       if (!toUser) return
-      await applyAction.mutateAsync({ action: 'handover', toUserId: toUser.id, toUserName: toUser.fullName })
+      await applyAction.mutateAsync({
+        action: 'handover',
+        toUserId: toUser.id,
+        toUserName: toUser.fullName,
+      })
     } else if (dialog === 'fieldVisit') {
       await applyAction.mutateAsync({
         action: 'fieldVisit',
@@ -149,29 +171,53 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
     <>
       <div className="flex flex-wrap gap-2">
         {shows('cancel') && (
-          <Button type="button" variant="outline" className="border-red-300 text-red-600 hover:bg-red-50" onClick={() => setDialog('cancel')}>
+          <Button
+            type="button"
+            variant="outline"
+            className="border-red-300 text-red-600 hover:bg-red-50"
+            onClick={() => setDialog('cancel')}
+          >
             <Ban className="size-4" />
             Cancel Job
           </Button>
         )}
         {canDo(crudKey('service', 'jobCards', 'create')) && (
-          <Button type="button" variant="outline" onClick={() => navigate(buildPath('service', 'job-cards') + '/create')}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate(buildPath('service', 'job-cards') + '/create')}
+          >
             <RotateCcw className="size-4" />
             Repeat Job
           </Button>
         )}
         {canDo(specialActionKey('service', 'printLabel')) && (
-          <Button type="button" variant="outline" onClick={handlePrintLabel} disabled={!deviceTagTemplate}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handlePrintLabel}
+            disabled={!deviceTagTemplate}
+          >
             Print Label
           </Button>
         )}
         {canDo(specialActionKey('service', 'printJobCard')) && (
-          <Button type="button" variant="outline" onClick={handlePrintJobCard} disabled={!jobCardTemplate}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handlePrintJobCard}
+            disabled={!jobCardTemplate}
+          >
             Print Job Card
           </Button>
         )}
         {canDo(specialActionKey('service', 'printBill')) && (
-          <Button type="button" variant="outline" onClick={handlePrintBill} disabled={!jobCardBillTemplate}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handlePrintBill}
+            disabled={!jobCardBillTemplate}
+          >
             Print Bill
           </Button>
         )}
@@ -184,7 +230,11 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         </Button>
 
         {shows('takeJob') && (
-          <Button type="button" onClick={() => applyAction.mutate({ action: 'takeJob' })} disabled={applyAction.isPending}>
+          <Button
+            type="button"
+            onClick={() => applyAction.mutate({ action: 'takeJob' })}
+            disabled={applyAction.isPending}
+          >
             Take Job
           </Button>
         )}
@@ -199,7 +249,11 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           </Button>
         )}
         {shows('resume') && (
-          <Button type="button" onClick={() => applyAction.mutate({ action: 'resume' })} disabled={applyAction.isPending}>
+          <Button
+            type="button"
+            onClick={() => applyAction.mutate({ action: 'resume' })}
+            disabled={applyAction.isPending}
+          >
             Resume
           </Button>
         )}
@@ -221,17 +275,29 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           </Button>
         )}
         {shows('deliver') && (
-          <Button type="button" onClick={() => applyAction.mutate({ action: 'deliver' })} disabled={applyAction.isPending}>
+          <Button
+            type="button"
+            onClick={() => applyAction.mutate({ action: 'deliver' })}
+            disabled={applyAction.isPending}
+          >
             Deliver
           </Button>
         )}
         {shows('close') && (
-          <Button type="button" onClick={() => setConfirmingTerminal('close')} disabled={applyAction.isPending}>
+          <Button
+            type="button"
+            onClick={() => setConfirmingTerminal('close')}
+            disabled={applyAction.isPending}
+          >
             Close
           </Button>
         )}
         {shows('returnAndClose') && (
-          <Button type="button" onClick={() => setConfirmingTerminal('returnAndClose')} disabled={applyAction.isPending}>
+          <Button
+            type="button"
+            onClick={() => setConfirmingTerminal('returnAndClose')}
+            disabled={applyAction.isPending}
+          >
             Return &amp; Close
           </Button>
         )}
@@ -253,7 +319,14 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             <Undo2 className="size-4" />
             Undo Last Action ({job.lastActionUndo.actionLabel}) · no time limit
           </span>
-          <Button type="button" size="sm" variant="outline" className="border-amber-400" onClick={() => setConfirmingUndo(true)} disabled={undoLastAction.isPending}>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="border-amber-400"
+            onClick={() => setConfirmingUndo(true)}
+            disabled={undoLastAction.isPending}
+          >
             <Undo2 className="size-3.5" />
             Undo
           </Button>
@@ -267,13 +340,17 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         message="This reverts the job's own fields to before that action and permanently deletes its timeline entry — the audit trail for this specific action is erased, not just hidden."
         confirmLabel="Undo"
         isPending={undoLastAction.isPending}
-        onConfirm={() => undoLastAction.mutate(undefined, { onSuccess: () => setConfirmingUndo(false) })}
+        onConfirm={() =>
+          undoLastAction.mutate(undefined, { onSuccess: () => setConfirmingUndo(false) })
+        }
       />
 
       <ConfirmDialog
         open={confirmingTerminal !== null}
         onOpenChange={(o) => !o && setConfirmingTerminal(null)}
-        title={confirmingTerminal === 'close' ? 'Close this job?' : 'Return device & close this job?'}
+        title={
+          confirmingTerminal === 'close' ? 'Close this job?' : 'Return device & close this job?'
+        }
         message={
           allowUndo
             ? 'This is a terminal status — once closed, "Undo Last Action" is no longer available for it.'
@@ -283,7 +360,11 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         destructive={false}
         isPending={applyAction.isPending}
         onConfirm={() => {
-          if (confirmingTerminal) applyAction.mutate({ action: confirmingTerminal }, { onSuccess: () => setConfirmingTerminal(null) })
+          if (confirmingTerminal)
+            applyAction.mutate(
+              { action: confirmingTerminal },
+              { onSuccess: () => setConfirmingTerminal(null) }
+            )
         }}
       />
 
@@ -347,9 +428,17 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       >
         <div className="space-y-1.5">
           <Label>
-            Description{workflowConfig?.behavior.requireDescriptionOnJobDone && <span className="text-red-600"> *</span>}
+            Description
+            {workflowConfig?.behavior.requireDescriptionOnJobDone && (
+              <span className="text-red-600"> *</span>
+            )}
           </Label>
-          <Textarea value={descriptionInput} onChange={(e) => setDescriptionInput(e.target.value)} placeholder="What was done..." rows={3} />
+          <Textarea
+            value={descriptionInput}
+            onChange={(e) => setDescriptionInput(e.target.value)}
+            placeholder="What was done..."
+            rows={3}
+          />
         </div>
       </FormModal>
 
@@ -364,19 +453,31 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         <div className="space-y-3">
           <div className="space-y-1.5">
             <Label>Final Amount</Label>
-            <Input type="number" min={0} value={amountInput} onChange={(e) => setAmountInput(Number(e.target.value) || 0)} />
+            <Input
+              type="number"
+              min={0}
+              value={amountInput}
+              onChange={(e) => setAmountInput(Number(e.target.value) || 0)}
+            />
           </div>
           {workflowConfig?.behavior.collectPaymentWithGenerateBill && (
             <>
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={collectPayment} onChange={(e) => setCollectPayment(e.target.checked)} />
+                <input
+                  type="checkbox"
+                  checked={collectPayment}
+                  onChange={(e) => setCollectPayment(e.target.checked)}
+                />
                 Collect payment now
               </label>
               {collectPayment && (
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1.5">
                     <Label>Mode</Label>
-                    <Select value={modeInput} onValueChange={(v) => v && setModeInput(v as typeof modeInput)}>
+                    <Select
+                      value={modeInput}
+                      onValueChange={(v) => v && setModeInput(v as typeof modeInput)}
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue />
                       </SelectTrigger>
@@ -405,11 +506,19 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         <div className="grid grid-cols-2 gap-2">
           <div className="space-y-1.5">
             <Label>Amount</Label>
-            <Input type="number" min={0} value={amountInput} onChange={(e) => setAmountInput(Number(e.target.value) || 0)} />
+            <Input
+              type="number"
+              min={0}
+              value={amountInput}
+              onChange={(e) => setAmountInput(Number(e.target.value) || 0)}
+            />
           </div>
           <div className="space-y-1.5">
             <Label>Mode</Label>
-            <Select value={modeInput} onValueChange={(v) => v && setModeInput(v as typeof modeInput)}>
+            <Select
+              value={modeInput}
+              onValueChange={(v) => v && setModeInput(v as typeof modeInput)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -458,18 +567,30 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       >
         <div className="space-y-3">
           <div className="space-y-1.5">
-            <Label>Time Spent (minutes) <span className="text-xs font-normal text-muted-foreground">(Optional)</span></Label>
+            <Label>
+              Time Spent (minutes){' '}
+              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            </Label>
             <Input
               type="number"
               min={0}
               value={durationInput}
-              onChange={(e) => setDurationInput(e.target.value === '' ? '' : Number(e.target.value) || 0)}
+              onChange={(e) =>
+                setDurationInput(e.target.value === '' ? '' : Number(e.target.value) || 0)
+              }
               placeholder="e.g. 45"
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Note <span className="text-xs font-normal text-muted-foreground">(Optional)</span></Label>
-            <Textarea value={descriptionInput} onChange={(e) => setDescriptionInput(e.target.value)} placeholder="What was done on-site..." rows={2} />
+            <Label>
+              Note <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            </Label>
+            <Textarea
+              value={descriptionInput}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+              placeholder="What was done on-site..."
+              rows={2}
+            />
           </div>
         </div>
       </FormModal>

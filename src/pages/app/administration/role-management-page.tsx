@@ -38,15 +38,9 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import {
-  useRoles,
-  useRenameRole,
-  useSetRoleStatus,
-  type RoleWithId,
-} from '@/hooks/use-roles'
+import { useRoles, useRenameRole, useSetRoleStatus, type RoleWithId } from '@/hooks/use-roles'
 import { slugifyCode, formatDateTimeLong } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
-
 
 type StatusFilter = 'active' | 'disabled' | 'deleted'
 
@@ -66,12 +60,14 @@ export function RoleManagementPage() {
   const [editing, setEditing] = useState<RoleWithId | null>(null)
   const [editName, setEditName] = useState('')
   const [editCode, setEditCode] = useState('')
-  const [confirmAction, setConfirmAction] = useState<{ role: RoleWithId; kind: 'disable' | 'enable' | 'delete' } | null>(null)
+  const [confirmAction, setConfirmAction] = useState<{
+    role: RoleWithId
+    kind: 'disable' | 'enable' | 'delete'
+  } | null>(null)
   const [showOwnerOnly, setShowOwnerOnly] = useState(false)
 
   const renameRole = useRenameRole()
   const setRoleStatus = useSetRoleStatus()
-
 
   const counts = {
     total: roles.length,
@@ -85,7 +81,6 @@ export function RoleManagementPage() {
     .filter((r) => (showOwnerOnly ? r.type === 'owner' : true))
     .filter((r) => `${r.name} ${r.code}`.toLowerCase().includes(search.toLowerCase()))
 
-
   const columns: DataTableColumn<RoleWithId>[] = [
     {
       key: 'name',
@@ -98,7 +93,12 @@ export function RoleManagementPage() {
           ) : (
             <Shield className="size-4 shrink-0 text-muted-foreground" />
           )}
-          <span className={cn('font-semibold', r.type === 'owner' && 'text-amber-700 dark:text-amber-400')}>
+          <span
+            className={cn(
+              'font-semibold',
+              r.type === 'owner' && 'text-amber-700 dark:text-amber-400'
+            )}
+          >
             {r.name}
           </span>
         </span>
@@ -187,7 +187,9 @@ export function RoleManagementPage() {
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
               </DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() => navigate(`${buildPath('administration', 'roles')}/${r.id}/configure`)}
+                onClick={() =>
+                  navigate(`${buildPath('administration', 'roles')}/${r.id}/configure`)
+                }
               >
                 <ShieldCheck />
                 <span className="font-medium text-teal-700 dark:text-teal-400">Configure Role</span>
@@ -203,13 +205,16 @@ export function RoleManagementPage() {
                 Edit
               </DropdownMenuItem>
               {/* The Owner role is protected in firestore.rules as well as here — it is the only
-                * role that can edit itself, so disabling it would lock the shop out of its own
-                * permissions with no way back. */}
+               * role that can edit itself, so disabling it would lock the shop out of its own
+               * permissions with no way back. */}
               {!r.protected && (
                 <>
                   <DropdownMenuItem
                     onClick={() =>
-                      setConfirmAction({ role: r, kind: r.status === 'active' ? 'disable' : 'enable' })
+                      setConfirmAction({
+                        role: r,
+                        kind: r.status === 'active' ? 'disable' : 'enable',
+                      })
                     }
                   >
                     <EyeOff />
@@ -419,7 +424,7 @@ export function RoleManagementPage() {
                 Edit
               </Button>
               {/* Same guard as the row kebab: the Owner role can't be disabled or deleted, since
-                * it is the only role that can restore permissions once they are gone. */}
+               * it is the only role that can restore permissions once they are gone. */}
               {!selectedRole.protected && (
                 <>
                   <Button
@@ -486,13 +491,16 @@ export function RoleManagementPage() {
                 value={formatDateTimeLong(selectedRole.createdAt)}
                 divider
               />
-              <DetailValue label="Last Updated" value={formatDateTimeLong(selectedRole.updatedAt)} />
+              <DetailValue
+                label="Last Updated"
+                value={formatDateTimeLong(selectedRole.updatedAt)}
+              />
             </DetailBlock>
 
             {selectedRole.protected && (
               <DetailNote icon={Crown} title="Owner Role" tone="amber">
-                This role has full access by definition and can only be managed by another Owner,
-                so it can't be disabled or deleted.
+                This role has full access by definition and can only be managed by another Owner, so
+                it can't be disabled or deleted.
               </DetailNote>
             )}
           </>
@@ -537,7 +545,9 @@ export function RoleManagementPage() {
             onChange={(e) => setEditCode(e.target.value.toUpperCase())}
             placeholder="e.g. SALES_MANAGER"
           />
-          <p className="text-xs text-muted-foreground">Unique identifier (auto-generated from name)</p>
+          <p className="text-xs text-muted-foreground">
+            Unique identifier (auto-generated from name)
+          </p>
         </div>
       </FormModal>
 
@@ -561,7 +571,11 @@ export function RoleManagementPage() {
             : ''
         }
         confirmLabel={
-          confirmAction?.kind === 'delete' ? 'Delete' : confirmAction?.kind === 'disable' ? 'Disable' : 'Enable'
+          confirmAction?.kind === 'delete'
+            ? 'Delete'
+            : confirmAction?.kind === 'disable'
+              ? 'Disable'
+              : 'Enable'
         }
         destructive={confirmAction?.kind !== 'enable'}
         isPending={setRoleStatus.isPending}
@@ -579,7 +593,6 @@ export function RoleManagementPage() {
           setConfirmAction(null)
         }}
       />
-
     </div>
   )
 }

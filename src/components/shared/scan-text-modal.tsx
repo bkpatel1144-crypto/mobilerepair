@@ -21,7 +21,13 @@ interface ScanTextModalProps {
  * the field with whatever it decodes and closes, rather than the honest-but-fake "just focuses
  * the input" stub this replaced. Shares its camera/decode plumbing with `ScanJobCardModal` via
  * `CameraScanFrame`; the only difference is what happens with the decoded text. */
-export function ScanTextModal({ open, onOpenChange, title, description, onScanned }: ScanTextModalProps) {
+export function ScanTextModal({
+  open,
+  onOpenChange,
+  title,
+  description,
+  onScanned,
+}: ScanTextModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md" showCloseButton={false}>
@@ -47,7 +53,12 @@ export function ScanTextModal({ open, onOpenChange, title, description, onScanne
           />
         )}
 
-        <Button type="button" variant="outline" className="w-full" onClick={() => onOpenChange(false)}>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={() => onOpenChange(false)}
+        >
           <X className="size-4" />
           Close
         </Button>

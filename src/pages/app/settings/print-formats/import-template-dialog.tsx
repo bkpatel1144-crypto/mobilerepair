@@ -10,8 +10,17 @@ import type { PrintTemplateDoc } from '@/types/firestore'
 /** Accepts a template exported from this app (the designer's "Export JSON" action writes the
  * same shape). Validated rather than trusted: an imported file becomes a document other people
  * print from, so a malformed one must fail here with a reason, not at the printer. */
-function parseTemplate(raw: unknown): { ok: true; value: Omit<PrintTemplateDoc, 'createdAt' | 'updatedAt' | 'createdById' | 'createdByName' | 'isDefault' | 'protected'> } | { ok: false; error: string } {
-  if (!raw || typeof raw !== 'object') return { ok: false, error: 'That file is not a template object.' }
+function parseTemplate(raw: unknown):
+  | {
+      ok: true
+      value: Omit<
+        PrintTemplateDoc,
+        'createdAt' | 'updatedAt' | 'createdById' | 'createdByName' | 'isDefault' | 'protected'
+      >
+    }
+  | { ok: false; error: string } {
+  if (!raw || typeof raw !== 'object')
+    return { ok: false, error: 'That file is not a template object.' }
   const t = raw as Record<string, unknown>
   if (!t.documentType || !PRINT_DOCUMENT_TYPES.some((d) => d.key === t.documentType)) {
     return { ok: false, error: `Unknown document type "${String(t.documentType)}".` }
@@ -95,7 +104,9 @@ export function ImportTemplateDialog({
         >
           <Upload className="size-5 shrink-0 text-muted-foreground" />
           <span className="min-w-0">
-            <span className="block truncate font-medium">{file ? file.name : 'Choose a .json file'}</span>
+            <span className="block truncate font-medium">
+              {file ? file.name : 'Choose a .json file'}
+            </span>
             <span className="block text-xs text-muted-foreground">
               {file ? `${(file.size / 1024).toFixed(1)} KB` : 'Exported from the designer'}
             </span>

@@ -1,4 +1,9 @@
-import { PRINT_BANDS, type PrintBand, type PrintElement, type PrintTemplateDoc } from '@/types/firestore'
+import {
+  PRINT_BANDS,
+  type PrintBand,
+  type PrintElement,
+  type PrintTemplateDoc,
+} from '@/types/firestore'
 import type { PrintContext } from '@/lib/print-contexts'
 
 /** Print contexts are built from real records, so a field can legitimately be a number or
@@ -66,7 +71,8 @@ function renderElement(el: PrintElement, values: PrintContext): string {
 
     case 'image':
     case 'logo': {
-      const src = el.type === 'logo' ? valueOf(values, 'shopLogo') || (el.text ?? '') : (el.text ?? '')
+      const src =
+        el.type === 'logo' ? valueOf(values, 'shopLogo') || (el.text ?? '') : (el.text ?? '')
       if (!src) return ''
       return `<img src="${escapeHtml(src)}" style="${styleAttr(el, 'object-fit:contain')}" />`
     }

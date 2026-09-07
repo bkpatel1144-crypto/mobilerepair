@@ -106,7 +106,9 @@ export function useChangePassword() {
 /** Firebase's own auth codes, translated into something a shop owner can act on. */
 export function passwordErrorMessage(error: unknown): string {
   const code =
-    error && typeof error === 'object' && 'code' in error ? String((error as { code: unknown }).code) : ''
+    error && typeof error === 'object' && 'code' in error
+      ? String((error as { code: unknown }).code)
+      : ''
   switch (code) {
     case 'auth/wrong-password':
     case 'auth/invalid-credential':

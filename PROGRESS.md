@@ -5,20 +5,20 @@ of every phase — see `BUILD_PLAN.md` for what each phase actually contains.
 
 ## Status
 
-| Phase                            | Status         | Notes                                                            |
-| -------------------------------- | -------------- | ---------------------------------------------------------------- |
-| 0 — Project scaffold             | ✅ Done        | `npm run dev`, `npm run build`, `npm run lint` all pass clean    |
-| 1 — Design system & app shell    | ✅ Done        | Verified in a real headless browser, not just `tsc`/`vite build` |
-| 2 — Auth + data model + rules    | ✅ Done        | Verified live against the real Firebase project — see below      |
-| 3 — RBAC engine                  | ✅ Done        | Found + fixed a real signup data-loss race — see below           |
-| 4 — Workflow Designer            | ✅ Done        | Company-wide form schemas, not per-role — see below              |
-| 5 — Service module               | ✅ Done        | Full job lifecycle + RBAC gating verified live — see below       |
-| 6 — Finance module               | ✅ Done        | All 5 pages read the same `jobCards`/`receipts` Phase 5 already writes — see below |
-| 7 — Masters + Second Hand Device | ✅ Done        | 6 Masters pages + full buy→sell Second Hand Device flow — see below |
-| 8 — Administration deep dive     | ✅ Done        | Audit trail retrofit across ~18 files + 3 real auth races found and fixed — see below |
-| 9 — Reports                      | ✅ Done        | 6 real reports over live Firestore data, 2 real Phase 5 gaps closed to feed them — see below |
-| 10 — Remaining Settings          | ✅ Done        | Branches/Company/FY/Print/WhatsApp/Backup all real; retired every remaining "Phase 10" print stub — see below |
-| 11 — Polish & deploy             | ✅ Code done   | Error states app-wide, Sales Invoices built, 375px fixes — deploy still needs you |
+| Phase                            | Status       | Notes                                                                                                         |
+| -------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------- |
+| 0 — Project scaffold             | ✅ Done      | `npm run dev`, `npm run build`, `npm run lint` all pass clean                                                 |
+| 1 — Design system & app shell    | ✅ Done      | Verified in a real headless browser, not just `tsc`/`vite build`                                              |
+| 2 — Auth + data model + rules    | ✅ Done      | Verified live against the real Firebase project — see below                                                   |
+| 3 — RBAC engine                  | ✅ Done      | Found + fixed a real signup data-loss race — see below                                                        |
+| 4 — Workflow Designer            | ✅ Done      | Company-wide form schemas, not per-role — see below                                                           |
+| 5 — Service module               | ✅ Done      | Full job lifecycle + RBAC gating verified live — see below                                                    |
+| 6 — Finance module               | ✅ Done      | All 5 pages read the same `jobCards`/`receipts` Phase 5 already writes — see below                            |
+| 7 — Masters + Second Hand Device | ✅ Done      | 6 Masters pages + full buy→sell Second Hand Device flow — see below                                           |
+| 8 — Administration deep dive     | ✅ Done      | Audit trail retrofit across ~18 files + 3 real auth races found and fixed — see below                         |
+| 9 — Reports                      | ✅ Done      | 6 real reports over live Firestore data, 2 real Phase 5 gaps closed to feed them — see below                  |
+| 10 — Remaining Settings          | ✅ Done      | Branches/Company/FY/Print/WhatsApp/Backup all real; retired every remaining "Phase 10" print stub — see below |
+| 11 — Polish & deploy             | ✅ Code done | Error states app-wide, Sales Invoices built, 375px fixes — deploy still needs you                             |
 
 ## Decisions log
 
@@ -197,13 +197,13 @@ missing` and blanked to the ErrorBoundary's fallback the instant anyone opened i
   Technician (Service only). Each carries a `dashboardConfig` (landing route + hidden widget
   keys) alongside its menu/action grants.
 - **Teammate creation without hijacking the acting Owner's session:** `createTeammateUser()`
-  spins up a *secondary* Firebase App instance (`initializeApp(app.options, uniqueName)`),
-  creates the Auth account on that instance, writes the profile doc via the *primary* `db`, then
+  spins up a _secondary_ Firebase App instance (`initializeApp(app.options, uniqueName)`),
+  creates the Auth account on that instance, writes the profile doc via the _primary_ `db`, then
   tears the secondary instance down — the Owner's own `auth.currentUser` never changes. Verified
   live: creating a Technician while signed in as Owner leaves the Owner signed in throughout.
 - **`firestore.rules`: two bugs found and fixed while building this.**
   1. The `users/{uid}` `create` rule originally required `request.auth.uid == uid` unconditionally
-     — which also blocked an Owner from creating a *teammate's* doc (different uid). Split into
+     — which also blocked an Owner from creating a _teammate's_ doc (different uid). Split into
      a bootstrap branch (`request.auth.uid == uid && isBootstrapping()`) and an admin branch
      (`belongsToCompany(...) && hasMenuAccess(..., 'administration/users')`).
   2. Every `hasMenuAccess()` call site still checked bare section keys (`'administration'`) left
@@ -227,11 +227,11 @@ led to the real, reproducible root cause:
 
 1. **`GuestOnlyRoute` redirected on bare Firebase Auth `user` truthiness.** `signUp()`'s
    `createUserWithEmailAndPassword()` call signs the new account in immediately — long before
-   the *rest* of `signUp()` (the 9-document batch: company, branch, financial year, 5 roles,
+   the _rest_ of `signUp()` (the 9-document batch: company, branch, financial year, 5 roles,
    user profile) has committed, which measured at **~1.9 seconds** against this project's real
    (named, non-default) Firestore database. `GuestOnlyRoute`, mounted on `/signup` the whole
    time, reacted to that early `user` change on its own and rendered `<Navigate
-   to="/app/dashboard">` — yanking the signup form (and its own, correctly-`await`ed navigation)
+to="/app/dashboard">` — yanking the signup form (and its own, correctly-`await`ed navigation)
    away roughly 1.5+ seconds before the batch write anyone was waiting on had actually finished.
 2. **That premature redirect turned an in-flight write into a losable one.** If the tab reloaded
    or closed during that window (measured: a full-page navigation ~400ms after reaching
@@ -246,14 +246,14 @@ led to the real, reproducible root cause:
 
 1. **`persistentLocalCache`** (`firebase.ts`) — Firestore now uses an IndexedDB-backed cache
    (`persistentMultipleTabManager`) instead of the SDK's memory-only default. `commit()` enqueues
-   a mutation to IndexedDB *before* attempting the network call, so it survives a reload/close and
+   a mutation to IndexedDB _before_ attempting the network call, so it survives a reload/close and
    the SDK resumes and replays it automatically once the page reconnects. Verified live: the same
    "reload ~400ms after reaching the dashboard" reproduction that previously lost the write now
    self-heals within a few seconds via the existing retry logic in `auth-provider.tsx`.
 2. **`GuestOnlyRoute` now gates on `profileLoading`, not just `user`** (`guest-only-route.tsx`) —
    won't redirect away from the signup/login form until there's an actual profile to route to.
-   This doesn't just avoid a UI flash; it keeps the user *on the one page whose still-running JS
-   promise chain is what the write depends on* for the whole ~1.9s, shrinking the realistic
+   This doesn't just avoid a UI flash; it keeps the user _on the one page whose still-running JS
+   promise chain is what the write depends on_ for the whole ~1.9s, shrinking the realistic
    "user navigates/reloads mid-write" window from "the entire time between account creation and
    redirect" (guaranteed to occur, every signup) down to "a manual refresh during the
    'Creating account…' pending state" (rare, deliberate). Verified live: signup-to-dashboard
@@ -262,7 +262,7 @@ led to the real, reproducible root cause:
    `auth.ts`) — defense in depth for the narrow window fix #2 doesn't close (a refresh during the
    pending-submit window itself, or `updateProfile()`'s Auth displayName call — which has no
    offline-replay mechanism of its own — not landing). `ProtectedRoute` now redirects a signed-in
-   user whose profile is *confirmed* absent (`profileLoading` false, `profile` still null — which
+   user whose profile is _confirmed_ absent (`profileLoading` false, `profile` still null — which
    only happens once `auth-provider.tsx`'s full retry budget has genuinely given up, never during
    ordinary loading) to a small form that re-collects company name and re-runs the same seeding
    batch for their existing uid. Guards against a false-positive "orphan" clobbering a real
@@ -273,12 +273,12 @@ led to the real, reproducible root cause:
 **One more bug found while re-verifying, unrelated to the race above:** the sidebar showed
 "Finance" and "Reports" for a Technician role with zero real permissions in either. Root cause:
 `sidebar-nav.tsx` included a section's locked (not-yet-built) leaves in `visibleChildren`
-*unconditionally* (`leaf.locked || canView(...)`), so a section with any locked leaf — Finance
+_unconditionally_ (`leaf.locked || canView(...)`), so a section with any locked leaf — Finance
 has 2 (Supplier Payables, Expenses), Reports has 1 (Profit & Loss) — appeared for every role
 regardless of actual access, showing only those disabled placeholder rows. Not a real permission
 leak (locked leaves have no route at all — `App.tsx` never generates one for them), but a
 misleading sidebar. Fixed: a locked leaf now only rides along with a section the role can
-*already* see via some other, real (unlocked) permission — never manufactures visibility on its
+_already_ see via some other, real (unlocked) permission — never manufactures visibility on its
 own. Every section has at least one unlocked leaf, so this can't hide a section from a role
 that's actually meant to see it.
 
@@ -286,7 +286,7 @@ that's actually meant to see it.
 checks passing both times, zero console/page errors): signup → Role Management list (5 seeded
 roles) → Owner's Configure page (Full Access badge) → create "QA Tester" custom role → check a
 leaf + save → reload → confirm persistence → User Management list → create a Technician user
-(Owner's own session unaffected) → sign out → log in as Technician → sidebar shows *only*
+(Owner's own session unaffected) → sign out → log in as Technician → sidebar shows _only_
 Dashboard + Service → direct URL to Finance and to Role Management both correctly show "Access
 Denied" via the route guard, not just a hidden sidebar item.
 
@@ -296,7 +296,7 @@ Denied" via the route guard, not just a hidden sidebar item.
   deviation from this phase's own opening line in BUILD_PLAN.md ("`workflowConfig/{roleId}` holds
   all of the below per role"). The reference screenshots contradict that line themselves:
   `preview (7)`'s "Job Card Form" and "Lead Form" tabs are siblings of "Role Permissions" at the
-  *top* level, with no role in scope for either — only "Role Permissions" (statuses, actions,
+  _top_ level, with no role in scope for either — only "Role Permissions" (statuses, actions,
   assignment, behavior) is actually nested under a selected role's own sub-tabs. See
   `BUILD_PLAN.md`'s Deviations list, item 6, for the full reasoning.
 - **`StatusBadge`'s tone-resolution logic split into `src/lib/status-tone.ts`.** Needed
@@ -312,14 +312,14 @@ Denied" via the route guard, not just a hidden sidebar item.
   own blue banner text ("Nothing here can be submitted or saved from this preview") — every
   preview input (`field-preview-input.tsx`) is a static-looking but non-functional control
   (search boxes don't actually search, the currency chips just update local component state).
-  This is the *builder's* preview only; Phase 5's real Create Job Card form is a separate,
+  This is the _builder's_ preview only; Phase 5's real Create Job Card form is a separate,
   fully-functional component that reads the same `formSchemas/jobCard` doc this builder writes,
   never a second hardcoded copy of the field list.
 - **Section checkboxes in the form builder are a builder-only declutter toggle, not a master
   visibility switch.** Confirmed against `preview (10)`: the "Accessories" section shows
   unchecked while its fields (Items received/returned) remain visible with their own
   fully-active icon rows in the live-preview pane below — so unchecking a section only
-  collapses that group of fields out of the *editing* view; each field's own `visible` flag is
+  collapses that group of fields out of the _editing_ view; each field's own `visible` flag is
   still what actually governs whether Phase 5's real form shows it.
 - **Import/Export are real** (schema round-trips as downloaded/uploaded JSON), but "Save as
   template" and the Template dropdown are a lightweight, genuinely-functional but
@@ -330,13 +330,13 @@ Denied" via the route guard, not just a hidden sidebar item.
   "read-only once the field has a value," per its tooltip) — there's no real Create Job Card
   form yet for it to matter to. Phase 5 is what would need to respect it.
 - **Live verification found and fixed a real product bug**, unrelated to the RBAC race:
-  the sidebar showed "Finance" and "Reports" for a Technician role with *zero* real permissions
+  the sidebar showed "Finance" and "Reports" for a Technician role with _zero_ real permissions
   in either. Root cause: `sidebar-nav.tsx` included a section's locked (not-yet-built) leaves in
-  `visibleChildren` *unconditionally* — Finance has 2 locked leaves (Supplier Payables,
+  `visibleChildren` _unconditionally_ — Finance has 2 locked leaves (Supplier Payables,
   Expenses), Reports has 1 (Profit & Loss), so either section appeared for every role regardless
   of actual access, showing only its disabled placeholder rows. Not a real permission leak
   (locked leaves have no route at all), but a misleading sidebar. Fixed: a locked leaf now only
-  rides along with a section the role can *already* see via some other, real (unlocked)
+  rides along with a section the role can _already_ see via some other, real (unlocked)
   permission.
 - **Two test-script bugs surfaced during verification, both false alarms, not product bugs** —
   worth recording since each briefly looked like a real data-loss issue: (1) a Playwright
@@ -364,7 +364,7 @@ live (`*` → `(Optional)`) → Save → reload → change persisted → Lead Fo
   function without a customer to attach to and a catalog to pick parts/service items from, but
   BUILD_PLAN.md's own phase ordering puts Service (5) before Masters (7). `PartyDoc`/`ItemDoc`
   (in `src/types/firestore.ts`) are deliberately minimal — just enough shape for Phase 7's
-  fuller Item Master/Party Management pages to *extend*, never replace. No early Masters pages
+  fuller Item Master/Party Management pages to _extend_, never replace. No early Masters pages
   were built; the quick-add UI (`SearchSelect`'s `onCreateNew`, `MultiSelectPopover`'s inline
   add) lives directly inside the Job Card form and Service Items page. See BUILD_PLAN.md
   Deviations #7.
@@ -381,13 +381,13 @@ live (`*` → `(Optional)`) → Save → reload → change persisted → Lead Fo
 - **Every status-transition action funnels through one dispatcher**
   (`useApplyJobAction`/`use-job-actions.ts`) that always does the same two things atomically —
   patches the job's own fields and appends the real timeline event that action produced — and
-  always snapshots the *before* values of whatever it just patched into the job doc's own
+  always snapshots the _before_ values of whatever it just patched into the job doc's own
   `lastActionUndo` field. "Undo Last Action" (`useUndoLastAction`) is deliberately
   single-level, matching the reference app's own copy ("Undo Last Action," singular, not a full
   undo stack).
 - **Which action buttons even show is two independent gates**, both required: the Phase-4
-  status×action matrix (is this role *allowed*) and a local `ACTION_APPLICABLE_STATUSES` map in
-  `action-buttons.tsx` (would this action even make sense given the job's *current* status — a
+  status×action matrix (is this role _allowed_) and a local `ACTION_APPLICABLE_STATUSES` map in
+  `action-buttons.tsx` (would this action even make sense given the job's _current_ status — a
   role permitted to "Deliver" shouldn't see that button on a `pending` job). An Owner
   (`fullAccess`) bypasses the matrix entirely, same as every other RBAC check in this app.
 - **Reorder in Service Options is up/down arrows, not drag-and-drop.** A real drag library is
@@ -396,14 +396,14 @@ live (`*` → `(Optional)`) → Save → reload → change persisted → Lead Fo
   simpler control than the reference screenshot's drag handle.
 - **A real, if severe, performance issue found and fixed during verification**: creating a job
   card with an advance measured up to ~10-20 seconds on this network before a fix, because
-  `getNextSequence()` (job number, then receipt number) ran as two *sequential* Firestore
+  `getNextSequence()` (job number, then receipt number) ran as two _sequential_ Firestore
   transactions — each already two round trips (a transactional read, then a commit) — before
   the actual batch write even started. Fixed by running both counters through `Promise.all()`
   instead (`useCreateJobCard` in `use-job-cards.ts`) — they're independent counters with no
   data dependency on each other, so there was no reason they were sequential in the first
   place. Roughly halves the real-world latency of creating a job card with an advance.
 - **A real UI stacking bug found and fixed**: Job Costing's "Record Cost" button opened a
-  custom fixed-overlay modal *on top of* the still-open detail drawer (a separate Sheet
+  custom fixed-overlay modal _on top of_ the still-open detail drawer (a separate Sheet
   component) rather than instead of it — both are `position: fixed` at the same z-index, and
   the older (drawer's) backdrop ended up intercepting clicks meant for the modal's own buttons.
   Fixed by closing the drawer the moment the modal opens (`job-costing-page.tsx`) — the two
@@ -414,7 +414,7 @@ live (`*` → `(Optional)`) → Save → reload → change persisted → Lead Fo
   button landed on an unrelated section's add-trigger instead — same class of bug as Phase 4's
   "Save" vs. "Save as template," now confirmed to recur anywhere a short, generic button label
   shares a page with longer labels containing it; (2) a device-type checkbox in the brand
-  quick-add form is *pre-checked* by default (correctly — you opened it via that device type's
+  quick-add form is _pre-checked_ by default (correctly — you opened it via that device type's
   own "+ Add brand"), so a test clicking it "to select it" actually deselected it; (3) a
   same-labeled trigger button and modal submit button (e.g. "Job Done" outside and inside its
   own confirmation dialog) both remain in the DOM while the dialog is open, so a bare text
@@ -429,7 +429,7 @@ real "Created" and "Advance Received" events → Take Job → added a part (quic
 catalog item) → Job Done → Generate Bill → Deliver → Close → Job Costing list shows it as
 "Pending Costing" → recorded actual costing → Service Items quick-add created a real Item
 Master-shape entry. **Separately verified the actual point of Phase 4+5 together**
-(`verify-gating.mjs`, 8/8 checks): a fresh Technician with no workflow config sees *zero*
+(`verify-gating.mjs`, 8/8 checks): a fresh Technician with no workflow config sees _zero_
 status-action buttons on a job card; after the Owner grants only "Take Job" for the Pending
 status via the Workflow Designer, the Technician sees exactly that one button (plus the
 always-available Repeat Job/WhatsApp) and nothing else — "Job Done"/"Generate Bill" stay hidden.
@@ -557,7 +557,7 @@ of them functional, not cosmetic:
   Delivery", and "Cancelled · Pending Return" where the reference just says "Tech Done", "Ready",
   and "Pending Return". Renamed at the source so it's correct everywhere at once.
 - **The `<Select>` fix from round 1 needed a companion fix for the exact same failure mode
-  elsewhere**: the Device PIN/Pattern field was rendering its *internal* pattern encoding
+  elsewhere**: the Device PIN/Pattern field was rendering its _internal_ pattern encoding
   (`"1-2-3-6-9"`) into a plain editable `<Input>` once a pattern was drawn — the same class of
   bug as the raw-Firestore-ID `<Select>` issue, an internal representation leaking where a
   friendly summary belongs. Fixed to show "Pattern drawn" with an inline "Clear", matching the
@@ -621,7 +621,7 @@ of them functional, not cosmetic:
   `py-6` → `py-4`) for 1199px → 1047px, ~13% total reduction.
 - **The actual, correct fix for the height problem turned out to be structural, not spacing**:
   asked directly to compare two screenshots side by side, the real difference wasn't padding at
-  all — the reference's two columns are two *independent* vertical stacks (left column:
+  all — the reference's two columns are two _independent_ vertical stacks (left column:
   `customerInformation` + `deviceInformation` + `repairInformation` fields, ending after Service
   Items with visible empty space below it; right column: `financial` + `accessories` +
   `internalDetails` + `images` fields, running further down on its own), not a single grid where
@@ -678,11 +678,11 @@ of them functional, not cosmetic:
 - **Void Receipt reverses the ledger atomically, not a soft-delete** — flips `voided: true` and,
   if the receipt was against a job card, reverses that job's `paidAmount` by the same signed
   amount, both in one batch. `firestore.rules`' own `update` rule for `receipts` is deliberately
-  narrow: the *only* legal diff is `voided: false → true` (plus `updatedAt`) — never a rewrite of
+  narrow: the _only_ legal diff is `voided: false → true` (plus `updatedAt`) — never a rewrite of
   the amount/party/mode after the fact, same "append-only ledger" principle the job timeline
   already uses. The matching `jobCards` rule update needed its own narrow second clause too: a
   Finance-only role (no Service access at all) can still legally reverse `paidAmount` — and
-  *only* that field — on a job it doesn't otherwise have access to.
+  _only_ that field — on a job it doesn't otherwise have access to.
 - **Payables reinterpreted for what this app actually has** — see BUILD_PLAN.md Deviation #11:
   no supplier-purchase flow exists yet, so this is customer-side (Refund Due / Unused Advance /
   Advance Credit), computed entirely from `jobCards`+`receipts`, not a second Payables data model
@@ -693,7 +693,7 @@ of them functional, not cosmetic:
   (once a job's `finalAmount` is set) is a debit. A positive credit-minus-debit running balance
   means the shop is holding more than it's billed (shown as "₹N Cr", same as the reference);
   negative means the customer still owes. The summary list's own `balance` field intentionally
-  uses the *opposite* sign convention (`billed − paid`, positive = customer owes) to read
+  uses the _opposite_ sign convention (`billed − paid`, positive = customer owes) to read
   naturally as a plain "Balance" column — `balanceLabel()` reconciles the two call sites by
   negating the detail view's running total before display; documented in-code since two
   opposite, both-correct conventions in one file is a real footgun for whoever touches this next.
@@ -734,7 +734,7 @@ of them functional, not cosmetic:
   catalog Job Cards already picks from** — confirmed correct by comparing `preview (50)`'s combos
   to the Job Card form's own, which are visually identical. One shared catalog, not a second one
   seeded separately for second-hand devices; adding a brand from either screen shows up in both.
-- **Parties' `type` field (Phase 5) is kept, now *derived*, not replaced** — Phase 7 needs the
+- **Parties' `type` field (Phase 5) is kept, now _derived_, not replaced** — Phase 7 needs the
   reference's real `partyTypes: ('customer' | 'supplier')[]` array (`preview (51)`'s own "Both"
   filter pill proves Customer/Supplier are independent checkboxes, not a mutually-exclusive
   radio), but every Phase 5/6 call site reading `party.type` (job-card customer search, receipt
@@ -801,7 +801,7 @@ of them functional, not cosmetic:
 - **Every mutation written since Phase 2 now logs to `auditLog` inside the same atomic
   `writeBatch` as the real write it's recording** — `addAuditLogToBatch()` (`src/lib/audit-log.ts`)
   resolves IP/branch-name first (it's `async`) but never calls `.commit()` itself, leaving that to
-  the caller, so an audit entry exists *iff* the write it records actually landed. Retrofitted
+  the caller, so an audit entry exists _iff_ the write it records actually landed. Retrofitted
   across ~18 pre-existing files (`use-roles.ts`, `use-workflow-config.ts`, `use-form-schema.ts`,
   `use-service-options.ts`, `use-job-cards.ts`, `use-job-actions.ts`, `use-job-costing.ts`,
   `use-receipts.ts`, `use-parties.ts`, `use-items.ts`, `use-item-categories.ts`, `use-uom.ts`,
@@ -827,31 +827,31 @@ of them functional, not cosmetic:
   client-SDK-only project; documented as the closest honest stand-in, not a fabricated value.
 - **A broad, previously-latent Firestore correctness bug, found and fixed everywhere it appeared,
   not just in new Phase 8 code**: a `serverTimestamp()` field reads back as `null` locally until
-  the server acknowledges it, and Firestore's query engine *excludes* — not just mis-sorts — a
+  the server acknowledges it, and Firestore's query engine _excludes_ — not just mis-sorts — a
   document from a server-side `orderBy()`-sorted result while its sort field is `null`. A
   freshly-created job card, receipt, session, audit entry, or second-hand purchase/sale was
-  silently invisible in its own list until a server round trip completed *and* something
+  silently invisible in its own list until a server round trip completed _and_ something
   triggered a refetch. This had been present since whichever phase first wrote each affected
   hook (as far back as Phase 5) — Phase 8's own live testing of "does a brand-new session/audit
   row show up immediately" is simply the first thing that exercised it hard enough to notice.
   Fixed by removing every server-side `orderBy()` on these collections and sorting client-side
   instead, using `new Date().getTime()` (not the bare `Date.now()` this project's React Compiler
   flags as impure) as the fallback for an unresolved timestamp. The identical bug also showed up
-  in a *date-range filter* — Login Report's own "is this today" check falling back to epoch
+  in a _date-range filter_ — Login Report's own "is this today" check falling back to epoch
   (`new Date(0)`) for an unresolved timestamp, wrongly dropping a same-second login event out of
   every stat on the page. Same fix, same reasoning: an unresolved timestamp should fall back to
   "now" (definitely included), never to "the beginning of time" (definitely excluded).
 - **Two genuine races between Firebase Auth's own global state change and this app's async
   post-auth checks, both newly discovered this phase**:
-  1. *Signup*: `GuestOnlyRoute` redirects reactively the instant a profile doc becomes visible,
+  1. _Signup_: `GuestOnlyRoute` redirects reactively the instant a profile doc becomes visible,
      independent of `signUp()`'s own JS. The session + audit-log docs used to be written as a
-     separate `await` *after* the bootstrap batch committed, landing 1-3s after that redirect
+     separate `await` _after_ the bootstrap batch committed, landing 1-3s after that redirect
      already fired — long enough for anything checking immediately post-signup (an automated
-     test, a very fast real user) to see them "missing." Fixed by folding both into the *same*
+     test, a very fast real user) to see them "missing." Fixed by folding both into the _same_
      atomic bootstrap batch as the profile doc (`addSessionToBatch`/`addLoginAuditToBatch` in
      `seedTenantForUser()`), using a `getClientIp()` promise kicked off in parallel with the rest
      of signup rather than awaited afterward.
-  2. *Login rejection*: `signInWithEmailAndPassword` flips Firebase's global auth state (and
+  2. _Login rejection_: `signInWithEmailAndPassword` flips Firebase's global auth state (and
      `GuestOnlyRoute`'s reactive redirect) the instant credentials check out — before `logIn()`'s
      own async profile-status/IP-whitelist check (a Firestore round trip) can reject the attempt
      from the login form itself. This could let a disabled/blocked account briefly reach
@@ -869,9 +869,9 @@ of them functional, not cosmetic:
      in-flight write needs, silently turning a security-relevant rejection into one that never
      gets logged — exactly the kind of gap a real audit trail exists to not have. A first fix
      (tracking only the `logLoginEvent()` write itself, registered once `logIn()` reaches it) was
-     verified insufficient by direct testing: the race can land *before* `logIn()` has even
+     verified insufficient by direct testing: the race can land _before_ `logIn()` has even
      reached its own whitelist/status check, i.e. before there's anything yet to track. Fixed
-     properly by having `logIn()` register its *entire* attempt as a pending write
+     properly by having `logIn()` register its _entire_ attempt as a pending write
      (`trackPendingAuditWrite`) from the very first synchronous tick it's called, and `logOut()`
      awaits that (`flushPendingAuditWrite()`) before actually calling `firebaseSignOut()` —
      closing the race regardless of which stage it lands in. Confirmed via direct instrumentation
@@ -879,7 +879,7 @@ of them functional, not cosmetic:
      then re-confirmed with 4+ consecutive clean full-suite runs with the tracing removed again.
 - **A real server-side security gap found and fixed**: `firestore.rules`' `belongsToCompany()` —
   the gate nearly every rule in the file goes through — never checked account `status` at all, so
-  a disabled account had *zero* server-side enforcement, only a client-side UI nicety a direct SDK
+  a disabled account had _zero_ server-side enforcement, only a client-side UI nicety a direct SDK
   call could bypass entirely. Fixed by baking `myUserDoc().data.status == 'active'` into
   `belongsToCompany()` itself; a disabled account is now correctly denied everything except
   reading their own profile doc (still allowed via the separate `request.auth.uid == uid` clause
@@ -890,16 +890,16 @@ of them functional, not cosmetic:
   `protected` users and the viewer's own row), so the rejection path built for this phase is
   actually reachable through the UI, not just exercisable by hand-editing Firestore.
 - **A `getClientIp()` cache correctness fix**: the module-level IP cache (shared by every
-  audit-log write and login-attempt check on one page load) previously cached a *failed* lookup
+  audit-log write and login-attempt check on one page load) previously cached a _failed_ lookup
   (a network blip, the free `api.ipify.org` rate-limiting a page that's made many calls) just as
   permanently as a successful one, meaning one transient failure poisoned every subsequent
   audit-log write for the rest of that page's lifetime with `ip: null`. Fixed so only a
-  *successful* lookup is cached — a failed one clears itself, so the next call gets a fresh
+  _successful_ lookup is cached — a failed one clears itself, so the next call gets a fresh
   attempt instead of reusing the same failure forever.
 - **Two test-script bugs found while chasing what first looked like a flaky "Blocked IPs" stat**,
   both worth recording since each masqueraded as a product bug for a while: (1) the test's own
-  free-text search on System Audit ("Blocked Tech") happened to match the *test teammate's own
-  name* rather than a `result: 'blocked'` row — the search box doesn't index `result` at all, only
+  free-text search on System Audit ("Blocked Tech") happened to match the _test teammate's own
+  name_ rather than a `result: 'blocked'` row — the search box doesn't index `result` at all, only
   action/entity/label/user/target — producing a false-positive pass that hid the real underlying
   issue (a stale, un-rebuilt preview server — see below) for several iterations; fixed by renaming
   the teammate and switching the check to the page's own "All Results" dropdown filter, which
@@ -928,7 +928,7 @@ of them functional, not cosmetic:
 
 - **Four of six reports (Job-wise Profit, Technician Report, Supplier Report, Period Summary)
   read a `jobCosting`+`jobCards` join, not `jobCards` alone** — `useCostedJobs()`
-  (`src/hooks/use-reports.ts`). A job only has a real revenue/cost/profit number once Closed *and*
+  (`src/hooks/use-reports.ts`). A job only has a real revenue/cost/profit number once Closed _and_
   actually costed; a Closed-but-not-yet-costed job has nothing to report and is correctly absent
   from all four, matching the reference's own screenshots ("Jobs: 1" reflecting only the one
   costed job in its test data). Service Reports and Field Visit Report read their own source
@@ -936,7 +936,7 @@ of them functional, not cosmetic:
 - **Two real, pre-existing gaps from Phase 5 had to be closed before these reports had anything
   real to show**, both found while building this phase, neither a Phase 9 regression:
   1. `record-costing-modal.tsx` declared a `supplier: string | null` field on every cost item but
-     never rendered anything to *set* it — every cost item's supplier had been permanently `null`
+     never rendered anything to _set_ it — every cost item's supplier had been permanently `null`
      since the day that modal was written. Added a real `SearchSelect` per cost item (autocompletes
      against existing supplier-type Parties, quick-adds a new one via `useCreateParty()` — the same
      call the Second Hand Device seller picker already makes — for anything typed that doesn't
@@ -1001,7 +1001,7 @@ of them functional, not cosmetic:
 
 ### Phase 10 decisions
 
-- **Company Settings manages *the* one company, not a real multi-company list** — see
+- **Company Settings manages _the_ one company, not a real multi-company list** — see
   BUILD_PLAN.md's Phase 10 deviations (#28) for the full reasoning: this app's data model ties
   `UserDoc.companyId` to exactly one company, with no company-switcher anywhere, so a genuine
   "Create Company" would create a permanently unreachable orphan doc. `useCompany()` does a
@@ -1009,7 +1009,7 @@ of them functional, not cosmetic:
   rule on `companies` for a query that could only ever return one document anyway. The reference's
   own screenshot shows the identical "list with exactly one row" shape for the same reason, so
   this still looks and behaves like the reference's own list+drawer pattern.
-- **Financial Year *documents* are administrative/informational, deliberately independent of the
+- **Financial Year _documents_ are administrative/informational, deliberately independent of the
   FY string Job/Receipt/Party sequence numbers embed** — see BUILD_PLAN.md deviation #29.
   `getCurrentFinancialYear()` (used since Phase 2 for `JC-2026-27-...`-style IDs) still derives
   its answer purely from the real calendar date, never from which `FinancialYearDoc` a company
@@ -1022,7 +1022,7 @@ of them functional, not cosmetic:
   the reference screenshot shows, same "advisory, not fake" principle as IP Whitelist.
 - **Print Formats' "canvas" is an ordered, reorder-by-arrows block list, not pixel-positioned
   drag-and-drop** — BUILD_PLAN's own spec for this phase explicitly allows exactly this. The live
-  preview pane renders through the *exact same* `renderPrintHtml()` (`src/lib/print-render.ts`)
+  preview pane renders through the _exact same_ `renderPrintHtml()` (`src/lib/print-render.ts`)
   every real "Print X" button in the app calls, against sample data — a true live preview, not a
   decorative mockup of one. Templates are seeded with one protected default per document type
   (11 total) at signup, matching every other "real usable defaults, not an empty shelf" seed in
@@ -1030,7 +1030,7 @@ of them functional, not cosmetic:
 - **Every pre-existing "Print X" stub retired for real** — Job Card's Print Label/Print Job
   Card/Print Bill (previously bare `window.print()` calls since Phase 5) and Second Hand Device's
   Print Receipt/Print Label (previously a visibly-disabled "(Phase 10)" stub since Phase 7) now
-  render the company's own *default* template for that document type against the real record via
+  render the company's own _default_ template for that document type against the real record via
   `openPrintWindow(renderPrintHtml(...))` — not a hardcoded layout. Which template a button uses
   is whichever the company has marked default in Print Formats, changeable without touching any
   of these call sites. The WhatsApp button (previously a single hardcoded message string) now
@@ -1049,7 +1049,7 @@ of them functional, not cosmetic:
 - **A genuine performance fix found while verifying Backup & Restore live**: `buildBackupSnapshot()`
   (walks ~19 top-level collections + 8 Service Options sub-collections + a per-job-card
   `timeline` subcollection + this company's own slice of `users`) originally fetched every one of
-  those *sequentially*, one Firestore round trip at a time — slow enough that "Current Database"
+  those _sequentially_, one Firestore round trip at a time — slow enough that "Current Database"
   stats and "Backup Now"/"Download Backup" all took long enough to make a naive test's own
   polling budget time out. Parallelized every independent fetch via `Promise.all()` instead
   (nothing in that walk actually depends on anything else in it) — a real, measured latency fix
@@ -1057,7 +1057,7 @@ of them functional, not cosmetic:
 - **A real UI staleness bug found and fixed, present in the exact same shape on Branch Management
   and Financial Years' own detail drawers**: clicking Activate/Deactivate/Lock from within a
   drawer mutated the underlying document correctly, but the open drawer kept showing the
-  *pre-mutation* snapshot it was opened with (a plain React state holding a copied object, never
+  _pre-mutation_ snapshot it was opened with (a plain React state holding a copied object, never
   re-synced against the freshly refetched list behind it) — confirmed live via a failing
   verification check that this project's own established convention already avoids elsewhere
   (every other status-changing action in this app closes its drawer on success rather than trying
@@ -1090,7 +1090,7 @@ of them functional, not cosmetic:
 
 - **The headline finding wasn't on the checklist at all.** Phase 11's list asked for empty
   states and loading skeletons; both turned out to be essentially done already, because every
-  feature phase had honoured the quality bar as it went. What no phase had done was the *third*
+  feature phase had honoured the quality bar as it went. What no phase had done was the _third_
   branch that same bar names — the error state. Every one of the 43 query call sites in the app
   read `const { data = [], isLoading } = useThing()`, discarding `isError`, and the QueryClient
   sets no `throwOnError`, so nothing reached the `ErrorBoundary` either. The consequence is
@@ -1101,21 +1101,21 @@ of them functional, not cosmetic:
   shown to the user as reassurance — a shop owner would reasonably start re-entering data that
   was still there. Fixed with a shared `ErrorState` + `errorMessage()` (the latter in
   `lib/error-message.ts`, so the component file only exports a component), an `error`/`onRetry`
-  pair on `DataTable`/`ExpandableTable` checked *before* the empty branch, and composed hooks
+  pair on `DataTable`/`ExpandableTable` checked _before_ the empty branch, and composed hooks
   (`use-dashboard-stats`, `use-cash-book`, `use-party-ledger`, `use-payables`, `use-receivables`,
   `use-reports`, `use-login-report`, `use-service-options`) now surfacing a combined error plus
   a refetch that retries every source query they fan out over.
 - **Three places were worse than a wrong empty state, and needed more than a new branch:**
   - Dashboard and Payables derive their tiles inside a `useMemo`, so a failed read still
     produced a complete, well-formed object of zeros — every tile confidently reporting "0" and
-    "₹0". Rendering an error message *next to* fabricated totals would satisfy the letter of the
+    "₹0". Rendering an error message _next to_ fabricated totals would satisfy the letter of the
     checklist and violate "no fake numbers," so both page bodies are suppressed entirely on error.
   - The Workflow Designer's Form Builder and Role Permissions tabs fall back to
     `blankFormSchema()` / `blankWorkflowConfig()` when the read returns nothing. A failed load
     therefore rendered a pristine editor whose Save would overwrite the company's real stored
     schema with defaults — data loss, not a cosmetic bug. Both now refuse to render an editor at
     all until they know what they are editing.
-  - The job card detail page reported "Job card not found — it may have been removed" on *any*
+  - The job card detail page reported "Job card not found — it may have been removed" on _any_
     read failure, sending someone to look for a deletion that never happened; and the timeline
     showed "No activity yet" even though every job has a `Created` event written at intake, so
     an empty timeline is only ever truthful when the read actually succeeded.
@@ -1124,7 +1124,7 @@ of them functional, not cosmetic:
   section's phase label, it was telling users "Sales Invoices is built in Phase 5 — Service
   module" — a phase marked ✅ Done. It is specced in `SCREENS_NOTES.md` (`preview (68)`) but was
   never assigned to a phase in `BUILD_PLAN.md`, which is how it slipped through ten phases.
-- **No `invoices` collection for it.** A bill *is* a job card that has been through the
+- **No `invoices` collection for it.** A bill _is_ a job card that has been through the
   `generateBill` action — the only thing in the app that ever sets `finalAmount`. A second
   collection would mean two sources of truth for one number; this is the same call Phase 5 made
   when it had Service Items query Item Master rather than duplicate it. An invoice is exactly
@@ -1133,14 +1133,14 @@ of them functional, not cosmetic:
   cancelled jobs as bills.
 - **Added `billGeneratedAt`.** Without it the only available bill date was `updatedAt`, which
   every later action (payment, deliver, close) overwrites — so a closed job would have shown its
-  *close* date in a column headed "Bill Date". It is written by the `generateBill` action
+  _close_ date in a column headed "Bill Date". It is written by the `generateBill` action
   alongside the existing `deliveredAt`/`closedAt`/`cancelledAt` pattern. Jobs billed before the
   field existed fall back to `updatedAt` rather than showing an invented date. No rules change
   was needed: `jobCards` has no field whitelist on update.
 - **Crash reporting closes Phase 8's leftover TODO in `error-boundary.tsx`.** A render crash
   that unmounted the whole app previously left nothing behind but a `console.error` in a browser
-  nobody was watching. It deliberately does *not* go through `AuditContext`/`useAuth()`: the
-  boundary is a class component mounted *above* `AuthProvider` (it has to be, or a crash inside
+  nobody was watching. It deliberately does _not_ go through `AuditContext`/`useAuth()`: the
+  boundary is a class component mounted _above_ `AuthProvider` (it has to be, or a crash inside
   AuthProvider itself would go uncaught), so it has no hooks and no profile in scope —
   `auth.currentUser` plus the existing per-viewer profile cache give the same fields without
   one. The import is dynamic, because this boundary is one of the few things `App.tsx` imports
@@ -1163,7 +1163,7 @@ of them functional, not cosmetic:
   1–10 matched it to the reference app's desktop screenshots; resizing everything unconditionally
   would have thrown that away to satisfy a mobile guideline. Gating on `pointer: coarse` means a
   mouse keeps the exact dense layout and only touch devices get 44px. The usual trick for this is
-  a transparent `::after` halo, which is the *wrong* one here: adjacent icon buttons sit `gap-1.5`
+  a transparent `::after` halo, which is the _wrong_ one here: adjacent icon buttons sit `gap-1.5`
   (6px) apart, so 44px halos would overlap by ~10px and whichever painted last would silently
   swallow the other's taps. Growing the control itself cannot overlap anything, and every row
   holding these is either `flex-wrap` or a scroll container. Also fixed the marketing site's
@@ -1183,7 +1183,7 @@ of them functional, not cosmetic:
   made the app actually render; that dummy `.env.local` has since been deleted, so `npm run dev`
   again gives `firebase.ts`'s clear "Missing env var" warning rather than a booting app that
   fails every call.
-- **Deliberately left alone:** a handful of secondary lookups that populate pickers *inside*
+- **Deliberately left alone:** a handful of secondary lookups that populate pickers _inside_
   already-error-guarded views (`action-buttons.tsx`'s cancel-reason list, `record-costing-modal`'s
   supplier picker). A failure there means an empty dropdown next to an "+ Add New" affordance,
   inside a page that has already reported its own load failure — worth knowing about, but not
@@ -1249,7 +1249,7 @@ of them functional, not cosmetic:
    the Auth accounts cleaned up, or would rather clear everything yourself via Firebase Console,
    or just leave it.
 3. Not a new blocker, just carried forward: Phase 2's cleanup used a broad `taskkill /F /IM
-   node.exe /T` at one point, stopping every Node process on the machine, not just this one's.
+node.exe /T` at one point, stopping every Node process on the machine, not just this one's.
    This phase's own cleanup was more surgical (exact PIDs via `netstat`), but flagging again in
    case it wasn't seen the first time.
 
@@ -1261,7 +1261,7 @@ work in Phases 0-11.
 1. **Deploy the security rules** — carried forward unchanged from every phase since Phase 2, and
    still the most important open item. `firestore.rules`, `firestore.indexes.json` and
    `storage.rules` are written but have never been deployed, so every phase's live testing ran
-   against the project's *older* rules. Most significantly, `belongsToCompany()` now also
+   against the project's _older_ rules. Most significantly, `belongsToCompany()` now also
    requires `status == 'active'`, and that check is still unenforced in production.
    ```
    npx firebase-tools login

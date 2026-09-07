@@ -26,12 +26,18 @@ export function WhatsAppPage() {
   const effectiveTemplates = templates ?? config?.templates ?? []
   const dirty = countryCode !== null || templates !== null
 
-  function updateTemplate(event: WhatsAppTemplateDoc['event'], patch: Partial<WhatsAppTemplateDoc>) {
+  function updateTemplate(
+    event: WhatsAppTemplateDoc['event'],
+    patch: Partial<WhatsAppTemplateDoc>
+  ) {
     setTemplates(effectiveTemplates.map((t) => (t.event === event ? { ...t, ...patch } : t)))
   }
 
   async function handleSave() {
-    await updateConfig.mutateAsync({ countryCode: effectiveCountryCode, templates: effectiveTemplates })
+    await updateConfig.mutateAsync({
+      countryCode: effectiveCountryCode,
+      templates: effectiveTemplates,
+    })
     setCountryCode(null)
     setTemplates(null)
   }
@@ -43,7 +49,11 @@ export function WhatsAppPage() {
         title="WhatsApp"
         subtitle="Message templates sent to customers as their job progresses"
         actions={
-          <Button type="button" onClick={handleSave} disabled={isLoading || !dirty || updateConfig.isPending}>
+          <Button
+            type="button"
+            onClick={handleSave}
+            disabled={isLoading || !dirty || updateConfig.isPending}
+          >
             <Save className="size-4" />
             {updateConfig.isPending ? 'Saving…' : 'Save Changes'}
           </Button>
@@ -58,13 +68,23 @@ export function WhatsAppPage() {
           ))}
         </div>
       ) : loadError ? (
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load your WhatsApp templates" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load your WhatsApp templates"
+        />
       ) : (
         <>
           <div className="max-w-xs space-y-1.5">
             <Label>Country Code</Label>
-            <Input value={effectiveCountryCode} onChange={(e) => setCountryCode(e.target.value.replace(/\D/g, '').slice(0, 3))} placeholder="91" />
-            <p className="text-xs text-muted-foreground">Prefixed to a customer's 10-digit mobile before opening WhatsApp.</p>
+            <Input
+              value={effectiveCountryCode}
+              onChange={(e) => setCountryCode(e.target.value.replace(/\D/g, '').slice(0, 3))}
+              placeholder="91"
+            />
+            <p className="text-xs text-muted-foreground">
+              Prefixed to a customer's 10-digit mobile before opening WhatsApp.
+            </p>
           </div>
 
           <div className="space-y-3">
@@ -72,7 +92,10 @@ export function WhatsAppPage() {
               <div key={t.event} className="space-y-2 rounded-lg border p-4">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold">{t.label}</p>
-                  <Switch checked={t.enabled} onCheckedChange={(checked) => updateTemplate(t.event, { enabled: checked })} />
+                  <Switch
+                    checked={t.enabled}
+                    onCheckedChange={(checked) => updateTemplate(t.event, { enabled: checked })}
+                  />
                 </div>
                 <Textarea
                   value={t.message}
@@ -84,7 +107,9 @@ export function WhatsAppPage() {
             ))}
           </div>
 
-          <p className="text-xs text-muted-foreground">Available placeholders: {PLACEHOLDER_HINT}</p>
+          <p className="text-xs text-muted-foreground">
+            Available placeholders: {PLACEHOLDER_HINT}
+          </p>
         </>
       )}
     </div>

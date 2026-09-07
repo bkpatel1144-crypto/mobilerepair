@@ -20,7 +20,11 @@ export interface CashBookData {
  * the balance of everything *before* the selected range (so switching from "This Month" to
  * "Today" doesn't reset the running total to zero, matching how a real cash book works), not
  * just a fixed 0. */
-export function useCashBook(range: DateRangeKey | 'all' = 'all', customFrom?: string, customTo?: string) {
+export function useCashBook(
+  range: DateRangeKey | 'all' = 'all',
+  customFrom?: string,
+  customTo?: string
+) {
   const { data: allReceipts = [], isLoading, error, refetch } = useReceipts()
 
   const data = useMemo<CashBookData>(() => {

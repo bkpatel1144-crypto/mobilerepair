@@ -116,7 +116,10 @@ export interface UserDoc {
    * Absent on single-company accounts, where the top-level `roleId`/`branchId` are already
    * correct for the only company there is.
    */
-  memberships?: Record<string, { roleId: string; roleName: string; roleCode: RoleCode; branchId: string }>
+  memberships?: Record<
+    string,
+    { roleId: string; roleName: string; roleCode: RoleCode; branchId: string }
+  >
   /**
    * Which of `companyIds` the app is currently showing. Absent means `companyId`.
    *
@@ -383,7 +386,11 @@ export interface JobCardDoc {
    * values of whatever the most recent action patched, plus the timeline event it wrote, so
    * "Undo" can restore both in one step. Cleared after use or by the next action. Deliberately
    * not a full undo *stack* — the reference app's own copy says "Undo Last Action," singular. */
-  lastActionUndo: { beforePatch: Record<string, unknown>; timelineEventId: string; actionLabel: string } | null
+  lastActionUndo: {
+    beforePatch: Record<string, unknown>
+    timelineEventId: string
+    actionLabel: string
+  } | null
 
   createdById: string
   createdByName: string
@@ -403,9 +410,20 @@ export interface JobCardDoc {
  * never synthesized/backfilled after the fact, per BUILD_PLAN.md's explicit instruction. */
 export interface JobTimelineEventDoc {
   type:
-    | 'created' | 'assigned' | 'advanceReceived' | 'partAdded' | 'statusChange' | 'note'
-    | 'repairDone' | 'billGenerated' | 'paymentReceived' | 'delivered' | 'cancelled'
-    | 'handover' | 'fieldVisit' | 'undone'
+    | 'created'
+    | 'assigned'
+    | 'advanceReceived'
+    | 'partAdded'
+    | 'statusChange'
+    | 'note'
+    | 'repairDone'
+    | 'billGenerated'
+    | 'paymentReceived'
+    | 'delivered'
+    | 'cancelled'
+    | 'handover'
+    | 'fieldVisit'
+    | 'undone'
   title: string
   description: string
   fromStatus?: string
@@ -864,14 +882,7 @@ export const PRINT_BANDS: PrintBand[] = ['header', 'detail', 'footer']
 /** Element palette, matching the designer's own "Add Element" buttons. `field` is the one type
  * bound to live record data — everything else is static chrome the user draws. */
 export type PrintElementType =
-  | 'field'
-  | 'text'
-  | 'image'
-  | 'logo'
-  | 'barcode'
-  | 'qrcode'
-  | 'line'
-  | 'shape'
+  'field' | 'text' | 'image' | 'logo' | 'barcode' | 'qrcode' | 'line' | 'shape'
 
 export interface PrintElementStyle {
   /** Points, like every other print tool — converted to mm only at render time. */

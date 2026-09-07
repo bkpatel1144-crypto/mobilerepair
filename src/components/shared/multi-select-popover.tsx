@@ -143,7 +143,11 @@ export function MultiSelectPopover({
             >
               {opt.label}
               {!disabled && (
-                <button type="button" onClick={() => toggle(opt.id)} className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10">
+                <button
+                  type="button"
+                  onClick={() => toggle(opt.id)}
+                  className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
+                >
                   <X className="size-3" />
                 </button>
               )}

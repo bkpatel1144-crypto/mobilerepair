@@ -45,7 +45,10 @@ const SAMPLES: Record<string, string> = {
   notes: 'Thank you for your business',
 }
 
-export function samplePrintContext(documentType: PrintDocumentType, shopName: string): PrintContext {
+export function samplePrintContext(
+  documentType: PrintDocumentType,
+  shopName: string
+): PrintContext {
   const ctx: PrintContext = {
     shopName,
     shopPhone: '9898767654',

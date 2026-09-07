@@ -33,7 +33,12 @@ export interface PayablesData {
  *    its own total rather than recomputed a second way.
  */
 export function usePayables() {
-  const { data: jobs = [], isLoading: jobsLoading, error: jobsError, refetch: refetchJobs } = useJobCards()
+  const {
+    data: jobs = [],
+    isLoading: jobsLoading,
+    error: jobsError,
+    refetch: refetchJobs,
+  } = useJobCards()
   const {
     data: receipts = [],
     isLoading: receiptsLoading,
@@ -58,7 +63,13 @@ export function usePayables() {
       if (job.status === 'cancelled' || job.status === 'pendingReturn') {
         const amountDue = job.paidAmount - refundsIssued
         if (amountDue > 0) {
-          rows.push({ job, totalReceived: job.paidAmount, alreadyRefunded: refundsIssued, amountDue, kind: 'refundDue' })
+          rows.push({
+            job,
+            totalReceived: job.paidAmount,
+            alreadyRefunded: refundsIssued,
+            amountDue,
+            kind: 'refundDue',
+          })
         }
       } else if (job.finalAmount == null && job.paidAmount > 0) {
         rows.push({
@@ -71,8 +82,12 @@ export function usePayables() {
       }
     }
 
-    const refundDueTotal = rows.filter((r) => r.kind === 'refundDue').reduce((s, r) => s + r.amountDue, 0)
-    const unusedAdvanceTotal = rows.filter((r) => r.kind === 'unusedAdvance').reduce((s, r) => s + r.amountDue, 0)
+    const refundDueTotal = rows
+      .filter((r) => r.kind === 'refundDue')
+      .reduce((s, r) => s + r.amountDue, 0)
+    const unusedAdvanceTotal = rows
+      .filter((r) => r.kind === 'unusedAdvance')
+      .reduce((s, r) => s + r.amountDue, 0)
     const advanceCreditTotal = partySummaries
       .filter((s) => s.balance < 0)
       .reduce((sum, s) => sum + Math.abs(s.balance), 0)

@@ -1,4 +1,10 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import type { RoleWithId } from '@/hooks/use-roles'
 import type { WorkflowConfigDraft } from './types'
@@ -142,9 +148,7 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-medium">Field Visit Technician</p>
-                <p className="text-xs text-muted-foreground">
-                  Who checked in on an on-site visit
-                </p>
+                <p className="text-xs text-muted-foreground">Who checked in on an on-site visit</p>
               </div>
               <Switch
                 checked={draft.whoDidIt.fieldVisitTechnician}

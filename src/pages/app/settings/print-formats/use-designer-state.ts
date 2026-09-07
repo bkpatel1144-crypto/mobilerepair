@@ -134,7 +134,10 @@ export function useDesignerState(initial: DesignerDraft) {
       const id = `el-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`
       commit((prev) => ({
         ...prev,
-        elements: [...prev.elements, { ...el, id, z: Math.max(0, ...prev.elements.map((e) => e.z)) + 1 }],
+        elements: [
+          ...prev.elements,
+          { ...el, id, z: Math.max(0, ...prev.elements.map((e) => e.z)) + 1 },
+        ],
       }))
       setSelectedIds([id])
       return id
@@ -233,7 +236,13 @@ export function newElement(
     case 'line':
       return { ...common, type, h: 0.3, style: makeStyle({ strokeWidth: 0.2 }) }
     case 'shape':
-      return { ...common, type, h: 12, w: Math.min(contentWidth, 20), style: makeStyle({ strokeWidth: 0.2 }) }
+      return {
+        ...common,
+        type,
+        h: 12,
+        w: Math.min(contentWidth, 20),
+        style: makeStyle({ strokeWidth: 0.2 }),
+      }
     case 'logo':
     case 'image':
       return { ...common, type, h: 14, w: Math.min(contentWidth, 24) }

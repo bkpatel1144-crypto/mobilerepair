@@ -10,7 +10,10 @@ import type { BadgeTone } from '@/lib/status-tone'
  * across Device Purchase / Device Stock / Device Sale / Purchase Register / Sale Register
  * (`preview (41)`/`(43)`/`(45)`/`(47)` all show the exact same DEVICE/SELLER/PURCHASE block; only
  * the action-buttons row above it differs per page). */
-export function purchaseDetailSections(p: SecondHandPurchaseWithId, sale?: SecondHandSaleWithId): DetailSection[] {
+export function purchaseDetailSections(
+  p: SecondHandPurchaseWithId,
+  sale?: SecondHandSaleWithId
+): DetailSection[] {
   const sections: DetailSection[] = [
     {
       title: 'DEVICE',
@@ -33,7 +36,11 @@ export function purchaseDetailSections(p: SecondHandPurchaseWithId, sale?: Secon
       rows: [{ label: 'Seller', value: p.sellerName }],
     },
     {
-      title: sale ? 'PURCHASE' : p.status === 'inStock' || p.status === 'inRefurb' ? 'PRICING' : 'PURCHASE',
+      title: sale
+        ? 'PURCHASE'
+        : p.status === 'inStock' || p.status === 'inRefurb'
+          ? 'PRICING'
+          : 'PURCHASE',
       icon: ShoppingCart,
       rows: [
         { label: 'Purchase Price', value: `₹${p.purchasePrice}` },
@@ -52,7 +59,11 @@ export function purchaseDetailSections(p: SecondHandPurchaseWithId, sale?: Secon
         { label: 'Buyer', value: sale.buyerName },
         { label: 'Sale Price', value: `₹${sale.salePrice}` },
         { label: 'Warranty', value: `${sale.warrantyDays} days` },
-        { label: 'Profit', value: `₹${sale.profit}`, tone: sale.profit >= 0 ? 'success' : 'danger' },
+        {
+          label: 'Profit',
+          value: `₹${sale.profit}`,
+          tone: sale.profit >= 0 ? 'success' : 'danger',
+        },
       ],
     })
   }
@@ -60,12 +71,23 @@ export function purchaseDetailSections(p: SecondHandPurchaseWithId, sale?: Secon
   return sections
 }
 
-export function purchaseTimeline(p: SecondHandPurchaseWithId, sale?: SecondHandSaleWithId): TimelineEvent[] {
+export function purchaseTimeline(
+  p: SecondHandPurchaseWithId,
+  sale?: SecondHandSaleWithId
+): TimelineEvent[] {
   const events: TimelineEvent[] = [
-    { title: 'Purchased', description: `₹${p.purchasePrice} · ${p.purchaseNumber}`, timestamp: formatTimestamp(p.createdAt) },
+    {
+      title: 'Purchased',
+      description: `₹${p.purchasePrice} · ${p.purchaseNumber}`,
+      timestamp: formatTimestamp(p.createdAt),
+    },
   ]
   if (sale) {
-    events.push({ title: 'Sold', description: `₹${sale.salePrice} · ${sale.saleNumber}`, timestamp: formatTimestamp(sale.createdAt) })
+    events.push({
+      title: 'Sold',
+      description: `₹${sale.salePrice} · ${sale.saleNumber}`,
+      timestamp: formatTimestamp(sale.createdAt),
+    })
   }
   if (p.status === 'returnedToSeller') {
     events.push({ title: 'Returned to Seller', timestamp: formatTimestamp(p.updatedAt) })

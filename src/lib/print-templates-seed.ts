@@ -76,8 +76,7 @@ export function missingPresets(
     (p) =>
       !existing.some(
         (e) =>
-          e.documentType === p.documentType &&
-          (e.presetKey === p.presetKey || e.name === p.name)
+          e.documentType === p.documentType && (e.presetKey === p.presetKey || e.name === p.name)
       )
   )
 }

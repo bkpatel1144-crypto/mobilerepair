@@ -68,8 +68,14 @@ export function useAllServiceOptions() {
   const problems = useServiceOptions('problems')
 
   const all = {
-    brands, cancelReasons, customerItems, deviceTypes,
-    holdReasons, models, outstandingReasons, problems,
+    brands,
+    cancelReasons,
+    customerItems,
+    deviceTypes,
+    holdReasons,
+    models,
+    outstandingReasons,
+    problems,
   }
   const isLoading = Object.values(all).some((q) => q.isLoading)
   const data = Object.fromEntries(
@@ -95,7 +101,12 @@ export function useCreateServiceOption(type: ServiceOptionType) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: { label: string; deviceTypeIds?: string[]; brandId?: string; existingCount: number }) => {
+    mutationFn: async (input: {
+      label: string
+      deviceTypeIds?: string[]
+      brandId?: string
+      existingCount: number
+    }) => {
       const ref = doc(collection(db, serviceOptionsCollection(companyId, type)))
       const now = serverTimestamp()
       const data: ServiceOptionDoc = {
@@ -119,7 +130,8 @@ export function useCreateServiceOption(type: ServiceOptionType) {
       await batch.commit()
       return ref.id
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
   })
 }
 
@@ -144,7 +156,8 @@ export function useUpdateServiceOption(type: ServiceOptionType) {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
   })
 }
 
@@ -166,7 +179,8 @@ export function useDeleteServiceOption(type: ServiceOptionType) {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
   })
 }
 
@@ -197,7 +211,8 @@ export function useReorderServiceOption(type: ServiceOptionType) {
       batch.update(doc(db, serviceOptionsCollection(companyId, type), b.id), { order: a.order })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) }),
   })
 }
 

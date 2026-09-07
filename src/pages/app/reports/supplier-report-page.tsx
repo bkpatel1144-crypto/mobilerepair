@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Package, Download, Wrench, TrendingDown, ShoppingCart} from 'lucide-react'
+import { Package, Download, Wrench, TrendingDown, ShoppingCart } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -8,7 +8,13 @@ import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ExpandableTable, type ExpandableTableColumn } from '@/components/shared/expandable-table'
 import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useCostedJobs } from '@/hooks/use-reports'
 import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
@@ -61,7 +67,15 @@ export function SupplierReportPage() {
         if (!item.supplier) continue
         let group = map.get(item.supplier)
         if (!group) {
-          group = { supplierName: item.supplier, transactions: [], totalPurchase: 0, totalQty: 0, jobCount: 0, avgCostPerUnit: 0, sharePct: 0 }
+          group = {
+            supplierName: item.supplier,
+            transactions: [],
+            totalPurchase: 0,
+            totalQty: 0,
+            jobCount: 0,
+            avgCostPerUnit: 0,
+            sharePct: 0,
+          }
           map.set(item.supplier, group)
         }
         const totalCost = item.cost * item.qty
@@ -94,7 +108,9 @@ export function SupplierReportPage() {
   const allSuppliers = groups.map((g) => g.supplierName).sort()
   const filtered = groups
     .filter((g) => supplierFilter === 'all' || g.supplierName === supplierFilter)
-    .filter((g) => (search.trim() ? g.supplierName.toLowerCase().includes(search.toLowerCase()) : true))
+    .filter((g) =>
+      search.trim() ? g.supplierName.toLowerCase().includes(search.toLowerCase()) : true
+    )
     .sort((a, b) => b.totalPurchase - a.totalPurchase)
 
   const totals = {
@@ -104,18 +120,34 @@ export function SupplierReportPage() {
   }
 
   const columns: ExpandableTableColumn<SupplierGroup>[] = [
-    { key: 'supplier', header: 'Supplier', render: (g) => <span className="font-medium">{g.supplierName}</span> },
-    { key: 'totalPurchase', header: 'Total Purchase', render: (g) => formatCurrency(g.totalPurchase) },
+    {
+      key: 'supplier',
+      header: 'Supplier',
+      render: (g) => <span className="font-medium">{g.supplierName}</span>,
+    },
+    {
+      key: 'totalPurchase',
+      header: 'Total Purchase',
+      render: (g) => formatCurrency(g.totalPurchase),
+    },
     { key: 'totalQty', header: 'Total Qty', render: (g) => g.totalQty },
     { key: 'jobs', header: 'Jobs', hideOnMobile: true, render: (g) => g.jobCount },
-    { key: 'avgCost', header: 'Avg Cost/Unit', hideOnMobile: true, render: (g) => formatCurrency(g.avgCostPerUnit) },
+    {
+      key: 'avgCost',
+      header: 'Avg Cost/Unit',
+      hideOnMobile: true,
+      render: (g) => formatCurrency(g.avgCostPerUnit),
+    },
     {
       key: 'share',
       header: 'Share %',
       render: (g) => (
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
-            <div className="h-full rounded-full bg-amber-500" style={{ width: `${Math.min(g.sharePct, 100)}%` }} />
+            <div
+              className="h-full rounded-full bg-amber-500"
+              style={{ width: `${Math.min(g.sharePct, 100)}%` }}
+            />
           </div>
           <span className="text-xs tabular-nums">{g.sharePct.toFixed(1)}%</span>
         </div>
@@ -155,7 +187,11 @@ export function SupplierReportPage() {
 
       <StatCardGrid>
         <StatCard label="Suppliers" value={totals.suppliers} icon={Package} tone="warning" />
-        <StatCard label="Total Purchase" icon={ShoppingCart} value={formatCurrency(totals.totalPurchase)} />
+        <StatCard
+          label="Total Purchase"
+          icon={ShoppingCart}
+          value={formatCurrency(totals.totalPurchase)}
+        />
         <StatCard label="Total Qty" icon={Package} value={totals.totalQty} />
       </StatCardGrid>
 
@@ -172,10 +208,16 @@ export function SupplierReportPage() {
         onCustomToChange={setCustomTo}
       >
         <Select value={supplierFilter} onValueChange={(v) => v && setSupplierFilter(v)}>
-          <SelectTrigger className="w-44"><SelectValue placeholder="All Suppliers" /></SelectTrigger>
+          <SelectTrigger className="w-44">
+            <SelectValue placeholder="All Suppliers" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Suppliers</SelectItem>
-            {allSuppliers.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+            {allSuppliers.map((s) => (
+              <SelectItem key={s} value={s}>
+                {s}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </FilterBar>
@@ -187,7 +229,13 @@ export function SupplierReportPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Package} title="No supplier purchases yet" description="Pick a supplier while recording a job's actual costing to see them here." />}
+        emptyState={
+          <EmptyState
+            icon={Package}
+            title="No supplier purchases yet"
+            description="Pick a supplier while recording a job's actual costing to see them here."
+          />
+        }
         renderExpanded={(g) => {
           const topParts = Array.from(
             g.transactions.reduce((map, t) => {
@@ -204,7 +252,9 @@ export function SupplierReportPage() {
           return (
             <div className="space-y-3 p-4">
               <div className="flex items-center justify-between">
-                <p className="text-sm font-medium">{g.transactions.length} transactions · {g.supplierName}</p>
+                <p className="text-sm font-medium">
+                  {g.transactions.length} transactions · {g.supplierName}
+                </p>
                 <Button
                   type="button"
                   variant="outline"
@@ -230,17 +280,30 @@ export function SupplierReportPage() {
                 </Button>
               </div>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                <StatCard label="Total Spent" value={formatCurrency(g.totalPurchase)} className="min-w-0" />
+                <StatCard
+                  label="Total Spent"
+                  value={formatCurrency(g.totalPurchase)}
+                  className="min-w-0"
+                />
                 <StatCard label="Total Qty" value={g.totalQty} className="min-w-0" />
                 <StatCard label="Transactions" value={g.transactions.length} className="min-w-0" />
-                <StatCard label="Avg Cost/Unit" value={formatCurrency(g.avgCostPerUnit)} className="min-w-0" />
+                <StatCard
+                  label="Avg Cost/Unit"
+                  value={formatCurrency(g.avgCostPerUnit)}
+                  className="min-w-0"
+                />
               </div>
               {topParts.length > 0 && (
                 <div className="space-y-1.5">
-                  <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Top Parts by Spend</p>
+                  <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                    Top Parts by Spend
+                  </p>
                   <div className="flex flex-wrap gap-1.5">
                     {topParts.map(([name, stats]) => (
-                      <span key={name} className="inline-flex items-center gap-1.5 rounded-full border bg-background px-2.5 py-1 text-xs">
+                      <span
+                        key={name}
+                        className="inline-flex items-center gap-1.5 rounded-full border bg-background px-2.5 py-1 text-xs"
+                      >
                         <Wrench className="size-3" />
                         {name} ×{stats.qty} — {formatCurrency(stats.spend)}
                       </span>
@@ -266,7 +329,10 @@ export function SupplierReportPage() {
                     {g.transactions.map((t, i) => (
                       <tr key={`${t.jobId}-${i}`} className="border-t">
                         <td className="p-2">
-                          <Link to={`/app/service/job-cards/${t.jobId}`} className="font-medium text-teal-700 hover:underline dark:text-teal-400">
+                          <Link
+                            to={`/app/service/job-cards/${t.jobId}`}
+                            className="font-medium text-teal-700 hover:underline dark:text-teal-400"
+                          >
                             {t.jobNumber}
                           </Link>
                         </td>

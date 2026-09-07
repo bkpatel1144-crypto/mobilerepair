@@ -109,7 +109,11 @@ export function FieldControlRow({
                 active={config.required}
                 activeClassName="border-transparent bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400"
                 icon={Asterisk}
-                label={config.required ? 'Required — click to make optional' : 'Optional — click to require'}
+                label={
+                  config.required
+                    ? 'Required — click to make optional'
+                    : 'Optional — click to require'
+                }
                 onClick={() => onChange({ required: !config.required })}
                 disabled={disabled}
               />
@@ -117,7 +121,11 @@ export function FieldControlRow({
                 active={config.locked}
                 activeClassName="border-transparent bg-slate-200 text-slate-700 dark:bg-slate-500/20 dark:text-slate-300"
                 icon={Lock}
-                label={config.locked ? 'Locked after first save — click to unlock' : 'Click to lock after first save'}
+                label={
+                  config.locked
+                    ? 'Locked after first save — click to unlock'
+                    : 'Click to lock after first save'
+                }
                 onClick={() => onChange({ locked: !config.locked })}
                 disabled={disabled}
               />
@@ -125,7 +133,11 @@ export function FieldControlRow({
                 active={config.deviceOnly}
                 activeClassName="border-transparent bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400"
                 icon={Smartphone}
-                label={config.deviceOnly ? 'Mobile-app only — click to show everywhere' : 'Click to restrict to the mobile app'}
+                label={
+                  config.deviceOnly
+                    ? 'Mobile-app only — click to show everywhere'
+                    : 'Click to restrict to the mobile app'
+                }
                 onClick={() => onChange({ deviceOnly: !config.deviceOnly })}
                 disabled={disabled}
               />

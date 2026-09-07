@@ -1,13 +1,5 @@
 import { useState } from 'react'
-import {
-  Wallet,
-  Plus,
-  Ban,
-  IndianRupee,
-  Receipt as ReceiptIcon,
-  Tag,
-  Download,
-} from 'lucide-react'
+import { Wallet, Plus, Ban, IndianRupee, Receipt as ReceiptIcon, Tag, Download } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -30,7 +22,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useExpenses, useCreateExpense, useVoidExpense, type ExpenseWithId } from '@/hooks/use-expenses'
+import {
+  useExpenses,
+  useCreateExpense,
+  useVoidExpense,
+  type ExpenseWithId,
+} from '@/hooks/use-expenses'
 import { useExpenseCategories, useCreateExpenseCategory } from '@/hooks/use-expense-categories'
 import { useParties } from '@/hooks/use-parties'
 import { usePaymentModes } from '@/hooks/use-payment-modes'
@@ -49,7 +46,13 @@ function modeFromName(name: string): ExpenseDoc['mode'] {
   return 'upi'
 }
 
-function NewExpenseModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+function NewExpenseModal({
+  open,
+  onOpenChange,
+}: {
+  open: boolean
+  onOpenChange: (o: boolean) => void
+}) {
   const create = useCreateExpense()
   const { data: categories = [] } = useExpenseCategories()
   const createCategory = useCreateExpenseCategory()
@@ -198,8 +201,8 @@ function NewExpenseModal({ open, onOpenChange }: { open: boolean; onOpenChange: 
           placeholder="Landlord, supplier, staff..."
         />
         <p className="text-xs text-muted-foreground">
-          Set this to have the expense show on that party's ledger. Leave empty for things like
-          tea or transport.
+          Set this to have the expense show on that party's ledger. Leave empty for things like tea
+          or transport.
         </p>
       </div>
 
@@ -256,7 +259,8 @@ export function ExpensesPage() {
   const total = live.reduce((sum, e) => sum + e.amount, 0)
 
   const byCategory = new Map<string, number>()
-  for (const e of live) byCategory.set(e.categoryName, (byCategory.get(e.categoryName) ?? 0) + e.amount)
+  for (const e of live)
+    byCategory.set(e.categoryName, (byCategory.get(e.categoryName) ?? 0) + e.amount)
   const topCategory = [...byCategory.entries()].sort((a, b) => b[1] - a[1])[0]
 
   const columns: DataTableColumn<ExpenseWithId>[] = [
@@ -271,7 +275,12 @@ export function ExpensesPage() {
         </div>
       ),
     },
-    { key: 'category', header: 'Category', sortValue: (e) => e.categoryName, render: (e) => e.categoryName },
+    {
+      key: 'category',
+      header: 'Category',
+      sortValue: (e) => e.categoryName,
+      render: (e) => e.categoryName,
+    },
     {
       key: 'paidTo',
       header: 'Paid To',
@@ -284,7 +293,9 @@ export function ExpensesPage() {
       header: 'Amount',
       sortValue: (e) => e.amount,
       render: (e) => (
-        <span className={e.voided ? 'text-muted-foreground line-through' : 'font-medium text-red-600'}>
+        <span
+          className={e.voided ? 'text-muted-foreground line-through' : 'font-medium text-red-600'}
+        >
           ₹{e.amount}
         </span>
       ),
@@ -293,7 +304,11 @@ export function ExpensesPage() {
       key: 'status',
       header: 'Status',
       render: (e) =>
-        e.voided ? <StatusBadge status="Voided" tone="neutral" /> : <StatusBadge status="Posted" tone="success" />,
+        e.voided ? (
+          <StatusBadge status="Voided" tone="neutral" />
+        ) : (
+          <StatusBadge status="Posted" tone="success" />
+        ),
     },
     {
       key: 'actions',

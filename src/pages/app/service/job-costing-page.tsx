@@ -7,7 +7,14 @@ import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { Button } from '@/components/ui/button'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useJobCostingList } from '@/hooks/use-job-costing'
 import { formatTimestamp } from '@/lib/utils'
@@ -28,7 +35,11 @@ export function JobCostingPage() {
   const costingByJobId = new Map(costings.map((c) => [c.id, c]))
 
   const filtered = closedJobs
-    .filter((j) => `${j.jobNumber} ${j.customerName} ${j.model ?? ''}`.toLowerCase().includes(search.toLowerCase()))
+    .filter((j) =>
+      `${j.jobNumber} ${j.customerName} ${j.model ?? ''}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    )
     .filter((j) => {
       if (tab === 'all') return true
       const done = costingByJobId.has(j.id)
@@ -39,11 +50,29 @@ export function JobCostingPage() {
   const doneCount = closedJobs.length - pendingCount
 
   const columns: DataTableColumn<JobCardWithId>[] = [
-    { key: 'job', header: 'Job', render: (j) => <span className="font-semibold">{j.jobNumber}</span> },
+    {
+      key: 'job',
+      header: 'Job',
+      render: (j) => <span className="font-semibold">{j.jobNumber}</span>,
+    },
     { key: 'customer', header: 'Customer', render: (j) => j.customerName },
-    { key: 'device', header: 'Device', render: (j) => [j.brandName, j.model].filter(Boolean).join(' ') || '—' },
-    { key: 'technician', header: 'Technician', hideOnMobile: true, render: (j) => j.assignedToName ?? '—' },
-    { key: 'parts', header: 'Parts', hideOnMobile: true, render: (j) => `⚙ ${j.partsUsed.length} parts` },
+    {
+      key: 'device',
+      header: 'Device',
+      render: (j) => [j.brandName, j.model].filter(Boolean).join(' ') || '—',
+    },
+    {
+      key: 'technician',
+      header: 'Technician',
+      hideOnMobile: true,
+      render: (j) => j.assignedToName ?? '—',
+    },
+    {
+      key: 'parts',
+      header: 'Parts',
+      hideOnMobile: true,
+      render: (j) => `⚙ ${j.partsUsed.length} parts`,
+    },
     { key: 'revenue', header: 'Revenue', render: (j) => `₹${j.finalAmount ?? j.estimatedCost}` },
     {
       key: 'profit',
@@ -54,7 +83,11 @@ export function JobCostingPage() {
         return costing ? `₹${costing.profit}` : '—'
       },
     },
-    { key: 'status', header: 'Status', render: () => <StatusBadge status="Closed" tone="neutral" /> },
+    {
+      key: 'status',
+      header: 'Status',
+      render: () => <StatusBadge status="Closed" tone="neutral" />,
+    },
     {
       key: 'costing',
       header: 'Costing',
@@ -75,7 +108,11 @@ export function JobCostingPage() {
         subtitle="Closed jobs — record actual parts, labor & overhead costs"
       />
 
-      <FilterBar searchValue={search} onSearchChange={setSearch} searchPlaceholder="Search job, customer, device...">
+      <FilterBar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search job, customer, device..."
+      >
         <div className="flex gap-1 rounded-lg border p-0.5">
           {(['all', 'pending', 'done'] as Tab[]).map((t) => (
             <button
@@ -102,7 +139,13 @@ export function JobCostingPage() {
         isLoading={isLoading}
         error={loadError}
         onRetry={() => void refetch()}
-        emptyState={<EmptyState icon={Calculator} title="No closed jobs yet" description="Closed job cards ready for costing will show up here." />}
+        emptyState={
+          <EmptyState
+            icon={Calculator}
+            title="No closed jobs yet"
+            description="Closed job cards ready for costing will show up here."
+          />
+        }
       />
 
       <DetailDrawer
@@ -148,7 +191,11 @@ export function JobCostingPage() {
                   rows: [
                     { label: 'Customer', value: selectedJob.customerName },
                     { label: 'Technician', value: selectedJob.assignedToName ?? '—' },
-                    { label: 'Device', value: [selectedJob.brandName, selectedJob.model].filter(Boolean).join(' ') || '—' },
+                    {
+                      label: 'Device',
+                      value:
+                        [selectedJob.brandName, selectedJob.model].filter(Boolean).join(' ') || '—',
+                    },
                     { label: 'IMEI', value: selectedJob.imei ?? '—' },
                     { label: 'Created', value: formatTimestamp(selectedJob.createdAt) },
                     { label: 'Closed', value: formatTimestamp(selectedJob.closedAt) },
@@ -157,7 +204,10 @@ export function JobCostingPage() {
                 {
                   title: 'Financial',
                   rows: [
-                    { label: 'Revenue', value: `₹${selectedJob.finalAmount ?? selectedJob.estimatedCost}` },
+                    {
+                      label: 'Revenue',
+                      value: `₹${selectedJob.finalAmount ?? selectedJob.estimatedCost}`,
+                    },
                     { label: 'Advance Paid', value: `₹${selectedJob.advanceReceived}` },
                   ],
                 },

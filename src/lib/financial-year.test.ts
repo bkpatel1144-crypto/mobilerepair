@@ -74,7 +74,9 @@ describe('formatFinancialYearDuration', () => {
   })
 
   it('drops the days part when it lands exactly on a 30-day boundary', () => {
-    expect(formatFinancialYearDuration(new Date(2026, 3, 1), new Date(2026, 5, 30))).toBe('3 months')
+    expect(formatFinancialYearDuration(new Date(2026, 3, 1), new Date(2026, 5, 30))).toBe(
+      '3 months'
+    )
   })
 
   it('survives a DST-style shift without going off by a day', () => {

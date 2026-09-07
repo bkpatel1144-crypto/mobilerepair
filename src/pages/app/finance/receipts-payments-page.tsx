@@ -9,7 +9,9 @@ import {
   Search,
   Banknote,
   Smartphone,
-  CreditCard, IndianRupee} from 'lucide-react'
+  CreditCard,
+  IndianRupee,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -42,7 +44,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useReceipts, useCreateReceiptOrPayment, useVoidReceipt, receiptsQueryKey, type ReceiptWithId } from '@/hooks/use-receipts'
+import {
+  useReceipts,
+  useCreateReceiptOrPayment,
+  useVoidReceipt,
+  receiptsQueryKey,
+  type ReceiptWithId,
+} from '@/hooks/use-receipts'
 import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { useJobCards } from '@/hooks/use-job-cards'
 import { useAuth } from '@/hooks/use-auth'
@@ -87,7 +95,9 @@ export function ReceiptsPaymentsPage() {
     .filter((r) => modeFilter === 'all' || r.mode === modeFilter)
     .filter((r) =>
       search.trim()
-        ? `${r.receiptNumber} ${r.partyName} ${r.jobCardNumber ?? ''}`.toLowerCase().includes(search.toLowerCase())
+        ? `${r.receiptNumber} ${r.partyName} ${r.jobCardNumber ?? ''}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
         : true
     )
 
@@ -127,11 +137,20 @@ export function ReceiptsPaymentsPage() {
         </div>
       ),
     },
-    { key: 'against', header: 'Against', hideOnMobile: true, render: (r) => r.jobCardNumber ?? 'Manual / Advance' },
+    {
+      key: 'against',
+      header: 'Against',
+      hideOnMobile: true,
+      render: (r) => r.jobCardNumber ?? 'Manual / Advance',
+    },
     {
       key: 'mode',
       header: 'Mode',
-      render: (r) => <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium uppercase">{r.mode}</span>,
+      render: (r) => (
+        <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium uppercase">
+          {r.mode}
+        </span>
+      ),
     },
     {
       key: 'amount',
@@ -143,7 +162,12 @@ export function ReceiptsPaymentsPage() {
         </span>
       ),
     },
-    { key: 'date', header: 'Date', sortValue: (r) => r.createdAt?.toDate?.()?.getTime() ?? 0, render: (r) => formatTimestamp(r.createdAt) },
+    {
+      key: 'date',
+      header: 'Date',
+      sortValue: (r) => r.createdAt?.toDate?.()?.getTime() ?? 0,
+      render: (r) => formatTimestamp(r.createdAt),
+    },
     {
       key: 'actions',
       header: 'Actions',
@@ -153,7 +177,12 @@ export function ReceiptsPaymentsPage() {
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <Button type="button" variant="ghost" size="icon-sm" onClick={(e) => e.stopPropagation()}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <MoreVertical className="size-4" />
                 </Button>
               }
@@ -186,7 +215,9 @@ export function ReceiptsPaymentsPage() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })}
+              onClick={() =>
+                queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })
+              }
             >
               <RefreshCw className="size-4" />
               Refresh
@@ -202,8 +233,20 @@ export function ReceiptsPaymentsPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Today Received" value={`₹${todayReceived}`} sublabel={`${active.filter((r) => r.direction === 'in' && (r.createdAt?.toDate?.() ?? new Date(0)) >= today).length} receipts`} icon={Wallet} tone="success" />
-        <StatCard label="Net Amount" icon={IndianRupee} value={`₹${netAmount}`} sublabel="After money out" tone="info" />
+        <StatCard
+          label="Today Received"
+          value={`₹${todayReceived}`}
+          sublabel={`${active.filter((r) => r.direction === 'in' && (r.createdAt?.toDate?.() ?? new Date(0)) >= today).length} receipts`}
+          icon={Wallet}
+          tone="success"
+        />
+        <StatCard
+          label="Net Amount"
+          icon={IndianRupee}
+          value={`₹${netAmount}`}
+          sublabel="After money out"
+          tone="info"
+        />
         <StatCard label="Cash · Net" icon={Wallet} value={`₹${cashNet}`} />
       </StatCardGrid>
 
@@ -214,7 +257,10 @@ export function ReceiptsPaymentsPage() {
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >
-        <Select value={modeFilter} onValueChange={(v) => v && setModeFilter(v as typeof modeFilter)}>
+        <Select
+          value={modeFilter}
+          onValueChange={(v) => v && setModeFilter(v as typeof modeFilter)}
+        >
           <SelectTrigger className="w-36">
             <SelectValue />
           </SelectTrigger>
@@ -235,7 +281,11 @@ export function ReceiptsPaymentsPage() {
         error={loadError}
         onRetry={() => void refetch()}
         emptyState={
-          <EmptyState icon={Search} title="No receipts found" description="Receipts recorded here, and from Job Cards, will appear in this list." />
+          <EmptyState
+            icon={Search}
+            title="No receipts found"
+            description="Receipts recorded here, and from Job Cards, will appear in this list."
+          />
         }
       />
 
@@ -256,7 +306,13 @@ export function ReceiptsPaymentsPage() {
   )
 }
 
-function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+function NewEntryDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { data: parties = [] } = useParties()
   const { data: jobs = [] } = useJobCards()
   const createParty = useCreateParty()
@@ -269,7 +325,9 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
   const [amount, setAmount] = useState(0)
   const [mode, setMode] = useState<'cash' | 'upi' | 'card'>('cash')
   const [notes, setNotes] = useState('')
-  const [quickAddCustomer, setQuickAddCustomer] = useState<{ name: string; mobile: string } | null>(null)
+  const [quickAddCustomer, setQuickAddCustomer] = useState<{ name: string; mobile: string } | null>(
+    null
+  )
   const [error, setError] = useState<string | null>(null)
 
   function reset() {
@@ -332,10 +390,18 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-2">
-          <Button type="button" variant={direction === 'in' ? 'default' : 'outline'} onClick={() => setDirection('in')}>
+          <Button
+            type="button"
+            variant={direction === 'in' ? 'default' : 'outline'}
+            onClick={() => setDirection('in')}
+          >
             ₹ Receipt (IN)
           </Button>
-          <Button type="button" variant={direction === 'out' ? 'default' : 'outline'} onClick={() => setDirection('out')}>
+          <Button
+            type="button"
+            variant={direction === 'out' ? 'default' : 'outline'}
+            onClick={() => setDirection('out')}
+          >
             ₹ Payment (OUT)
           </Button>
         </div>
@@ -363,7 +429,12 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
               />
               <Input
                 value={quickAddCustomer.mobile}
-                onChange={(e) => setQuickAddCustomer({ ...quickAddCustomer, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+                onChange={(e) =>
+                  setQuickAddCustomer({
+                    ...quickAddCustomer,
+                    mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
+                  })
+                }
                 placeholder="10-digit mobile"
                 className="h-8 text-sm"
               />
@@ -386,10 +457,19 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
         <div className="space-y-1.5">
           <Label>Against</Label>
           <div className="grid grid-cols-2 gap-2">
-            <Button type="button" variant={against === 'jobCard' ? 'default' : 'outline'} disabled={!partyId} onClick={() => setAgainst('jobCard')}>
+            <Button
+              type="button"
+              variant={against === 'jobCard' ? 'default' : 'outline'}
+              disabled={!partyId}
+              onClick={() => setAgainst('jobCard')}
+            >
               Job Card
             </Button>
-            <Button type="button" variant={against === 'manualAdvance' ? 'default' : 'outline'} onClick={() => setAgainst('manualAdvance')}>
+            <Button
+              type="button"
+              variant={against === 'manualAdvance' ? 'default' : 'outline'}
+              onClick={() => setAgainst('manualAdvance')}
+            >
               Manual / Advance
             </Button>
           </div>
@@ -399,7 +479,11 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
           <div className="space-y-1.5">
             <Label>Job Card</Label>
             <SearchSelect
-              options={partyJobs.map((j) => ({ id: j.id, label: j.jobNumber, helper: [j.brandName, j.model].filter(Boolean).join(' ') }))}
+              options={partyJobs.map((j) => ({
+                id: j.id,
+                label: j.jobNumber,
+                helper: [j.brandName, j.model].filter(Boolean).join(' '),
+              }))}
               value={jobCardId}
               onChange={setJobCardId}
               placeholder={partyId ? "Select this customer's job card..." : 'Pick a customer first'}
@@ -410,7 +494,12 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
 
         <div className="space-y-1.5">
           <Label>Amount *</Label>
-          <Input type="number" min={0} value={amount} onChange={(e) => setAmount(Number(e.target.value) || 0)} />
+          <Input
+            type="number"
+            min={0}
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value) || 0)}
+          />
         </div>
 
         <div className="space-y-1.5">
@@ -419,7 +508,12 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
             {(['cash', 'upi', 'card'] as const).map((m) => {
               const Icon = MODE_ICONS[m]
               return (
-                <Button key={m} type="button" variant={mode === m ? 'default' : 'outline'} onClick={() => setMode(m)}>
+                <Button
+                  key={m}
+                  type="button"
+                  variant={mode === m ? 'default' : 'outline'}
+                  onClick={() => setMode(m)}
+                >
                   <Icon className="size-4" />
                   {m.toUpperCase()}
                 </Button>
@@ -430,7 +524,12 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
 
         <div className="space-y-1.5">
           <Label>Notes (optional)</Label>
-          <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any note" rows={2} />
+          <Textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Any note"
+            rows={2}
+          />
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
@@ -440,7 +539,11 @@ function NewEntryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (
             Cancel
           </Button>
           <Button type="button" onClick={handleSubmit} disabled={createEntry.isPending}>
-            {createEntry.isPending ? 'Saving…' : direction === 'in' ? 'Record Receipt' : 'Record Payment'}
+            {createEntry.isPending
+              ? 'Saving…'
+              : direction === 'in'
+                ? 'Record Receipt'
+                : 'Record Payment'}
           </Button>
         </div>
       </DialogContent>

@@ -51,7 +51,15 @@ export function useCostedJobs() {
       const cost = costing.totalCost
       const profit = costing.profit
       const date = job.closedAt?.toDate?.() ?? costing.createdAt?.toDate?.() ?? now
-      rows.push({ job, costing, revenue, cost, profit, marginPct: marginPct(profit, revenue), date })
+      rows.push({
+        job,
+        costing,
+        revenue,
+        cost,
+        profit,
+        marginPct: marginPct(profit, revenue),
+        date,
+      })
     }
     return rows
   }, [jobsQuery.data, costingQuery.data])
@@ -88,7 +96,11 @@ export function useFieldVisits() {
       const now = new Date().getTime()
       return snap.docs
         .map((d) => ({ id: d.id, ...(d.data() as FieldVisitDoc) }))
-        .sort((a, b) => (b.createdAt?.toDate?.()?.getTime() ?? now) - (a.createdAt?.toDate?.()?.getTime() ?? now))
+        .sort(
+          (a, b) =>
+            (b.createdAt?.toDate?.()?.getTime() ?? now) -
+            (a.createdAt?.toDate?.()?.getTime() ?? now)
+        )
     },
     enabled: !!companyId,
   })

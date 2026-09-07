@@ -1,13 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import {
-  ArrowLeft,
-  Crown,
-  ShieldCheck,
-  LayoutGrid,
-  KeyRound,
-  User as UserIcon,
-} from 'lucide-react'
+import { ArrowLeft, Crown, ShieldCheck, LayoutGrid, KeyRound, User as UserIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -77,7 +70,11 @@ export function RoleConfigurePage() {
   if (loadError) {
     return (
       <div className="p-4 sm:p-6">
-        <ErrorState error={loadError} onRetry={() => void refetch()} title="Couldn't load this role" />
+        <ErrorState
+          error={loadError}
+          onRetry={() => void refetch()}
+          title="Couldn't load this role"
+        />
       </div>
     )
   }
@@ -129,8 +126,8 @@ export function RoleConfigurePage() {
           {role.protected && <StatusBadge status="System" tone="neutral" />}
 
           {/* Who is doing the editing, matching the reference. On a screen that hands out
-            * permissions it is worth being explicit about whose account is making the change —
-            * the audit entry records the same name. */}
+           * permissions it is worth being explicit about whose account is making the change —
+           * the audit entry records the same name. */}
           {profile && (
             <span className="ml-auto flex items-center gap-2 text-sm">
               <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted">
