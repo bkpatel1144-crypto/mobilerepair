@@ -440,6 +440,182 @@
         "jobCardsByStatus": "સ્થિતિ પ્રમાણે જોબ કાર્ડ",
         "revenueTrend": "આવકનો પ્રવાહ"
       }
+    },
+    "finance": {
+      "cashBook": {
+        "cashBook": "રોકડ ખાતાવહી",
+        "runningCashPositionAcrossEveryReceipt": "દરેક રસીદ અને ચુકવણી સાથે ચાલતી રોકડ સ્થિતિ",
+        "noEntriesInThisRange": "આ સમયગાળામાં કોઈ નોંધ નથી",
+        "receiptsAndPaymentsRecordedHereWill": "અહીં નોંધેલી રસીદો અને ચુકવણી રોકડ ખાતાવહીમાં દેખાશે."
+      },
+      "expenses": {
+        "newExpense": "નવો ખર્ચ",
+        "recordedAsMoneyOutItAppears": "રકમ બહાર જવા તરીકે નોંધાય — તે તરત રોકડ ખાતાવહીમાં દેખાશે.",
+        "searchCategory": "શ્રેણી શોધો...",
+        "landlordSupplierStaff": "મકાનમાલિક, સપ્લાયર, કર્મચારી...",
+        "topCategory": "સૌથી મોટી શ્રેણી",
+        "noExpensesInThisPeriod": "આ સમયગાળામાં કોઈ ખર્ચ નથી",
+        "voidThisExpense": "આ ખર્ચ રદ કરવો?",
+        "void": "રદ કરો",
+        "expense": "ખર્ચ #",
+        "paidTo": "કોને ચૂકવ્યું"
+      },
+      "partyLedger": {
+        "partyLedger": "પાર્ટી ખાતાવહી",
+        "partyWiseAccountsClickToView": "પાર્ટી પ્રમાણે ખાતાં · આખું ખાતું જોવા ક્લિક કરો",
+        "totalParties": "કુલ પાર્ટીઓ",
+        "noPartiesYet": "હજી કોઈ પાર્ટી નથી",
+        "partiesAppearHereOnceAJob": "પાર્ટી માટે જોબ કાર્ડ બનતાં તે અહીં દેખાશે.",
+        "noActivityYet": "હજી કોઈ પ્રવૃત્તિ નથી",
+        "thisPartySJobCardsAnd": "આ પાર્ટીના જોબ કાર્ડ અને ચુકવણી અહીં દેખાશે.",
+        "settled": "ચૂકતે ✓"
+      },
+      "payables": {
+        "payables": "દેવી રકમ",
+        "refundsDueAndUnusedAdvancesThe": "દુકાન પાસે રહેલી પરત કરવાની રકમ અને વપરાયા વગરના એડવાન્સ",
+        "totalPayable": "કુલ દેવું",
+        "refundDue": "રિફંડ બાકી",
+        "unusedAdvance": "વપરાયા વગરનો એડવાન્સ",
+        "advanceCredit": "એડવાન્સ જમા",
+        "nothingPayableRightNow": "હાલ કંઈ દેવું નથી",
+        "refundsDueAndUnusedAdvancesWill": "પરત કરવાની રકમ અને વપરાયા વગરના એડવાન્સ અહીં દેખાશે.",
+        "totalReceived": "કુલ મળેલ"
+      },
+      "receiptsPayments": {
+        "allPaymentEntriesJobCardsAnd": "બધી ચુકવણી નોંધો — જોબ કાર્ડ અને હાથે નોંધેલી",
+        "todayReceived": "આજે મળેલ",
+        "netAmount": "ચોખ્ખી રકમ",
+        "cashNet": "રોકડ · ચોખ્ખું",
+        "noReceiptsFound": "કોઈ રસીદ મળી નથી",
+        "receiptsRecordedHereAndFromJob": "અહીં અને જોબ કાર્ડમાંથી નોંધેલી રસીદો આ સૂચિમાં દેખાશે.",
+        "voidReceipt": "રસીદ રદ કરો",
+        "searchCustomer": "ગ્રાહક શોધો...",
+        "anyNote": "કોઈ નોંધ",
+        "receipt": "રસીદ #",
+        "against": "સામે",
+        "allModes": "બધી રીતો",
+        "newEntry": "નવી નોંધ",
+        "recordAReceiptOrPayment": "રસીદ કે ચુકવણી નોંધો.",
+        "customer": "ગ્રાહક *",
+        "amount": "રકમ *"
+      },
+      "receivables": {
+        "receivables": "લેણી રકમ",
+        "outstandingAmountsAcrossEveryActiveJob": "દરેક ચાલુ જોબ કાર્ડ પર બાકી રકમ",
+        "collection": "વસૂલાત %",
+        "noOutstandingReceivables": "કોઈ બાકી લેણું નથી",
+        "allPaymentsAreUpToDate": "બધી ચુકવણી અદ્યતન છે.",
+        "aging": "જૂનાપણું"
+      },
+      "supplierPayables": {
+        "newSupplierBill": "નવું સપ્લાયર બિલ",
+        "aPurchaseInvoiceYouOwePayments": "એક ખરીદ બિલ જે તમારે ચૂકવવાનું છે. તેની સામે કરેલી ચુકવણી અહીં નોંધાય છે અને સપ્લાયરના ખાતામાં દેખાય છે.",
+        "supplierPayables": "સપ્લાયર દેવું",
+        "whatTheShopOwesSuppliersPurchase": "દુકાન સપ્લાયરોને શું આપવાનું છે — ખરીદ બિલ અને ન ચૂકવેલી ડિવાઇસ ખરીદી, જૂનાપણા પ્રમાણે",
+        "overdue60": "60+ દિવસ બાકી",
+        "nothingOwedToSuppliers": "સપ્લાયરોને કંઈ દેવું નથી",
+        "enterAPurchaseBillOrRecord": "કોઈ ખરીદ બિલ નોંધો, અથવા કોઈ ડિવાઇસ ખરીદી પૂરી ચુકવણી વગર નોંધો, તો તે અહીં દેખાશે.",
+        "voidThisBill": "આ બિલ રદ કરવું?",
+        "voidBill": "બિલ રદ કરો",
+        "current": "ચાલુ",
+        "130Days": "1–30 દિવસ",
+        "3160Days": "31–60 દિવસ",
+        "60Days": "60+ દિવસ",
+        "oldest": "સૌથી જૂનું"
+      }
+    },
+    "masters": {
+      "itemCategories": {
+        "itemCategories": "આઇટમ શ્રેણી",
+        "organiseItemsIntoCategoriesAndSub": "આઇટમને શ્રેણી અને ઉપ-શ્રેણીમાં ગોઠવો",
+        "noItemCategoriesYet": "હજી કોઈ આઇટમ શ્રેણી નથી",
+        "level": "સ્તર",
+        "path": "પથ",
+        "statistics": "આંકડા",
+        "subCategories": "ઉપ-શ્રેણીઓ",
+        "categoryName": "શ્રેણીનું નામ *",
+        "rawMaterial": "કાચો માલ",
+        "parentCategory": "મુખ્ય શ્રેણી"
+      },
+      "itemMaster": {
+        "itemMaster": "આઇટમ માસ્ટર",
+        "productsServicesAndSparePartsCatalog": "પ્રોડક્ટ, સર્વિસ અને સ્પેર પાર્ટ્સની યાદી",
+        "noItemsYet": "હજી કોઈ આઇટમ નથી",
+        "addYourFirstItemAbove": "ઉપર તમારું પહેલું આઇટમ ઉમેરો.",
+        "nature": "સ્વરૂપ",
+        "classification": "વર્ગીકરણ",
+        "primaryUom": "મુખ્ય UOM",
+        "pricing": "કિંમત",
+        "gst": "GST",
+        "mrp": "MRP",
+        "inventory": "સ્ટોક",
+        "stockTracked": "સ્ટોક ટ્રેક કરેલ",
+        "enabledIn": "ક્યાં ચાલુ",
+        "product": "પ્રોડક્ટ",
+        "itemName": "આઇટમનું નામ *",
+        "gst2": "GST %",
+        "enabledIn2": "ક્યાં ચાલુ"
+      },
+      "parties": {
+        "manageCustomersAndSuppliers": "ગ્રાહકો અને સપ્લાયર સંભાળો",
+        "noPartiesFound": "કોઈ પાર્ટી મળી નથી",
+        "addYourFirstCustomerOrSupplier": "ઉપર તમારો પહેલો ગ્રાહક કે સપ્લાયર ઉમેરો.",
+        "10DigitMobileNumber": "10 અંકનો મોબાઇલ નંબર",
+        "selectCategory": "શ્રેણી પસંદ કરો",
+        "shopHouseAreaCityPincode": "દુકાન / ઘર, વિસ્તાર, શહેર, પિનકોડ",
+        "27abcde1234f1z5": "27ABCDE1234F1Z5",
+        "abcde1234f": "ABCDE1234F",
+        "localityArea": "મહોલ્લો / વિસ્તાર",
+        "village": "ગામ",
+        "taluka": "તાલુકો",
+        "district": "જિલ્લો",
+        "6DigitPin": "6 અંકનો પિન",
+        "gstNumber": "GST નંબર",
+        "panNumber": "PAN નંબર",
+        "credit": "ઉધાર",
+        "creditLimit": "ઉધાર મર્યાદા",
+        "creditDays": "ઉધાર દિવસ",
+        "partyName": "પાર્ટીનું નામ *",
+        "mobile": "મોબાઇલ *",
+        "partyType": "પાર્ટીનો પ્રકાર *",
+        "gstNumber2": "GST નંબર",
+        "panNumber2": "PAN નંબર",
+        "area": "વિસ્તાર"
+      },
+      "partyCategories": {
+        "partyCategories": "પાર્ટી શ્રેણી",
+        "manageAllPartyCategories": "બધી પાર્ટી શ્રેણી સંભાળો",
+        "noPartyCategoriesYet": "હજી કોઈ પાર્ટી શ્રેણી નથી",
+        "partiesAlreadyAssignedToThisCategory": "આ શ્રેણીમાં પહેલેથી જોડાયેલી પાર્ટીઓ એવી શ્રેણીનો સંદર્ભ રાખશે જે હવે અસ્તિત્વમાં નથી. આ પાછું લઈ શકાતું નથી.",
+        "creditInformation": "ઉધાર માહિતી",
+        "defaultCreditDays": "ડિફોલ્ટ ઉધાર દિવસ"
+      },
+      "paymentModes": {
+        "paymentModes": "ચુકવણીની રીતો",
+        "cashUpiCardBankTransferAnd": "રોકડ, UPI, કાર્ડ, બેંક ટ્રાન્સફર અને અન્ય સ્વીકૃત ચુકવણી રીતો",
+        "noPaymentModesYet": "હજી કોઈ ચુકવણી રીત નથી",
+        "addYourFirstPaymentModeAbove": "ઉપર તમારી પહેલી ચુકવણી રીત ઉમેરો.",
+        "receiptsAlreadyRecordedUnderThisPayment": "આ ચુકવણી રીત હેઠળ પહેલેથી નોંધેલી રસીદો એવી રીતનો સંદર્ભ રાખશે જે હવે અસ્તિત્વમાં નથી. આ પાછું લઈ શકાતું નથી.",
+        "code": "કોડ *"
+      },
+      "uom": {
+        "unitsOfMeasure": "માપના એકમો",
+        "manageUnitsUsedAcrossItemsStock": "આઇટમ, સ્ટોક, ખરીદી અને વેચાણમાં વપરાતા એકમો સંભાળો",
+        "noUnitsOfMeasureYet": "હજી કોઈ માપ એકમ નથી",
+        "addYourFirstUomAbove": "ઉપર તમારું પહેલું UOM ઉમેરો.",
+        "itemsAlreadyUsingThisUnitWill": "આ એકમ વાપરતાં આઇટમ એવા એકમનો સંદર્ભ રાખશે જે હવે અસ્તિત્વમાં નથી. આ પાછું લઈ શકાતું નથી.",
+        "baseUom": "મૂળ UOM",
+        "conversionFactor": "રૂપાંતરણ ગુણક",
+        "optionalNotesAboutThisUnit": "આ એકમ વિશે વૈકલ્પિક નોંધ",
+        "conversion": "રૂપાંતરણ",
+        "source": "સ્રોત",
+        "uomName": "UOM નું નામ *",
+        "uomCode": "UOM કોડ *",
+        "symbolAbbreviation": "ચિહ્ન / ટૂંકું રૂપ",
+        "shownInDropdownsAndReports": "ડ્રોપડાઉન અને રિપોર્ટમાં દેખાય છે",
+        "decimalPlaces": "દશાંશ સ્થાન",
+        "displayOrder": "દેખાવાનો ક્રમ"
+      }
     }
   }
 }

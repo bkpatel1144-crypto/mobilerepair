@@ -111,7 +111,7 @@ export function PartiesPage() {
       <PageHeader
         icon={Users}
         title={t('common.parties')}
-        subtitle="Manage customers and suppliers"
+        subtitle={t('pages.masters.parties.manageCustomersAndSuppliers')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -183,8 +183,8 @@ export function PartiesPage() {
         emptyState={
           <EmptyState
             icon={Users}
-            title="No parties found"
-            description="Add your first customer or supplier above."
+            title={t('pages.masters.parties.noPartiesFound')}
+            description={t('pages.masters.parties.addYourFirstCustomerOrSupplier')}
           />
         }
       />
@@ -239,15 +239,19 @@ export function PartiesPage() {
                 ...(viewing.address
                   ? [{ label: t('common.address'), value: viewing.address }]
                   : []),
-                ...(viewing.gstNumber ? [{ label: 'GST Number', value: viewing.gstNumber }] : []),
-                ...(viewing.panNumber ? [{ label: 'PAN Number', value: viewing.panNumber }] : []),
+                ...(viewing.gstNumber
+                  ? [{ label: t('pages.masters.parties.gstNumber'), value: viewing.gstNumber }]
+                  : []),
+                ...(viewing.panNumber
+                  ? [{ label: t('pages.masters.parties.panNumber'), value: viewing.panNumber }]
+                  : []),
               ],
             },
             {
-              title: 'CREDIT',
+              title: t('pages.masters.parties.credit'),
               rows: [
-                { label: 'Credit Limit', value: `₹${viewing.creditLimit}` },
-                { label: 'Credit Days', value: String(viewing.creditDays) },
+                { label: t('pages.masters.parties.creditLimit'), value: `₹${viewing.creditLimit}` },
+                { label: t('pages.masters.parties.creditDays'), value: String(viewing.creditDays) },
               ],
             },
           ]}
@@ -379,7 +383,7 @@ function PartyModal({
     >
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>Party Name *</Label>
+          <Label>{t('pages.masters.parties.partyName')}</Label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -388,11 +392,11 @@ function PartyModal({
           />
         </div>
         <div className="space-y-1.5">
-          <Label>Mobile *</Label>
+          <Label>{t('pages.masters.parties.mobile')}</Label>
           <Input
             value={mobile}
             onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-            placeholder="10-digit mobile number"
+            placeholder={t('pages.masters.parties.10DigitMobileNumber')}
           />
         </div>
       </div>
@@ -401,7 +405,7 @@ function PartyModal({
           <Label>{t('common.category')}</Label>
           <Select value={categoryId} onValueChange={(v) => v && setCategoryId(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Category" />
+              <SelectValue placeholder={t('pages.masters.parties.selectCategory')} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">{t('common.none')}</SelectItem>
@@ -414,7 +418,7 @@ function PartyModal({
           </Select>
         </div>
         <div className="space-y-1.5">
-          <Label>Party Type *</Label>
+          <Label>{t('pages.masters.parties.partyType')}</Label>
           <div className="flex h-8 items-center gap-4 text-sm">
             <label className="flex items-center gap-1.5">
               <Checkbox checked={isCustomer} onCheckedChange={(v) => setIsCustomer(v === true)} />
@@ -444,7 +448,7 @@ function PartyModal({
             <Textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              placeholder="Shop / house, area, city, pincode"
+              placeholder={t('pages.masters.parties.shopHouseAreaCityPincode')}
               rows={2}
             />
           </div>
@@ -459,53 +463,53 @@ function PartyModal({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>GST number</Label>
+              <Label>{t('pages.masters.parties.gstNumber2')}</Label>
               <Input
                 value={gstNumber}
                 onChange={(e) => setGstNumber(e.target.value.toUpperCase())}
-                placeholder="27ABCDE1234F1Z5"
+                placeholder={t('pages.masters.parties.27abcde1234f1z5')}
               />
             </div>
             <div className="space-y-1.5">
-              <Label>PAN number</Label>
+              <Label>{t('pages.masters.parties.panNumber2')}</Label>
               <Input
                 value={panNumber}
                 onChange={(e) => setPanNumber(e.target.value.toUpperCase())}
-                placeholder="ABCDE1234F"
+                placeholder={t('pages.masters.parties.abcde1234f')}
               />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="space-y-1.5">
-              <Label>Area</Label>
+              <Label>{t('pages.masters.parties.area')}</Label>
               <Input
                 value={area}
                 onChange={(e) => setArea(e.target.value)}
-                placeholder="Locality / area"
+                placeholder={t('pages.masters.parties.localityArea')}
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Village</Label>
+              <Label>{t('pages.masters.parties.village')}</Label>
               <Input
                 value={village}
                 onChange={(e) => setVillage(e.target.value)}
-                placeholder="Village"
+                placeholder={t('pages.masters.parties.village')}
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Taluka</Label>
+              <Label>{t('pages.masters.parties.taluka')}</Label>
               <Input
                 value={taluka}
                 onChange={(e) => setTaluka(e.target.value)}
-                placeholder="Taluka"
+                placeholder={t('pages.masters.parties.taluka')}
               />
             </div>
             <div className="space-y-1.5">
-              <Label>District</Label>
+              <Label>{t('pages.masters.parties.district')}</Label>
               <Input
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                placeholder="District"
+                placeholder={t('pages.masters.parties.district')}
               />
             </div>
           </div>
@@ -514,7 +518,7 @@ function PartyModal({
             <Input
               value={pincode}
               onChange={(e) => setPincode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-              placeholder="6-digit PIN"
+              placeholder={t('pages.masters.parties.6DigitPin')}
             />
           </div>
         </div>

@@ -146,8 +146,8 @@ function NewBillModal({
         if (!o) reset()
         onOpenChange(o)
       }}
-      title="New Supplier Bill"
-      description="A purchase invoice you owe. Payments against it are recorded here and show on the supplier's ledger."
+      title={t('pages.finance.supplierPayables.newSupplierBill')}
+      description={t('pages.finance.supplierPayables.aPurchaseInvoiceYouOwePayments')}
       submitLabel={create.isPending ? 'Saving…' : 'Save Bill'}
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
@@ -419,7 +419,7 @@ export function SupplierPayablesPage() {
     },
     {
       key: 'oldest',
-      header: 'Oldest',
+      header: t('pages.finance.supplierPayables.oldest'),
       hideOnMobile: true,
       sortValue: (g) => g.oldestDaysOverdue,
       render: (g) =>
@@ -443,8 +443,8 @@ export function SupplierPayablesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Truck}
-        title="Supplier Payables"
-        subtitle="What the shop owes suppliers — purchase bills and unpaid device purchases, by age"
+        title={t('pages.finance.supplierPayables.supplierPayables')}
+        subtitle={t('pages.finance.supplierPayables.whatTheShopOwesSuppliersPurchase')}
         actions={
           <>
             <Button
@@ -493,7 +493,7 @@ export function SupplierPayablesPage() {
             />
             <StatCard label={t('common.suppliers')} value={data.supplierCount} icon={Users} />
             <StatCard
-              label="Overdue 60+"
+              label={t('pages.finance.supplierPayables.overdue60')}
               value={`₹${data.buckets['60+']}`}
               icon={AlertTriangle}
               tone="warning"
@@ -562,8 +562,8 @@ export function SupplierPayablesPage() {
             emptyState={
               <EmptyState
                 icon={Truck}
-                title="Nothing owed to suppliers"
-                description="Enter a purchase bill, or record a device purchase without paying it in full, and it will appear here."
+                title={t('pages.finance.supplierPayables.nothingOwedToSuppliers')}
+                description={t('pages.finance.supplierPayables.enterAPurchaseBillOrRecord')}
                 action={
                   <Button type="button" onClick={() => setNewOpen(true)}>
                     <Plus className="size-4" />
@@ -672,13 +672,13 @@ export function SupplierPayablesPage() {
       <ConfirmDialog
         open={!!voidTarget}
         onOpenChange={(o) => !o && setVoidTarget(null)}
-        title="Void this bill?"
+        title={t('pages.finance.supplierPayables.voidThisBill')}
         message={
           voidTarget
             ? `${voidTarget.billNumber} (₹${voidTarget.amount}) stops counting as payable. Payments already recorded against it stay on the supplier's ledger — void the receipts separately if they were entered in error.`
             : ''
         }
-        confirmLabel="Void Bill"
+        confirmLabel={t('pages.finance.supplierPayables.voidBill')}
         isPending={voidBill.isPending}
         onConfirm={async () => {
           if (voidTarget) await voidBill.mutateAsync(voidTarget)

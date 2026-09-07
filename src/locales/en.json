@@ -427,6 +427,182 @@
         "jobCardsByStatus": "Job Cards by Status",
         "revenueTrend": "Revenue Trend"
       }
+    },
+    "finance": {
+      "cashBook": {
+        "cashBook": "Cash Book",
+        "runningCashPositionAcrossEveryReceipt": "Running cash position across every receipt and payment",
+        "noEntriesInThisRange": "No entries in this range",
+        "receiptsAndPaymentsRecordedHereWill": "Receipts and payments recorded here will appear in the cash book."
+      },
+      "expenses": {
+        "newExpense": "New Expense",
+        "recordedAsMoneyOutItAppears": "Recorded as money out — it appears in Cash Book straight away.",
+        "searchCategory": "Search category...",
+        "landlordSupplierStaff": "Landlord, supplier, staff...",
+        "topCategory": "Top Category",
+        "noExpensesInThisPeriod": "No expenses in this period",
+        "voidThisExpense": "Void this expense?",
+        "void": "Void",
+        "expense": "Expense #",
+        "paidTo": "Paid To"
+      },
+      "partyLedger": {
+        "partyLedger": "Party Ledger",
+        "partyWiseAccountsClickToView": "Party-wise accounts · Click to view full khata",
+        "totalParties": "Total Parties",
+        "noPartiesYet": "No parties yet",
+        "partiesAppearHereOnceAJob": "Parties appear here once a job card is created for them.",
+        "noActivityYet": "No activity yet",
+        "thisPartySJobCardsAnd": "This party's job cards and payments will appear here.",
+        "settled": "Settled ✓"
+      },
+      "payables": {
+        "payables": "Payables",
+        "refundsDueAndUnusedAdvancesThe": "Refunds due and unused advances the shop is currently holding",
+        "totalPayable": "Total Payable",
+        "refundDue": "Refund Due",
+        "unusedAdvance": "Unused Advance",
+        "advanceCredit": "Advance Credit",
+        "nothingPayableRightNow": "Nothing payable right now",
+        "refundsDueAndUnusedAdvancesWill": "Refunds due and unused advances will appear here.",
+        "totalReceived": "Total Received"
+      },
+      "receiptsPayments": {
+        "allPaymentEntriesJobCardsAnd": "All payment entries — Job Cards and manual",
+        "todayReceived": "Today Received",
+        "netAmount": "Net Amount",
+        "cashNet": "Cash · Net",
+        "noReceiptsFound": "No receipts found",
+        "receiptsRecordedHereAndFromJob": "Receipts recorded here, and from Job Cards, will appear in this list.",
+        "voidReceipt": "Void Receipt",
+        "searchCustomer": "Search customer...",
+        "anyNote": "Any note",
+        "receipt": "Receipt #",
+        "against": "Against",
+        "allModes": "All Modes",
+        "newEntry": "New Entry",
+        "recordAReceiptOrPayment": "Record a receipt or payment.",
+        "customer": "Customer *",
+        "amount": "Amount *"
+      },
+      "receivables": {
+        "receivables": "Receivables",
+        "outstandingAmountsAcrossEveryActiveJob": "Outstanding amounts across every active job card",
+        "collection": "Collection %",
+        "noOutstandingReceivables": "No outstanding receivables",
+        "allPaymentsAreUpToDate": "All payments are up to date.",
+        "aging": "Aging"
+      },
+      "supplierPayables": {
+        "newSupplierBill": "New Supplier Bill",
+        "aPurchaseInvoiceYouOwePayments": "A purchase invoice you owe. Payments against it are recorded here and show on the supplier's ledger.",
+        "supplierPayables": "Supplier Payables",
+        "whatTheShopOwesSuppliersPurchase": "What the shop owes suppliers — purchase bills and unpaid device purchases, by age",
+        "overdue60": "Overdue 60+",
+        "nothingOwedToSuppliers": "Nothing owed to suppliers",
+        "enterAPurchaseBillOrRecord": "Enter a purchase bill, or record a device purchase without paying it in full, and it will appear here.",
+        "voidThisBill": "Void this bill?",
+        "voidBill": "Void Bill",
+        "current": "Current",
+        "130Days": "1–30 days",
+        "3160Days": "31–60 days",
+        "60Days": "60+ days",
+        "oldest": "Oldest"
+      }
+    },
+    "masters": {
+      "itemCategories": {
+        "itemCategories": "Item Categories",
+        "organiseItemsIntoCategoriesAndSub": "Organise items into categories and sub-categories",
+        "noItemCategoriesYet": "No item categories yet",
+        "level": "Level",
+        "path": "Path",
+        "statistics": "STATISTICS",
+        "subCategories": "Sub-Categories",
+        "categoryName": "Category Name *",
+        "rawMaterial": "Raw Material",
+        "parentCategory": "Parent Category"
+      },
+      "itemMaster": {
+        "itemMaster": "Item Master",
+        "productsServicesAndSparePartsCatalog": "Products, services, and spare parts catalog",
+        "noItemsYet": "No items yet",
+        "addYourFirstItemAbove": "Add your first item above.",
+        "nature": "Nature",
+        "classification": "CLASSIFICATION",
+        "primaryUom": "Primary UOM",
+        "pricing": "PRICING",
+        "gst": "GST",
+        "mrp": "MRP",
+        "inventory": "INVENTORY",
+        "stockTracked": "Stock Tracked",
+        "enabledIn": "ENABLED IN",
+        "product": "Product",
+        "itemName": "Item Name *",
+        "gst2": "GST %",
+        "enabledIn2": "Enabled In"
+      },
+      "parties": {
+        "manageCustomersAndSuppliers": "Manage customers and suppliers",
+        "noPartiesFound": "No parties found",
+        "addYourFirstCustomerOrSupplier": "Add your first customer or supplier above.",
+        "10DigitMobileNumber": "10-digit mobile number",
+        "selectCategory": "Select Category",
+        "shopHouseAreaCityPincode": "Shop / house, area, city, pincode",
+        "27abcde1234f1z5": "27ABCDE1234F1Z5",
+        "abcde1234f": "ABCDE1234F",
+        "localityArea": "Locality / area",
+        "village": "Village",
+        "taluka": "Taluka",
+        "district": "District",
+        "6DigitPin": "6-digit PIN",
+        "gstNumber": "GST Number",
+        "panNumber": "PAN Number",
+        "credit": "CREDIT",
+        "creditLimit": "Credit Limit",
+        "creditDays": "Credit Days",
+        "partyName": "Party Name *",
+        "mobile": "Mobile *",
+        "partyType": "Party Type *",
+        "gstNumber2": "GST number",
+        "panNumber2": "PAN number",
+        "area": "Area"
+      },
+      "partyCategories": {
+        "partyCategories": "Party Categories",
+        "manageAllPartyCategories": "Manage all party categories",
+        "noPartyCategoriesYet": "No party categories yet",
+        "partiesAlreadyAssignedToThisCategory": "Parties already assigned to this category will keep a reference to a category that no longer exists. This cannot be undone.",
+        "creditInformation": "CREDIT INFORMATION",
+        "defaultCreditDays": "Default Credit Days"
+      },
+      "paymentModes": {
+        "paymentModes": "Payment Modes",
+        "cashUpiCardBankTransferAnd": "Cash, UPI, card, bank transfer and other accepted payment methods",
+        "noPaymentModesYet": "No payment modes yet",
+        "addYourFirstPaymentModeAbove": "Add your first payment mode above.",
+        "receiptsAlreadyRecordedUnderThisPayment": "Receipts already recorded under this payment mode will keep a reference to a mode that no longer exists. This cannot be undone.",
+        "code": "Code *"
+      },
+      "uom": {
+        "unitsOfMeasure": "Units of Measure",
+        "manageUnitsUsedAcrossItemsStock": "Manage units used across items, stock, purchases and sales",
+        "noUnitsOfMeasureYet": "No units of measure yet",
+        "addYourFirstUomAbove": "Add your first UOM above.",
+        "itemsAlreadyUsingThisUnitWill": "Items already using this unit will keep a reference to a unit that no longer exists. This cannot be undone.",
+        "baseUom": "Base UOM",
+        "conversionFactor": "Conversion factor",
+        "optionalNotesAboutThisUnit": "Optional notes about this unit",
+        "conversion": "Conversion",
+        "source": "Source",
+        "uomName": "UOM Name *",
+        "uomCode": "UOM Code *",
+        "symbolAbbreviation": "Symbol / Abbreviation",
+        "shownInDropdownsAndReports": "Shown in dropdowns and reports",
+        "decimalPlaces": "Decimal Places",
+        "displayOrder": "Display Order"
+      }
     }
   }
 }

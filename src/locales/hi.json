@@ -427,6 +427,182 @@
         "jobCardsByStatus": "स्थिति के अनुसार जॉब कार्ड",
         "revenueTrend": "आय का रुझान"
       }
+    },
+    "finance": {
+      "cashBook": {
+        "cashBook": "रोकड़ बही",
+        "runningCashPositionAcrossEveryReceipt": "हर रसीद और भुगतान के साथ चलती रोकड़ स्थिति",
+        "noEntriesInThisRange": "इस अवधि में कोई प्रविष्टि नहीं",
+        "receiptsAndPaymentsRecordedHereWill": "यहाँ दर्ज रसीदें और भुगतान रोकड़ बही में दिखेंगे।"
+      },
+      "expenses": {
+        "newExpense": "नया खर्च",
+        "recordedAsMoneyOutItAppears": "रकम बाहर जाने के रूप में दर्ज — यह तुरंत रोकड़ बही में दिखेगा।",
+        "searchCategory": "श्रेणी खोजें...",
+        "landlordSupplierStaff": "मकान मालिक, सप्लायर, कर्मचारी...",
+        "topCategory": "सबसे बड़ी श्रेणी",
+        "noExpensesInThisPeriod": "इस अवधि में कोई खर्च नहीं",
+        "voidThisExpense": "यह खर्च रद्द करें?",
+        "void": "रद्द करें",
+        "expense": "खर्च #",
+        "paidTo": "किसे दिया"
+      },
+      "partyLedger": {
+        "partyLedger": "पार्टी खाता",
+        "partyWiseAccountsClickToView": "पार्टी-वार खाते · पूरा खाता देखने के लिए क्लिक करें",
+        "totalParties": "कुल पार्टियाँ",
+        "noPartiesYet": "अभी कोई पार्टी नहीं",
+        "partiesAppearHereOnceAJob": "पार्टी के लिए जॉब कार्ड बनने पर वह यहाँ दिखेगी।",
+        "noActivityYet": "अभी कोई गतिविधि नहीं",
+        "thisPartySJobCardsAnd": "इस पार्टी के जॉब कार्ड और भुगतान यहाँ दिखेंगे।",
+        "settled": "चुकता ✓"
+      },
+      "payables": {
+        "payables": "देय राशि",
+        "refundsDueAndUnusedAdvancesThe": "दुकान के पास रखी वापसी योग्य रकम और बिना उपयोग हुए अग्रिम",
+        "totalPayable": "कुल देय",
+        "refundDue": "वापसी बाकी",
+        "unusedAdvance": "बिना उपयोग अग्रिम",
+        "advanceCredit": "अग्रिम जमा",
+        "nothingPayableRightNow": "अभी कुछ देय नहीं",
+        "refundsDueAndUnusedAdvancesWill": "वापसी योग्य रकम और बिना उपयोग हुए अग्रिम यहाँ दिखेंगे।",
+        "totalReceived": "कुल प्राप्त"
+      },
+      "receiptsPayments": {
+        "allPaymentEntriesJobCardsAnd": "सभी भुगतान प्रविष्टियाँ — जॉब कार्ड और हाथ से दर्ज",
+        "todayReceived": "आज प्राप्त",
+        "netAmount": "शुद्ध राशि",
+        "cashNet": "नकद · शुद्ध",
+        "noReceiptsFound": "कोई रसीद नहीं मिली",
+        "receiptsRecordedHereAndFromJob": "यहाँ और जॉब कार्ड से दर्ज रसीदें इस सूची में दिखेंगी।",
+        "voidReceipt": "रसीद रद्द करें",
+        "searchCustomer": "ग्राहक खोजें...",
+        "anyNote": "कोई टिप्पणी",
+        "receipt": "रसीद #",
+        "against": "किसके सामने",
+        "allModes": "सभी तरीके",
+        "newEntry": "नई प्रविष्टि",
+        "recordAReceiptOrPayment": "रसीद या भुगतान दर्ज करें।",
+        "customer": "ग्राहक *",
+        "amount": "राशि *"
+      },
+      "receivables": {
+        "receivables": "प्राप्य राशि",
+        "outstandingAmountsAcrossEveryActiveJob": "हर चालू जॉब कार्ड पर बाकी रकम",
+        "collection": "वसूली %",
+        "noOutstandingReceivables": "कोई बाकी प्राप्य नहीं",
+        "allPaymentsAreUpToDate": "सभी भुगतान अद्यतन हैं।",
+        "aging": "पुरानापन"
+      },
+      "supplierPayables": {
+        "newSupplierBill": "नया सप्लायर बिल",
+        "aPurchaseInvoiceYouOwePayments": "एक खरीद बिल जो आपको चुकाना है। इसके सामने किए भुगतान यहाँ दर्ज होते हैं और सप्लायर के खाते में दिखते हैं।",
+        "supplierPayables": "सप्लायर देय",
+        "whatTheShopOwesSuppliersPurchase": "दुकान सप्लायरों को क्या देती है — खरीद बिल और बिना चुकाई डिवाइस खरीद, पुरानेपन के अनुसार",
+        "overdue60": "60+ दिन बकाया",
+        "nothingOwedToSuppliers": "सप्लायरों को कुछ देय नहीं",
+        "enterAPurchaseBillOrRecord": "कोई खरीद बिल दर्ज करें, या कोई डिवाइस खरीद पूरा भुगतान किए बिना दर्ज करें, तो वह यहाँ दिखेगा।",
+        "voidThisBill": "यह बिल रद्द करें?",
+        "voidBill": "बिल रद्द करें",
+        "current": "चालू",
+        "130Days": "1–30 दिन",
+        "3160Days": "31–60 दिन",
+        "60Days": "60+ दिन",
+        "oldest": "सबसे पुराना"
+      }
+    },
+    "masters": {
+      "itemCategories": {
+        "itemCategories": "आइटम श्रेणी",
+        "organiseItemsIntoCategoriesAndSub": "आइटम को श्रेणियों और उप-श्रेणियों में व्यवस्थित करें",
+        "noItemCategoriesYet": "अभी कोई आइटम श्रेणी नहीं",
+        "level": "स्तर",
+        "path": "पथ",
+        "statistics": "आँकड़े",
+        "subCategories": "उप-श्रेणियाँ",
+        "categoryName": "श्रेणी का नाम *",
+        "rawMaterial": "कच्चा माल",
+        "parentCategory": "मूल श्रेणी"
+      },
+      "itemMaster": {
+        "itemMaster": "आइटम मास्टर",
+        "productsServicesAndSparePartsCatalog": "उत्पाद, सर्विस और स्पेयर पुर्ज़ों की सूची",
+        "noItemsYet": "अभी कोई आइटम नहीं",
+        "addYourFirstItemAbove": "ऊपर अपना पहला आइटम जोड़ें।",
+        "nature": "प्रकृति",
+        "classification": "वर्गीकरण",
+        "primaryUom": "मुख्य UOM",
+        "pricing": "कीमत",
+        "gst": "GST",
+        "mrp": "MRP",
+        "inventory": "स्टॉक",
+        "stockTracked": "स्टॉक ट्रैक किया",
+        "enabledIn": "कहाँ चालू",
+        "product": "उत्पाद",
+        "itemName": "आइटम का नाम *",
+        "gst2": "GST %",
+        "enabledIn2": "कहाँ चालू"
+      },
+      "parties": {
+        "manageCustomersAndSuppliers": "ग्राहक और सप्लायर प्रबंधित करें",
+        "noPartiesFound": "कोई पार्टी नहीं मिली",
+        "addYourFirstCustomerOrSupplier": "ऊपर अपना पहला ग्राहक या सप्लायर जोड़ें।",
+        "10DigitMobileNumber": "10 अंकों का मोबाइल नंबर",
+        "selectCategory": "श्रेणी चुनें",
+        "shopHouseAreaCityPincode": "दुकान / घर, इलाका, शहर, पिनकोड",
+        "27abcde1234f1z5": "27ABCDE1234F1Z5",
+        "abcde1234f": "ABCDE1234F",
+        "localityArea": "मोहल्ला / इलाका",
+        "village": "गाँव",
+        "taluka": "तालुका",
+        "district": "ज़िला",
+        "6DigitPin": "6 अंकों का पिन",
+        "gstNumber": "GST नंबर",
+        "panNumber": "PAN नंबर",
+        "credit": "उधार",
+        "creditLimit": "उधार की सीमा",
+        "creditDays": "उधार के दिन",
+        "partyName": "पार्टी का नाम *",
+        "mobile": "मोबाइल *",
+        "partyType": "पार्टी का प्रकार *",
+        "gstNumber2": "GST नंबर",
+        "panNumber2": "PAN नंबर",
+        "area": "इलाका"
+      },
+      "partyCategories": {
+        "partyCategories": "पार्टी श्रेणी",
+        "manageAllPartyCategories": "सभी पार्टी श्रेणियाँ प्रबंधित करें",
+        "noPartyCategoriesYet": "अभी कोई पार्टी श्रेणी नहीं",
+        "partiesAlreadyAssignedToThisCategory": "इस श्रेणी में पहले से जुड़ी पार्टियाँ एक ऐसी श्रेणी का संदर्भ रखेंगी जो अब मौजूद नहीं है। यह पूर्ववत नहीं हो सकता।",
+        "creditInformation": "उधार की जानकारी",
+        "defaultCreditDays": "डिफ़ॉल्ट उधार दिन"
+      },
+      "paymentModes": {
+        "paymentModes": "भुगतान के तरीके",
+        "cashUpiCardBankTransferAnd": "नकद, UPI, कार्ड, बैंक ट्रांसफ़र और अन्य स्वीकृत भुगतान तरीके",
+        "noPaymentModesYet": "अभी कोई भुगतान तरीका नहीं",
+        "addYourFirstPaymentModeAbove": "ऊपर अपना पहला भुगतान तरीका जोड़ें।",
+        "receiptsAlreadyRecordedUnderThisPayment": "इस भुगतान तरीके से पहले दर्ज रसीदें एक ऐसे तरीके का संदर्भ रखेंगी जो अब मौजूद नहीं है। यह पूर्ववत नहीं हो सकता।",
+        "code": "कोड *"
+      },
+      "uom": {
+        "unitsOfMeasure": "माप की इकाइयाँ",
+        "manageUnitsUsedAcrossItemsStock": "आइटम, स्टॉक, खरीद और विक्रय में उपयोग होने वाली इकाइयाँ प्रबंधित करें",
+        "noUnitsOfMeasureYet": "अभी कोई माप इकाई नहीं",
+        "addYourFirstUomAbove": "ऊपर अपनी पहली UOM जोड़ें।",
+        "itemsAlreadyUsingThisUnitWill": "इस इकाई का उपयोग कर रहे आइटम एक ऐसी इकाई का संदर्भ रखेंगे जो अब मौजूद नहीं है। यह पूर्ववत नहीं हो सकता।",
+        "baseUom": "मूल UOM",
+        "conversionFactor": "रूपांतरण गुणक",
+        "optionalNotesAboutThisUnit": "इस इकाई के बारे में वैकल्पिक टिप्पणी",
+        "conversion": "रूपांतरण",
+        "source": "स्रोत",
+        "uomName": "UOM का नाम *",
+        "uomCode": "UOM कोड *",
+        "symbolAbbreviation": "चिह्न / संक्षेप",
+        "shownInDropdownsAndReports": "ड्रॉपडाउन और रिपोर्ट में दिखता है",
+        "decimalPlaces": "दशमलव स्थान",
+        "displayOrder": "दिखाने का क्रम"
+      }
     }
   }
 }

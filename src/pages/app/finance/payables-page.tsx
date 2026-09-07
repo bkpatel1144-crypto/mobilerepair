@@ -38,8 +38,8 @@ export function PayablesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={HandCoins}
-        title="Payables"
-        subtitle="Refunds due and unused advances the shop is currently holding"
+        title={t('pages.finance.payables.payables')}
+        subtitle={t('pages.finance.payables.refundsDueAndUnusedAdvancesThe')}
         actions={
           <Button
             type="button"
@@ -62,10 +62,26 @@ export function PayablesPage() {
       ) : (
         <>
           <StatCardGrid>
-            <StatCard label="Total Payable" value={`₹${data.totalPayable}`} tone="danger" />
-            <StatCard label="Refund Due" value={`₹${data.refundDueTotal}`} tone="warning" />
-            <StatCard label="Unused Advance" value={`₹${data.unusedAdvanceTotal}`} tone="info" />
-            <StatCard label="Advance Credit" value={`₹${data.advanceCreditTotal}`} tone="purple" />
+            <StatCard
+              label={t('pages.finance.payables.totalPayable')}
+              value={`₹${data.totalPayable}`}
+              tone="danger"
+            />
+            <StatCard
+              label={t('pages.finance.payables.refundDue')}
+              value={`₹${data.refundDueTotal}`}
+              tone="warning"
+            />
+            <StatCard
+              label={t('pages.finance.payables.unusedAdvance')}
+              value={`₹${data.unusedAdvanceTotal}`}
+              tone="info"
+            />
+            <StatCard
+              label={t('pages.finance.payables.advanceCredit')}
+              value={`₹${data.advanceCreditTotal}`}
+              tone="purple"
+            />
           </StatCardGrid>
 
           <FilterBar
@@ -93,8 +109,8 @@ export function PayablesPage() {
           ) : filtered.length === 0 ? (
             <EmptyState
               icon={Search}
-              title="Nothing payable right now"
-              description="Refunds due and unused advances will appear here."
+              title={t('pages.finance.payables.nothingPayableRightNow')}
+              description={t('pages.finance.payables.refundsDueAndUnusedAdvancesWill')}
             />
           ) : (
             <div className="divide-y rounded-lg border">
@@ -127,7 +143,9 @@ export function PayablesPage() {
                     {isOpen && (
                       <div className="grid grid-cols-3 gap-3 border-t bg-muted/20 p-3 text-sm">
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase">Total Received</p>
+                          <p className="text-xs text-muted-foreground uppercase">
+                            {t('pages.finance.payables.totalReceived')}
+                          </p>
                           <p className="font-medium">₹{row.totalReceived}</p>
                         </div>
                         <div>

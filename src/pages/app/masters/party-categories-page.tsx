@@ -99,8 +99,8 @@ export function PartyCategoriesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Users}
-        title="Party Categories"
-        subtitle="Manage all party categories"
+        title={t('pages.masters.partyCategories.partyCategories')}
+        subtitle={t('pages.masters.partyCategories.manageAllPartyCategories')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -129,7 +129,7 @@ export function PartyCategoriesPage() {
         emptyState={
           <EmptyState
             icon={Users}
-            title="No party categories yet"
+            title={t('pages.masters.partyCategories.noPartyCategoriesYet')}
             description={t('shared.addYourFirstCategoryAbove')}
           />
         }
@@ -177,8 +177,13 @@ export function PartyCategoriesPage() {
           }
           sections={[
             {
-              title: 'CREDIT INFORMATION',
-              rows: [{ label: 'Default Credit Days', value: `${viewing.defaultCreditDays} Days` }],
+              title: t('pages.masters.partyCategories.creditInformation'),
+              rows: [
+                {
+                  label: t('pages.masters.partyCategories.defaultCreditDays'),
+                  value: `${viewing.defaultCreditDays} Days`,
+                },
+              ],
             },
           ]}
           timeline={[
@@ -217,7 +222,7 @@ function DeletePartyCategoryButton({
         open={confirming}
         onOpenChange={setConfirming}
         title={`Delete "${category.name}"?`}
-        message="Parties already assigned to this category will keep a reference to a category that no longer exists. This cannot be undone."
+        message={t('pages.masters.partyCategories.partiesAlreadyAssignedToThisCategory')}
         confirmLabel={t('common.delete')}
         isPending={deleteCategory.isPending}
         onConfirm={() =>
@@ -242,6 +247,7 @@ function PartyCategoryModal({
   existing: PartyCategoryWithId[]
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const createCategory = useCreatePartyCategory(existing)
   const updateCategory = useUpdatePartyCategory(existing)
@@ -298,7 +304,7 @@ function PartyCategoryModal({
         </p>
       </div>
       <div className="space-y-1.5">
-        <Label>Default Credit Days</Label>
+        <Label>{t('pages.masters.partyCategories.defaultCreditDays')}</Label>
         <Input
           type="number"
           min={0}

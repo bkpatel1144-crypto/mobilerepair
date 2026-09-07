@@ -119,8 +119,8 @@ function NewExpenseModal({
         if (!o) reset()
         onOpenChange(o)
       }}
-      title="New Expense"
-      description="Recorded as money out — it appears in Cash Book straight away."
+      title={t('pages.finance.expenses.newExpense')}
+      description={t('pages.finance.expenses.recordedAsMoneyOutItAppears')}
       submitLabel={create.isPending ? 'Saving…' : 'Record Expense'}
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
@@ -156,7 +156,7 @@ function NewExpenseModal({
           options={categories.map((c) => ({ id: c.id, label: c.name }))}
           value={categoryId}
           onChange={setCategoryId}
-          placeholder="Search category..."
+          placeholder={t('pages.finance.expenses.searchCategory')}
           onCreateNew={(name) =>
             createCategory.mutate(
               { name, existingCount: categories.length },
@@ -200,7 +200,7 @@ function NewExpenseModal({
           options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile || undefined }))}
           value={partyId}
           onChange={setPartyId}
-          placeholder="Landlord, supplier, staff..."
+          placeholder={t('pages.finance.expenses.landlordSupplierStaff')}
         />
         <p className="text-xs text-muted-foreground">
           Set this to have the expense show on that party's ledger. Leave empty for things like tea
@@ -269,7 +269,7 @@ export function ExpensesPage() {
   const columns: DataTableColumn<ExpenseWithId>[] = [
     {
       key: 'expenseNumber',
-      header: 'Expense #',
+      header: t('pages.finance.expenses.expense'),
       sortValue: (e) => e.expenseNumber,
       render: (e) => (
         <div>
@@ -286,7 +286,7 @@ export function ExpensesPage() {
     },
     {
       key: 'paidTo',
-      header: 'Paid To',
+      header: t('pages.finance.expenses.paidTo'),
       hideOnMobile: true,
       render: (e) => e.paidToPartyName ?? <span className="text-muted-foreground">—</span>,
     },
@@ -383,7 +383,7 @@ export function ExpensesPage() {
         <StatCard label={t('common.total')} value={`₹${total}`} icon={IndianRupee} tone="danger" />
         <StatCard label={t('shared.entries')} value={live.length} icon={ReceiptIcon} />
         <StatCard
-          label="Top Category"
+          label={t('pages.finance.expenses.topCategory')}
           value={topCategory ? `₹${topCategory[1]}` : '—'}
           sublabel={topCategory?.[0]}
           icon={Tag}
@@ -428,7 +428,7 @@ export function ExpensesPage() {
         emptyState={
           <EmptyState
             icon={Wallet}
-            title="No expenses in this period"
+            title={t('pages.finance.expenses.noExpensesInThisPeriod')}
             description="Record rent, salaries and other running costs here — they flow straight into Cash Book and Profit & Loss."
             action={
               <Button type="button" onClick={() => setNewOpen(true)}>
@@ -445,13 +445,13 @@ export function ExpensesPage() {
       <ConfirmDialog
         open={!!voidTarget}
         onOpenChange={(o) => !o && setVoidTarget(null)}
-        title="Void this expense?"
+        title={t('pages.finance.expenses.voidThisExpense')}
         message={
           voidTarget
             ? `${voidTarget.expenseNumber} (₹${voidTarget.amount}) stays on the list marked Voided and stops counting towards totals. Its cash-book entry is voided at the same time.`
             : ''
         }
-        confirmLabel="Void"
+        confirmLabel={t('pages.finance.expenses.void')}
         isPending={voidExpense.isPending}
         onConfirm={async () => {
           if (voidTarget) await voidExpense.mutateAsync(voidTarget)

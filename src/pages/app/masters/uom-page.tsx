@@ -75,7 +75,7 @@ export function UomPage() {
     { key: 'type', header: t('common.type'), hideOnMobile: true, render: (u) => u.type },
     {
       key: 'conversion',
-      header: 'Conversion',
+      header: t('pages.masters.uom.conversion'),
       hideOnMobile: true,
       render: (u) =>
         u.baseUomId ? (
@@ -88,7 +88,7 @@ export function UomPage() {
     },
     {
       key: 'source',
-      header: 'Source',
+      header: t('pages.masters.uom.source'),
       hideOnMobile: true,
       render: (u) => (
         <span className="text-xs text-muted-foreground">
@@ -165,8 +165,8 @@ export function UomPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Ruler}
-        title="Units of Measure"
-        subtitle="Manage units used across items, stock, purchases and sales"
+        title={t('pages.masters.uom.unitsOfMeasure')}
+        subtitle={t('pages.masters.uom.manageUnitsUsedAcrossItemsStock')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -212,8 +212,8 @@ export function UomPage() {
         emptyState={
           <EmptyState
             icon={Ruler}
-            title="No units of measure yet"
-            description="Add your first UOM above."
+            title={t('pages.masters.uom.noUnitsOfMeasureYet')}
+            description={t('pages.masters.uom.addYourFirstUomAbove')}
           />
         }
       />
@@ -250,7 +250,7 @@ export function UomPage() {
           open
           onOpenChange={(o) => !o && setDeleteTarget(null)}
           title={`Delete "${deleteTarget.name}"?`}
-          message="Items already using this unit will keep a reference to a unit that no longer exists. This cannot be undone."
+          message={t('pages.masters.uom.itemsAlreadyUsingThisUnitWill')}
           confirmLabel={t('common.delete')}
           isPending={deleteUom.isPending}
           onConfirm={() =>
@@ -320,7 +320,7 @@ function UomModal({
     >
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>UOM Name *</Label>
+          <Label>{t('pages.masters.uom.uomName')}</Label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -329,7 +329,7 @@ function UomModal({
           />
         </div>
         <div className="space-y-1.5">
-          <Label>UOM Code *</Label>
+          <Label>{t('pages.masters.uom.uomCode')}</Label>
           <Input value={isNew ? 'AUTO-GENERATED' : editing.code} disabled />
         </div>
       </div>
@@ -351,18 +351,20 @@ function UomModal({
           <p className="text-xs text-muted-foreground">e.g. Pcs, Nos, Dozen, Box</p>
         </div>
         <div className="space-y-1.5">
-          <Label>Symbol / Abbreviation</Label>
+          <Label>{t('pages.masters.uom.symbolAbbreviation')}</Label>
           <Input
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
             placeholder="e.g. kg, L, pcs"
           />
-          <p className="text-xs text-muted-foreground">Shown in dropdowns and reports</p>
+          <p className="text-xs text-muted-foreground">
+            {t('pages.masters.uom.shownInDropdownsAndReports')}
+          </p>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>Decimal Places</Label>
+          <Label>{t('pages.masters.uom.decimalPlaces')}</Label>
           <Input
             type="number"
             min={0}
@@ -373,7 +375,7 @@ function UomModal({
           <p className="text-xs text-muted-foreground">0 = whole numbers (Pcs), 3 = precise (Kg)</p>
         </div>
         <div className="space-y-1.5">
-          <Label>Display Order</Label>
+          <Label>{t('pages.masters.uom.displayOrder')}</Label>
           <Input
             type="number"
             min={0}
@@ -391,7 +393,7 @@ function UomModal({
         <div className="grid grid-cols-2 gap-3">
           <Select value={baseUomId} onValueChange={(v) => v && setBaseUomId(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Base UOM" />
+              <SelectValue placeholder={t('pages.masters.uom.baseUom')} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">{t('common.none')}</SelectItem>
@@ -410,7 +412,7 @@ function UomModal({
             onChange={(e) =>
               setConversionFactor(e.target.value === '' ? '' : Number(e.target.value))
             }
-            placeholder="Conversion factor"
+            placeholder={t('pages.masters.uom.conversionFactor')}
           />
         </div>
       </div>
@@ -419,7 +421,7 @@ function UomModal({
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Optional notes about this unit"
+          placeholder={t('pages.masters.uom.optionalNotesAboutThisUnit')}
           rows={2}
         />
       </div>

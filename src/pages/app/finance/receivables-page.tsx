@@ -67,7 +67,7 @@ export function ReceivablesPage() {
     },
     {
       key: 'aging',
-      header: 'Aging',
+      header: t('pages.finance.receivables.aging'),
       sortValue: (r) => r.daysOld,
       render: (r) => `${r.daysOld}d (${BUCKET_LABELS[r.bucket]})`,
     },
@@ -83,8 +83,8 @@ export function ReceivablesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={AlertTriangle}
-        title="Receivables"
-        subtitle="Outstanding amounts across every active job card"
+        title={t('pages.finance.receivables.receivables')}
+        subtitle={t('pages.finance.receivables.outstandingAmountsAcrossEveryActiveJob')}
         actions={
           <Button
             type="button"
@@ -111,7 +111,11 @@ export function ReceivablesPage() {
           value={`₹${data.totalCollected}`}
           tone="success"
         />
-        <StatCard label="Collection %" value={`${data.collectionPercent}%`} tone="info" />
+        <StatCard
+          label={t('pages.finance.receivables.collection')}
+          value={`${data.collectionPercent}%`}
+          tone="info"
+        />
       </StatCardGrid>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -141,8 +145,8 @@ export function ReceivablesPage() {
         emptyState={
           <EmptyState
             icon={Search}
-            title="No outstanding receivables"
-            description="All payments are up to date."
+            title={t('pages.finance.receivables.noOutstandingReceivables')}
+            description={t('pages.finance.receivables.allPaymentsAreUpToDate')}
           />
         }
       />

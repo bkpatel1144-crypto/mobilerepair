@@ -90,7 +90,7 @@ export function ItemCategoriesPage() {
     },
     {
       key: 'level',
-      header: 'Level',
+      header: t('pages.masters.itemCategories.level'),
       hideOnMobile: true,
       render: (c) => categoryLevel(c, categories).level,
     },
@@ -101,8 +101,8 @@ export function ItemCategoriesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={FolderTree}
-        title="Item Categories"
-        subtitle="Organise items into categories and sub-categories"
+        title={t('pages.masters.itemCategories.itemCategories')}
+        subtitle={t('pages.masters.itemCategories.organiseItemsIntoCategoriesAndSub')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -137,7 +137,7 @@ export function ItemCategoriesPage() {
         emptyState={
           <EmptyState
             icon={FolderTree}
-            title="No item categories yet"
+            title={t('pages.masters.itemCategories.noItemCategoriesYet')}
             description={t('shared.addYourFirstCategoryAbove')}
           />
         }
@@ -202,12 +202,15 @@ export function ItemCategoriesPage() {
               title: t('shared.details'),
               rows: [
                 { label: t('common.type'), value: viewing.type },
-                { label: 'Level', value: categoryLevel(viewing, categories).level },
-                { label: 'Path', value: viewing.code },
+                {
+                  label: t('pages.masters.itemCategories.level'),
+                  value: categoryLevel(viewing, categories).level,
+                },
+                { label: t('pages.masters.itemCategories.path'), value: viewing.code },
               ],
             },
             {
-              title: 'STATISTICS',
+              title: t('pages.masters.itemCategories.statistics'),
               children: (
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-lg border p-3 text-center">
@@ -216,7 +219,9 @@ export function ItemCategoriesPage() {
                   </div>
                   <div className="rounded-lg border p-3 text-center">
                     <p className="text-xl font-bold">{subCategoryCountFor(viewing)}</p>
-                    <p className="text-xs text-muted-foreground">Sub-Categories</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t('pages.masters.itemCategories.subCategories')}
+                    </p>
                   </div>
                 </div>
               ),
@@ -376,7 +381,7 @@ function ItemCategoryModal({
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">
-        <Label>Category Name *</Label>
+        <Label>{t('pages.masters.itemCategories.categoryName')}</Label>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -392,13 +397,15 @@ function ItemCategoryModal({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Raw Material">Raw Material</SelectItem>
+              <SelectItem value="Raw Material">
+                {t('pages.masters.itemCategories.rawMaterial')}
+              </SelectItem>
               <SelectItem value="Service">{t('shared.service')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-1.5">
-          <Label>Parent Category</Label>
+          <Label>{t('pages.masters.itemCategories.parentCategory')}</Label>
           <Select value={parentId} onValueChange={(v) => v && setParentId(v)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="None (Root)" />

@@ -98,7 +98,12 @@ export function ItemMasterPage() {
         </span>
       ),
     },
-    { key: 'nature', header: 'Nature', hideOnMobile: true, render: (i) => i.nature },
+    {
+      key: 'nature',
+      header: t('pages.masters.itemMaster.nature'),
+      hideOnMobile: true,
+      render: (i) => i.nature,
+    },
     { key: 'uom', header: t('shared.uom'), hideOnMobile: true, render: (i) => i.uom },
     {
       key: 'status',
@@ -111,8 +116,8 @@ export function ItemMasterPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Package}
-        title="Item Master"
-        subtitle="Products, services, and spare parts catalog"
+        title={t('pages.masters.itemMaster.itemMaster')}
+        subtitle={t('pages.masters.itemMaster.productsServicesAndSparePartsCatalog')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -154,7 +159,7 @@ export function ItemMasterPage() {
             <SelectItem value="all">{t('common.allTypes')}</SelectItem>
             <SelectItem value="service">{t('shared.service')}</SelectItem>
             <SelectItem value="part">{t('common.part')}</SelectItem>
-            <SelectItem value="product">Product</SelectItem>
+            <SelectItem value="product">{t('pages.masters.itemMaster.product')}</SelectItem>
           </SelectContent>
         </Select>
       </FilterBar>
@@ -170,8 +175,8 @@ export function ItemMasterPage() {
         emptyState={
           <EmptyState
             icon={Package}
-            title="No items yet"
-            description="Add your first item above."
+            title={t('pages.masters.itemMaster.noItemsYet')}
+            description={t('pages.masters.itemMaster.addYourFirstItemAbove')}
           />
         }
       />
@@ -214,20 +219,20 @@ export function ItemMasterPage() {
           }
           sections={[
             {
-              title: 'CLASSIFICATION',
+              title: t('pages.masters.itemMaster.classification'),
               rows: [
                 { label: t('common.type'), value: TYPE_LABEL[viewing.type].toUpperCase() },
-                { label: 'Nature', value: viewing.nature },
+                { label: t('pages.masters.itemMaster.nature'), value: viewing.nature },
                 { label: t('common.category'), value: viewing.categoryName ?? '—' },
-                { label: 'Primary UOM', value: viewing.uom },
+                { label: t('pages.masters.itemMaster.primaryUom'), value: viewing.uom },
               ],
             },
             {
-              title: 'PRICING',
+              title: t('pages.masters.itemMaster.pricing'),
               rows: [
                 { label: t('common.tax'), value: `GST ${viewing.gstPercent}%` },
                 {
-                  label: 'GST',
+                  label: t('pages.masters.itemMaster.gst'),
                   value: `CGST ${viewing.cgstPercent}% + SGST ${viewing.sgstPercent}%`,
                 },
                 {
@@ -238,15 +243,23 @@ export function ItemMasterPage() {
                   label: t('common.purchasePrice'),
                   value: viewing.purchasePrice != null ? `₹${viewing.purchasePrice}` : '—',
                 },
-                { label: 'MRP', value: viewing.mrp != null ? `₹${viewing.mrp}` : '—' },
+                {
+                  label: t('pages.masters.itemMaster.mrp'),
+                  value: viewing.mrp != null ? `₹${viewing.mrp}` : '—',
+                },
               ],
             },
             {
-              title: 'INVENTORY',
-              rows: [{ label: 'Stock Tracked', value: viewing.stockTracked ? 'Yes' : 'No' }],
+              title: t('pages.masters.itemMaster.inventory'),
+              rows: [
+                {
+                  label: t('pages.masters.itemMaster.stockTracked'),
+                  value: viewing.stockTracked ? 'Yes' : 'No',
+                },
+              ],
             },
             {
-              title: 'ENABLED IN',
+              title: t('pages.masters.itemMaster.enabledIn'),
               children: (
                 <div className="flex flex-wrap gap-1.5">
                   {[
@@ -401,7 +414,7 @@ function ItemModal({
     >
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2 space-y-1.5">
-          <Label>Item Name *</Label>
+          <Label>{t('pages.masters.itemMaster.itemName')}</Label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -418,7 +431,7 @@ function ItemModal({
             <SelectContent>
               <SelectItem value="service">{t('shared.service')}</SelectItem>
               <SelectItem value="part">{t('common.part')}</SelectItem>
-              <SelectItem value="product">Product</SelectItem>
+              <SelectItem value="product">{t('pages.masters.itemMaster.product')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -439,7 +452,7 @@ function ItemModal({
           </Select>
         </div>
         <div className="space-y-1.5">
-          <Label>Primary UOM</Label>
+          <Label>{t('pages.masters.itemMaster.primaryUom')}</Label>
           <Select value={uom} onValueChange={(v) => v && setUom(v)}>
             <SelectTrigger className="w-full">
               <SelectValue />
@@ -454,7 +467,7 @@ function ItemModal({
           </Select>
         </div>
         <div className="space-y-1.5">
-          <Label>GST %</Label>
+          <Label>{t('pages.masters.itemMaster.gst2')}</Label>
           <Input
             type="number"
             min={0}
@@ -487,7 +500,7 @@ function ItemModal({
           />
         </div>
         <div className="space-y-1.5">
-          <Label>MRP</Label>
+          <Label>{t('pages.masters.itemMaster.mrp')}</Label>
           <Input
             type="number"
             min={0}
@@ -499,7 +512,7 @@ function ItemModal({
       </div>
 
       <div className="space-y-2">
-        <Label>Enabled In</Label>
+        <Label>{t('pages.masters.itemMaster.enabledIn2')}</Label>
         <div className="flex flex-wrap gap-4 text-sm">
           <label className="flex items-center gap-1.5">
             <Checkbox checked={stockTracked} onCheckedChange={(v) => setStockTracked(v === true)} />

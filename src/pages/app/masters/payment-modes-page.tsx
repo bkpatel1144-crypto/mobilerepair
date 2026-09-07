@@ -158,8 +158,8 @@ export function PaymentModesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={CreditCard}
-        title="Payment Modes"
-        subtitle="Cash, UPI, card, bank transfer and other accepted payment methods"
+        title={t('pages.masters.paymentModes.paymentModes')}
+        subtitle={t('pages.masters.paymentModes.cashUpiCardBankTransferAnd')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -196,8 +196,8 @@ export function PaymentModesPage() {
         emptyState={
           <EmptyState
             icon={CreditCard}
-            title="No payment modes yet"
-            description="Add your first payment mode above."
+            title={t('pages.masters.paymentModes.noPaymentModesYet')}
+            description={t('pages.masters.paymentModes.addYourFirstPaymentModeAbove')}
           />
         }
       />
@@ -236,7 +236,7 @@ export function PaymentModesPage() {
           open
           onOpenChange={(o) => !o && setDeleteTarget(null)}
           title={`Delete "${deleteTarget.name}"?`}
-          message="Receipts already recorded under this payment mode will keep a reference to a mode that no longer exists. This cannot be undone."
+          message={t('pages.masters.paymentModes.receiptsAlreadyRecordedUnderThisPayment')}
           confirmLabel={t('common.delete')}
           isPending={deleteMode.isPending}
           onConfirm={() =>
@@ -297,7 +297,7 @@ function PaymentModeModal({
         />
       </div>
       <div className="space-y-1.5">
-        <Label>Code *</Label>
+        <Label>{t('pages.masters.paymentModes.code')}</Label>
         <Input value={isNew ? 'AUTO-GENERATED' : editing.code} disabled />
       </div>
       <div className="space-y-1.5">

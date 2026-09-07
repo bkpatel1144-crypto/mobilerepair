@@ -108,7 +108,7 @@ export function ReceiptsPaymentsPage() {
   const columns: DataTableColumn<ReceiptWithId>[] = [
     {
       key: 'receiptNumber',
-      header: 'Receipt #',
+      header: t('pages.finance.receiptsPayments.receipt'),
       render: (r) => (
         <div className="flex items-center gap-2">
           <span className="font-semibold">{r.receiptNumber}</span>
@@ -141,7 +141,7 @@ export function ReceiptsPaymentsPage() {
     },
     {
       key: 'against',
-      header: 'Against',
+      header: t('pages.finance.receiptsPayments.against'),
       hideOnMobile: true,
       render: (r) => r.jobCardNumber ?? 'Manual / Advance',
     },
@@ -211,7 +211,7 @@ export function ReceiptsPaymentsPage() {
       <PageHeader
         icon={Wallet}
         title="Receipts & Payments"
-        subtitle="All payment entries — Job Cards and manual"
+        subtitle={t('pages.finance.receiptsPayments.allPaymentEntriesJobCardsAnd')}
         actions={
           <>
             <Button
@@ -236,20 +236,24 @@ export function ReceiptsPaymentsPage() {
 
       <StatCardGrid>
         <StatCard
-          label="Today Received"
+          label={t('pages.finance.receiptsPayments.todayReceived')}
           value={`₹${todayReceived}`}
           sublabel={`${active.filter((r) => r.direction === 'in' && (r.createdAt?.toDate?.() ?? new Date(0)) >= today).length} receipts`}
           icon={Wallet}
           tone="success"
         />
         <StatCard
-          label="Net Amount"
+          label={t('pages.finance.receiptsPayments.netAmount')}
           icon={IndianRupee}
           value={`₹${netAmount}`}
           sublabel="After money out"
           tone="info"
         />
-        <StatCard label="Cash · Net" icon={Wallet} value={`₹${cashNet}`} />
+        <StatCard
+          label={t('pages.finance.receiptsPayments.cashNet')}
+          icon={Wallet}
+          value={`₹${cashNet}`}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -267,7 +271,7 @@ export function ReceiptsPaymentsPage() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Modes</SelectItem>
+            <SelectItem value="all">{t('pages.finance.receiptsPayments.allModes')}</SelectItem>
             <SelectItem value="cash">{t('common.cash')}</SelectItem>
             <SelectItem value="upi">{t('shared.upi')}</SelectItem>
             <SelectItem value="card">{t('common.cardMode')}</SelectItem>
@@ -285,8 +289,8 @@ export function ReceiptsPaymentsPage() {
         emptyState={
           <EmptyState
             icon={Search}
-            title="No receipts found"
-            description="Receipts recorded here, and from Job Cards, will appear in this list."
+            title={t('pages.finance.receiptsPayments.noReceiptsFound')}
+            description={t('pages.finance.receiptsPayments.receiptsRecordedHereAndFromJob')}
           />
         }
       />
@@ -299,7 +303,7 @@ export function ReceiptsPaymentsPage() {
           onOpenChange={(o) => !o && setVoidTarget(null)}
           title={`Void receipt "${voidTarget.receiptNumber}"?`}
           message={`This reverses ₹${voidTarget.amount} against ${voidTarget.partyName}${voidTarget.jobCardNumber ? ` (job ${voidTarget.jobCardNumber})` : ''} in the ledger and Cash Book. This cannot be undone.`}
-          confirmLabel="Void Receipt"
+          confirmLabel={t('pages.finance.receiptsPayments.voidReceipt')}
           isPending={voidReceipt.isPending}
           onConfirm={() => voidReceipt.mutate(voidTarget, { onSuccess: () => setVoidTarget(null) })}
         />
@@ -388,8 +392,10 @@ function NewEntryDialog({
     >
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>New Entry</DialogTitle>
-          <DialogDescription>Record a receipt or payment.</DialogDescription>
+          <DialogTitle>{t('pages.finance.receiptsPayments.newEntry')}</DialogTitle>
+          <DialogDescription>
+            {t('pages.finance.receiptsPayments.recordAReceiptOrPayment')}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-2">
@@ -410,7 +416,7 @@ function NewEntryDialog({
         </div>
 
         <div className="space-y-1.5">
-          <Label>Customer *</Label>
+          <Label>{t('pages.finance.receiptsPayments.customer')}</Label>
           <SearchSelect
             options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
             value={partyId}
@@ -419,7 +425,7 @@ function NewEntryDialog({
               setJobCardId(null)
               if (id) setQuickAddCustomer(null)
             }}
-            placeholder="Search customer..."
+            placeholder={t('pages.finance.receiptsPayments.searchCustomer')}
             onCreateNew={(query) => setQuickAddCustomer({ name: query, mobile: '' })}
           />
           {quickAddCustomer && !partyId && (
@@ -458,7 +464,7 @@ function NewEntryDialog({
         </div>
 
         <div className="space-y-1.5">
-          <Label>Against</Label>
+          <Label>{t('pages.finance.receiptsPayments.against')}</Label>
           <div className="grid grid-cols-2 gap-2">
             <Button
               type="button"
@@ -496,7 +502,7 @@ function NewEntryDialog({
         )}
 
         <div className="space-y-1.5">
-          <Label>Amount *</Label>
+          <Label>{t('pages.finance.receiptsPayments.amount')}</Label>
           <Input
             type="number"
             min={0}
@@ -530,7 +536,7 @@ function NewEntryDialog({
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="Any note"
+            placeholder={t('pages.finance.receiptsPayments.anyNote')}
             rows={2}
           />
         </div>

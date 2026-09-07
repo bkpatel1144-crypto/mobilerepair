@@ -112,8 +112,8 @@ export function PartyLedgerPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={BookOpen}
-        title="Party Ledger"
-        subtitle="Party-wise accounts · Click to view full khata"
+        title={t('pages.finance.partyLedger.partyLedger')}
+        subtitle={t('pages.finance.partyLedger.partyWiseAccountsClickToView')}
         actions={
           <Button
             type="button"
@@ -132,7 +132,7 @@ export function PartyLedgerPage() {
 
       <StatCardGrid>
         <StatCard
-          label="Total Parties"
+          label={t('pages.finance.partyLedger.totalParties')}
           value={summaries.length}
           sublabel="With job card activity"
         />
@@ -187,8 +187,8 @@ export function PartyLedgerPage() {
         emptyState={
           <EmptyState
             icon={Search}
-            title="No parties yet"
-            description="Parties appear here once a job card is created for them."
+            title={t('pages.finance.partyLedger.noPartiesYet')}
+            description={t('pages.finance.partyLedger.partiesAppearHereOnceAJob')}
           />
         }
       />
@@ -258,8 +258,8 @@ function PartyLedgerDetailSheet({
               ) : !data || data.rows.length === 0 ? (
                 <EmptyState
                   icon={BookOpen}
-                  title="No activity yet"
-                  description="This party's job cards and payments will appear here."
+                  title={t('pages.finance.partyLedger.noActivityYet')}
+                  description={t('pages.finance.partyLedger.thisPartySJobCardsAnd')}
                 />
               ) : (
                 <table className="w-full min-w-[600px] text-sm">

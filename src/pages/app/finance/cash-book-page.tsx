@@ -63,8 +63,8 @@ export function CashBookPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Banknote}
-        title="Cash Book"
-        subtitle="Running cash position across every receipt and payment"
+        title={t('pages.finance.cashBook.cashBook')}
+        subtitle={t('pages.finance.cashBook.runningCashPositionAcrossEveryReceipt')}
         actions={
           <>
             <Button
@@ -110,8 +110,8 @@ export function CashBookPage() {
         emptyState={
           <EmptyState
             icon={Search}
-            title="No entries in this range"
-            description="Receipts and payments recorded here will appear in the cash book."
+            title={t('pages.finance.cashBook.noEntriesInThisRange')}
+            description={t('pages.finance.cashBook.receiptsAndPaymentsRecordedHereWill')}
           />
         }
       />
