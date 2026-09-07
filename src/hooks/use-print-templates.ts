@@ -4,20 +4,63 @@ import {
   doc,
   getDocs,
   increment,
+  orderBy,
+  query,
   serverTimestamp,
   writeBatch,
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { printTemplatesCollection, printTemplateDoc } from '@/lib/firestore-paths'
+import {
+  printTemplatesCollection,
+  printTemplateDoc,
+  printTemplateVersionsCollection,
+  printTemplateVersionDoc,
+} from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import { printDocumentTypeLabel } from '@/config/print-fields'
-import type { PrintDocumentType, PrintTemplateDoc, PrintTemplateDocV1 } from '@/types/firestore'
+import type {
+  PrintDocumentType,
+  PrintTemplateDoc,
+  PrintTemplateDocV1,
+  PrintTemplateVersionDoc,
+} from '@/types/firestore'
 import { migratePrintTemplate } from '@/lib/print-migrate'
 import { buildTemplateFromPreset, missingPresets } from '@/lib/print-templates-seed'
 
 export interface PrintTemplateWithId extends PrintTemplateDoc {
   id: string
+}
+
+export interface PrintTemplateVersionWithId extends PrintTemplateVersionDoc {
+  id: string
+}
+
+export function printTemplateVersionsQueryKey(
+  companyId: string | undefined,
+  templateId: string | undefined
+) {
+  return ['printTemplateVersions', companyId, templateId] as const
+}
+
+/** Every superseded revision of one template, newest first. */
+export function usePrintTemplateVersions(templateId: string | undefined) {
+  const { profile } = useAuth()
+  const companyId = profile?.companyId
+
+  return useQuery({
+    queryKey: printTemplateVersionsQueryKey(companyId, templateId),
+    queryFn: async () => {
+      const snap = await getDocs(
+        query(
+          collection(db, printTemplateVersionsCollection(companyId!, templateId!)),
+          orderBy('version', 'desc')
+        )
+      )
+      return snap.docs.map((d) => ({ id: d.id, ...(d.data() as PrintTemplateVersionDoc) }))
+    },
+    enabled: !!companyId && !!templateId,
+  })
 }
 
 export function printTemplatesQueryKey(companyId: string | undefined) {
@@ -114,8 +157,29 @@ export function useUpdatePrintTemplate() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: PrintTemplateInput & { id: string }) => {
+    mutationFn: async (
+      input: PrintTemplateInput & { id: string; previous: PrintTemplateWithId }
+    ) => {
       const batch = writeBatch(db)
+
+      // Snapshot the outgoing revision in the same batch, so history can never record a version
+      // that wasn't actually replaced — and never miss one that was.
+      const previous = input.previous
+      const snapshot: PrintTemplateVersionDoc = {
+        version: previous.version,
+        name: previous.name,
+        presetKey: previous.presetKey,
+        paper: previous.paper,
+        margins: previous.margins,
+        settings: previous.settings,
+        bandHeights: previous.bandHeights,
+        elements: previous.elements,
+        supersededById: user!.uid,
+        supersededByName: profile!.fullName,
+        supersededAt: serverTimestamp() as never,
+      }
+      batch.set(doc(db, printTemplateVersionDoc(companyId, input.id, previous.version)), snapshot)
+
       batch.update(doc(db, printTemplateDoc(companyId, input.id)), {
         schemaVersion: 2,
         name: input.name,
@@ -140,7 +204,12 @@ export function useUpdatePrintTemplate() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: printTemplatesQueryKey(companyId) }),
+    onSuccess: (_data, input) => {
+      void queryClient.invalidateQueries({ queryKey: printTemplatesQueryKey(companyId) })
+      void queryClient.invalidateQueries({
+        queryKey: printTemplateVersionsQueryKey(companyId, input.id),
+      })
+    },
   })
 }
 

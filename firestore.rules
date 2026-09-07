@@ -478,6 +478,26 @@ service cloud.firestore {
         // for a type, and Add Missing Defaults restores any seed from the catalogue, so a
         // deletion here is always recoverable.
         allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'settings/print-formats');
+
+        // ---- .../versions/{version} — superseded revisions of this template ------------------
+        // Append-only by design: a version is written in the same batch as the save that
+        // supersedes it, and nothing may rewrite or remove it afterwards. History that can be
+        // edited is not history, and the whole point of the collection is to be the record of
+        // what a template used to look like. Restoring an old revision goes through a normal
+        // template `update`, which appends a new version rather than deleting any.
+        //
+        // A side effect worth knowing: because the document id *is* the outgoing version number,
+        // two tabs that both loaded v3 and both save will race, and the second one's write to
+        // versions/3 is an update rather than a create, so its whole batch is rejected. That is
+        // the safer outcome — the alternative is the second save silently overwriting the first
+        // — but the shopkeeper sees a permission error rather than "someone else saved this
+        // first", so it reads as a bug until you know why.
+        match /versions/{version} {
+          allow read: if belongsToCompany(companyId);
+          allow create: if belongsToCompany(companyId) &&
+            hasMenuAccess(companyId, 'settings/print-formats');
+          allow update, delete: if false;
+        }
       }
 
       // ---- companies/{companyId}/whatsappConfig/{docId} --------------------------------------

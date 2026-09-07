@@ -1018,6 +1018,36 @@ export interface PrintTemplateDoc {
   updatedAt: Timestamp
 }
 
+/**
+ * `companies/{companyId}/printTemplates/{templateId}/versions/{version}` — one superseded
+ * revision of a template.
+ *
+ * Written in the same batch as the update that replaces it, holding the state being *overwritten*
+ * rather than the new state. That ordering is deliberate: `version` is bumped with
+ * `increment(1)`, so the client never learns the resulting number and could not address a
+ * snapshot of the new state. The outgoing version number is known exactly, so history is keyed
+ * by it and the live document is always the current revision.
+ *
+ * Only the design payload is kept. `isDefault`, `isActive` and `protected` are properties of the
+ * template's role in the shop rather than of a design, and restoring an old layout should not
+ * also resurrect which document type was the default three weeks ago.
+ */
+export interface PrintTemplateVersionDoc {
+  version: number
+  name: string
+  presetKey: string | null
+  paper: PrintPaper
+  margins: PrintMargins
+  settings: PrintSettings
+  bandHeights: Record<PrintBand, number>
+  elements: PrintElement[]
+  /** Who made the change that *superseded* this revision, and when — which is the question a
+   * history list is actually asked ("who changed this, and when did it stop being live?"). */
+  supersededById: string
+  supersededByName: string
+  supersededAt: Timestamp
+}
+
 /** What a v1 document looks like on disk, for the migration path only. */
 export interface PrintTemplateDocV1 {
   schemaVersion?: undefined

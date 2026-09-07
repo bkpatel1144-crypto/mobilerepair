@@ -117,6 +117,10 @@ export const printTemplatesCollection = (companyId: string) =>
   `companies/${companyId}/printTemplates`
 export const printTemplateDoc = (companyId: string, id: string) =>
   `${printTemplatesCollection(companyId)}/${id}`
+export const printTemplateVersionsCollection = (companyId: string, templateId: string) =>
+  `${printTemplateDoc(companyId, templateId)}/versions`
+export const printTemplateVersionDoc = (companyId: string, templateId: string, version: number) =>
+  `${printTemplateVersionsCollection(companyId, templateId)}/${version}`
 export const backupsCollection = (companyId: string) => `companies/${companyId}/backups`
 export const backupDoc = (companyId: string, id: string) => `${backupsCollection(companyId)}/${id}`
 export const archivesCollection = (companyId: string) => `companies/${companyId}/archives`

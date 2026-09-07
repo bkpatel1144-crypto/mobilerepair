@@ -28,6 +28,7 @@ import {
   Download,
   MoreVertical,
   Star,
+  History,
   Ruler,
   RotateCcw,
 } from 'lucide-react'
@@ -40,6 +41,9 @@ import { Switch } from '@/components/ui/switch'
 import { RouteFallback } from '@/components/shared/route-fallback'
 import { ErrorState } from '@/components/shared/error-state'
 import { EmptyState } from '@/components/shared/empty-state'
+import { DetailDrawer } from '@/components/shared/detail-drawer'
+import { Skeleton } from '@/components/ui/skeleton'
+import { formatDateTimeLong } from '@/lib/utils'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import {
   DropdownMenu,
@@ -50,6 +54,8 @@ import {
 import {
   usePrintTemplates,
   useUpdatePrintTemplate,
+  usePrintTemplateVersions,
+  type PrintTemplateVersionWithId,
   useSetDefaultPrintTemplate,
   useDuplicatePrintTemplate,
 } from '@/hooks/use-print-templates'
@@ -102,6 +108,7 @@ export function PrintTemplateDesignerPage() {
   const update = useUpdatePrintTemplate()
   const setDefault = useSetDefaultPrintTemplate()
   const duplicate = useDuplicatePrintTemplate()
+  const versions = usePrintTemplateVersions(templateId)
 
   const template = templates.find((t) => t.id === templateId) ?? null
 
@@ -114,6 +121,7 @@ export function PrintTemplateDesignerPage() {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [pageSetupOpen, setPageSetupOpen] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
+  const [historyOpen, setHistoryOpen] = useState(false)
 
   const state = useDesignerState(
     template
@@ -195,8 +203,26 @@ export function PrintTemplateDesignerPage() {
       settings: draft.settings,
       bandHeights: draft.bandHeights,
       elements: draft.elements,
+      previous: template!,
     })
     state.markSaved()
+  }
+
+  /** Loads an old revision into the editor as unsaved changes rather than writing it straight
+   * back, so the shopkeeper can look at what they are about to restore before committing to it.
+   * Routed through `commit`, which means Ctrl+Z undoes a restore like any other edit, and saving
+   * afterwards goes through the same snapshot path — so the revision it replaces is itself
+   * recorded and nothing is ever lost. */
+  function restoreVersion(v: PrintTemplateVersionWithId) {
+    state.commit({
+      name: v.name,
+      paper: v.paper,
+      margins: v.margins,
+      settings: v.settings,
+      bandHeights: v.bandHeights,
+      elements: v.elements,
+    })
+    setHistoryOpen(false)
   }
 
   function html() {
@@ -266,6 +292,13 @@ export function PrintTemplateDesignerPage() {
               <DropdownMenuItem onClick={() => setPageSetupOpen(true)}>
                 <Ruler />
                 Page Setup
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setHistoryOpen(true)}>
+                <History />
+                Version History
+                {versions.data && versions.data.length > 0 && (
+                  <span className="ml-auto text-xs text-muted-foreground">v{template.version}</span>
+                )}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -780,6 +813,61 @@ export function PrintTemplateDesignerPage() {
           setConfirmReset(false)
         }}
       />
+
+      <DetailDrawer
+        open={historyOpen}
+        onOpenChange={setHistoryOpen}
+        icon={History}
+        title="Version History"
+        subtitle={`${template.name} — currently on v${template.version}`}
+      >
+        {versions.isLoading ? (
+          <div className="space-y-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} className="h-16 w-full" />
+            ))}
+          </div>
+        ) : versions.error ? (
+          <ErrorState error={versions.error} onRetry={() => void versions.refetch()} />
+        ) : !versions.data?.length ? (
+          <EmptyState
+            icon={History}
+            title="No earlier versions yet"
+            description="A version is recorded each time you save a change, so the layout you had before is always recoverable."
+          />
+        ) : (
+          <ol className="space-y-2">
+            {versions.data.map((v) => (
+              <li key={v.id} className="rounded-xl border p-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-md bg-muted px-2 py-0.5 font-mono text-xs">
+                    v{v.version}
+                  </span>
+                  <span className="font-medium">{v.name}</span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="ml-auto"
+                    onClick={() => restoreVersion(v)}
+                  >
+                    <Undo2 className="size-4" />
+                    Restore
+                  </Button>
+                </div>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  {v.elements.length} element{v.elements.length === 1 ? '' : 's'} · {v.paper.width}×
+                  {v.paper.height}
+                  {v.paper.unit}
+                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Replaced by {v.supersededByName} · {formatDateTimeLong(v.supersededAt)}
+                </p>
+              </li>
+            ))}
+          </ol>
+        )}
+      </DetailDrawer>
 
       <ConfirmDialog
         open={confirmBack}
