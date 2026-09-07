@@ -122,3 +122,26 @@ export function cashBook<T extends CashEntry>(
 
   return { opening, totalCredit, totalDebit, closing: running, rows }
 }
+
+/** What one job card has actually taken in and paid back out.
+ *
+ * Computed from the job's own receipts rather than from `JobCardDoc.paidAmount`, which is
+ * *already* net of refunds (`useCreateReceiptOrPayment` increments it by a negative amount for
+ * an outgoing payment). Reading `paidAmount` as a gross figure and then subtracting refunds from
+ * it as well removed them twice and understated every refund the shop owed. Deriving all three
+ * numbers from one source also guarantees the row a user reads adds up: received minus refunded
+ * is the amount due, on screen and in the totals.
+ */
+export function jobMoney(receipts: readonly { direction: 'in' | 'out'; amount: number }[]): {
+  totalReceived: number
+  alreadyRefunded: number
+  amountDue: number
+} {
+  let totalReceived = 0
+  let alreadyRefunded = 0
+  for (const r of receipts) {
+    if (r.direction === 'in') totalReceived += r.amount
+    else alreadyRefunded += r.amount
+  }
+  return { totalReceived, alreadyRefunded, amountDue: totalReceived - alreadyRefunded }
+}

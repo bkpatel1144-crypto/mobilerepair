@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { withRunningBalance, ledgerTotals, partyBalance, cashBook } from './ledger-math'
+import { withRunningBalance, ledgerTotals, partyBalance, cashBook, jobMoney } from './ledger-math'
 
 const d = (iso: string) => new Date(iso)
 
@@ -171,5 +171,57 @@ describe('cashBook', () => {
     // signs answer different questions and swapping them was the bug this file exists to prevent.
     expect(withRunningBalance([bill('2026-04-01', 1000)])[0].runningBalance).toBe(1000)
     expect(cashBook([cashOut('2026-04-01', 1000)]).closing).toBe(-1000)
+  })
+})
+
+const rIn = (amount: number) => ({ direction: 'in' as const, amount })
+const rOut = (amount: number) => ({ direction: 'out' as const, amount })
+
+describe('jobMoney', () => {
+  it('reports the full advance as due when nothing has been refunded', () => {
+    expect(jobMoney([rIn(1000)])).toEqual({
+      totalReceived: 1000,
+      alreadyRefunded: 0,
+      amountDue: 1000,
+    })
+  })
+
+  it('takes a partial refund off exactly once', () => {
+    // The bug: Payables read `job.paidAmount` (already ₹600 after the refund) as the gross
+    // received and subtracted the ₹400 again, reporting ₹200 owed instead of ₹600.
+    expect(jobMoney([rIn(1000), rOut(400)])).toEqual({
+      totalReceived: 1000,
+      alreadyRefunded: 400,
+      amountDue: 600,
+    })
+  })
+
+  it('leaves nothing due once the advance is fully refunded', () => {
+    expect(jobMoney([rIn(1000), rOut(1000)]).amountDue).toBe(0)
+  })
+
+  it('goes negative on an over-refund so the caller can reject the row', () => {
+    // Payables drops any row with `amountDue <= 0`. Surfacing the negative rather than clamping
+    // it keeps that decision at the call site, where the ₹0 case is dropped for the same reason.
+    expect(jobMoney([rIn(500), rOut(800)]).amountDue).toBe(-300)
+  })
+
+  it('adds up multiple payments and multiple refunds', () => {
+    expect(jobMoney([rIn(500), rIn(300), rOut(100), rOut(50)])).toEqual({
+      totalReceived: 800,
+      alreadyRefunded: 150,
+      amountDue: 650,
+    })
+  })
+
+  it('always has received minus refunded equal to the amount due', () => {
+    // The three numbers appear on one row on screen; a user checking the arithmetic must find
+    // it correct.
+    const m = jobMoney([rIn(1000), rIn(250), rOut(400)])
+    expect(m.totalReceived - m.alreadyRefunded).toBe(m.amountDue)
+  })
+
+  it('is all zeroes for a job with no receipts', () => {
+    expect(jobMoney([])).toEqual({ totalReceived: 0, alreadyRefunded: 0, amountDue: 0 })
   })
 })
