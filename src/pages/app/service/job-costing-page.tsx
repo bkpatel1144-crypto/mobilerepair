@@ -96,7 +96,7 @@ export function JobCostingPage() {
     },
     {
       key: 'costing',
-      header: 'Costing',
+      header: t('pages.service.jobCosting.costing'),
       render: (j) =>
         costingByJobId.has(j.id) ? (
           <StatusBadge status="Recorded" tone="success" />
@@ -110,7 +110,7 @@ export function JobCostingPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Calculator}
-        title="Job Costing"
+        title={t('pages.service.jobCosting.jobCosting')}
         subtitle="Closed jobs — record actual parts, labor & overhead costs"
       />
 
@@ -149,8 +149,8 @@ export function JobCostingPage() {
         emptyState={
           <EmptyState
             icon={Calculator}
-            title="No closed jobs yet"
-            description="Closed job cards ready for costing will show up here."
+            title={t('pages.service.jobCosting.noClosedJobsYet')}
+            description={t('pages.service.jobCosting.closedJobCardsReadyForCosting')}
           />
         }
       />
@@ -194,7 +194,7 @@ export function JobCostingPage() {
           selectedJob
             ? [
                 {
-                  title: 'Job Details',
+                  title: t('pages.service.jobCosting.jobDetails'),
                   rows: [
                     { label: t('common.customer'), value: selectedJob.customerName },
                     { label: t('common.technician'), value: selectedJob.assignedToName ?? '—' },
@@ -209,13 +209,16 @@ export function JobCostingPage() {
                   ],
                 },
                 {
-                  title: 'Financial',
+                  title: t('pages.service.jobCosting.financial'),
                   rows: [
                     {
                       label: t('common.revenue'),
                       value: `₹${selectedJob.finalAmount ?? selectedJob.estimatedCost}`,
                     },
-                    { label: 'Advance Paid', value: `₹${selectedJob.advanceReceived}` },
+                    {
+                      label: t('pages.service.jobCosting.advancePaid'),
+                      value: `₹${selectedJob.advanceReceived}`,
+                    },
                   ],
                 },
               ]

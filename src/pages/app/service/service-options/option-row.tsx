@@ -120,7 +120,7 @@ export function OptionRow({
         open={confirmingDelete}
         onOpenChange={setConfirmingDelete}
         title={`Delete "${option.label}"?`}
-        message="Job cards or catalog entries already referencing this will keep a reference to something that no longer exists. This cannot be undone."
+        message={t('pages.service.optionRow.jobCardsOrCatalogEntriesAlready')}
         confirmLabel={t('common.delete')}
         onConfirm={() => {
           onDelete()

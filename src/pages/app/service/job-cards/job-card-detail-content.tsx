@@ -134,10 +134,12 @@ export function JobCardDetailContent({
 
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="space-y-4">
-          <Panel icon={ClipboardList} title="Items at Intake">
+          <Panel icon={ClipboardList} title={t('pages.service.jobCardDetailContent.itemsAtIntake')}>
             <div className="space-y-2">
               <div>
-                <p className="mb-1 text-xs text-muted-foreground uppercase">Received at Intake</p>
+                <p className="mb-1 text-xs text-muted-foreground uppercase">
+                  {t('pages.service.jobCardDetailContent.receivedAtIntake')}
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {job.itemsReceived.length === 0 && (
                     <span className="text-sm text-muted-foreground">—</span>
@@ -148,7 +150,9 @@ export function JobCardDetailContent({
                 </div>
               </div>
               <div>
-                <p className="mb-1 text-xs text-muted-foreground uppercase">Returned at Intake</p>
+                <p className="mb-1 text-xs text-muted-foreground uppercase">
+                  {t('pages.service.jobCardDetailContent.returnedAtIntake')}
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {job.itemsReturned.length === 0 && (
                     <span className="text-sm text-muted-foreground">—</span>
@@ -190,7 +194,10 @@ export function JobCardDetailContent({
             </dl>
           </Panel>
 
-          <Panel icon={AlertTriangle} title="Problem Reported">
+          <Panel
+            icon={AlertTriangle}
+            title={t('pages.service.jobCardDetailContent.problemReported')}
+          >
             <div className="flex flex-wrap gap-1.5">
               {job.problemLabels.map((label) => (
                 <span
@@ -209,7 +216,7 @@ export function JobCardDetailContent({
             )}
           </Panel>
 
-          <Panel icon={UserRound} title="Assignment">
+          <Panel icon={UserRound} title={t('pages.service.jobCardDetailContent.assignment')}>
             <div className="flex items-center gap-2">
               <span className="flex size-8 items-center justify-center rounded-full bg-teal-600 text-xs font-semibold text-white">
                 {(job.assignedToName ?? '—').slice(0, 2).toUpperCase()}
@@ -245,7 +252,9 @@ export function JobCardDetailContent({
             <Panel icon={IndianRupee} title={t('common.payment')}>
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
                 <div>
-                  <dt className="text-xs text-muted-foreground uppercase">Estimated</dt>
+                  <dt className="text-xs text-muted-foreground uppercase">
+                    {t('pages.service.jobCardDetailContent.estimated')}
+                  </dt>
                   <dd>₹{job.estimatedCost}</dd>
                 </div>
                 <div>
@@ -268,7 +277,9 @@ export function JobCardDetailContent({
                 </div>
               </dl>
               <div className="flex justify-between border-t pt-2 text-sm">
-                <span className="text-muted-foreground">Parts Cost</span>
+                <span className="text-muted-foreground">
+                  {t('pages.service.jobCardDetailContent.partsCost')}
+                </span>
                 <span>₹{job.partsCost}</span>
               </div>
               {job.finalAmount != null && (
@@ -296,7 +307,9 @@ export function JobCardDetailContent({
                 </div>
               ))}
               {job.partsUsed.length === 0 && (
-                <p className="text-sm text-muted-foreground">No parts used yet.</p>
+                <p className="text-sm text-muted-foreground">
+                  {t('pages.service.jobCardDetailContent.noPartsUsedYet')}
+                </p>
               )}
             </div>
             {canPerform('addPart') &&
@@ -314,7 +327,7 @@ export function JobCardDetailContent({
                       const item = partOptions.find((i) => i.id === id)
                       if (item?.sellingPrice) setPartRate(item.sellingPrice)
                     }}
-                    placeholder="Search part..."
+                    placeholder={t('pages.service.jobCardDetailContent.searchPart')}
                     onCreateNew={(name) =>
                       createItem.mutate(
                         { name, type: 'part', itemCode: nextItemCode(items, 'part') },
@@ -383,9 +396,11 @@ export function JobCardDetailContent({
               ))}
           </Panel>
 
-          <Panel icon={ImageIcon} title="Images">
+          <Panel icon={ImageIcon} title={t('pages.service.jobCardDetailContent.images')}>
             {job.imageUrls.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No images uploaded</p>
+              <p className="text-sm text-muted-foreground">
+                {t('pages.service.jobCardDetailContent.noImagesUploaded')}
+              </p>
             ) : (
               <div className="grid grid-cols-3 gap-2">
                 {job.imageUrls.map((url) => (
@@ -421,7 +436,7 @@ export function JobCardDetailContent({
               onClick={() => setNotesOpen((o) => !o)}
               className="flex w-full items-center justify-between text-sm"
             >
-              <span className="sr-only">Toggle notes</span>
+              <span className="sr-only">{t('pages.service.jobCardDetailContent.toggleNotes')}</span>
               {notesOpen ? (
                 <ChevronUp className="ml-auto size-4" />
               ) : (
@@ -464,7 +479,7 @@ export function JobCardDetailContent({
           setNoteOpen(o)
           if (!o) setNoteText('')
         }}
-        title="Add Note"
+        title={t('pages.service.jobCardDetailContent.addNote')}
         submitLabel="Add Note"
         isSubmitting={applyAction.isPending}
         onSubmit={(e) => {
@@ -476,7 +491,7 @@ export function JobCardDetailContent({
         }}
       >
         <div className="space-y-1.5">
-          <Label>Note</Label>
+          <Label>{t('pages.service.jobCardDetailContent.note')}</Label>
           <Textarea
             value={noteText}
             onChange={(e) => setNoteText(e.target.value)}

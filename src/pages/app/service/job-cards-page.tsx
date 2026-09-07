@@ -160,7 +160,7 @@ export function JobCardsPage() {
     },
     {
       key: 'deliveredBy',
-      header: 'Delivered / Returned By',
+      header: t('pages.service.jobCards.deliveredReturnedBy'),
       hideOnMobile: true,
       render: (j) => j.deliveredByName ?? j.returnedByName ?? '—',
     },
@@ -176,7 +176,7 @@ export function JobCardsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         title={`${profile?.roleName ?? ''} — Jobs`}
-        subtitle="Click a status card to filter"
+        subtitle={t('pages.service.jobCards.clickAStatusCardToFilter')}
         actions={
           <>
             <Button
@@ -257,7 +257,11 @@ export function JobCardsPage() {
               Assigned To
             </p>
             <div className="max-h-56 space-y-0.5 overflow-y-auto">
-              {users.length === 0 && <p className="text-sm text-muted-foreground">No users yet.</p>}
+              {users.length === 0 && (
+                <p className="text-sm text-muted-foreground">
+                  {t('pages.service.jobCards.noUsersYet')}
+                </p>
+              )}
               {users.map((u) => {
                 const checked = assignedToFilter.includes(u.id)
                 return (
@@ -323,7 +327,7 @@ export function JobCardsPage() {
           <EmptyState
             icon={ClipboardCheck}
             title={t('shared.noJobCardsFound')}
-            description="Create your first job card to get started."
+            description={t('pages.service.jobCards.createYourFirstJobCardTo')}
           />
         }
       />

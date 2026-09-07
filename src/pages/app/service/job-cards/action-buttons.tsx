@@ -339,7 +339,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         open={confirmingUndo}
         onOpenChange={setConfirmingUndo}
         title={`Undo "${job.lastActionUndo?.actionLabel}"?`}
-        message="This reverts the job's own fields to before that action and permanently deletes its timeline entry — the audit trail for this specific action is erased, not just hidden."
+        message={t('pages.service.actionButtons.thisRevertsTheJobSOwn')}
         confirmLabel={t('shared.undo')}
         isPending={undoLastAction.isPending}
         onConfirm={() =>
@@ -373,16 +373,16 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'hold'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Hold Job"
+        title={t('pages.service.actionButtons.holdJob')}
         onSubmit={submitDialog}
         submitLabel="Hold"
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">
-          <Label>Reason</Label>
+          <Label>{t('pages.service.actionButtons.reason')}</Label>
           <Select value={reasonInput} onValueChange={(v) => v && setReasonInput(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a reason..." />
+              <SelectValue placeholder={t('pages.service.actionButtons.selectAReason')} />
             </SelectTrigger>
             <SelectContent>
               {options?.holdReasons.map((r) => (
@@ -398,16 +398,16 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'cancel'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Cancel Job"
+        title={t('pages.service.actionButtons.cancelJob')}
         onSubmit={submitDialog}
         submitLabel="Cancel Job"
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">
-          <Label>Reason</Label>
+          <Label>{t('pages.service.actionButtons.reason')}</Label>
           <Select value={reasonInput} onValueChange={(v) => v && setReasonInput(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a reason..." />
+              <SelectValue placeholder={t('pages.service.actionButtons.selectAReason')} />
             </SelectTrigger>
             <SelectContent>
               {options?.cancelReasons.map((r) => (
@@ -423,7 +423,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'jobDone'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Mark Job Done"
+        title={t('pages.service.actionButtons.markJobDone')}
         onSubmit={submitDialog}
         submitLabel="Job Done"
         isSubmitting={applyAction.isPending}
@@ -438,7 +438,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           <Textarea
             value={descriptionInput}
             onChange={(e) => setDescriptionInput(e.target.value)}
-            placeholder="What was done..."
+            placeholder={t('pages.service.actionButtons.whatWasDone')}
             rows={3}
           />
         </div>
@@ -447,7 +447,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'generateBill'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Generate Bill"
+        title={t('pages.service.actionButtons.generateBill')}
         onSubmit={submitDialog}
         submitLabel="Generate Bill"
         isSubmitting={applyAction.isPending || recordPayment.isPending}
@@ -537,16 +537,16 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'handover'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Handover"
+        title={t('pages.service.actionButtons.handover')}
         onSubmit={submitDialog}
         submitLabel="Handover"
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">
-          <Label>Handover to</Label>
+          <Label>{t('pages.service.actionButtons.handoverTo')}</Label>
           <Select value={handoverToId} onValueChange={(v) => v && setHandoverToId(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select user..." />
+              <SelectValue placeholder={t('pages.service.actionButtons.selectUser')} />
             </SelectTrigger>
             <SelectContent>
               {users.map((u) => (
@@ -562,7 +562,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'fieldVisit'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Log Field Visit"
+        title={t('pages.service.actionButtons.logFieldVisit')}
         onSubmit={submitDialog}
         submitLabel="Log Visit"
         isSubmitting={applyAction.isPending}
@@ -590,7 +590,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             <Textarea
               value={descriptionInput}
               onChange={(e) => setDescriptionInput(e.target.value)}
-              placeholder="What was done on-site..."
+              placeholder={t('pages.service.actionButtons.whatWasDoneOnSite')}
               rows={2}
             />
           </div>

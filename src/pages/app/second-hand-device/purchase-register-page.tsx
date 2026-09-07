@@ -105,8 +105,8 @@ export function PurchaseRegisterPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={ClipboardList}
-        title="Purchase Register"
-        subtitle="All device purchases — filter, search and export"
+        title={t('pages.secondHandDevice.purchaseRegister.purchaseRegister')}
+        subtitle={t('pages.secondHandDevice.purchaseRegister.allDevicePurchasesFilterSearchAnd')}
         actions={
           <>
             <Button
@@ -146,7 +146,10 @@ export function PurchaseRegisterPage() {
 
       <StatCardGrid>
         <StatCard label="Purchases (₹)" value={`₹${totalPurchases}`} />
-        <StatCard label="Purchases" value={filtered.length} />
+        <StatCard
+          label={t('pages.secondHandDevice.purchaseRegister.purchases')}
+          value={filtered.length}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -161,7 +164,9 @@ export function PurchaseRegisterPage() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Device Types</SelectItem>
+            <SelectItem value="all">
+              {t('pages.secondHandDevice.purchaseRegister.allDeviceTypes')}
+            </SelectItem>
             {(options?.deviceTypes ?? []).map((dt) => (
               <SelectItem key={dt.id} value={dt.id}>
                 {dt.label}
@@ -194,8 +199,10 @@ export function PurchaseRegisterPage() {
         emptyState={
           <EmptyState
             icon={ClipboardList}
-            title="No purchases found"
-            description="Purchases recorded from Device Purchase will appear here."
+            title={t('pages.secondHandDevice.purchaseRegister.noPurchasesFound')}
+            description={t(
+              'pages.secondHandDevice.purchaseRegister.purchasesRecordedFromDevicePurchaseWill'
+            )}
           />
         }
       />

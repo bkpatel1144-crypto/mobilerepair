@@ -112,8 +112,8 @@ export function DeviceSalePage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={ShoppingBag}
-        title="Device Sale"
-        subtitle="Sell devices from stock to a buyer"
+        title={t('pages.secondHandDevice.deviceSale.deviceSale')}
+        subtitle={t('pages.secondHandDevice.deviceSale.sellDevicesFromStockToA')}
         actions={
           <Button
             type="button"
@@ -132,7 +132,7 @@ export function DeviceSalePage() {
 
       <StatCardGrid>
         <StatCard
-          label="Available to Sell"
+          label={t('pages.secondHandDevice.deviceSale.availableToSell')}
           value={availableToSell.length}
           icon={ShoppingBag}
           tone="success"
@@ -145,7 +145,7 @@ export function DeviceSalePage() {
         />
         <StatCard label={t('common.sold')} icon={Truck} value={sold.length} tone="info" />
         <StatCard
-          label="Total Profit"
+          label={t('pages.secondHandDevice.deviceSale.totalProfit')}
           value={`₹${totalProfit}`}
           icon={DollarSign}
           tone={totalProfit >= 0 ? 'success' : 'danger'}
@@ -171,8 +171,8 @@ export function DeviceSalePage() {
         emptyState={
           <EmptyState
             icon={ShoppingBag}
-            title="Nothing available to sell"
-            description="Devices you purchase show up here once in stock."
+            title={t('pages.secondHandDevice.deviceSale.nothingAvailableToSell')}
+            description={t('pages.secondHandDevice.deviceSale.devicesYouPurchaseShowUpHere')}
           />
         }
       />
@@ -278,7 +278,7 @@ function SellDeviceModal({
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label>Buyer *</Label>
+            <Label>{t('pages.secondHandDevice.deviceSale.buyer')}</Label>
             <SearchSelect
               options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
               value={buyerId}
@@ -286,12 +286,12 @@ function SellDeviceModal({
                 setBuyerId(id)
                 if (id) setQuickAddBuyer(null)
               }}
-              placeholder="Search buyer..."
+              placeholder={t('pages.secondHandDevice.deviceSale.searchBuyer')}
               onCreateNew={(query) => setQuickAddBuyer({ name: query, mobile: '' })}
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="salePrice">Sale Price *</Label>
+            <Label htmlFor="salePrice">{t('pages.secondHandDevice.deviceSale.salePrice')}</Label>
             <Input
               id="salePrice"
               type="number"
@@ -306,7 +306,7 @@ function SellDeviceModal({
             <Input
               value={quickAddBuyer.name}
               onChange={(e) => setQuickAddBuyer({ ...quickAddBuyer, name: e.target.value })}
-              placeholder="Buyer name"
+              placeholder={t('pages.secondHandDevice.deviceSale.buyerName')}
               className="h-8 text-sm"
             />
             <Input
@@ -352,7 +352,7 @@ function SellDeviceModal({
         </div>
 
         <div className="space-y-1.5">
-          <Label>Accessories Given to Buyer</Label>
+          <Label>{t('pages.secondHandDevice.deviceSale.accessoriesGivenToBuyer')}</Label>
           <Input
             value={accessoriesGiven}
             onChange={(e) => setAccessoriesGiven(e.target.value)}

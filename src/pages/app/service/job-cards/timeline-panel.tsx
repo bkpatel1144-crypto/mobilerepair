@@ -21,6 +21,7 @@ import { ErrorState } from '@/components/shared/error-state'
 import { formatTimestamp } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import type { TimelineEventWithId } from '@/hooks/use-job-cards'
+import { useTranslation } from 'react-i18next'
 
 const EVENT_ICONS: Record<string, LucideIcon> = {
   created: Plus,
@@ -54,6 +55,7 @@ export function TimelinePanel({
   error?: unknown
   onRetry?: () => void
 }) {
+  const { t } = useTranslation()
   return (
     <div className="space-y-1">
       <div className="flex items-center gap-1.5 text-sm font-semibold">
@@ -67,11 +69,13 @@ export function TimelinePanel({
         <ErrorState
           error={error}
           onRetry={onRetry}
-          title="Couldn't load the timeline"
+          title={t('pages.service.timelinePanel.couldnTLoadTheTimeline')}
           className="py-6"
         />
       ) : events.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No activity yet.</p>
+        <p className="text-sm text-muted-foreground">
+          {t('pages.service.timelinePanel.noActivityYet')}
+        </p>
       ) : (
         <ol className="space-y-4 border-l pl-4">
           {events.map((event) => {

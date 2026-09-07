@@ -603,6 +603,198 @@
         "decimalPlaces": "दशमलव स्थान",
         "displayOrder": "दिखाने का क्रम"
       }
+    },
+    "secondHandDevice": {
+      "createPurchase": {
+        "couldnTLoadThePurchaseForm": "खरीद फ़ॉर्म लोड नहीं हो सका",
+        "searchSellerByNameOrMobile": "विक्रेता को नाम या मोबाइल से खोजें...",
+        "sellerName": "विक्रेता का नाम",
+        "buySecondHandDevice": "सेकंड हैंड डिवाइस खरीदें",
+        "noPatternDrawn": "कोई पैटर्न नहीं बनाया",
+        "notChecked": "जाँचा नहीं",
+        "cleanNoLock": "साफ़ — कोई लॉक नहीं",
+        "addPhotos": "तस्वीरें जोड़ें",
+        "idProofType": "पहचान पत्र का प्रकार",
+        "notCaptured": "लिया नहीं",
+        "aadhaar": "आधार",
+        "panCard": "PAN कार्ड",
+        "drivingLicence": "ड्राइविंग लाइसेंस",
+        "voterId": "वोटर ID",
+        "dateOfPurchase": "खरीद की तारीख",
+        "paidInFull": "पूरा भुगतान हो गया।",
+        "whoeverIsLoggedIn": "जो भी लॉग इन है"
+      },
+      "devicePurchase": {
+        "devicePurchase": "डिवाइस खरीद",
+        "totalPurchased": "कुल खरीदे",
+        "returned": "वापस किए",
+        "noPurchasesYet": "अभी कोई खरीद नहीं",
+        "recordYourFirstDevicePurchaseAbove": "ऊपर अपनी पहली डिवाइस खरीद दर्ज करें।",
+        "thisIsATerminalStatusThe": "यह अंतिम स्थिति है — इसके बाद खरीद में बदलाव, मरम्मत में भेजना या बेचना नहीं हो सकेगा। खरीद कीमत की वापसी या उलट-फेर अपने आप दर्ज नहीं होती।",
+        "returnToSeller": "विक्रेता को वापस करें",
+        "accessoriesIncluded": "साथ मिली चीज़ें",
+        "conditionNotes": "हालत की टिप्पणी"
+      },
+      "deviceSale": {
+        "deviceSale": "डिवाइस विक्रय",
+        "sellDevicesFromStockToA": "स्टॉक से डिवाइस खरीदार को बेचें",
+        "availableToSell": "बेचने के लिए उपलब्ध",
+        "totalProfit": "कुल लाभ",
+        "nothingAvailableToSell": "बेचने के लिए कुछ उपलब्ध नहीं",
+        "devicesYouPurchaseShowUpHere": "आपकी खरीदी डिवाइस स्टॉक में आने पर यहाँ दिखेंगी।",
+        "searchBuyer": "खरीदार खोजें...",
+        "buyerName": "खरीदार का नाम",
+        "buyer": "खरीदार *",
+        "salePrice": "विक्रय कीमत *",
+        "accessoriesGivenToBuyer": "खरीदार को दी गई चीज़ें"
+      },
+      "deviceStock": {
+        "deviceStock": "डिवाइस स्टॉक",
+        "secondHandDevicesCurrentlyInStock": "अभी स्टॉक में मौजूद सेकंड हैंड डिवाइस — लगाई रकम और पुरानापन",
+        "totalInvested": "कुल लगाई रकम",
+        "noDevicesInStock": "स्टॉक में कोई डिवाइस नहीं",
+        "devicesYouPurchaseWillShowUp": "आपकी खरीदी डिवाइस बिकने तक यहाँ दिखेंगी।",
+        "daysInStock": "स्टॉक में दिन"
+      },
+      "purchaseDetailSections": {
+        "device": "डिवाइस",
+        "type": "प्रकार",
+        "brand": "ब्रांड",
+        "model": "मॉडल",
+        "purchasedOn": "खरीद की तारीख",
+        "imeiSerial": "IMEI / सीरियल",
+        "condition": "हालत",
+        "purchasePrice": "खरीद कीमत",
+        "paymentMode": "भुगतान का तरीका",
+        "purchasedBy": "खरीदने वाला",
+        "sale": "विक्रय",
+        "salePrice": "विक्रय कीमत",
+        "warranty": "वारंटी",
+        "purchased": "खरीदा",
+        "sold": "बिका"
+      },
+      "purchaseRegister": {
+        "purchaseRegister": "खरीद रजिस्टर",
+        "allDevicePurchasesFilterSearchAnd": "सभी डिवाइस खरीद — फ़िल्टर, खोज और एक्सपोर्ट",
+        "purchases": "खरीद",
+        "noPurchasesFound": "कोई खरीद नहीं मिली",
+        "purchasesRecordedFromDevicePurchaseWill": "डिवाइस खरीद से दर्ज खरीद यहाँ दिखेंगी।",
+        "allDeviceTypes": "सभी डिवाइस प्रकार"
+      },
+      "saleRegister": {
+        "saleRegister": "विक्रय रजिस्टर",
+        "allDeviceSalesProfitMarginAnd": "सभी डिवाइस विक्रय — लाभ, मार्जिन और एक्सपोर्ट",
+        "sales": "विक्रय",
+        "noSalesYet": "अभी कोई विक्रय नहीं",
+        "devicesSoldFromDeviceSaleWill": "डिवाइस विक्रय से बेची गई डिवाइस यहाँ दिखेंगी।"
+      }
+    },
+    "service": {
+      "actionButtons": {
+        "thisRevertsTheJobSOwn": "यह जॉब के फ़ील्ड उस कार्रवाई से पहले की स्थिति में लौटा देता है और उसकी समय-रेखा प्रविष्टि हमेशा के लिए मिटा देता है — इस कार्रवाई का ऑडिट रिकॉर्ड छिपता नहीं, मिट जाता है।",
+        "holdJob": "जॉब रोकें",
+        "selectAReason": "कारण चुनें...",
+        "cancelJob": "जॉब रद्द करें",
+        "markJobDone": "जॉब पूर्ण करें",
+        "whatWasDone": "क्या किया गया...",
+        "generateBill": "बिल बनाएं",
+        "handover": "सौंपें",
+        "selectUser": "उपयोगकर्ता चुनें...",
+        "logFieldVisit": "फील्ड विज़िट दर्ज करें",
+        "whatWasDoneOnSite": "साइट पर क्या किया गया...",
+        "reason": "कारण",
+        "handoverTo": "किसे सौंपें"
+      },
+      "createJobCard": {
+        "couldnTLoadTheCreateJob": "जॉब कार्ड बनाने का फ़ॉर्म लोड नहीं हो सका",
+        "searchCustomerByNameOrMobile": "ग्राहक को नाम या मोबाइल से खोजें...",
+        "10DigitMobile": "10 अंकों का मोबाइल",
+        "scanImei": "IMEI स्कैन करें",
+        "scanSerialNo": "सीरियल नं. स्कैन करें",
+        "selectProblems": "समस्याएं चुनें...",
+        "addItemsFromCatalog": "सूची से आइटम जोड़ें",
+        "selectItemsReceivedWithDevice": "डिवाइस के साथ मिली चीज़ें चुनें...",
+        "selectItemsReturnedToCustomer": "ग्राहक को लौटाई चीज़ें चुनें...",
+        "searchUser": "उपयोगकर्ता खोजें...",
+        "anyAdditionalNoteAboutTheDevice": "डिवाइस / जॉब के बारे में कोई अतिरिक्त टिप्पणी...",
+        "clearThisDraft": "यह ड्राफ़्ट साफ़ करें?",
+        "everyFieldYouVeFilledIn": "अब तक भरा हुआ हर फ़ील्ड मिट जाएगा, अपने आप सहेजी गई नकल भी। यह पूर्ववत नहीं हो सकता।",
+        "clearDraft": "ड्राफ़्ट साफ़ करें",
+        "createJobCard": "जॉब कार्ड बनाएं"
+      },
+      "jobCardDetailContent": {
+        "itemsAtIntake": "लेते समय की चीज़ें",
+        "problemReported": "बताई गई समस्या",
+        "assignment": "सौंपना",
+        "searchPart": "पुर्ज़ा खोजें...",
+        "images": "तस्वीरें",
+        "addNote": "टिप्पणी जोड़ें",
+        "receivedAtIntake": "लेते समय मिला",
+        "returnedAtIntake": "लेते समय लौटाया",
+        "estimated": "अनुमानित",
+        "partsCost": "पुर्ज़ों की लागत",
+        "noPartsUsedYet": "अभी कोई पुर्ज़ा इस्तेमाल नहीं हुआ।",
+        "noImagesUploaded": "कोई तस्वीर अपलोड नहीं",
+        "toggleNotes": "टिप्पणियाँ दिखाएं/छिपाएं",
+        "note": "टिप्पणी"
+      },
+      "jobCardDetail": {
+        "couldnTLoadThisJobCard": "यह जॉब कार्ड लोड नहीं हो सका",
+        "jobCardNotFound": "जॉब कार्ड नहीं मिला",
+        "itMayHaveBeenRemoved": "यह हटाया जा चुका हो सकता है।"
+      },
+      "timelinePanel": {
+        "couldnTLoadTheTimeline": "समय-रेखा लोड नहीं हो सकी",
+        "noActivityYet": "अभी कोई गतिविधि नहीं।"
+      },
+      "jobCards": {
+        "clickAStatusCardToFilter": "फ़िल्टर करने के लिए किसी स्थिति कार्ड पर क्लिक करें",
+        "createYourFirstJobCardTo": "शुरू करने के लिए अपना पहला जॉब कार्ड बनाएं।",
+        "deliveredReturnedBy": "सौंपने / लौटाने वाला",
+        "noUsersYet": "अभी कोई उपयोगकर्ता नहीं।"
+      },
+      "recordCostingModal": {
+        "itemName": "आइटम का नाम",
+        "cost": "लागत ₹",
+        "anyNotes": "कोई टिप्पणी...",
+        "part": "पुर्ज़ा",
+        "labor": "मज़दूरी",
+        "overhead": "ऊपरी खर्च",
+        "other": "अन्य",
+        "billAmount": "बिल राशि"
+      },
+      "jobCosting": {
+        "jobCosting": "जॉब लागत",
+        "noClosedJobsYet": "अभी कोई बंद जॉब नहीं",
+        "closedJobCardsReadyForCosting": "लागत दर्ज करने के लिए तैयार बंद जॉब कार्ड यहाँ दिखेंगे।",
+        "costing": "लागत",
+        "jobDetails": "जॉब का विवरण",
+        "financial": "वित्तीय",
+        "advancePaid": "अग्रिम भुगतान"
+      },
+      "serviceItems": {
+        "serviceItems": "सर्विस आइटम",
+        "itemsAndServicesUsedInJob": "जॉब कार्ड में उपयोग होने वाले आइटम और सर्विस — आइटम मास्टर से प्रबंधित",
+        "itemMasterShipsInPhase7": "आइटम मास्टर फेज़ 7 में आएगा",
+        "noServiceItemsYet": "अभी कोई सर्विस आइटम नहीं",
+        "addOneToGetStarted": "शुरू करने के लिए एक जोड़ें।"
+      },
+      "addOptionForm": {
+        "selectBrand": "ब्रांड चुनें..."
+      },
+      "optionRow": {
+        "jobCardsOrCatalogEntriesAlready": "इसका संदर्भ रखने वाले जॉब कार्ड या सूची प्रविष्टियाँ एक ऐसी चीज़ का संदर्भ रखेंगी जो अब मौजूद नहीं है। यह पूर्ववत नहीं हो सकता।"
+      },
+      "serviceOptions": {
+        "newBrand": "नया ब्रांड...",
+        "newModel": "नया मॉडल...",
+        "couldnTLoadServiceOptions": "सर्विस विकल्प लोड नहीं हो सके",
+        "serviceOptions": "सर्विस विकल्प",
+        "manageDeviceTypesBrandsAndProblem": "जॉब कार्ड में उपयोग होने वाले डिवाइस प्रकार, ब्रांड और समस्या टैग प्रबंधित करें",
+        "splitAllSharedBrands": "सभी साझा ब्रांड अलग करें?",
+        "split": "अलग करें",
+        "splitSharedBrands": "साझा ब्रांड अलग करें"
+      }
     }
   }
 }

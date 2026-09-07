@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import type { ServiceOptionWithId } from '@/hooks/use-service-options'
+import { useTranslation } from 'react-i18next'
 
 interface AddOptionFormProps {
   placeholder: string
@@ -34,6 +35,7 @@ export function AddOptionForm({
   defaultScopeId,
   onSubmit,
 }: AddOptionFormProps) {
+  const { t } = useTranslation()
   const [label, setLabel] = useState('')
   const [deviceTypeIds, setDeviceTypeIds] = useState<string[]>(
     defaultScopeId ? [defaultScopeId] : []
@@ -88,7 +90,7 @@ export function AddOptionForm({
       {brandOptions && (
         <Select value={brandId} onValueChange={(v) => v && setBrandId(v)}>
           <SelectTrigger className="w-full sm:w-56">
-            <SelectValue placeholder="Select brand..." />
+            <SelectValue placeholder={t('pages.service.addOptionForm.selectBrand')} />
           </SelectTrigger>
           <SelectContent>
             {brandOptions.map((b) => (

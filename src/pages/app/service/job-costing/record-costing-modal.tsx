@@ -222,7 +222,7 @@ export function RecordCostingModal({
                   <Input
                     value={item.itemName}
                     onChange={(e) => updateItem(item.id, { itemName: e.target.value })}
-                    placeholder="Item name"
+                    placeholder={t('pages.service.recordCostingModal.itemName')}
                     disabled={item.linked}
                   />
                   <SearchSelect
@@ -242,7 +242,7 @@ export function RecordCostingModal({
                       type="number"
                       value={item.cost}
                       onChange={(e) => updateItem(item.id, { cost: Number(e.target.value) || 0 })}
-                      placeholder="Cost ₹"
+                      placeholder={t('pages.service.recordCostingModal.cost')}
                       className={cn(requiresCost && 'border-red-400')}
                     />
                     <Input
@@ -279,7 +279,9 @@ export function RecordCostingModal({
             </div>
             <div className="space-y-1.5 rounded-lg border p-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Bill Amount</span>
+                <span className="text-muted-foreground">
+                  {t('pages.service.recordCostingModal.billAmount')}
+                </span>
                 <span className="font-medium">₹{billAmount}</span>
               </div>
               <div className="flex justify-between">
@@ -303,7 +305,7 @@ export function RecordCostingModal({
               <Textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Any notes..."
+                placeholder={t('pages.service.recordCostingModal.anyNotes')}
                 rows={2}
               />
             </div>

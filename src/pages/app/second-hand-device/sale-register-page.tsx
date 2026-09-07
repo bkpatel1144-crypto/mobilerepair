@@ -96,8 +96,8 @@ export function SaleRegisterPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Receipt}
-        title="Sale Register"
-        subtitle="All device sales — profit, margin and export"
+        title={t('pages.secondHandDevice.saleRegister.saleRegister')}
+        subtitle={t('pages.secondHandDevice.saleRegister.allDeviceSalesProfitMarginAnd')}
         actions={
           <>
             <Button
@@ -143,7 +143,7 @@ export function SaleRegisterPage() {
           value={`₹${totalProfit}`}
           tone={totalProfit >= 0 ? 'success' : 'danger'}
         />
-        <StatCard label="Sales" value={filtered.length} />
+        <StatCard label={t('pages.secondHandDevice.saleRegister.sales')} value={filtered.length} />
       </StatCardGrid>
       {totalInvested > 0 && (
         <p className="text-sm text-muted-foreground">↗ Average margin: {avgMargin.toFixed(1)}%</p>
@@ -168,8 +168,8 @@ export function SaleRegisterPage() {
         emptyState={
           <EmptyState
             icon={Receipt}
-            title="No sales yet"
-            description="Devices sold from Device Sale will appear here."
+            title={t('pages.secondHandDevice.saleRegister.noSalesYet')}
+            description={t('pages.secondHandDevice.saleRegister.devicesSoldFromDeviceSaleWill')}
           />
         }
       />

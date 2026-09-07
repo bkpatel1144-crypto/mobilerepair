@@ -7,11 +7,13 @@ import { ErrorState } from '@/components/shared/error-state'
 import { FileQuestion } from 'lucide-react'
 import { useJobCard } from '@/hooks/use-job-cards'
 import { JobCardDetailContent } from './job-card-detail-content'
+import { useTranslation } from 'react-i18next'
 
 /** The full-page half of "build one component, the drawer just renders it narrower" — same
  * `JobCardDetailContent` as the drawer, just given the whole page width so its `lg:grid-cols-3`
  * body actually shows 3 columns, matching `preview (72)`. */
 export function JobCardDetailPage() {
+  const { t } = useTranslation()
   const { jobId } = useParams<{ jobId: string }>()
   const navigate = useNavigate()
   const { data: job, isLoading, error: loadError, refetch } = useJobCard(jobId)
@@ -26,7 +28,7 @@ export function JobCardDetailPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load this job card"
+          title={t('pages.service.jobCardDetail.couldnTLoadThisJobCard')}
         />
       </div>
     )
@@ -36,8 +38,8 @@ export function JobCardDetailPage() {
       <div className="p-4 sm:p-6">
         <EmptyState
           icon={FileQuestion}
-          title="Job card not found"
-          description="It may have been removed."
+          title={t('pages.service.jobCardDetail.jobCardNotFound')}
+          description={t('pages.service.jobCardDetail.itMayHaveBeenRemoved')}
         />
       </div>
     )

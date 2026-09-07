@@ -20,6 +20,7 @@ import { SERVICE_OPTION_SECTIONS, type ServiceOptionType } from '@/config/servic
 import { OptionRow } from './service-options/option-row'
 import { AddOptionForm } from './service-options/add-option-form'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 /** Everything a plain flat section (Cancel Reasons, Customer Items, Device Types, Hold Reasons,
  * Outstanding Reasons, Problems) needs — Brands/Models below reuse the same row/add-form pieces
@@ -90,6 +91,7 @@ function BrandsSection({
   addingScope: string | null
   setAddingScope: (v: string | null) => void
 }) {
+  const { t } = useTranslation()
   const create = useCreateServiceOption('brands')
   const update = useUpdateServiceOption('brands')
   const del = useDeleteServiceOption('brands')
@@ -151,7 +153,7 @@ function BrandsSection({
                 <div className="pl-6">
                   {addingScope === dt.id ? (
                     <AddOptionForm
-                      placeholder="New brand..."
+                      placeholder={t('pages.service.serviceOptions.newBrand')}
                       deviceTypeOptions={deviceTypes}
                       defaultScopeId={dt.id}
                       onCancel={() => setAddingScope(null)}
@@ -179,7 +181,7 @@ function BrandsSection({
       <div className="pl-6">
         {addingScope === '__brand_global__' ? (
           <AddOptionForm
-            placeholder="New brand..."
+            placeholder={t('pages.service.serviceOptions.newBrand')}
             deviceTypeOptions={deviceTypes}
             onCancel={() => setAddingScope(null)}
             onSubmit={(input) => {
@@ -213,6 +215,7 @@ function ModelsSection({
   addingScope: string | null
   setAddingScope: (v: string | null) => void
 }) {
+  const { t } = useTranslation()
   const create = useCreateServiceOption('models')
   const update = useUpdateServiceOption('models')
   const del = useDeleteServiceOption('models')
@@ -281,7 +284,7 @@ function ModelsSection({
       <div className="pl-6">
         {addingScope === '__model_global__' ? (
           <AddOptionForm
-            placeholder="New model..."
+            placeholder={t('pages.service.serviceOptions.newModel')}
             brandOptions={brands}
             onCancel={() => setAddingScope(null)}
             onSubmit={(input) => {
@@ -305,6 +308,7 @@ function ModelsSection({
 }
 
 export function ServiceOptionsPage() {
+  const { t } = useTranslation()
   const { data, isLoading, error: loadError, refetch } = useAllServiceOptions()
   const splitSharedBrands = useSplitSharedBrands()
   const queryClient = useQueryClient()
@@ -319,7 +323,7 @@ export function ServiceOptionsPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load service options"
+          title={t('pages.service.serviceOptions.couldnTLoadServiceOptions')}
         />
       </div>
     )
@@ -339,8 +343,8 @@ export function ServiceOptionsPage() {
   return (
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
-        title="Service Options"
-        subtitle="Manage device types, brands, and problem tags used in job cards"
+        title={t('pages.service.serviceOptions.serviceOptions')}
+        subtitle={t('pages.service.serviceOptions.manageDeviceTypesBrandsAndProblem')}
         actions={
           <>
             <Button
@@ -367,8 +371,8 @@ export function ServiceOptionsPage() {
         <p className="flex items-start gap-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
           <Info className="mt-0.5 size-4 shrink-0" />
           Some brands are still shared across multiple device types. Click{' '}
-          <strong>Split shared brands</strong> above to give each device type its own independent
-          brand row. Existing job cards stay untouched.
+          <strong>{t('pages.service.serviceOptions.splitSharedBrands')}</strong> above to give each
+          device type its own independent brand row. Existing job cards stay untouched.
         </p>
       )}
 
@@ -442,9 +446,9 @@ export function ServiceOptionsPage() {
       <ConfirmDialog
         open={confirmingSplit}
         onOpenChange={setConfirmingSplit}
-        title="Split all shared brands?"
+        title={t('pages.service.serviceOptions.splitAllSharedBrands')}
         message={`This creates one independent copy of each of the ${sharedBrandCount} shared brand(s) per device type it applies to, and deletes the original shared brand doc. This is a one-way migration — it cannot be undone.`}
-        confirmLabel="Split"
+        confirmLabel={t('pages.service.serviceOptions.split')}
         isPending={splitSharedBrands.isPending}
         onConfirm={() =>
           splitSharedBrands.mutate(data.brands, { onSuccess: () => setConfirmingSplit(false) })

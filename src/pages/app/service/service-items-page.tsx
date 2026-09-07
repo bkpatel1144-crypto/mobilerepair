@@ -135,8 +135,8 @@ export function ServiceItemsPage() {
   return (
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
-        title="Service Items"
-        subtitle="Items and services used in job cards — managed via Item Master"
+        title={t('pages.service.serviceItems.serviceItems')}
+        subtitle={t('pages.service.serviceItems.itemsAndServicesUsedInJob')}
         actions={
           <>
             <Button
@@ -173,7 +173,7 @@ export function ServiceItemsPage() {
           size="sm"
           variant="outline"
           disabled
-          title="Item Master ships in Phase 7"
+          title={t('pages.service.serviceItems.itemMasterShipsInPhase7')}
         >
           <ExternalLink className="size-3.5" />
           Item Master
@@ -196,8 +196,8 @@ export function ServiceItemsPage() {
         emptyState={
           <EmptyState
             icon={Wrench}
-            title="No service items yet"
-            description="Add one to get started."
+            title={t('pages.service.serviceItems.noServiceItemsYet')}
+            description={t('pages.service.serviceItems.addOneToGetStarted')}
           />
         }
       />

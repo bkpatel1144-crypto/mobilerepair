@@ -105,7 +105,7 @@ export function DeviceStockPage() {
     },
     {
       key: 'daysInStock',
-      header: 'Days in Stock',
+      header: t('pages.secondHandDevice.deviceStock.daysInStock'),
       sortValue: (p) => daysInStock(p),
       render: (p) => (
         <span className={daysInStock(p) > 30 ? 'font-medium text-amber-600' : ''}>
@@ -119,13 +119,17 @@ export function DeviceStockPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Boxes}
-        title="Device Stock"
-        subtitle="Second hand devices currently in stock — invested amount and aging"
+        title={t('pages.secondHandDevice.deviceStock.deviceStock')}
+        subtitle={t('pages.secondHandDevice.deviceStock.secondHandDevicesCurrentlyInStock')}
       />
 
       <StatCardGrid>
         <StatCard label={t('shared.inStock')} value={stock.length} icon={Boxes} tone="success" />
-        <StatCard label="Total Invested" icon={IndianRupee} value={`₹${totalInvested}`} />
+        <StatCard
+          label={t('pages.secondHandDevice.deviceStock.totalInvested')}
+          icon={IndianRupee}
+          value={`₹${totalInvested}`}
+        />
         <StatCard
           label="Aging > 30 days"
           value={aging}
@@ -153,8 +157,8 @@ export function DeviceStockPage() {
         emptyState={
           <EmptyState
             icon={Boxes}
-            title="No devices in stock"
-            description="Devices you purchase will show up here until sold."
+            title={t('pages.secondHandDevice.deviceStock.noDevicesInStock')}
+            description={t('pages.secondHandDevice.deviceStock.devicesYouPurchaseWillShowUp')}
           />
         }
       />

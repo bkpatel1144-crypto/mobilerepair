@@ -603,6 +603,198 @@
         "decimalPlaces": "Decimal Places",
         "displayOrder": "Display Order"
       }
+    },
+    "secondHandDevice": {
+      "createPurchase": {
+        "couldnTLoadThePurchaseForm": "Couldn't load the purchase form",
+        "searchSellerByNameOrMobile": "Search seller by name or mobile...",
+        "sellerName": "Seller name",
+        "buySecondHandDevice": "Buy Second Hand Device",
+        "noPatternDrawn": "No pattern drawn",
+        "notChecked": "Not checked",
+        "cleanNoLock": "Clean — no lock",
+        "addPhotos": "Add Photos",
+        "idProofType": "ID Proof Type",
+        "notCaptured": "Not Captured",
+        "aadhaar": "Aadhaar",
+        "panCard": "PAN Card",
+        "drivingLicence": "Driving Licence",
+        "voterId": "Voter ID",
+        "dateOfPurchase": "Date of Purchase",
+        "paidInFull": "Paid in full.",
+        "whoeverIsLoggedIn": "Whoever is logged in"
+      },
+      "devicePurchase": {
+        "devicePurchase": "Device Purchase",
+        "totalPurchased": "Total Purchased",
+        "returned": "Returned",
+        "noPurchasesYet": "No purchases yet",
+        "recordYourFirstDevicePurchaseAbove": "Record your first device purchase above.",
+        "thisIsATerminalStatusThe": "This is a terminal status — the purchase can no longer be edited, sent to refurb, or sold afterward. No refund/reversal of the purchase price is recorded automatically.",
+        "returnToSeller": "Return to Seller",
+        "accessoriesIncluded": "Accessories Included",
+        "conditionNotes": "Condition Notes"
+      },
+      "deviceSale": {
+        "deviceSale": "Device Sale",
+        "sellDevicesFromStockToA": "Sell devices from stock to a buyer",
+        "availableToSell": "Available to Sell",
+        "totalProfit": "Total Profit",
+        "nothingAvailableToSell": "Nothing available to sell",
+        "devicesYouPurchaseShowUpHere": "Devices you purchase show up here once in stock.",
+        "searchBuyer": "Search buyer...",
+        "buyerName": "Buyer name",
+        "buyer": "Buyer *",
+        "salePrice": "Sale Price *",
+        "accessoriesGivenToBuyer": "Accessories Given to Buyer"
+      },
+      "deviceStock": {
+        "deviceStock": "Device Stock",
+        "secondHandDevicesCurrentlyInStock": "Second hand devices currently in stock — invested amount and aging",
+        "totalInvested": "Total Invested",
+        "noDevicesInStock": "No devices in stock",
+        "devicesYouPurchaseWillShowUp": "Devices you purchase will show up here until sold.",
+        "daysInStock": "Days in Stock"
+      },
+      "purchaseDetailSections": {
+        "device": "DEVICE",
+        "type": "Type",
+        "brand": "Brand",
+        "model": "Model",
+        "purchasedOn": "Purchased On",
+        "imeiSerial": "IMEI / Serial",
+        "condition": "Condition",
+        "purchasePrice": "Purchase Price",
+        "paymentMode": "Payment Mode",
+        "purchasedBy": "Purchased By",
+        "sale": "SALE",
+        "salePrice": "Sale Price",
+        "warranty": "Warranty",
+        "purchased": "Purchased",
+        "sold": "Sold"
+      },
+      "purchaseRegister": {
+        "purchaseRegister": "Purchase Register",
+        "allDevicePurchasesFilterSearchAnd": "All device purchases — filter, search and export",
+        "purchases": "Purchases",
+        "noPurchasesFound": "No purchases found",
+        "purchasesRecordedFromDevicePurchaseWill": "Purchases recorded from Device Purchase will appear here.",
+        "allDeviceTypes": "All Device Types"
+      },
+      "saleRegister": {
+        "saleRegister": "Sale Register",
+        "allDeviceSalesProfitMarginAnd": "All device sales — profit, margin and export",
+        "sales": "Sales",
+        "noSalesYet": "No sales yet",
+        "devicesSoldFromDeviceSaleWill": "Devices sold from Device Sale will appear here."
+      }
+    },
+    "service": {
+      "actionButtons": {
+        "thisRevertsTheJobSOwn": "This reverts the job's own fields to before that action and permanently deletes its timeline entry — the audit trail for this specific action is erased, not just hidden.",
+        "holdJob": "Hold Job",
+        "selectAReason": "Select a reason...",
+        "cancelJob": "Cancel Job",
+        "markJobDone": "Mark Job Done",
+        "whatWasDone": "What was done...",
+        "generateBill": "Generate Bill",
+        "handover": "Handover",
+        "selectUser": "Select user...",
+        "logFieldVisit": "Log Field Visit",
+        "whatWasDoneOnSite": "What was done on-site...",
+        "reason": "Reason",
+        "handoverTo": "Handover to"
+      },
+      "createJobCard": {
+        "couldnTLoadTheCreateJob": "Couldn't load the Create Job Card form",
+        "searchCustomerByNameOrMobile": "Search customer by name or mobile...",
+        "10DigitMobile": "10-digit mobile",
+        "scanImei": "Scan IMEI",
+        "scanSerialNo": "Scan Serial No",
+        "selectProblems": "Select problems...",
+        "addItemsFromCatalog": "Add items from catalog",
+        "selectItemsReceivedWithDevice": "Select items received with device...",
+        "selectItemsReturnedToCustomer": "Select items returned to customer...",
+        "searchUser": "Search user...",
+        "anyAdditionalNoteAboutTheDevice": "Any additional note about the device / job...",
+        "clearThisDraft": "Clear this draft?",
+        "everyFieldYouVeFilledIn": "Every field you've filled in so far will be wiped, including the autosaved copy. This cannot be undone.",
+        "clearDraft": "Clear Draft",
+        "createJobCard": "Create Job Card"
+      },
+      "jobCardDetailContent": {
+        "itemsAtIntake": "Items at Intake",
+        "problemReported": "Problem Reported",
+        "assignment": "Assignment",
+        "searchPart": "Search part...",
+        "images": "Images",
+        "addNote": "Add Note",
+        "receivedAtIntake": "Received at Intake",
+        "returnedAtIntake": "Returned at Intake",
+        "estimated": "Estimated",
+        "partsCost": "Parts Cost",
+        "noPartsUsedYet": "No parts used yet.",
+        "noImagesUploaded": "No images uploaded",
+        "toggleNotes": "Toggle notes",
+        "note": "Note"
+      },
+      "jobCardDetail": {
+        "couldnTLoadThisJobCard": "Couldn't load this job card",
+        "jobCardNotFound": "Job card not found",
+        "itMayHaveBeenRemoved": "It may have been removed."
+      },
+      "timelinePanel": {
+        "couldnTLoadTheTimeline": "Couldn't load the timeline",
+        "noActivityYet": "No activity yet."
+      },
+      "jobCards": {
+        "clickAStatusCardToFilter": "Click a status card to filter",
+        "createYourFirstJobCardTo": "Create your first job card to get started.",
+        "deliveredReturnedBy": "Delivered / Returned By",
+        "noUsersYet": "No users yet."
+      },
+      "recordCostingModal": {
+        "itemName": "Item name",
+        "cost": "Cost ₹",
+        "anyNotes": "Any notes...",
+        "part": "Part",
+        "labor": "Labor",
+        "overhead": "Overhead",
+        "other": "Other",
+        "billAmount": "Bill Amount"
+      },
+      "jobCosting": {
+        "jobCosting": "Job Costing",
+        "noClosedJobsYet": "No closed jobs yet",
+        "closedJobCardsReadyForCosting": "Closed job cards ready for costing will show up here.",
+        "costing": "Costing",
+        "jobDetails": "Job Details",
+        "financial": "Financial",
+        "advancePaid": "Advance Paid"
+      },
+      "serviceItems": {
+        "serviceItems": "Service Items",
+        "itemsAndServicesUsedInJob": "Items and services used in job cards — managed via Item Master",
+        "itemMasterShipsInPhase7": "Item Master ships in Phase 7",
+        "noServiceItemsYet": "No service items yet",
+        "addOneToGetStarted": "Add one to get started."
+      },
+      "addOptionForm": {
+        "selectBrand": "Select brand..."
+      },
+      "optionRow": {
+        "jobCardsOrCatalogEntriesAlready": "Job cards or catalog entries already referencing this will keep a reference to something that no longer exists. This cannot be undone."
+      },
+      "serviceOptions": {
+        "newBrand": "New brand...",
+        "newModel": "New model...",
+        "couldnTLoadServiceOptions": "Couldn't load service options",
+        "serviceOptions": "Service Options",
+        "manageDeviceTypesBrandsAndProblem": "Manage device types, brands, and problem tags used in job cards",
+        "splitAllSharedBrands": "Split all shared brands?",
+        "split": "Split",
+        "splitSharedBrands": "Split shared brands"
+      }
     }
   }
 }

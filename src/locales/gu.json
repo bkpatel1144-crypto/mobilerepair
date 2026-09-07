@@ -616,6 +616,198 @@
         "decimalPlaces": "દશાંશ સ્થાન",
         "displayOrder": "દેખાવાનો ક્રમ"
       }
+    },
+    "secondHandDevice": {
+      "createPurchase": {
+        "couldnTLoadThePurchaseForm": "ખરીદ ફોર્મ લોડ થઈ શક્યું નથી",
+        "searchSellerByNameOrMobile": "વેચનારને નામ કે મોબાઇલથી શોધો...",
+        "sellerName": "વેચનારનું નામ",
+        "buySecondHandDevice": "સેકન્ડ હેન્ડ ડિવાઇસ ખરીદો",
+        "noPatternDrawn": "કોઈ પેટર્ન દોરી નથી",
+        "notChecked": "તપાસ્યું નથી",
+        "cleanNoLock": "ચોખ્ખું — કોઈ લોક નથી",
+        "addPhotos": "ફોટા ઉમેરો",
+        "idProofType": "ઓળખપત્રનો પ્રકાર",
+        "notCaptured": "લીધું નથી",
+        "aadhaar": "આધાર",
+        "panCard": "PAN કાર્ડ",
+        "drivingLicence": "ડ્રાઇવિંગ લાઇસન્સ",
+        "voterId": "વોટર ID",
+        "dateOfPurchase": "ખરીદીની તારીખ",
+        "paidInFull": "પૂરી ચુકવણી થઈ ગઈ.",
+        "whoeverIsLoggedIn": "જે લોગ ઇન હોય તે"
+      },
+      "devicePurchase": {
+        "devicePurchase": "ડિવાઇસ ખરીદી",
+        "totalPurchased": "કુલ ખરીદેલા",
+        "returned": "પરત કરેલા",
+        "noPurchasesYet": "હજી કોઈ ખરીદી નથી",
+        "recordYourFirstDevicePurchaseAbove": "ઉપર તમારી પહેલી ડિવાઇસ ખરીદી નોંધો.",
+        "thisIsATerminalStatusThe": "આ આખરી સ્થિતિ છે — તે પછી ખરીદીમાં ફેરફાર, રિફર્બમાં મોકલવું કે વેચવું શક્ય નહીં રહે. ખરીદ કિંમતનું રિફંડ કે ઉલટાવવું આપોઆપ નોંધાતું નથી.",
+        "returnToSeller": "વેચનારને પરત કરો",
+        "accessoriesIncluded": "સાથે મળેલી વસ્તુઓ",
+        "conditionNotes": "સ્થિતિની નોંધ"
+      },
+      "deviceSale": {
+        "deviceSale": "ડિવાઇસ વેચાણ",
+        "sellDevicesFromStockToA": "સ્ટોકમાંથી ડિવાઇસ ખરીદનારને વેચો",
+        "availableToSell": "વેચવા માટે ઉપલબ્ધ",
+        "totalProfit": "કુલ નફો",
+        "nothingAvailableToSell": "વેચવા માટે કંઈ ઉપલબ્ધ નથી",
+        "devicesYouPurchaseShowUpHere": "તમે ખરીદેલી ડિવાઇસ સ્ટોકમાં આવતાં અહીં દેખાશે.",
+        "searchBuyer": "ખરીદનાર શોધો...",
+        "buyerName": "ખરીદનારનું નામ",
+        "buyer": "ખરીદનાર *",
+        "salePrice": "વેચાણ કિંમત *",
+        "accessoriesGivenToBuyer": "ખરીદનારને આપેલી વસ્તુઓ"
+      },
+      "deviceStock": {
+        "deviceStock": "ડિવાઇસ સ્ટોક",
+        "secondHandDevicesCurrentlyInStock": "હાલ સ્ટોકમાં રહેલી સેકન્ડ હેન્ડ ડિવાઇસ — રોકેલી રકમ અને જૂનાપણું",
+        "totalInvested": "કુલ રોકેલી રકમ",
+        "noDevicesInStock": "સ્ટોકમાં કોઈ ડિવાઇસ નથી",
+        "devicesYouPurchaseWillShowUp": "તમે ખરીદેલી ડિવાઇસ વેચાય ત્યાં સુધી અહીં દેખાશે.",
+        "daysInStock": "સ્ટોકમાં દિવસ"
+      },
+      "purchaseDetailSections": {
+        "device": "ડિવાઇસ",
+        "type": "પ્રકાર",
+        "brand": "બ્રાન્ડ",
+        "model": "મોડેલ",
+        "purchasedOn": "ખરીદીની તારીખ",
+        "imeiSerial": "IMEI / સિરિયલ",
+        "condition": "સ્થિતિ",
+        "purchasePrice": "ખરીદ કિંમત",
+        "paymentMode": "ચુકવણીની રીત",
+        "purchasedBy": "ખરીદનાર",
+        "sale": "વેચાણ",
+        "salePrice": "વેચાણ કિંમત",
+        "warranty": "વોરંટી",
+        "purchased": "ખરીદ્યું",
+        "sold": "વેચાયું"
+      },
+      "purchaseRegister": {
+        "purchaseRegister": "ખરીદી રજિસ્ટર",
+        "allDevicePurchasesFilterSearchAnd": "બધી ડિવાઇસ ખરીદી — ફિલ્ટર, શોધ અને એક્સપોર્ટ",
+        "purchases": "ખરીદી",
+        "noPurchasesFound": "કોઈ ખરીદી મળી નથી",
+        "purchasesRecordedFromDevicePurchaseWill": "ડિવાઇસ ખરીદીમાંથી નોંધેલી ખરીદી અહીં દેખાશે.",
+        "allDeviceTypes": "બધા ડિવાઇસ પ્રકાર"
+      },
+      "saleRegister": {
+        "saleRegister": "વેચાણ રજિસ્ટર",
+        "allDeviceSalesProfitMarginAnd": "બધું ડિવાઇસ વેચાણ — નફો, માર્જિન અને એક્સપોર્ટ",
+        "sales": "વેચાણ",
+        "noSalesYet": "હજી કોઈ વેચાણ નથી",
+        "devicesSoldFromDeviceSaleWill": "ડિવાઇસ વેચાણમાંથી વેચેલી ડિવાઇસ અહીં દેખાશે."
+      }
+    },
+    "service": {
+      "actionButtons": {
+        "thisRevertsTheJobSOwn": "આ જોબનાં ફીલ્ડ તે ક્રિયા પહેલાંની સ્થિતિમાં પાછાં લાવે છે અને તેની સમયરેખા નોંધ કાયમ માટે ભૂંસી નાખે છે — આ ક્રિયાનો ઓડિટ રેકોર્ડ છુપાતો નથી, ભૂંસાઈ જાય છે.",
+        "holdJob": "જોબ અટકાવો",
+        "selectAReason": "કારણ પસંદ કરો...",
+        "cancelJob": "જોબ રદ કરો",
+        "markJobDone": "જોબ પૂર્ણ કરો",
+        "whatWasDone": "શું કર્યું...",
+        "generateBill": "બિલ બનાવો",
+        "handover": "સોંપો",
+        "selectUser": "વપરાશકર્તા પસંદ કરો...",
+        "logFieldVisit": "ફીલ્ડ વિઝિટ નોંધો",
+        "whatWasDoneOnSite": "સ્થળ પર શું કર્યું...",
+        "reason": "કારણ",
+        "handoverTo": "કોને સોંપવું"
+      },
+      "createJobCard": {
+        "couldnTLoadTheCreateJob": "જોબ કાર્ડ બનાવવાનું ફોર્મ લોડ થઈ શક્યું નથી",
+        "searchCustomerByNameOrMobile": "ગ્રાહકને નામ કે મોબાઇલથી શોધો...",
+        "10DigitMobile": "10 અંકનો મોબાઇલ",
+        "scanImei": "IMEI સ્કેન કરો",
+        "scanSerialNo": "સિરિયલ નં. સ્કેન કરો",
+        "selectProblems": "સમસ્યાઓ પસંદ કરો...",
+        "addItemsFromCatalog": "યાદીમાંથી આઇટમ ઉમેરો",
+        "selectItemsReceivedWithDevice": "ડિવાઇસ સાથે મળેલી વસ્તુઓ પસંદ કરો...",
+        "selectItemsReturnedToCustomer": "ગ્રાહકને પરત કરેલી વસ્તુઓ પસંદ કરો...",
+        "searchUser": "વપરાશકર્તા શોધો...",
+        "anyAdditionalNoteAboutTheDevice": "ડિવાઇસ / જોબ વિશે કોઈ વધારાની નોંધ...",
+        "clearThisDraft": "આ ડ્રાફ્ટ સાફ કરવો?",
+        "everyFieldYouVeFilledIn": "હજી સુધી ભરેલું દરેક ફીલ્ડ ભૂંસાઈ જશે, આપોઆપ સાચવેલી નકલ સહિત. આ પાછું લઈ શકાતું નથી.",
+        "clearDraft": "ડ્રાફ્ટ સાફ કરો",
+        "createJobCard": "જોબ કાર્ડ બનાવો"
+      },
+      "jobCardDetailContent": {
+        "itemsAtIntake": "લેતી વખતની વસ્તુઓ",
+        "problemReported": "જણાવેલી સમસ્યા",
+        "assignment": "સોંપણી",
+        "searchPart": "પાર્ટ શોધો...",
+        "images": "ફોટા",
+        "addNote": "નોંધ ઉમેરો",
+        "receivedAtIntake": "લેતી વખતે મળ્યું",
+        "returnedAtIntake": "લેતી વખતે પરત કર્યું",
+        "estimated": "અંદાજિત",
+        "partsCost": "પાર્ટ્સનો ખર્ચ",
+        "noPartsUsedYet": "હજી કોઈ પાર્ટ વપરાયો નથી.",
+        "noImagesUploaded": "કોઈ ફોટો અપલોડ થયો નથી",
+        "toggleNotes": "નોંધ બતાવો/છુપાવો",
+        "note": "નોંધ"
+      },
+      "jobCardDetail": {
+        "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",
+        "jobCardNotFound": "જોબ કાર્ડ મળ્યું નથી",
+        "itMayHaveBeenRemoved": "તે કાઢી નાખવામાં આવ્યું હોઈ શકે."
+      },
+      "timelinePanel": {
+        "couldnTLoadTheTimeline": "સમયરેખા લોડ થઈ શકી નથી",
+        "noActivityYet": "હજી કોઈ પ્રવૃત્તિ નથી."
+      },
+      "jobCards": {
+        "clickAStatusCardToFilter": "ફિલ્ટર કરવા કોઈ સ્થિતિ કાર્ડ પર ક્લિક કરો",
+        "createYourFirstJobCardTo": "શરૂ કરવા તમારું પહેલું જોબ કાર્ડ બનાવો.",
+        "deliveredReturnedBy": "આપનાર / પરત કરનાર",
+        "noUsersYet": "હજી કોઈ વપરાશકર્તા નથી."
+      },
+      "recordCostingModal": {
+        "itemName": "આઇટમનું નામ",
+        "cost": "ખર્ચ ₹",
+        "anyNotes": "કોઈ નોંધ...",
+        "part": "પાર્ટ",
+        "labor": "મજૂરી",
+        "overhead": "ઉપરી ખર્ચ",
+        "other": "અન્ય",
+        "billAmount": "બિલ રકમ"
+      },
+      "jobCosting": {
+        "jobCosting": "જોબ ખર્ચ",
+        "noClosedJobsYet": "હજી કોઈ બંધ જોબ નથી",
+        "closedJobCardsReadyForCosting": "ખર્ચ નોંધવા તૈયાર બંધ જોબ કાર્ડ અહીં દેખાશે.",
+        "costing": "ખર્ચ",
+        "jobDetails": "જોબની વિગતો",
+        "financial": "નાણાકીય",
+        "advancePaid": "એડવાન્સ ચૂકવેલ"
+      },
+      "serviceItems": {
+        "serviceItems": "સર્વિસ આઇટમ",
+        "itemsAndServicesUsedInJob": "જોબ કાર્ડમાં વપરાતાં આઇટમ અને સર્વિસ — આઇટમ માસ્ટરથી સંભાળાય",
+        "itemMasterShipsInPhase7": "આઇટમ માસ્ટર ફેઝ 7 માં આવશે",
+        "noServiceItemsYet": "હજી કોઈ સર્વિસ આઇટમ નથી",
+        "addOneToGetStarted": "શરૂ કરવા એક ઉમેરો."
+      },
+      "addOptionForm": {
+        "selectBrand": "બ્રાન્ડ પસંદ કરો..."
+      },
+      "optionRow": {
+        "jobCardsOrCatalogEntriesAlready": "આનો સંદર્ભ રાખતાં જોબ કાર્ડ કે યાદી નોંધો એવી વસ્તુનો સંદર્ભ રાખશે જે હવે અસ્તિત્વમાં નથી. આ પાછું લઈ શકાતું નથી."
+      },
+      "serviceOptions": {
+        "newBrand": "નવી બ્રાન્ડ...",
+        "newModel": "નવું મોડેલ...",
+        "couldnTLoadServiceOptions": "સર્વિસ વિકલ્પો લોડ થઈ શક્યા નથી",
+        "serviceOptions": "સર્વિસ વિકલ્પો",
+        "manageDeviceTypesBrandsAndProblem": "જોબ કાર્ડમાં વપરાતા ડિવાઇસ પ્રકાર, બ્રાન્ડ અને સમસ્યા ટૅગ સંભાળો",
+        "splitAllSharedBrands": "બધી શેર કરેલી બ્રાન્ડ અલગ કરવી?",
+        "split": "અલગ કરો",
+        "splitSharedBrands": "શેર કરેલી બ્રાન્ડ અલગ કરો"
+      }
     }
   }
 }

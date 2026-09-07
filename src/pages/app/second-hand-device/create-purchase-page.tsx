@@ -115,7 +115,7 @@ export function CreateSecondHandPurchasePage() {
         <ErrorState
           error={optionsError}
           onRetry={() => void refetchOptions()}
-          title="Couldn't load the purchase form"
+          title={t('pages.secondHandDevice.createPurchase.couldnTLoadThePurchaseForm')}
         />
       </div>
     )
@@ -233,7 +233,9 @@ export function CreateSecondHandPurchasePage() {
     <div className="mx-auto max-w-3xl space-y-4 p-4 pb-24 sm:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold">Buy Second Hand Device</h1>
+          <h1 className="text-xl font-bold">
+            {t('pages.secondHandDevice.createPurchase.buySecondHandDevice')}
+          </h1>
           <p className="text-sm text-muted-foreground">
             Record a second hand device purchase from a seller — added to stock immediately.
           </p>
@@ -432,7 +434,9 @@ export function CreateSecondHandPurchasePage() {
                   </button>
                 </>
               ) : (
-                <span className="flex-1 text-sm text-muted-foreground">No pattern drawn</span>
+                <span className="flex-1 text-sm text-muted-foreground">
+                  {t('pages.secondHandDevice.createPurchase.noPatternDrawn')}
+                </span>
               )}
               <PatternLockPicker value={devicePinPattern} onChange={setDevicePinPattern} />
             </div>
@@ -551,8 +555,12 @@ export function CreateSecondHandPurchasePage() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="notChecked">Not checked</SelectItem>
-                <SelectItem value="clean">Clean — no lock</SelectItem>
+                <SelectItem value="notChecked">
+                  {t('pages.secondHandDevice.createPurchase.notChecked')}
+                </SelectItem>
+                <SelectItem value="clean">
+                  {t('pages.secondHandDevice.createPurchase.cleanNoLock')}
+                </SelectItem>
                 <SelectItem value="locked">{t('common.locked')}</SelectItem>
               </SelectContent>
             </Select>
@@ -608,7 +616,7 @@ export function CreateSecondHandPurchasePage() {
           </Label>
           <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
             <ImagePlus className="size-5" />
-            <span className="text-sm">Add Photos</span>
+            <span className="text-sm">{t('pages.secondHandDevice.createPurchase.addPhotos')}</span>
             <input
               type="file"
               accept="image/*"
@@ -657,7 +665,7 @@ export function CreateSecondHandPurchasePage() {
               setSellerId(id)
               if (id) setQuickAddSeller(null)
             }}
-            placeholder="Search seller by name or mobile..."
+            placeholder={t('pages.secondHandDevice.createPurchase.searchSellerByNameOrMobile')}
             open={sellerOpen}
             onOpenChange={setSellerOpen}
             onCreateNew={(query) => setQuickAddSeller({ name: query, mobile: '' })}
@@ -667,7 +675,7 @@ export function CreateSecondHandPurchasePage() {
               <Input
                 value={quickAddSeller.name}
                 onChange={(e) => setQuickAddSeller({ ...quickAddSeller, name: e.target.value })}
-                placeholder="Seller name"
+                placeholder={t('pages.secondHandDevice.createPurchase.sellerName')}
                 className="h-8 text-sm"
               />
               <Input
@@ -687,17 +695,27 @@ export function CreateSecondHandPurchasePage() {
 
         <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
-            <Label>ID Proof Type</Label>
+            <Label>{t('pages.secondHandDevice.createPurchase.idProofType')}</Label>
             <Select value={idProofType} onValueChange={(v) => v && setIdProofType(v)}>
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Not Captured">Not Captured</SelectItem>
-                <SelectItem value="Aadhaar">Aadhaar</SelectItem>
-                <SelectItem value="PAN Card">PAN Card</SelectItem>
-                <SelectItem value="Driving Licence">Driving Licence</SelectItem>
-                <SelectItem value="Voter ID">Voter ID</SelectItem>
+                <SelectItem value="Not Captured">
+                  {t('pages.secondHandDevice.createPurchase.notCaptured')}
+                </SelectItem>
+                <SelectItem value="Aadhaar">
+                  {t('pages.secondHandDevice.createPurchase.aadhaar')}
+                </SelectItem>
+                <SelectItem value="PAN Card">
+                  {t('pages.secondHandDevice.createPurchase.panCard')}
+                </SelectItem>
+                <SelectItem value="Driving Licence">
+                  {t('pages.secondHandDevice.createPurchase.drivingLicence')}
+                </SelectItem>
+                <SelectItem value="Voter ID">
+                  {t('pages.secondHandDevice.createPurchase.voterId')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -774,7 +792,7 @@ export function CreateSecondHandPurchasePage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Date of Purchase</Label>
+            <Label>{t('pages.secondHandDevice.createPurchase.dateOfPurchase')}</Label>
             <Input
               type="date"
               value={purchaseDate}
@@ -808,7 +826,11 @@ export function CreateSecondHandPurchasePage() {
               value={amountPaid}
               onChange={(e) => setAmountPaid(e.target.value === '' ? '' : Number(e.target.value))}
             />
-            {paidInFull && <p className="text-xs text-emerald-600">Paid in full.</p>}
+            {paidInFull && (
+              <p className="text-xs text-emerald-600">
+                {t('pages.secondHandDevice.createPurchase.paidInFull')}
+              </p>
+            )}
           </div>
           <div className="space-y-1.5">
             <Label>
@@ -823,7 +845,9 @@ export function CreateSecondHandPurchasePage() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="__self__">Whoever is logged in</SelectItem>
+                <SelectItem value="__self__">
+                  {t('pages.secondHandDevice.createPurchase.whoeverIsLoggedIn')}
+                </SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
                     {u.fullName}

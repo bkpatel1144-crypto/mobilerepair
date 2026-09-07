@@ -143,7 +143,7 @@ export function DevicePurchasePage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Smartphone}
-        title="Device Purchase"
+        title={t('pages.secondHandDevice.devicePurchase.devicePurchase')}
         subtitle="Buy used mobiles, laptops & other devices from sellers"
         actions={
           <>
@@ -173,7 +173,11 @@ export function DevicePurchasePage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Purchased" value={purchases.length} icon={Smartphone} />
+        <StatCard
+          label={t('pages.secondHandDevice.devicePurchase.totalPurchased')}
+          value={purchases.length}
+          icon={Smartphone}
+        />
         <StatCard
           label={t('shared.inStock')}
           icon={Package}
@@ -193,7 +197,7 @@ export function DevicePurchasePage() {
           tone="info"
         />
         <StatCard
-          label="Returned"
+          label={t('pages.secondHandDevice.devicePurchase.returned')}
           icon={Undo2}
           value={purchases.filter((p) => p.status === 'returnedToSeller').length}
           tone="danger"
@@ -219,8 +223,10 @@ export function DevicePurchasePage() {
         emptyState={
           <EmptyState
             icon={Smartphone}
-            title="No purchases yet"
-            description="Record your first device purchase above."
+            title={t('pages.secondHandDevice.devicePurchase.noPurchasesYet')}
+            description={t(
+              'pages.secondHandDevice.devicePurchase.recordYourFirstDevicePurchaseAbove'
+            )}
           />
         }
       />
@@ -295,8 +301,8 @@ export function DevicePurchasePage() {
           open={confirmingReturn}
           onOpenChange={setConfirmingReturn}
           title={`Return "${viewing.purchaseNumber}" to seller?`}
-          message="This is a terminal status — the purchase can no longer be edited, sent to refurb, or sold afterward. No refund/reversal of the purchase price is recorded automatically."
-          confirmLabel="Return to Seller"
+          message={t('pages.secondHandDevice.devicePurchase.thisIsATerminalStatusThe')}
+          confirmLabel={t('pages.secondHandDevice.devicePurchase.returnToSeller')}
           isPending={setStatus.isPending}
           onConfirm={() =>
             setStatus.mutate(
@@ -401,7 +407,7 @@ function EditPurchaseModal({
         </p>
       </div>
       <div className="space-y-1.5">
-        <Label>Accessories Included</Label>
+        <Label>{t('pages.secondHandDevice.devicePurchase.accessoriesIncluded')}</Label>
         <Input
           value={accessoriesIncluded}
           onChange={(e) => setAccessoriesIncluded(e.target.value)}
@@ -409,7 +415,7 @@ function EditPurchaseModal({
         />
       </div>
       <div className="space-y-1.5">
-        <Label>Condition Notes</Label>
+        <Label>{t('pages.secondHandDevice.devicePurchase.conditionNotes')}</Label>
         <Textarea
           value={conditionNotes}
           onChange={(e) => setConditionNotes(e.target.value)}
