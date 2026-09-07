@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/command'
 import { DASHBOARD_NAV, NAV_SECTIONS, buildPath } from '@/config/nav'
 import { Lock } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface CommandPaletteProps {
   open: boolean
@@ -19,6 +20,7 @@ interface CommandPaletteProps {
 /** Real Ctrl+K / Cmd+K navigation — jump to any (unlocked) page in the app by name, without
  * digging through the sidebar. Registered globally in AppShell. */
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -41,7 +43,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
     <CommandDialog
       open={open}
       onOpenChange={onOpenChange}
-      title="Search"
+      title={t('common.search')}
       description="Jump to any page"
     >
       <CommandInput placeholder="Search pages..." />

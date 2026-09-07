@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/select'
 import type { CompanyDoc } from '@/types/firestore'
 import { CURRENCIES, TIMEZONES, type CompanyFormValues } from '@/lib/company-validation'
+import { useTranslation } from 'react-i18next'
 
 function Field({
   label,
@@ -51,6 +52,7 @@ export function CompanyForm({
   value: CompanyFormValues
   onChange: (next: CompanyFormValues) => void
 }) {
+  const { t } = useTranslation()
   const set = (patch: Partial<CompanyFormValues>) => onChange({ ...value, ...patch })
   const registered = value.gstRegistration !== 'Unregistered'
 
@@ -104,7 +106,7 @@ export function CompanyForm({
             </SelectContent>
           </Select>
         </Field>
-        <Field label="GSTIN" required={registered}>
+        <Field label={t('common.gstin')} required={registered}>
           <Input
             value={value.gstin}
             onChange={(e) => set({ gstin: e.target.value.toUpperCase() })}
@@ -113,7 +115,7 @@ export function CompanyForm({
             maxLength={15}
           />
         </Field>
-        <Field label="PAN" required={registered}>
+        <Field label={t('common.pan')} required={registered}>
           <Input
             value={value.pan}
             onChange={(e) => set({ pan: e.target.value.toUpperCase() })}
@@ -122,7 +124,7 @@ export function CompanyForm({
             maxLength={10}
           />
         </Field>
-        <Field label="Email" required>
+        <Field label={t('common.email')} required>
           <Input
             type="email"
             value={value.email}
@@ -133,11 +135,11 @@ export function CompanyForm({
       </div>
 
       <div className="grid gap-4 border-t pt-5 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
-        <Field label="Phone" required>
+        <Field label={t('common.phone')} required>
           <Input
             value={value.phone}
             onChange={(e) => set({ phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
-            placeholder="10-digit mobile"
+            placeholder={t('common.tenDigitMobile')}
             inputMode="numeric"
           />
         </Field>

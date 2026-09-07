@@ -271,6 +271,7 @@ function UomModal({
   existing: UomWithId[]
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const createUom = useCreateUom()
   const updateUom = useUpdateUom()
@@ -393,7 +394,7 @@ function UomModal({
               <SelectValue placeholder="Base UOM" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None</SelectItem>
+              <SelectItem value="none">{t('common.none')}</SelectItem>
               {baseOptions.map((u) => (
                 <SelectItem key={u.id} value={u.id}>
                   {u.name}
@@ -414,7 +415,7 @@ function UomModal({
         </div>
       </div>
       <div className="space-y-1.5">
-        <Label>Description</Label>
+        <Label>{t('common.description')}</Label>
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}

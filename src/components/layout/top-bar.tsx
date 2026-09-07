@@ -167,7 +167,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           size="icon-sm"
           onClick={onSearchClick}
           className="sm:hidden"
-          aria-label="Search"
+          aria-label={t('common.search')}
         >
           <Search className="size-5" />
         </Button>

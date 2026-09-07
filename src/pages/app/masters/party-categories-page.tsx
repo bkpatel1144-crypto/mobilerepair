@@ -198,6 +198,7 @@ function DeletePartyCategoryButton({
   category: PartyCategoryWithId
   onDeleted: () => void
 }) {
+  const { t } = useTranslation()
   const deleteCategory = useDeletePartyCategory()
   const [confirming, setConfirming] = useState(false)
   return (
@@ -217,7 +218,7 @@ function DeletePartyCategoryButton({
         onOpenChange={setConfirming}
         title={`Delete "${category.name}"?`}
         message="Parties already assigned to this category will keep a reference to a category that no longer exists. This cannot be undone."
-        confirmLabel="Delete"
+        confirmLabel={t('common.delete')}
         isPending={deleteCategory.isPending}
         onConfirm={() =>
           deleteCategory.mutate(category, {

@@ -3,6 +3,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface DetailSectionRow {
   label: string
@@ -78,6 +79,7 @@ export function DetailDrawer({
   children,
   className,
 }: DetailDrawerProps) {
+  const { t } = useTranslation()
   const headerNode = header ?? (
     <div>
       <div className="flex items-center gap-2">
@@ -125,7 +127,7 @@ export function DetailDrawer({
 
       {timeline && timeline.length > 0 && (
         <div className="space-y-3">
-          <div className="text-sm font-semibold">Timeline</div>
+          <div className="text-sm font-semibold">{t('common.timeline')}</div>
           <Separator />
           <ol className="space-y-4">
             {timeline.map((event, i) => (

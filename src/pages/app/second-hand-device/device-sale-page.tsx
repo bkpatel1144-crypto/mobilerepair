@@ -197,6 +197,7 @@ function SellDeviceModal({
   purchase: SecondHandPurchaseWithId
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const { data: parties = [] } = useParties()
   const createParty = useCreateParty()
   const createSale = useCreateSecondHandSale()
@@ -311,7 +312,7 @@ function SellDeviceModal({
                   mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
                 })
               }
-              placeholder="10-digit mobile"
+              placeholder={t('common.tenDigitMobile')}
               className="h-8 text-sm"
             />
           </div>
@@ -319,7 +320,7 @@ function SellDeviceModal({
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label>Payment Mode</Label>
+            <Label>{t('common.paymentMode')}</Label>
             <Select
               value={paymentMode}
               onValueChange={(v) => v && setPaymentMode(v as typeof paymentMode)}
@@ -328,9 +329,9 @@ function SellDeviceModal({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="cash">Cash</SelectItem>
+                <SelectItem value="cash">{t('common.cash')}</SelectItem>
                 <SelectItem value="upi">UPI</SelectItem>
-                <SelectItem value="card">Card</SelectItem>
+                <SelectItem value="card">{t('common.cardMode')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

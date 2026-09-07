@@ -105,13 +105,23 @@ function topLevelFunctions(src) {
   return ranges
 }
 
-/** The innermost top-level function containing `index`, or null for module scope. */
+/**
+ * The function a match belongs to: the nearest top-level declaration *before* it.
+ *
+ * Not "the range whose braces enclose it", which is what this did first and got wrong. Brace
+ * matching needs to know where strings are, and apostrophes in ordinary JSX text — "can't",
+ * "doesn't" — read as an opening quote, so a range would end early and everything after it
+ * looked like module scope. That mislabelled 138 strings that were in fact inside components.
+ *
+ * Sequential attribution has its own failure mode — a genuine module-scope constant declared
+ * *after* the last component would be attributed to that component — but it fails loudly:
+ * `t()` is then referenced where it doesn't exist and tsc says so. An early-ending range failed
+ * silently, by skipping work.
+ */
 function enclosing(ranges, index) {
   let best = null
   for (const r of ranges) {
-    if (index >= r.start && index < r.end) {
-      if (!best || r.start > best.start) best = r
-    }
+    if (r.start <= index && (!best || r.start > best.start)) best = r
   }
   return best
 }

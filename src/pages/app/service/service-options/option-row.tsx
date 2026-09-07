@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import type { ServiceOptionWithId } from '@/hooks/use-service-options'
+import { useTranslation } from 'react-i18next'
 
 interface OptionRowProps {
   option: ServiceOptionWithId
@@ -27,6 +28,7 @@ export function OptionRow({
   canMoveUp,
   canMoveDown,
 }: OptionRowProps) {
+  const { t } = useTranslation()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(option.label)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
@@ -119,7 +121,7 @@ export function OptionRow({
         onOpenChange={setConfirmingDelete}
         title={`Delete "${option.label}"?`}
         message="Job cards or catalog entries already referencing this will keep a reference to something that no longer exists. This cannot be undone."
-        confirmLabel="Delete"
+        confirmLabel={t('common.delete')}
         onConfirm={() => {
           onDelete()
           setConfirmingDelete(false)

@@ -315,6 +315,7 @@ function NewEntryDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
+  const { t } = useTranslation()
   const { data: parties = [] } = useParties()
   const { data: jobs = [] } = useJobCards()
   const createParty = useCreateParty()
@@ -437,7 +438,7 @@ function NewEntryDialog({
                     mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
                   })
                 }
-                placeholder="10-digit mobile"
+                placeholder={t('common.tenDigitMobile')}
                 className="h-8 text-sm"
               />
               <Button
@@ -479,7 +480,7 @@ function NewEntryDialog({
 
         {against === 'jobCard' && (
           <div className="space-y-1.5">
-            <Label>Job Card</Label>
+            <Label>{t('common.jobCard')}</Label>
             <SearchSelect
               options={partyJobs.map((j) => ({
                 id: j.id,
@@ -505,7 +506,7 @@ function NewEntryDialog({
         </div>
 
         <div className="space-y-1.5">
-          <Label>Payment Mode</Label>
+          <Label>{t('common.paymentMode')}</Label>
           <div className="grid grid-cols-3 gap-2">
             {(['cash', 'upi', 'card'] as const).map((m) => {
               const Icon = MODE_ICONS[m]

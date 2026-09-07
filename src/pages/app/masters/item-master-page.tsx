@@ -332,6 +332,7 @@ function ItemModal({
   categories: ReturnType<typeof useItemCategories>['data']
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const { data: uoms = [] } = useUoms()
   const createItem = useCreateItem()
@@ -416,19 +417,19 @@ function ItemModal({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="service">Service</SelectItem>
-              <SelectItem value="part">Part</SelectItem>
+              <SelectItem value="part">{t('common.part')}</SelectItem>
               <SelectItem value="product">Product</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-1.5">
-          <Label>Category</Label>
+          <Label>{t('common.category')}</Label>
           <Select value={categoryId} onValueChange={(v) => v && setCategoryId(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="None" />
+              <SelectValue placeholder={t('common.none')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None</SelectItem>
+              <SelectItem value="none">{t('common.none')}</SelectItem>
               {(categories ?? []).map((c) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}
@@ -466,7 +467,7 @@ function ItemModal({
 
       <div className="grid grid-cols-3 gap-3">
         <div className="space-y-1.5">
-          <Label>Selling Price</Label>
+          <Label>{t('common.sellingPrice')}</Label>
           <Input
             type="number"
             min={0}
@@ -476,7 +477,7 @@ function ItemModal({
           />
         </div>
         <div className="space-y-1.5">
-          <Label>Purchase Price</Label>
+          <Label>{t('common.purchasePrice')}</Label>
           <Input
             type="number"
             min={0}
@@ -529,11 +530,11 @@ function ItemModal({
       </div>
 
       <div className="space-y-1.5">
-        <Label>Description</Label>
+        <Label>{t('common.description')}</Label>
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Optional"
+          placeholder={t('common.optional')}
           rows={2}
         />
       </div>

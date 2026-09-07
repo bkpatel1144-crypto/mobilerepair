@@ -54,6 +54,7 @@ function NewExpenseModal({
   open: boolean
   onOpenChange: (o: boolean) => void
 }) {
+  const { t } = useTranslation()
   const create = useCreateExpense()
   const { data: categories = [] } = useExpenseCategories()
   const createCategory = useCreateExpenseCategory()
@@ -178,9 +179,9 @@ function NewExpenseModal({
             {(modes.length > 0
               ? modes.map((m) => ({ value: modeFromName(m.name), label: m.name }))
               : [
-                  { value: 'cash' as const, label: 'Cash' },
+                  { value: 'cash' as const, label: t('common.cash') },
                   { value: 'upi' as const, label: 'UPI' },
-                  { value: 'card' as const, label: 'Card' },
+                  { value: 'card' as const, label: t('common.cardMode') },
                 ]
             ).map((m, i) => (
               <SelectItem key={`${m.value}-${i}`} value={m.value}>

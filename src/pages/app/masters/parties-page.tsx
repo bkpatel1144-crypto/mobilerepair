@@ -262,6 +262,7 @@ export function PartiesPage() {
 }
 
 function PartyDeleteButton({ party, onDone }: { party: PartyWithId; onDone: () => void }) {
+  const { t } = useTranslation()
   const setStatus = useSetPartyStatus()
   const [confirming, setConfirming] = useState(false)
   return (
@@ -281,7 +282,7 @@ function PartyDeleteButton({ party, onDone }: { party: PartyWithId; onDone: () =
         onOpenChange={setConfirming}
         title={`Delete "${party.name}"?`}
         message="This removes the party from every picker (job cards, receipts, purchases). There is no undo screen for this in the app — recovering it would mean editing Firestore directly."
-        confirmLabel="Delete"
+        confirmLabel={t('common.delete')}
         isPending={setStatus.isPending}
         onConfirm={() =>
           setStatus.mutate(
@@ -308,6 +309,7 @@ function PartyModal({
   categories: ReturnType<typeof usePartyCategories>['data']
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const createParty = useCreateParty()
   const updateParty = useUpdateParty()
@@ -396,13 +398,13 @@ function PartyModal({
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>Category</Label>
+          <Label>{t('common.category')}</Label>
           <Select value={categoryId} onValueChange={(v) => v && setCategoryId(v)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select Category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None</SelectItem>
+              <SelectItem value="none">{t('common.none')}</SelectItem>
               {(categories ?? []).map((c) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}
@@ -438,7 +440,7 @@ function PartyModal({
       {showExtra && (
         <div className="space-y-3 rounded-md border border-dashed p-3">
           <div className="space-y-1.5">
-            <Label>Address</Label>
+            <Label>{t('common.address')}</Label>
             <Textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -447,7 +449,7 @@ function PartyModal({
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Email</Label>
+            <Label>{t('common.email')}</Label>
             <Input
               type="email"
               value={email}
@@ -508,7 +510,7 @@ function PartyModal({
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label>Pincode</Label>
+            <Label>{t('common.pincode')}</Label>
             <Input
               value={pincode}
               onChange={(e) => setPincode(e.target.value.replace(/\D/g, '').slice(0, 6))}

@@ -323,6 +323,7 @@ function EditPurchaseModal({
   purchase: SecondHandPurchaseWithId
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const updatePurchase = useUpdateSecondHandPurchase()
   const [conditionGrade, setConditionGrade] = useState<ConditionGrade>(purchase.conditionGrade)
   const [conditionNotes, setConditionNotes] = useState(purchase.conditionNotes ?? '')
@@ -417,7 +418,7 @@ function EditPurchaseModal({
         />
       </div>
       <div className="space-y-1.5">
-        <Label>Notes</Label>
+        <Label>{t('common.notes')}</Label>
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}

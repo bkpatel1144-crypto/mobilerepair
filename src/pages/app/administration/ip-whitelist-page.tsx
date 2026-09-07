@@ -241,6 +241,7 @@ function IpWhitelistModal({
   editing: IpWhitelistWithId | 'new'
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const { data: myIp } = useMyIp()
   const createEntry = useCreateIpWhitelistEntry()
@@ -304,11 +305,11 @@ function IpWhitelistModal({
         )}
       </div>
       <div className="space-y-1.5">
-        <Label>Notes</Label>
+        <Label>{t('common.notes')}</Label>
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Optional"
+          placeholder={t('common.optional')}
           rows={2}
         />
       </div>

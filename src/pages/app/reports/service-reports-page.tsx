@@ -47,6 +47,7 @@ function outstandingOf(job: JobCardWithId): number {
 /** The expanded row's own sub-panel — its own component (not an inline callback) so
  * `useJobTimeline`/`useJobCosting` only fetch for whichever row is actually open. */
 function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
+  const { t } = useTranslation()
   const { data: timeline = [] } = useJobTimeline(job.id)
   const { data: costing } = useJobCosting(job.id)
   const supplierByItemId = new Map(
@@ -77,7 +78,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
             Payment
           </p>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Final Amount</span>
+            <span className="text-muted-foreground">{t('common.finalAmount')}</span>
             <span className="font-medium">{formatCurrency(job.finalAmount ?? 0)}</span>
           </div>
           <div className="flex justify-between">
@@ -85,7 +86,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
             <span className="font-medium">{formatCurrency(job.paidAmount)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Outstanding</span>
+            <span className="text-muted-foreground">{t('common.outstanding')}</span>
             {outstanding === 0 ? (
               <span className="font-medium text-emerald-600">✓ Fully Paid</span>
             ) : (
@@ -107,11 +108,11 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
             <table className="w-full min-w-[480px] text-sm whitespace-nowrap">
               <thead className="bg-muted/40 text-xs text-muted-foreground uppercase">
                 <tr>
-                  <th className="p-2 text-left">Part</th>
-                  <th className="p-2 text-left">Supplier</th>
-                  <th className="p-2 text-right">Rate</th>
+                  <th className="p-2 text-left">{t('common.part')}</th>
+                  <th className="p-2 text-left">{t('common.supplier')}</th>
+                  <th className="p-2 text-right">{t('common.rate')}</th>
                   <th className="p-2 text-right">Qty</th>
-                  <th className="p-2 text-right">Total</th>
+                  <th className="p-2 text-right">{t('common.total')}</th>
                 </tr>
               </thead>
               <tbody>

@@ -211,6 +211,7 @@ function PartyLedgerDetailSheet({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
+  const { t } = useTranslation()
   const { data, isLoading, error: loadError, refetch } = usePartyLedgerDetail(party?.party.id)
 
   return (
@@ -231,7 +232,10 @@ function PartyLedgerDetailSheet({
             <div className="grid grid-cols-2 gap-3 px-4 sm:grid-cols-4">
               <StatCard label="Total Billed" value={`₹${data?.totalBilled ?? 0}`} />
               <StatCard label="Total Paid" value={`₹${data?.totalPaid ?? 0}`} tone="success" />
-              <StatCard label="Balance" value={data ? balanceLabel(data.closingBalance) : '—'} />
+              <StatCard
+                label={t('common.balance')}
+                value={data ? balanceLabel(data.closingBalance) : '—'}
+              />
               <StatCard label="Entries" value={data?.rows.length ?? 0} />
             </div>
 
@@ -244,7 +248,7 @@ function PartyLedgerDetailSheet({
 
             <div className="overflow-x-auto px-4 pb-4">
               {isLoading ? (
-                <p className="p-4 text-sm text-muted-foreground">Loading…</p>
+                <p className="p-4 text-sm text-muted-foreground">{t('common.loading')}</p>
               ) : loadError ? (
                 <ErrorState error={loadError} onRetry={() => void refetch()} />
               ) : !data || data.rows.length === 0 ? (
@@ -257,11 +261,11 @@ function PartyLedgerDetailSheet({
                 <table className="w-full min-w-[600px] text-sm">
                   <thead className="border-b text-xs text-muted-foreground uppercase">
                     <tr>
-                      <th className="p-2 text-left">Date</th>
+                      <th className="p-2 text-left">{t('common.date')}</th>
                       <th className="p-2 text-left">Particulars</th>
                       <th className="p-2 text-right">Debit (Dr)</th>
                       <th className="p-2 text-right">Credit (Cr)</th>
-                      <th className="p-2 text-right">Balance</th>
+                      <th className="p-2 text-right">{t('common.balance')}</th>
                     </tr>
                   </thead>
                   <tbody>

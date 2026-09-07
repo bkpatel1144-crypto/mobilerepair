@@ -28,6 +28,7 @@ import { resolveWhatsAppMessage, whatsAppEventForStatus, buildWhatsAppLink } fro
 import { buildPath } from '@/config/nav'
 import { useNavigate } from 'react-router-dom'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
+import { useTranslation } from 'react-i18next'
 
 /** Which statuses each action even makes sense in — the status×action *permission* matrix
  * (Phase 4) says whether a role is *allowed* to do something; this says whether doing it would
@@ -51,6 +52,7 @@ type DialogKind =
   'hold' | 'cancel' | 'jobDone' | 'generateBill' | 'payment' | 'handover' | 'fieldVisit' | null
 
 export function ActionButtons({ job }: { job: JobCardWithId }) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { canDo } = usePermissions()
   const { canPerform, workflowConfig, allowUndo } = useJobActionGating(job)
@@ -452,7 +454,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       >
         <div className="space-y-3">
           <div className="space-y-1.5">
-            <Label>Final Amount</Label>
+            <Label>{t('common.finalAmount')}</Label>
             <Input
               type="number"
               min={0}
@@ -473,7 +475,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
               {collectPayment && (
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1.5">
-                    <Label>Mode</Label>
+                    <Label>{t('common.mode')}</Label>
                     <Select
                       value={modeInput}
                       onValueChange={(v) => v && setModeInput(v as typeof modeInput)}
@@ -482,9 +484,9 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="cash">Cash</SelectItem>
+                        <SelectItem value="cash">{t('common.cash')}</SelectItem>
                         <SelectItem value="upi">UPI</SelectItem>
-                        <SelectItem value="card">Card</SelectItem>
+                        <SelectItem value="card">{t('common.cardMode')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -505,7 +507,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       >
         <div className="grid grid-cols-2 gap-2">
           <div className="space-y-1.5">
-            <Label>Amount</Label>
+            <Label>{t('common.amount')}</Label>
             <Input
               type="number"
               min={0}
@@ -514,7 +516,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Mode</Label>
+            <Label>{t('common.mode')}</Label>
             <Select
               value={modeInput}
               onValueChange={(v) => v && setModeInput(v as typeof modeInput)}
@@ -523,9 +525,9 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="cash">Cash</SelectItem>
+                <SelectItem value="cash">{t('common.cash')}</SelectItem>
                 <SelectItem value="upi">UPI</SelectItem>
-                <SelectItem value="card">Card</SelectItem>
+                <SelectItem value="card">{t('common.cardMode')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

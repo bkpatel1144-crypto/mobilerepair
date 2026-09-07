@@ -9,6 +9,7 @@ import { FormError } from '@/components/shared/form-error'
 import { useAuth } from '@/hooks/use-auth'
 import { useUpdateMyProfile, useChangePassword, passwordErrorMessage } from '@/hooks/use-my-profile'
 import { getInitials } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 /** A field the user can see but not edit from here — role and mobile are administrative (see
  * `useUpdateMyProfile`'s doc comment for why editing them from your own profile would be a
@@ -43,6 +44,7 @@ export function ProfileDrawer({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const updateProfile = useUpdateMyProfile()
   const changePassword = useChangePassword()
@@ -155,8 +157,16 @@ export function ProfileDrawer({
           <TabsContent value="info" className="min-h-0 flex-1 overflow-y-auto p-5">
             <form id="profile-info-form" onSubmit={handleSaveProfile} className="space-y-4">
               <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(12rem,1fr))]">
-                <ReadOnlyField icon={Phone} label="Mobile" value={profile.mobile ?? '—'} />
-                <ReadOnlyField icon={ShieldCheck} label="Role" value={profile.roleName} />
+                <ReadOnlyField
+                  icon={Phone}
+                  label={t('common.mobile')}
+                  value={profile.mobile ?? '—'}
+                />
+                <ReadOnlyField
+                  icon={ShieldCheck}
+                  label={t('common.role')}
+                  value={profile.roleName}
+                />
               </div>
 
               <div className="space-y-1.5">

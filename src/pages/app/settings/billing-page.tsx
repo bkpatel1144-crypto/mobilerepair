@@ -18,6 +18,7 @@ import { useBranches } from '@/hooks/use-branches'
 import { usePermissions } from '@/hooks/use-permissions'
 import { NAV_SECTIONS, buildPath } from '@/config/nav'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 /**
  * There is no paid tier, per BUILD_PLAN.md — "plainly free forever, zero plan-tier UI." So this
@@ -55,6 +56,7 @@ function StatTile({
 }
 
 export function BillingPage() {
+  const { t } = useTranslation()
   const { data: company, isLoading, error: loadError, refetch } = useCompany()
   const { data: users = [], isLoading: usersLoading } = useUsers()
   const { data: branches = [], isLoading: branchesLoading } = useBranches()
@@ -144,10 +146,15 @@ export function BillingPage() {
           {/* Account */}
           <div className="space-y-5">
             <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))]">
-              <StatTile icon={Users} label="Users" value={activeUsers} loading={usersLoading} />
+              <StatTile
+                icon={Users}
+                label={t('common.users')}
+                value={activeUsers}
+                loading={usersLoading}
+              />
               <StatTile
                 icon={GitBranch}
-                label="Branches"
+                label={t('common.branches')}
                 value={activeBranches}
                 loading={branchesLoading}
               />

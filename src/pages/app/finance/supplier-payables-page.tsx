@@ -49,6 +49,7 @@ import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { downloadCsv } from '@/lib/csv-export'
 import { cn, toDateInputValue } from '@/lib/utils'
 import type { ReceiptDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 const BUCKET_LABELS: {
   key: SupplierPayable['bucket']
@@ -248,6 +249,7 @@ function PaymentModal({
   payable: SupplierPayable | null
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const pay = useRecordSupplierPayment()
   const [amount, setAmount] = useState('')
   const [mode, setMode] = useState<ReceiptDoc['mode']>('cash')
@@ -297,7 +299,7 @@ function PaymentModal({
     >
       {payable && (
         <div className="flex items-center justify-between rounded-lg border bg-muted/40 p-3 text-sm">
-          <span className="text-muted-foreground">Outstanding</span>
+          <span className="text-muted-foreground">{t('common.outstanding')}</span>
           <span className="text-lg font-semibold text-red-600">₹{payable.outstanding}</span>
         </div>
       )}
@@ -325,9 +327,9 @@ function PaymentModal({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="cash">Cash</SelectItem>
+              <SelectItem value="cash">{t('common.cash')}</SelectItem>
               <SelectItem value="upi">UPI</SelectItem>
-              <SelectItem value="card">Card</SelectItem>
+              <SelectItem value="card">{t('common.cardMode')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -355,6 +357,7 @@ function PaymentModal({
 }
 
 export function SupplierPayablesPage() {
+  const { t } = useTranslation()
   const { data, isLoading, error: loadError, refetch } = useSupplierPayables()
   const { data: bills = [] } = useSupplierBills()
   const voidBill = useVoidSupplierBill()
@@ -384,7 +387,7 @@ export function SupplierPayablesPage() {
   const columns: DataTableColumn<SupplierGroup>[] = [
     {
       key: 'supplier',
-      header: 'Supplier',
+      header: t('common.supplier'),
       sortValue: (g) => g.supplierName,
       render: (g) => (
         <div>
@@ -398,13 +401,13 @@ export function SupplierPayablesPage() {
     { key: 'billed', header: 'Billed', sortValue: (g) => g.billed, render: (g) => `₹${g.billed}` },
     {
       key: 'paid',
-      header: 'Paid',
+      header: t('common.paid'),
       sortValue: (g) => g.paid,
       render: (g) => <span className="text-teal-600 dark:text-teal-400">₹{g.paid}</span>,
     },
     {
       key: 'outstanding',
-      header: 'Outstanding',
+      header: t('common.outstanding'),
       sortValue: (g) => g.outstanding,
       render: (g) => <span className="font-semibold text-red-600">₹{g.outstanding}</span>,
     },
@@ -482,7 +485,7 @@ export function SupplierPayablesPage() {
               icon={IndianRupee}
               tone="danger"
             />
-            <StatCard label="Suppliers" value={data.supplierCount} icon={Users} />
+            <StatCard label={t('common.suppliers')} value={data.supplierCount} icon={Users} />
             <StatCard
               label="Overdue 60+"
               value={`₹${data.buckets['60+']}`}
@@ -605,17 +608,21 @@ export function SupplierPayablesPage() {
 
                   <dl className="grid grid-cols-3 gap-2 text-sm">
                     <div>
-                      <dt className="text-xs text-muted-foreground uppercase">Amount</dt>
+                      <dt className="text-xs text-muted-foreground uppercase">
+                        {t('common.amount')}
+                      </dt>
                       <dd className="font-medium">₹{item.amount}</dd>
                     </div>
                     <div>
-                      <dt className="text-xs text-muted-foreground uppercase">Paid</dt>
+                      <dt className="text-xs text-muted-foreground uppercase">
+                        {t('common.paid')}
+                      </dt>
                       <dd className="font-medium text-teal-600 dark:text-teal-400">
                         ₹{item.amountPaid}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-xs text-muted-foreground uppercase">Due</dt>
+                      <dt className="text-xs text-muted-foreground uppercase">{t('common.due')}</dt>
                       <dd className="font-semibold text-red-600">₹{item.outstanding}</dd>
                     </div>
                   </dl>

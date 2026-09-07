@@ -21,6 +21,7 @@ import {
 } from '@/hooks/use-form-schema'
 import { FieldControlRow } from './form-builder/field-control-row'
 import type { FormFieldConfig, FormLayout, FormSchemaDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 const LAYOUT_OPTIONS: { value: FormLayout; label: string }[] = [
   { value: 'standard', label: 'Standard (one field per row)' },
@@ -73,6 +74,7 @@ function writeTemplates(formType: FormType, templates: Record<string, SchemaDraf
 }
 
 export function FormBuilderTab({ formType }: { formType: FormType }) {
+  const { t } = useTranslation()
   const { data: existingSchema, isLoading, error: loadError, refetch } = useFormSchema(formType)
   const saveSchema = useSaveFormSchema(formType)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -328,7 +330,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
         onOpenChange={(open) => !open && setPendingImportFile(null)}
         title="Import form schema?"
         message="This replaces every field and layout setting currently in this draft with the contents of the uploaded file. Nothing is saved until you click Save, but any unsaved changes made so far will be overwritten."
-        confirmLabel="Import"
+        confirmLabel={t('common.import')}
         onConfirm={() => {
           if (pendingImportFile) handleImportFile(pendingImportFile)
           setPendingImportFile(null)
@@ -340,7 +342,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
         onOpenChange={(open) => !open && setPendingTemplateName(null)}
         title={`Apply template "${pendingTemplateName ?? ''}"?`}
         message="This replaces every field and layout setting currently in this draft with the saved template. Nothing is saved until you click Save, but any unsaved changes made so far will be overwritten."
-        confirmLabel="Apply"
+        confirmLabel={t('common.apply')}
         onConfirm={() => {
           if (pendingTemplateName) handleApplyTemplate(pendingTemplateName)
           setPendingTemplateName(null)

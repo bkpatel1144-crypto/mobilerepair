@@ -26,6 +26,7 @@ import { UsersSubtab } from './users-subtab'
 import { BehaviorSubtab } from './behavior-subtab'
 import { draftFromConfig, draftsEqual, type WorkflowConfigDraft } from './types'
 import type { WorkflowConfigDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 const HOW_IT_WORKS = [
   {
@@ -164,6 +165,7 @@ function SelectedRolePanel({
   onSelectRole: (roleId: string) => void
   onBack: () => void
 }) {
+  const { t } = useTranslation()
   const role = allRoles.find((r) => r.id === roleId)
   const { data: existingConfig, isLoading, error: loadError, refetch } = useWorkflowConfig(roleId)
   const saveConfig = useSaveWorkflowConfig()
@@ -267,8 +269,8 @@ function SelectedRolePanel({
 
       <Tabs value={subtab} onValueChange={(v) => setSubtab(v as typeof subtab)}>
         <TabsList>
-          <TabsTrigger value="permissions">Permissions</TabsTrigger>
-          <TabsTrigger value="users">Users</TabsTrigger>
+          <TabsTrigger value="permissions">{t('common.permissions')}</TabsTrigger>
+          <TabsTrigger value="users">{t('common.users')}</TabsTrigger>
           <TabsTrigger value="behavior">Behavior</TabsTrigger>
         </TabsList>
         <TabsContent value="permissions" className="pt-4">

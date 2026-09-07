@@ -17,6 +17,7 @@ import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { cn } from '@/lib/utils'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
 import type { JobCostingDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 type CostItem = JobCostingDoc['costItems'][number]
 const COST_TYPES: { key: CostItem['type']; label: string }[] = [
@@ -52,6 +53,7 @@ export function RecordCostingModal({
   existing: JobCostingDoc | null
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const [costItems, setCostItems] = useState<CostItem[]>(
     existing?.costItems ?? costItemsFromJob(job)
   )
@@ -156,9 +158,9 @@ export function RecordCostingModal({
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Part</TableHead>
-                      <TableHead>Supplier</TableHead>
-                      <TableHead>Rate</TableHead>
+                      <TableHead>{t('common.part')}</TableHead>
+                      <TableHead>{t('common.supplier')}</TableHead>
+                      <TableHead>{t('common.rate')}</TableHead>
                       <TableHead>Qty</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -235,7 +237,7 @@ export function RecordCostingModal({
                     onCreateNew={(query) => handleCreateSupplier(item.id, query)}
                   />
                   <div className="grid grid-cols-4 items-center gap-2">
-                    <Input value={item.rate ?? ''} placeholder="Rate" disabled />
+                    <Input value={item.rate ?? ''} placeholder={t('common.rate')} disabled />
                     <Input
                       type="number"
                       value={item.cost}
@@ -285,7 +287,7 @@ export function RecordCostingModal({
                 <span className="font-medium">₹{totalCost}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Profit</span>
+                <span className="text-muted-foreground">{t('common.profit')}</span>
                 <span className={cn('font-medium', profit < 0 ? 'text-red-600' : 'text-teal-600')}>
                   ₹{profit} ({profitPct}%)
                 </span>

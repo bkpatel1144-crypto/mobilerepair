@@ -30,6 +30,7 @@ import { useAuth } from '@/hooks/use-auth'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import { ActionButtons } from './action-buttons'
 import { TimelinePanel } from './timeline-panel'
+import { useTranslation } from 'react-i18next'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -67,6 +68,7 @@ export function JobCardDetailContent({
   job: JobCardWithId
   onExpand?: () => void
 }) {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const {
     data: timeline = [],
@@ -159,18 +161,18 @@ export function JobCardDetailContent({
             </div>
           </Panel>
 
-          <Panel icon={Smartphone} title="Device">
+          <Panel icon={Smartphone} title={t('common.device')}>
             <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
               <div>
-                <dt className="text-xs text-muted-foreground uppercase">Type</dt>
+                <dt className="text-xs text-muted-foreground uppercase">{t('common.type')}</dt>
                 <dd>{job.deviceTypeName ?? '—'}</dd>
               </div>
               <div>
-                <dt className="text-xs text-muted-foreground uppercase">Brand</dt>
+                <dt className="text-xs text-muted-foreground uppercase">{t('common.brand')}</dt>
                 <dd>{job.brandName ?? '—'}</dd>
               </div>
               <div>
-                <dt className="text-xs text-muted-foreground uppercase">Model</dt>
+                <dt className="text-xs text-muted-foreground uppercase">{t('common.model')}</dt>
                 <dd>{job.model ?? '—'}</dd>
               </div>
               <div>
@@ -199,7 +201,7 @@ export function JobCardDetailContent({
             </div>
             {job.remark && (
               <div className="pt-2">
-                <p className="text-xs text-muted-foreground uppercase">Remark</p>
+                <p className="text-xs text-muted-foreground uppercase">{t('common.remark')}</p>
                 <p className="text-sm">{job.remark}</p>
               </div>
             )}
@@ -212,12 +214,12 @@ export function JobCardDetailContent({
               </span>
               <div>
                 <p className="text-sm font-medium">{job.assignedToName ?? 'Unassigned'}</p>
-                <p className="text-xs text-muted-foreground">Technician</p>
+                <p className="text-xs text-muted-foreground">{t('common.technician')}</p>
               </div>
             </div>
             <dl className="space-y-1 pt-2 text-sm">
               <div className="flex justify-between">
-                <dt className="text-muted-foreground">Received By</dt>
+                <dt className="text-muted-foreground">{t('common.receivedBy')}</dt>
                 <dd>{job.receivedByName}</dd>
               </div>
               {job.deliveredByName && (
@@ -238,22 +240,22 @@ export function JobCardDetailContent({
 
         <div className="space-y-4">
           {canViewMoney && (
-            <Panel icon={IndianRupee} title="Payment">
+            <Panel icon={IndianRupee} title={t('common.payment')}>
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
                 <div>
                   <dt className="text-xs text-muted-foreground uppercase">Estimated</dt>
                   <dd>₹{job.estimatedCost}</dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-muted-foreground uppercase">Advance</dt>
+                  <dt className="text-xs text-muted-foreground uppercase">{t('common.advance')}</dt>
                   <dd>₹{job.advanceReceived}</dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-muted-foreground uppercase">Paid</dt>
+                  <dt className="text-xs text-muted-foreground uppercase">{t('common.paid')}</dt>
                   <dd>₹{job.paidAmount}</dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-muted-foreground uppercase">Balance</dt>
+                  <dt className="text-xs text-muted-foreground uppercase">{t('common.balance')}</dt>
                   <dd
                     className={
                       balance <= 0 ? 'font-medium text-teal-600' : 'font-medium text-amber-600'
@@ -269,7 +271,7 @@ export function JobCardDetailContent({
               </div>
               {job.finalAmount != null && (
                 <div className="flex justify-between text-sm font-medium">
-                  <span>Final Amount</span>
+                  <span>{t('common.finalAmount')}</span>
                   <span>₹{job.finalAmount}</span>
                 </div>
               )}
@@ -324,7 +326,7 @@ export function JobCardDetailContent({
                       min={0}
                       value={partRate}
                       onChange={(e) => setPartRate(Number(e.target.value) || 0)}
-                      placeholder="Rate"
+                      placeholder={t('common.rate')}
                       className="w-24 rounded-md border px-2 py-1 text-sm"
                     />
                     <input

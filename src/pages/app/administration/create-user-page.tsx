@@ -23,6 +23,7 @@ import { getAuthErrorMessage } from '@/lib/auth'
 import { errorMessage } from '@/lib/error-message'
 import { buildPath } from '@/config/nav'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
+import { useTranslation } from 'react-i18next'
 
 const createUserSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters').max(80),
@@ -39,6 +40,7 @@ type CreateUserInput = z.infer<typeof createUserSchema>
 const DRAFT_KEY = 'aim-create-user-draft'
 
 export function CreateUserPage() {
+  const { t } = useTranslation()
   useBreadcrumbExtra('Create')
   const navigate = useNavigate()
   const { profile } = useAuth()
@@ -171,7 +173,7 @@ export function CreateUserPage() {
             <Label htmlFor="mobile">Mobile Number</Label>
             <Input
               id="mobile"
-              placeholder="10-digit mobile"
+              placeholder={t('common.tenDigitMobile')}
               aria-invalid={!!errors.mobile}
               {...register('mobile')}
             />

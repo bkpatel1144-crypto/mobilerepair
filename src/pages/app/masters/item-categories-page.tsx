@@ -287,6 +287,7 @@ function ItemCategoryDeleteButton({
   subCategoryCount: number
   onDeleted: () => void
 }) {
+  const { t } = useTranslation()
   const deleteCategory = useDeleteItemCategory()
   const [confirming, setConfirming] = useState(false)
   const hasDependents = itemCount > 0 || subCategoryCount > 0
@@ -312,7 +313,7 @@ function ItemCategoryDeleteButton({
             ? `This category still has ${itemCount} item(s) and ${subCategoryCount} sub-categor${subCategoryCount === 1 ? 'y' : 'ies'}. Deleting it will leave them pointing at a category that no longer exists. This cannot be undone.`
             : 'This permanently deletes the category. This cannot be undone.'
         }
-        confirmLabel="Delete"
+        confirmLabel={t('common.delete')}
         isPending={deleteCategory.isPending}
         onConfirm={() =>
           deleteCategory.mutate(category, {
@@ -336,6 +337,7 @@ function ItemCategoryModal({
   existing: ItemCategoryWithId[]
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const createCategory = useCreateItemCategory()
   const updateCategory = useUpdateItemCategory()
@@ -413,11 +415,11 @@ function ItemCategoryModal({
         </div>
       </div>
       <div className="space-y-1.5">
-        <Label>Description</Label>
+        <Label>{t('common.description')}</Label>
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Optional"
+          placeholder={t('common.optional')}
           rows={2}
         />
       </div>

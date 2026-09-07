@@ -15,6 +15,7 @@ import { PRINT_PRESETS } from '@/config/print-presets'
 import { buildDefaultLayout } from '@/config/print-layouts'
 import { useCreatePrintTemplate, type PrintTemplateWithId } from '@/hooks/use-print-templates'
 import type { PrintDocumentType } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 /** A new template always starts from a catalogue preset rather than a blank page: paper size,
  * margins and print settings for a 58mm roll are not something anyone should have to type in
@@ -30,6 +31,7 @@ export function NewTemplateDialog({
   existing: PrintTemplateWithId[]
   onCreated: (id: string) => void
 }) {
+  const { t } = useTranslation()
   const create = useCreatePrintTemplate()
   const [documentType, setDocumentType] = useState<PrintDocumentType>('jobCard')
   const [presetIndex, setPresetIndex] = useState(0)
@@ -117,7 +119,7 @@ export function NewTemplateDialog({
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="tpl-name">Name</Label>
+        <Label htmlFor="tpl-name">{t('common.name')}</Label>
         <Input
           id="tpl-name"
           value={name}

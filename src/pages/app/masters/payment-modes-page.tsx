@@ -257,6 +257,7 @@ function PaymentModeModal({
   existing: PaymentModeWithId[]
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const isNew = editing === 'new'
   const createMode = useCreatePaymentMode(existing)
   const updateMode = useUpdatePaymentMode(existing)
@@ -315,11 +316,11 @@ function PaymentModeModal({
         </Select>
       </div>
       <div className="space-y-1.5">
-        <Label>Description</Label>
+        <Label>{t('common.description')}</Label>
         <Input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Optional"
+          placeholder={t('common.optional')}
         />
       </div>
       <label className="flex items-center gap-2 text-sm">
