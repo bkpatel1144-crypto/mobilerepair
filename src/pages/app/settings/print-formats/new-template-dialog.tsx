@@ -46,7 +46,7 @@ export function NewTemplateDialog({
       setError('That document type has no base format to start from.')
       return
     }
-    if (existing.some((t) => t.name.trim().toLowerCase() === finalName.toLowerCase())) {
+    if (existing.some((tpl) => tpl.name.trim().toLowerCase() === finalName.toLowerCase())) {
       setError('A template with that name already exists.')
       return
     }
@@ -91,9 +91,9 @@ export function NewTemplateDialog({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {PRINT_DOCUMENT_TYPES.map((t) => (
-              <SelectItem key={t.key} value={t.key}>
-                {t.label}
+            {PRINT_DOCUMENT_TYPES.map((opt) => (
+              <SelectItem key={opt.key} value={opt.key}>
+                {opt.label}
               </SelectItem>
             ))}
           </SelectContent>

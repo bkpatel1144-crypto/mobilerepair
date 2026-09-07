@@ -155,15 +155,15 @@ export function PartyLedgerPage() {
         searchPlaceholder="Search party name, mobile, code..."
       >
         <div className="flex gap-1">
-          {(['all', 'customer', 'supplier'] as const).map((t) => (
+          {(['all', 'customer', 'supplier'] as const).map((tab) => (
             <Button
-              key={t}
+              key={tab}
               type="button"
               size="sm"
-              variant={typeFilter === t ? 'default' : 'outline'}
-              onClick={() => setTypeFilter(t)}
+              variant={typeFilter === tab ? 'default' : 'outline'}
+              onClick={() => setTypeFilter(tab)}
             >
-              {t === 'all' ? 'All' : t === 'customer' ? 'Customers' : 'Suppliers'}
+              {tab === 'all' ? 'All' : tab === 'customer' ? 'Customers' : 'Suppliers'}
             </Button>
           ))}
         </div>

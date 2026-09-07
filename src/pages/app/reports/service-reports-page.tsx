@@ -415,9 +415,9 @@ export function ServiceReportsPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
-                {deviceTypes.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {t}
+                {deviceTypes.map((dt) => (
+                  <SelectItem key={dt} value={dt}>
+                    {dt}
                   </SelectItem>
                 ))}
               </SelectContent>

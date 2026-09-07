@@ -21,16 +21,16 @@ function parseTemplate(raw: unknown):
   | { ok: false; error: string } {
   if (!raw || typeof raw !== 'object')
     return { ok: false, error: 'That file is not a template object.' }
-  const t = raw as Record<string, unknown>
-  if (!t.documentType || !PRINT_DOCUMENT_TYPES.some((d) => d.key === t.documentType)) {
-    return { ok: false, error: `Unknown document type "${String(t.documentType)}".` }
+  const obj = raw as Record<string, unknown>
+  if (!obj.documentType || !PRINT_DOCUMENT_TYPES.some((d) => d.key === obj.documentType)) {
+    return { ok: false, error: `Unknown document type "${String(obj.documentType)}".` }
   }
-  if (!Array.isArray(t.elements)) return { ok: false, error: 'The file has no `elements` array.' }
-  const paper = t.paper as Record<string, unknown> | undefined
+  if (!Array.isArray(obj.elements)) return { ok: false, error: 'The file has no `elements` array.' }
+  const paper = obj.paper as Record<string, unknown> | undefined
   if (!paper || typeof paper.width !== 'number' || typeof paper.height !== 'number') {
     return { ok: false, error: 'The file has no valid `paper` size.' }
   }
-  return { ok: true, value: t as never }
+  return { ok: true, value: obj as never }
 }
 
 export function ImportTemplateDialog({

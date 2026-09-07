@@ -72,15 +72,15 @@ export function PayablesPage() {
             searchPlaceholder="Search job card, customer..."
           >
             <div className="flex gap-1">
-              {(['all', 'refundDue', 'unusedAdvance'] as const).map((t) => (
+              {(['all', 'refundDue', 'unusedAdvance'] as const).map((tab) => (
                 <Button
-                  key={t}
+                  key={tab}
                   type="button"
                   size="sm"
-                  variant={tab === t ? 'default' : 'outline'}
-                  onClick={() => setTab(t)}
+                  variant={tab === tab ? 'default' : 'outline'}
+                  onClick={() => setTab(tab)}
                 >
-                  {t === 'all' ? 'All' : t === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                  {tab === 'all' ? 'All' : tab === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
                 </Button>
               ))}
             </div>

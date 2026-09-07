@@ -30,7 +30,9 @@ export function WhatsAppPage() {
     event: WhatsAppTemplateDoc['event'],
     patch: Partial<WhatsAppTemplateDoc>
   ) {
-    setTemplates(effectiveTemplates.map((t) => (t.event === event ? { ...t, ...patch } : t)))
+    setTemplates(
+      effectiveTemplates.map((tpl) => (tpl.event === event ? { ...tpl, ...patch } : tpl))
+    )
   }
 
   async function handleSave() {
@@ -88,20 +90,20 @@ export function WhatsAppPage() {
           </div>
 
           <div className="space-y-3">
-            {effectiveTemplates.map((t) => (
-              <div key={t.event} className="space-y-2 rounded-lg border p-4">
+            {effectiveTemplates.map((tpl) => (
+              <div key={tpl.event} className="space-y-2 rounded-lg border p-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold">{t.label}</p>
+                  <p className="text-sm font-semibold">{tpl.label}</p>
                   <Switch
-                    checked={t.enabled}
-                    onCheckedChange={(checked) => updateTemplate(t.event, { enabled: checked })}
+                    checked={tpl.enabled}
+                    onCheckedChange={(checked) => updateTemplate(tpl.event, { enabled: checked })}
                   />
                 </div>
                 <Textarea
-                  value={t.message}
-                  onChange={(e) => updateTemplate(t.event, { message: e.target.value })}
+                  value={tpl.message}
+                  onChange={(e) => updateTemplate(tpl.event, { message: e.target.value })}
                   rows={2}
-                  disabled={!t.enabled}
+                  disabled={!tpl.enabled}
                 />
               </div>
             ))}

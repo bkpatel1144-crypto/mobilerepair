@@ -188,19 +188,19 @@ export function RecordCostingModal({
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex gap-1">
-                      {COST_TYPES.map((t) => (
+                      {COST_TYPES.map((opt) => (
                         <button
-                          key={t.key}
+                          key={opt.key}
                           type="button"
-                          onClick={() => updateItem(item.id, { type: t.key })}
+                          onClick={() => updateItem(item.id, { type: opt.key })}
                           className={cn(
                             'rounded-full px-2 py-0.5 text-xs',
-                            item.type === t.key
+                            item.type === opt.key
                               ? 'bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400'
                               : 'text-muted-foreground hover:bg-muted'
                           )}
                         >
-                          {t.label}
+                          {opt.label}
                         </button>
                       ))}
                     </div>

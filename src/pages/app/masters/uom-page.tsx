@@ -36,10 +36,12 @@ import {
 } from '@/hooks/use-uom'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
+import { useTranslation } from 'react-i18next'
 
 const TYPE_OPTIONS = ['Quantity', 'Length', 'Weight', 'Volume', 'Time', 'Other']
 
 export function UomPage() {
+  const { t } = useTranslation()
   const { data: uoms = [], isLoading, error: loadError, refetch } = useUoms()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'uom', 'update'))
@@ -59,7 +61,7 @@ export function UomPage() {
   const columns: DataTableColumn<UomWithId>[] = [
     {
       key: 'name',
-      header: 'Unit',
+      header: t('common.unit'),
       sortValue: (u) => u.displayOrder,
       render: (u) => (
         <div>
@@ -70,7 +72,7 @@ export function UomPage() {
         </div>
       ),
     },
-    { key: 'type', header: 'Type', hideOnMobile: true, render: (u) => u.type },
+    { key: 'type', header: t('common.type'), hideOnMobile: true, render: (u) => u.type },
     {
       key: 'conversion',
       header: 'Conversion',
@@ -96,12 +98,12 @@ export function UomPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (u) => <StatusBadge status={u.status === 'active' ? 'Active' : 'Inactive'} />,
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       className: 'text-right',
       render: (u) =>
         canManage ? (
@@ -176,9 +178,9 @@ export function UomPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total" value={uoms.length} icon={Ruler} />
+        <StatCard label={t('common.total')} value={uoms.length} icon={Ruler} />
         <StatCard
-          label="System"
+          label={t('common.system')}
           icon={Lock}
           value={uoms.filter((u) => u.source === 'system').length}
         />
@@ -190,10 +192,10 @@ export function UomPage() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            {TYPE_OPTIONS.map((t) => (
-              <SelectItem key={t} value={t}>
-                {t}
+            <SelectItem value="all">{t('common.allTypes')}</SelectItem>
+            {TYPE_OPTIONS.map((opt) => (
+              <SelectItem key={opt} value={opt}>
+                {opt}
               </SelectItem>
             ))}
           </SelectContent>
@@ -249,7 +251,7 @@ export function UomPage() {
           onOpenChange={(o) => !o && setDeleteTarget(null)}
           title={`Delete "${deleteTarget.name}"?`}
           message="Items already using this unit will keep a reference to a unit that no longer exists. This cannot be undone."
-          confirmLabel="Delete"
+          confirmLabel={t('common.delete')}
           isPending={deleteUom.isPending}
           onConfirm={() =>
             deleteUom.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })
@@ -338,9 +340,9 @@ function UomModal({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {TYPE_OPTIONS.map((t) => (
-                <SelectItem key={t} value={t}>
-                  {t}
+              {TYPE_OPTIONS.map((opt) => (
+                <SelectItem key={opt} value={opt}>
+                  {opt}
                 </SelectItem>
               ))}
             </SelectContent>

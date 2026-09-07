@@ -19,8 +19,8 @@ function useCountdown(target: number | null): string | null {
   const [, force] = useState(0)
   useEffect(() => {
     if (target === null) return
-    const t = setInterval(() => force((n) => n + 1), 1000)
-    return () => clearInterval(t)
+    const timer = setInterval(() => force((n) => n + 1), 1000)
+    return () => clearInterval(timer)
   }, [target])
   if (target === null) return null
   // `new Date().getTime()`, not the bare `Date.now()` — this project's established React

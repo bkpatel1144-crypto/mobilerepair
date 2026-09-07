@@ -79,7 +79,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
   }
 
   const whatsAppTemplate = whatsAppConfig?.templates.find(
-    (t) => t.event === whatsAppEventForStatus(job.status) && t.enabled
+    (tpl) => tpl.event === whatsAppEventForStatus(job.status) && tpl.enabled
   )
   const whatsAppMessage = whatsAppTemplate
     ? resolveWhatsAppMessage(whatsAppTemplate.message, {

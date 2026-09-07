@@ -213,19 +213,19 @@ export function SalesInvoicesPage() {
         onDateRangeChange={setDateRange}
       >
         <div className="flex flex-wrap gap-1 rounded-lg border p-0.5">
-          {(Object.keys(TAB_LABELS) as Tab[]).map((t) => (
+          {(Object.keys(TAB_LABELS) as Tab[]).map((tab) => (
             <button
-              key={t}
+              key={tab}
               type="button"
               data-slot="button"
-              onClick={() => setTab(t)}
-              aria-pressed={tab === t}
+              onClick={() => setTab(tab)}
+              aria-pressed={tab === tab}
               className={
                 'min-h-9 rounded-md px-3 py-1 text-sm ' +
-                (tab === t ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
+                (tab === tab ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
               }
             >
-              {TAB_LABELS[t]} {counts[t]}
+              {TAB_LABELS[tab]} {counts[tab]}
             </button>
           ))}
         </div>

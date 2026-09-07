@@ -110,7 +110,7 @@ export function PrintTemplateDesignerPage() {
   const duplicate = useDuplicatePrintTemplate()
   const versions = usePrintTemplateVersions(templateId)
 
-  const template = templates.find((t) => t.id === templateId) ?? null
+  const template = templates.find((tpl) => tpl.id === templateId) ?? null
 
   const [ready, setReady] = useState<string | null>(null)
   const [zoom, setZoom] = useState(100)
@@ -277,7 +277,9 @@ export function PrintTemplateDesignerPage() {
                   onClick={() =>
                     setDefault.mutate({
                       target: template,
-                      siblings: templates.filter((t) => t.documentType === template.documentType),
+                      siblings: templates.filter(
+                        (tpl) => tpl.documentType === template.documentType
+                      ),
                     })
                   }
                 >

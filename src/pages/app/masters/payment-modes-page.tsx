@@ -304,9 +304,9 @@ function PaymentModeModal({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {TYPE_OPTIONS.map((t) => (
-              <SelectItem key={t} value={t}>
-                {t}
+            {TYPE_OPTIONS.map((opt) => (
+              <SelectItem key={opt} value={opt}>
+                {opt}
               </SelectItem>
             ))}
           </SelectContent>

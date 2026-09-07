@@ -38,7 +38,7 @@ export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
 
     function stop() {
       if (rafId != null) cancelAnimationFrame(rafId)
-      stream?.getTracks().forEach((t) => t.stop())
+      stream?.getTracks().forEach((track) => track.stop())
     }
 
     function tick() {
@@ -72,7 +72,7 @@ export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
       try {
         stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
         if (cancelled) {
-          stream.getTracks().forEach((t) => t.stop())
+          stream.getTracks().forEach((track) => track.stop())
           return
         }
         if (videoRef.current) {

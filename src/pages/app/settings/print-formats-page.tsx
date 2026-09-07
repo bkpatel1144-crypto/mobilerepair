@@ -69,14 +69,14 @@ export function PrintFormatsPage() {
 
   const q = search.trim().toLowerCase()
   const groups = PRINT_DOCUMENT_TYPES.map((docType) => {
-    const all = templates.filter((t) => t.documentType === docType.key)
+    const all = templates.filter((tpl) => tpl.documentType === docType.key)
     const matches =
       !q ||
       docType.label.toLowerCase().includes(q) ||
-      all.some((t) => t.name.toLowerCase().includes(q))
+      all.some((tpl) => tpl.name.toLowerCase().includes(q))
     const formats =
       q && !docType.label.toLowerCase().includes(q)
-        ? all.filter((t) => t.name.toLowerCase().includes(q))
+        ? all.filter((tpl) => tpl.name.toLowerCase().includes(q))
         : all
     return { docType, formats, visible: matches }
   }).filter((g) => g.visible)
@@ -168,7 +168,7 @@ export function PrintFormatsPage() {
         <div className="overflow-hidden rounded-xl border">
           {groups.map(({ docType, formats }, i) => {
             const isOpen = expanded.has(docType.key)
-            const defaultTemplate = formats.find((t) => t.isDefault)
+            const defaultTemplate = formats.find((tpl) => tpl.isDefault)
             return (
               <div key={docType.key} className={cn(i > 0 && 'border-t')}>
                 <button
@@ -205,19 +205,19 @@ export function PrintFormatsPage() {
                       />
                     ) : (
                       <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))]">
-                        {formats.map((t) => (
+                        {formats.map((tpl) => (
                           <div
-                            key={t.id}
+                            key={tpl.id}
                             className="group relative rounded-xl border bg-card p-4 transition-colors hover:border-teal-600/60"
                           >
                             <button
                               type="button"
-                              onClick={() => openDesigner(t.id)}
+                              onClick={() => openDesigner(tpl.id)}
                               className="block w-full pr-8 text-left"
                             >
                               <span className="flex flex-wrap items-center gap-2">
-                                <span className="truncate font-medium">{t.name}</span>
-                                {t.isDefault && (
+                                <span className="truncate font-medium">{tpl.name}</span>
+                                {tpl.isDefault && (
                                   <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-300 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">
                                     <Star className="size-3 fill-current" />
                                     Default
@@ -225,7 +225,7 @@ export function PrintFormatsPage() {
                                 )}
                               </span>
                               <span className="mt-1 block text-xs text-muted-foreground">
-                                {t.paper.width}×{t.paper.height}mm · v{t.version}
+                                {tpl.paper.width}×{tpl.paper.height}mm · v{tpl.version}
                               </span>
                             </button>
 
@@ -236,7 +236,7 @@ export function PrintFormatsPage() {
                                     type="button"
                                     variant="ghost"
                                     size="icon-sm"
-                                    aria-label={`Actions for ${t.name}`}
+                                    aria-label={`Actions for ${tpl.name}`}
                                     className="absolute top-3 right-2"
                                   />
                                 }
@@ -244,17 +244,17 @@ export function PrintFormatsPage() {
                                 <MoreVertical className="size-4" />
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                {!t.isDefault && (
+                                {!tpl.isDefault && (
                                   <DropdownMenuItem
                                     onClick={() =>
-                                      setDefault.mutate({ target: t, siblings: formats })
+                                      setDefault.mutate({ target: tpl, siblings: formats })
                                     }
                                   >
                                     <Star />
                                     Set as Default
                                   </DropdownMenuItem>
                                 )}
-                                <DropdownMenuItem onClick={() => duplicate.mutate(t)}>
+                                <DropdownMenuItem onClick={() => duplicate.mutate(tpl)}>
                                   <Copy />
                                   Duplicate
                                 </DropdownMenuItem>
@@ -265,7 +265,7 @@ export function PrintFormatsPage() {
                                 <DropdownMenuItem
                                   variant="destructive"
                                   disabled={formats.length <= 1}
-                                  onClick={() => setDeleteTarget(t)}
+                                  onClick={() => setDeleteTarget(tpl)}
                                 >
                                   <Trash2 />
                                   {formats.length <= 1 ? 'Delete — only format' : 'Delete'}

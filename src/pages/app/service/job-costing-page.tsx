@@ -114,18 +114,19 @@ export function JobCostingPage() {
         searchPlaceholder="Search job, customer, device..."
       >
         <div className="flex gap-1 rounded-lg border p-0.5">
-          {(['all', 'pending', 'done'] as Tab[]).map((t) => (
+          {(['all', 'pending', 'done'] as Tab[]).map((tab) => (
             <button
-              key={t}
+              key={tab}
               type="button"
               data-slot="button"
-              onClick={() => setTab(t)}
+              onClick={() => setTab(tab)}
               className={
                 'rounded-md px-3 py-1 text-sm capitalize ' +
-                (tab === t ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
+                (tab === tab ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
               }
             >
-              {t} {t === 'pending' ? `(${pendingCount})` : t === 'done' ? `(${doneCount})` : ''}
+              {tab}{' '}
+              {tab === 'pending' ? `(${pendingCount})` : tab === 'done' ? `(${doneCount})` : ''}
             </button>
           ))}
         </div>

@@ -169,9 +169,9 @@ export function CompanyForm({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {TIMEZONES.map((t) => (
-                <SelectItem key={t.value} value={t.value}>
-                  {t.label}
+              {TIMEZONES.map((tz) => (
+                <SelectItem key={tz.value} value={tz.value}>
+                  {tz.label}
                 </SelectItem>
               ))}
             </SelectContent>

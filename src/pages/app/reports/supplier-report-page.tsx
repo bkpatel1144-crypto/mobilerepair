@@ -97,7 +97,7 @@ export function SupplierReportPage() {
     }
     const grandTotal = Array.from(map.values()).reduce((s, g) => s + g.totalPurchase, 0)
     for (const group of map.values()) {
-      group.jobCount = new Set(group.transactions.map((t) => t.jobId)).size
+      group.jobCount = new Set(group.transactions.map((txn) => txn.jobId)).size
       group.avgCostPerUnit = group.totalQty > 0 ? group.totalPurchase / group.totalQty : 0
       group.sharePct = grandTotal > 0 ? (group.totalPurchase / grandTotal) * 100 : 0
     }
@@ -262,15 +262,15 @@ export function SupplierReportPage() {
                   onClick={() =>
                     downloadCsv(
                       `supplier-${g.supplierName}.csv`,
-                      g.transactions.map((t) => ({
-                        'Job Card': t.jobNumber,
-                        'Part Name': t.partName,
-                        'Device Name': t.deviceLabel,
-                        'Purchase Price': t.purchasePrice,
-                        Qty: t.qty,
-                        'Total Cost': t.totalCost,
-                        'Job Revenue': t.jobRevenue,
-                        Date: formatTimestamp({ toDate: () => t.date }, false),
+                      g.transactions.map((txn) => ({
+                        'Job Card': txn.jobNumber,
+                        'Part Name': txn.partName,
+                        'Device Name': txn.deviceLabel,
+                        'Purchase Price': txn.purchasePrice,
+                        Qty: txn.qty,
+                        'Total Cost': txn.totalCost,
+                        'Job Revenue': txn.jobRevenue,
+                        Date: formatTimestamp({ toDate: () => txn.date }, false),
                       }))
                     )
                   }
@@ -326,31 +326,33 @@ export function SupplierReportPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {g.transactions.map((t, i) => (
-                      <tr key={`${t.jobId}-${i}`} className="border-t">
+                    {g.transactions.map((txn, i) => (
+                      <tr key={`${txn.jobId}-${i}`} className="border-t">
                         <td className="p-2">
                           <Link
-                            to={`/app/service/job-cards/${t.jobId}`}
+                            to={`/app/service/job-cards/${txn.jobId}`}
                             className="font-medium text-teal-700 hover:underline dark:text-teal-400"
                           >
-                            {t.jobNumber}
+                            {txn.jobNumber}
                           </Link>
                         </td>
-                        <td className="p-2">{t.partName}</td>
-                        <td className="p-2">{t.deviceLabel}</td>
-                        <td className="p-2 text-right">{formatCurrency(t.purchasePrice)}</td>
-                        <td className="p-2 text-right">{t.qty}</td>
-                        <td className="p-2 text-right">{formatCurrency(t.totalCost)}</td>
+                        <td className="p-2">{txn.partName}</td>
+                        <td className="p-2">{txn.deviceLabel}</td>
+                        <td className="p-2 text-right">{formatCurrency(txn.purchasePrice)}</td>
+                        <td className="p-2 text-right">{txn.qty}</td>
+                        <td className="p-2 text-right">{formatCurrency(txn.totalCost)}</td>
                         <td className="p-2 text-right">
-                          {formatCurrency(t.jobRevenue)}
-                          {t.overrunPct > 0 && (
+                          {formatCurrency(txn.jobRevenue)}
+                          {txn.overrunPct > 0 && (
                             <span className="ml-1 inline-flex items-center gap-0.5 text-xs text-red-600">
                               <TrendingDown className="size-3" />
-                              {formatPercent(t.overrunPct)}
+                              {formatPercent(txn.overrunPct)}
                             </span>
                           )}
                         </td>
-                        <td className="p-2">{formatTimestamp({ toDate: () => t.date }, false)}</td>
+                        <td className="p-2">
+                          {formatTimestamp({ toDate: () => txn.date }, false)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

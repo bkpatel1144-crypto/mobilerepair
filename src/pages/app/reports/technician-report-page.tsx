@@ -231,9 +231,9 @@ export function TechnicianReportPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Technicians</SelectItem>
-            {allTechnicians.map((t) => (
-              <SelectItem key={t} value={t}>
-                {t}
+            {allTechnicians.map((tech) => (
+              <SelectItem key={tech} value={tech}>
+                {tech}
               </SelectItem>
             ))}
           </SelectContent>
