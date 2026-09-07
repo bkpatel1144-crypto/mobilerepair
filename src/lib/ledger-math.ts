@@ -145,3 +145,42 @@ export function jobMoney(receipts: readonly { direction: 'in' | 'out'; amount: n
   }
   return { totalReceived, alreadyRefunded, amountDue: totalReceived - alreadyRefunded }
 }
+
+/** A receipt, reduced to what a cash-basis revenue figure needs. */
+export interface RevenueEntry {
+  date: Date
+  amount: number
+  direction: 'in' | 'out'
+  /** Absent on receipts written before Expenses and Supplier Payables existed; all of those are
+   * customer money, so `undefined` reads as `'customer'`. */
+  kind?: 'customer' | 'expense' | 'supplierPayment'
+  voided?: boolean
+}
+
+/**
+ * Cash-basis net revenue for a period: customer money in, less customer refunds out.
+ *
+ * Shared by the dashboard's Revenue tile and the Profit & Loss report so the two cannot disagree
+ * about the same month. They did: the dashboard summed each job's `paidAmount` over the jobs
+ * *created* in the range, which counts a payment in the month the job was opened rather than the
+ * month the money arrived — and so both misses payments collected this month against older jobs
+ * and includes payments collected later against this month's jobs.
+ *
+ * A refund is netted off revenue rather than counted as a cost, matching P&L's `netRevenue`:
+ * treating it as an expense would overstate revenue and costs by the same amount and flatter
+ * gross margin. Money out to a supplier or an operating expense is not revenue at all and is
+ * excluded here — those are separate P&L lines.
+ */
+export function cashRevenue(
+  entries: readonly RevenueEntry[],
+  bounds?: { from: Date; to: Date }
+): number {
+  let total = 0
+  for (const e of entries) {
+    if (e.voided) continue
+    if (bounds && (e.date < bounds.from || e.date > bounds.to)) continue
+    if (e.direction === 'in') total += e.amount
+    else if ((e.kind ?? 'customer') === 'customer') total -= e.amount
+  }
+  return total
+}

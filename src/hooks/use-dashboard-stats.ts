@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
 import { useJobCards } from '@/hooks/use-job-cards'
+import { useReceipts } from '@/hooks/use-receipts'
 import { dateRangeBounds, formatDurationLabel } from '@/lib/date-range'
+import { cashRevenue } from '@/lib/ledger-math'
+import { dayKey } from '@/lib/reports'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import type { DateRangeKey } from '@/components/shared/filter-bar'
 
@@ -36,6 +39,12 @@ export function useDashboardStats(
   customTo?: string
 ) {
   const { data: allJobs = [], isLoading, error, refetch } = useJobCards()
+  const {
+    data: allReceipts = [],
+    isLoading: receiptsLoading,
+    error: receiptsError,
+    refetch: refetchReceipts,
+  } = useReceipts()
 
   const data = useMemo<DashboardStats>(() => {
     const bounds = dateRangeBounds(range, customFrom, customTo)
@@ -48,7 +57,11 @@ export function useDashboardStats(
 
     const countBy = (status: string) => jobsInRange.filter((j) => j.status === status).length
 
-    const revenue = jobsInRange.reduce((sum, j) => sum + (j.paidAmount ?? 0), 0)
+    const receiptEntries = allReceipts.flatMap((r) => {
+      const date = r.createdAt?.toDate?.()
+      return date ? [{ ...r, date }] : []
+    })
+    const revenue = cashRevenue(receiptEntries, bounds ?? undefined)
     const outstanding = jobsInRange.reduce((sum, j) => {
       const due = (j.finalAmount ?? j.estimatedCost ?? 0) - (j.paidAmount ?? 0)
       return sum + (due > 0 ? due : 0)
@@ -69,21 +82,33 @@ export function useDashboardStats(
       count: countBy(s.key),
     })).filter((s) => s.count > 0)
 
-    // Revenue trend: bucket paid amounts by day across the jobs actually in range (falls back to
-    // each job's own createdAt day when range is 'all', so "All Time" still draws a real trend).
+    // Revenue trend: bucketed by the day each payment was received, for the same reason the tile
+    // above is. Keyed with `dayKey` rather than `toISOString().slice(0, 10)` — that formats in
+    // UTC, so a payment taken at 11pm local time was plotted on the following day.
     const byDay = new Map<string, number>()
-    for (const j of jobsInRange) {
-      const created = j.createdAt?.toDate?.()
-      if (!created || !j.paidAmount) continue
-      const key = created.toISOString().slice(0, 10)
-      byDay.set(key, (byDay.get(key) ?? 0) + j.paidAmount)
+    for (const e of receiptEntries) {
+      if (e.voided) continue
+      if (bounds && (e.date < bounds.from || e.date > bounds.to)) continue
+      const signed =
+        e.direction === 'in' ? e.amount : (e.kind ?? 'customer') === 'customer' ? -e.amount : 0
+      if (signed === 0) continue
+      const key = dayKey(e.date)
+      byDay.set(key, (byDay.get(key) ?? 0) + signed)
     }
     const revenueTrend = [...byDay.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([date, rev]) => ({
-        date: new Date(date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }),
-        revenue: rev,
-      }))
+      .map(([key, rev]) => {
+        // Split the key rather than `new Date(key)`, which parses as UTC midnight and can render
+        // the previous day's label once formatted in local time.
+        const [y, m, d] = key.split('-').map(Number)
+        return {
+          date: new Date(y, m - 1, d).toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+          }),
+          revenue: rev,
+        }
+      })
 
     return {
       totalJobCards: jobsInRange.length,
@@ -105,7 +130,12 @@ export function useDashboardStats(
       jobCardsByStatus,
       revenueTrend,
     }
-  }, [allJobs, range, customFrom, customTo])
+  }, [allJobs, allReceipts, range, customFrom, customTo])
 
-  return { data, isLoading, error, refetch }
+  return {
+    data,
+    isLoading: isLoading || receiptsLoading,
+    error: error ?? receiptsError,
+    refetch: () => Promise.all([refetch(), refetchReceipts()]),
+  }
 }

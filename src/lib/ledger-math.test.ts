@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import { withRunningBalance, ledgerTotals, partyBalance, cashBook, jobMoney } from './ledger-math'
+import {
+  withRunningBalance,
+  ledgerTotals,
+  partyBalance,
+  cashBook,
+  jobMoney,
+  cashRevenue,
+} from './ledger-math'
 
 const d = (iso: string) => new Date(iso)
 
@@ -223,5 +230,80 @@ describe('jobMoney', () => {
 
   it('is all zeroes for a job with no receipts', () => {
     expect(jobMoney([])).toEqual({ totalReceived: 0, alreadyRefunded: 0, amountDue: 0 })
+  })
+})
+
+describe('cashRevenue', () => {
+  const paidIn = (iso: string, amount: number) => ({
+    date: d(iso),
+    amount,
+    direction: 'in' as const,
+  })
+
+  it('sums customer money received', () => {
+    expect(cashRevenue([paidIn('2026-04-01', 1000), paidIn('2026-04-02', 500)])).toBe(1500)
+  })
+
+  it('nets a customer refund off revenue rather than counting it as a cost', () => {
+    // Treating a refund as an expense would overstate revenue and costs by the same amount and
+    // flatter gross margin — this is what makes it a subtraction here.
+    expect(cashRevenue([paidIn('2026-04-01', 1000), { ...cashOut('2026-04-02', 300) }])).toBe(700)
+  })
+
+  it('treats a receipt with no `kind` as customer money', () => {
+    // Receipts written before Expenses and Supplier Payables existed have no `kind`, and every
+    // one of them is a job advance, final payment or refund.
+    const legacyRefund = { date: d('2026-04-02'), amount: 300, direction: 'out' as const }
+    expect(cashRevenue([paidIn('2026-04-01', 1000), legacyRefund])).toBe(700)
+  })
+
+  it('excludes an operating expense from revenue entirely', () => {
+    const expense = {
+      date: d('2026-04-02'),
+      amount: 300,
+      direction: 'out' as const,
+      kind: 'expense' as const,
+    }
+    expect(cashRevenue([paidIn('2026-04-01', 1000), expense])).toBe(1000)
+  })
+
+  it('excludes a supplier payment from revenue entirely', () => {
+    const supplier = {
+      date: d('2026-04-02'),
+      amount: 300,
+      direction: 'out' as const,
+      kind: 'supplierPayment' as const,
+    }
+    expect(cashRevenue([paidIn('2026-04-01', 1000), supplier])).toBe(1000)
+  })
+
+  it('ignores voided receipts', () => {
+    expect(
+      cashRevenue([paidIn('2026-04-01', 1000), { ...paidIn('2026-04-02', 500), voided: true }])
+    ).toBe(1000)
+  })
+
+  it('attributes revenue to the day the money arrived, not the day the job opened', () => {
+    // The dashboard used to sum each job's paidAmount over jobs *created* in the range, so a
+    // payment collected in May against an April job counted as April revenue — and disagreed
+    // with the P&L for the same month.
+    const april = { from: d('2026-04-01'), to: d('2026-04-30T23:59:59.999Z') }
+    const entries = [paidIn('2026-04-10', 1000), paidIn('2026-05-05', 700)]
+    expect(cashRevenue(entries, april)).toBe(1000)
+    expect(cashRevenue(entries)).toBe(1700)
+  })
+
+  it('counts entries exactly on each boundary', () => {
+    const bounds = { from: d('2026-04-01T00:00:00.000Z'), to: d('2026-04-30T23:59:59.999Z') }
+    expect(
+      cashRevenue(
+        [paidIn('2026-04-01T00:00:00.000Z', 10), paidIn('2026-04-30T23:59:59.999Z', 20)],
+        bounds
+      )
+    ).toBe(30)
+  })
+
+  it('is zero with no receipts', () => {
+    expect(cashRevenue([])).toBe(0)
   })
 })
