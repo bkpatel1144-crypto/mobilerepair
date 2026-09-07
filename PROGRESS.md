@@ -1286,3 +1286,84 @@ work in Phases 0-11.
    therefore against the real project's _current_ (not-yet-updated) rules, not against
    `firestore.rules` itself. Once you deploy, a re-run of the signup flow is the practical
    substitute for emulator unit tests.
+
+---
+
+## Post-Phase-11: production hardening
+
+A pass done specifically to answer "is this ready for production?" — not UI work. Four real bugs
+came out of it, all in money or date arithmetic, all of the kind that produces a plausible-looking
+wrong number rather than a crash.
+
+### Bugs found and fixed
+
+1. **Party ledger sign inversion.** `usePartyLedgerDetail` computed its running balance as
+   `credit - debit` — the opposite sign from its own doc comment, from `usePartyLedgerSummaries`'
+   documented `billed - paid`, and from what `use-payables.ts` assumes when it reads a negative
+   party balance as an advance owed back. The page had been patched by negating at two of the
+   three display sites, so the Balance stat card and the closing-balance row of the table
+   immediately below it showed opposite signs for the same party: a customer owing ₹1,000 read as
+   "₹1,000 Cr" in one and "₹1,000" in the other.
+
+2. **Payables subtracted refunds twice.** `JobCardDoc.paidAmount` is already net of refunds — an
+   outgoing payment increments it by a negative amount — but Payables read it as the gross
+   received and subtracted the refund receipts again. A ₹1,000 advance with a ₹400 refund issued
+   reported ₹200 owed back when the shop still owed ₹600. The "unused advance" branch was also
+   missing the sibling branch's `amountDue > 0` guard, so a fully refunded advance still listed
+   at ₹0 due and an over-refund listed as a negative payable, reducing the total owed.
+
+3. **Dashboard revenue dated by the wrong event.** The Revenue tile summed each job's `paidAmount`
+   over the jobs _created_ in the range. On a cash-basis system revenue belongs to the period the
+   money arrived, which is what the P&L uses — so the dashboard and the P&L disagreed about the
+   same month. The trend chart also bucketed by `toISOString().slice(0, 10)`, i.e. in UTC, so a
+   payment taken at 11pm local was plotted on the following day.
+
+4. **Financial year dates round-tripped through UTC.** The edit dialog read `f.startDate` with
+   `toISOString().slice(0, 10)` and wrote it back parsed as local midnight. At UTC+5:30 a Date at
+   local midnight stringifies as the _previous_ day, so opening Edit on FY 2026-27 pre-filled
+   31 Mar 2026 and saving shifted the year one day earlier — silently, on a range that decides
+   which financial year a job card is filed under. Expenses, Supplier Payables and Second-hand
+   Purchase defaulted their date fields the same way and showed yesterday before 5:30am.
+
+The money math elsewhere was checked and is sound: receivables, cash book, P&L, job costing and
+second-hand profit.
+
+### Added
+
+- `src/lib/ledger-math.ts` — the arithmetic behind Party Ledger, Cash Book, Payables and the
+  dashboard's revenue, with the two sign conventions in play stated once at the top. Conflating
+  the receivable convention (`debit - credit`, positive = owed to the shop) with the cash one
+  (`in - out`) was bug 1.
+- **118 tests** (`npm test`), pinned to `Asia/Kolkata`. The timezone pin is load-bearing: in CI's
+  UTC the whole class of bug 4 is invisible, so the suite would have passed while the app was
+  wrong for every real user.
+- **CI** (`.github/workflows/ci.yml`) — lint, format, tests, build on push and PR.
+- **Version History** for print templates, the one deliberately-deferred feature. An append-only
+  `printTemplates/{id}/versions/{version}` subcollection, written in the same batch as the save
+  that supersedes each revision.
+- Vendor chunking in `vite.config.ts`. The Firebase SDK had been landing in a chunk named after
+  `firestore-paths`, keyed to an app file, so its hash changed on every deploy and returning users
+  re-downloaded it. Entry chunk went 401 KB → 134 KB (29 KB gzipped).
+- Cache and security headers in `vercel.json`, including `no-cache` on `index.html` so a deploy
+  can't leave viewers on stale HTML pointing at deleted bundles.
+- Repo formatted with its own Prettier config — `format:check` had never been run and failed on
+  263 files, which would have made CI red on its first run.
+
+### Still not production-ready
+
+Two of these need credentials this environment doesn't have; one needs a decision.
+
+1. **The rules have still never been deployed.** Now blocking more than before: `expenses`,
+   `expenseCategories`, `supplierBills`, `printDevices`, the multi-company `myCompanyIds` /
+   `myRoleIdFor` changes, the users-update allow-list, and the new `printTemplates/*/versions`
+   block are all written and inert. Those features fail with permission-denied against the live
+   project until deployed.
+2. **Nothing has ever run against the real Firebase project.** Every check is compile-time — tsc,
+   eslint, vitest, vite build. Not one page has been loaded against `ibellmobiles-123` with a real
+   login. The single highest-value next action is to sign up a fresh account and walk one complete
+   flow — company → party → job card → invoice → receipt → ledger → P&L. That will find more real
+   problems than any further static work.
+3. **The sidebar has 44 menu leaves; the competitor has 55.** A genuine feature gap. Every route
+   is generated from `NAV_SECTIONS`, so there are no built-but-hidden pages to surface — the
+   missing 11 are features that don't exist. Needs a screenshot of the competitor's expanded
+   sidebar to add them as real pages rather than dead links.
