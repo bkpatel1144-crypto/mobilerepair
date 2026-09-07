@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useReceipts, type ReceiptWithId } from '@/hooks/use-receipts'
 import { dateRangeBounds } from '@/lib/date-range'
+import { cashBook } from '@/lib/ledger-math'
 import type { DateRangeKey } from '@/components/shared/filter-bar'
 
 export interface CashBookRow extends ReceiptWithId {
@@ -23,38 +24,21 @@ export function useCashBook(range: DateRangeKey | 'all' = 'all', customFrom?: st
   const { data: allReceipts = [], isLoading, error, refetch } = useReceipts()
 
   const data = useMemo<CashBookData>(() => {
-    const active = [...allReceipts].filter((r) => !r.voided).sort((a, b) => {
-      const at = a.createdAt?.toDate?.()?.getTime() ?? 0
-      const bt = b.createdAt?.toDate?.()?.getTime() ?? 0
-      return at - bt
-    })
+    // Receipts with no `createdAt` yet — a local write whose server timestamp hasn't landed —
+    // are dropped rather than dated to the epoch, which would park them at the top of the book
+    // and shift every running balance below them.
+    const entries = allReceipts
+      .filter((r) => !r.voided)
+      .flatMap((r) => {
+        const date = r.createdAt?.toDate?.()
+        return date ? [{ ...r, date }] : []
+      })
 
-    const bounds = dateRangeBounds(range, customFrom, customTo)
-    const signedAmount = (r: ReceiptWithId) => (r.direction === 'in' ? r.amount : -r.amount)
-
-    let opening = 0
-    const inRange: ReceiptWithId[] = []
-    for (const r of active) {
-      const at = r.createdAt?.toDate?.()
-      if (!at) continue
-      if (bounds && at < bounds.from) {
-        opening += signedAmount(r)
-      } else if (!bounds || at <= bounds.to) {
-        inRange.push(r)
-      }
-    }
-
-    let running = opening
-    let totalCredit = 0
-    let totalDebit = 0
-    const rows: CashBookRow[] = inRange.map((r) => {
-      if (r.direction === 'in') totalCredit += r.amount
-      else totalDebit += r.amount
-      running += signedAmount(r)
-      return { ...r, runningBalance: running }
-    })
-
-    return { opening, totalCredit, totalDebit, closing: running, rows }
+    const { opening, totalCredit, totalDebit, closing, rows } = cashBook(
+      entries,
+      dateRangeBounds(range, customFrom, customTo) ?? undefined
+    )
+    return { opening, totalCredit, totalDebit, closing, rows }
   }, [allReceipts, range, customFrom, customTo])
 
   return { data, isLoading, error, refetch }

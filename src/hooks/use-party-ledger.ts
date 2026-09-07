@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useReceipts } from '@/hooks/use-receipts'
 import { useParties, type PartyWithId } from '@/hooks/use-parties'
+import { withRunningBalance, ledgerTotals, partyBalance } from '@/lib/ledger-math'
 
 export interface PartyLedgerSummary {
   party: PartyWithId
@@ -112,18 +113,16 @@ export function usePartyLedgerDetail(partyId: string | undefined) {
       })
     }
 
-    events.sort((a, b) => a.date.getTime() - b.date.getTime())
+    const rows: LedgerRow[] = withRunningBalance(events)
+    const { totalDebit, totalCredit, closingBalance } = ledgerTotals(rows)
 
-    let running = 0
-    const rows: LedgerRow[] = events.map((e) => {
-      running += e.credit - e.debit
-      return { ...e, runningBalance: running }
-    })
-
-    const totalBilled = rows.reduce((sum, r) => sum + r.debit, 0)
-    const totalPaid = rows.reduce((sum, r) => sum + r.credit, 0)
-
-    return { party, rows, totalBilled, totalPaid, closingBalance: running }
+    return {
+      party,
+      rows,
+      totalBilled: totalDebit,
+      totalPaid: totalCredit,
+      closingBalance,
+    }
   }, [partyId, jobs, receipts, parties])
 
   return {
@@ -166,7 +165,7 @@ export function usePartyLedgerSummaries() {
           jobsCount: partyJobs.length,
           billed,
           paid,
-          balance: billed - paid,
+          balance: partyBalance(billed, paid),
         }
       })
       .filter((s) => s.jobsCount > 0 || s.paid !== 0)

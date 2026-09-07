@@ -201,7 +201,7 @@ function PartyLedgerDetailSheet({
                         </td>
                         <td className="p-2 text-right align-top text-red-600">{row.debit > 0 ? `₹${row.debit}` : ''}</td>
                         <td className="p-2 text-right align-top text-emerald-600">{row.credit > 0 ? `₹${row.credit}` : ''}</td>
-                        <td className="p-2 text-right align-top">{balanceLabel(-row.runningBalance)}</td>
+                        <td className="p-2 text-right align-top">{balanceLabel(row.runningBalance)}</td>
                       </tr>
                     ))}
                     <tr className="border-t-2 font-semibold">
@@ -210,7 +210,7 @@ function PartyLedgerDetailSheet({
                       </td>
                       <td className="p-2 text-right text-red-600">₹{data.totalBilled}</td>
                       <td className="p-2 text-right text-emerald-600">₹{data.totalPaid}</td>
-                      <td className="p-2 text-right">{balanceLabel(-data.closingBalance)}</td>
+                      <td className="p-2 text-right">{balanceLabel(data.closingBalance)}</td>
                     </tr>
                   </tbody>
                 </table>
