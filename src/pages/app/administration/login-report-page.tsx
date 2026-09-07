@@ -15,6 +15,7 @@ import { formatTimestamp } from '@/lib/utils'
 import { dateRangeBounds } from '@/lib/date-range'
 import type { AuditLogWithId } from '@/hooks/use-audit-log'
 import type { AuditResult } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 type CardFilter =
   'all' | 'online' | 'today' | 'users' | 'ips' | 'failed' | 'unauthorized' | 'blocked'
@@ -35,6 +36,7 @@ const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
 }
 
 export function LoginReportPage() {
+  const { t } = useTranslation()
   const { data, isLoading, error: loadError, refetch } = useLoginReport()
   const { data: sessions = [] } = useSessions()
   const [cardFilter, setCardFilter] = useState<CardFilter>('all')
@@ -78,13 +80,13 @@ export function LoginReportPage() {
   const columns: DataTableColumn<AuditLogWithId>[] = [
     {
       key: 'time',
-      header: 'Time',
+      header: t('common.time'),
       sortValue: (e) => e.createdAt?.toDate?.()?.getTime() ?? 0,
       render: (e) => formatTimestamp(e.createdAt),
     },
     {
       key: 'user',
-      header: 'User',
+      header: t('common.user'),
       render: (e) => (
         <>
           <p className="font-medium">{e.performedByName}</p>
@@ -92,7 +94,7 @@ export function LoginReportPage() {
         </>
       ),
     },
-    { key: 'role', header: 'Role', hideOnMobile: true, render: (e) => e.performedByRole },
+    { key: 'role', header: t('common.role'), hideOnMobile: true, render: (e) => e.performedByRole },
     { key: 'ip', header: 'IP', hideOnMobile: true, render: (e) => e.ip ?? '—' },
     {
       key: 'result',
@@ -209,8 +211,8 @@ export function LoginReportPage() {
             {
               title: 'SESSION INFO',
               rows: [
-                { label: 'Time', value: formatTimestamp(viewing.createdAt) },
-                { label: 'Role', value: viewing.performedByRole },
+                { label: t('common.time'), value: formatTimestamp(viewing.createdAt) },
+                { label: t('common.role'), value: viewing.performedByRole },
                 { label: 'IP Address', value: viewing.ip ?? '—' },
                 { label: 'Browser', value: viewing.userAgent || '—' },
               ],

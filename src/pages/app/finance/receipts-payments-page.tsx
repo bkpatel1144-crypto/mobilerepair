@@ -58,10 +58,12 @@ import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
 import { dateRangeBounds } from '@/lib/date-range'
+import { useTranslation } from 'react-i18next'
 
 const MODE_ICONS = { cash: Banknote, upi: Smartphone, card: CreditCard } as const
 
 export function ReceiptsPaymentsPage() {
+  const { t } = useTranslation()
   const { data: receipts = [], isLoading, error: loadError, refetch } = useReceipts()
   const { canDo, isOwner } = usePermissions()
   const queryClient = useQueryClient()
@@ -130,7 +132,7 @@ export function ReceiptsPaymentsPage() {
     },
     {
       key: 'party',
-      header: 'Party',
+      header: t('common.party'),
       render: (r) => (
         <div>
           <p className="font-medium">{r.partyName}</p>
@@ -145,7 +147,7 @@ export function ReceiptsPaymentsPage() {
     },
     {
       key: 'mode',
-      header: 'Mode',
+      header: t('common.mode'),
       render: (r) => (
         <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium uppercase">
           {r.mode}
@@ -154,7 +156,7 @@ export function ReceiptsPaymentsPage() {
     },
     {
       key: 'amount',
-      header: 'Amount',
+      header: t('common.amount'),
       sortValue: (r) => r.amount,
       render: (r) => (
         <span className={r.direction === 'in' ? 'text-emerald-600' : 'text-red-600'}>
@@ -164,13 +166,13 @@ export function ReceiptsPaymentsPage() {
     },
     {
       key: 'date',
-      header: 'Date',
+      header: t('common.date'),
       sortValue: (r) => r.createdAt?.toDate?.()?.getTime() ?? 0,
       render: (r) => formatTimestamp(r.createdAt),
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       className: 'text-right',
       render: (r) =>
         !r.voided && canVoid ? (
@@ -266,9 +268,9 @@ export function ReceiptsPaymentsPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Modes</SelectItem>
-            <SelectItem value="cash">Cash</SelectItem>
+            <SelectItem value="cash">{t('common.cash')}</SelectItem>
             <SelectItem value="upi">UPI</SelectItem>
-            <SelectItem value="card">Card</SelectItem>
+            <SelectItem value="card">{t('common.cardMode')}</SelectItem>
           </SelectContent>
         </Select>
       </FilterBar>

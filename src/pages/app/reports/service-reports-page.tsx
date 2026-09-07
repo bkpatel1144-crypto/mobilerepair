@@ -34,6 +34,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatCurrency, formatTimestamp } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
+import { useTranslation } from 'react-i18next'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -149,6 +150,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
  * Reads `useJobCards()` directly (every job, any status) — unlike the profit-based reports below
  * it, this one isn't limited to costed/Closed jobs. */
 export function ServiceReportsPage() {
+  const { t } = useTranslation()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { data: users = [] } = useUsers()
   const [showAdvanced, setShowAdvanced] = useState(false)
@@ -199,10 +201,14 @@ export function ServiceReportsPage() {
   }
 
   const columns: ExpandableTableColumn<JobCardWithId>[] = [
-    { key: 'created', header: 'Created', render: (j) => formatTimestamp(j.createdAt, false) },
+    {
+      key: 'created',
+      header: t('common.createdAt'),
+      render: (j) => formatTimestamp(j.createdAt, false),
+    },
     {
       key: 'job',
-      header: 'Job Card',
+      header: t('common.jobCard'),
       render: (j) => (
         <Link
           to={`/app/service/job-cards/${j.id}`}
@@ -214,7 +220,7 @@ export function ServiceReportsPage() {
     },
     {
       key: 'customer',
-      header: 'Customer',
+      header: t('common.customer'),
       render: (j) => (
         <>
           <p>{j.customerName}</p>
@@ -224,7 +230,7 @@ export function ServiceReportsPage() {
     },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       hideOnMobile: true,
       render: (j) => (
         <>
@@ -235,13 +241,13 @@ export function ServiceReportsPage() {
     },
     {
       key: 'receivedBy',
-      header: 'Received By',
+      header: t('common.receivedBy'),
       hideOnMobile: true,
       render: (j) => j.receivedByName,
     },
     {
       key: 'assignedTo',
-      header: 'Assigned To',
+      header: t('common.assignedTo'),
       hideOnMobile: true,
       render: (j) => j.assignedToName ?? '—',
     },
@@ -258,20 +264,20 @@ export function ServiceReportsPage() {
     },
     {
       key: 'paid',
-      header: 'Paid',
+      header: t('common.paid'),
       render: (j) => (
         <span className="text-teal-700 dark:text-teal-400">{formatCurrency(j.paidAmount)}</span>
       ),
     },
     {
       key: 'due',
-      header: 'Due',
+      header: t('common.due'),
       hideOnMobile: true,
       render: (j) => formatCurrency(outstandingOf(j)),
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (j) => <StatusBadge status={statusLabel(j.status)} />,
     },
     {
@@ -337,17 +343,22 @@ export function ServiceReportsPage() {
 
       <StatCardGrid>
         <StatCard label="Total Jobs" value={totals.total} icon={BarChart3} />
-        <StatCard label="Pending" icon={Clock} value={totals.pending} tone="warning" />
+        <StatCard label={t('common.pending')} icon={Clock} value={totals.pending} tone="warning" />
         <StatCard label="In Progress" icon={Activity} value={totals.inProgress} tone="info" />
-        <StatCard label="Completed" icon={CheckCircle2} value={totals.completed} tone="success" />
         <StatCard
-          label="Revenue"
+          label={t('common.completed')}
+          icon={CheckCircle2}
+          value={totals.completed}
+          tone="success"
+        />
+        <StatCard
+          label={t('common.revenue')}
           icon={IndianRupee}
           value={formatCurrency(totals.revenue)}
           tone="success"
         />
         <StatCard
-          label="Outstanding"
+          label={t('common.outstanding')}
           icon={AlertTriangle}
           value={formatCurrency(totals.outstanding)}
           tone={totals.outstanding > 0 ? 'danger' : 'default'}
@@ -372,10 +383,10 @@ export function ServiceReportsPage() {
           >
             <Select value={statusFilter} onValueChange={(v) => v && setStatusFilter(v)}>
               <SelectTrigger className="w-36">
-                <SelectValue placeholder="All Statuses" />
+                <SelectValue placeholder={t('common.allStatuses')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="all">{t('common.allStatuses')}</SelectItem>
                 {JOB_STATUSES.map((s) => (
                   <SelectItem key={s.key} value={s.key}>
                     {s.label}
@@ -411,10 +422,10 @@ export function ServiceReportsPage() {
             </Select>
             <Select value={deviceTypeFilter} onValueChange={(v) => v && setDeviceTypeFilter(v)}>
               <SelectTrigger className="w-32">
-                <SelectValue placeholder="All Types" />
+                <SelectValue placeholder={t('common.allTypes')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="all">{t('common.allTypes')}</SelectItem>
                 {deviceTypes.map((dt) => (
                   <SelectItem key={dt} value={dt}>
                     {dt}

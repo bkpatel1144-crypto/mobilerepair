@@ -22,12 +22,14 @@ import {
   type BranchWithId,
 } from '@/hooks/use-branches'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 /** `preview (14)`/`(15)` — a straightforward list + protected-row + drawer, same shape as every
  * other Masters-style page in this app. The seeded "Main Branch" (`type: 'system'`,
  * `protected: true`) can never be disabled or deleted through this UI, backed server-side by
  * `firestore.rules`' own `resource.data.protected != true` guard. */
 export function BranchManagementPage() {
+  const { t } = useTranslation()
   const { data: branches = [], isLoading, error: loadError, refetch } = useBranches()
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'disabled'>('all')
@@ -82,18 +84,18 @@ export function BranchManagementPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (b) => <StatusBadge status={b.status === 'active' ? 'Active' : 'Disabled'} dot />,
     },
     {
       key: 'type',
-      header: 'Type',
+      header: t('common.type'),
       hideOnMobile: true,
       render: (b) => (b.type === 'system' ? 'System' : 'Custom'),
     },
     {
       key: 'created',
-      header: 'Created',
+      header: t('common.createdAt'),
       hideOnMobile: true,
       render: (b) => formatTimestamp(b.createdAt, false),
     },
@@ -115,7 +117,7 @@ export function BranchManagementPage() {
       <StatCardGrid>
         <StatCard label="Total Branches" value={branches.length} icon={Building2} />
         <StatCard
-          label="Active"
+          label={t('common.active')}
           icon={CheckCircle2}
           value={branches.filter((b) => b.status === 'active').length}
           tone="success"
@@ -123,7 +125,7 @@ export function BranchManagementPage() {
           onClick={() => setStatusFilter((f) => (f === 'active' ? 'all' : 'active'))}
         />
         <StatCard
-          label="Inactive"
+          label={t('common.inactive')}
           icon={XCircle}
           value={branches.filter((b) => b.status === 'disabled').length}
           tone="warning"
@@ -202,7 +204,7 @@ export function BranchManagementPage() {
             {
               title: 'BRANCH INFORMATION',
               rows: [
-                { label: 'Name', value: viewing.name },
+                { label: t('common.name'), value: viewing.name },
                 { label: 'Branch Code', value: viewing.code },
               ],
             },
@@ -235,8 +237,8 @@ export function BranchManagementPage() {
               : []),
           ]}
           timeline={[
-            { title: 'Created', timestamp: formatTimestamp(viewing.createdAt) },
-            { title: 'Last Updated', timestamp: formatTimestamp(viewing.updatedAt) },
+            { title: t('common.createdAt'), timestamp: formatTimestamp(viewing.createdAt) },
+            { title: t('common.updatedAt'), timestamp: formatTimestamp(viewing.updatedAt) },
           ]}
         />
       )}

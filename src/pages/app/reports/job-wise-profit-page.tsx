@@ -14,6 +14,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatCurrency, formatPercent } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
+import { useTranslation } from 'react-i18next'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -24,6 +25,7 @@ function statusLabel(key: string) {
  * matches the reference's own "Jobs: 1" count reflecting only the costed job, not every job
  * card ever created). */
 export function JobWiseProfitPage() {
+  const { t } = useTranslation()
   const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -55,7 +57,7 @@ export function JobWiseProfitPage() {
   const columns: DataTableColumn<CostedJobRow>[] = [
     {
       key: 'job',
-      header: 'Job',
+      header: t('common.job'),
       sortValue: (r) => r.job.jobNumber,
       render: (r) => (
         <Link
@@ -68,31 +70,31 @@ export function JobWiseProfitPage() {
     },
     {
       key: 'customer',
-      header: 'Customer',
+      header: t('common.customer'),
       sortValue: (r) => r.job.customerName,
       render: (r) => r.job.customerName,
     },
     {
       key: 'assignedTo',
-      header: 'Assigned To',
+      header: t('common.assignedTo'),
       hideOnMobile: true,
       render: (r) => r.job.assignedToName ?? '—',
     },
     {
       key: 'revenue',
-      header: 'Revenue',
+      header: t('common.revenue'),
       sortValue: (r) => r.revenue,
       render: (r) => formatCurrency(r.revenue),
     },
     {
       key: 'cost',
-      header: 'Cost',
+      header: t('common.cost'),
       sortValue: (r) => r.cost,
       render: (r) => formatCurrency(r.cost),
     },
     {
       key: 'profit',
-      header: 'Profit',
+      header: t('common.profit'),
       sortValue: (r) => r.profit,
       render: (r) => (
         <span
@@ -104,7 +106,7 @@ export function JobWiseProfitPage() {
     },
     {
       key: 'margin',
-      header: 'Margin',
+      header: t('common.margin'),
       sortValue: (r) => r.marginPct,
       render: (r) => (
         <span className={r.marginPct < 0 ? 'text-red-600' : 'text-emerald-600'}>
@@ -114,7 +116,7 @@ export function JobWiseProfitPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (r) => <StatusBadge status={statusLabel(r.job.status)} />,
     },
   ]
@@ -152,21 +154,21 @@ export function JobWiseProfitPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Jobs" value={totals.jobs} icon={BarChart3} />
+        <StatCard label={t('common.jobs')} value={totals.jobs} icon={BarChart3} />
         <StatCard
-          label="Revenue"
+          label={t('common.revenue')}
           icon={IndianRupee}
           value={formatCurrency(totals.revenue)}
           tone="success"
         />
         <StatCard
-          label="Cost"
+          label={t('common.cost')}
           icon={TrendingDown}
           value={formatCurrency(totals.cost)}
           tone="warning"
         />
         <StatCard
-          label="Profit"
+          label={t('common.profit')}
           icon={TrendingUp}
           value={formatCurrency(totals.profit)}
           tone={totals.profit < 0 ? 'danger' : 'success'}

@@ -20,6 +20,7 @@ import {
   nextItemCode,
   type ItemWithId,
 } from '@/hooks/use-items'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Read-only-by-design view of Item Master, filtered to `type === 'service'` — matches
@@ -29,6 +30,7 @@ import {
  * Phase 7's real Item Master page doesn't exist yet to hand off to — see PROGRESS.md.
  */
 export function ServiceItemsPage() {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
   const { data: items = [], isLoading, error: loadError, refetch } = useItems()
@@ -85,7 +87,7 @@ export function ServiceItemsPage() {
   const columns: DataTableColumn<ItemWithId>[] = [
     {
       key: 'item',
-      header: 'Item',
+      header: t('common.item'),
       sortValue: (i) => i.name,
       render: (i) => (
         <div className="flex items-center gap-2.5">
@@ -99,12 +101,16 @@ export function ServiceItemsPage() {
         </div>
       ),
     },
-    { key: 'category', header: 'Category', render: (i) => i.categoryName ?? '—' },
-    { key: 'type', header: 'Type', render: () => <StatusBadge status="Services" tone="success" /> },
+    { key: 'category', header: t('common.category'), render: (i) => i.categoryName ?? '—' },
+    {
+      key: 'type',
+      header: t('common.type'),
+      render: () => <StatusBadge status="Services" tone="success" />,
+    },
     { key: 'uom', header: 'UOM', hideOnMobile: true, render: (i) => i.uom },
     {
       key: 'price',
-      header: 'Selling Price',
+      header: t('common.sellingPrice'),
       render: (i) => (i.sellingPrice != null ? `₹${i.sellingPrice}` : '—'),
     },
     {
@@ -152,9 +158,9 @@ export function ServiceItemsPage() {
       />
 
       <div className="flex flex-wrap gap-3">
-        <StatCard label="Total" value={items.length} />
+        <StatCard label={t('common.total')} value={items.length} />
         <StatCard label="Services" value={serviceItems.length} tone="success" />
-        <StatCard label="Parts" value={partItems.length} />
+        <StatCard label={t('common.parts')} value={partItems.length} />
       </div>
 
       <p className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-blue-50 p-3 text-sm text-blue-800 dark:bg-blue-500/10 dark:text-blue-400">
@@ -205,7 +211,7 @@ export function ServiceItemsPage() {
       >
         <div className="space-y-3">
           <div className="space-y-1.5">
-            <Label>Name</Label>
+            <Label>{t('common.name')}</Label>
             <Input value={name} onChange={(e) => setName(e.target.value)} autoFocus />
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -214,7 +220,7 @@ export function ServiceItemsPage() {
               <Input value={uom} onChange={(e) => setUom(e.target.value)} />
             </div>
             <div className="space-y-1.5">
-              <Label>Selling Price</Label>
+              <Label>{t('common.sellingPrice')}</Label>
               <Input
                 type="number"
                 min={0}

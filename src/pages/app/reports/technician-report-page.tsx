@@ -21,6 +21,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatCurrency, formatPercent, formatTimestamp } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
+import { useTranslation } from 'react-i18next'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -78,6 +79,7 @@ function groupByTechnician(rows: CostedJobRow[]): TechnicianGroup[] {
  * `assignedToId`/`assignedToName` (the technician a job's own final assignment landed on — a
  * job handed over mid-repair already reflects its *last* assignee by the time it's Closed). */
 export function TechnicianReportPage() {
+  const { t } = useTranslation()
   const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [technicianFilter, setTechnicianFilter] = useState('all')
@@ -113,15 +115,15 @@ export function TechnicianReportPage() {
   const columns: ExpandableTableColumn<TechnicianGroup>[] = [
     {
       key: 'technician',
-      header: 'Technician',
+      header: t('common.technician'),
       render: (g) => <span className="font-medium">{g.technicianName}</span>,
     },
-    { key: 'jobs', header: 'Jobs', render: (g) => g.jobs.length },
-    { key: 'revenue', header: 'Revenue', render: (g) => formatCurrency(g.revenue) },
-    { key: 'cost', header: 'Cost', render: (g) => formatCurrency(g.cost) },
+    { key: 'jobs', header: t('common.jobs'), render: (g) => g.jobs.length },
+    { key: 'revenue', header: t('common.revenue'), render: (g) => formatCurrency(g.revenue) },
+    { key: 'cost', header: t('common.cost'), render: (g) => formatCurrency(g.cost) },
     {
       key: 'profit',
-      header: 'Profit',
+      header: t('common.profit'),
       render: (g) => (
         <span
           className={g.profit < 0 ? 'font-medium text-red-600' : 'font-medium text-emerald-600'}
@@ -132,7 +134,7 @@ export function TechnicianReportPage() {
     },
     {
       key: 'margin',
-      header: 'Margin',
+      header: t('common.margin'),
       hideOnMobile: true,
       render: (g) => (
         <span className={g.marginPct < 0 ? 'text-red-600' : 'text-emerald-600'}>
@@ -191,22 +193,27 @@ export function TechnicianReportPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Technicians" value={totals.technicians} icon={Users} tone="purple" />
-        <StatCard label="Jobs" icon={FileText} value={totals.jobs} />
         <StatCard
-          label="Revenue"
+          label={t('common.technicians')}
+          value={totals.technicians}
+          icon={Users}
+          tone="purple"
+        />
+        <StatCard label={t('common.jobs')} icon={FileText} value={totals.jobs} />
+        <StatCard
+          label={t('common.revenue')}
           icon={IndianRupee}
           value={formatCurrency(totals.revenue)}
           tone="success"
         />
         <StatCard
-          label="Cost"
+          label={t('common.cost')}
           icon={TrendingDown}
           value={formatCurrency(totals.cost)}
           tone="warning"
         />
         <StatCard
-          label="Profit"
+          label={t('common.profit')}
           icon={TrendingUp}
           value={formatCurrency(totals.profit)}
           tone={totals.profit < 0 ? 'danger' : 'success'}
@@ -287,19 +294,19 @@ export function TechnicianReportPage() {
             </div>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-6">
               <StatCard
-                label="Revenue"
+                label={t('common.revenue')}
                 value={formatCurrency(g.revenue)}
                 tone="success"
                 className="min-w-0"
               />
               <StatCard
-                label="Cost"
+                label={t('common.cost')}
                 value={formatCurrency(g.cost)}
                 tone="warning"
                 className="min-w-0"
               />
               <StatCard
-                label="Profit"
+                label={t('common.profit')}
                 value={formatCurrency(g.profit)}
                 tone={g.profit < 0 ? 'danger' : 'success'}
                 className="min-w-0"
@@ -317,15 +324,15 @@ export function TechnicianReportPage() {
               <table className="w-full min-w-[880px] text-sm whitespace-nowrap">
                 <thead className="bg-muted/40 text-xs text-muted-foreground uppercase">
                   <tr>
-                    <th className="p-2 text-left">Job Card</th>
-                    <th className="p-2 text-left">Customer</th>
-                    <th className="p-2 text-left">Device</th>
-                    <th className="p-2 text-left">Status</th>
-                    <th className="p-2 text-right">Revenue</th>
-                    <th className="p-2 text-right">Cost</th>
-                    <th className="p-2 text-right">Profit</th>
-                    <th className="p-2 text-right">Margin</th>
-                    <th className="p-2 text-left">Date</th>
+                    <th className="p-2 text-left">{t('common.jobCard')}</th>
+                    <th className="p-2 text-left">{t('common.customer')}</th>
+                    <th className="p-2 text-left">{t('common.device')}</th>
+                    <th className="p-2 text-left">{t('common.status')}</th>
+                    <th className="p-2 text-right">{t('common.revenue')}</th>
+                    <th className="p-2 text-right">{t('common.cost')}</th>
+                    <th className="p-2 text-right">{t('common.profit')}</th>
+                    <th className="p-2 text-right">{t('common.margin')}</th>
+                    <th className="p-2 text-left">{t('common.date')}</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -10,8 +10,10 @@ import { Button } from '@/components/ui/button'
 import { FormError } from '@/components/shared/form-error'
 import { resetPassword, getAuthErrorMessage } from '@/lib/auth'
 import { forgotPasswordSchema, type ForgotPasswordInput } from '@/lib/validation/auth-schemas'
+import { useTranslation } from 'react-i18next'
 
 export function ForgotPasswordPage() {
+  const { t } = useTranslation()
   const [formError, setFormError] = useState<string | null>(null)
   const [sent, setSent] = useState(false)
 
@@ -66,7 +68,7 @@ export function ForgotPasswordPage() {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
           <FormError message={formError} />
           <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('common.email')}</Label>
             <Input
               id="email"
               type="email"

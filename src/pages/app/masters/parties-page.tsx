@@ -42,10 +42,12 @@ import { usePartyCategories } from '@/hooks/use-party-categories'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 type PartyTypeFilter = 'all' | 'customer' | 'supplier' | 'both'
 
 export function PartiesPage() {
+  const { t } = useTranslation()
   const { data: parties = [], isLoading, error: loadError, refetch } = useParties()
   const { data: categories = [] } = usePartyCategories()
   const { canDo } = usePermissions()
@@ -80,7 +82,7 @@ export function PartiesPage() {
   const columns: DataTableColumn<PartyWithId>[] = [
     {
       key: 'party',
-      header: 'Party',
+      header: t('common.party'),
       sortValue: (p) => p.name,
       render: (p) => (
         <div>
@@ -89,17 +91,17 @@ export function PartiesPage() {
         </div>
       ),
     },
-    { key: 'mobile', header: 'Mobile', render: (p) => p.mobile },
+    { key: 'mobile', header: t('common.mobile'), render: (p) => p.mobile },
     {
       key: 'category',
-      header: 'Category',
+      header: t('common.category'),
       hideOnMobile: true,
       render: (p) => p.categoryName ?? '—',
     },
-    { key: 'type', header: 'Type', hideOnMobile: true, render: (p) => typeLabel(p) },
+    { key: 'type', header: t('common.type'), hideOnMobile: true, render: (p) => typeLabel(p) },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (p) => <StatusBadge status={p.status === 'active' ? 'Active' : 'Inactive'} />,
     },
   ]
@@ -108,7 +110,7 @@ export function PartiesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Users}
-        title="Parties"
+        title={t('common.parties')}
         subtitle="Manage customers and suppliers"
         actions={
           canManage && (
@@ -231,10 +233,12 @@ export function PartiesPage() {
               title: 'DETAILS',
               icon: UserCog,
               rows: [
-                { label: 'Category', value: viewing.categoryName ?? '—' },
-                { label: 'Mobile', value: viewing.mobile },
-                ...(viewing.email ? [{ label: 'Email', value: viewing.email }] : []),
-                ...(viewing.address ? [{ label: 'Address', value: viewing.address }] : []),
+                { label: t('common.category'), value: viewing.categoryName ?? '—' },
+                { label: t('common.mobile'), value: viewing.mobile },
+                ...(viewing.email ? [{ label: t('common.email'), value: viewing.email }] : []),
+                ...(viewing.address
+                  ? [{ label: t('common.address'), value: viewing.address }]
+                  : []),
                 ...(viewing.gstNumber ? [{ label: 'GST Number', value: viewing.gstNumber }] : []),
                 ...(viewing.panNumber ? [{ label: 'PAN Number', value: viewing.panNumber }] : []),
               ],
@@ -248,7 +252,7 @@ export function PartiesPage() {
             },
           ]}
           timeline={[
-            { title: 'Created', timestamp: formatTimestamp(viewing.createdAt) },
+            { title: t('common.createdAt'), timestamp: formatTimestamp(viewing.createdAt) },
             { title: 'Updated', timestamp: formatTimestamp(viewing.updatedAt) },
           ]}
         />

@@ -12,6 +12,7 @@ import { useReceivables, type ReceivableRow, type AgingBucket } from '@/hooks/us
 import { jobCardsQueryKey } from '@/hooks/use-job-cards'
 import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 const BUCKET_LABELS: Record<AgingBucket, string> = {
   '0-30': '0-30 days',
@@ -21,6 +22,7 @@ const BUCKET_LABELS: Record<AgingBucket, string> = {
 }
 
 export function ReceivablesPage() {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
   const { data, isLoading, error: loadError, refetch } = useReceivables()
@@ -37,12 +39,12 @@ export function ReceivablesPage() {
   const columns: DataTableColumn<ReceivableRow>[] = [
     {
       key: 'job',
-      header: 'Job Card',
+      header: t('common.jobCard'),
       render: (r) => <span className="font-semibold">{r.job.jobNumber}</span>,
     },
     {
       key: 'customer',
-      header: 'Customer',
+      header: t('common.customer'),
       render: (r) => (
         <div>
           <p className="font-medium">{r.job.customerName}</p>
@@ -52,14 +54,14 @@ export function ReceivablesPage() {
     },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       hideOnMobile: true,
       render: (r) =>
         [r.job.brandName, r.job.model].filter(Boolean).join(' ') || r.job.deviceTypeName,
     },
     {
       key: 'created',
-      header: 'Created',
+      header: t('common.createdAt'),
       hideOnMobile: true,
       render: (r) => formatTimestamp(r.job.createdAt),
     },
@@ -71,7 +73,7 @@ export function ReceivablesPage() {
     },
     {
       key: 'outstanding',
-      header: 'Outstanding',
+      header: t('common.outstanding'),
       sortValue: (r) => r.outstanding,
       render: (r) => <span className="font-medium text-red-600">₹{r.outstanding}</span>,
     },

@@ -41,6 +41,7 @@ import { Input } from '@/components/ui/input'
 import { useRoles, useRenameRole, useSetRoleStatus, type RoleWithId } from '@/hooks/use-roles'
 import { slugifyCode, formatDateTimeLong } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
+import { useTranslation } from 'react-i18next'
 
 type StatusFilter = 'active' | 'disabled' | 'deleted'
 
@@ -51,6 +52,7 @@ const STATUS_LABEL: Record<StatusFilter, string> = {
 }
 
 export function RoleManagementPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { data: roles = [], isLoading, error: loadError, refetch } = useRoles()
 
@@ -184,7 +186,7 @@ export function RoleManagementPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuGroup>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuLabel>{t('common.actions')}</DropdownMenuLabel>
               </DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() =>
@@ -347,7 +349,7 @@ export function RoleManagementPage() {
           <EmptyState
             icon={ShieldCheck}
             title="No roles found"
-            description="Try a different search or filter."
+            description={t('common.noResultsHint')}
           />
         }
       />
@@ -485,14 +487,14 @@ export function RoleManagementPage() {
               />
             </DetailBlock>
 
-            <DetailBlock icon={Clock} title="Timeline" tone="blue">
+            <DetailBlock icon={Clock} title={t('common.timeline')} tone="blue">
               <DetailValue
-                label="Created"
+                label={t('common.createdAt')}
                 value={formatDateTimeLong(selectedRole.createdAt)}
                 divider
               />
               <DetailValue
-                label="Last Updated"
+                label={t('common.updatedAt')}
                 value={formatDateTimeLong(selectedRole.updatedAt)}
               />
             </DetailBlock>

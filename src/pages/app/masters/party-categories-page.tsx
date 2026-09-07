@@ -22,8 +22,10 @@ import {
 } from '@/hooks/use-party-categories'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
+import { useTranslation } from 'react-i18next'
 
 export function PartyCategoriesPage() {
+  const { t } = useTranslation()
   const { data: categories = [], isLoading, error: loadError, refetch } = usePartyCategories()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'partyCategories', 'update'))
@@ -34,7 +36,7 @@ export function PartyCategoriesPage() {
   const columns: DataTableColumn<PartyCategoryWithId>[] = [
     {
       key: 'name',
-      header: 'Category',
+      header: t('common.category'),
       sortValue: (c) => c.name,
       render: (c) => (
         <div className="flex flex-wrap items-center gap-1.5">
@@ -82,12 +84,12 @@ export function PartyCategoriesPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (c) => <StatusBadge status={c.status === 'active' ? 'Active' : 'Inactive'} />,
     },
     {
       key: 'created',
-      header: 'Created',
+      header: t('common.createdAt'),
       hideOnMobile: true,
       render: (c) => formatTimestamp(c.createdAt, false),
     },
@@ -109,7 +111,12 @@ export function PartyCategoriesPage() {
         }
       />
 
-      <StatCard label="Total" value={categories.length} icon={Users} className="sm:max-w-48" />
+      <StatCard
+        label={t('common.total')}
+        value={categories.length}
+        icon={Users}
+        className="sm:max-w-48"
+      />
 
       <DataTable
         columns={columns}
@@ -175,7 +182,7 @@ export function PartyCategoriesPage() {
             },
           ]}
           timeline={[
-            { title: 'Created', timestamp: formatTimestamp(viewing.createdAt) },
+            { title: t('common.createdAt'), timestamp: formatTimestamp(viewing.createdAt) },
             { title: 'Updated', timestamp: formatTimestamp(viewing.updatedAt) },
           ]}
         />

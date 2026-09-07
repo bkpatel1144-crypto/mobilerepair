@@ -9,8 +9,10 @@ import { Button } from '@/components/ui/button'
 import { FormError } from '@/components/shared/form-error'
 import { signUp, getAuthErrorMessage } from '@/lib/auth'
 import { signupSchema, type SignupInput } from '@/lib/validation/auth-schemas'
+import { useTranslation } from 'react-i18next'
 
 export function SignupPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [formError, setFormError] = useState<string | null>(null)
 
@@ -71,7 +73,7 @@ export function SignupPage() {
           {errors.fullName && <p className="text-xs text-red-600">{errors.fullName.message}</p>}
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('common.email')}</Label>
           <Input
             id="email"
             type="email"

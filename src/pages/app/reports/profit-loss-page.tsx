@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { usePnl } from '@/hooks/use-pnl'
 import { downloadCsv } from '@/lib/csv-export'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 function Row({
   label,
@@ -60,6 +61,7 @@ function Row({
  * there is no estimated or annualised figure anywhere on it.
  */
 export function ProfitLossPage() {
+  const { t } = useTranslation()
   const [range, setRange] = useState<DateRangeKey | 'all'>('month')
   const { data, isLoading, error: loadError, refetch } = usePnl(range)
 
@@ -149,7 +151,7 @@ export function ProfitLossPage() {
               tone={data.grossProfit >= 0 ? 'success' : 'danger'}
             />
             <StatCard
-              label="Expenses"
+              label={t('common.expensesLabel')}
               value={`₹${data.operatingExpenses}`}
               icon={TrendingDown}
               tone="warning"

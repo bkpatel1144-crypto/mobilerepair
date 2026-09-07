@@ -48,8 +48,10 @@ import {
 } from '@/hooks/use-financial-years'
 import { getNextFinancialYear, formatFinancialYearDuration } from '@/lib/financial-year'
 import { formatDateShort, formatDateTimeLong } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export function FinancialYearsPage() {
+  const { t } = useTranslation()
   const { data: fys = [], isLoading, error: loadError, refetch } = useFinancialYears()
   const [search, setSearch] = useState('')
   const [viewing, setViewing] = useState<FinancialYearWithId | null>(null)
@@ -119,7 +121,7 @@ export function FinancialYearsPage() {
   const columns: DataTableColumn<FinancialYearWithId>[] = [
     {
       key: 'name',
-      header: 'Name',
+      header: t('common.name'),
       sortValue: (f) => f.startDate.toMillis(),
       render: (f) => (
         <span className="inline-flex items-center gap-2">
@@ -149,7 +151,7 @@ export function FinancialYearsPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (f) =>
         f.isLocked ? (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
@@ -170,13 +172,13 @@ export function FinancialYearsPage() {
     },
     {
       key: 'created',
-      header: 'Created',
+      header: t('common.createdAt'),
       hideOnMobile: true,
       render: (f) => formatDateShort(f.createdAt),
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       render: (f) => (
         <div className="flex items-center justify-end gap-1">
           <Button
@@ -269,17 +271,21 @@ export function FinancialYearsPage() {
       />
 
       <StatPillRow>
-        <StatPill label="Total" count={fys.length} />
+        <StatPill label={t('common.total')} count={fys.length} />
         <StatPill
           icon={CheckCircle2}
-          label="Active"
+          label={t('common.active')}
           count={fys.filter((f) => f.isActive).length}
           tone="success"
         />
-        <StatPill icon={Lock} label="Locked" count={fys.filter((f) => f.isLocked).length} />
+        <StatPill
+          icon={Lock}
+          label={t('common.locked')}
+          count={fys.filter((f) => f.isLocked).length}
+        />
         <StatPill
           icon={XCircle}
-          label="Inactive"
+          label={t('common.inactive')}
           count={fys.filter((f) => !f.isActive).length}
           tone="danger"
         />
@@ -430,9 +436,16 @@ export function FinancialYearsPage() {
               />
             </DetailBlock>
 
-            <DetailBlock icon={Clock} title="Timeline" tone="amber">
-              <DetailValue label="Created" value={formatDateTimeLong(viewing.createdAt)} divider />
-              <DetailValue label="Last Updated" value={formatDateTimeLong(viewing.updatedAt)} />
+            <DetailBlock icon={Clock} title={t('common.timeline')} tone="amber">
+              <DetailValue
+                label={t('common.createdAt')}
+                value={formatDateTimeLong(viewing.createdAt)}
+                divider
+              />
+              <DetailValue
+                label={t('common.updatedAt')}
+                value={formatDateTimeLong(viewing.updatedAt)}
+              />
             </DetailBlock>
           </div>
         </DetailDrawer>

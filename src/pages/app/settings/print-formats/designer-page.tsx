@@ -79,6 +79,7 @@ import { cn } from '@/lib/utils'
 import type { PrintBand, PrintElement, PrintElementStyle } from '@/types/firestore'
 import { DesignerCanvas } from './designer-canvas'
 import { useDesignerState, draftFromTemplate, newElement } from './use-designer-state'
+import { useTranslation } from 'react-i18next'
 
 const PALETTE: { type: PrintElement['type']; label: string; icon: typeof Type }[] = [
   { type: 'text', label: 'Text', icon: Type },
@@ -101,6 +102,7 @@ function FieldBadge({ type }: { type: PrintFieldDef['type'] }) {
 }
 
 export function PrintTemplateDesignerPage() {
+  const { t } = useTranslation()
   const { templateId } = useParams<{ templateId: string }>()
   const navigate = useNavigate()
   const { data: templates = [], isLoading, error: loadError, refetch } = usePrintTemplates()
@@ -375,7 +377,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Duplicate"
+          aria-label={t('common.duplicate')}
           disabled={!state.selectedIds.length}
           onClick={state.duplicateSelected}
         >
@@ -385,7 +387,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Delete"
+          aria-label={t('common.delete')}
           disabled={!state.selectedIds.length}
           onClick={state.removeSelected}
           className="text-red-600"
@@ -797,7 +799,7 @@ export function PrintTemplateDesignerPage() {
         onOpenChange={setConfirmReset}
         title="Reset to the default layout?"
         message="Every element on this template is replaced with the standard layout for its paper size. Undo still works until you leave the designer."
-        confirmLabel="Reset"
+        confirmLabel={t('common.reset')}
         onConfirm={() => {
           const preset =
             PRINT_PRESETS.find(
@@ -876,7 +878,7 @@ export function PrintTemplateDesignerPage() {
         onOpenChange={setConfirmBack}
         title="Discard unsaved changes?"
         message="This template has edits that haven't been saved. Leaving now loses them."
-        confirmLabel="Discard"
+        confirmLabel={t('common.discard')}
         onConfirm={() => navigate(buildPath('settings', 'print-formats'))}
       />
     </div>

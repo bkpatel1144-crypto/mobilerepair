@@ -20,6 +20,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatCurrency, formatPercent, formatTimestamp } from '@/lib/utils'
 import { lineOverrunPct } from '@/lib/reports'
+import { useTranslation } from 'react-i18next'
 
 interface SupplierTransaction {
   jobId: string
@@ -49,6 +50,7 @@ interface SupplierGroup {
  * comment for why this isn't a partyId reference). A cost item with no supplier picked isn't
  * attributable to anyone and is deliberately excluded, not lumped into a fake "Unknown" row. */
 export function SupplierReportPage() {
+  const { t } = useTranslation()
   const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [supplierFilter, setSupplierFilter] = useState('all')
@@ -122,7 +124,7 @@ export function SupplierReportPage() {
   const columns: ExpandableTableColumn<SupplierGroup>[] = [
     {
       key: 'supplier',
-      header: 'Supplier',
+      header: t('common.supplier'),
       render: (g) => <span className="font-medium">{g.supplierName}</span>,
     },
     {
@@ -131,7 +133,7 @@ export function SupplierReportPage() {
       render: (g) => formatCurrency(g.totalPurchase),
     },
     { key: 'totalQty', header: 'Total Qty', render: (g) => g.totalQty },
-    { key: 'jobs', header: 'Jobs', hideOnMobile: true, render: (g) => g.jobCount },
+    { key: 'jobs', header: t('common.jobs'), hideOnMobile: true, render: (g) => g.jobCount },
     {
       key: 'avgCost',
       header: 'Avg Cost/Unit',
@@ -186,7 +188,12 @@ export function SupplierReportPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Suppliers" value={totals.suppliers} icon={Package} tone="warning" />
+        <StatCard
+          label={t('common.suppliers')}
+          value={totals.suppliers}
+          icon={Package}
+          tone="warning"
+        />
         <StatCard
           label="Total Purchase"
           icon={ShoppingCart}
@@ -315,14 +322,14 @@ export function SupplierReportPage() {
                 <table className="w-full min-w-[820px] text-sm whitespace-nowrap">
                   <thead className="bg-muted/40 text-xs text-muted-foreground uppercase">
                     <tr>
-                      <th className="p-2 text-left">Job Card</th>
+                      <th className="p-2 text-left">{t('common.jobCard')}</th>
                       <th className="p-2 text-left">Part Name</th>
                       <th className="p-2 text-left">Device Name</th>
-                      <th className="p-2 text-right">Purchase Price</th>
+                      <th className="p-2 text-right">{t('common.purchasePrice')}</th>
                       <th className="p-2 text-right">Qty</th>
                       <th className="p-2 text-right">Total Cost</th>
                       <th className="p-2 text-right">Job Revenue</th>
-                      <th className="p-2 text-left">Date</th>
+                      <th className="p-2 text-left">{t('common.date')}</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -48,6 +48,7 @@ import { cn } from '@/lib/utils'
 import { CompanyForm } from './company-form'
 import { BLANK_COMPANY, validateCompany, type CompanyFormValues } from '@/lib/company-validation'
 import type { CompanyWithId } from '@/hooks/use-company'
+import { useTranslation } from 'react-i18next'
 
 /** The UI says "Inactive" (matching the reference) while the stored value is `disabled` —
  * `EntityStatus` is shared across every entity in the app, so it is the label that bends here,
@@ -119,6 +120,7 @@ function DetailValue({ label, value }: { label: string; value: React.ReactNode }
 }
 
 export function CompanySettingsPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { profile } = useAuth()
   const { data: active } = useCompany()
@@ -240,7 +242,7 @@ export function CompanySettingsPage() {
     },
     {
       key: 'code',
-      header: 'Code',
+      header: t('common.code'),
       hideOnMobile: true,
       sortValue: (c) => c.code,
       render: (c) => (
@@ -249,7 +251,7 @@ export function CompanySettingsPage() {
     },
     {
       key: 'gstin',
-      header: 'GSTIN',
+      header: t('common.gstin'),
       hideOnMobile: true,
       render: (c) =>
         c.gstRegistration === 'Unregistered' || !c.gstin ? (
@@ -271,7 +273,7 @@ export function CompanySettingsPage() {
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       render: (c) => (
         <div className="flex items-center gap-1">
           <Button
@@ -348,19 +350,25 @@ export function CompanySettingsPage() {
   }[] = [
     {
       key: 'active',
-      label: 'Active',
+      label: t('common.active'),
       count: counts.active,
       icon: CheckCircle2,
       tone: 'text-teal-600 dark:text-teal-400',
     },
     {
       key: 'disabled',
-      label: 'Inactive',
+      label: t('common.inactive'),
       count: counts.disabled,
       icon: XCircle,
       tone: 'text-red-600',
     },
-    { key: 'deleted', label: 'Deleted', count: counts.deleted, icon: Trash2, tone: 'text-red-600' },
+    {
+      key: 'deleted',
+      label: t('common.deleted'),
+      count: counts.deleted,
+      icon: Trash2,
+      tone: 'text-red-600',
+    },
   ]
 
   return (
@@ -539,7 +547,7 @@ export function CompanySettingsPage() {
                     : `${viewing.gstRegistration} — ${viewing.gstin ?? '—'}`
                 }
               />
-              {viewing.pan && <DetailValue label="PAN" value={viewing.pan} />}
+              {viewing.pan && <DetailValue label={t('common.pan')} value={viewing.pan} />}
             </DetailBlock>
 
             <DetailBlock icon={Wallet} title="Financial Settings" tone="teal">
@@ -547,8 +555,11 @@ export function CompanySettingsPage() {
               <DetailValue label="Timezone" value={viewing.timezone} />
             </DetailBlock>
 
-            <DetailBlock icon={Clock} title="Timeline" tone="amber">
-              <DetailValue label="Created" value={formatDateTimeLong(viewing.createdAt)} />
+            <DetailBlock icon={Clock} title={t('common.timeline')} tone="amber">
+              <DetailValue
+                label={t('common.createdAt')}
+                value={formatDateTimeLong(viewing.createdAt)}
+              />
               <DetailValue label="Last updated" value={formatDateTimeLong(viewing.updatedAt)} />
             </DetailBlock>
           </div>

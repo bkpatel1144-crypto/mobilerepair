@@ -35,6 +35,7 @@ import { useUoms } from '@/hooks/use-uom'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 import type { ItemType } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 const TYPE_LABEL: Record<ItemType, string> = {
   service: 'Service',
@@ -43,6 +44,7 @@ const TYPE_LABEL: Record<ItemType, string> = {
 }
 
 export function ItemMasterPage() {
+  const { t } = useTranslation()
   const { data: items = [], isLoading, error: loadError, refetch } = useItems()
   const { data: categories = [] } = useItemCategories()
   const { canDo } = usePermissions()
@@ -60,7 +62,7 @@ export function ItemMasterPage() {
   const columns: DataTableColumn<ItemWithId>[] = [
     {
       key: 'item',
-      header: 'Item',
+      header: t('common.item'),
       sortValue: (i) => i.name,
       render: (i) => (
         <div className="flex items-center gap-2.5">
@@ -76,13 +78,13 @@ export function ItemMasterPage() {
     },
     {
       key: 'category',
-      header: 'Category',
+      header: t('common.category'),
       hideOnMobile: true,
       render: (i) => i.categoryName ?? '—',
     },
     {
       key: 'type',
-      header: 'Type',
+      header: t('common.type'),
       render: (i) => (
         <span
           className={
@@ -100,7 +102,7 @@ export function ItemMasterPage() {
     { key: 'uom', header: 'UOM', hideOnMobile: true, render: (i) => i.uom },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (i) => <StatusBadge status={i.status === 'active' ? 'Active' : 'Inactive'} />,
     },
   ]
@@ -122,9 +124,9 @@ export function ItemMasterPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total" value={items.length} icon={Package} />
+        <StatCard label={t('common.total')} value={items.length} icon={Package} />
         <StatCard
-          label="Active"
+          label={t('common.active')}
           icon={CheckCircle2}
           value={items.filter((i) => i.status === 'active').length}
           tone="success"
@@ -149,9 +151,9 @@ export function ItemMasterPage() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
+            <SelectItem value="all">{t('common.allTypes')}</SelectItem>
             <SelectItem value="service">Service</SelectItem>
-            <SelectItem value="part">Part</SelectItem>
+            <SelectItem value="part">{t('common.part')}</SelectItem>
             <SelectItem value="product">Product</SelectItem>
           </SelectContent>
         </Select>
@@ -214,26 +216,26 @@ export function ItemMasterPage() {
             {
               title: 'CLASSIFICATION',
               rows: [
-                { label: 'Type', value: TYPE_LABEL[viewing.type].toUpperCase() },
+                { label: t('common.type'), value: TYPE_LABEL[viewing.type].toUpperCase() },
                 { label: 'Nature', value: viewing.nature },
-                { label: 'Category', value: viewing.categoryName ?? '—' },
+                { label: t('common.category'), value: viewing.categoryName ?? '—' },
                 { label: 'Primary UOM', value: viewing.uom },
               ],
             },
             {
               title: 'PRICING',
               rows: [
-                { label: 'Tax', value: `GST ${viewing.gstPercent}%` },
+                { label: t('common.tax'), value: `GST ${viewing.gstPercent}%` },
                 {
                   label: 'GST',
                   value: `CGST ${viewing.cgstPercent}% + SGST ${viewing.sgstPercent}%`,
                 },
                 {
-                  label: 'Selling Price',
+                  label: t('common.sellingPrice'),
                   value: viewing.sellingPrice != null ? `₹${viewing.sellingPrice}` : '—',
                 },
                 {
-                  label: 'Purchase Price',
+                  label: t('common.purchasePrice'),
                   value: viewing.purchasePrice != null ? `₹${viewing.purchasePrice}` : '—',
                 },
                 { label: 'MRP', value: viewing.mrp != null ? `₹${viewing.mrp}` : '—' },

@@ -12,8 +12,10 @@ import { useCashBook, type CashBookRow } from '@/hooks/use-cash-book'
 import { receiptsQueryKey } from '@/hooks/use-receipts'
 import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export function CashBookPage() {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
@@ -29,7 +31,7 @@ export function CashBookPage() {
   )
 
   const columns: DataTableColumn<CashBookRow>[] = [
-    { key: 'date', header: 'Date', render: (r) => formatTimestamp(r.createdAt) },
+    { key: 'date', header: t('common.date'), render: (r) => formatTimestamp(r.createdAt) },
     {
       key: 'particulars',
       header: 'Particulars',
@@ -54,7 +56,7 @@ export function CashBookPage() {
       render: (r) =>
         r.direction === 'out' ? <span className="text-red-600">₹{r.amount}</span> : '',
     },
-    { key: 'balance', header: 'Balance', render: (r) => `₹${r.runningBalance}` },
+    { key: 'balance', header: t('common.balance'), render: (r) => `₹${r.runningBalance}` },
   ]
 
   return (
@@ -84,10 +86,10 @@ export function CashBookPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Opening" value={`₹${data.opening}`} />
+        <StatCard label={t('common.opening')} value={`₹${data.opening}`} />
         <StatCard label="Total Credit (IN)" value={`₹${data.totalCredit}`} tone="success" />
         <StatCard label="Total Debit (OUT)" value={`₹${data.totalDebit}`} tone="danger" />
-        <StatCard label="Closing" value={`₹${data.closing}`} tone="info" />
+        <StatCard label={t('common.closing')} value={`₹${data.closing}`} tone="info" />
       </StatCardGrid>
 
       <FilterBar

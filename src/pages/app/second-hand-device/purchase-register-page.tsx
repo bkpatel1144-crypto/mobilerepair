@@ -35,8 +35,10 @@ import {
   PURCHASE_STATUS_LABEL,
   PURCHASE_STATUS_TONE,
 } from './purchase-detail-sections'
+import { useTranslation } from 'react-i18next'
 
 export function PurchaseRegisterPage() {
+  const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { data: options } = useAllServiceOptions()
   const { profile } = useAuth()
@@ -79,17 +81,17 @@ export function PurchaseRegisterPage() {
         </div>
       ),
     },
-    { key: 'device', header: 'Device', render: (p) => deviceLabel(p) },
+    { key: 'device', header: t('common.device'), render: (p) => deviceLabel(p) },
     { key: 'seller', header: 'Seller', hideOnMobile: true, render: (p) => p.sellerName },
     {
       key: 'price',
-      header: 'Purchase Price',
+      header: t('common.purchasePrice'),
       sortValue: (p) => p.purchasePrice,
       render: (p) => `₹${p.purchasePrice}`,
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (p) => (
         <StatusBadge
           status={PURCHASE_STATUS_LABEL[p.status]}
@@ -172,10 +174,10 @@ export function PurchaseRegisterPage() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
+            <SelectItem value="all">{t('common.allStatuses')}</SelectItem>
             <SelectItem value="inStock">In Stock</SelectItem>
             <SelectItem value="inRefurb">In Refurb</SelectItem>
-            <SelectItem value="sold">Sold</SelectItem>
+            <SelectItem value="sold">{t('common.sold')}</SelectItem>
             <SelectItem value="returnedToSeller">Returned to Seller</SelectItem>
           </SelectContent>
         </Select>

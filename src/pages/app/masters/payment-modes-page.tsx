@@ -45,10 +45,12 @@ import {
 } from '@/hooks/use-payment-modes'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
+import { useTranslation } from 'react-i18next'
 
 const TYPE_OPTIONS = ['Cash', 'UPI', 'Card', 'Bank Transfer', 'Other']
 
 export function PaymentModesPage() {
+  const { t } = useTranslation()
   const { data: modes = [], isLoading, error: loadError, refetch } = usePaymentModes()
   const { canDo } = usePermissions()
   const setStatus = useSetPaymentModeStatus()
@@ -65,7 +67,7 @@ export function PaymentModesPage() {
   const columns: DataTableColumn<PaymentModeWithId>[] = [
     {
       key: 'name',
-      header: 'Payment Mode',
+      header: t('common.paymentMode'),
       sortValue: (m) => m.name,
       render: (m) => (
         <span className="inline-flex items-center gap-1.5 font-medium">
@@ -76,25 +78,25 @@ export function PaymentModesPage() {
     },
     {
       key: 'type',
-      header: 'Type',
+      header: t('common.type'),
       render: (m) => (
         <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">{m.type}</span>
       ),
     },
     {
       key: 'description',
-      header: 'Description',
+      header: t('common.description'),
       hideOnMobile: true,
       render: (m) => m.description || '—',
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (m) => <StatusBadge status={m.status === 'active' ? 'Active' : 'Inactive'} />,
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       className: 'text-right',
       render: (m) =>
         canManage ? (
@@ -169,9 +171,9 @@ export function PaymentModesPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total" value={modes.length} icon={CreditCard} />
+        <StatCard label={t('common.total')} value={modes.length} icon={CreditCard} />
         <StatCard
-          label="Active"
+          label={t('common.active')}
           icon={CheckCircle2}
           value={modes.filter((m) => m.status === 'active').length}
           tone="success"
@@ -235,7 +237,7 @@ export function PaymentModesPage() {
           onOpenChange={(o) => !o && setDeleteTarget(null)}
           title={`Delete "${deleteTarget.name}"?`}
           message="Receipts already recorded under this payment mode will keep a reference to a mode that no longer exists. This cannot be undone."
-          confirmLabel="Delete"
+          confirmLabel={t('common.delete')}
           isPending={deleteMode.isPending}
           onConfirm={() =>
             deleteMode.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })

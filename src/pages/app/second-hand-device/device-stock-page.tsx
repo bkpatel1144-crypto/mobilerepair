@@ -20,6 +20,7 @@ import {
   PURCHASE_STATUS_LABEL,
   PURCHASE_STATUS_TONE,
 } from './purchase-detail-sections'
+import { useTranslation } from 'react-i18next'
 
 // `new Date().getTime()`, not the bare `Date.now()` call — the latter is flagged by this
 // project's React Compiler config as an impure call even when it's a plain helper function
@@ -31,6 +32,7 @@ function daysInStock(p: SecondHandPurchaseWithId) {
 }
 
 export function DeviceStockPage() {
+  const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -58,7 +60,7 @@ export function DeviceStockPage() {
     { key: 'purchaseNumber', header: 'Purchase #', render: (p) => p.purchaseNumber },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       render: (p) => (
         <div>
           <p className="font-medium">{deviceLabel(p)}</p>
@@ -70,7 +72,7 @@ export function DeviceStockPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (p) => (
         <StatusBadge
           status={PURCHASE_STATUS_LABEL[p.status]}
@@ -80,7 +82,7 @@ export function DeviceStockPage() {
     },
     {
       key: 'purchasePrice',
-      header: 'Purchase Price',
+      header: t('common.purchasePrice'),
       hideOnMobile: true,
       render: (p) => `₹${p.purchasePrice}`,
     },

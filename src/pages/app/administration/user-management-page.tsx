@@ -14,6 +14,7 @@ import { useUsers, useSetUserStatus, type UserWithId } from '@/hooks/use-users'
 import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
+import { useTranslation } from 'react-i18next'
 
 type StatusFilter = 'active' | 'disabled' | 'deleted' | null
 
@@ -25,6 +26,7 @@ function getInitials(name: string) {
 }
 
 export function UserManagementPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { user: currentUser } = useAuth()
   const { data: users = [], isLoading, error: loadError, refetch } = useUsers()
@@ -51,7 +53,7 @@ export function UserManagementPage() {
   const columns: DataTableColumn<UserWithId>[] = [
     {
       key: 'user',
-      header: 'User',
+      header: t('common.user'),
       sortValue: (u) => u.fullName,
       render: (u) => (
         <div className="flex items-center gap-2.5">
@@ -70,14 +72,14 @@ export function UserManagementPage() {
     },
     {
       key: 'role',
-      header: 'Role',
+      header: t('common.role'),
       render: (u) => <StatusBadge status={u.roleName} tone="warning" />,
     },
     { key: 'contact', header: 'Contact', hideOnMobile: true, render: (u) => u.mobile ?? '—' },
-    { key: 'status', header: 'Status', render: (u) => <StatusBadge status={u.status} /> },
+    { key: 'status', header: t('common.status'), render: (u) => <StatusBadge status={u.status} /> },
     {
       key: 'created',
-      header: 'Created',
+      header: t('common.createdAt'),
       hideOnMobile: true,
       render: (u) => formatTimestamp(u.createdAt, false),
     },
@@ -142,11 +144,7 @@ export function UserManagementPage() {
         error={loadError}
         onRetry={() => void refetch()}
         emptyState={
-          <EmptyState
-            icon={Users}
-            title="No users found"
-            description="Try a different search or filter."
-          />
+          <EmptyState icon={Users} title="No users found" description={t('common.noResultsHint')} />
         }
       />
 
@@ -192,19 +190,22 @@ export function UserManagementPage() {
                   title: 'Contact Details',
                   icon: Mail,
                   rows: [
-                    { label: 'Email', value: selectedUser.email },
-                    { label: 'Mobile', value: selectedUser.mobile ?? '—' },
+                    { label: t('common.email'), value: selectedUser.email },
+                    { label: t('common.mobile'), value: selectedUser.mobile ?? '—' },
                   ],
                 },
                 {
                   title: 'Role & Access',
                   icon: Phone,
-                  rows: [{ label: 'Role', value: selectedUser.roleName }],
+                  rows: [{ label: t('common.role'), value: selectedUser.roleName }],
                 },
                 {
-                  title: 'Timeline',
+                  title: t('common.timeline'),
                   rows: [
-                    { label: 'Created', value: formatTimestamp(selectedUser.createdAt, false) },
+                    {
+                      label: t('common.createdAt'),
+                      value: formatTimestamp(selectedUser.createdAt, false),
+                    },
                   ],
                 },
               ]

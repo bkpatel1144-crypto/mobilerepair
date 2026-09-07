@@ -35,6 +35,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp, toDateInputValue } from '@/lib/utils'
 import type { ExpenseDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 /** Maps a Payment Modes master row onto the three modes `ReceiptDoc` actually stores. The
  * receipt schema is a fixed union, so a shop that adds "Paytm" as a mode still records the
@@ -225,6 +226,7 @@ function NewExpenseModal({
 }
 
 export function ExpensesPage() {
+  const { t } = useTranslation()
   const { data: expenses = [], isLoading, error: loadError, refetch } = useExpenses()
   const voidExpense = useVoidExpense()
 
@@ -277,7 +279,7 @@ export function ExpensesPage() {
     },
     {
       key: 'category',
-      header: 'Category',
+      header: t('common.category'),
       sortValue: (e) => e.categoryName,
       render: (e) => e.categoryName,
     },
@@ -287,10 +289,15 @@ export function ExpensesPage() {
       hideOnMobile: true,
       render: (e) => e.paidToPartyName ?? <span className="text-muted-foreground">—</span>,
     },
-    { key: 'mode', header: 'Mode', hideOnMobile: true, render: (e) => e.mode.toUpperCase() },
+    {
+      key: 'mode',
+      header: t('common.mode'),
+      hideOnMobile: true,
+      render: (e) => e.mode.toUpperCase(),
+    },
     {
       key: 'amount',
-      header: 'Amount',
+      header: t('common.amount'),
       sortValue: (e) => e.amount,
       render: (e) => (
         <span
@@ -302,7 +309,7 @@ export function ExpensesPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (e) =>
         e.voided ? (
           <StatusBadge status="Voided" tone="neutral" />
@@ -312,7 +319,7 @@ export function ExpensesPage() {
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       className: 'text-right',
       render: (e) =>
         e.voided ? null : (
@@ -337,7 +344,7 @@ export function ExpensesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Wallet}
-        title="Expenses"
+        title={t('common.expensesLabel')}
         subtitle="Shop running costs — rent, salaries, utilities and everything else Profit & Loss subtracts"
         actions={
           <>
@@ -372,7 +379,7 @@ export function ExpensesPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total" value={`₹${total}`} icon={IndianRupee} tone="danger" />
+        <StatCard label={t('common.total')} value={`₹${total}`} icon={IndianRupee} tone="danger" />
         <StatCard label="Entries" value={live.length} icon={ReceiptIcon} />
         <StatCard
           label="Top Category"
@@ -392,10 +399,10 @@ export function ExpensesPage() {
       >
         <Select value={categoryFilter} onValueChange={(v) => v && setCategoryFilter(v)}>
           <SelectTrigger className="w-44">
-            <SelectValue placeholder="All Categories" />
+            <SelectValue placeholder={t('common.allCategories')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
+            <SelectItem value="all">{t('common.allCategories')}</SelectItem>
             {categories.map((c) => (
               <SelectItem key={c.id} value={c.id}>
                 {c.name}

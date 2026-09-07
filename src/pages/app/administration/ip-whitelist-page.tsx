@@ -31,8 +31,10 @@ import {
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export function IpWhitelistPage() {
+  const { t } = useTranslation()
   const { data: entries = [], isLoading, error: loadError, refetch } = useIpWhitelist()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('administration', 'ipWhitelist', 'update'))
@@ -57,21 +59,21 @@ export function IpWhitelistPage() {
       header: 'IP / CIDR',
       render: (e) => <span className="font-mono text-xs">{e.ipOrCidr}</span>,
     },
-    { key: 'notes', header: 'Notes', hideOnMobile: true, render: (e) => e.notes || '—' },
+    { key: 'notes', header: t('common.notes'), hideOnMobile: true, render: (e) => e.notes || '—' },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (e) => <StatusBadge status={e.active ? 'Active' : 'Inactive'} />,
     },
     {
       key: 'created',
-      header: 'Created',
+      header: t('common.createdAt'),
       hideOnMobile: true,
       render: (e) => formatTimestamp(e.createdAt, false),
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       className: 'text-right',
       render: (e) =>
         canManage ? (
@@ -135,9 +137,9 @@ export function IpWhitelistPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total" value={entries.length} icon={ShieldCheck} />
+        <StatCard label={t('common.total')} value={entries.length} icon={ShieldCheck} />
         <StatCard
-          label="Active"
+          label={t('common.active')}
           icon={CheckCircle2}
           value={entries.filter((e) => e.active).length}
           tone="success"
@@ -178,7 +180,7 @@ export function IpWhitelistPage() {
               ? `This is your only active whitelist entry — deleting it removes every IP restriction, letting non-Owner sign-ins succeed from any network. This cannot be undone.`
               : 'This permanently removes this IP restriction. This cannot be undone.'
           }
-          confirmLabel="Delete"
+          confirmLabel={t('common.delete')}
           isPending={deleteEntry.isPending}
           onConfirm={() =>
             deleteEntry.mutate(deleteTarget, { onSuccess: () => setDeleteTarget(null) })

@@ -15,6 +15,7 @@ import { formatTimestamp } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import { JobCardDetailDrawer } from '../service/job-cards/job-card-detail-drawer'
+import { useTranslation } from 'react-i18next'
 
 /**
  * `preview (68)` — Sales > Sales Invoices.
@@ -53,6 +54,7 @@ function billDate(job: JobCardWithId) {
 }
 
 export function SalesInvoicesPage() {
+  const { t } = useTranslation()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -102,13 +104,13 @@ export function SalesInvoicesPage() {
     },
     {
       key: 'jobNumber',
-      header: 'Job Card',
+      header: t('common.jobCard'),
       sortValue: (j) => j.jobNumber,
       render: (j) => <span className="font-semibold">{j.jobNumber}</span>,
     },
     {
       key: 'customer',
-      header: 'Customer',
+      header: t('common.customer'),
       sortValue: (j) => j.customerName,
       render: (j) => (
         <div>
@@ -119,25 +121,25 @@ export function SalesInvoicesPage() {
     },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       hideOnMobile: true,
       render: (j) => [j.brandName, j.model].filter(Boolean).join(' ') || '—',
     },
     {
       key: 'total',
-      header: 'Total',
+      header: t('common.total'),
       sortValue: (j) => j.finalAmount ?? 0,
       render: (j) => `₹${j.finalAmount ?? 0}`,
     },
     {
       key: 'paid',
-      header: 'Paid',
+      header: t('common.paid'),
       sortValue: (j) => j.paidAmount,
       render: (j) => <span className="text-teal-600 dark:text-teal-400">₹{j.paidAmount}</span>,
     },
     {
       key: 'outstanding',
-      header: 'Outstanding',
+      header: t('common.outstanding'),
       sortValue: (j) => Math.max(0, (j.finalAmount ?? 0) - j.paidAmount),
       render: (j) => {
         const due = (j.finalAmount ?? 0) - j.paidAmount
@@ -148,13 +150,13 @@ export function SalesInvoicesPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       sortValue: (j) => j.status,
       render: (j) => <StatusBadge status={statusLabel(j.status)} />,
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       render: (j) => (
         <div className="flex items-center gap-1.5">
           <Button

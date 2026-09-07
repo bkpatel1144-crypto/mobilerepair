@@ -37,8 +37,10 @@ import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { useAuth } from '@/hooks/use-auth'
 import { dateRangeBounds } from '@/lib/date-range'
 import { purchaseDetailSections, purchaseTimeline } from './purchase-detail-sections'
+import { useTranslation } from 'react-i18next'
 
 export function DeviceSalePage() {
+  const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { data: sales = [] } = useSecondHandSales()
   const { profile } = useAuth()
@@ -74,7 +76,7 @@ export function DeviceSalePage() {
     { key: 'purchaseNumber', header: 'Purchase #', render: (p) => p.purchaseNumber },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       render: (p) => (
         <>
           <p className="font-medium">{deviceLabel(p)}</p>
@@ -89,7 +91,7 @@ export function DeviceSalePage() {
     },
     {
       key: 'actions',
-      header: 'Actions',
+      header: t('common.actions'),
       className: 'text-right',
       render: (p) => (
         <Button
@@ -136,7 +138,7 @@ export function DeviceSalePage() {
           tone="success"
         />
         <StatCard label="In Refurb" icon={Wrench} value={inRefurb.length} tone="warning" />
-        <StatCard label="Sold" icon={Truck} value={sold.length} tone="info" />
+        <StatCard label={t('common.sold')} icon={Truck} value={sold.length} tone="info" />
         <StatCard
           label="Total Profit"
           value={`₹${totalProfit}`}

@@ -20,6 +20,7 @@ import { useAuditLog, type AuditLogWithId } from '@/hooks/use-audit-log'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
 import type { AuditResult } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 const RESULT_LABEL: Record<AuditResult, string> = {
   success: 'Success',
@@ -35,6 +36,7 @@ const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
 }
 
 export function SystemAuditPage() {
+  const { t } = useTranslation()
   const { data: events = [], isLoading, error: loadError, refetch } = useAuditLog()
   const [search, setSearch] = useState('')
   const [moduleFilter, setModuleFilter] = useState('all')
@@ -66,7 +68,7 @@ export function SystemAuditPage() {
   const columns: DataTableColumn<AuditLogWithId>[] = [
     {
       key: 'time',
-      header: 'Time',
+      header: t('common.time'),
       sortValue: (e) => e.createdAt?.toDate?.()?.getTime() ?? 0,
       render: (e) => formatTimestamp(e.createdAt),
     },
@@ -147,7 +149,7 @@ export function SystemAuditPage() {
           selected={criticalOnly}
           onClick={() => setCriticalOnly((v) => !v)}
         />
-        <StatCard label="Today" value={todayCount} icon={Calendar} />
+        <StatCard label={t('common.today')} value={todayCount} icon={Calendar} />
       </StatCardGrid>
 
       <FilterBar
@@ -224,7 +226,7 @@ export function SystemAuditPage() {
             {
               title: 'ENTITY',
               rows: [
-                { label: 'Type', value: viewing.entityType },
+                { label: t('common.type'), value: viewing.entityType },
                 { label: 'ID', value: viewing.entityId ?? '—' },
                 { label: 'Target', value: viewing.targetLabel },
               ],
@@ -232,15 +234,15 @@ export function SystemAuditPage() {
             {
               title: 'PERFORMED BY',
               rows: [
-                { label: 'Name', value: viewing.performedByName },
-                { label: 'Role', value: viewing.performedByRole },
-                { label: 'Branch', value: viewing.performedByBranch },
+                { label: t('common.name'), value: viewing.performedByName },
+                { label: t('common.role'), value: viewing.performedByRole },
+                { label: t('common.branch'), value: viewing.performedByBranch },
               ],
             },
             {
               title: 'SESSION INFO',
               rows: [
-                { label: 'Time', value: formatTimestamp(viewing.createdAt) },
+                { label: t('common.time'), value: formatTimestamp(viewing.createdAt) },
                 { label: 'IP Address', value: viewing.ip ?? '—' },
                 { label: 'Browser', value: viewing.userAgent || '—' },
               ],

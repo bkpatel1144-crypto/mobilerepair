@@ -26,6 +26,7 @@ import { partiesQueryKey } from '@/hooks/use-parties'
 import { receiptsQueryKey } from '@/hooks/use-receipts'
 import { jobCardsQueryKey } from '@/hooks/use-job-cards'
 import { useAuth } from '@/hooks/use-auth'
+import { useTranslation } from 'react-i18next'
 
 function balanceLabel(balance: number) {
   if (balance === 0) return <span className="font-medium text-emerald-600">Settled ✓</span>
@@ -35,6 +36,7 @@ function balanceLabel(balance: number) {
 }
 
 export function PartyLedgerPage() {
+  const { t } = useTranslation()
   const { data: summaries = [], isLoading, error: loadError, refetch } = usePartyLedgerSummaries()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -58,7 +60,7 @@ export function PartyLedgerPage() {
   const columns: DataTableColumn<PartyLedgerSummary>[] = [
     {
       key: 'party',
-      header: 'Party',
+      header: t('common.party'),
       render: (s) => (
         <div>
           <p className="font-medium">{s.party.name}</p>
@@ -70,10 +72,15 @@ export function PartyLedgerPage() {
     },
     {
       key: 'type',
-      header: 'Type',
+      header: t('common.type'),
       render: (s) => <StatusBadge status={s.party.type === 'customer' ? 'Customer' : 'Supplier'} />,
     },
-    { key: 'jobs', header: 'Jobs', sortValue: (s) => s.jobsCount, render: (s) => s.jobsCount },
+    {
+      key: 'jobs',
+      header: t('common.jobs'),
+      sortValue: (s) => s.jobsCount,
+      render: (s) => s.jobsCount,
+    },
     {
       key: 'billed',
       header: 'Billed',
@@ -83,14 +90,14 @@ export function PartyLedgerPage() {
     },
     {
       key: 'paid',
-      header: 'Paid',
+      header: t('common.paid'),
       hideOnMobile: true,
       sortValue: (s) => s.paid,
       render: (s) => `₹${s.paid}`,
     },
     {
       key: 'balance',
-      header: 'Balance',
+      header: t('common.balance'),
       sortValue: (s) => s.balance,
       render: (s) => balanceLabel(s.balance),
     },

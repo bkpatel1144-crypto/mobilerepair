@@ -22,6 +22,7 @@ import { dateRangeBounds } from '@/lib/date-range'
 import { buildPath } from '@/config/nav'
 import { JobCardDetailDrawer } from './job-cards/job-card-detail-drawer'
 import { StatusPill } from './job-cards/status-pill'
+import { useTranslation } from 'react-i18next'
 
 type StatusPill = 'total' | (typeof JOB_STATUSES)[number]['key']
 
@@ -30,6 +31,7 @@ function statusLabel(key: string) {
 }
 
 export function JobCardsPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
@@ -91,16 +93,16 @@ export function JobCardsPage() {
     .filter((j) => !myReceivedOnly || j.receivedById === user?.uid)
 
   const columns: DataTableColumn<JobCardWithId>[] = [
-    { key: 'created', header: 'Created', render: (j) => formatTimestamp(j.createdAt) },
+    { key: 'created', header: t('common.createdAt'), render: (j) => formatTimestamp(j.createdAt) },
     {
       key: 'jobNumber',
-      header: 'Job Card',
+      header: t('common.jobCard'),
       sortValue: (j) => j.jobNumber,
       render: (j) => <span className="font-semibold">{j.jobNumber}</span>,
     },
     {
       key: 'customer',
-      header: 'Customer',
+      header: t('common.customer'),
       render: (j) => (
         <div>
           <p className="font-medium">{j.customerName}</p>
@@ -110,7 +112,7 @@ export function JobCardsPage() {
     },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       render: (j) => (
         <div>
           <p>{[j.brandName, j.model].filter(Boolean).join(' ') || '—'}</p>
@@ -120,13 +122,13 @@ export function JobCardsPage() {
     },
     {
       key: 'receivedBy',
-      header: 'Received By',
+      header: t('common.receivedBy'),
       hideOnMobile: true,
       render: (j) => j.receivedByName,
     },
     {
       key: 'assignedTo',
-      header: 'Assigned To',
+      header: t('common.assignedTo'),
       hideOnMobile: true,
       render: (j) => j.assignedToName ?? '—',
     },
@@ -142,10 +144,10 @@ export function JobCardsPage() {
       hideOnMobile: true,
       render: (j) => (j.finalAmount != null ? `₹${j.finalAmount}` : '—'),
     },
-    { key: 'paid', header: 'Paid', render: (j) => `₹${j.paidAmount}` },
+    { key: 'paid', header: t('common.paid'), render: (j) => `₹${j.paidAmount}` },
     {
       key: 'due',
-      header: 'Due',
+      header: t('common.due'),
       render: (j) => {
         const due = (j.finalAmount ?? j.estimatedCost) - j.paidAmount
         return due > 0 ? `₹${due}` : '—'
@@ -153,7 +155,7 @@ export function JobCardsPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (j) => <StatusBadge status={statusLabel(j.status)} dot />,
     },
     {
@@ -203,7 +205,7 @@ export function JobCardsPage() {
       <div className="flex flex-wrap gap-2">
         <StatusPill
           statusKey="total"
-          label="Total"
+          label={t('common.total')}
           value={counts.total}
           selected={statusFilter === 'total'}
           onClick={() => setStatusFilter('total')}

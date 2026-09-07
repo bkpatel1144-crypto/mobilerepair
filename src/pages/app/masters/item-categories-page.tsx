@@ -31,8 +31,10 @@ import {
 import { useItems } from '@/hooks/use-items'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
+import { useTranslation } from 'react-i18next'
 
 export function ItemCategoriesPage() {
+  const { t } = useTranslation()
   const { data: categories = [], isLoading, error: loadError, refetch } = useItemCategories()
   const { data: items = [] } = useItems()
   const { canDo } = usePermissions()
@@ -54,7 +56,7 @@ export function ItemCategoriesPage() {
   const columns: DataTableColumn<ItemCategoryWithId>[] = [
     {
       key: 'name',
-      header: 'Category',
+      header: t('common.category'),
       sortValue: (c) => c.name,
       render: (c) => {
         const { level, parentName } = categoryLevel(c, categories)
@@ -71,7 +73,7 @@ export function ItemCategoriesPage() {
     },
     {
       key: 'type',
-      header: 'Type',
+      header: t('common.type'),
       hideOnMobile: true,
       render: (c) => (
         <span
@@ -92,7 +94,7 @@ export function ItemCategoriesPage() {
       hideOnMobile: true,
       render: (c) => categoryLevel(c, categories).level,
     },
-    { key: 'items', header: 'Items', render: (c) => itemCountFor(c) },
+    { key: 'items', header: t('common.items'), render: (c) => itemCountFor(c) },
   ]
 
   return (
@@ -111,7 +113,12 @@ export function ItemCategoriesPage() {
         }
       />
 
-      <StatCard label="Total" value={categories.length} icon={FolderTree} className="sm:max-w-48" />
+      <StatCard
+        label={t('common.total')}
+        value={categories.length}
+        icon={FolderTree}
+        className="sm:max-w-48"
+      />
 
       <FilterBar
         searchValue={search}
@@ -194,7 +201,7 @@ export function ItemCategoriesPage() {
             {
               title: 'DETAILS',
               rows: [
-                { label: 'Type', value: viewing.type },
+                { label: t('common.type'), value: viewing.type },
                 { label: 'Level', value: categoryLevel(viewing, categories).level },
                 { label: 'Path', value: viewing.code },
               ],
@@ -205,7 +212,7 @@ export function ItemCategoriesPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-lg border p-3 text-center">
                     <p className="text-xl font-bold">{itemCountFor(viewing)}</p>
-                    <p className="text-xs text-muted-foreground">Items</p>
+                    <p className="text-xs text-muted-foreground">{t('common.items')}</p>
                   </div>
                   <div className="rounded-lg border p-3 text-center">
                     <p className="text-xl font-bold">{subCategoryCountFor(viewing)}</p>

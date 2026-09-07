@@ -29,6 +29,7 @@ import { deviceTypeIcon } from '@/config/service-options'
 import { buildPath } from '@/config/nav'
 import type { AccountLockStatus, ConditionGrade } from '@/types/firestore'
 import { toDateInputValue } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 const NETWORK_OPTIONS = ['—', '2G', '3G', '4G', '5G', 'WiFi Only']
 const ACCESSORIES_OPTIONS = [
@@ -40,6 +41,7 @@ const ACCESSORIES_OPTIONS = [
 ]
 
 export function CreateSecondHandPurchasePage() {
+  const { t } = useTranslation()
   useBreadcrumbExtra('Create')
   const navigate = useNavigate()
   const { user, profile } = useAuth()
@@ -551,7 +553,7 @@ export function CreateSecondHandPurchasePage() {
               <SelectContent>
                 <SelectItem value="notChecked">Not checked</SelectItem>
                 <SelectItem value="clean">Clean — no lock</SelectItem>
-                <SelectItem value="locked">Locked</SelectItem>
+                <SelectItem value="locked">{t('common.locked')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -676,7 +678,7 @@ export function CreateSecondHandPurchasePage() {
                     mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
                   })
                 }
-                placeholder="10-digit mobile"
+                placeholder={t('common.tenDigitMobile')}
                 className="h-8 text-sm"
               />
             </div>
@@ -780,7 +782,7 @@ export function CreateSecondHandPurchasePage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Payment Mode</Label>
+            <Label>{t('common.paymentMode')}</Label>
             <Select
               value={paymentMode}
               onValueChange={(v) => v && setPaymentMode(v as typeof paymentMode)}
@@ -789,9 +791,9 @@ export function CreateSecondHandPurchasePage() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="cash">Cash</SelectItem>
+                <SelectItem value="cash">{t('common.cash')}</SelectItem>
                 <SelectItem value="upi">UPI</SelectItem>
-                <SelectItem value="card">Card</SelectItem>
+                <SelectItem value="card">{t('common.cardMode')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

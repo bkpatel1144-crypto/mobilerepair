@@ -21,6 +21,7 @@ import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
 import { formatDurationLabel } from '@/lib/date-range'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
+import { useTranslation } from 'react-i18next'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -47,6 +48,7 @@ interface JobVisitGroup {
  * doc comment). Genuinely, honestly empty for a company that's never logged one — there's no
  * fabricated data behind the zero-state, same as the reference's own screenshot. */
 export function FieldVisitReportPage() {
+  const { t } = useTranslation()
   const { data: visits = [], isLoading, error: loadError, refetch } = useFieldVisits()
   const [view, setView] = useState<'technician' | 'jobCard'>('technician')
   const [search, setSearch] = useState('')
@@ -139,7 +141,7 @@ export function FieldVisitReportPage() {
   const technicianColumns: DataTableColumn<TechnicianVisitGroup>[] = [
     {
       key: 'technician',
-      header: 'Technician',
+      header: t('common.technician'),
       sortValue: (g) => g.technicianName,
       render: (g) => <span className="font-medium">{g.technicianName}</span>,
     },
@@ -166,7 +168,7 @@ export function FieldVisitReportPage() {
   const jobColumns: DataTableColumn<JobVisitGroup>[] = [
     {
       key: 'job',
-      header: 'Job Card',
+      header: t('common.jobCard'),
       sortValue: (g) => g.jobNumber,
       render: (g) => (
         <Link
@@ -179,7 +181,7 @@ export function FieldVisitReportPage() {
     },
     {
       key: 'customer',
-      header: 'Customer',
+      header: t('common.customer'),
       sortValue: (g) => g.customerName,
       render: (g) => g.customerName,
     },
@@ -291,10 +293,10 @@ export function FieldVisitReportPage() {
           </Select>
           <Select value={deviceTypeFilter} onValueChange={(v) => v && setDeviceTypeFilter(v)}>
             <SelectTrigger className="w-36">
-              <SelectValue placeholder="All Types" />
+              <SelectValue placeholder={t('common.allTypes')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
+              <SelectItem value="all">{t('common.allTypes')}</SelectItem>
               {allDeviceTypes.map((dt) => (
                 <SelectItem key={dt} value={dt}>
                   {dt}
@@ -304,10 +306,10 @@ export function FieldVisitReportPage() {
           </Select>
           <Select value={statusFilter} onValueChange={(v) => v && setStatusFilter(v)}>
             <SelectTrigger className="w-36">
-              <SelectValue placeholder="All Statuses" />
+              <SelectValue placeholder={t('common.allStatuses')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
+              <SelectItem value="all">{t('common.allStatuses')}</SelectItem>
               {JOB_STATUSES.map((s) => (
                 <SelectItem key={s.key} value={s.key}>
                   {s.label}

@@ -13,10 +13,12 @@ import { usePayables } from '@/hooks/use-payables'
 import { jobCardsQueryKey } from '@/hooks/use-job-cards'
 import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 type Tab = 'all' | 'refundDue' | 'unusedAdvance'
 
 export function PayablesPage() {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
   const { data, isLoading, error: loadError, refetch } = usePayables()
@@ -87,7 +89,7 @@ export function PayablesPage() {
           </FilterBar>
 
           {isLoading ? (
-            <p className="p-6 text-center text-sm text-muted-foreground">Loading…</p>
+            <p className="p-6 text-center text-sm text-muted-foreground">{t('common.loading')}</p>
           ) : filtered.length === 0 ? (
             <EmptyState
               icon={Search}

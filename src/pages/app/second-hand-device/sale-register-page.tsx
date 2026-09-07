@@ -23,8 +23,10 @@ import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
 import { PrintButtonGroup } from './device-purchase-page'
 import { purchaseDetailSections, purchaseTimeline } from './purchase-detail-sections'
+import { useTranslation } from 'react-i18next'
 
 export function SaleRegisterPage() {
+  const { t } = useTranslation()
   const { data: sales = [], isLoading, error: loadError, refetch } = useSecondHandSales()
   const { data: purchases = [] } = useSecondHandPurchases()
   const { profile } = useAuth()
@@ -66,7 +68,7 @@ export function SaleRegisterPage() {
         </div>
       ),
     },
-    { key: 'device', header: 'Device', render: (s) => s.deviceLabel },
+    { key: 'device', header: t('common.device'), render: (s) => s.deviceLabel },
     { key: 'buyer', header: 'Buyer', hideOnMobile: true, render: (s) => s.buyerName },
     {
       key: 'invested',
@@ -76,13 +78,13 @@ export function SaleRegisterPage() {
     },
     {
       key: 'salePrice',
-      header: 'Sale Price',
+      header: t('common.salePrice'),
       sortValue: (s) => s.salePrice,
       render: (s) => `₹${s.salePrice}`,
     },
     {
       key: 'profit',
-      header: 'Profit',
+      header: t('common.profit'),
       sortValue: (s) => s.profit,
       render: (s) => (
         <span className={s.profit >= 0 ? 'text-emerald-600' : 'text-red-600'}>₹{s.profit}</span>

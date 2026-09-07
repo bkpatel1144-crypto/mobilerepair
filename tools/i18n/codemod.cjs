@@ -230,12 +230,19 @@ function ensureHook(src, componentNames) {
   }
 
   if (/useTranslation/.test(out) && !/from 'react-i18next'/.test(out)) {
-    // After the last import, so it can't land above a directive or inside a comment block.
-    const imports = [...out.matchAll(/^import .*$/gm)]
+    // After the last *complete* import statement. Matching `^import .*$` line by line is wrong:
+    // a multi-line `import {\n  a,\n} from 'x'` matches only its opening line, and inserting
+    // there drops the new import inside the braces and breaks the file — which is exactly what
+    // happened on the first run across src/. So match the whole statement, brace block included,
+    // through its closing quote.
+    const importStmt = /^import\s+[\s\S]*?from\s+['"][^'"]+['"];?$/gm
+    const imports = [...out.matchAll(importStmt)]
     if (imports.length) {
       const last = imports[imports.length - 1]
       const at = last.index + last[0].length
       out = out.slice(0, at) + `\nimport { useTranslation } from 'react-i18next'` + out.slice(at)
+    } else {
+      out = `import { useTranslation } from 'react-i18next'\n` + out
     }
   }
   return out

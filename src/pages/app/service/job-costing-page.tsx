@@ -19,10 +19,12 @@ import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useJobCostingList } from '@/hooks/use-job-costing'
 import { formatTimestamp } from '@/lib/utils'
 import { RecordCostingModal } from './job-costing/record-costing-modal'
+import { useTranslation } from 'react-i18next'
 
 type Tab = 'all' | 'pending' | 'done'
 
 export function JobCostingPage() {
+  const { t } = useTranslation()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { data: costings = [] } = useJobCostingList()
 
@@ -52,31 +54,35 @@ export function JobCostingPage() {
   const columns: DataTableColumn<JobCardWithId>[] = [
     {
       key: 'job',
-      header: 'Job',
+      header: t('common.job'),
       render: (j) => <span className="font-semibold">{j.jobNumber}</span>,
     },
-    { key: 'customer', header: 'Customer', render: (j) => j.customerName },
+    { key: 'customer', header: t('common.customer'), render: (j) => j.customerName },
     {
       key: 'device',
-      header: 'Device',
+      header: t('common.device'),
       render: (j) => [j.brandName, j.model].filter(Boolean).join(' ') || '—',
     },
     {
       key: 'technician',
-      header: 'Technician',
+      header: t('common.technician'),
       hideOnMobile: true,
       render: (j) => j.assignedToName ?? '—',
     },
     {
       key: 'parts',
-      header: 'Parts',
+      header: t('common.parts'),
       hideOnMobile: true,
       render: (j) => `⚙ ${j.partsUsed.length} parts`,
     },
-    { key: 'revenue', header: 'Revenue', render: (j) => `₹${j.finalAmount ?? j.estimatedCost}` },
+    {
+      key: 'revenue',
+      header: t('common.revenue'),
+      render: (j) => `₹${j.finalAmount ?? j.estimatedCost}`,
+    },
     {
       key: 'profit',
-      header: 'Profit',
+      header: t('common.profit'),
       hideOnMobile: true,
       render: (j) => {
         const costing = costingByJobId.get(j.id)
@@ -85,7 +91,7 @@ export function JobCostingPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: () => <StatusBadge status="Closed" tone="neutral" />,
     },
     {
@@ -190,15 +196,15 @@ export function JobCostingPage() {
                 {
                   title: 'Job Details',
                   rows: [
-                    { label: 'Customer', value: selectedJob.customerName },
-                    { label: 'Technician', value: selectedJob.assignedToName ?? '—' },
+                    { label: t('common.customer'), value: selectedJob.customerName },
+                    { label: t('common.technician'), value: selectedJob.assignedToName ?? '—' },
                     {
-                      label: 'Device',
+                      label: t('common.device'),
                       value:
                         [selectedJob.brandName, selectedJob.model].filter(Boolean).join(' ') || '—',
                     },
                     { label: 'IMEI', value: selectedJob.imei ?? '—' },
-                    { label: 'Created', value: formatTimestamp(selectedJob.createdAt) },
+                    { label: t('common.createdAt'), value: formatTimestamp(selectedJob.createdAt) },
                     { label: 'Closed', value: formatTimestamp(selectedJob.closedAt) },
                   ],
                 },
@@ -206,7 +212,7 @@ export function JobCostingPage() {
                   title: 'Financial',
                   rows: [
                     {
-                      label: 'Revenue',
+                      label: t('common.revenue'),
                       value: `₹${selectedJob.finalAmount ?? selectedJob.estimatedCost}`,
                     },
                     { label: 'Advance Paid', value: `₹${selectedJob.advanceReceived}` },
@@ -222,10 +228,10 @@ export function JobCostingPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Part</TableHead>
-                  <TableHead>Rate</TableHead>
+                  <TableHead>{t('common.part')}</TableHead>
+                  <TableHead>{t('common.rate')}</TableHead>
                   <TableHead>Qty</TableHead>
-                  <TableHead>Total</TableHead>
+                  <TableHead>{t('common.total')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

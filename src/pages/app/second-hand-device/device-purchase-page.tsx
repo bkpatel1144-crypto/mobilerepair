@@ -70,8 +70,10 @@ import {
   PURCHASE_STATUS_LABEL,
   PURCHASE_STATUS_TONE,
 } from './purchase-detail-sections'
+import { useTranslation } from 'react-i18next'
 
 export function DevicePurchasePage() {
+  const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { canDo } = usePermissions()
   const { profile } = useAuth()
@@ -117,17 +119,17 @@ export function DevicePurchasePage() {
         </div>
       ),
     },
-    { key: 'device', header: 'Device', render: (p) => deviceLabel(p) },
+    { key: 'device', header: t('common.device'), render: (p) => deviceLabel(p) },
     { key: 'seller', header: 'Seller', hideOnMobile: true, render: (p) => p.sellerName },
     {
       key: 'price',
-      header: 'Purchase Price',
+      header: t('common.purchasePrice'),
       sortValue: (p) => p.purchasePrice,
       render: (p) => `₹${p.purchasePrice}`,
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('common.status'),
       render: (p) => (
         <StatusBadge
           status={PURCHASE_STATUS_LABEL[p.status]}
@@ -185,7 +187,7 @@ export function DevicePurchasePage() {
           tone="warning"
         />
         <StatCard
-          label="Sold"
+          label={t('common.sold')}
           icon={Truck}
           value={purchases.filter((p) => p.status === 'sold').length}
           tone="info"
