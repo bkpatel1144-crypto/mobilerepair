@@ -31,7 +31,11 @@ export default defineConfig({
         advancedChunks: {
           groups: [
             { name: 'vendor-firebase', test: /node_modules[\\/]@?firebase/, priority: 30 },
-            { name: 'vendor-charts', test: /node_modules[\\/](recharts|d3-|victory)/, priority: 30 },
+            {
+              name: 'vendor-charts',
+              test: /node_modules[\\/](recharts|d3-|victory)/,
+              priority: 30,
+            },
             {
               name: 'vendor-react',
               test: /node_modules[\\/](react|react-dom|react-router|scheduler)[\\/]/,
