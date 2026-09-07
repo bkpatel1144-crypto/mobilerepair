@@ -28,6 +28,7 @@ import { uploadSecondHandDeviceImage } from '@/lib/second-hand-device-images'
 import { deviceTypeIcon } from '@/config/service-options'
 import { buildPath } from '@/config/nav'
 import type { AccountLockStatus, ConditionGrade } from '@/types/firestore'
+import { toDateInputValue } from '@/lib/utils'
 
 const NETWORK_OPTIONS = ['—', '2G', '3G', '4G', '5G', 'WiFi Only']
 const ACCESSORIES_OPTIONS = [
@@ -96,7 +97,7 @@ export function CreateSecondHandPurchasePage() {
   const [sellerDeclaredNotStolen, setSellerDeclaredNotStolen] = useState(false)
 
   const [purchasePrice, setPurchasePrice] = useState<number | ''>('')
-  const [purchaseDate, setPurchaseDate] = useState(new Date().toISOString().slice(0, 10))
+  const [purchaseDate, setPurchaseDate] = useState(toDateInputValue(new Date()))
   const [paymentMode, setPaymentMode] = useState<'cash' | 'upi' | 'card'>('cash')
   const [amountPaid, setAmountPaid] = useState<number | ''>('')
   const [purchasedById, setPurchasedById] = useState<string | null>(null)

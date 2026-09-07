@@ -1,3 +1,5 @@
+import { toDateInputValue } from '@/lib/utils'
+
 /**
  * Shared math for every Phase 9 report — kept in one place so "profit," "margin," and "how far a
  * single cost line overran a job's own revenue" mean exactly the same thing on every report page
@@ -23,10 +25,9 @@ export function lineOverrunPct(lineCost: number, jobRevenue: number): number {
  * not `toISOString()` (which would shift the date at UTC day boundaries away from what the shop's
  * own clock shows). */
 export function dayKey(d: Date): string {
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
+  // Same `YYYY-MM-DD`-in-local-time formatting a date input needs, so it shares that
+  // implementation rather than keeping a second copy that could drift from it.
+  return toDateInputValue(d)
 }
 
 /** `YYYY-MM` grouping key for Period Summary's "Monthly" view. */

@@ -33,7 +33,7 @@ import { useParties } from '@/hooks/use-parties'
 import { usePaymentModes } from '@/hooks/use-payment-modes'
 import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
-import { formatTimestamp } from '@/lib/utils'
+import { formatTimestamp, toDateInputValue } from '@/lib/utils'
 import type { ExpenseDoc } from '@/types/firestore'
 
 /** Maps a Payment Modes master row onto the three modes `ReceiptDoc` actually stores. The
@@ -59,7 +59,7 @@ function NewExpenseModal({
   const { data: parties = [] } = useParties()
   const { data: modes = [] } = usePaymentModes()
 
-  const today = new Date().toISOString().slice(0, 10)
+  const today = toDateInputValue(new Date())
   const [date, setDate] = useState(today)
   const [categoryId, setCategoryId] = useState<string | null>(null)
   const [amount, setAmount] = useState('')

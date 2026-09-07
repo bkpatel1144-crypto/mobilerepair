@@ -7,6 +7,7 @@ import {
   formatDateTimeLong,
   formatCurrency,
   formatPercent,
+  toDateInputValue,
 } from './utils'
 
 /** Stands in for a Firestore Timestamp, which is all these helpers actually touch. */
@@ -167,5 +168,33 @@ describe('formatPercent', () => {
 
   it('rounds rather than truncating', () => {
     expect(formatPercent(33.336)).toBe('33.34%')
+  })
+})
+
+describe('toDateInputValue', () => {
+  it('formats a Date as YYYY-MM-DD', () => {
+    expect(toDateInputValue(new Date(2026, 8, 4))).toBe('2026-09-04')
+  })
+
+  it('zero-pads single-digit months and days', () => {
+    expect(toDateInputValue(new Date(2026, 0, 5))).toBe('2026-01-05')
+  })
+
+  it('uses the local calendar, not UTC', () => {
+    // The bug this replaces: at UTC+5:30, `new Date(2026, 3, 1).toISOString().slice(0, 10)` is
+    // "2026-03-31". The Financial Years edit dialog read stored dates that way and wrote them
+    // back parsed as local midnight, so every save shifted the year back a day.
+    expect(toDateInputValue(new Date(2026, 3, 1))).toBe('2026-04-01')
+  })
+
+  it('round-trips through the local parse the forms use to save', () => {
+    const original = new Date(2026, 3, 1)
+    const reparsed = new Date(`${toDateInputValue(original)}T00:00:00`)
+    expect(reparsed.getTime()).toBe(original.getTime())
+  })
+
+  it('holds at both ends of the day', () => {
+    expect(toDateInputValue(new Date(2026, 3, 1, 0, 0))).toBe('2026-04-01')
+    expect(toDateInputValue(new Date(2026, 3, 1, 23, 59))).toBe('2026-04-01')
   })
 })

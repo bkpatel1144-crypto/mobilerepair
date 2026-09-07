@@ -47,7 +47,7 @@ import {
 } from '@/hooks/use-supplier-payables'
 import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { downloadCsv } from '@/lib/csv-export'
-import { cn } from '@/lib/utils'
+import { cn, toDateInputValue } from '@/lib/utils'
 import type { ReceiptDoc } from '@/types/firestore'
 
 const BUCKET_LABELS: {
@@ -79,7 +79,7 @@ function NewBillModal({
   const { data: parties = [] } = useParties()
   const createParty = useCreateParty()
 
-  const today = new Date().toISOString().slice(0, 10)
+  const today = toDateInputValue(new Date())
   const [supplierId, setSupplierId] = useState<string | null>(null)
   const [supplierRef, setSupplierRef] = useState('')
   const [billDate, setBillDate] = useState(today)

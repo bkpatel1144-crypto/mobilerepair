@@ -81,6 +81,21 @@ export function formatDateTimeLong(ts: { toDate?: () => Date } | Date | null | u
   return `${MONTHS_SHORT[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()} • ${time}`
 }
 
+/**
+ * A `Date` as the `YYYY-MM-DD` string an `<input type="date">` expects, in the *local* calendar.
+ *
+ * Not `toISOString().slice(0, 10)`, which formats in UTC and is off by a day for much of every
+ * day in India: `new Date(2026, 3, 1)` — 1 April, local midnight — stringifies as
+ * `"2026-03-31"` at UTC+5:30. Round-tripping a stored date through a date input that way loses
+ * a day on every save, and defaulting a form to "today" that way shows yesterday before 5:30am.
+ */
+export function toDateInputValue(date: Date): string {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
 /** `₹6,200` — thousands-separated rupee display, matching the `₹{amt.toLocaleString('en-IN')}`
  * pattern already used ad hoc in a few earlier pages, now a shared helper for Phase 9's reports
  * (which need it in many more places than any earlier phase did). Rounds to whole rupees —

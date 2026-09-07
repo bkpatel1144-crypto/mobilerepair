@@ -27,7 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
+import { cn, toDateInputValue } from '@/lib/utils'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { FormModal } from '@/components/shared/form-modal'
@@ -223,8 +223,8 @@ export function FinancialYearsPage() {
                 onClick={() => {
                   setEditing(f)
                   setNameInput(f.name)
-                  setStartInput(f.startDate.toDate().toISOString().slice(0, 10))
-                  setEndInput(f.endDate.toDate().toISOString().slice(0, 10))
+                  setStartInput(toDateInputValue(f.startDate.toDate()))
+                  setEndInput(toDateInputValue(f.endDate.toDate()))
                 }}
               >
                 <Pencil />

@@ -11,5 +11,11 @@ export default defineConfig({
     // rather than slowing every run down with a DOM nobody uses.
     environment: 'node',
     include: ['src/**/*.test.ts'],
+    // Pinned to the timezone this app is actually used in. CI runs in UTC, where a whole class
+    // of local-vs-UTC date bug is invisible — `new Date(2026, 3, 1).toISOString()` only loses a
+    // day at a positive offset, so the Financial Years off-by-one would have passed in CI while
+    // being wrong for every real user. A fixed offset also keeps the date assertions
+    // deterministic between a developer's machine and CI.
+    env: { TZ: 'Asia/Kolkata' },
   },
 })
