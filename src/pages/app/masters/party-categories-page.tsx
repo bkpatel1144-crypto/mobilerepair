@@ -130,7 +130,7 @@ export function PartyCategoriesPage() {
           <EmptyState
             icon={Users}
             title="No party categories yet"
-            description="Add your first category above."
+            description={t('shared.addYourFirstCategoryAbove')}
           />
         }
       />
@@ -183,7 +183,7 @@ export function PartyCategoriesPage() {
           ]}
           timeline={[
             { title: t('common.createdAt'), timestamp: formatTimestamp(viewing.createdAt) },
-            { title: 'Updated', timestamp: formatTimestamp(viewing.updatedAt) },
+            { title: t('shared.updated'), timestamp: formatTimestamp(viewing.updatedAt) },
           ]}
         />
       )}

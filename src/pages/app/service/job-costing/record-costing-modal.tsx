@@ -161,7 +161,7 @@ export function RecordCostingModal({
                       <TableHead>{t('common.part')}</TableHead>
                       <TableHead>{t('common.supplier')}</TableHead>
                       <TableHead>{t('common.rate')}</TableHead>
-                      <TableHead>Qty</TableHead>
+                      <TableHead>{t('shared.qty')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -233,7 +233,7 @@ export function RecordCostingModal({
                     }))}
                     value={item.supplier}
                     onChange={(name) => updateItem(item.id, { supplier: name })}
-                    placeholder="Search supplier..."
+                    placeholder={t('shared.searchSupplier')}
                     onCreateNew={(query) => handleCreateSupplier(item.id, query)}
                   />
                   <div className="grid grid-cols-4 items-center gap-2">
@@ -283,7 +283,7 @@ export function RecordCostingModal({
                 <span className="font-medium">₹{billAmount}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Total Cost</span>
+                <span className="text-muted-foreground">{t('shared.totalCost')}</span>
                 <span className="font-medium">₹{totalCost}</span>
               </div>
               <div className="flex justify-between">

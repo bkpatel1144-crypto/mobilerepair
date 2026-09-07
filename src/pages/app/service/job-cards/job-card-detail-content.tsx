@@ -176,12 +176,14 @@ export function JobCardDetailContent({
                 <dd>{job.model ?? '—'}</dd>
               </div>
               <div>
-                <dt className="text-xs text-muted-foreground uppercase">IMEI</dt>
+                <dt className="text-xs text-muted-foreground uppercase">{t('shared.imei')}</dt>
                 <dd>{job.imei ?? '—'}</dd>
               </div>
               {job.devicePinPattern && (
                 <div>
-                  <dt className="text-xs text-muted-foreground uppercase">PIN / Pattern</dt>
+                  <dt className="text-xs text-muted-foreground uppercase">
+                    {t('shared.pinPattern')}
+                  </dt>
                   <dd>{job.devicePinPattern}</dd>
                 </div>
               )}
@@ -224,13 +226,13 @@ export function JobCardDetailContent({
               </div>
               {job.deliveredByName && (
                 <div className="flex justify-between">
-                  <dt className="text-muted-foreground">Delivered By</dt>
+                  <dt className="text-muted-foreground">{t('shared.deliveredBy')}</dt>
                   <dd>{job.deliveredByName}</dd>
                 </div>
               )}
               {job.cancelledByName && (
                 <div className="flex justify-between">
-                  <dt className="text-muted-foreground">Cancelled By</dt>
+                  <dt className="text-muted-foreground">{t('shared.cancelledBy')}</dt>
                   <dd>{job.cancelledByName}</dd>
                 </div>
               )}
@@ -334,7 +336,7 @@ export function JobCardDetailContent({
                       min={1}
                       value={partQty}
                       onChange={(e) => setPartQty(Number(e.target.value) || 1)}
-                      placeholder="Qty"
+                      placeholder={t('shared.qty')}
                       className="w-20 rounded-md border px-2 py-1 text-sm"
                     />
                     <Button

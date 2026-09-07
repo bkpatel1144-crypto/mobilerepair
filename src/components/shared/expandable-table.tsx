@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorState } from '@/components/shared/error-state'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface ExpandableTableColumn<T> {
   key: string
@@ -66,6 +67,7 @@ export function ExpandableTable<T>({
   defaultPageSize = 10,
   className,
 }: ExpandableTableProps<T>) {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [page, setPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(defaultPageSize)
@@ -196,7 +198,7 @@ export function ExpandableTable<T>({
         </span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
-            <span>Rows per page:</span>
+            <span>{t('shared.rowsPerPage')}</span>
             <Select
               value={String(rowsPerPage)}
               onValueChange={(v) => {

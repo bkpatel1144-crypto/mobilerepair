@@ -100,9 +100,17 @@ export function ReceivablesPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Outstanding" value={`₹${data.totalOutstanding}`} tone="danger" />
-        <StatCard label="Total Billed" value={`₹${data.totalBilled}`} tone="purple" />
-        <StatCard label="Total Collected" value={`₹${data.totalCollected}`} tone="success" />
+        <StatCard
+          label={t('shared.totalOutstanding')}
+          value={`₹${data.totalOutstanding}`}
+          tone="danger"
+        />
+        <StatCard label={t('shared.totalBilled')} value={`₹${data.totalBilled}`} tone="purple" />
+        <StatCard
+          label={t('shared.totalCollected')}
+          value={`₹${data.totalCollected}`}
+          tone="success"
+        />
         <StatCard label="Collection %" value={`${data.collectionPercent}%`} tone="info" />
       </StatCardGrid>
 

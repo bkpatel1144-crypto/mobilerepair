@@ -59,11 +59,11 @@ export function CompanyForm({
   return (
     <div className="space-y-5">
       <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))]">
-        <Field label="Company Name" required>
+        <Field label={t('shared.companyName')} required>
           <Input
             value={value.name}
             onChange={(e) => set({ name: e.target.value })}
-            placeholder="Sunrise Enterprises"
+            placeholder={t('shared.sunriseEnterprises')}
           />
         </Field>
         <Field label="Company Code" required>
@@ -83,7 +83,7 @@ export function CompanyForm({
       </div>
 
       <div className="grid gap-4 border-t pt-5 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
-        <Field label="GST Registration" required>
+        <Field label={t('shared.gstRegistration')} required>
           <Select
             value={value.gstRegistration}
             onValueChange={(v) =>
@@ -102,7 +102,7 @@ export function CompanyForm({
             <SelectContent>
               <SelectItem value="Regular">Regular</SelectItem>
               <SelectItem value="Composition">Composition</SelectItem>
-              <SelectItem value="Unregistered">Unregistered</SelectItem>
+              <SelectItem value="Unregistered">{t('shared.unregistered')}</SelectItem>
             </SelectContent>
           </Select>
         </Field>
@@ -144,7 +144,7 @@ export function CompanyForm({
           />
         </Field>
         <Field
-          label="Currency"
+          label={t('shared.currency')}
           required
           hint={value.currency ? <Confirmed text="Currency selected" /> : undefined}
         >
@@ -162,7 +162,7 @@ export function CompanyForm({
           </Select>
         </Field>
         <Field
-          label="Timezone"
+          label={t('shared.timezone')}
           required
           hint={value.timezone ? <Confirmed text="Timezone selected" /> : undefined}
         >

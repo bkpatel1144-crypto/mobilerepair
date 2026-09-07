@@ -207,7 +207,7 @@ export function CompanySettingsPage() {
   const columns: DataTableColumn<CompanyWithId>[] = [
     {
       key: 'name',
-      header: 'Company Name',
+      header: t('shared.companyName'),
       sortValue: (c) => c.name,
       render: (c) => (
         <div className="flex items-center gap-3">
@@ -255,14 +255,14 @@ export function CompanySettingsPage() {
       hideOnMobile: true,
       render: (c) =>
         c.gstRegistration === 'Unregistered' || !c.gstin ? (
-          <span className="text-sm text-muted-foreground italic">Unregistered</span>
+          <span className="text-sm text-muted-foreground italic">{t('shared.unregistered')}</span>
         ) : (
           <span className="font-mono text-xs">{c.gstin}</span>
         ),
     },
     {
       key: 'contact',
-      header: 'Contact',
+      header: t('shared.contact'),
       hideOnMobile: true,
       render: (c) => (
         <div>
@@ -436,7 +436,7 @@ export function CompanySettingsPage() {
       </div>
 
       <p className="flex items-center gap-2 text-sm">
-        <span className="text-muted-foreground">Viewing:</span>
+        <span className="text-muted-foreground">{t('shared.viewing')}</span>
         <span className="rounded-full border px-2.5 py-0.5 text-xs font-medium">
           {STATUS_LABEL[statusFilter]} Companies ({filtered.length})
         </span>
@@ -538,9 +538,9 @@ export function CompanySettingsPage() {
               </p>
             )}
 
-            <DetailBlock icon={ShieldCheck} title="GST Registration" tone="purple">
+            <DetailBlock icon={ShieldCheck} title={t('shared.gstRegistration')} tone="purple">
               <DetailValue
-                label="GST Registration"
+                label={t('shared.gstRegistration')}
                 value={
                   viewing.gstRegistration === 'Unregistered'
                     ? 'Unregistered (No GST)'
@@ -551,8 +551,8 @@ export function CompanySettingsPage() {
             </DetailBlock>
 
             <DetailBlock icon={Wallet} title="Financial Settings" tone="teal">
-              <DetailValue label="Currency" value={viewing.currency} />
-              <DetailValue label="Timezone" value={viewing.timezone} />
+              <DetailValue label={t('shared.currency')} value={viewing.currency} />
+              <DetailValue label={t('shared.timezone')} value={viewing.timezone} />
             </DetailBlock>
 
             <DetailBlock icon={Clock} title={t('common.timeline')} tone="amber">

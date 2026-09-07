@@ -144,7 +144,7 @@ export function ProfitLossPage() {
               tone="success"
             />
             <StatCard
-              label="Gross Profit"
+              label={t('shared.grossProfit')}
               value={`₹${data.grossProfit}`}
               sublabel={`${data.grossMarginPct}% margin`}
               icon={TrendingUp}
@@ -157,7 +157,7 @@ export function ProfitLossPage() {
               tone="warning"
             />
             <StatCard
-              label="Net Profit"
+              label={t('shared.netProfit')}
               value={`₹${data.netProfit}`}
               sublabel={`${data.netMarginPct}% margin`}
               icon={Percent}

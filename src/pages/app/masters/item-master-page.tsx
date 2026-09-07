@@ -99,7 +99,7 @@ export function ItemMasterPage() {
       ),
     },
     { key: 'nature', header: 'Nature', hideOnMobile: true, render: (i) => i.nature },
-    { key: 'uom', header: 'UOM', hideOnMobile: true, render: (i) => i.uom },
+    { key: 'uom', header: t('shared.uom'), hideOnMobile: true, render: (i) => i.uom },
     {
       key: 'status',
       header: t('common.status'),
@@ -132,7 +132,7 @@ export function ItemMasterPage() {
           tone="success"
         />
         <StatCard
-          label="Services"
+          label={t('shared.services')}
           icon={Wrench}
           value={items.filter((i) => i.type === 'service').length}
         />
@@ -152,7 +152,7 @@ export function ItemMasterPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{t('common.allTypes')}</SelectItem>
-            <SelectItem value="service">Service</SelectItem>
+            <SelectItem value="service">{t('shared.service')}</SelectItem>
             <SelectItem value="part">{t('common.part')}</SelectItem>
             <SelectItem value="product">Product</SelectItem>
           </SelectContent>
@@ -273,7 +273,7 @@ export function ItemMasterPage() {
             ...(viewing.description
               ? [
                   {
-                    title: 'DESCRIPTION',
+                    title: t('shared.description'),
                     children: (
                       <p className="text-sm text-muted-foreground">{viewing.description}</p>
                     ),
@@ -410,13 +410,13 @@ function ItemModal({
           />
         </div>
         <div className="space-y-1.5">
-          <Label>Type *</Label>
+          <Label>{t('shared.type')}</Label>
           <Select value={type} onValueChange={(v) => v && setType(v as ItemType)}>
             <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="service">Service</SelectItem>
+              <SelectItem value="service">{t('shared.service')}</SelectItem>
               <SelectItem value="part">{t('common.part')}</SelectItem>
               <SelectItem value="product">Product</SelectItem>
             </SelectContent>

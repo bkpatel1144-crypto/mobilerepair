@@ -280,10 +280,10 @@ export function FieldVisitReportPage() {
         >
           <Select value={technicianFilter} onValueChange={(v) => v && setTechnicianFilter(v)}>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="All Technicians" />
+              <SelectValue placeholder={t('shared.allTechnicians')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Technicians</SelectItem>
+              <SelectItem value="all">{t('shared.allTechnicians')}</SelectItem>
               {allTechnicians.map((tech) => (
                 <SelectItem key={tech} value={tech}>
                   {tech}

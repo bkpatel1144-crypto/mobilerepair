@@ -10,6 +10,7 @@ import { FormError } from '@/components/shared/form-error'
 import { useAuth } from '@/hooks/use-auth'
 import { completeAccountSetup, getAuthErrorMessage, logOut } from '@/lib/auth'
 import { completeSetupSchema, type CompleteSetupInput } from '@/lib/validation/auth-schemas'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Reachable only when `ProtectedRoute` finds a signed-in Auth user with no profile doc after
@@ -21,6 +22,7 @@ import { completeSetupSchema, type CompleteSetupInput } from '@/lib/validation/a
  * "Access Denied" with no path forward.
  */
 export function CompleteSetupPage() {
+  const { t } = useTranslation()
   const { user } = useAuth()
   const navigate = useNavigate()
   const [formError, setFormError] = useState<string | null>(null)
@@ -63,10 +65,10 @@ export function CompleteSetupPage() {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormError message={formError} />
         <div className="space-y-1.5">
-          <Label htmlFor="companyName">Company name</Label>
+          <Label htmlFor="companyName">{t('shared.companyName2')}</Label>
           <Input
             id="companyName"
-            placeholder="Sunrise Enterprises"
+            placeholder={t('shared.sunriseEnterprises')}
             aria-invalid={!!errors.companyName}
             {...register('companyName')}
           />
@@ -75,10 +77,10 @@ export function CompleteSetupPage() {
           )}
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="fullName">Your name</Label>
+          <Label htmlFor="fullName">{t('shared.yourName')}</Label>
           <Input
             id="fullName"
-            placeholder="Shrey Ghadge"
+            placeholder={t('shared.shreyGhadge')}
             aria-invalid={!!errors.fullName}
             {...register('fullName')}
           />

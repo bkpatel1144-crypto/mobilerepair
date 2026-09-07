@@ -60,7 +60,7 @@ export function SaleRegisterPage() {
   const columns: DataTableColumn<SecondHandSaleWithId>[] = [
     {
       key: 'saleNumber',
-      header: 'Sale Invoice #',
+      header: t('shared.saleInvoice'),
       render: (s) => (
         <div>
           <p className="font-semibold">{s.saleNumber}</p>
@@ -69,10 +69,10 @@ export function SaleRegisterPage() {
       ),
     },
     { key: 'device', header: t('common.device'), render: (s) => s.deviceLabel },
-    { key: 'buyer', header: 'Buyer', hideOnMobile: true, render: (s) => s.buyerName },
+    { key: 'buyer', header: t('shared.buyer'), hideOnMobile: true, render: (s) => s.buyerName },
     {
       key: 'invested',
-      header: 'Invested',
+      header: t('shared.invested'),
       hideOnMobile: true,
       render: (s) => `₹${s.purchasePrice + s.refurbCost}`,
     },

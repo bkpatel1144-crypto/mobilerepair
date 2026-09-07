@@ -3,6 +3,7 @@ import { ScanLine, Search, UserRound, Image as ImageIcon, Plus, Grid3x3 } from '
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Renders what each field *looks* like in the builder's live-preview pane — deliberately inert
@@ -29,6 +30,7 @@ export function FieldPreviewInput({
   options,
   disabled,
 }: FieldPreviewInputProps) {
+  const { t } = useTranslation()
   const [amount, setAmount] = useState<number | null>(quickAmounts?.[0] === 0 ? 0 : null)
 
   const baseInputClasses = cn(
@@ -156,7 +158,7 @@ export function FieldPreviewInput({
       return (
         <div className="flex flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground">
           <ImageIcon className="size-5" />
-          <span className="text-sm">Add Images</span>
+          <span className="text-sm">{t('shared.addImages')}</span>
         </div>
       )
     case 'text':

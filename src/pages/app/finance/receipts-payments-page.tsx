@@ -269,7 +269,7 @@ export function ReceiptsPaymentsPage() {
           <SelectContent>
             <SelectItem value="all">All Modes</SelectItem>
             <SelectItem value="cash">{t('common.cash')}</SelectItem>
-            <SelectItem value="upi">UPI</SelectItem>
+            <SelectItem value="upi">{t('shared.upi')}</SelectItem>
             <SelectItem value="card">{t('common.cardMode')}</SelectItem>
           </SelectContent>
         </Select>
@@ -427,7 +427,7 @@ function NewEntryDialog({
               <Input
                 value={quickAddCustomer.name}
                 onChange={(e) => setQuickAddCustomer({ ...quickAddCustomer, name: e.target.value })}
-                placeholder="Customer name"
+                placeholder={t('shared.customerName')}
                 className="h-8 text-sm"
               />
               <Input

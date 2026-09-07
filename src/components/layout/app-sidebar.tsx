@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 interface AppSidebarProps {
   collapsed: boolean
@@ -24,6 +25,7 @@ interface AppSidebarProps {
  * beside it, not underneath it — see `app-shell.tsx`.
  */
 export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: AppSidebarProps) {
+  const { t } = useTranslation()
   const [filter, setFilter] = useState('')
 
   const toggle = (
@@ -78,8 +80,8 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
             <Input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              placeholder="Search..."
-              aria-label="Search navigation"
+              placeholder={t('shared.search')}
+              aria-label={t('shared.searchNavigation')}
               className="h-10 rounded-full border-sidebar-border bg-background pl-9"
             />
           </div>

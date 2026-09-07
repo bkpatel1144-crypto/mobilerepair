@@ -356,7 +356,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Undo"
+          aria-label={t('shared.undo')}
           disabled={!state.canUndo}
           onClick={state.undo}
         >

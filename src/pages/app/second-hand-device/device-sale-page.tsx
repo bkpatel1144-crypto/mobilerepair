@@ -73,7 +73,7 @@ export function DeviceSalePage() {
     )
 
   const columns: DataTableColumn<SecondHandPurchaseWithId>[] = [
-    { key: 'purchaseNumber', header: 'Purchase #', render: (p) => p.purchaseNumber },
+    { key: 'purchaseNumber', header: t('shared.purchase'), render: (p) => p.purchaseNumber },
     {
       key: 'device',
       header: t('common.device'),
@@ -86,7 +86,7 @@ export function DeviceSalePage() {
     },
     {
       key: 'expectedSalePrice',
-      header: 'Expected Sale Price',
+      header: t('shared.expectedSalePrice'),
       render: (p) => (p.expectedSalePrice != null ? `₹${p.expectedSalePrice}` : '—'),
     },
     {
@@ -137,7 +137,12 @@ export function DeviceSalePage() {
           icon={ShoppingBag}
           tone="success"
         />
-        <StatCard label="In Refurb" icon={Wrench} value={inRefurb.length} tone="warning" />
+        <StatCard
+          label={t('shared.inRefurb')}
+          icon={Wrench}
+          value={inRefurb.length}
+          tone="warning"
+        />
         <StatCard label={t('common.sold')} icon={Truck} value={sold.length} tone="info" />
         <StatCard
           label="Total Profit"
@@ -330,7 +335,7 @@ function SellDeviceModal({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="cash">{t('common.cash')}</SelectItem>
-                <SelectItem value="upi">UPI</SelectItem>
+                <SelectItem value="upi">{t('shared.upi')}</SelectItem>
                 <SelectItem value="card">{t('common.cardMode')}</SelectItem>
               </SelectContent>
             </Select>
@@ -351,7 +356,7 @@ function SellDeviceModal({
           <Input
             value={accessoriesGiven}
             onChange={(e) => setAccessoriesGiven(e.target.value)}
-            placeholder="Charger, box, cable..."
+            placeholder={t('shared.chargerBoxCable')}
           />
           <p className="text-xs text-muted-foreground">
             Defaults to what was purchased with the device — edit if you're keeping anything back or

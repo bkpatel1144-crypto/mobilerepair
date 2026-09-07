@@ -234,10 +234,10 @@ export function TechnicianReportPage() {
       >
         <Select value={technicianFilter} onValueChange={(v) => v && setTechnicianFilter(v)}>
           <SelectTrigger className="w-44">
-            <SelectValue placeholder="All Technicians" />
+            <SelectValue placeholder={t('shared.allTechnicians')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Technicians</SelectItem>
+            <SelectItem value="all">{t('shared.allTechnicians')}</SelectItem>
             {allTechnicians.map((tech) => (
               <SelectItem key={tech} value={tech}>
                 {tech}
@@ -257,7 +257,7 @@ export function TechnicianReportPage() {
         emptyState={
           <EmptyState
             icon={Users}
-            title="No costed jobs yet"
+            title={t('shared.noCostedJobsYet')}
             description="Technician performance appears once jobs have recorded costing."
           />
         }
@@ -312,7 +312,7 @@ export function TechnicianReportPage() {
                 className="min-w-0"
               />
               <StatCard
-                label="Avg Margin"
+                label={t('shared.avgMargin')}
                 value={formatPercent(g.marginPct)}
                 tone={g.marginPct < 0 ? 'danger' : 'default'}
                 className="min-w-0"

@@ -134,13 +134,13 @@ export function JobCardsPage() {
     },
     {
       key: 'estCost',
-      header: 'Est. Cost',
+      header: t('shared.estCost'),
       hideOnMobile: true,
       render: (j) => `₹${j.estimatedCost}`,
     },
     {
       key: 'finalAmt',
-      header: 'Final Amt',
+      header: t('shared.finalAmt'),
       hideOnMobile: true,
       render: (j) => (j.finalAmount != null ? `₹${j.finalAmount}` : '—'),
     },
@@ -166,7 +166,7 @@ export function JobCardsPage() {
     },
     {
       key: 'cancelledBy',
-      header: 'Cancelled By',
+      header: t('shared.cancelledBy'),
       hideOnMobile: true,
       render: (j) => j.cancelledByName ?? '—',
     },
@@ -234,7 +234,7 @@ export function JobCardsPage() {
           size="icon"
           variant="outline"
           onClick={() => setScanOpen(true)}
-          aria-label="Scan Job Card"
+          aria-label={t('shared.scanJobCard')}
         >
           <ScanLine className="size-4" />
         </Button>
@@ -322,7 +322,7 @@ export function JobCardsPage() {
         emptyState={
           <EmptyState
             icon={ClipboardCheck}
-            title="No job cards found"
+            title={t('shared.noJobCardsFound')}
             description="Create your first job card to get started."
           />
         }

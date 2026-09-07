@@ -268,7 +268,7 @@ export function CreateSecondHandPurchasePage() {
                     setBrandId(null)
                     setModel('')
                   }}
-                  placeholder="Search device type..."
+                  placeholder={t('shared.searchDeviceType')}
                   open={deviceTypeOpen}
                   onOpenChange={setDeviceTypeOpen}
                 />
@@ -525,7 +525,7 @@ export function CreateSecondHandPurchasePage() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Condition Grade</Label>
+            <Label>{t('shared.conditionGrade')}</Label>
             <Select
               value={conditionGrade}
               onValueChange={(v) => v && setConditionGrade(v as ConditionGrade)}
@@ -534,10 +534,10 @@ export function CreateSecondHandPurchasePage() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="A">A — Excellent</SelectItem>
-                <SelectItem value="B">B — Good</SelectItem>
-                <SelectItem value="C">C — Fair</SelectItem>
-                <SelectItem value="D">D — Poor</SelectItem>
+                <SelectItem value="A">{t('shared.aExcellent')}</SelectItem>
+                <SelectItem value="B">{t('shared.bGood')}</SelectItem>
+                <SelectItem value="C">{t('shared.cFair')}</SelectItem>
+                <SelectItem value="D">{t('shared.dPoor')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -792,7 +792,7 @@ export function CreateSecondHandPurchasePage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="cash">{t('common.cash')}</SelectItem>
-                <SelectItem value="upi">UPI</SelectItem>
+                <SelectItem value="upi">{t('shared.upi')}</SelectItem>
                 <SelectItem value="card">{t('common.cardMode')}</SelectItem>
               </SelectContent>
             </Select>
@@ -858,7 +858,7 @@ export function CreateSecondHandPurchasePage() {
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            placeholder="Optional notes"
+            placeholder={t('shared.optionalNotes')}
             rows={2}
           />
         </div>
@@ -877,7 +877,7 @@ export function CreateSecondHandPurchasePage() {
         open={scanningField != null}
         onOpenChange={(open) => !open && setScanningField(null)}
         title={scanningField === 'imei' ? 'Scan IMEI' : 'Scan IMEI 2'}
-        description="Point the camera at the barcode or QR on the device or its box"
+        description={t('shared.pointTheCameraAtTheBarcode')}
         onScanned={(text) => {
           if (scanningField === 'imei') setImei(text)
           else if (scanningField === 'imei2') setImei2(text)

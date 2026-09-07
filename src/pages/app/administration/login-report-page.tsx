@@ -95,10 +95,10 @@ export function LoginReportPage() {
       ),
     },
     { key: 'role', header: t('common.role'), hideOnMobile: true, render: (e) => e.performedByRole },
-    { key: 'ip', header: 'IP', hideOnMobile: true, render: (e) => e.ip ?? '—' },
+    { key: 'ip', header: t('shared.ip'), hideOnMobile: true, render: (e) => e.ip ?? '—' },
     {
       key: 'result',
-      header: 'Result',
+      header: t('shared.result'),
       render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} />,
     },
   ]
@@ -150,7 +150,7 @@ export function LoginReportPage() {
           onClick={() => setCardFilter(cardFilter === 'failed' ? 'all' : 'failed')}
         />
         <StatCard
-          label="Unauthorized"
+          label={t('shared.unauthorized')}
           value={data.unauthorizedToday}
           icon={ShieldX}
           tone="danger"
@@ -209,18 +209,18 @@ export function LoginReportPage() {
           }
           sections={[
             {
-              title: 'SESSION INFO',
+              title: t('shared.sessionInfo'),
               rows: [
                 { label: t('common.time'), value: formatTimestamp(viewing.createdAt) },
                 { label: t('common.role'), value: viewing.performedByRole },
-                { label: 'IP Address', value: viewing.ip ?? '—' },
-                { label: 'Browser', value: viewing.userAgent || '—' },
+                { label: t('shared.ipAddress'), value: viewing.ip ?? '—' },
+                { label: t('shared.browser'), value: viewing.userAgent || '—' },
               ],
             },
             ...(Object.keys(viewing.details).length > 0
               ? [
                   {
-                    title: 'DETAILS',
+                    title: t('shared.details'),
                     children: (
                       <p className="text-sm text-muted-foreground">
                         {String(viewing.details.note ?? JSON.stringify(viewing.details))}

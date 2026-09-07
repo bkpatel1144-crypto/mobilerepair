@@ -32,6 +32,7 @@ import {
 import { cn } from '@/lib/utils'
 import type { RoleWithId } from '@/hooks/use-roles'
 import type { RoleDraft } from './types'
+import { useTranslation } from 'react-i18next'
 
 const CRUD_LABELS: Record<CrudOp, string> = {
   create: 'Create',
@@ -54,6 +55,7 @@ export function MenusPermissionsTab({
   otherRoles,
   disabled,
 }: MenusPermissionsTabProps) {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [search, setSearch] = useState('')
   const [visibility, setVisibility] = useState<VisibilityFilter>('all')
@@ -369,7 +371,7 @@ export function MenusPermissionsTab({
                           <table className="w-full min-w-[420px] text-sm">
                             <thead className="border-t bg-muted/30 text-xs text-muted-foreground uppercase">
                               <tr>
-                                <th className="p-2 text-left">Entity</th>
+                                <th className="p-2 text-left">{t('shared.entity')}</th>
                                 {CRUD_OPS.map((op) => (
                                   <th key={op} className="p-2 text-center">
                                     {CRUD_LABELS[op]}
@@ -448,7 +450,7 @@ export function MenusPermissionsTab({
         onOpenChange={setConfirmingClear}
         title="Clear all menus & permissions?"
         message="This wipes every menu and permission checkbox for this role back to unchecked. It only affects the unsaved draft — you can still Cancel out of the page — but any hand-tuned selections made so far will be lost."
-        confirmLabel="Clear All"
+        confirmLabel={t('shared.clearAll')}
         onConfirm={() => {
           handleClearAll()
           setConfirmingClear(false)

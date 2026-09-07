@@ -34,7 +34,7 @@ export function CashBookPage() {
     { key: 'date', header: t('common.date'), render: (r) => formatTimestamp(r.createdAt) },
     {
       key: 'particulars',
-      header: 'Particulars',
+      header: t('shared.particulars'),
       render: (r) => (
         <div>
           <p className="font-medium">{r.partyName}</p>

@@ -76,6 +76,7 @@ function NewBillModal({
   open: boolean
   onOpenChange: (o: boolean) => void
 }) {
+  const { t } = useTranslation()
   const create = useCreateSupplierBill()
   const { data: parties = [] } = useParties()
   const createParty = useCreateParty()
@@ -163,7 +164,7 @@ function NewBillModal({
           }))}
           value={supplierId}
           onChange={setSupplierId}
-          placeholder="Search supplier..."
+          placeholder={t('shared.searchSupplier')}
           onCreateNew={(name) =>
             createParty.mutate(
               { name: name.trim(), mobile: '', partyTypes: ['supplier'] },
@@ -291,7 +292,7 @@ function PaymentModal({
     <FormModal
       open={!!payable}
       onOpenChange={(o) => !o && onClose()}
-      title="Record Payment"
+      title={t('shared.recordPayment')}
       description={payable ? `${payable.supplierName} · ${payable.reference}` : ''}
       submitLabel={pay.isPending ? 'Saving…' : 'Record Payment'}
       isSubmitting={pay.isPending}
@@ -328,7 +329,7 @@ function PaymentModal({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="cash">{t('common.cash')}</SelectItem>
-              <SelectItem value="upi">UPI</SelectItem>
+              <SelectItem value="upi">{t('shared.upi')}</SelectItem>
               <SelectItem value="card">{t('common.cardMode')}</SelectItem>
             </SelectContent>
           </Select>
@@ -398,7 +399,12 @@ export function SupplierPayablesPage() {
         </div>
       ),
     },
-    { key: 'billed', header: 'Billed', sortValue: (g) => g.billed, render: (g) => `₹${g.billed}` },
+    {
+      key: 'billed',
+      header: t('shared.billed'),
+      sortValue: (g) => g.billed,
+      render: (g) => `₹${g.billed}`,
+    },
     {
       key: 'paid',
       header: t('common.paid'),
@@ -480,7 +486,7 @@ export function SupplierPayablesPage() {
         <>
           <StatCardGrid>
             <StatCard
-              label="Total Outstanding"
+              label={t('shared.totalOutstanding')}
               value={`₹${data.totalOutstanding}`}
               icon={IndianRupee}
               tone="danger"

@@ -326,7 +326,7 @@ export function RoleManagementPage() {
       </div>
 
       <p className="flex items-center gap-2 text-sm">
-        <span className="text-muted-foreground">Viewing:</span>
+        <span className="text-muted-foreground">{t('shared.viewing')}</span>
         <span className="rounded-full border px-2.5 py-0.5 text-xs font-medium">
           {STATUS_LABEL[statusFilter]} ({filtered.length})
         </span>

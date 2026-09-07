@@ -126,7 +126,7 @@ function enclosing(ranges, index) {
   return best
 }
 
-/** A string worth translating: has a letter, isn't a route/class/identifier. */
+/** A string worth translating: has a letter, isn't a route/class/identifier, isn't code. */
 function isDisplayString(s) {
   const t = s.trim()
   if (t.length < 2) return false
@@ -135,6 +135,14 @@ function isDisplayString(s) {
   if (t.startsWith('/') || t.startsWith('#') || t.startsWith('http')) return false
   if (/^[a-z]+[A-Z]/.test(t) && !t.includes(' ')) return false // camelCase identifier
   if (/(^|\s)(bg|text|flex|grid|border|rounded|size|p|px|py|m|mx|my|w|h)-/.test(t)) return false
+
+  // Reject anything that is code rather than copy. The `>...<` JSX-text pattern happily matches
+  // across a comparison — `d >= bounds.from && d <= bounds.to` yields "= bounds.from && d" —
+  // and rewriting that into a `t()` call would replace working code with a translation lookup.
+  // Nothing in this app's user-facing copy contains these characters.
+  if (/[=&|;${}()[\]<>]/.test(t)) return false
+  if (/\.\w/.test(t)) return false // property access, e.g. `bounds.from`
+  if (/^\W/.test(t) && !/^[(“"']/.test(t)) return false // starts with an operator
   return true
 }
 

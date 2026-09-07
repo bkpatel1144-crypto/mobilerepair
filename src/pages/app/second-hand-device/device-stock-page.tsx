@@ -57,7 +57,7 @@ export function DeviceStockPage() {
   const aging = stock.filter((p) => daysInStock(p) > 30).length
 
   const columns: DataTableColumn<SecondHandPurchaseWithId>[] = [
-    { key: 'purchaseNumber', header: 'Purchase #', render: (p) => p.purchaseNumber },
+    { key: 'purchaseNumber', header: t('shared.purchase'), render: (p) => p.purchaseNumber },
     {
       key: 'device',
       header: t('common.device'),
@@ -88,14 +88,18 @@ export function DeviceStockPage() {
     },
     {
       key: 'refurbCost',
-      header: 'Refurb Cost',
+      header: t('shared.refurbCost'),
       hideOnMobile: true,
       render: (p) => (p.refurbCost > 0 ? `₹${p.refurbCost}` : '—'),
     },
-    { key: 'invested', header: 'Invested', render: (p) => `₹${p.purchasePrice + p.refurbCost}` },
+    {
+      key: 'invested',
+      header: t('shared.invested'),
+      render: (p) => `₹${p.purchasePrice + p.refurbCost}`,
+    },
     {
       key: 'expectedSalePrice',
-      header: 'Expected Sale Price',
+      header: t('shared.expectedSalePrice'),
       hideOnMobile: true,
       render: (p) => (p.expectedSalePrice != null ? `₹${p.expectedSalePrice}` : '—'),
     },
@@ -120,7 +124,7 @@ export function DeviceStockPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="In Stock" value={stock.length} icon={Boxes} tone="success" />
+        <StatCard label={t('shared.inStock')} value={stock.length} icon={Boxes} tone="success" />
         <StatCard label="Total Invested" icon={IndianRupee} value={`₹${totalInvested}`} />
         <StatCard
           label="Aging > 30 days"

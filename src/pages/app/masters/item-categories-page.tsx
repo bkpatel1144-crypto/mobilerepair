@@ -138,7 +138,7 @@ export function ItemCategoriesPage() {
           <EmptyState
             icon={FolderTree}
             title="No item categories yet"
-            description="Add your first category above."
+            description={t('shared.addYourFirstCategoryAbove')}
           />
         }
       />
@@ -199,7 +199,7 @@ export function ItemCategoriesPage() {
           }
           sections={[
             {
-              title: 'DETAILS',
+              title: t('shared.details'),
               rows: [
                 { label: t('common.type'), value: viewing.type },
                 { label: 'Level', value: categoryLevel(viewing, categories).level },
@@ -224,7 +224,7 @@ export function ItemCategoriesPage() {
             ...(viewing.description
               ? [
                   {
-                    title: 'DESCRIPTION',
+                    title: t('shared.description'),
                     children: (
                       <p className="text-sm text-muted-foreground">{viewing.description}</p>
                     ),
@@ -386,14 +386,14 @@ function ItemCategoryModal({
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>Type *</Label>
+          <Label>{t('shared.type')}</Label>
           <Select value={type} onValueChange={(v) => v && setType(v as typeof type)}>
             <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Raw Material">Raw Material</SelectItem>
-              <SelectItem value="Service">Service</SelectItem>
+              <SelectItem value="Service">{t('shared.service')}</SelectItem>
             </SelectContent>
           </Select>
         </div>

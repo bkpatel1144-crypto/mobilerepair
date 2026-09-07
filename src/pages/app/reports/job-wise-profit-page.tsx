@@ -174,7 +174,7 @@ export function JobWiseProfitPage() {
           tone={totals.profit < 0 ? 'danger' : 'success'}
         />
         <StatCard
-          label="Avg Margin"
+          label={t('shared.avgMargin')}
           icon={Percent}
           value={formatPercent(totals.avgMargin)}
           tone={totals.avgMargin < 0 ? 'danger' : 'default'}
@@ -204,7 +204,7 @@ export function JobWiseProfitPage() {
         emptyState={
           <EmptyState
             icon={BarChart3}
-            title="No costed jobs yet"
+            title={t('shared.noCostedJobsYet')}
             description="Record actual costing on a closed job to see its profit here."
           />
         }

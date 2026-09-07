@@ -335,7 +335,7 @@ function UomModal({
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>Type *</Label>
+          <Label>{t('shared.type')}</Label>
           <Select value={type} onValueChange={(v) => v && setType(v)}>
             <SelectTrigger className="w-full">
               <SelectValue />

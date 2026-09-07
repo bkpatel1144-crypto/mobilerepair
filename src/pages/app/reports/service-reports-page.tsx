@@ -82,7 +82,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
             <span className="font-medium">{formatCurrency(job.finalAmount ?? 0)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Total Paid</span>
+            <span className="text-muted-foreground">{t('shared.totalPaid')}</span>
             <span className="font-medium">{formatCurrency(job.paidAmount)}</span>
           </div>
           <div className="flex justify-between">
@@ -111,7 +111,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
                   <th className="p-2 text-left">{t('common.part')}</th>
                   <th className="p-2 text-left">{t('common.supplier')}</th>
                   <th className="p-2 text-right">{t('common.rate')}</th>
-                  <th className="p-2 text-right">Qty</th>
+                  <th className="p-2 text-right">{t('shared.qty')}</th>
                   <th className="p-2 text-right">{t('common.total')}</th>
                 </tr>
               </thead>
@@ -254,13 +254,13 @@ export function ServiceReportsPage() {
     },
     {
       key: 'estCost',
-      header: 'Est. Cost',
+      header: t('shared.estCost'),
       hideOnMobile: true,
       render: (j) => formatCurrency(j.estimatedCost),
     },
     {
       key: 'finalAmt',
-      header: 'Final Amt',
+      header: t('shared.finalAmt'),
       render: (j) => (j.finalAmount != null ? formatCurrency(j.finalAmount) : '—'),
     },
     {
@@ -293,7 +293,7 @@ export function ServiceReportsPage() {
     },
     {
       key: 'cancelledBy',
-      header: 'Cancelled By',
+      header: t('shared.cancelledBy'),
       hideOnMobile: true,
       render: (j) => j.cancelledByName ?? '—',
     },
@@ -345,7 +345,12 @@ export function ServiceReportsPage() {
       <StatCardGrid>
         <StatCard label="Total Jobs" value={totals.total} icon={BarChart3} />
         <StatCard label={t('common.pending')} icon={Clock} value={totals.pending} tone="warning" />
-        <StatCard label="In Progress" icon={Activity} value={totals.inProgress} tone="info" />
+        <StatCard
+          label={t('shared.inProgress')}
+          icon={Activity}
+          value={totals.inProgress}
+          tone="info"
+        />
         <StatCard
           label={t('common.completed')}
           icon={CheckCircle2}
@@ -474,7 +479,7 @@ export function ServiceReportsPage() {
         emptyState={
           <EmptyState
             icon={BarChart3}
-            title="No job cards found"
+            title={t('shared.noJobCardsFound')}
             description="Try widening your filters or date range."
           />
         }

@@ -4,6 +4,7 @@ import { ChevronDown, X, Plus, Check, Package } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface MultiSelectOption {
   id: string
@@ -42,6 +43,7 @@ export function MultiSelectPopover({
   open: controlledOpen,
   onOpenChange,
 }: MultiSelectPopoverProps) {
+  const { t } = useTranslation()
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = onOpenChange ?? setUncontrolledOpen
@@ -109,7 +111,7 @@ export function MultiSelectPopover({
                 <Input
                   value={newLabel}
                   onChange={(e) => setNewLabel(e.target.value)}
-                  placeholder="Add New..."
+                  placeholder={t('shared.addNew')}
                   className="h-8 flex-1 text-sm"
                   onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
                 />

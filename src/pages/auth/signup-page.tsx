@@ -51,10 +51,10 @@ export function SignupPage() {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormError message={formError} />
         <div className="space-y-1.5">
-          <Label htmlFor="companyName">Company name</Label>
+          <Label htmlFor="companyName">{t('shared.companyName2')}</Label>
           <Input
             id="companyName"
-            placeholder="Sunrise Enterprises"
+            placeholder={t('shared.sunriseEnterprises')}
             aria-invalid={!!errors.companyName}
             {...register('companyName')}
           />
@@ -63,10 +63,10 @@ export function SignupPage() {
           )}
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="fullName">Your name</Label>
+          <Label htmlFor="fullName">{t('shared.yourName')}</Label>
           <Input
             id="fullName"
-            placeholder="Shrey Ghadge"
+            placeholder={t('shared.shreyGhadge')}
             aria-invalid={!!errors.fullName}
             {...register('fullName')}
           />
@@ -85,7 +85,7 @@ export function SignupPage() {
           {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('shared.password')}</Label>
           <Input
             id="password"
             type="password"

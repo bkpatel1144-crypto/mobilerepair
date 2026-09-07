@@ -3,6 +3,7 @@ import { Search } from 'lucide-react'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { SidebarNav } from '@/components/layout/sidebar-nav'
 import { Input } from '@/components/ui/input'
+import { useTranslation } from 'react-i18next'
 
 interface MobileSidebarProps {
   open: boolean
@@ -13,6 +14,7 @@ interface MobileSidebarProps {
  * "sidebar becomes a slide-in drawer under ~768px" rule. Carries the same wordmark + nav search
  * as the desktop rail so the two aren't two different navigations. */
 export function MobileSidebar({ open, onOpenChange }: MobileSidebarProps) {
+  const { t } = useTranslation()
   const [filter, setFilter] = useState('')
 
   return (
@@ -28,8 +30,8 @@ export function MobileSidebar({ open, onOpenChange }: MobileSidebarProps) {
             <Input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              placeholder="Search..."
-              aria-label="Search navigation"
+              placeholder={t('shared.search')}
+              aria-label={t('shared.searchNavigation')}
               className="h-10 rounded-full bg-background pl-9"
             />
           </div>

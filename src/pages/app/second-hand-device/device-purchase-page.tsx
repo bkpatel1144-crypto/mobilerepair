@@ -111,7 +111,7 @@ export function DevicePurchasePage() {
   const columns: DataTableColumn<SecondHandPurchaseWithId>[] = [
     {
       key: 'purchaseNumber',
-      header: 'Purchase #',
+      header: t('shared.purchase'),
       render: (p) => (
         <div>
           <p className="font-semibold">{p.purchaseNumber}</p>
@@ -120,7 +120,7 @@ export function DevicePurchasePage() {
       ),
     },
     { key: 'device', header: t('common.device'), render: (p) => deviceLabel(p) },
-    { key: 'seller', header: 'Seller', hideOnMobile: true, render: (p) => p.sellerName },
+    { key: 'seller', header: t('shared.seller'), hideOnMobile: true, render: (p) => p.sellerName },
     {
       key: 'price',
       header: t('common.purchasePrice'),
@@ -175,13 +175,13 @@ export function DevicePurchasePage() {
       <StatCardGrid>
         <StatCard label="Total Purchased" value={purchases.length} icon={Smartphone} />
         <StatCard
-          label="In Stock"
+          label={t('shared.inStock')}
           icon={Package}
           value={purchases.filter((p) => p.status === 'inStock').length}
           tone="success"
         />
         <StatCard
-          label="In Refurb"
+          label={t('shared.inRefurb')}
           icon={Wrench}
           value={purchases.filter((p) => p.status === 'inRefurb').length}
           tone="warning"
@@ -360,7 +360,7 @@ function EditPurchaseModal({
     >
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label>Condition Grade</Label>
+          <Label>{t('shared.conditionGrade')}</Label>
           <Select
             value={conditionGrade}
             onValueChange={(v) => v && setConditionGrade(v as ConditionGrade)}
@@ -369,15 +369,15 @@ function EditPurchaseModal({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="A">A — Excellent</SelectItem>
-              <SelectItem value="B">B — Good</SelectItem>
-              <SelectItem value="C">C — Fair</SelectItem>
-              <SelectItem value="D">D — Poor</SelectItem>
+              <SelectItem value="A">{t('shared.aExcellent')}</SelectItem>
+              <SelectItem value="B">{t('shared.bGood')}</SelectItem>
+              <SelectItem value="C">{t('shared.cFair')}</SelectItem>
+              <SelectItem value="D">{t('shared.dPoor')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-1.5">
-          <Label>Expected Sale Price</Label>
+          <Label>{t('shared.expectedSalePrice')}</Label>
           <Input
             type="number"
             min={0}
@@ -389,7 +389,7 @@ function EditPurchaseModal({
         </div>
       </div>
       <div className="space-y-1.5">
-        <Label>Refurb Cost</Label>
+        <Label>{t('shared.refurbCost')}</Label>
         <Input
           type="number"
           min={0}
@@ -405,7 +405,7 @@ function EditPurchaseModal({
         <Input
           value={accessoriesIncluded}
           onChange={(e) => setAccessoriesIncluded(e.target.value)}
-          placeholder="Charger, box, cable..."
+          placeholder={t('shared.chargerBoxCable')}
         />
       </div>
       <div className="space-y-1.5">
@@ -422,7 +422,7 @@ function EditPurchaseModal({
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Optional notes"
+          placeholder={t('shared.optionalNotes')}
           rows={2}
         />
       </div>

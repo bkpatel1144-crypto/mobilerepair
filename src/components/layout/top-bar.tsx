@@ -157,7 +157,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           className="hidden items-center gap-2 rounded-md border bg-background px-2.5 py-1.5 text-sm text-muted-foreground hover:bg-muted sm:flex"
         >
           <Search className="size-4" />
-          <span>Search...</span>
+          <span>{t('shared.search')}</span>
           <kbd className="ml-2 rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium">
             Ctrl K
           </kbd>

@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import type { RoleDraft } from './types'
+import { useTranslation } from 'react-i18next'
 
 interface DashboardLandingTabProps {
   draft: RoleDraft
@@ -20,6 +21,7 @@ interface DashboardLandingTabProps {
 }
 
 export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLandingTabProps) {
+  const { t } = useTranslation()
   const [confirmingClear, setConfirmingClear] = useState(false)
   // Only routes this role can actually reach make sense as a landing page.
   const landingOptions = [
@@ -143,7 +145,7 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
         onOpenChange={setConfirmingClear}
         title="Clear all dashboard widgets?"
         message="This turns off every dashboard widget for this role — its dashboard will show nothing until widgets are re-enabled. It only affects the unsaved draft."
-        confirmLabel="Clear All"
+        confirmLabel={t('shared.clearAll')}
         onConfirm={() => {
           setAllWidgets(false)
           setConfirmingClear(false)

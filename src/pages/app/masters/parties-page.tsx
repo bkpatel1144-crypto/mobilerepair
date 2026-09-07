@@ -230,7 +230,7 @@ export function PartiesPage() {
           }
           sections={[
             {
-              title: 'DETAILS',
+              title: t('shared.details'),
               icon: UserCog,
               rows: [
                 { label: t('common.category'), value: viewing.categoryName ?? '—' },
@@ -253,7 +253,7 @@ export function PartiesPage() {
           ]}
           timeline={[
             { title: t('common.createdAt'), timestamp: formatTimestamp(viewing.createdAt) },
-            { title: 'Updated', timestamp: formatTimestamp(viewing.updatedAt) },
+            { title: t('shared.updated'), timestamp: formatTimestamp(viewing.updatedAt) },
           ]}
         />
       )}

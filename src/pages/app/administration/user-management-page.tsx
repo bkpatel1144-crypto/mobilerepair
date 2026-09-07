@@ -75,7 +75,12 @@ export function UserManagementPage() {
       header: t('common.role'),
       render: (u) => <StatusBadge status={u.roleName} tone="warning" />,
     },
-    { key: 'contact', header: 'Contact', hideOnMobile: true, render: (u) => u.mobile ?? '—' },
+    {
+      key: 'contact',
+      header: t('shared.contact'),
+      hideOnMobile: true,
+      render: (u) => u.mobile ?? '—',
+    },
     { key: 'status', header: t('common.status'), render: (u) => <StatusBadge status={u.status} /> },
     {
       key: 'created',

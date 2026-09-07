@@ -340,7 +340,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={setConfirmingUndo}
         title={`Undo "${job.lastActionUndo?.actionLabel}"?`}
         message="This reverts the job's own fields to before that action and permanently deletes its timeline entry — the audit trail for this specific action is erased, not just hidden."
-        confirmLabel="Undo"
+        confirmLabel={t('shared.undo')}
         isPending={undoLastAction.isPending}
         onConfirm={() =>
           undoLastAction.mutate(undefined, { onSuccess: () => setConfirmingUndo(false) })
@@ -485,7 +485,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="cash">{t('common.cash')}</SelectItem>
-                        <SelectItem value="upi">UPI</SelectItem>
+                        <SelectItem value="upi">{t('shared.upi')}</SelectItem>
                         <SelectItem value="card">{t('common.cardMode')}</SelectItem>
                       </SelectContent>
                     </Select>
@@ -500,7 +500,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       <FormModal
         open={dialog === 'payment'}
         onOpenChange={(o) => !o && closeDialog()}
-        title="Record Payment"
+        title={t('shared.recordPayment')}
         onSubmit={submitDialog}
         submitLabel="Record Payment"
         isSubmitting={recordPayment.isPending}
@@ -526,7 +526,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="cash">{t('common.cash')}</SelectItem>
-                <SelectItem value="upi">UPI</SelectItem>
+                <SelectItem value="upi">{t('shared.upi')}</SelectItem>
                 <SelectItem value="card">{t('common.cardMode')}</SelectItem>
               </SelectContent>
             </Select>

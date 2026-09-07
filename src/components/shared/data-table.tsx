@@ -28,6 +28,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorState } from '@/components/shared/error-state'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface DataTableColumn<T> {
   key: string
@@ -84,6 +85,7 @@ export function DataTable<T>({
   defaultPageSize = 10,
   className,
 }: DataTableProps<T>) {
+  const { t } = useTranslation()
   const [sort, setSort] = useState<SortState>(null)
   const [page, setPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(defaultPageSize)
@@ -265,7 +267,7 @@ export function DataTable<T>({
         </span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
-            <span>Rows per page:</span>
+            <span>{t('shared.rowsPerPage')}</span>
             <Select
               value={String(rowsPerPage)}
               onValueChange={(v) => {

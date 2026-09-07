@@ -470,7 +470,7 @@ export function FinancialYearsPage() {
         isSubmitting={createFy.isPending || updateFy.isPending}
       >
         <div className="space-y-1.5">
-          <Label>Name *</Label>
+          <Label>{t('shared.name')}</Label>
           <Input
             value={nameInput}
             onChange={(e) => setNameInput(e.target.value.slice(0, 20))}

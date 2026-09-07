@@ -107,7 +107,7 @@ export function ServiceItemsPage() {
       header: t('common.type'),
       render: () => <StatusBadge status="Services" tone="success" />,
     },
-    { key: 'uom', header: 'UOM', hideOnMobile: true, render: (i) => i.uom },
+    { key: 'uom', header: t('shared.uom'), hideOnMobile: true, render: (i) => i.uom },
     {
       key: 'price',
       header: t('common.sellingPrice'),
@@ -159,7 +159,7 @@ export function ServiceItemsPage() {
 
       <div className="flex flex-wrap gap-3">
         <StatCard label={t('common.total')} value={items.length} />
-        <StatCard label="Services" value={serviceItems.length} tone="success" />
+        <StatCard label={t('shared.services')} value={serviceItems.length} tone="success" />
         <StatCard label={t('common.parts')} value={partItems.length} />
       </div>
 
@@ -216,7 +216,7 @@ export function ServiceItemsPage() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1.5">
-              <Label>UOM</Label>
+              <Label>{t('shared.uom')}</Label>
               <Input value={uom} onChange={(e) => setUom(e.target.value)} />
             </div>
             <div className="space-y-1.5">

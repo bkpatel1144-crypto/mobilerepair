@@ -326,8 +326,8 @@ export function SupplierReportPage() {
                       <th className="p-2 text-left">Part Name</th>
                       <th className="p-2 text-left">Device Name</th>
                       <th className="p-2 text-right">{t('common.purchasePrice')}</th>
-                      <th className="p-2 text-right">Qty</th>
-                      <th className="p-2 text-right">Total Cost</th>
+                      <th className="p-2 text-right">{t('shared.qty')}</th>
+                      <th className="p-2 text-right">{t('shared.totalCost')}</th>
                       <th className="p-2 text-right">Job Revenue</th>
                       <th className="p-2 text-left">{t('common.date')}</th>
                     </tr>

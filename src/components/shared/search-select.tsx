@@ -4,6 +4,7 @@ import { Search, X, Plus, Check, Package, ChevronDown } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export interface SearchSelectOption {
   id: string
@@ -46,6 +47,7 @@ export function SearchSelect({
   open: controlledOpen,
   onOpenChange,
 }: SearchSelectProps) {
+  const { t } = useTranslation()
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = onOpenChange ?? setUncontrolledOpen
@@ -177,7 +179,7 @@ export function SearchSelect({
             <Input
               value={newLabel}
               onChange={(e) => setNewLabel(e.target.value)}
-              placeholder="Add New..."
+              placeholder={t('shared.addNew')}
               className="h-8 flex-1 text-sm"
               onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
             />

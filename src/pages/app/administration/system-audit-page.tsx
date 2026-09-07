@@ -84,7 +84,7 @@ export function SystemAuditPage() {
     },
     {
       key: 'entity',
-      header: 'Entity',
+      header: t('shared.entity'),
       render: (e) => (
         <>
           <p>{e.entityType}</p>
@@ -101,10 +101,10 @@ export function SystemAuditPage() {
     { key: 'target', header: 'Target', hideOnMobile: true, render: (e) => e.targetLabel },
     {
       key: 'result',
-      header: 'Result',
+      header: t('shared.result'),
       render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} />,
     },
-    { key: 'ip', header: 'IP', hideOnMobile: true, render: (e) => e.ip ?? '—' },
+    { key: 'ip', header: t('shared.ip'), hideOnMobile: true, render: (e) => e.ip ?? '—' },
   ]
 
   return (
@@ -180,7 +180,7 @@ export function SystemAuditPage() {
           <SelectContent>
             <SelectItem value="all">All Results</SelectItem>
             <SelectItem value="success">Success</SelectItem>
-            <SelectItem value="unauthorized">Unauthorized</SelectItem>
+            <SelectItem value="unauthorized">{t('shared.unauthorized')}</SelectItem>
             <SelectItem value="blocked">Blocked</SelectItem>
             <SelectItem value="failed">Failed</SelectItem>
           </SelectContent>
@@ -240,11 +240,11 @@ export function SystemAuditPage() {
               ],
             },
             {
-              title: 'SESSION INFO',
+              title: t('shared.sessionInfo'),
               rows: [
                 { label: t('common.time'), value: formatTimestamp(viewing.createdAt) },
-                { label: 'IP Address', value: viewing.ip ?? '—' },
-                { label: 'Browser', value: viewing.userAgent || '—' },
+                { label: t('shared.ipAddress'), value: viewing.ip ?? '—' },
+                { label: t('shared.browser'), value: viewing.userAgent || '—' },
               ],
             },
             {

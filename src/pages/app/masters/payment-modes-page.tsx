@@ -288,7 +288,7 @@ function PaymentModeModal({
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">
-        <Label>Name *</Label>
+        <Label>{t('shared.name')}</Label>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -301,7 +301,7 @@ function PaymentModeModal({
         <Input value={isNew ? 'AUTO-GENERATED' : editing.code} disabled />
       </div>
       <div className="space-y-1.5">
-        <Label>Type *</Label>
+        <Label>{t('shared.type')}</Label>
         <Select value={type} onValueChange={(v) => v && setType(v)}>
           <SelectTrigger className="w-full">
             <SelectValue />

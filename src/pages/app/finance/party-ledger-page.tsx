@@ -83,7 +83,7 @@ export function PartyLedgerPage() {
     },
     {
       key: 'billed',
-      header: 'Billed',
+      header: t('shared.billed'),
       hideOnMobile: true,
       sortValue: (s) => s.billed,
       render: (s) => `₹${s.billed}`,
@@ -137,19 +137,19 @@ export function PartyLedgerPage() {
           sublabel="With job card activity"
         />
         <StatCard
-          label="Total Billed"
+          label={t('shared.totalBilled')}
           value={`₹${totalBilled}`}
           sublabel="Active jobs only"
           tone="purple"
         />
         <StatCard
-          label="Total Collected"
+          label={t('shared.totalCollected')}
           value={`₹${totalCollected}`}
           sublabel="Incl. advance on unbilled jobs"
           tone="success"
         />
         <StatCard
-          label="Total Outstanding"
+          label={t('shared.totalOutstanding')}
           value={`₹${totalOutstanding}`}
           sublabel="Pending collection"
           tone="danger"
@@ -230,13 +230,17 @@ function PartyLedgerDetailSheet({
             </SheetHeader>
 
             <div className="grid grid-cols-2 gap-3 px-4 sm:grid-cols-4">
-              <StatCard label="Total Billed" value={`₹${data?.totalBilled ?? 0}`} />
-              <StatCard label="Total Paid" value={`₹${data?.totalPaid ?? 0}`} tone="success" />
+              <StatCard label={t('shared.totalBilled')} value={`₹${data?.totalBilled ?? 0}`} />
+              <StatCard
+                label={t('shared.totalPaid')}
+                value={`₹${data?.totalPaid ?? 0}`}
+                tone="success"
+              />
               <StatCard
                 label={t('common.balance')}
                 value={data ? balanceLabel(data.closingBalance) : '—'}
               />
-              <StatCard label="Entries" value={data?.rows.length ?? 0} />
+              <StatCard label={t('shared.entries')} value={data?.rows.length ?? 0} />
             </div>
 
             <div className="flex items-center justify-end px-4">
@@ -262,7 +266,7 @@ function PartyLedgerDetailSheet({
                   <thead className="border-b text-xs text-muted-foreground uppercase">
                     <tr>
                       <th className="p-2 text-left">{t('common.date')}</th>
-                      <th className="p-2 text-left">Particulars</th>
+                      <th className="p-2 text-left">{t('shared.particulars')}</th>
                       <th className="p-2 text-right">Debit (Dr)</th>
                       <th className="p-2 text-right">Credit (Cr)</th>
                       <th className="p-2 text-right">{t('common.balance')}</th>

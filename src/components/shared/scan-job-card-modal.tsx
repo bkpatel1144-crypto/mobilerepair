@@ -13,6 +13,7 @@ import { CameraScanFrame } from '@/components/shared/camera-scan-frame'
 import { useAuth } from '@/hooks/use-auth'
 import { findJobCardIdByNumber, extractJobNumberOrId } from '@/lib/job-card-lookup'
 import { buildPath } from '@/config/nav'
+import { useTranslation } from 'react-i18next'
 
 interface ScanJobCardModalProps {
   open: boolean
@@ -26,6 +27,7 @@ interface ScanJobCardModalProps {
  * ("Just point — it auto-focuses, zooms and locks on instantly") and camera-unavailable state.
  */
 export function ScanJobCardModal({ open, onOpenChange }: ScanJobCardModalProps) {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const navigate = useNavigate()
   const [notFoundCode, setNotFoundCode] = useState<string | null>(null)
@@ -69,7 +71,7 @@ export function ScanJobCardModal({ open, onOpenChange }: ScanJobCardModalProps) 
               <QrCode className="size-5" />
             </span>
             <div>
-              <DialogTitle>Scan Job Card</DialogTitle>
+              <DialogTitle>{t('shared.scanJobCard')}</DialogTitle>
               <DialogDescription>
                 Just point — it auto-focuses, zooms and locks on instantly
               </DialogDescription>

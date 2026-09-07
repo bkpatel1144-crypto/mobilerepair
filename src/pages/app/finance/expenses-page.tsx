@@ -180,7 +180,7 @@ function NewExpenseModal({
               ? modes.map((m) => ({ value: modeFromName(m.name), label: m.name }))
               : [
                   { value: 'cash' as const, label: t('common.cash') },
-                  { value: 'upi' as const, label: 'UPI' },
+                  { value: 'upi' as const, label: t('shared.upi') },
                   { value: 'card' as const, label: t('common.cardMode') },
                 ]
             ).map((m, i) => (
@@ -381,7 +381,7 @@ export function ExpensesPage() {
 
       <StatCardGrid>
         <StatCard label={t('common.total')} value={`₹${total}`} icon={IndianRupee} tone="danger" />
-        <StatCard label="Entries" value={live.length} icon={ReceiptIcon} />
+        <StatCard label={t('shared.entries')} value={live.length} icon={ReceiptIcon} />
         <StatCard
           label="Top Category"
           value={topCategory ? `₹${topCategory[1]}` : '—'}

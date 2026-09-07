@@ -73,7 +73,7 @@ export function PurchaseRegisterPage() {
   const columns: DataTableColumn<SecondHandPurchaseWithId>[] = [
     {
       key: 'purchaseNumber',
-      header: 'Purchase #',
+      header: t('shared.purchase'),
       render: (p) => (
         <div>
           <p className="font-semibold">{p.purchaseNumber}</p>
@@ -82,7 +82,7 @@ export function PurchaseRegisterPage() {
       ),
     },
     { key: 'device', header: t('common.device'), render: (p) => deviceLabel(p) },
-    { key: 'seller', header: 'Seller', hideOnMobile: true, render: (p) => p.sellerName },
+    { key: 'seller', header: t('shared.seller'), hideOnMobile: true, render: (p) => p.sellerName },
     {
       key: 'price',
       header: t('common.purchasePrice'),
@@ -175,10 +175,10 @@ export function PurchaseRegisterPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{t('common.allStatuses')}</SelectItem>
-            <SelectItem value="inStock">In Stock</SelectItem>
-            <SelectItem value="inRefurb">In Refurb</SelectItem>
+            <SelectItem value="inStock">{t('shared.inStock')}</SelectItem>
+            <SelectItem value="inRefurb">{t('shared.inRefurb')}</SelectItem>
             <SelectItem value="sold">{t('common.sold')}</SelectItem>
-            <SelectItem value="returnedToSeller">Returned to Seller</SelectItem>
+            <SelectItem value="returnedToSeller">{t('shared.returnedToSeller')}</SelectItem>
           </SelectContent>
         </Select>
       </FilterBar>

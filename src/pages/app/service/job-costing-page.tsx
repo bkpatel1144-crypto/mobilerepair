@@ -203,9 +203,9 @@ export function JobCostingPage() {
                       value:
                         [selectedJob.brandName, selectedJob.model].filter(Boolean).join(' ') || '—',
                     },
-                    { label: 'IMEI', value: selectedJob.imei ?? '—' },
+                    { label: t('shared.imei'), value: selectedJob.imei ?? '—' },
                     { label: t('common.createdAt'), value: formatTimestamp(selectedJob.createdAt) },
-                    { label: 'Closed', value: formatTimestamp(selectedJob.closedAt) },
+                    { label: t('shared.closed'), value: formatTimestamp(selectedJob.closedAt) },
                   ],
                 },
                 {
@@ -230,7 +230,7 @@ export function JobCostingPage() {
                 <TableRow>
                   <TableHead>{t('common.part')}</TableHead>
                   <TableHead>{t('common.rate')}</TableHead>
-                  <TableHead>Qty</TableHead>
+                  <TableHead>{t('shared.qty')}</TableHead>
                   <TableHead>{t('common.total')}</TableHead>
                 </TableRow>
               </TableHeader>
