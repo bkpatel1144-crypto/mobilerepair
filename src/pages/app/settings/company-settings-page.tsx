@@ -331,7 +331,7 @@ export function CompanySettingsPage() {
               )}
               <DropdownMenuItem onClick={() => startEdit(c)}>
                 <Pencil />
-                Edit Company
+                {t('pages.settings.companySettings.editCompany')}
               </DropdownMenuItem>
               {c.protected && (
                 <>

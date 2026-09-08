@@ -22,6 +22,13 @@ const CODE_ATTR =
   /\b(className|class|type|variant|size|key|value|name|id|htmlFor|to|href|src|path|align|side|role|slug|mode|direction|accept|autoComplete|inputMode|pattern|data-\w+)=\s*$/
 
 function isCodeContext(before, after, text) {
+  // A quoted phrase inside JSX prose, not a string literal. `pick "Unregistered" if this` uses
+  // real quotation marks as *punctuation*, and rewriting one produced a page that rendered
+  // `pick t('pages.settings.companyForm.unregistered') if this` to the user. The tell is what
+  // follows: prose continues with a lowercase word, whereas a real literal is followed by `)`,
+  // `,`, `}`, `;` or end of line. Attribute values are exempt — those legitimately continue with
+  // another lowercase attribute name.
+  if (!/[A-Za-z0-9_-]=\s*$/.test(before) && /^\s+[a-z]/.test(after)) return true
   // An apostrophe inside JSX text, not a string delimiter. `Here's what's happening` made the
   // scanner see a "literal" of `s what`. A real string literal is never preceded directly by an
   // identifier character — `foo'bar'` is not valid JS — so that is the tell.

@@ -254,7 +254,7 @@ export function JobCardsPage() {
           />
           <PopoverContent className="w-64 p-3" align="start">
             <p className="mb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Assigned To
+              {t('common.assignedTo')}
             </p>
             <div className="max-h-56 space-y-0.5 overflow-y-auto">
               {users.length === 0 && (

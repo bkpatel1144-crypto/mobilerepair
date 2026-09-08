@@ -199,7 +199,7 @@ export function CompanyForm({
           </p>
           <p className="mt-0.5 text-blue-900/80 dark:text-blue-300/80">
             All fields marked with * are required. GSTIN is only required for registered companies
-            (Regular/Composition) — pick t('pages.settings.companyForm.unregistered') if this
+            (Regular/Composition) — pick "{t('pages.settings.companyForm.unregistered')}" if this
             company isn't GST-registered. Ensure GSTIN and PAN match correctly.
           </p>
         </div>

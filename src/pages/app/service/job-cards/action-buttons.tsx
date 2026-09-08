@@ -268,7 +268,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
               setDialog('generateBill')
             }}
           >
-            Generate Bill
+            {t('pages.service.actionButtons.generateBill')}
           </Button>
         )}
         {shows('payment') && (

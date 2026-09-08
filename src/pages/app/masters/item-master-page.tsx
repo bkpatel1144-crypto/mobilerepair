@@ -521,7 +521,7 @@ function ItemModal({
         <div className="flex flex-wrap gap-4 text-sm">
           <label className="flex items-center gap-1.5">
             <Checkbox checked={stockTracked} onCheckedChange={(v) => setStockTracked(v === true)} />
-            Stock Tracked
+            {t('pages.masters.itemMaster.stockTracked')}
           </label>
           <label className="flex items-center gap-1.5">
             <Checkbox
@@ -542,7 +542,7 @@ function ItemModal({
               checked={enabledInServicePos}
               onCheckedChange={(v) => setEnabledInServicePos(v === true)}
             />
-            Service / POS
+            {t('pages.masters.itemMaster.servicePos')}
           </label>
         </div>
       </div>

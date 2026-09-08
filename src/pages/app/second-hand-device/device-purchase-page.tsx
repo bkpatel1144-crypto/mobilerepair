@@ -283,7 +283,7 @@ export function DevicePurchasePage() {
                   onClick={() => setConfirmingReturn(true)}
                 >
                   <Undo2 className="size-3.5" />
-                  Return to Seller
+                  {t('pages.secondHandDevice.devicePurchase.returnToSeller')}
                 </Button>
               )}
               <PrintButtonGroup purchase={viewing} />

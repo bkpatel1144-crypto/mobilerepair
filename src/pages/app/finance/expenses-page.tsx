@@ -377,7 +377,7 @@ export function ExpensesPage() {
             </Button>
             <Button type="button" onClick={() => setNewOpen(true)}>
               <Plus className="size-4" />
-              New Expense
+              {t('pages.finance.expenses.newExpense')}
             </Button>
           </>
         }
@@ -437,7 +437,7 @@ export function ExpensesPage() {
             action={
               <Button type="button" onClick={() => setNewOpen(true)}>
                 <Plus className="size-4" />
-                New Expense
+                {t('pages.finance.expenses.newExpense')}
               </Button>
             }
           />

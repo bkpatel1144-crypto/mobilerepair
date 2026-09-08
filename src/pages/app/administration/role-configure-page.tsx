@@ -202,7 +202,7 @@ export function RoleConfigurePage() {
           </span>
           {isDirty && (
             <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
-              Unsaved changes
+              {t('common.unsavedChanges')}
             </span>
           )}
           <div className="ml-auto flex gap-2">

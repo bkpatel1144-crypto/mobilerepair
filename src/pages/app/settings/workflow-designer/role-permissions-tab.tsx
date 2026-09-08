@@ -297,7 +297,7 @@ function SelectedRolePanel({
       <div className="sticky bottom-0 flex flex-wrap items-center gap-3 border-t bg-background py-3">
         {isDirty ? (
           <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
-            Unsaved changes
+            {t('common.unsavedChanges')}
           </span>
         ) : (
           <span className="flex items-center gap-1 text-xs text-muted-foreground">

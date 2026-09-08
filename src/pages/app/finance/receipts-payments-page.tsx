@@ -198,7 +198,7 @@ export function ReceiptsPaymentsPage() {
                 }}
               >
                 <Undo2 className="size-4" />
-                Void Receipt
+                {t('pages.finance.receiptsPayments.voidReceipt')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -479,7 +479,7 @@ function NewEntryDialog({
               variant={against === 'manualAdvance' ? 'default' : 'outline'}
               onClick={() => setAgainst('manualAdvance')}
             >
-              Manual / Advance
+              {t('pages.finance.receiptsPayments.manualAdvance')}
             </Button>
           </div>
         </div>

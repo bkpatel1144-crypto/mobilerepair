@@ -421,7 +421,7 @@ export function CreateJobCardPage() {
               onClick={() => setConfirmingClear(true)}
             >
               <Trash2 className="size-3.5" />
-              Clear Draft
+              {t('pages.service.createJobCard.clearDraft')}
             </Button>
           )}
           <Button type="button" variant="outline" size="sm" onClick={() => navigate(-1)}>

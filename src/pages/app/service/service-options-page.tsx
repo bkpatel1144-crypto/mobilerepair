@@ -361,7 +361,7 @@ export function ServiceOptionsPage() {
               disabled={sharedBrandCount === 0 || splitSharedBrands.isPending}
             >
               <Shuffle className="size-4" />
-              Split shared brands
+              {t('pages.service.serviceOptions.splitSharedBrands')}
             </Button>
           </>
         }

@@ -304,7 +304,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="font-normal">
                   <p className="text-[0.65rem] font-medium tracking-wide text-muted-foreground uppercase">
-                    Organization
+                    {t('pages.settings.billing.organization')}
                   </p>
                 </DropdownMenuLabel>
               </DropdownMenuGroup>

@@ -254,7 +254,7 @@ export function PrintTemplateDesignerPage() {
         </span>
         {state.isDirty && (
           <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
-            Unsaved changes
+            {t('common.unsavedChanges')}
           </span>
         )}
         <div className="ml-auto flex flex-wrap items-center gap-2">

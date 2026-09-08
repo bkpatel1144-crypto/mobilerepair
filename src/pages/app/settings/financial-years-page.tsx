@@ -539,8 +539,8 @@ export function FinancialYearsPage() {
         </div>
         {formError && <FormError message={formError} />}
         <p className="rounded-lg bg-blue-50 p-2.5 text-xs text-blue-800 dark:bg-blue-500/10 dark:text-blue-400">
-          Note: Use t('pages.settings.financialYears.createNextFy') for sequential years. This form
-          is for manual creation only.
+          Note: Use "{t('pages.settings.financialYears.createNextFy')}" for sequential years. This
+          form is for manual creation only.
         </p>
       </FormModal>
 

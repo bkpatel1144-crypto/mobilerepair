@@ -264,8 +264,8 @@ export function BackupRestorePage() {
             </div>
             <p className="text-xs text-muted-foreground">
               Persists your preference, but can't fire itself unattended — this project has no
-              server/Cloud Function/cron to run a schedule. Use
-              t('pages.settings.backupRestore.backupNow') for a real backup today.
+              server/Cloud Function/cron to run a schedule. Use "
+              {t('pages.settings.backupRestore.backupNow')}" for a real backup today.
             </p>
           </div>
         </div>

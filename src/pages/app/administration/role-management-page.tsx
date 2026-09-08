@@ -317,7 +317,7 @@ export function RoleManagementPage() {
         <DropdownMenu>
           <DropdownMenuTrigger render={<Button type="button" variant="outline" className="h-10" />}>
             <MoreVertical className="size-4" />
-            More Actions
+            {t('common.moreActions')}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setStatusFilter('active')}>
