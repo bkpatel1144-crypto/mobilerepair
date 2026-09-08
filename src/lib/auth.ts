@@ -9,6 +9,7 @@ import {
   collection,
   doc,
   getDoc,
+  getDocFromServer,
   getDocs,
   serverTimestamp,
   Timestamp,
@@ -281,7 +282,13 @@ export async function completeAccountSetup(
   // retry budget gave up, but re-checking here (rather than trusting that) is the difference
   // between "recover a genuinely orphaned account" and "give a legitimately-provisioned user a
   // confusing second company" if the retry logic's timing were ever off.
-  const existing = await getDoc(doc(db, userDoc(uid)))
+  // From the *server*, not `getDoc`. This is the check that decides whether to re-seed, and
+  // `getDoc` will happily answer from `persistentLocalCache` — which after a rejected signup
+  // batch can still hold the user doc the server never accepted. Recovery then saw "profile
+  // exists, nothing to do" and returned, dropping the user into the app with a profile but no
+  // company and no roles: an empty sidebar and "You don't have access to this page" on every
+  // route. A stale local copy must not be able to short-circuit the repair.
+  const existing = await getDocFromServer(doc(db, userDoc(uid)))
   if (existing.exists()) {
     const data = existing.data() as UserDoc
     cacheProfile(uid, data)

@@ -441,7 +441,15 @@ service cloud.firestore {
 
       match /auditLog/{id} {
         allow read: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/audit');
-        allow create: if belongsToCompany(companyId);
+        // `isBootstrapping()` is not optional here. Signup writes 13 documents in one batch, and
+        // the last two are the new Owner's own login event and session — `seedTenantForUser`
+        // deliberately puts them in the same batch so both exist the moment the profile doc does.
+        // `belongsToCompany()` requires a users/{uid} doc, which by definition does not exist yet
+        // during that batch, so without this branch the audit write was denied and — a batch
+        // being atomic — took the entire signup down with it. Still tied to the caller's own uid,
+        // so this cannot be used to forge a row about anyone else.
+        allow create: if (isBootstrapping() || belongsToCompany(companyId)) &&
+          request.resource.data.performedById == request.auth.uid;
         allow update, delete: if false;
       }
 
@@ -451,7 +459,11 @@ service cloud.firestore {
       // user's), and only for the two fields a heartbeat/logout ever legitimately changes.
       match /sessions/{id} {
         allow read: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'administration/sessions');
-        allow create: if belongsToCompany(companyId) && request.resource.data.userId == request.auth.uid;
+        // Same bootstrap case as `auditLog` above — the first session is written in the signup
+        // batch, before the user doc `belongsToCompany()` needs. The `userId` equality check is
+        // what actually protects this, and it holds either way.
+        allow create: if (isBootstrapping() || belongsToCompany(companyId)) &&
+          request.resource.data.userId == request.auth.uid;
         allow update: if belongsToCompany(companyId) && resource.data.userId == request.auth.uid &&
           request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastActivityAt', 'endedAt']);
         allow delete: if false;
