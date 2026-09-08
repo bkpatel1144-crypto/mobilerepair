@@ -54,7 +54,7 @@ export function JobCardMockup() {
                         : 'text-[11px] whitespace-nowrap text-muted-foreground'
                     }
                   >
-                    {step}
+                    {t(step)}
                   </span>
                 </div>
                 {i < TIMELINE_STEPS.length - 1 && (

@@ -199,10 +199,10 @@ export function LandingPage() {
           {FAQS.map((faq) => (
             <details key={faq.q} className="group p-4 sm:p-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-medium">
-                {faq.q}
+                {t(faq.q)}
                 <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
               </summary>
-              <p className="mt-2 text-sm text-muted-foreground">{faq.a}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{t(faq.a)}</p>
             </details>
           ))}
         </div>

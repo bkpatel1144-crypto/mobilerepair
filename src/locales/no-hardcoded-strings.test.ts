@@ -113,7 +113,11 @@ function blankComments(src: string): string {
 
 describe('no hardcoded display strings', () => {
   const files = Object.entries(sources).filter(
-    ([path]) => !/\.test\.tsx?$/.test(path) && !path.includes('/ui/')
+    ([path]) =>
+      !/\.test\.tsx?$/.test(path) &&
+      !path.includes('/ui/') &&
+      // Test support: fixtures there are data for assertions, never rendered to a user.
+      !path.includes('/test/')
   )
 
   it('finds source files to scan', () => {
