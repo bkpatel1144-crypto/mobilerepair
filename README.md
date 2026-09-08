@@ -165,3 +165,24 @@ rejects the listen stream and the SDK then reports itself offline rather than pe
 `--only firestore:indexes` crashes the CLI outright on the array form
 (`TypeError: Cannot read properties of undefined (reading 'map')`); the database-name selector
 deploys indexes and rules together and works.
+
+### Diagnosing a Firestore connection
+
+If the app hangs on its loading spinner with
+`FirebaseError: Failed to get document because the client is offline`, do not trust that message.
+A rejected `Listen` stream makes the SDK mark itself offline, so it blames the network for what
+is usually a ruleset, a wrong database id, or a billing requirement. The browser never shows the
+underlying gRPC error; Node does:
+
+```
+node --env-file=.env.local tools/firebase/probe-db.mjs
+```
+
+`permission-denied` or `invalid-argument` means the backend is reachable and rules are running —
+good. `unavailable` means it is not, and the gRPC line printed just above the result carries the
+real reason.
+
+**This project needs the Blaze plan.** `VITE_FIREBASE_DATABASE_ID` is `mobilerepairing`, a _named_
+database, and named databases are a paid feature — on Spark the backend answers
+`PERMISSION_DENIED: This API method requires billing to be enabled`. Only `(default)` works on
+Spark, and `(default)` is in use by other apps on this project, so it is not an option here.
