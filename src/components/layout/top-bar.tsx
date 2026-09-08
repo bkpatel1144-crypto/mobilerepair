@@ -97,7 +97,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
         size="icon-sm"
         className="md:hidden"
         onClick={onMenuClick}
-        aria-label="Open navigation"
+        aria-label={t('components.layout.topBar.openNavigation')}
       >
         <Menu className="size-5" />
       </Button>
@@ -109,7 +109,9 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
       <Breadcrumb className="hidden md:block">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink render={<Link to="/app/dashboard" />}>Dashboard</BreadcrumbLink>
+            <BreadcrumbLink render={<Link to="/app/dashboard" />}>
+              {t('components.layout.topBar.dashboard')}
+            </BreadcrumbLink>
           </BreadcrumbItem>
           {entry?.section && (
             <>
@@ -177,7 +179,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           size="icon-sm"
           onClick={toggleFullscreen}
           className="hidden sm:inline-flex"
-          aria-label="Toggle fullscreen"
+          aria-label={t('components.layout.topBar.toggleFullscreen')}
         >
           {isFullscreen ? <Minimize className="size-4.5" /> : <Maximize className="size-4.5" />}
         </Button>
@@ -229,12 +231,22 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
 
         <Popover>
           <PopoverTrigger
-            render={<Button variant="ghost" size="icon-sm" aria-label="Notifications" />}
+            render={
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label={t('components.layout.topBar.notifications')}
+              />
+            }
           >
             <Bell className="size-4.5" />
           </PopoverTrigger>
           <PopoverContent align="end" className="w-72 p-0">
-            <EmptyState icon={Bell} title="No notifications yet" className="py-8" />
+            <EmptyState
+              icon={Bell}
+              title={t('components.layout.topBar.noNotificationsYet')}
+              className="py-8"
+            />
           </PopoverContent>
         </Popover>
 

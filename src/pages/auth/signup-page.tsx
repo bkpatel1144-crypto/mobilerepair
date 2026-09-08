@@ -34,8 +34,8 @@ export function SignupPage() {
 
   return (
     <AuthLayout
-      title="Create your account"
-      subtitle="Free forever — no card required."
+      title={t('pages.signup.signup.createYourAccount')}
+      subtitle={t('pages.signup.signup.freeForeverNoCardRequired')}
       footer={
         <>
           Already have an account?{' '}

@@ -144,13 +144,13 @@ export function TechnicianReportPage() {
     },
     {
       key: 'avgPerJob',
-      header: 'Avg/Job',
+      header: t('pages.reports.technicianReport.avgJob2'),
       hideOnMobile: true,
       render: (g) => formatCurrency(g.avgPerJob),
     },
     {
       key: 'performance',
-      header: 'Performance',
+      header: t('pages.reports.technicianReport.performance'),
       render: (g) =>
         g.profit < 0 ? (
           <StatusBadge status="Loss" tone="danger" icon={TrendingDown} />
@@ -164,8 +164,8 @@ export function TechnicianReportPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Users}
-        title="Technician Report"
-        subtitle="Technician-wise job performance and profitability"
+        title={t('pages.reports.technicianReport.technicianReport')}
+        subtitle={t('pages.reports.technicianReport.technicianWiseJobPerformanceAndProfitability')}
         actions={
           <Button
             type="button"
@@ -258,7 +258,9 @@ export function TechnicianReportPage() {
           <EmptyState
             icon={Users}
             title={t('shared.noCostedJobsYet')}
-            description="Technician performance appears once jobs have recorded costing."
+            description={t(
+              'pages.reports.technicianReport.technicianPerformanceAppearsOnceJobsHave'
+            )}
           />
         }
         renderExpanded={(g) => (
@@ -317,8 +319,16 @@ export function TechnicianReportPage() {
                 tone={g.marginPct < 0 ? 'danger' : 'default'}
                 className="min-w-0"
               />
-              <StatCard label="Win Rate" value={`${g.winRate.toFixed(0)}%`} className="min-w-0" />
-              <StatCard label="Avg / Job" value={formatCurrency(g.avgPerJob)} className="min-w-0" />
+              <StatCard
+                label={t('pages.reports.technicianReport.winRate')}
+                value={`${g.winRate.toFixed(0)}%`}
+                className="min-w-0"
+              />
+              <StatCard
+                label={t('pages.reports.technicianReport.avgJob')}
+                value={formatCurrency(g.avgPerJob)}
+                className="min-w-0"
+              />
             </div>
             <div className="overflow-x-auto rounded-lg border bg-background">
               <table className="w-full min-w-[880px] text-sm whitespace-nowrap">

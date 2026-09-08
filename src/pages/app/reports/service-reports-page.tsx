@@ -102,7 +102,9 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
           Parts / Items
         </p>
         {job.partsUsed.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No parts used on this job.</p>
+          <p className="text-sm text-muted-foreground">
+            {t('pages.reports.serviceReports.noPartsUsedOnThisJob')}
+          </p>
         ) : (
           <div className="overflow-x-auto rounded-lg border bg-background">
             <table className="w-full min-w-[480px] text-sm whitespace-nowrap">
@@ -283,7 +285,7 @@ export function ServiceReportsPage() {
     },
     {
       key: 'deliveredBy',
-      header: 'Delivered/Returned By',
+      header: t('pages.reports.serviceReports.deliveredReturnedBy'),
       hideOnMobile: true,
       render: (j) => (
         <span className="text-purple-700 dark:text-purple-400">
@@ -303,8 +305,8 @@ export function ServiceReportsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={BarChart3}
-        title="Service Reports"
-        subtitle="Complete job card report with advanced filters"
+        title={t('pages.reports.serviceReports.serviceReports')}
+        subtitle={t('pages.reports.serviceReports.completeJobCardReportWithAdvanced')}
         actions={
           <>
             <Button type="button" variant="outline" onClick={() => setShowAdvanced((v) => !v)}>
@@ -343,7 +345,11 @@ export function ServiceReportsPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Jobs" value={totals.total} icon={BarChart3} />
+        <StatCard
+          label={t('pages.reports.serviceReports.totalJobs')}
+          value={totals.total}
+          icon={BarChart3}
+        />
         <StatCard label={t('common.pending')} icon={Clock} value={totals.pending} tone="warning" />
         <StatCard
           label={t('shared.inProgress')}
@@ -402,10 +408,10 @@ export function ServiceReportsPage() {
             </Select>
             <Select value={assignedToFilter} onValueChange={(v) => v && setAssignedToFilter(v)}>
               <SelectTrigger className="w-36">
-                <SelectValue placeholder="All Users" />
+                <SelectValue placeholder={t('pages.reports.serviceReports.allUsers')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Users</SelectItem>
+                <SelectItem value="all">{t('pages.reports.serviceReports.allUsers')}</SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
                     {u.fullName}
@@ -415,10 +421,12 @@ export function ServiceReportsPage() {
             </Select>
             <Select value={receivedByFilter} onValueChange={(v) => v && setReceivedByFilter(v)}>
               <SelectTrigger className="w-32">
-                <SelectValue placeholder="Received By: All" />
+                <SelectValue placeholder={t('pages.reports.serviceReports.receivedByAll')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Received By: All</SelectItem>
+                <SelectItem value="all">
+                  {t('pages.reports.serviceReports.receivedByAll')}
+                </SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
                     {u.fullName}
@@ -441,10 +449,12 @@ export function ServiceReportsPage() {
             </Select>
             <Select value={deliveredByFilter} onValueChange={(v) => v && setDeliveredByFilter(v)}>
               <SelectTrigger className="w-32">
-                <SelectValue placeholder="Delivered By: All" />
+                <SelectValue placeholder={t('pages.reports.serviceReports.deliveredByAll')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Delivered By: All</SelectItem>
+                <SelectItem value="all">
+                  {t('pages.reports.serviceReports.deliveredByAll')}
+                </SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
                     {u.fullName}
@@ -454,10 +464,12 @@ export function ServiceReportsPage() {
             </Select>
             <Select value={cancelledByFilter} onValueChange={(v) => v && setCancelledByFilter(v)}>
               <SelectTrigger className="w-32">
-                <SelectValue placeholder="Cancelled By: All" />
+                <SelectValue placeholder={t('pages.reports.serviceReports.cancelledByAll')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Cancelled By: All</SelectItem>
+                <SelectItem value="all">
+                  {t('pages.reports.serviceReports.cancelledByAll')}
+                </SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
                     {u.fullName}
@@ -480,7 +492,7 @@ export function ServiceReportsPage() {
           <EmptyState
             icon={BarChart3}
             title={t('shared.noJobCardsFound')}
-            description="Try widening your filters or date range."
+            description={t('pages.reports.serviceReports.tryWideningYourFiltersOrDate')}
           />
         }
         renderExpanded={(j) => <ServiceReportRowDetail job={j} />}

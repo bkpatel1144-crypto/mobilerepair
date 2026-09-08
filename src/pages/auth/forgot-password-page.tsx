@@ -42,8 +42,8 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      title="Reset your password"
-      subtitle="Enter your email and we'll send you a reset link."
+      title={t('pages.forgotPassword.forgotPassword.resetYourPassword')}
+      subtitle={t('pages.forgotPassword.forgotPassword.enterYourEmailAndWeLl')}
       footer={
         <>
           Remembered it?{' '}
@@ -59,7 +59,9 @@ export function ForgotPasswordPage() {
       {sent ? (
         <div className="flex flex-col items-center gap-2 py-2 text-center">
           <CheckCircle2 className="size-8 text-emerald-600" />
-          <p className="text-sm font-medium">Check your email</p>
+          <p className="text-sm font-medium">
+            {t('pages.forgotPassword.forgotPassword.checkYourEmail')}
+          </p>
           <p className="text-sm text-muted-foreground">
             If an account exists for that address, a reset link is on its way.
           </p>

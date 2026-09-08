@@ -79,7 +79,9 @@ export function MultiSelectPopover({
         <PopoverContent className="w-(--anchor-width) min-w-72 p-1" align="start">
           <div className="max-h-56 overflow-y-auto">
             {options.length === 0 && (
-              <p className="px-2 py-1.5 text-sm text-muted-foreground">Nothing here yet.</p>
+              <p className="px-2 py-1.5 text-sm text-muted-foreground">
+                {t('components.shared.multiSelectPopover.nothingHereYet')}
+              </p>
             )}
             {options.map((opt) => {
               const isSelected = selectedIds.includes(opt.id)

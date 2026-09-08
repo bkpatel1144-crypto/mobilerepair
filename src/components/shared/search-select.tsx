@@ -125,7 +125,7 @@ export function SearchSelect({
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Type to search..."
+          placeholder={t('components.shared.searchSelect.typeToSearch')}
           autoFocus
           className="mb-1 h-8 text-sm"
         />
@@ -171,7 +171,9 @@ export function SearchSelect({
             )
           })}
           {filtered.length === 0 && (
-            <p className="px-2 py-1.5 text-sm text-muted-foreground">No matches.</p>
+            <p className="px-2 py-1.5 text-sm text-muted-foreground">
+              {t('components.shared.searchSelect.noMatches')}
+            </p>
           )}
         </div>
         {onCreateNew && (

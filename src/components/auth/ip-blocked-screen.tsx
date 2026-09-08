@@ -1,12 +1,14 @@
 import { ShieldAlert } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/use-auth'
+import { useTranslation } from 'react-i18next'
 
 /** Shown by `ProtectedRoute` in place of the app shell when `useIpAccessCheck()` reports the
  * current (non-Owner) session's detected IP doesn't match the company's active IP Whitelist.
  * Deliberately upfront about this being advisory (see `ip-enforcement.ts`) rather than presenting
  * it as an unbreakable wall — an Owner can always fix the whitelist from a trusted network. */
 export function IpBlockedScreen({ ip }: { ip: string | null }) {
+  const { t } = useTranslation()
   const { logOut } = useAuth()
 
   return (
@@ -15,7 +17,9 @@ export function IpBlockedScreen({ ip }: { ip: string | null }) {
         <ShieldAlert className="size-7" />
       </span>
       <div className="space-y-1.5">
-        <h1 className="text-lg font-semibold">Access blocked from this network</h1>
+        <h1 className="text-lg font-semibold">
+          {t('components.auth.ipBlockedScreen.accessBlockedFromThisNetwork')}
+        </h1>
         <p className="max-w-sm text-sm text-muted-foreground">
           Your account's role requires signing in from a whitelisted IP address.
           {ip

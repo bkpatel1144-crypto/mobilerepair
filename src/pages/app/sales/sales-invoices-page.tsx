@@ -98,7 +98,7 @@ export function SalesInvoicesPage() {
   const columns: DataTableColumn<JobCardWithId>[] = [
     {
       key: 'billDate',
-      header: 'Bill Date',
+      header: t('pages.sales.salesInvoices.billDate'),
       sortValue: (j) => billDate(j)?.toMillis?.() ?? 0,
       render: (j) => formatTimestamp(billDate(j), false),
     },
@@ -191,8 +191,8 @@ export function SalesInvoicesPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={FileText}
-        title="Sales Invoices"
-        subtitle="All generated bills — view or edit bills that are ready for delivery, delivered, or closed."
+        title={t('pages.sales.salesInvoices.salesInvoices')}
+        subtitle={t('pages.sales.salesInvoices.allGeneratedBillsViewOrEdit')}
         actions={
           <Button
             type="button"
@@ -249,8 +249,8 @@ export function SalesInvoicesPage() {
         emptyState={
           <EmptyState
             icon={FileText}
-            title="No bills generated yet"
-            description="A job card appears here once its bill has been generated from the job card's own Generate Bill action."
+            title={t('pages.sales.salesInvoices.noBillsGeneratedYet')}
+            description={t('pages.sales.salesInvoices.aJobCardAppearsHereOnce')}
           />
         }
       />

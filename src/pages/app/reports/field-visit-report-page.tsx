@@ -147,19 +147,19 @@ export function FieldVisitReportPage() {
     },
     {
       key: 'visits',
-      header: 'Visits',
+      header: t('pages.reports.fieldVisitReport.visits'),
       sortValue: (g) => g.visits.length,
       render: (g) => g.visits.length,
     },
     {
       key: 'time',
-      header: 'Time Spent',
+      header: t('pages.reports.fieldVisitReport.timeSpent'),
       sortValue: (g) => g.totalMinutes,
       render: (g) => formatDurationLabel(g.totalMinutes * 60000),
     },
     {
       key: 'jobs',
-      header: 'Jobs Visited',
+      header: t('pages.reports.fieldVisitReport.jobsVisited'),
       sortValue: (g) => g.jobsVisited,
       render: (g) => g.jobsVisited,
     },
@@ -187,13 +187,13 @@ export function FieldVisitReportPage() {
     },
     {
       key: 'visits',
-      header: 'Visits',
+      header: t('pages.reports.fieldVisitReport.visits'),
       sortValue: (g) => g.visits.length,
       render: (g) => g.visits.length,
     },
     {
       key: 'time',
-      header: 'Time Spent',
+      header: t('pages.reports.fieldVisitReport.timeSpent'),
       sortValue: (g) => g.totalMinutes,
       render: (g) => formatDurationLabel(g.totalMinutes * 60000),
     },
@@ -203,7 +203,7 @@ export function FieldVisitReportPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={MapPin}
-        title="Field Visit Report"
+        title={t('pages.reports.fieldVisitReport.fieldVisitReport')}
         subtitle="On-field technician logbook — time spent & engineers per job"
         actions={
           <Button
@@ -232,21 +232,30 @@ export function FieldVisitReportPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Visits" value={totals.visits} icon={MapPin} />
         <StatCard
-          label="Total Time Spent"
+          label={t('pages.reports.fieldVisitReport.totalVisits')}
+          value={totals.visits}
+          icon={MapPin}
+        />
+        <StatCard
+          label={t('pages.reports.fieldVisitReport.totalTimeSpent')}
           value={formatDurationLabel(totals.totalMinutes * 60000)}
           icon={Clock}
           tone="purple"
         />
         <StatCard
-          label="Technicians On-Field"
+          label={t('pages.reports.fieldVisitReport.techniciansOnField')}
           value={totals.technicians.size}
           icon={Users}
           sublabel={totals.technicians.size > 0 ? 'Tap to see who' : undefined}
           onClick={totals.technicians.size > 0 ? () => setShowTechnicianList((v) => !v) : undefined}
         />
-        <StatCard label="Jobs Visited" value={totals.jobs.size} icon={Briefcase} tone="success" />
+        <StatCard
+          label={t('pages.reports.fieldVisitReport.jobsVisited')}
+          value={totals.jobs.size}
+          icon={Briefcase}
+          tone="success"
+        />
       </StatCardGrid>
 
       {showTechnicianList && totals.technicians.size > 0 && (
@@ -360,8 +369,8 @@ export function FieldVisitReportPage() {
           emptyState={
             <EmptyState
               icon={MapPin}
-              title="No field visits logged in this period"
-              description="Log a Field Visit from a job card to see it here."
+              title={t('pages.reports.fieldVisitReport.noFieldVisitsLoggedInThis')}
+              description={t('pages.reports.fieldVisitReport.logAFieldVisitFromA')}
             />
           }
         />
@@ -376,8 +385,8 @@ export function FieldVisitReportPage() {
           emptyState={
             <EmptyState
               icon={MapPin}
-              title="No field visits logged in this period"
-              description="Log a Field Visit from a job card to see it here."
+              title={t('pages.reports.fieldVisitReport.noFieldVisitsLoggedInThis')}
+              description={t('pages.reports.fieldVisitReport.logAFieldVisitFromA')}
             />
           }
         />

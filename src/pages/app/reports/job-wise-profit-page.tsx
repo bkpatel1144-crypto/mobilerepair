@@ -125,8 +125,8 @@ export function JobWiseProfitPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={BarChart3}
-        title="Job-wise Profit"
-        subtitle="Job-wise profit and loss analysis"
+        title={t('pages.reports.jobWiseProfit.jobWiseProfit')}
+        subtitle={t('pages.reports.jobWiseProfit.jobWiseProfitAndLossAnalysis')}
         actions={
           <Button
             type="button"
@@ -205,7 +205,7 @@ export function JobWiseProfitPage() {
           <EmptyState
             icon={BarChart3}
             title={t('shared.noCostedJobsYet')}
-            description="Record actual costing on a closed job to see its profit here."
+            description={t('pages.reports.jobWiseProfit.recordActualCostingOnAClosed')}
           />
         }
       />

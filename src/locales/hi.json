@@ -795,6 +795,234 @@
         "split": "अलग करें",
         "splitSharedBrands": "साझा ब्रांड अलग करें"
       }
+    },
+    "reports": {
+      "fieldVisitReport": {
+        "fieldVisitReport": "फील्ड विज़िट रिपोर्ट",
+        "totalVisits": "कुल विज़िट",
+        "totalTimeSpent": "कुल लगा समय",
+        "techniciansOnField": "फील्ड पर तकनीशियन",
+        "jobsVisited": "देखे गए जॉब",
+        "noFieldVisitsLoggedInThis": "इस अवधि में कोई फील्ड विज़िट दर्ज नहीं",
+        "logAFieldVisitFromA": "किसी जॉब कार्ड से फील्ड विज़िट दर्ज करें, तो वह यहाँ दिखेगी।",
+        "visits": "विज़िट",
+        "timeSpent": "लगा समय"
+      },
+      "jobWiseProfit": {
+        "jobWiseProfit": "जॉब अनुसार लाभ",
+        "jobWiseProfitAndLossAnalysis": "जॉब अनुसार लाभ-हानि विश्लेषण",
+        "recordActualCostingOnAClosed": "किसी बंद जॉब पर असल लागत दर्ज करें, तो उसका लाभ यहाँ दिखेगा।"
+      },
+      "periodSummary": {
+        "periodSummary": "अवधि सारांश",
+        "dailyAndMonthlyRevenueCostAnd": "दैनिक और मासिक आय, लागत और लाभ का सारांश",
+        "jobs": "जॉब",
+        "jobCost": "जॉब लागत",
+        "shopExpenses": "दुकान के खर्च",
+        "netMargin": "शुद्ध मार्जिन",
+        "periodTotalsAppearOnceJobsHave": "जॉब पर लागत दर्ज होने के बाद अवधि के कुल यहाँ दिखेंगे।",
+        "date": "दिनांक",
+        "margin": "मार्जिन",
+        "jobCard": "जॉब कार्ड",
+        "customer": "ग्राहक",
+        "assignedTo": "सौंपा गया",
+        "cost": "लागत",
+        "netAfterShopExpenses": "दुकान के खर्च घटाकर शुद्ध"
+      },
+      "profitLoss": {
+        "cashBasisMoneyActuallyReceivedAnd": "नकद आधार — असल में मिली और दी गई रकम, इसलिए यह हमेशा रोकड़ बही से मेल खाता है",
+        "noCashMovementsInThisPeriod": "इस अवधि में कोई रोकड़ हलचल नहीं",
+        "netRevenue": "शुद्ध आय",
+        "revenueReceived": "मिली आय",
+        "lessRefundsToCustomers": "घटाएं: ग्राहकों को वापसी",
+        "netRevenue2": "शुद्ध आय",
+        "directCost": "सीधी लागत",
+        "grossProfit": "सकल लाभ",
+        "totalOperatingExpenses": "कुल संचालन खर्च",
+        "netProfit": "शुद्ध लाभ",
+        "statement": "विवरण"
+      },
+      "serviceReports": {
+        "serviceReports": "सर्विस रिपोर्ट",
+        "completeJobCardReportWithAdvanced": "उन्नत फ़िल्टर के साथ पूरी जॉब कार्ड रिपोर्ट",
+        "totalJobs": "कुल जॉब",
+        "allUsers": "सभी उपयोगकर्ता",
+        "receivedByAll": "प्राप्तकर्ता: सभी",
+        "deliveredByAll": "सौंपने वाला: सभी",
+        "cancelledByAll": "रद्द करने वाला: सभी",
+        "tryWideningYourFiltersOrDate": "अपने फ़िल्टर या तारीख की सीमा बढ़ाकर देखें।",
+        "deliveredReturnedBy": "सौंपने / लौटाने वाला",
+        "noPartsUsedOnThisJob": "इस जॉब में कोई पुर्ज़ा इस्तेमाल नहीं हुआ।"
+      },
+      "supplierReport": {
+        "supplierReport": "सप्लायर रिपोर्ट",
+        "supplierWisePartsPurchaseAndCost": "सप्लायर अनुसार पुर्ज़ों की खरीद और लागत विश्लेषण",
+        "totalPurchase": "कुल खरीद",
+        "totalQty": "कुल मात्रा",
+        "allSuppliers": "सभी सप्लायर",
+        "noSupplierPurchasesYet": "अभी कोई सप्लायर खरीद नहीं",
+        "pickASupplierWhileRecordingA": "किसी जॉब की असल लागत दर्ज करते समय सप्लायर चुनें, तो वे यहाँ दिखेंगे।",
+        "totalSpent": "कुल खर्च",
+        "transactions": "लेन-देन",
+        "avgCostUnit": "औसत लागत / इकाई",
+        "share": "हिस्सा %",
+        "partName": "पुर्ज़े का नाम",
+        "deviceName": "डिवाइस का नाम",
+        "jobRevenue": "जॉब से आय"
+      },
+      "technicianReport": {
+        "technicianReport": "तकनीशियन रिपोर्ट",
+        "technicianWiseJobPerformanceAndProfitability": "तकनीशियन अनुसार जॉब प्रदर्शन और लाभप्रदता",
+        "technicianPerformanceAppearsOnceJobsHave": "जॉब पर लागत दर्ज होने के बाद तकनीशियन का प्रदर्शन यहाँ दिखेगा।",
+        "winRate": "सफलता दर",
+        "avgJob": "औसत / जॉब",
+        "avgJob2": "औसत/जॉब",
+        "performance": "प्रदर्शन"
+      }
+    },
+    "sales": {
+      "salesInvoices": {
+        "salesInvoices": "विक्रय बिल",
+        "allGeneratedBillsViewOrEdit": "सभी बने बिल — सौंपने के लिए तैयार, सौंपे जा चुके या बंद बिल देखें या बदलें।",
+        "noBillsGeneratedYet": "अभी कोई बिल नहीं बना",
+        "aJobCardAppearsHereOnce": "जॉब कार्ड के अपने बिल बनाएं विकल्प से बिल बनने पर वह यहाँ दिखेगा।",
+        "billDate": "बिल की तारीख"
+      }
+    },
+    "completeSetup": {
+      "completeSetup": {
+        "letSFinishSettingUpYour": "चलिए आपका खाता सेट करना पूरा करें",
+        "yourLastSignUpGotInterrupted": "आपकी पिछली साइन-अप आपकी कंपनी सेट होने से पहले रुक गई थी। इसमें बस एक पल लगेगा।"
+      }
+    },
+    "forgotPassword": {
+      "forgotPassword": {
+        "resetYourPassword": "अपना पासवर्ड बदलें",
+        "enterYourEmailAndWeLl": "अपना ईमेल डालें और हम आपको बदलने की लिंक भेज देंगे।",
+        "checkYourEmail": "अपना ईमेल देखें"
+      }
+    },
+    "login": {
+      "login": {
+        "logIn": "लॉग इन करें",
+        "welcomeBackEnterYourDetailsTo": "वापसी पर स्वागत है — आगे बढ़ने के लिए अपनी जानकारी डालें।",
+        "email": "ईमेल"
+      }
+    },
+    "signup": {
+      "signup": {
+        "createYourAccount": "अपना खाता बनाएं",
+        "freeForeverNoCardRequired": "हमेशा मुफ़्त — कार्ड की ज़रूरत नहीं।"
+      }
+    },
+    "landing": {
+      "landing": {
+        "jobCardsThatRunThemselves": "जॉब कार्ड जो खुद चलते हैं",
+        "dynamicIntakeFormsStatusGatedActions": "लचीले इनटेक फ़ॉर्म, हर भूमिका के लिए स्थिति-आधारित कार्रवाइयाँ, और हर जॉब पर पूरी ऑडिट समय-रेखा।",
+        "technicianWorkflowsNotJustTasks": "तकनीशियन वर्कफ़्लो, सिर्फ़ काम की सूची नहीं",
+        "whoCanSeeWhatAndDo": "हर स्थिति पर कौन क्या देख सकता है और क्या कर सकता है — हर भूमिका के लिए तय, हर जगह लागू।",
+        "customersStayInTheLoop": "ग्राहक हमेशा जानकारी में रहते हैं",
+        "automaticWhatsappUpdatesWhenADevice": "डिवाइस मिलने, काम चलने और लेने के लिए तैयार होने पर अपने आप WhatsApp सूचना।",
+        "advancesPartialPaymentsAndFinalBills": "अग्रिम, आंशिक भुगतान और अंतिम बिल — सब अपने आप एक ही खाते में मिल जाते हैं।",
+        "secondHandDeviceTrading": "सेकंड हैंड डिवाइस का व्यापार",
+        "buyRefurbishAndSellUsedDevices": "पुरानी डिवाइस खरीदें, ठीक करें और बेचें — खरीद से विक्रय तक पूरा लाभ हिसाब।",
+        "realRoleBasedAccess": "सच्चा भूमिका-आधारित नियंत्रण",
+        "everyMenuEveryActionGatedBy": "हर मेन्यू, हर कार्रवाई आपकी तय की हुई भूमिका अनुमति से नियंत्रित — कोड में जड़ी हुई नहीं।",
+        "intake": "डिवाइस लेना",
+        "scanOrSearchTheCustomerCapture": "ग्राहक को स्कैन करें या खोजें, डिवाइस का विवरण और बताई गई समस्या दर्ज करें।",
+        "aTechnicianTakesTheJobStatus": "तकनीशियन जॉब लेता है — स्थिति, पुर्ज़े और लागत अपने आप दर्ज होते रहते हैं।",
+        "generateTheBillCollectPaymentAnd": "बिल बनाएं, भुगतान लें, और खाते अपने आप अपडेट हो जाते हैं।",
+        "handOverTheDeviceWithA": "डिवाइस ऐसी वारंटी पर्ची के साथ सौंपें जिस पर ग्राहक भरोसा कर सके।",
+        "frequentlyAskedQuestions": "अक्सर पूछे जाने वाले सवाल",
+        "readyToRunYourShopOn": "अपनी दुकान aim पर चलाने के लिए तैयार हैं?",
+        "freeForeverNoCardRequired": "हमेशा मुफ़्त। कार्ड की ज़रूरत नहीं।"
+      }
+    },
+    "pricing": {
+      "pricing": {
+        "simplePricingFree": "सीधी कीमत: मुफ़्त।"
+      }
+    }
+  },
+  "components": {
+    "marketing": {
+      "jobCardMockup": {
+        "deviceReceived": "डिवाइस मिला",
+        "assignedToTechnician": "तकनीशियन को सौंपा",
+        "rahulKInProgress": "राहुल के. · चल रहा है",
+        "customerUpdated": "ग्राहक को बताया",
+        "autoMessageSentViaWhatsapp": "WhatsApp से अपने आप संदेश भेजा",
+        "readyForPickup": "लेने के लिए तैयार"
+      },
+      "marketingNav": {
+        "toggleMenu": "मेन्यू दिखाएं/छिपाएं",
+        "workflow": "वर्कफ़्लो",
+        "features": "खूबियाँ",
+        "pricing": "कीमत",
+        "faq": "सवाल-जवाब"
+      }
+    },
+    "auth": {
+      "accountDisabledScreen": {
+        "thisAccountHasBeenDisabled": "यह खाता बंद कर दिया गया है"
+      },
+      "ipBlockedScreen": {
+        "accessBlockedFromThisNetwork": "इस नेटवर्क से पहुँच रोकी गई है"
+      },
+      "requireMenuAccess": {
+        "youDonTHaveAccessTo": "आपको इस पेज की अनुमति नहीं है",
+        "askAnOwnerOrAdministratorTo": "अगर आपको लगता है कि यह गलती है, तो किसी मालिक या प्रशासक से भूमिका प्रबंधन में यह अनुमति देने को कहें।"
+      }
+    },
+    "layout": {
+      "appSidebar": {
+        "expandSidebar": "साइडबार खोलें"
+      },
+      "commandPalette": {
+        "jumpToAnyPage": "किसी भी पेज पर जाएं",
+        "searchPages": "पेज खोजें...",
+        "noMatchingPage": "कोई मिलता-जुलता पेज नहीं।"
+      },
+      "profileDrawer": {
+        "atLeast6Characters": "कम से कम 6 अक्षर।"
+      },
+      "topBar": {
+        "openNavigation": "नेविगेशन खोलें",
+        "toggleFullscreen": "पूरी स्क्रीन चालू/बंद करें",
+        "notifications": "सूचनाएं",
+        "noNotificationsYet": "अभी कोई सूचना नहीं",
+        "dashboard": "डैशबोर्ड"
+      }
+    },
+    "shared": {
+      "cameraScanFrame": {
+        "cameraUnavailable": "कैमरा उपलब्ध नहीं"
+      },
+      "errorBoundary": {
+        "somethingWentWrong": "कुछ गड़बड़ हो गई",
+        "reload": "फिर से लोड करें"
+      },
+      "filterBar": {
+        "today": "आज",
+        "yesterday": "कल",
+        "thisWeek": "इस सप्ताह",
+        "thisMonth": "इस महीने",
+        "thisYear": "इस साल"
+      },
+      "multiSelectPopover": {
+        "nothingHereYet": "अभी यहाँ कुछ नहीं।"
+      },
+      "patternLock": {
+        "drawPattern": "पैटर्न बनाएं",
+        "connectAtLeast2Dots": "कम से कम 2 बिंदु जोड़ें"
+      },
+      "scanJobCardModal": {
+        "noJobCardFound": "कोई जॉब कार्ड नहीं मिला"
+      },
+      "searchSelect": {
+        "typeToSearch": "खोजने के लिए टाइप करें...",
+        "noMatches": "कोई मेल नहीं।"
+      }
     }
   }
 }

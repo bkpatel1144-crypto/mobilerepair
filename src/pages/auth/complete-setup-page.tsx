@@ -50,8 +50,8 @@ export function CompleteSetupPage() {
 
   return (
     <AuthLayout
-      title="Let's finish setting up your account"
-      subtitle="Your last sign-up got interrupted before we could set up your company. This will only take a moment."
+      title={t('pages.completeSetup.completeSetup.letSFinishSettingUpYour')}
+      subtitle={t('pages.completeSetup.completeSetup.yourLastSignUpGotInterrupted')}
       footer={
         <button
           type="button"

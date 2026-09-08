@@ -2,6 +2,7 @@ import { ShieldAlert } from 'lucide-react'
 import { usePermissions } from '@/hooks/use-permissions'
 import { EmptyState } from '@/components/shared/empty-state'
 import { RouteFallback } from '@/components/shared/route-fallback'
+import { useTranslation } from 'react-i18next'
 
 interface RequireMenuAccessProps {
   menuKey: string
@@ -15,6 +16,7 @@ interface RequireMenuAccessProps {
  * data access; this just stops the page from rendering at all.
  */
 export function RequireMenuAccess({ menuKey, children }: RequireMenuAccessProps) {
+  const { t } = useTranslation()
   const { canView, isLoading } = usePermissions()
 
   if (isLoading) return <RouteFallback />
@@ -24,8 +26,8 @@ export function RequireMenuAccess({ menuKey, children }: RequireMenuAccessProps)
       <div className="p-4 sm:p-6">
         <EmptyState
           icon={ShieldAlert}
-          title="You don't have access to this page"
-          description="Ask an Owner or Administrator to grant this permission in Role Management if you believe this is a mistake."
+          title={t('components.auth.requireMenuAccess.youDonTHaveAccessTo')}
+          description={t('components.auth.requireMenuAccess.askAnOwnerOrAdministratorTo')}
         />
       </div>
     )

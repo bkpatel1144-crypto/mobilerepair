@@ -10,6 +10,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 const DOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const
 const DOT_POS: Record<number, [number, number]> = {
@@ -42,6 +43,7 @@ export function PatternLockPicker({
   onChange: (pattern: string) => void
   disabled?: boolean
 }) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState<number[]>(() => parsePattern(value))
   const [dragging, setDragging] = useState(false)
@@ -111,8 +113,10 @@ export function PatternLockPicker({
                 <Grid3x3 className="size-5" />
               </span>
               <div>
-                <DialogTitle>Draw Pattern</DialogTitle>
-                <DialogDescription>Connect at least 2 dots</DialogDescription>
+                <DialogTitle>{t('components.shared.patternLock.drawPattern')}</DialogTitle>
+                <DialogDescription>
+                  {t('components.shared.patternLock.connectAtLeast2Dots')}
+                </DialogDescription>
               </div>
             </div>
           </DialogHeader>

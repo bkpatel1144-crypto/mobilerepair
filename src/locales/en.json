@@ -795,6 +795,234 @@
         "split": "Split",
         "splitSharedBrands": "Split shared brands"
       }
+    },
+    "reports": {
+      "fieldVisitReport": {
+        "fieldVisitReport": "Field Visit Report",
+        "totalVisits": "Total Visits",
+        "totalTimeSpent": "Total Time Spent",
+        "techniciansOnField": "Technicians On-Field",
+        "jobsVisited": "Jobs Visited",
+        "noFieldVisitsLoggedInThis": "No field visits logged in this period",
+        "logAFieldVisitFromA": "Log a Field Visit from a job card to see it here.",
+        "visits": "Visits",
+        "timeSpent": "Time Spent"
+      },
+      "jobWiseProfit": {
+        "jobWiseProfit": "Job-wise Profit",
+        "jobWiseProfitAndLossAnalysis": "Job-wise profit and loss analysis",
+        "recordActualCostingOnAClosed": "Record actual costing on a closed job to see its profit here."
+      },
+      "periodSummary": {
+        "periodSummary": "Period Summary",
+        "dailyAndMonthlyRevenueCostAnd": "Daily and monthly revenue, cost, and profit summary",
+        "jobs": "Jobs",
+        "jobCost": "Job Cost",
+        "shopExpenses": "Shop Expenses",
+        "netMargin": "Net Margin",
+        "periodTotalsAppearOnceJobsHave": "Period totals appear once jobs have recorded costing.",
+        "date": "Date",
+        "margin": "Margin",
+        "jobCard": "Job Card",
+        "customer": "Customer",
+        "assignedTo": "Assigned To",
+        "cost": "Cost",
+        "netAfterShopExpenses": "Net after shop expenses"
+      },
+      "profitLoss": {
+        "cashBasisMoneyActuallyReceivedAnd": "Cash basis — money actually received and paid, so it always agrees with Cash Book",
+        "noCashMovementsInThisPeriod": "No cash movements in this period",
+        "netRevenue": "Net Revenue",
+        "revenueReceived": "Revenue received",
+        "lessRefundsToCustomers": "Less: refunds to customers",
+        "netRevenue2": "Net revenue",
+        "directCost": "Direct cost",
+        "grossProfit": "Gross profit",
+        "totalOperatingExpenses": "Total operating expenses",
+        "netProfit": "Net profit",
+        "statement": "Statement"
+      },
+      "serviceReports": {
+        "serviceReports": "Service Reports",
+        "completeJobCardReportWithAdvanced": "Complete job card report with advanced filters",
+        "totalJobs": "Total Jobs",
+        "allUsers": "All Users",
+        "receivedByAll": "Received By: All",
+        "deliveredByAll": "Delivered By: All",
+        "cancelledByAll": "Cancelled By: All",
+        "tryWideningYourFiltersOrDate": "Try widening your filters or date range.",
+        "deliveredReturnedBy": "Delivered/Returned By",
+        "noPartsUsedOnThisJob": "No parts used on this job."
+      },
+      "supplierReport": {
+        "supplierReport": "Supplier Report",
+        "supplierWisePartsPurchaseAndCost": "Supplier-wise parts purchase and cost analysis",
+        "totalPurchase": "Total Purchase",
+        "totalQty": "Total Qty",
+        "allSuppliers": "All Suppliers",
+        "noSupplierPurchasesYet": "No supplier purchases yet",
+        "pickASupplierWhileRecordingA": "Pick a supplier while recording a job's actual costing to see them here.",
+        "totalSpent": "Total Spent",
+        "transactions": "Transactions",
+        "avgCostUnit": "Avg Cost/Unit",
+        "share": "Share %",
+        "partName": "Part Name",
+        "deviceName": "Device Name",
+        "jobRevenue": "Job Revenue"
+      },
+      "technicianReport": {
+        "technicianReport": "Technician Report",
+        "technicianWiseJobPerformanceAndProfitability": "Technician-wise job performance and profitability",
+        "technicianPerformanceAppearsOnceJobsHave": "Technician performance appears once jobs have recorded costing.",
+        "winRate": "Win Rate",
+        "avgJob": "Avg / Job",
+        "avgJob2": "Avg/Job",
+        "performance": "Performance"
+      }
+    },
+    "sales": {
+      "salesInvoices": {
+        "salesInvoices": "Sales Invoices",
+        "allGeneratedBillsViewOrEdit": "All generated bills — view or edit bills that are ready for delivery, delivered, or closed.",
+        "noBillsGeneratedYet": "No bills generated yet",
+        "aJobCardAppearsHereOnce": "A job card appears here once its bill has been generated from the job card's own Generate Bill action.",
+        "billDate": "Bill Date"
+      }
+    },
+    "completeSetup": {
+      "completeSetup": {
+        "letSFinishSettingUpYour": "Let's finish setting up your account",
+        "yourLastSignUpGotInterrupted": "Your last sign-up got interrupted before we could set up your company. This will only take a moment."
+      }
+    },
+    "forgotPassword": {
+      "forgotPassword": {
+        "resetYourPassword": "Reset your password",
+        "enterYourEmailAndWeLl": "Enter your email and we'll send you a reset link.",
+        "checkYourEmail": "Check your email"
+      }
+    },
+    "login": {
+      "login": {
+        "logIn": "Log in",
+        "welcomeBackEnterYourDetailsTo": "Welcome back — enter your details to continue.",
+        "email": "Email"
+      }
+    },
+    "signup": {
+      "signup": {
+        "createYourAccount": "Create your account",
+        "freeForeverNoCardRequired": "Free forever — no card required."
+      }
+    },
+    "landing": {
+      "landing": {
+        "jobCardsThatRunThemselves": "Job cards that run themselves",
+        "dynamicIntakeFormsStatusGatedActions": "Dynamic intake forms, status-gated actions per role, and a full audit timeline on every job.",
+        "technicianWorkflowsNotJustTasks": "Technician workflows, not just tasks",
+        "whoCanSeeWhatAndDo": "Who can see what, and do what, at every status — configured per role, enforced everywhere.",
+        "customersStayInTheLoop": "Customers stay in the loop",
+        "automaticWhatsappUpdatesWhenADevice": "Automatic WhatsApp updates when a device is received, in progress, or ready for pickup.",
+        "advancesPartialPaymentsAndFinalBills": "Advances, partial payments, and final bills all reconcile automatically to one ledger.",
+        "secondHandDeviceTrading": "Second-hand device trading",
+        "buyRefurbishAndSellUsedDevices": "Buy, refurbish, and sell used devices with full purchase-to-sale profit tracking.",
+        "realRoleBasedAccess": "Real role-based access",
+        "everyMenuEveryActionGatedBy": "Every menu, every action, gated by a role permission you control — not hardcoded.",
+        "intake": "Intake",
+        "scanOrSearchTheCustomerCapture": "Scan or search the customer, capture device details and the reported problem.",
+        "aTechnicianTakesTheJobStatus": "A technician takes the job — status, parts, and cost track automatically.",
+        "generateTheBillCollectPaymentAnd": "Generate the bill, collect payment, and the ledgers update themselves.",
+        "handOverTheDeviceWithA": "Hand over the device with a warranty note customers can trust.",
+        "frequentlyAskedQuestions": "Frequently asked questions",
+        "readyToRunYourShopOn": "Ready to run your shop on aim?",
+        "freeForeverNoCardRequired": "Free forever. No card required."
+      }
+    },
+    "pricing": {
+      "pricing": {
+        "simplePricingFree": "Simple pricing: free."
+      }
+    }
+  },
+  "components": {
+    "marketing": {
+      "jobCardMockup": {
+        "deviceReceived": "Device Received",
+        "assignedToTechnician": "Assigned to Technician",
+        "rahulKInProgress": "Rahul K. · In progress",
+        "customerUpdated": "Customer Updated",
+        "autoMessageSentViaWhatsapp": "Auto-message sent via WhatsApp",
+        "readyForPickup": "Ready for Pickup"
+      },
+      "marketingNav": {
+        "toggleMenu": "Toggle menu",
+        "workflow": "Workflow",
+        "features": "Features",
+        "pricing": "Pricing",
+        "faq": "FAQ"
+      }
+    },
+    "auth": {
+      "accountDisabledScreen": {
+        "thisAccountHasBeenDisabled": "This account has been disabled"
+      },
+      "ipBlockedScreen": {
+        "accessBlockedFromThisNetwork": "Access blocked from this network"
+      },
+      "requireMenuAccess": {
+        "youDonTHaveAccessTo": "You don't have access to this page",
+        "askAnOwnerOrAdministratorTo": "Ask an Owner or Administrator to grant this permission in Role Management if you believe this is a mistake."
+      }
+    },
+    "layout": {
+      "appSidebar": {
+        "expandSidebar": "Expand sidebar"
+      },
+      "commandPalette": {
+        "jumpToAnyPage": "Jump to any page",
+        "searchPages": "Search pages...",
+        "noMatchingPage": "No matching page."
+      },
+      "profileDrawer": {
+        "atLeast6Characters": "At least 6 characters."
+      },
+      "topBar": {
+        "openNavigation": "Open navigation",
+        "toggleFullscreen": "Toggle fullscreen",
+        "notifications": "Notifications",
+        "noNotificationsYet": "No notifications yet",
+        "dashboard": "Dashboard"
+      }
+    },
+    "shared": {
+      "cameraScanFrame": {
+        "cameraUnavailable": "Camera unavailable"
+      },
+      "errorBoundary": {
+        "somethingWentWrong": "Something went wrong",
+        "reload": "Reload"
+      },
+      "filterBar": {
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "thisYear": "This Year"
+      },
+      "multiSelectPopover": {
+        "nothingHereYet": "Nothing here yet."
+      },
+      "patternLock": {
+        "drawPattern": "Draw Pattern",
+        "connectAtLeast2Dots": "Connect at least 2 dots"
+      },
+      "scanJobCardModal": {
+        "noJobCardFound": "No job card found"
+      },
+      "searchSelect": {
+        "typeToSearch": "Type to search...",
+        "noMatches": "No matches."
+      }
     }
   }
 }

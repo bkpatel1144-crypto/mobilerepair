@@ -82,7 +82,7 @@ export function ProfitLossPage() {
       <PageHeader
         icon={TrendingUp}
         title="Profit & Loss"
-        subtitle="Cash basis — money actually received and paid, so it always agrees with Cash Book"
+        subtitle={t('pages.reports.profitLoss.cashBasisMoneyActuallyReceivedAnd')}
         actions={
           <Button
             type="button"
@@ -131,14 +131,14 @@ export function ProfitLossPage() {
       ) : data.entryCount === 0 ? (
         <EmptyState
           icon={TrendingUp}
-          title="No cash movements in this period"
+          title={t('pages.reports.profitLoss.noCashMovementsInThisPeriod')}
           description="Profit & Loss is built from receipts and payments. Take a payment or record an expense and it appears here."
         />
       ) : (
         <>
           <StatCardGrid>
             <StatCard
-              label="Net Revenue"
+              label={t('pages.reports.profitLoss.netRevenue')}
               value={`₹${data.netRevenue}`}
               icon={IndianRupee}
               tone="success"
@@ -167,27 +167,36 @@ export function ProfitLossPage() {
 
           <div className="rounded-xl border bg-card">
             <div className="flex flex-wrap items-baseline justify-between gap-2 border-b p-4">
-              <h2 className="font-semibold">Statement</h2>
+              <h2 className="font-semibold">{t('pages.reports.profitLoss.statement')}</h2>
               <p className="text-sm text-muted-foreground">
                 {rangeLabel} · {data.entryCount} cash entries
               </p>
             </div>
 
             <div className="divide-y-0 px-4 pb-4">
-              <Row label="Revenue received" amount={data.revenue} />
+              <Row label={t('pages.reports.profitLoss.revenueReceived')} amount={data.revenue} />
               {data.refunds > 0 && (
-                <Row label="Less: refunds to customers" amount={data.refunds} negative indent />
+                <Row
+                  label={t('pages.reports.profitLoss.lessRefundsToCustomers')}
+                  amount={data.refunds}
+                  negative
+                  indent
+                />
               )}
-              <Row label="Net revenue" amount={data.netRevenue} emphasis="total" />
+              <Row
+                label={t('pages.reports.profitLoss.netRevenue2')}
+                amount={data.netRevenue}
+                emphasis="total"
+              />
 
               <Row
-                label="Direct cost"
+                label={t('pages.reports.profitLoss.directCost')}
                 sublabel="paid to suppliers"
                 amount={data.directCost}
                 negative
               />
               <Row
-                label="Gross profit"
+                label={t('pages.reports.profitLoss.grossProfit')}
                 sublabel={`${data.grossMarginPct}%`}
                 amount={data.grossProfit}
                 emphasis="total"
@@ -202,14 +211,14 @@ export function ProfitLossPage() {
                 <Row key={line.label} label={line.label} amount={line.amount} negative indent />
               ))}
               <Row
-                label="Total operating expenses"
+                label={t('pages.reports.profitLoss.totalOperatingExpenses')}
                 amount={data.operatingExpenses}
                 negative
                 emphasis="total"
               />
 
               <Row
-                label="Net profit"
+                label={t('pages.reports.profitLoss.netProfit')}
                 sublabel={`${data.netMarginPct}%`}
                 amount={data.netProfit}
                 emphasis="grand"

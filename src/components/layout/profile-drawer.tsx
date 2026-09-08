@@ -237,7 +237,9 @@ export function ProfileDrawer({
                   onChange={(e) => setNewPassword(e.target.value)}
                   autoComplete="new-password"
                 />
-                <p className="text-xs text-muted-foreground">At least 6 characters.</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('components.layout.profileDrawer.atLeast6Characters')}
+                </p>
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="confirm-password">

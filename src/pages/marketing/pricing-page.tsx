@@ -3,6 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { MarketingNav } from '@/components/marketing/marketing-nav'
 import { MarketingFooter } from '@/components/marketing/marketing-footer'
+import { useTranslation } from 'react-i18next'
 
 const INCLUDED = [
   'Unlimited job cards, technicians, and customers',
@@ -16,12 +17,15 @@ const INCLUDED = [
 /** Deliberately has no plan-tier UI, no payment form, and no "trial" language — this product
  * is free for every user, permanently. See BUILD_PLAN.md's quality bar. */
 export function PricingPage() {
+  const { t } = useTranslation()
   return (
     <div className="flex min-h-dvh flex-col">
       <MarketingNav />
 
       <section className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 text-center sm:px-6 sm:py-24">
-        <h1 className="text-3xl font-bold sm:text-4xl">Simple pricing: free.</h1>
+        <h1 className="text-3xl font-bold sm:text-4xl">
+          {t('pages.pricing.pricing.simplePricingFree')}
+        </h1>
         <p className="mt-3 text-lg text-muted-foreground">
           aim is free for every repair shop, forever — no tiers, no card required, no feature
           paywalls.

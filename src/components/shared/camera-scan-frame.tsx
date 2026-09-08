@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import jsQR from 'jsqr'
 import { AlertCircle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface CameraScanFrameProps {
   /** Called on every successfully decoded QR/barcode payload. The same payload won't be
@@ -17,6 +18,7 @@ interface CameraScanFrameProps {
  * camera" error copy. Callers own what happens with a decoded payload (navigate, fill a field);
  * this component only owns getting pixels off the camera and turning them into text. */
 export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
+  const { t } = useTranslation()
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [cameraError, setCameraError] = useState<string | null>(null)
@@ -99,7 +101,7 @@ export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
       {cameraError && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black px-4 text-center text-white">
           <AlertCircle className="size-8 text-red-500" />
-          <p className="font-medium">Camera unavailable</p>
+          <p className="font-medium">{t('components.shared.cameraScanFrame.cameraUnavailable')}</p>
           <p className="text-sm text-white/70">{cameraError}</p>
         </div>
       )}

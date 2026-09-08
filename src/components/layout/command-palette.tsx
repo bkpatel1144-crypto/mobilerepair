@@ -44,11 +44,11 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       open={open}
       onOpenChange={onOpenChange}
       title={t('common.search')}
-      description="Jump to any page"
+      description={t('components.layout.commandPalette.jumpToAnyPage')}
     >
-      <CommandInput placeholder="Search pages..." />
+      <CommandInput placeholder={t('components.layout.commandPalette.searchPages')} />
       <CommandList>
-        <CommandEmpty>No matching page.</CommandEmpty>
+        <CommandEmpty>{t('components.layout.commandPalette.noMatchingPage')}</CommandEmpty>
         <CommandGroup heading="General">
           <CommandItem onSelect={() => go('/app/dashboard')}>
             <DASHBOARD_NAV.icon />

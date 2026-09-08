@@ -85,7 +85,9 @@ export function ScanJobCardModal({ open, onOpenChange }: ScanJobCardModalProps) 
             {notFoundCode && (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg bg-black px-4 text-center text-white">
                 <AlertCircle className="size-8 text-amber-500" />
-                <p className="font-medium">No job card found</p>
+                <p className="font-medium">
+                  {t('components.shared.scanJobCardModal.noJobCardFound')}
+                </p>
                 <p className="text-sm text-white/70">
                   "{notFoundCode}" doesn't match any job card. Point at the label again.
                 </p>

@@ -63,7 +63,9 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
         {collapsed ? (
           <Tooltip>
             <TooltipTrigger render={toggle} />
-            <TooltipContent side="right">Expand sidebar</TooltipContent>
+            <TooltipContent side="right">
+              {t('components.layout.appSidebar.expandSidebar')}
+            </TooltipContent>
           </Tooltip>
         ) : (
           toggle

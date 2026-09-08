@@ -1,9 +1,11 @@
 import { Check, Smartphone, User, MessageCircle, PackageCheck, ShieldCheck } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const TIMELINE_STEPS = ['Received', 'Diagnosis', 'Repair', 'Quality check', 'Ready', 'Delivered']
 const ACTIVE_STEP_INDEX = 4 // "Ready" — matches the info cards below (device is ready for pickup)
 
 export function JobCardMockup() {
+  const { t } = useTranslation()
   return (
     <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-xl border border-white/10 bg-card shadow-2xl">
       {/* Browser chrome */}
@@ -69,7 +71,9 @@ export function JobCardMockup() {
               <Smartphone className="size-4" />
             </span>
             <div>
-              <p className="text-sm font-medium">Device Received</p>
+              <p className="text-sm font-medium">
+                {t('components.marketing.jobCardMockup.deviceReceived')}
+              </p>
               <p className="text-xs text-muted-foreground">
                 Samsung Galaxy A15 · Battery replacement
               </p>
@@ -82,8 +86,12 @@ export function JobCardMockup() {
                 <User className="size-4" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium">Assigned to Technician</p>
-                <p className="text-xs text-muted-foreground">Rahul K. · In progress</p>
+                <p className="text-sm font-medium">
+                  {t('components.marketing.jobCardMockup.assignedToTechnician')}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {t('components.marketing.jobCardMockup.rahulKInProgress')}
+                </p>
                 <div className="mt-1.5 h-1.5 w-full rounded-full bg-muted">
                   <div className="h-1.5 w-4/5 rounded-full bg-purple-600" />
                 </div>
@@ -96,8 +104,12 @@ export function JobCardMockup() {
               <MessageCircle className="size-4" />
             </span>
             <div>
-              <p className="text-sm font-medium">Customer Updated</p>
-              <p className="text-xs text-muted-foreground">Auto-message sent via WhatsApp</p>
+              <p className="text-sm font-medium">
+                {t('components.marketing.jobCardMockup.customerUpdated')}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {t('components.marketing.jobCardMockup.autoMessageSentViaWhatsapp')}
+              </p>
             </div>
           </div>
 
@@ -108,7 +120,9 @@ export function JobCardMockup() {
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-sm font-medium">Ready for Pickup</p>
+                  <p className="text-sm font-medium">
+                    {t('components.marketing.jobCardMockup.readyForPickup')}
+                  </p>
                   <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-semibold text-white">
                     Paid ₹1,450
                   </span>

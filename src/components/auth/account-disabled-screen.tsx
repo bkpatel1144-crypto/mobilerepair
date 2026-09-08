@@ -1,6 +1,7 @@
 import { UserX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/use-auth'
+import { useTranslation } from 'react-i18next'
 
 /** Shown by `ProtectedRoute` in place of the app shell for a `status: 'disabled'` account.
  *
@@ -14,6 +15,7 @@ import { useAuth } from '@/hooks/use-auth'
  * matches BUILD_PLAN.md's own "gated both client-side and server-side, never one without the
  * other" bar (see `firestore.rules`' `belongsToCompany()` for the matching server-side half). */
 export function AccountDisabledScreen() {
+  const { t } = useTranslation()
   const { logOut } = useAuth()
 
   return (
@@ -22,7 +24,9 @@ export function AccountDisabledScreen() {
         <UserX className="size-7" />
       </span>
       <div className="space-y-1.5">
-        <h1 className="text-lg font-semibold">This account has been disabled</h1>
+        <h1 className="text-lg font-semibold">
+          {t('components.auth.accountDisabledScreen.thisAccountHasBeenDisabled')}
+        </h1>
         <p className="max-w-sm text-sm text-muted-foreground">
           Contact your Owner or Administrator if you believe this is a mistake.
         </p>

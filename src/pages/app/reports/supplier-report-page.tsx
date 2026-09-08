@@ -129,20 +129,24 @@ export function SupplierReportPage() {
     },
     {
       key: 'totalPurchase',
-      header: 'Total Purchase',
+      header: t('pages.reports.supplierReport.totalPurchase'),
       render: (g) => formatCurrency(g.totalPurchase),
     },
-    { key: 'totalQty', header: 'Total Qty', render: (g) => g.totalQty },
+    {
+      key: 'totalQty',
+      header: t('pages.reports.supplierReport.totalQty'),
+      render: (g) => g.totalQty,
+    },
     { key: 'jobs', header: t('common.jobs'), hideOnMobile: true, render: (g) => g.jobCount },
     {
       key: 'avgCost',
-      header: 'Avg Cost/Unit',
+      header: t('pages.reports.supplierReport.avgCostUnit'),
       hideOnMobile: true,
       render: (g) => formatCurrency(g.avgCostPerUnit),
     },
     {
       key: 'share',
-      header: 'Share %',
+      header: t('pages.reports.supplierReport.share'),
       render: (g) => (
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
@@ -161,8 +165,8 @@ export function SupplierReportPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Package}
-        title="Supplier Report"
-        subtitle="Supplier-wise parts purchase and cost analysis"
+        title={t('pages.reports.supplierReport.supplierReport')}
+        subtitle={t('pages.reports.supplierReport.supplierWisePartsPurchaseAndCost')}
         actions={
           <Button
             type="button"
@@ -195,11 +199,15 @@ export function SupplierReportPage() {
           tone="warning"
         />
         <StatCard
-          label="Total Purchase"
+          label={t('pages.reports.supplierReport.totalPurchase')}
           icon={ShoppingCart}
           value={formatCurrency(totals.totalPurchase)}
         />
-        <StatCard label="Total Qty" icon={Package} value={totals.totalQty} />
+        <StatCard
+          label={t('pages.reports.supplierReport.totalQty')}
+          icon={Package}
+          value={totals.totalQty}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -216,10 +224,10 @@ export function SupplierReportPage() {
       >
         <Select value={supplierFilter} onValueChange={(v) => v && setSupplierFilter(v)}>
           <SelectTrigger className="w-44">
-            <SelectValue placeholder="All Suppliers" />
+            <SelectValue placeholder={t('pages.reports.supplierReport.allSuppliers')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Suppliers</SelectItem>
+            <SelectItem value="all">{t('pages.reports.supplierReport.allSuppliers')}</SelectItem>
             {allSuppliers.map((s) => (
               <SelectItem key={s} value={s}>
                 {s}
@@ -239,8 +247,8 @@ export function SupplierReportPage() {
         emptyState={
           <EmptyState
             icon={Package}
-            title="No supplier purchases yet"
-            description="Pick a supplier while recording a job's actual costing to see them here."
+            title={t('pages.reports.supplierReport.noSupplierPurchasesYet')}
+            description={t('pages.reports.supplierReport.pickASupplierWhileRecordingA')}
           />
         }
         renderExpanded={(g) => {
@@ -288,14 +296,22 @@ export function SupplierReportPage() {
               </div>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 <StatCard
-                  label="Total Spent"
+                  label={t('pages.reports.supplierReport.totalSpent')}
                   value={formatCurrency(g.totalPurchase)}
                   className="min-w-0"
                 />
-                <StatCard label="Total Qty" value={g.totalQty} className="min-w-0" />
-                <StatCard label="Transactions" value={g.transactions.length} className="min-w-0" />
                 <StatCard
-                  label="Avg Cost/Unit"
+                  label={t('pages.reports.supplierReport.totalQty')}
+                  value={g.totalQty}
+                  className="min-w-0"
+                />
+                <StatCard
+                  label={t('pages.reports.supplierReport.transactions')}
+                  value={g.transactions.length}
+                  className="min-w-0"
+                />
+                <StatCard
+                  label={t('pages.reports.supplierReport.avgCostUnit')}
                   value={formatCurrency(g.avgCostPerUnit)}
                   className="min-w-0"
                 />
@@ -323,12 +339,18 @@ export function SupplierReportPage() {
                   <thead className="bg-muted/40 text-xs text-muted-foreground uppercase">
                     <tr>
                       <th className="p-2 text-left">{t('common.jobCard')}</th>
-                      <th className="p-2 text-left">Part Name</th>
-                      <th className="p-2 text-left">Device Name</th>
+                      <th className="p-2 text-left">
+                        {t('pages.reports.supplierReport.partName')}
+                      </th>
+                      <th className="p-2 text-left">
+                        {t('pages.reports.supplierReport.deviceName')}
+                      </th>
                       <th className="p-2 text-right">{t('common.purchasePrice')}</th>
                       <th className="p-2 text-right">{t('shared.qty')}</th>
                       <th className="p-2 text-right">{t('shared.totalCost')}</th>
-                      <th className="p-2 text-right">Job Revenue</th>
+                      <th className="p-2 text-right">
+                        {t('pages.reports.supplierReport.jobRevenue')}
+                      </th>
                       <th className="p-2 text-left">{t('common.date')}</th>
                     </tr>
                   </thead>
