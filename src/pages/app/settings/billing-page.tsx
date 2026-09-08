@@ -72,7 +72,7 @@ export function BillingPage() {
       <PageHeader
         icon={CreditCard}
         title="Billing & Subscription"
-        subtitle="Your plan and billing details"
+        subtitle={t('pages.settings.billing.yourPlanAndBillingDetails')}
       />
 
       {loadError ? (
@@ -88,7 +88,9 @@ export function BillingPage() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-lg font-semibold">You're on the Free plan</h2>
+                    <h2 className="text-lg font-semibold">
+                      {t('pages.settings.billing.youReOnTheFreePlan')}
+                    </h2>
                     <span className="rounded-full bg-teal-600 px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide text-white uppercase">
                       Active
                     </span>
@@ -100,7 +102,9 @@ export function BillingPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold">₹0</p>
-                  <p className="text-xs text-muted-foreground">per month</p>
+                  <p className="text-xs text-muted-foreground">
+                    {t('pages.settings.billing.perMonth')}
+                  </p>
                 </div>
               </div>
 
@@ -125,7 +129,9 @@ export function BillingPage() {
             {/* Modules — read straight off the nav config, so it can't claim a module the app
              * doesn't have. */}
             <div className="rounded-xl border bg-card p-6">
-              <h3 className="text-sm font-semibold">Included modules</h3>
+              <h3 className="text-sm font-semibold">
+                {t('pages.settings.billing.includedModules')}
+              </h3>
               <p className="mt-0.5 text-xs text-muted-foreground">
                 All {includedModules.length} modules are enabled on this account.
               </p>

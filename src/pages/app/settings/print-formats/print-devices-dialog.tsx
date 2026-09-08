@@ -12,6 +12,7 @@ import {
   isCodeExpired,
   type PrintDeviceWithId,
 } from '@/hooks/use-print-devices'
+import { useTranslation } from 'react-i18next'
 
 /** Ticks once a second so the code's countdown is live. Kept local to the pending row so the
  * rest of the dialog isn't re-rendered every second. */
@@ -33,6 +34,7 @@ function useCountdown(target: number | null): string | null {
 }
 
 function PairingCode({ code, expiresAt }: { code: string; expiresAt: number | null }) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const countdown = useCountdown(expiresAt)
   const expired = countdown === '0:00'
@@ -50,7 +52,7 @@ function PairingCode({ code, expiresAt }: { code: string; expiresAt: number | nu
           type="button"
           variant="outline"
           size="icon"
-          aria-label="Copy pairing code"
+          aria-label={t('pages.settings.printDevicesDialog.copyPairingCode')}
           onClick={() => {
             void navigator.clipboard?.writeText(code)
             setCopied(true)
@@ -178,6 +180,7 @@ export function PrintDevicesDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
+  const { t } = useTranslation()
   const { data: devices = [], isLoading, error: loadError, refetch } = usePrintDevices()
   const createCode = useCreatePairingCode()
   const remove = useRemovePrintDevice()
@@ -190,7 +193,9 @@ export function PrintDevicesDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent size="md" className="gap-4">
         <div>
-          <DialogTitle className="text-lg">Print Devices</DialogTitle>
+          <DialogTitle className="text-lg">
+            {t('pages.settings.printDevicesDialog.printDevices')}
+          </DialogTitle>
           <DialogDescription className="mt-1">
             Shop PCs running the Print Agent. Pair one to let it print bills and labels from this
             browser.
@@ -212,7 +217,7 @@ export function PrintDevicesDialog({
           <ErrorState
             error={loadError}
             onRetry={() => void refetch()}
-            title="Couldn't load your print devices"
+            title={t('pages.settings.printDevicesDialog.couldnTLoadYourPrintDevices')}
           />
         ) : devices.length === 0 ? (
           <p className="py-6 text-center text-sm text-muted-foreground">

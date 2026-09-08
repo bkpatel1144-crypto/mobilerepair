@@ -69,7 +69,7 @@ export function BranchManagementPage() {
   const columns: DataTableColumn<BranchWithId>[] = [
     {
       key: 'name',
-      header: 'Branch Name',
+      header: t('pages.settings.branchManagement.branchName'),
       sortValue: (b) => b.name,
       render: (b) => (
         <span className="inline-flex items-center gap-2">
@@ -105,8 +105,8 @@ export function BranchManagementPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Building2}
-        title="Branch Management"
-        subtitle="Manage organizational branches and locations"
+        title={t('pages.settings.branchManagement.branchManagement')}
+        subtitle={t('pages.settings.branchManagement.manageOrganizationalBranchesAndLocations')}
         actions={
           <Button type="button" onClick={() => setCreating(true)}>
             + Create Branch
@@ -115,7 +115,11 @@ export function BranchManagementPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Branches" value={branches.length} icon={Building2} />
+        <StatCard
+          label={t('pages.settings.branchManagement.totalBranches')}
+          value={branches.length}
+          icon={Building2}
+        />
         <StatCard
           label={t('common.active')}
           icon={CheckCircle2}
@@ -148,7 +152,12 @@ export function BranchManagementPage() {
         error={loadError}
         onRetry={() => void refetch()}
         onRowClick={setViewing}
-        emptyState={<EmptyState icon={Building2} title="No branches found" />}
+        emptyState={
+          <EmptyState
+            icon={Building2}
+            title={t('pages.settings.branchManagement.noBranchesFound')}
+          />
+        }
       />
 
       {viewing && (
@@ -202,22 +211,22 @@ export function BranchManagementPage() {
           }
           sections={[
             {
-              title: 'BRANCH INFORMATION',
+              title: t('pages.settings.branchManagement.branchInformation'),
               rows: [
                 { label: t('common.name'), value: viewing.name },
-                { label: 'Branch Code', value: viewing.code },
+                { label: t('pages.settings.branchManagement.branchCode'), value: viewing.code },
               ],
             },
             {
               title: 'STATUS & TYPE',
               rows: [
                 {
-                  label: 'Current Status',
+                  label: t('pages.settings.branchManagement.currentStatus'),
                   value: viewing.status === 'active' ? 'Active' : 'Disabled',
                   tone: viewing.status === 'active' ? 'success' : 'warning',
                 },
                 {
-                  label: 'Branch Type',
+                  label: t('pages.settings.branchManagement.branchType'),
                   value: viewing.type === 'system' ? 'System Branch' : 'Custom Branch',
                   tone: viewing.type === 'system' ? 'purple' : 'default',
                 },
@@ -249,18 +258,18 @@ export function BranchManagementPage() {
           setCreating(o)
           if (!o) setNameInput('')
         }}
-        title="Create New Branch"
-        description="Add a new branch to your organization"
+        title={t('pages.settings.branchManagement.createNewBranch')}
+        description={t('pages.settings.branchManagement.addANewBranchToYour')}
         onSubmit={handleCreate}
         submitLabel="Create Branch"
         isSubmitting={createBranch.isPending}
       >
         <div className="space-y-1.5">
-          <Label>Branch Name</Label>
+          <Label>{t('pages.settings.branchManagement.branchName')}</Label>
           <Input
             value={nameInput}
             onChange={(e) => setNameInput(e.target.value)}
-            placeholder="Enter branch name"
+            placeholder={t('pages.settings.branchManagement.enterBranchName')}
             autoFocus
           />
           <p className="text-xs text-muted-foreground">
@@ -277,13 +286,13 @@ export function BranchManagementPage() {
             setNameInput('')
           }
         }}
-        title="Edit Branch"
+        title={t('pages.settings.branchManagement.editBranch')}
         onSubmit={handleEdit}
         submitLabel="Save Changes"
         isSubmitting={updateBranch.isPending}
       >
         <div className="space-y-1.5">
-          <Label>Branch Name</Label>
+          <Label>{t('pages.settings.branchManagement.branchName')}</Label>
           <Input value={nameInput} onChange={(e) => setNameInput(e.target.value)} autoFocus />
         </div>
       </FormModal>

@@ -1084,6 +1084,226 @@
         "noUsersFound": "कोई उपयोगकर्ता नहीं मिला",
         "contactDetails": "संपर्क विवरण"
       }
+    },
+    "settings": {
+      "backupRestore": {
+        "downloadBackupsScheduleDailyBackupsAnd": "बैकअप डाउनलोड करें, रोज़ का बैकअप तय करें, और डेटा सुरक्षित तरीके से वापस लाएं",
+        "couldnTLoadYourBackups": "आपके बैकअप लोड नहीं हो सके",
+        "noBackupsYet": "अभी कोई बैकअप नहीं।",
+        "createYourFirstBackupAbove": "ऊपर अपना पहला बैकअप बनाएं।",
+        "couldnTLoadYourArchives": "आपके संग्रह लोड नहीं हो सके",
+        "noArchives": "कोई संग्रह नहीं।",
+        "restoringABackupAsAnArchive": "बैकअप को संग्रह के रूप में वापस लाने पर आपके डेटा की एक अलग, सिर्फ़-पढ़ने वाली नकल बनती है — पुराने रिकॉर्ड देखने के लिए उपयोगी, बिना चालू डेटा छुए।",
+        "overwriteLiveData": "चालू डेटा बदलें",
+        "thisWritesEveryDocumentFromThe": "यह अपलोड की गई फ़ाइल का हर दस्तावेज़ आपके चालू कंपनी डेटा में लिख देता है, और मिलती-जुलती ID वाली हर चीज़ बदल देता है। इसे ऐप के भीतर से पूर्ववत नहीं किया जा सकता।",
+        "dataSets": "डेटा सेट",
+        "records": "रिकॉर्ड",
+        "dataSize": "डेटा का आकार",
+        "createBackup": "बैकअप बनाएं",
+        "time": "समय",
+        "file": "फ़ाइल",
+        "created": "बनाया",
+        "by": "किसने",
+        "size": "आकार"
+      },
+      "billing": {
+        "yourPlanAndBillingDetails": "आपका प्लान और बिलिंग विवरण",
+        "youReOnTheFreePlan": "आप मुफ़्त प्लान पर हैं",
+        "perMonth": "प्रति माह",
+        "includedModules": "शामिल मॉड्यूल"
+      },
+      "branchManagement": {
+        "branchManagement": "शाखा प्रबंधन",
+        "manageOrganizationalBranchesAndLocations": "संगठन की शाखाएं और जगहें प्रबंधित करें",
+        "totalBranches": "कुल शाखाएं",
+        "noBranchesFound": "कोई शाखा नहीं मिली",
+        "createNewBranch": "नई शाखा बनाएं",
+        "addANewBranchToYour": "अपने संगठन में नई शाखा जोड़ें",
+        "enterBranchName": "शाखा का नाम लिखें",
+        "editBranch": "शाखा बदलें",
+        "branchName": "शाखा का नाम",
+        "branchInformation": "शाखा की जानकारी",
+        "branchCode": "शाखा कोड",
+        "currentStatus": "मौजूदा स्थिति",
+        "branchType": "शाखा का प्रकार"
+      },
+      "companyForm": {
+        "companyCode": "कंपनी कोड",
+        "sunrise": "SUNRISE",
+        "legalName": "कानूनी नाम",
+        "sunriseEnterprisesPvtLtd": "Sunrise Enterprises Pvt Ltd",
+        "regular": "नियमित",
+        "composition": "कंपोज़िशन",
+        "note": "सूचना:"
+      },
+      "companySettings": {
+        "companyManagement": "कंपनी प्रबंधन",
+        "manageCompanyInformationAndSettings": "कंपनी की जानकारी और सेटिंग्स प्रबंधित करें",
+        "searchByNameCodeOrEmail": "नाम, कोड या ईमेल से खोजें...",
+        "couldnTLoadYourCompanies": "आपकी कंपनियाँ लोड नहीं हो सकीं",
+        "companyDetails": "कंपनी का विवरण",
+        "financialSettings": "वित्तीय सेटिंग्स",
+        "lastUpdated": "आख़िरी बदलाव",
+        "createCompany": "कंपनी बनाएं",
+        "aSecondShopUnderThisAccount": "इस खाते के अंतर्गत दूसरी दुकान। इसे अपनी अलग भूमिकाएं, शाखा, वित्तीय वर्ष, मास्टर और प्रिंट टेम्पलेट मिलते हैं।",
+        "editCompany": "कंपनी बदलें"
+      },
+      "financialYears": {
+        "financialYears": "वित्तीय वर्ष",
+        "manageFinancialYearPeriodsAndTransitions": "वित्तीय वर्ष की अवधियाँ और बदलाव प्रबंधित करें",
+        "searchFinancialYears": "वित्तीय वर्ष खोजें...",
+        "noFinancialYearsFound": "कोई वित्तीय वर्ष नहीं मिला",
+        "stateFlags": "स्थिति चिह्न",
+        "activeStatus": "सक्रिय स्थिति",
+        "lockedStatus": "लॉक स्थिति",
+        "activeFinancialYear": "सक्रिय वित्तीय वर्ष",
+        "closedPeriod": "बंद अवधि",
+        "periodDetails": "अवधि का विवरण",
+        "financialYearName": "वित्तीय वर्ष का नाम",
+        "startDate": "शुरू की तारीख",
+        "endDate": "अंत की तारीख",
+        "duration": "अवधि",
+        "startDate2": "शुरू की तारीख *",
+        "endDate2": "अंत की तारीख *"
+      },
+      "designer": {
+        "couldnTLoadThisTemplate": "यह टेम्पलेट लोड नहीं हो सका",
+        "templateNotFound": "टेम्पलेट नहीं मिला",
+        "itMayHaveBeenDeleted": "यह हटाया जा चुका हो सकता है।",
+        "templateName": "टेम्पलेट का नाम",
+        "more": "और",
+        "redo": "दोबारा करें",
+        "toggleGrid": "ग्रिड दिखाएं/छिपाएं",
+        "zoomOut": "छोटा करें",
+        "zoomIn": "बड़ा करें",
+        "toggleVisibility": "दिखाएं/छिपाएं",
+        "toggleLock": "लॉक चालू/बंद करें",
+        "templatePreview": "टेम्पलेट का पूर्वावलोकन",
+        "resetToTheDefaultLayout": "डिफ़ॉल्ट लेआउट पर लौटें?",
+        "everyElementOnThisTemplateIs": "इस टेम्पलेट का हर तत्व उसके कागज़ के आकार के मानक लेआउट से बदल दिया जाता है। डिज़ाइनर छोड़ने तक पूर्ववत करना काम करता रहेगा।",
+        "versionHistory": "संस्करण इतिहास",
+        "noEarlierVersionsYet": "अभी कोई पुराना संस्करण नहीं",
+        "aVersionIsRecordedEachTime": "हर बार बदलाव सहेजने पर एक संस्करण दर्ज होता है, इसलिए पहले वाला लेआउट हमेशा वापस लाया जा सकता है।",
+        "discardUnsavedChanges": "बिना सहेजे बदलाव छोड़ दें?",
+        "thisTemplateHasEditsThatHaven": "इस टेम्पलेट में ऐसे बदलाव हैं जो सहेजे नहीं गए। अभी जाने पर वे खो जाएंगे।",
+        "text": "लिखावट",
+        "image": "तस्वीर",
+        "logo": "लोगो",
+        "barcode": "बारकोड",
+        "qrCode": "QR कोड",
+        "line": "रेखा",
+        "shape": "आकृति",
+        "addElement": "तत्व जोड़ें",
+        "fields": "फ़ील्ड",
+        "nothingOnTheCanvasYet": "कैनवास पर अभी कुछ नहीं।",
+        "visibility": "दिखावट",
+        "alwaysVisible": "हमेशा दिखे",
+        "colour": "रंग"
+      },
+      "importTemplateDialog": {
+        "importTemplate": "टेम्पलेट इम्पोर्ट करें",
+        "loadATemplateJsonExportedFrom": "इस ऐप से एक्सपोर्ट किया गया टेम्पलेट JSON लोड करें। यह एक नए, ग़ैर-डिफ़ॉल्ट फ़ॉर्मेट के रूप में जुड़ जाता है।",
+        "templateFile": "टेम्पलेट फ़ाइल"
+      },
+      "newTemplateDialog": {
+        "newTemplate": "नया टेम्पलेट",
+        "pickADocumentTypeAndA": "शुरू करने के लिए दस्तावेज़ का प्रकार और कागज़ का आकार चुनें। डिज़ाइनर में सब कुछ बदला जा सकता है।",
+        "documentType": "दस्तावेज़ का प्रकार",
+        "startFrom": "यहाँ से शुरू करें"
+      },
+      "pageSetupDialog": {
+        "pageSetup": "पेज सेटअप",
+        "paperSizeMarginsAndOutputSettings": "इस टेम्पलेट के लिए कागज़ का आकार, हाशिये और आउटपुट सेटिंग्स।",
+        "paper": "कागज़",
+        "orientation": "दिशा",
+        "portrait": "खड़ा",
+        "landscape": "आड़ा",
+        "output": "आउटपुट",
+        "copies": "प्रतियाँ",
+        "copyLayout": "नकल का लेआउट",
+        "stacked": "एक के नीचे एक",
+        "sideBySide": "अगल-बगल"
+      },
+      "printDevicesDialog": {
+        "copyPairingCode": "जोड़ने का कोड कॉपी करें",
+        "couldnTLoadYourPrintDevices": "आपके प्रिंट डिवाइस लोड नहीं हो सके",
+        "printDevices": "प्रिंट डिवाइस"
+      },
+      "printFormats": {
+        "designAndManagePrintTemplatesFor": "बिल, रसीद और लेबल के लिए प्रिंट टेम्पलेट बनाएं और प्रबंधित करें",
+        "searchDocumentTypesOrTemplates": "दस्तावेज़ प्रकार या टेम्पलेट खोजें...",
+        "couldnTLoadYourPrintTemplates": "आपके प्रिंट टेम्पलेट लोड नहीं हो सके",
+        "noMatches": "कोई मेल नहीं",
+        "noDocumentTypeOrTemplateMatches": "उस खोज से कोई दस्तावेज़ प्रकार या टेम्पलेट मेल नहीं खाता।",
+        "noFormatsForThisDocumentType": "इस दस्तावेज़ प्रकार के लिए कोई फ़ॉर्मेट नहीं",
+        "useAddMissingDefaultsToRestore": "मानक फ़ॉर्मेट वापस लाने के लिए छूटे हुए डिफ़ॉल्ट जोड़ें का उपयोग करें, या एक नया बनाएं।",
+        "deleteThisTemplate": "यह टेम्पलेट हटाएं?",
+        "delete": "हटाएं"
+      },
+      "whatsapp": {
+        "whatsapp": "WhatsApp",
+        "messageTemplatesSentToCustomersAs": "जॉब आगे बढ़ने पर ग्राहकों को भेजे जाने वाले संदेश टेम्पलेट",
+        "couldnTLoadYourWhatsappTemplates": "आपके WhatsApp टेम्पलेट लोड नहीं हो सके",
+        "countryCode": "देश का कोड"
+      },
+      "behaviorSubtab": {
+        "collectPaymentWithGenerateBill": "बिल बनाते समय भुगतान लें",
+        "printPromptAfterJobCardCreation": "जॉब कार्ड बनने के बाद प्रिंट का सुझाव",
+        "afterCreatingAJobCardA": "जॉब कार्ड बनने के बाद एक पॉपअप लेबल प्रिंट / रसीद प्रिंट / WhatsApp का विकल्प देता है।",
+        "requireDescriptionOnJobDone": "जॉब पूर्ण पर विवरण ज़रूरी",
+        "descriptionIsOptionalWhenMarkingA": "जॉब पूर्ण करते समय विवरण वैकल्पिक है।",
+        "seesEstimatedCostFinalAmountPaid": "अनुमानित लागत, अंतिम राशि, भुगतान, बाकी, रसीदें और पुर्ज़ों की लागत देख सकता है।",
+        "allowUndoLastAction": "आख़िरी कार्रवाई पूर्ववत करने दें",
+        "undoDisabledStatusChangesArePermanent": "पूर्ववत बंद — इस भूमिका के लिए स्थिति बदलाव स्थायी हैं।",
+        "autoOpenPopups": "अपने आप खुलने वाले पॉपअप",
+        "afterJobDone": "जॉब पूर्ण होने के बाद",
+        "technicianMarksTheRepairComplete": "तकनीशियन मरम्मत पूरी बताता है",
+        "openGenerateBill": "बिल बनाएं खोलें",
+        "billPopupOpensAutomatically": "बिल पॉपअप अपने आप खुलता है",
+        "openHandover": "सौंपना खोलें",
+        "handoverPopupOpensAutomatically": "सौंपने का पॉपअप अपने आप खुलता है",
+        "afterGenerateBill": "बिल बनने के बाद",
+        "billIsGeneratedForTheJob": "जॉब के लिए बिल बनता है",
+        "afterReceivePayment": "भुगतान मिलने के बाद",
+        "aPaymentIsRecordedForThe": "जॉब के लिए भुगतान दर्ज होता है"
+      },
+      "formBuilderTab": {
+        "couldnTLoadThisFormS": "इस फ़ॉर्म का सहेजा हुआ लेआउट लोड नहीं हो सका",
+        "selectATemplate": "टेम्पलेट चुनें...",
+        "importFormSchema": "फ़ॉर्म स्कीमा इम्पोर्ट करें?",
+        "thisReplacesEveryFieldAndLayout": "यह इस ड्राफ़्ट के हर फ़ील्ड और लेआउट सेटिंग को अपलोड की गई फ़ाइल की सामग्री से बदल देता है। सहेजें दबाने तक कुछ नहीं सहेजा जाता, पर अब तक के बिना सहेजे बदलाव मिट जाएंगे।",
+        "thisReplacesEveryFieldAndLayout2": "यह इस ड्राफ़्ट के हर फ़ील्ड और लेआउट सेटिंग को सहेजे हुए टेम्पलेट से बदल देता है। सहेजें दबाने तक कुछ नहीं सहेजा जाता, पर अब तक के बिना सहेजे बदलाव मिट जाएंगे।",
+        "twoColumn": "दो कॉलम",
+        "largeDesktop": "बड़ा डेस्कटॉप",
+        "template": "टेम्पलेट",
+        "layout": "लेआउट"
+      },
+      "permissionsSubtab": {
+        "allowedActionsPerStatus": "हर स्थिति पर अनुमत कार्रवाइयाँ"
+      },
+      "rolePermissionsTab": {
+        "couldnTLoadYourRoles": "आपकी भूमिकाएं लोड नहीं हो सकीं",
+        "selectARoleToConfigure": "कॉन्फ़िगर करने के लिए भूमिका चुनें...",
+        "noRolesConfiguredYet": "अभी कोई भूमिका कॉन्फ़िगर नहीं हुई",
+        "pickARoleFromTheDropdown": "उसकी स्थितियाँ और कार्रवाइयाँ तय करने के लिए ऊपर की सूची से भूमिका चुनें।",
+        "couldnTLoadThisRoleS": "इस भूमिका का वर्कफ़्लो कॉन्फ़िग लोड नहीं हो सका",
+        "selectARole": "भूमिका चुनें",
+        "behavior": "व्यवहार"
+      },
+      "usersSubtab": {
+        "receivedBy": "प्राप्तकर्ता",
+        "returnedBy": "लौटाने वाला",
+        "allUsers": "सभी उपयोगकर्ता",
+        "whoDidItDropdowns": "किसने किया — सूचियाँ",
+        "fieldVisitTechnician": "फील्ड विज़िट तकनीशियन",
+        "whoCheckedInOnAnOn": "साइट पर जाकर किसने हाज़िरी दर्ज की"
+      },
+      "workflowDesigner": {
+        "workflowDesigner": "वर्कफ़्लो डिज़ाइनर",
+        "rolePermissions": "भूमिका अनुमतियाँ",
+        "jobCardForm": "जॉब कार्ड फ़ॉर्म",
+        "leadForm": "लीड फ़ॉर्म"
+      }
     }
   },
   "components": {

@@ -142,10 +142,14 @@ export function FinancialYearsPage() {
         </span>
       ),
     },
-    { key: 'start', header: 'Start Date', render: (f) => formatDateShort(f.startDate) },
+    {
+      key: 'start',
+      header: t('pages.settings.financialYears.startDate'),
+      render: (f) => formatDateShort(f.startDate),
+    },
     {
       key: 'end',
-      header: 'End Date',
+      header: t('pages.settings.financialYears.endDate'),
       hideOnMobile: true,
       render: (f) => formatDateShort(f.endDate),
     },
@@ -254,8 +258,8 @@ export function FinancialYearsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Calendar}
-        title="Financial Years"
-        subtitle="Manage financial year periods and transitions"
+        title={t('pages.settings.financialYears.financialYears')}
+        subtitle={t('pages.settings.financialYears.manageFinancialYearPeriodsAndTransitions')}
         actions={
           <>
             <Button type="button" variant="outline" onClick={() => void refetch()}>
@@ -312,7 +316,7 @@ export function FinancialYearsPage() {
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search financial years..."
+          placeholder={t('pages.settings.financialYears.searchFinancialYears')}
           className="h-10 max-w-md flex-1 rounded-full"
         />
         <Button
@@ -338,7 +342,12 @@ export function FinancialYearsPage() {
         // The current year is tinted so it is findable in a list of many without reading
         // the Status column — the same treatment the default company gets.
         rowClassName={(f) => (f.isCurrent ? 'bg-amber-50/70 dark:bg-amber-500/10' : undefined)}
-        emptyState={<EmptyState icon={Calendar} title="No financial years found" />}
+        emptyState={
+          <EmptyState
+            icon={Calendar}
+            title={t('pages.settings.financialYears.noFinancialYearsFound')}
+          />
+        }
       />
 
       {viewing && (
@@ -383,9 +392,13 @@ export function FinancialYearsPage() {
           }
         >
           <div className="space-y-5">
-            <DetailBlock icon={Info} title="State Flags" tone="purple">
+            <DetailBlock
+              icon={Info}
+              title={t('pages.settings.financialYears.stateFlags')}
+              tone="purple"
+            >
               <DetailValue
-                label="Active Status"
+                label={t('pages.settings.financialYears.activeStatus')}
                 value={viewing.isActive ? 'Yes' : 'No'}
                 divider
                 trailing={
@@ -397,7 +410,7 @@ export function FinancialYearsPage() {
                 }
               />
               <DetailValue
-                label="Locked Status"
+                label={t('pages.settings.financialYears.lockedStatus')}
                 value={viewing.isLocked ? 'Yes' : 'No'}
                 trailing={
                   viewing.isLocked ? (
@@ -410,25 +423,48 @@ export function FinancialYearsPage() {
             </DetailBlock>
 
             {viewing.isCurrent && (
-              <DetailNote icon={CheckCircle2} title="Active Financial Year">
+              <DetailNote
+                icon={CheckCircle2}
+                title={t('pages.settings.financialYears.activeFinancialYear')}
+              >
                 This is the currently active financial year. All new transactions will be recorded
                 under this period. Only one financial year can be active at a time.
               </DetailNote>
             )}
 
             {viewing.isLocked && (
-              <DetailNote icon={Lock} title="Closed Period" tone="amber">
+              <DetailNote
+                icon={Lock}
+                title={t('pages.settings.financialYears.closedPeriod')}
+                tone="amber"
+              >
                 This year is closed. Existing records stay readable; it is reopened from the Actions
                 menu.
               </DetailNote>
             )}
 
-            <DetailBlock icon={Layers} title="Period Details" tone="teal">
-              <DetailValue label="Financial Year Name" value={viewing.name} divider />
-              <DetailValue label="Start Date" value={formatDateShort(viewing.startDate)} divider />
-              <DetailValue label="End Date" value={formatDateShort(viewing.endDate)} divider />
+            <DetailBlock
+              icon={Layers}
+              title={t('pages.settings.financialYears.periodDetails')}
+              tone="teal"
+            >
               <DetailValue
-                label="Duration"
+                label={t('pages.settings.financialYears.financialYearName')}
+                value={viewing.name}
+                divider
+              />
+              <DetailValue
+                label={t('pages.settings.financialYears.startDate')}
+                value={formatDateShort(viewing.startDate)}
+                divider
+              />
+              <DetailValue
+                label={t('pages.settings.financialYears.endDate')}
+                value={formatDateShort(viewing.endDate)}
+                divider
+              />
+              <DetailValue
+                label={t('pages.settings.financialYears.duration')}
                 value={formatFinancialYearDuration(
                   viewing.startDate.toDate(),
                   viewing.endDate.toDate()
@@ -481,11 +517,11 @@ export function FinancialYearsPage() {
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label>Start Date *</Label>
+            <Label>{t('pages.settings.financialYears.startDate2')}</Label>
             <Input type="date" value={startInput} onChange={(e) => setStartInput(e.target.value)} />
           </div>
           <div className="space-y-1.5">
-            <Label>End Date *</Label>
+            <Label>{t('pages.settings.financialYears.endDate2')}</Label>
             <Input type="date" value={endInput} onChange={(e) => setEndInput(e.target.value)} />
           </div>
         </div>

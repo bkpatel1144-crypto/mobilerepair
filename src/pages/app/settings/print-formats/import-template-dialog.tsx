@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label'
 import { useCreatePrintTemplate } from '@/hooks/use-print-templates'
 import { PRINT_DOCUMENT_TYPES } from '@/config/print-fields'
 import type { PrintTemplateDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 /** Accepts a template exported from this app (the designer's "Export JSON" action writes the
  * same shape). Validated rather than trusted: an imported file becomes a document other people
@@ -40,6 +41,7 @@ export function ImportTemplateDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
+  const { t } = useTranslation()
   const create = useCreatePrintTemplate()
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -90,14 +92,14 @@ export function ImportTemplateDialog({
     <FormModal
       open={open}
       onOpenChange={onOpenChange}
-      title="Import Template"
-      description="Load a template JSON exported from this app. It is added as a new, non-default format."
+      title={t('pages.settings.importTemplateDialog.importTemplate')}
+      description={t('pages.settings.importTemplateDialog.loadATemplateJsonExportedFrom')}
       submitLabel="Import"
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >
       <div className="space-y-1.5">
-        <Label htmlFor="tpl-file">Template file</Label>
+        <Label htmlFor="tpl-file">{t('pages.settings.importTemplateDialog.templateFile')}</Label>
         <label
           htmlFor="tpl-file"
           className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed p-4 text-sm hover:bg-muted/40"

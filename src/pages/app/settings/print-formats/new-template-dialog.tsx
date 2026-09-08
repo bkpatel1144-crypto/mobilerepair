@@ -73,14 +73,14 @@ export function NewTemplateDialog({
     <FormModal
       open={open}
       onOpenChange={onOpenChange}
-      title="New Template"
-      description="Pick a document type and a paper size to start from. You can change everything in the designer."
+      title={t('pages.settings.newTemplateDialog.newTemplate')}
+      description={t('pages.settings.newTemplateDialog.pickADocumentTypeAndA')}
       submitLabel="Create & Design"
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >
       <div className="space-y-1.5">
-        <Label>Document Type</Label>
+        <Label>{t('pages.settings.newTemplateDialog.documentType')}</Label>
         <Select
           value={documentType}
           onValueChange={(v) => {
@@ -103,7 +103,7 @@ export function NewTemplateDialog({
       </div>
 
       <div className="space-y-1.5">
-        <Label>Start From</Label>
+        <Label>{t('pages.settings.newTemplateDialog.startFrom')}</Label>
         <Select value={String(presetIndex)} onValueChange={(v) => v && setPresetIndex(Number(v))}>
           <SelectTrigger className="w-full">
             <SelectValue />

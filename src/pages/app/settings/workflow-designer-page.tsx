@@ -3,6 +3,7 @@ import { Workflow } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { RolePermissionsTab } from './workflow-designer/role-permissions-tab'
 import { FormBuilderTab } from './workflow-designer/form-builder-tab'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Admin > Settings > Workflow Designer — matches `preview (7)`–`(13)` exactly. Three top-level
@@ -13,6 +14,7 @@ import { FormBuilderTab } from './workflow-designer/form-builder-tab'
  * per-role).
  */
 export function WorkflowDesignerPage() {
+  const { t } = useTranslation()
   const [tab, setTab] = useState<'rolePermissions' | 'jobCardForm' | 'leadForm'>('rolePermissions')
 
   return (
@@ -20,7 +22,9 @@ export function WorkflowDesignerPage() {
       <div className="flex items-start gap-3">
         <Workflow className="mt-0.5 size-5 text-teal-600" />
         <div>
-          <h1 className="text-lg font-bold">Workflow Designer</h1>
+          <h1 className="text-lg font-bold">
+            {t('pages.settings.workflowDesigner.workflowDesigner')}
+          </h1>
           <p className="text-sm text-muted-foreground">
             Control exactly what each role can see and do at every job status.
           </p>
@@ -29,9 +33,15 @@ export function WorkflowDesignerPage() {
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
         <TabsList>
-          <TabsTrigger value="rolePermissions">Role Permissions</TabsTrigger>
-          <TabsTrigger value="jobCardForm">Job Card Form</TabsTrigger>
-          <TabsTrigger value="leadForm">Lead Form</TabsTrigger>
+          <TabsTrigger value="rolePermissions">
+            {t('pages.settings.workflowDesigner.rolePermissions')}
+          </TabsTrigger>
+          <TabsTrigger value="jobCardForm">
+            {t('pages.settings.workflowDesigner.jobCardForm')}
+          </TabsTrigger>
+          <TabsTrigger value="leadForm">
+            {t('pages.settings.workflowDesigner.leadForm')}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="rolePermissions" className="pt-4">
           <RolePermissionsTab />

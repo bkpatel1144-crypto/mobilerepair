@@ -161,7 +161,7 @@ export function PrintTemplateDesignerPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load this template"
+          title={t('pages.settings.designer.couldnTLoadThisTemplate')}
         />
       </div>
     )
@@ -172,8 +172,8 @@ export function PrintTemplateDesignerPage() {
       <div className="p-6">
         <EmptyState
           icon={Printer}
-          title="Template not found"
-          description="It may have been deleted."
+          title={t('pages.settings.designer.templateNotFound')}
+          description={t('pages.settings.designer.itMayHaveBeenDeleted')}
         />
       </div>
     )
@@ -244,7 +244,7 @@ export function PrintTemplateDesignerPage() {
           value={draft.name}
           onChange={(e) => state.setName(e.target.value)}
           className="h-9 w-56"
-          aria-label="Template name"
+          aria-label={t('pages.settings.designer.templateName')}
         />
         <span className="text-sm text-muted-foreground">
           {printDocumentTypeLabel(template.documentType)}
@@ -269,7 +269,14 @@ export function PrintTemplateDesignerPage() {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={<Button type="button" variant="ghost" size="icon" aria-label="More" />}
+              render={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  aria-label={t('pages.settings.designer.more')}
+                />
+              }
             >
               <MoreVertical className="size-4" />
             </DropdownMenuTrigger>
@@ -366,7 +373,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Redo"
+          aria-label={t('pages.settings.designer.redo')}
           disabled={!state.canRedo}
           onClick={state.redo}
         >
@@ -442,7 +449,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant={showGrid ? 'secondary' : 'ghost'}
           size="icon-sm"
-          aria-label="Toggle grid"
+          aria-label={t('pages.settings.designer.toggleGrid')}
           onClick={() => setShowGrid((g) => !g)}
         >
           <Grid3x3 className="size-4" />
@@ -451,7 +458,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Zoom out"
+          aria-label={t('pages.settings.designer.zoomOut')}
           onClick={() => setZoom((z) => ZOOMS[Math.max(0, ZOOMS.indexOf(z) - 1)] ?? z)}
         >
           <ZoomOut className="size-4" />
@@ -461,7 +468,7 @@ export function PrintTemplateDesignerPage() {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Zoom in"
+          aria-label={t('pages.settings.designer.zoomIn')}
           onClick={() =>
             setZoom((z) => ZOOMS[Math.min(ZOOMS.length - 1, ZOOMS.indexOf(z) + 1)] ?? z)
           }
@@ -497,7 +504,9 @@ export function PrintTemplateDesignerPage() {
             </TabsList>
 
             <TabsContent value="fields" className="min-h-0 flex-1 overflow-y-auto p-3">
-              <p className="text-xs font-medium text-muted-foreground">Add Element</p>
+              <p className="text-xs font-medium text-muted-foreground">
+                {t('pages.settings.designer.addElement')}
+              </p>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 {PALETTE.map(({ type, label, icon: Icon }) => (
                   <button
@@ -513,7 +522,9 @@ export function PrintTemplateDesignerPage() {
                 ))}
               </div>
 
-              <p className="mt-4 text-xs font-medium text-muted-foreground">Fields</p>
+              <p className="mt-4 text-xs font-medium text-muted-foreground">
+                {t('pages.settings.designer.fields')}
+              </p>
               <div className="mt-1.5 space-y-0.5">
                 {fields.map((f) => (
                   <button
@@ -558,7 +569,7 @@ export function PrintTemplateDesignerPage() {
                         type="button"
                         variant="ghost"
                         size="icon-xs"
-                        aria-label="Toggle visibility"
+                        aria-label={t('pages.settings.designer.toggleVisibility')}
                         onClick={() =>
                           state.updateElements([el.id], (x) => ({ ...x, hidden: !x.hidden }))
                         }
@@ -569,7 +580,7 @@ export function PrintTemplateDesignerPage() {
                         type="button"
                         variant="ghost"
                         size="icon-xs"
-                        aria-label="Toggle lock"
+                        aria-label={t('pages.settings.designer.toggleLock')}
                         onClick={() =>
                           state.updateElements([el.id], (x) => ({ ...x, locked: !x.locked }))
                         }
@@ -579,7 +590,9 @@ export function PrintTemplateDesignerPage() {
                     </div>
                   ))}
                 {draft.elements.length === 0 && (
-                  <p className="p-2 text-xs text-muted-foreground">Nothing on the canvas yet.</p>
+                  <p className="p-2 text-xs text-muted-foreground">
+                    {t('pages.settings.designer.nothingOnTheCanvasYet')}
+                  </p>
                 )}
               </div>
             </TabsContent>
@@ -713,7 +726,7 @@ export function PrintTemplateDesignerPage() {
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs">Visibility</Label>
+                <Label className="text-xs">{t('pages.settings.designer.visibility')}</Label>
                 <Select
                   value={one.visibleWhen ? one.visibleWhen.fieldKey : '__always'}
                   onValueChange={(v) => {
@@ -727,7 +740,9 @@ export function PrintTemplateDesignerPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__always">Always visible</SelectItem>
+                    <SelectItem value="__always">
+                      {t('pages.settings.designer.alwaysVisible')}
+                    </SelectItem>
                     {fields.map((f) => (
                       <SelectItem key={f.key} value={f.key}>
                         Hide when {f.label} is empty
@@ -742,7 +757,7 @@ export function PrintTemplateDesignerPage() {
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs">Colour</Label>
+                <Label className="text-xs">{t('pages.settings.designer.colour')}</Label>
                 <Input
                   type="color"
                   value={one.style.color}
@@ -769,7 +784,7 @@ export function PrintTemplateDesignerPage() {
           </DialogTitle>
           <div className="min-h-0 flex-1 overflow-auto rounded-lg border bg-muted/40 p-4">
             <iframe
-              title="Template preview"
+              title={t('pages.settings.designer.templatePreview')}
               srcDoc={html()}
               sandbox=""
               className="mx-auto block h-[60vh] w-full max-w-[840px] rounded border bg-white"
@@ -797,8 +812,8 @@ export function PrintTemplateDesignerPage() {
       <ConfirmDialog
         open={confirmReset}
         onOpenChange={setConfirmReset}
-        title="Reset to the default layout?"
-        message="Every element on this template is replaced with the standard layout for its paper size. Undo still works until you leave the designer."
+        title={t('pages.settings.designer.resetToTheDefaultLayout')}
+        message={t('pages.settings.designer.everyElementOnThisTemplateIs')}
         confirmLabel={t('common.reset')}
         onConfirm={() => {
           const preset =
@@ -822,7 +837,7 @@ export function PrintTemplateDesignerPage() {
         open={historyOpen}
         onOpenChange={setHistoryOpen}
         icon={History}
-        title="Version History"
+        title={t('pages.settings.designer.versionHistory')}
         subtitle={`${template.name} — currently on v${template.version}`}
       >
         {versions.isLoading ? (
@@ -836,8 +851,8 @@ export function PrintTemplateDesignerPage() {
         ) : !versions.data?.length ? (
           <EmptyState
             icon={History}
-            title="No earlier versions yet"
-            description="A version is recorded each time you save a change, so the layout you had before is always recoverable."
+            title={t('pages.settings.designer.noEarlierVersionsYet')}
+            description={t('pages.settings.designer.aVersionIsRecordedEachTime')}
           />
         ) : (
           <ol className="space-y-2">
@@ -876,8 +891,8 @@ export function PrintTemplateDesignerPage() {
       <ConfirmDialog
         open={confirmBack}
         onOpenChange={setConfirmBack}
-        title="Discard unsaved changes?"
-        message="This template has edits that haven't been saved. Leaving now loses them."
+        title={t('pages.settings.designer.discardUnsavedChanges')}
+        message={t('pages.settings.designer.thisTemplateHasEditsThatHaven')}
         confirmLabel={t('common.discard')}
         onConfirm={() => navigate(buildPath('settings', 'print-formats'))}
       />

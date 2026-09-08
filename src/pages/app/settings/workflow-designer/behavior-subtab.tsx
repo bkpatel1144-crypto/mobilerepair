@@ -1,5 +1,6 @@
 import { Switch } from '@/components/ui/switch'
 import type { WorkflowConfigDraft } from './types'
+import { useTranslation } from 'react-i18next'
 
 interface BehaviorSubtabProps {
   draft: WorkflowConfigDraft
@@ -50,6 +51,7 @@ const TOGGLE_ROWS: {
 
 /** "Behavior" sub-tab of a selected role — popups, undo & prompts. Matches `preview (11)`. */
 export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProps) {
+  const { t } = useTranslation()
   function setBehavior(patch: Partial<WorkflowConfigDraft['behavior']>) {
     setDraft((prev) => ({ ...prev, behavior: { ...prev.behavior, ...patch } }))
   }
@@ -90,7 +92,9 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
 
       <div className="space-y-3">
         <div>
-          <h3 className="text-sm font-semibold">Auto-Open Popups</h3>
+          <h3 className="text-sm font-semibold">
+            {t('pages.settings.behaviorSubtab.autoOpenPopups')}
+          </h3>
           <p className="text-xs text-muted-foreground">
             Which popup opens automatically after an action completes — no extra click. All OFF by
             default.
@@ -99,13 +103,19 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-3 rounded-lg border p-3">
             <div>
-              <p className="text-sm font-medium">After Job Done</p>
-              <p className="text-xs text-muted-foreground">Technician marks the repair complete</p>
+              <p className="text-sm font-medium">
+                {t('pages.settings.behaviorSubtab.afterJobDone')}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {t('pages.settings.behaviorSubtab.technicianMarksTheRepairComplete')}
+              </p>
             </div>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm">Open Generate Bill</p>
-                <p className="text-xs text-muted-foreground">Bill popup opens automatically</p>
+                <p className="text-sm">{t('pages.settings.behaviorSubtab.openGenerateBill')}</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('pages.settings.behaviorSubtab.billPopupOpensAutomatically')}
+                </p>
               </div>
               <Switch
                 checked={draft.behavior.autoOpenPopups.afterJobDone.openGenerateBill}
@@ -117,8 +127,10 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
             </div>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm">Open Handover</p>
-                <p className="text-xs text-muted-foreground">Handover popup opens automatically</p>
+                <p className="text-sm">{t('pages.settings.behaviorSubtab.openHandover')}</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('pages.settings.behaviorSubtab.handoverPopupOpensAutomatically')}
+                </p>
               </div>
               <Switch
                 checked={draft.behavior.autoOpenPopups.afterJobDone.openHandover}
@@ -132,13 +144,19 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
 
           <div className="space-y-3 rounded-lg border p-3">
             <div>
-              <p className="text-sm font-medium">After Generate Bill</p>
-              <p className="text-xs text-muted-foreground">Bill is generated for the job</p>
+              <p className="text-sm font-medium">
+                {t('pages.settings.behaviorSubtab.afterGenerateBill')}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {t('pages.settings.behaviorSubtab.billIsGeneratedForTheJob')}
+              </p>
             </div>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm">Open Handover</p>
-                <p className="text-xs text-muted-foreground">Handover popup opens automatically</p>
+                <p className="text-sm">{t('pages.settings.behaviorSubtab.openHandover')}</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('pages.settings.behaviorSubtab.handoverPopupOpensAutomatically')}
+                </p>
               </div>
               <Switch
                 checked={draft.behavior.autoOpenPopups.afterGenerateBill.openHandover}
@@ -152,13 +170,19 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
 
           <div className="space-y-3 rounded-lg border p-3 sm:col-span-2">
             <div>
-              <p className="text-sm font-medium">After Receive Payment</p>
-              <p className="text-xs text-muted-foreground">A payment is recorded for the job</p>
+              <p className="text-sm font-medium">
+                {t('pages.settings.behaviorSubtab.afterReceivePayment')}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {t('pages.settings.behaviorSubtab.aPaymentIsRecordedForThe')}
+              </p>
             </div>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm">Open Handover</p>
-                <p className="text-xs text-muted-foreground">Handover popup opens automatically</p>
+                <p className="text-sm">{t('pages.settings.behaviorSubtab.openHandover')}</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('pages.settings.behaviorSubtab.handoverPopupOpensAutomatically')}
+                </p>
               </div>
               <Switch
                 checked={draft.behavior.autoOpenPopups.afterReceivePayment.openHandover}

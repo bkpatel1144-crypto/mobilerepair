@@ -66,18 +66,18 @@ export function CompanyForm({
             placeholder={t('shared.sunriseEnterprises')}
           />
         </Field>
-        <Field label="Company Code" required>
+        <Field label={t('pages.settings.companyForm.companyCode')} required>
           <Input
             value={value.code}
             onChange={(e) => set({ code: e.target.value.toUpperCase() })}
-            placeholder="SUNRISE"
+            placeholder={t('pages.settings.companyForm.sunrise')}
           />
         </Field>
-        <Field label="Legal Name" required>
+        <Field label={t('pages.settings.companyForm.legalName')} required>
           <Input
             value={value.legalName}
             onChange={(e) => set({ legalName: e.target.value })}
-            placeholder="Sunrise Enterprises Pvt Ltd"
+            placeholder={t('pages.settings.companyForm.sunriseEnterprisesPvtLtd')}
           />
         </Field>
       </div>
@@ -100,8 +100,10 @@ export function CompanyForm({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Regular">Regular</SelectItem>
-              <SelectItem value="Composition">Composition</SelectItem>
+              <SelectItem value="Regular">{t('pages.settings.companyForm.regular')}</SelectItem>
+              <SelectItem value="Composition">
+                {t('pages.settings.companyForm.composition')}
+              </SelectItem>
               <SelectItem value="Unregistered">{t('shared.unregistered')}</SelectItem>
             </SelectContent>
           </Select>
@@ -184,7 +186,9 @@ export function CompanyForm({
       <div className="flex gap-3 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm dark:border-blue-500/30 dark:bg-blue-500/10">
         <Info className="mt-0.5 size-4 shrink-0 text-blue-600 dark:text-blue-400" />
         <div>
-          <p className="font-semibold text-blue-900 dark:text-blue-300">Note:</p>
+          <p className="font-semibold text-blue-900 dark:text-blue-300">
+            {t('pages.settings.companyForm.note')}
+          </p>
           <p className="mt-0.5 text-blue-900/80 dark:text-blue-300/80">
             All fields marked with * are required. GSTIN is only required for registered companies
             (Regular/Composition) — pick "Unregistered" if this company isn't GST-registered. Ensure

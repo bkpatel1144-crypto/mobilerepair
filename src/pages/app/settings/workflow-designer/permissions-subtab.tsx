@@ -14,6 +14,7 @@ import {
 } from '@/config/workflow-statuses-actions'
 import { cn } from '@/lib/utils'
 import type { WorkflowConfigDraft } from './types'
+import { useTranslation } from 'react-i18next'
 
 interface PermissionsSubtabProps {
   draft: WorkflowConfigDraft
@@ -24,6 +25,7 @@ interface PermissionsSubtabProps {
 /** "Permissions" sub-tab of a selected role — Job Access scope, the removable-chip Status
  * Filter multi-select, and the full status×action matrix. Matches `preview (13)` exactly. */
 export function PermissionsSubtab({ draft, setDraft, disabled }: PermissionsSubtabProps) {
+  const { t } = useTranslation()
   const [statusPickerOpen, setStatusPickerOpen] = useState(false)
   const enabledCount = countEnabledActions(draft.statusActionMatrix)
 
@@ -140,7 +142,9 @@ export function PermissionsSubtab({ draft, setDraft, disabled }: PermissionsSubt
       <div className="space-y-1">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-semibold">Allowed Actions per Status</h3>
+            <h3 className="text-sm font-semibold">
+              {t('pages.settings.permissionsSubtab.allowedActionsPerStatus')}
+            </h3>
             <p className="text-xs text-muted-foreground">
               Tick a box = this role can do that action while the job is in that status.
             </p>

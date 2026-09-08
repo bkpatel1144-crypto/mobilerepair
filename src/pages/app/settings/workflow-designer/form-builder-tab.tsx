@@ -105,7 +105,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
       <ErrorState
         error={loadError}
         onRetry={() => void refetch()}
-        title="Couldn't load this form's saved layout"
+        title={t('pages.settings.formBuilderTab.couldnTLoadThisFormS')}
       />
     )
   }
@@ -188,10 +188,12 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="flex flex-wrap gap-4">
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground">Template</p>
+            <p className="text-xs font-medium text-muted-foreground">
+              {t('pages.settings.formBuilderTab.template')}
+            </p>
             <Select value="" onValueChange={(v) => v && setPendingTemplateName(v)}>
               <SelectTrigger className="w-56">
-                <SelectValue placeholder="Select a template..." />
+                <SelectValue placeholder={t('pages.settings.formBuilderTab.selectATemplate')} />
               </SelectTrigger>
               <SelectContent>
                 {Object.keys(templates).length === 0 ? (
@@ -209,7 +211,9 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground">Layout</p>
+            <p className="text-xs font-medium text-muted-foreground">
+              {t('pages.settings.formBuilderTab.layout')}
+            </p>
             <Select
               value={draft.layout}
               onValueChange={(v) =>
@@ -328,8 +332,8 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
       <ConfirmDialog
         open={!!pendingImportFile}
         onOpenChange={(open) => !open && setPendingImportFile(null)}
-        title="Import form schema?"
-        message="This replaces every field and layout setting currently in this draft with the contents of the uploaded file. Nothing is saved until you click Save, but any unsaved changes made so far will be overwritten."
+        title={t('pages.settings.formBuilderTab.importFormSchema')}
+        message={t('pages.settings.formBuilderTab.thisReplacesEveryFieldAndLayout')}
         confirmLabel={t('common.import')}
         onConfirm={() => {
           if (pendingImportFile) handleImportFile(pendingImportFile)
@@ -341,7 +345,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
         open={!!pendingTemplateName}
         onOpenChange={(open) => !open && setPendingTemplateName(null)}
         title={`Apply template "${pendingTemplateName ?? ''}"?`}
-        message="This replaces every field and layout setting currently in this draft with the saved template. Nothing is saved until you click Save, but any unsaved changes made so far will be overwritten."
+        message={t('pages.settings.formBuilderTab.thisReplacesEveryFieldAndLayout2')}
         confirmLabel={t('common.apply')}
         onConfirm={() => {
           if (pendingTemplateName) handleApplyTemplate(pendingTemplateName)

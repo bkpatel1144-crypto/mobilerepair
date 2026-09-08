@@ -8,6 +8,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import type { RoleWithId } from '@/hooks/use-roles'
 import type { WorkflowConfigDraft } from './types'
+import { useTranslation } from 'react-i18next'
 
 interface UsersSubtabProps {
   draft: WorkflowConfigDraft
@@ -30,6 +31,7 @@ const WHO_DID_IT_ROWS: {
  * It" toggles (off = the logged-in user is auto-recorded, on = a dropdown lets anyone pick).
  * Matches `preview (12)`. */
 export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtabProps) {
+  const { t } = useTranslation()
   function setAssignment(patch: Partial<WorkflowConfigDraft['assignment']>) {
     setDraft((prev) => ({ ...prev, assignment: { ...prev.assignment, ...patch } }))
   }
@@ -53,7 +55,7 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All users</SelectItem>
+          <SelectItem value="all">{t('pages.settings.usersSubtab.allUsers')}</SelectItem>
           {allRoles.map((role) => (
             <SelectItem key={role.id} value={role.id}>
               {role.name}
@@ -122,7 +124,9 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
 
       <div className="space-y-3">
         <div>
-          <h3 className="text-sm font-semibold">Who Did It — Dropdowns</h3>
+          <h3 className="text-sm font-semibold">
+            {t('pages.settings.usersSubtab.whoDidItDropdowns')}
+          </h3>
           <p className="text-xs text-muted-foreground">
             When an action happens, should the user pick who did it? Off = the logged-in user is
             recorded automatically.
@@ -147,8 +151,12 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
           <div className="space-y-2 p-3">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-medium">Field Visit Technician</p>
-                <p className="text-xs text-muted-foreground">Who checked in on an on-site visit</p>
+                <p className="text-sm font-medium">
+                  {t('pages.settings.usersSubtab.fieldVisitTechnician')}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {t('pages.settings.usersSubtab.whoCheckedInOnAnOn')}
+                </p>
               </div>
               <Switch
                 checked={draft.whoDidIt.fieldVisitTechnician}

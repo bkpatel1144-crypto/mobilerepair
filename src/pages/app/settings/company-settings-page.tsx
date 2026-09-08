@@ -375,8 +375,8 @@ export function CompanySettingsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Store}
-        title="Company Management"
-        subtitle="Manage company information and settings"
+        title={t('pages.settings.companySettings.companyManagement')}
+        subtitle={t('pages.settings.companySettings.manageCompanyInformationAndSettings')}
         actions={
           <>
             <Button type="button" variant="outline" onClick={() => void refetch()}>
@@ -430,7 +430,7 @@ export function CompanySettingsPage() {
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by name, code, or email..."
+          placeholder={t('pages.settings.companySettings.searchByNameCodeOrEmail')}
           className="h-10 max-w-md flex-1 rounded-full"
         />
       </div>
@@ -446,7 +446,7 @@ export function CompanySettingsPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load your companies"
+          title={t('pages.settings.companySettings.couldnTLoadYourCompanies')}
         />
       ) : (
         <DataTable
@@ -475,7 +475,7 @@ export function CompanySettingsPage() {
         open={!!viewing}
         onOpenChange={(o) => !o && setViewing(null)}
         icon={Store}
-        title="Company Details"
+        title={t('pages.settings.companySettings.companyDetails')}
       >
         {viewing && (
           <div className="space-y-5">
@@ -550,7 +550,11 @@ export function CompanySettingsPage() {
               {viewing.pan && <DetailValue label={t('common.pan')} value={viewing.pan} />}
             </DetailBlock>
 
-            <DetailBlock icon={Wallet} title="Financial Settings" tone="teal">
+            <DetailBlock
+              icon={Wallet}
+              title={t('pages.settings.companySettings.financialSettings')}
+              tone="teal"
+            >
               <DetailValue label={t('shared.currency')} value={viewing.currency} />
               <DetailValue label={t('shared.timezone')} value={viewing.timezone} />
             </DetailBlock>
@@ -560,7 +564,10 @@ export function CompanySettingsPage() {
                 label={t('common.createdAt')}
                 value={formatDateTimeLong(viewing.createdAt)}
               />
-              <DetailValue label="Last updated" value={formatDateTimeLong(viewing.updatedAt)} />
+              <DetailValue
+                label={t('pages.settings.companySettings.lastUpdated')}
+                value={formatDateTimeLong(viewing.updatedAt)}
+              />
             </DetailBlock>
           </div>
         )}
@@ -573,8 +580,8 @@ export function CompanySettingsPage() {
           if (!o) setError(null)
           setCreating(o)
         }}
-        title="Create Company"
-        description="A second shop under this account. It gets its own roles, branch, financial year, masters and print templates."
+        title={t('pages.settings.companySettings.createCompany')}
+        description={t('pages.settings.companySettings.aSecondShopUnderThisAccount')}
         submitLabel={createCompany.isPending ? 'Creating…' : 'Create Company'}
         isSubmitting={createCompany.isPending}
         onSubmit={submitCreate}
@@ -593,7 +600,7 @@ export function CompanySettingsPage() {
             setError(null)
           }
         }}
-        title="Edit Company"
+        title={t('pages.settings.companySettings.editCompany')}
         description={
           editing && editing.id !== profile?.companyId
             ? 'Note: only the active company can be edited — switch to it first.'

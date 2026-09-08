@@ -1097,6 +1097,226 @@
         "noUsersFound": "કોઈ વપરાશકર્તા મળ્યો નથી",
         "contactDetails": "સંપર્ક વિગતો"
       }
+    },
+    "settings": {
+      "backupRestore": {
+        "downloadBackupsScheduleDailyBackupsAnd": "બેકઅપ ડાઉનલોડ કરો, રોજનું બેકઅપ ગોઠવો, અને ડેટા સુરક્ષિત રીતે પાછો લાવો",
+        "couldnTLoadYourBackups": "તમારા બેકઅપ લોડ થઈ શક્યા નથી",
+        "noBackupsYet": "હજી કોઈ બેકઅપ નથી.",
+        "createYourFirstBackupAbove": "ઉપર તમારો પહેલો બેકઅપ બનાવો.",
+        "couldnTLoadYourArchives": "તમારા આર્કાઇવ લોડ થઈ શક્યા નથી",
+        "noArchives": "કોઈ આર્કાઇવ નથી.",
+        "restoringABackupAsAnArchive": "બેકઅપને આર્કાઇવ તરીકે પાછો લાવતાં તમારા ડેટાની અલગ, ફક્ત-વાંચી શકાય તેવી નકલ બને છે — જૂના રેકોર્ડ જોવા ઉપયોગી, ચાલુ ડેટાને અડ્યા વગર.",
+        "overwriteLiveData": "ચાલુ ડેટા બદલો",
+        "thisWritesEveryDocumentFromThe": "આ અપલોડ કરેલી ફાઇલનો દરેક દસ્તાવેજ તમારા ચાલુ કંપની ડેટામાં લખી દે છે, અને મળતી આવતી ID વાળી દરેક વસ્તુ બદલી નાખે છે. આને એપની અંદરથી પાછું લઈ શકાતું નથી.",
+        "dataSets": "ડેટા સેટ",
+        "records": "રેકોર્ડ",
+        "dataSize": "ડેટાનું કદ",
+        "createBackup": "બેકઅપ બનાવો",
+        "time": "સમય",
+        "file": "ફાઇલ",
+        "created": "બનાવ્યું",
+        "by": "કોણે",
+        "size": "કદ"
+      },
+      "billing": {
+        "yourPlanAndBillingDetails": "તમારો પ્લાન અને બિલિંગ વિગતો",
+        "youReOnTheFreePlan": "તમે મફત પ્લાન પર છો",
+        "perMonth": "દર મહિને",
+        "includedModules": "સામેલ મોડ્યુલ"
+      },
+      "branchManagement": {
+        "branchManagement": "શાખા વ્યવસ્થાપન",
+        "manageOrganizationalBranchesAndLocations": "સંસ્થાની શાખાઓ અને સ્થળો સંભાળો",
+        "totalBranches": "કુલ શાખાઓ",
+        "noBranchesFound": "કોઈ શાખા મળી નથી",
+        "createNewBranch": "નવી શાખા બનાવો",
+        "addANewBranchToYour": "તમારી સંસ્થામાં નવી શાખા ઉમેરો",
+        "enterBranchName": "શાખાનું નામ લખો",
+        "editBranch": "શાખા બદલો",
+        "branchName": "શાખાનું નામ",
+        "branchInformation": "શાખાની માહિતી",
+        "branchCode": "શાખા કોડ",
+        "currentStatus": "હાલની સ્થિતિ",
+        "branchType": "શાખાનો પ્રકાર"
+      },
+      "companyForm": {
+        "companyCode": "કંપની કોડ",
+        "sunrise": "SUNRISE",
+        "legalName": "કાયદેસર નામ",
+        "sunriseEnterprisesPvtLtd": "Sunrise Enterprises Pvt Ltd",
+        "regular": "નિયમિત",
+        "composition": "કમ્પોઝિશન",
+        "note": "નોંધ:"
+      },
+      "companySettings": {
+        "companyManagement": "કંપની વ્યવસ્થાપન",
+        "manageCompanyInformationAndSettings": "કંપનીની માહિતી અને સેટિંગ્સ સંભાળો",
+        "searchByNameCodeOrEmail": "નામ, કોડ કે ઈમેલથી શોધો...",
+        "couldnTLoadYourCompanies": "તમારી કંપનીઓ લોડ થઈ શકી નથી",
+        "companyDetails": "કંપનીની વિગતો",
+        "financialSettings": "નાણાકીય સેટિંગ્સ",
+        "lastUpdated": "છેલ્લો ફેરફાર",
+        "createCompany": "કંપની બનાવો",
+        "aSecondShopUnderThisAccount": "આ ખાતા હેઠળ બીજી દુકાન. તેને પોતાની અલગ ભૂમિકાઓ, શાખા, નાણાકીય વર્ષ, માસ્ટર અને પ્રિન્ટ ટેમ્પલેટ મળે છે.",
+        "editCompany": "કંપની બદલો"
+      },
+      "financialYears": {
+        "financialYears": "નાણાકીય વર્ષ",
+        "manageFinancialYearPeriodsAndTransitions": "નાણાકીય વર્ષના સમયગાળા અને ફેરફાર સંભાળો",
+        "searchFinancialYears": "નાણાકીય વર્ષ શોધો...",
+        "noFinancialYearsFound": "કોઈ નાણાકીય વર્ષ મળ્યું નથી",
+        "stateFlags": "સ્થિતિ ચિહ્નો",
+        "activeStatus": "સક્રિય સ્થિતિ",
+        "lockedStatus": "લોક સ્થિતિ",
+        "activeFinancialYear": "સક્રિય નાણાકીય વર્ષ",
+        "closedPeriod": "બંધ સમયગાળો",
+        "periodDetails": "સમયગાળાની વિગતો",
+        "financialYearName": "નાણાકીય વર્ષનું નામ",
+        "startDate": "શરૂ તારીખ",
+        "endDate": "અંતિમ તારીખ",
+        "duration": "સમયગાળો",
+        "startDate2": "શરૂ તારીખ *",
+        "endDate2": "અંતિમ તારીખ *"
+      },
+      "designer": {
+        "couldnTLoadThisTemplate": "આ ટેમ્પલેટ લોડ થઈ શક્યું નથી",
+        "templateNotFound": "ટેમ્પલેટ મળ્યું નથી",
+        "itMayHaveBeenDeleted": "તે કાઢી નાખવામાં આવ્યું હોઈ શકે.",
+        "templateName": "ટેમ્પલેટનું નામ",
+        "more": "વધુ",
+        "redo": "ફરી કરો",
+        "toggleGrid": "ગ્રિડ બતાવો/છુપાવો",
+        "zoomOut": "નાનું કરો",
+        "zoomIn": "મોટું કરો",
+        "toggleVisibility": "બતાવો/છુપાવો",
+        "toggleLock": "લોક ચાલુ/બંધ કરો",
+        "templatePreview": "ટેમ્પલેટનું પૂર્વદર્શન",
+        "resetToTheDefaultLayout": "ડિફોલ્ટ લેઆઉટ પર પાછા જવું?",
+        "everyElementOnThisTemplateIs": "આ ટેમ્પલેટનું દરેક તત્વ તેના કાગળના માપના પ્રમાણભૂત લેઆઉટથી બદલાઈ જાય છે. ડિઝાઇનર છોડો ત્યાં સુધી પાછું લેવાનું કામ કરતું રહેશે.",
+        "versionHistory": "આવૃત્તિ ઇતિહાસ",
+        "noEarlierVersionsYet": "હજી કોઈ જૂની આવૃત્તિ નથી",
+        "aVersionIsRecordedEachTime": "દર વખતે ફેરફાર સાચવતાં એક આવૃત્તિ નોંધાય છે, તેથી પહેલાંનું લેઆઉટ હંમેશાં પાછું લાવી શકાય છે.",
+        "discardUnsavedChanges": "સાચવ્યા વગરના ફેરફાર છોડી દેવા?",
+        "thisTemplateHasEditsThatHaven": "આ ટેમ્પલેટમાં એવા ફેરફાર છે જે સાચવ્યા નથી. હમણાં જવાથી તે ખોવાઈ જશે.",
+        "text": "લખાણ",
+        "image": "ફોટો",
+        "logo": "લોગો",
+        "barcode": "બારકોડ",
+        "qrCode": "QR કોડ",
+        "line": "રેખા",
+        "shape": "આકૃતિ",
+        "addElement": "તત્વ ઉમેરો",
+        "fields": "ફીલ્ડ",
+        "nothingOnTheCanvasYet": "કેનવાસ પર હજી કંઈ નથી.",
+        "visibility": "દેખાવ",
+        "alwaysVisible": "હંમેશાં દેખાય",
+        "colour": "રંગ"
+      },
+      "importTemplateDialog": {
+        "importTemplate": "ટેમ્પલેટ ઇમ્પોર્ટ કરો",
+        "loadATemplateJsonExportedFrom": "આ એપમાંથી એક્સપોર્ટ કરેલું ટેમ્પલેટ JSON લોડ કરો. તે નવા, બિન-ડિફોલ્ટ ફોર્મેટ તરીકે ઉમેરાય છે.",
+        "templateFile": "ટેમ્પલેટ ફાઇલ"
+      },
+      "newTemplateDialog": {
+        "newTemplate": "નવું ટેમ્પલેટ",
+        "pickADocumentTypeAndA": "શરૂ કરવા દસ્તાવેજનો પ્રકાર અને કાગળનું માપ પસંદ કરો. ડિઝાઇનરમાં બધું બદલી શકાય છે.",
+        "documentType": "દસ્તાવેજનો પ્રકાર",
+        "startFrom": "અહીંથી શરૂ કરો"
+      },
+      "pageSetupDialog": {
+        "pageSetup": "પાના સેટઅપ",
+        "paperSizeMarginsAndOutputSettings": "આ ટેમ્પલેટ માટે કાગળનું માપ, હાંસિયા અને આઉટપુટ સેટિંગ્સ.",
+        "paper": "કાગળ",
+        "orientation": "દિશા",
+        "portrait": "ઊભું",
+        "landscape": "આડું",
+        "output": "આઉટપુટ",
+        "copies": "નકલો",
+        "copyLayout": "નકલનું લેઆઉટ",
+        "stacked": "એકની નીચે એક",
+        "sideBySide": "બાજુ બાજુમાં"
+      },
+      "printDevicesDialog": {
+        "copyPairingCode": "જોડવાનો કોડ કોપી કરો",
+        "couldnTLoadYourPrintDevices": "તમારાં પ્રિન્ટ ડિવાઇસ લોડ થઈ શક્યાં નથી",
+        "printDevices": "પ્રિન્ટ ડિવાઇસ"
+      },
+      "printFormats": {
+        "designAndManagePrintTemplatesFor": "બિલ, રસીદ અને લેબલ માટે પ્રિન્ટ ટેમ્પલેટ બનાવો અને સંભાળો",
+        "searchDocumentTypesOrTemplates": "દસ્તાવેજ પ્રકાર કે ટેમ્પલેટ શોધો...",
+        "couldnTLoadYourPrintTemplates": "તમારાં પ્રિન્ટ ટેમ્પલેટ લોડ થઈ શક્યાં નથી",
+        "noMatches": "કોઈ મેળ નથી",
+        "noDocumentTypeOrTemplateMatches": "તે શોધ સાથે કોઈ દસ્તાવેજ પ્રકાર કે ટેમ્પલેટ મેળ ખાતું નથી.",
+        "noFormatsForThisDocumentType": "આ દસ્તાવેજ પ્રકાર માટે કોઈ ફોર્મેટ નથી",
+        "useAddMissingDefaultsToRestore": "પ્રમાણભૂત ફોર્મેટ પાછાં લાવવા ખૂટતાં ડિફોલ્ટ ઉમેરો વાપરો, અથવા નવું બનાવો.",
+        "deleteThisTemplate": "આ ટેમ્પલેટ કાઢી નાખવું?",
+        "delete": "કાઢી નાખો"
+      },
+      "whatsapp": {
+        "whatsapp": "WhatsApp",
+        "messageTemplatesSentToCustomersAs": "જોબ આગળ વધતાં ગ્રાહકોને મોકલાતા સંદેશ ટેમ્પલેટ",
+        "couldnTLoadYourWhatsappTemplates": "તમારાં WhatsApp ટેમ્પલેટ લોડ થઈ શક્યાં નથી",
+        "countryCode": "દેશનો કોડ"
+      },
+      "behaviorSubtab": {
+        "collectPaymentWithGenerateBill": "બિલ બનાવતી વખતે ચુકવણી લો",
+        "printPromptAfterJobCardCreation": "જોબ કાર્ડ બન્યા પછી પ્રિન્ટનું સૂચન",
+        "afterCreatingAJobCardA": "જોબ કાર્ડ બન્યા પછી એક પોપઅપ લેબલ પ્રિન્ટ / રસીદ પ્રિન્ટ / WhatsApp નો વિકલ્પ આપે છે.",
+        "requireDescriptionOnJobDone": "જોબ પૂર્ણ પર વર્ણન જરૂરી",
+        "descriptionIsOptionalWhenMarkingA": "જોબ પૂર્ણ કરતી વખતે વર્ણન વૈકલ્પિક છે.",
+        "seesEstimatedCostFinalAmountPaid": "અંદાજિત ખર્ચ, આખરી રકમ, ચૂકવેલ, બાકી, રસીદો અને પાર્ટ્સનો ખર્ચ જોઈ શકે છે.",
+        "allowUndoLastAction": "છેલ્લી ક્રિયા પાછી લેવા દો",
+        "undoDisabledStatusChangesArePermanent": "પાછું લેવાનું બંધ — આ ભૂમિકા માટે સ્થિતિ ફેરફાર કાયમી છે.",
+        "autoOpenPopups": "આપોઆપ ખૂલતાં પોપઅપ",
+        "afterJobDone": "જોબ પૂર્ણ થયા પછી",
+        "technicianMarksTheRepairComplete": "ટેકનિશિયન મરામત પૂરી જણાવે છે",
+        "openGenerateBill": "બિલ બનાવો ખોલો",
+        "billPopupOpensAutomatically": "બિલ પોપઅપ આપોઆપ ખૂલે છે",
+        "openHandover": "સોંપણી ખોલો",
+        "handoverPopupOpensAutomatically": "સોંપણીનું પોપઅપ આપોઆપ ખૂલે છે",
+        "afterGenerateBill": "બિલ બન્યા પછી",
+        "billIsGeneratedForTheJob": "જોબ માટે બિલ બને છે",
+        "afterReceivePayment": "ચુકવણી મળ્યા પછી",
+        "aPaymentIsRecordedForThe": "જોબ માટે ચુકવણી નોંધાય છે"
+      },
+      "formBuilderTab": {
+        "couldnTLoadThisFormS": "આ ફોર્મનું સાચવેલું લેઆઉટ લોડ થઈ શક્યું નથી",
+        "selectATemplate": "ટેમ્પલેટ પસંદ કરો...",
+        "importFormSchema": "ફોર્મ સ્કીમા ઇમ્પોર્ટ કરવી?",
+        "thisReplacesEveryFieldAndLayout": "આ આ ડ્રાફ્ટના દરેક ફીલ્ડ અને લેઆઉટ સેટિંગને અપલોડ કરેલી ફાઇલની સામગ્રીથી બદલી નાખે છે. સાચવો દબાવો ત્યાં સુધી કંઈ સચવાતું નથી, પણ અત્યાર સુધીના સાચવ્યા વગરના ફેરફાર ભૂંસાઈ જશે.",
+        "thisReplacesEveryFieldAndLayout2": "આ આ ડ્રાફ્ટના દરેક ફીલ્ડ અને લેઆઉટ સેટિંગને સાચવેલા ટેમ્પલેટથી બદલી નાખે છે. સાચવો દબાવો ત્યાં સુધી કંઈ સચવાતું નથી, પણ અત્યાર સુધીના સાચવ્યા વગરના ફેરફાર ભૂંસાઈ જશે.",
+        "twoColumn": "બે કૉલમ",
+        "largeDesktop": "મોટું ડેસ્કટોપ",
+        "template": "ટેમ્પલેટ",
+        "layout": "લેઆઉટ"
+      },
+      "permissionsSubtab": {
+        "allowedActionsPerStatus": "દરેક સ્થિતિ પર માન્ય ક્રિયાઓ"
+      },
+      "rolePermissionsTab": {
+        "couldnTLoadYourRoles": "તમારી ભૂમિકાઓ લોડ થઈ શકી નથી",
+        "selectARoleToConfigure": "કોન્ફિગર કરવા ભૂમિકા પસંદ કરો...",
+        "noRolesConfiguredYet": "હજી કોઈ ભૂમિકા કોન્ફિગર થઈ નથી",
+        "pickARoleFromTheDropdown": "તેની સ્થિતિઓ અને ક્રિયાઓ ગોઠવવા ઉપરની યાદીમાંથી ભૂમિકા પસંદ કરો.",
+        "couldnTLoadThisRoleS": "આ ભૂમિકાનું વર્કફ્લો કોન્ફિગ લોડ થઈ શક્યું નથી",
+        "selectARole": "ભૂમિકા પસંદ કરો",
+        "behavior": "વર્તન"
+      },
+      "usersSubtab": {
+        "receivedBy": "સ્વીકારનાર",
+        "returnedBy": "પરત કરનાર",
+        "allUsers": "બધા વપરાશકર્તા",
+        "whoDidItDropdowns": "કોણે કર્યું — યાદીઓ",
+        "fieldVisitTechnician": "ફીલ્ડ વિઝિટ ટેકનિશિયન",
+        "whoCheckedInOnAnOn": "સ્થળ પર જઈને કોણે હાજરી નોંધી"
+      },
+      "workflowDesigner": {
+        "workflowDesigner": "વર્કફ્લો ડિઝાઇનર",
+        "rolePermissions": "ભૂમિકા પરવાનગીઓ",
+        "jobCardForm": "જોબ કાર્ડ ફોર્મ",
+        "leadForm": "લીડ ફોર્મ"
+      }
     }
   },
   "components": {

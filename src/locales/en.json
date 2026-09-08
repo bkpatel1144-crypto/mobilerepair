@@ -1084,6 +1084,226 @@
         "noUsersFound": "No users found",
         "contactDetails": "Contact Details"
       }
+    },
+    "settings": {
+      "backupRestore": {
+        "downloadBackupsScheduleDailyBackupsAnd": "Download backups, schedule daily backups, and restore data safely",
+        "couldnTLoadYourBackups": "Couldn't load your backups",
+        "noBackupsYet": "No backups yet.",
+        "createYourFirstBackupAbove": "Create your first backup above.",
+        "couldnTLoadYourArchives": "Couldn't load your archives",
+        "noArchives": "No archives.",
+        "restoringABackupAsAnArchive": "Restoring a backup as an archive creates a separate read-only copy of your data — useful for viewing old records without touching what's live.",
+        "overwriteLiveData": "Overwrite Live Data",
+        "thisWritesEveryDocumentFromThe": "This writes every document from the uploaded file back into your live company data, overwriting anything with a matching ID. This cannot be undone from within the app.",
+        "dataSets": "Data Sets",
+        "records": "Records",
+        "dataSize": "Data Size",
+        "createBackup": "Create Backup",
+        "time": "Time",
+        "file": "File",
+        "created": "Created",
+        "by": "By",
+        "size": "Size"
+      },
+      "billing": {
+        "yourPlanAndBillingDetails": "Your plan and billing details",
+        "youReOnTheFreePlan": "You're on the Free plan",
+        "perMonth": "per month",
+        "includedModules": "Included modules"
+      },
+      "branchManagement": {
+        "branchManagement": "Branch Management",
+        "manageOrganizationalBranchesAndLocations": "Manage organizational branches and locations",
+        "totalBranches": "Total Branches",
+        "noBranchesFound": "No branches found",
+        "createNewBranch": "Create New Branch",
+        "addANewBranchToYour": "Add a new branch to your organization",
+        "enterBranchName": "Enter branch name",
+        "editBranch": "Edit Branch",
+        "branchName": "Branch Name",
+        "branchInformation": "BRANCH INFORMATION",
+        "branchCode": "Branch Code",
+        "currentStatus": "Current Status",
+        "branchType": "Branch Type"
+      },
+      "companyForm": {
+        "companyCode": "Company Code",
+        "sunrise": "SUNRISE",
+        "legalName": "Legal Name",
+        "sunriseEnterprisesPvtLtd": "Sunrise Enterprises Pvt Ltd",
+        "regular": "Regular",
+        "composition": "Composition",
+        "note": "Note:"
+      },
+      "companySettings": {
+        "companyManagement": "Company Management",
+        "manageCompanyInformationAndSettings": "Manage company information and settings",
+        "searchByNameCodeOrEmail": "Search by name, code, or email...",
+        "couldnTLoadYourCompanies": "Couldn't load your companies",
+        "companyDetails": "Company Details",
+        "financialSettings": "Financial Settings",
+        "lastUpdated": "Last updated",
+        "createCompany": "Create Company",
+        "aSecondShopUnderThisAccount": "A second shop under this account. It gets its own roles, branch, financial year, masters and print templates.",
+        "editCompany": "Edit Company"
+      },
+      "financialYears": {
+        "financialYears": "Financial Years",
+        "manageFinancialYearPeriodsAndTransitions": "Manage financial year periods and transitions",
+        "searchFinancialYears": "Search financial years...",
+        "noFinancialYearsFound": "No financial years found",
+        "stateFlags": "State Flags",
+        "activeStatus": "Active Status",
+        "lockedStatus": "Locked Status",
+        "activeFinancialYear": "Active Financial Year",
+        "closedPeriod": "Closed Period",
+        "periodDetails": "Period Details",
+        "financialYearName": "Financial Year Name",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "duration": "Duration",
+        "startDate2": "Start Date *",
+        "endDate2": "End Date *"
+      },
+      "designer": {
+        "couldnTLoadThisTemplate": "Couldn't load this template",
+        "templateNotFound": "Template not found",
+        "itMayHaveBeenDeleted": "It may have been deleted.",
+        "templateName": "Template name",
+        "more": "More",
+        "redo": "Redo",
+        "toggleGrid": "Toggle grid",
+        "zoomOut": "Zoom out",
+        "zoomIn": "Zoom in",
+        "toggleVisibility": "Toggle visibility",
+        "toggleLock": "Toggle lock",
+        "templatePreview": "Template preview",
+        "resetToTheDefaultLayout": "Reset to the default layout?",
+        "everyElementOnThisTemplateIs": "Every element on this template is replaced with the standard layout for its paper size. Undo still works until you leave the designer.",
+        "versionHistory": "Version History",
+        "noEarlierVersionsYet": "No earlier versions yet",
+        "aVersionIsRecordedEachTime": "A version is recorded each time you save a change, so the layout you had before is always recoverable.",
+        "discardUnsavedChanges": "Discard unsaved changes?",
+        "thisTemplateHasEditsThatHaven": "This template has edits that haven't been saved. Leaving now loses them.",
+        "text": "Text",
+        "image": "Image",
+        "logo": "Logo",
+        "barcode": "Barcode",
+        "qrCode": "QR Code",
+        "line": "Line",
+        "shape": "Shape",
+        "addElement": "Add Element",
+        "fields": "Fields",
+        "nothingOnTheCanvasYet": "Nothing on the canvas yet.",
+        "visibility": "Visibility",
+        "alwaysVisible": "Always visible",
+        "colour": "Colour"
+      },
+      "importTemplateDialog": {
+        "importTemplate": "Import Template",
+        "loadATemplateJsonExportedFrom": "Load a template JSON exported from this app. It is added as a new, non-default format.",
+        "templateFile": "Template file"
+      },
+      "newTemplateDialog": {
+        "newTemplate": "New Template",
+        "pickADocumentTypeAndA": "Pick a document type and a paper size to start from. You can change everything in the designer.",
+        "documentType": "Document Type",
+        "startFrom": "Start From"
+      },
+      "pageSetupDialog": {
+        "pageSetup": "Page Setup",
+        "paperSizeMarginsAndOutputSettings": "Paper size, margins and output settings for this template.",
+        "paper": "Paper",
+        "orientation": "Orientation",
+        "portrait": "Portrait",
+        "landscape": "Landscape",
+        "output": "Output",
+        "copies": "Copies",
+        "copyLayout": "Copy layout",
+        "stacked": "Stacked",
+        "sideBySide": "Side by side"
+      },
+      "printDevicesDialog": {
+        "copyPairingCode": "Copy pairing code",
+        "couldnTLoadYourPrintDevices": "Couldn't load your print devices",
+        "printDevices": "Print Devices"
+      },
+      "printFormats": {
+        "designAndManagePrintTemplatesFor": "Design and manage print templates for bills, receipts and labels",
+        "searchDocumentTypesOrTemplates": "Search document types or templates...",
+        "couldnTLoadYourPrintTemplates": "Couldn't load your print templates",
+        "noMatches": "No matches",
+        "noDocumentTypeOrTemplateMatches": "No document type or template matches that search.",
+        "noFormatsForThisDocumentType": "No formats for this document type",
+        "useAddMissingDefaultsToRestore": "Use Add Missing Defaults to restore the standard formats, or create one.",
+        "deleteThisTemplate": "Delete this template?",
+        "delete": "Delete"
+      },
+      "whatsapp": {
+        "whatsapp": "WhatsApp",
+        "messageTemplatesSentToCustomersAs": "Message templates sent to customers as their job progresses",
+        "couldnTLoadYourWhatsappTemplates": "Couldn't load your WhatsApp templates",
+        "countryCode": "Country Code"
+      },
+      "behaviorSubtab": {
+        "collectPaymentWithGenerateBill": "Collect payment with Generate Bill",
+        "printPromptAfterJobCardCreation": "Print prompt after job card creation",
+        "afterCreatingAJobCardA": "After creating a job card, a popup offers Print Label / Print Receipt / WhatsApp.",
+        "requireDescriptionOnJobDone": "Require description on Job Done",
+        "descriptionIsOptionalWhenMarkingA": "Description is optional when marking a job done.",
+        "seesEstimatedCostFinalAmountPaid": "Sees estimated cost, final amount, paid, due, receipts and parts cost.",
+        "allowUndoLastAction": "Allow undo last action",
+        "undoDisabledStatusChangesArePermanent": "Undo disabled — status changes are permanent for this role.",
+        "autoOpenPopups": "Auto-Open Popups",
+        "afterJobDone": "After Job Done",
+        "technicianMarksTheRepairComplete": "Technician marks the repair complete",
+        "openGenerateBill": "Open Generate Bill",
+        "billPopupOpensAutomatically": "Bill popup opens automatically",
+        "openHandover": "Open Handover",
+        "handoverPopupOpensAutomatically": "Handover popup opens automatically",
+        "afterGenerateBill": "After Generate Bill",
+        "billIsGeneratedForTheJob": "Bill is generated for the job",
+        "afterReceivePayment": "After Receive Payment",
+        "aPaymentIsRecordedForThe": "A payment is recorded for the job"
+      },
+      "formBuilderTab": {
+        "couldnTLoadThisFormS": "Couldn't load this form's saved layout",
+        "selectATemplate": "Select a template...",
+        "importFormSchema": "Import form schema?",
+        "thisReplacesEveryFieldAndLayout": "This replaces every field and layout setting currently in this draft with the contents of the uploaded file. Nothing is saved until you click Save, but any unsaved changes made so far will be overwritten.",
+        "thisReplacesEveryFieldAndLayout2": "This replaces every field and layout setting currently in this draft with the saved template. Nothing is saved until you click Save, but any unsaved changes made so far will be overwritten.",
+        "twoColumn": "Two Column",
+        "largeDesktop": "Large Desktop",
+        "template": "Template",
+        "layout": "Layout"
+      },
+      "permissionsSubtab": {
+        "allowedActionsPerStatus": "Allowed Actions per Status"
+      },
+      "rolePermissionsTab": {
+        "couldnTLoadYourRoles": "Couldn't load your roles",
+        "selectARoleToConfigure": "Select a role to configure...",
+        "noRolesConfiguredYet": "No roles configured yet",
+        "pickARoleFromTheDropdown": "Pick a role from the dropdown above to set up its statuses and actions.",
+        "couldnTLoadThisRoleS": "Couldn't load this role's workflow config",
+        "selectARole": "Select a role",
+        "behavior": "Behavior"
+      },
+      "usersSubtab": {
+        "receivedBy": "Received By",
+        "returnedBy": "Returned By",
+        "allUsers": "All users",
+        "whoDidItDropdowns": "Who Did It — Dropdowns",
+        "fieldVisitTechnician": "Field Visit Technician",
+        "whoCheckedInOnAnOn": "Who checked in on an on-site visit"
+      },
+      "workflowDesigner": {
+        "workflowDesigner": "Workflow Designer",
+        "rolePermissions": "Role Permissions",
+        "jobCardForm": "Job Card Form",
+        "leadForm": "Lead Form"
+      }
     }
   },
   "components": {

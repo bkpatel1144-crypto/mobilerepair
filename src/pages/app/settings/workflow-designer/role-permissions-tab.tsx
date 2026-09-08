@@ -47,6 +47,7 @@ const HOW_IT_WORKS = [
 ]
 
 export function RolePermissionsTab() {
+  const { t } = useTranslation()
   const {
     data: allRoles = [],
     isLoading: rolesLoading,
@@ -61,7 +62,7 @@ export function RolePermissionsTab() {
       <ErrorState
         error={rolesError}
         onRetry={() => void refetchRoles()}
-        title="Couldn't load your roles"
+        title={t('pages.settings.rolePermissionsTab.couldnTLoadYourRoles')}
       />
     )
   }
@@ -73,7 +74,9 @@ export function RolePermissionsTab() {
       <div className="space-y-6">
         <Select value="" onValueChange={(v) => v && setSelectedRoleId(v)}>
           <SelectTrigger className="w-full sm:w-80">
-            <SelectValue placeholder="Select a role to configure..." />
+            <SelectValue
+              placeholder={t('pages.settings.rolePermissionsTab.selectARoleToConfigure')}
+            />
           </SelectTrigger>
           <SelectContent>
             {allRoles.map((role) => (
@@ -107,8 +110,8 @@ export function RolePermissionsTab() {
           </p>
           {configuredRoles.length === 0 ? (
             <EmptyState
-              title="No roles configured yet"
-              description="Pick a role from the dropdown above to set up its statuses and actions."
+              title={t('pages.settings.rolePermissionsTab.noRolesConfiguredYet')}
+              description={t('pages.settings.rolePermissionsTab.pickARoleFromTheDropdown')}
             />
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -192,7 +195,7 @@ function SelectedRolePanel({
       <ErrorState
         error={loadError}
         onRetry={() => void refetch()}
-        title="Couldn't load this role's workflow config"
+        title={t('pages.settings.rolePermissionsTab.couldnTLoadThisRoleS')}
       />
     )
   }
@@ -271,7 +274,9 @@ function SelectedRolePanel({
         <TabsList>
           <TabsTrigger value="permissions">{t('common.permissions')}</TabsTrigger>
           <TabsTrigger value="users">{t('common.users')}</TabsTrigger>
-          <TabsTrigger value="behavior">Behavior</TabsTrigger>
+          <TabsTrigger value="behavior">
+            {t('pages.settings.rolePermissionsTab.behavior')}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="permissions" className="pt-4">
           <PermissionsSubtab draft={draft} setDraft={updateDraft} disabled={saveConfig.isPending} />

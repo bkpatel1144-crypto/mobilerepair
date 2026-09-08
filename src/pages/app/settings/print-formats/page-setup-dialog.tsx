@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import type { DesignerDraft } from './use-designer-state'
+import { useTranslation } from 'react-i18next'
 
 /** Paper, margins and output settings for one template. Everything here is undoable through the
  * designer's own history, because it commits through the same `commit()` an element move does. */
@@ -25,6 +26,7 @@ export function PageSetupDialog({
   draft: DesignerDraft
   onChange: (next: Partial<DesignerDraft>) => void
 }) {
+  const { t } = useTranslation()
   const num = (v: string, fallback: number) => {
     const n = Number(v)
     return Number.isFinite(n) && n >= 0 ? n : fallback
@@ -34,13 +36,15 @@ export function PageSetupDialog({
     <FormModal
       open={open}
       onOpenChange={onOpenChange}
-      title="Page Setup"
-      description="Paper size, margins and output settings for this template."
+      title={t('pages.settings.pageSetupDialog.pageSetup')}
+      description={t('pages.settings.pageSetupDialog.paperSizeMarginsAndOutputSettings')}
       submitLabel="Done"
       onSubmit={() => onOpenChange(false)}
     >
       <div className="space-y-1.5">
-        <Label className="text-xs font-semibold tracking-wide uppercase">Paper</Label>
+        <Label className="text-xs font-semibold tracking-wide uppercase">
+          {t('pages.settings.pageSetupDialog.paper')}
+        </Label>
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))]">
           <div className="space-y-1">
             <Label className="text-xs">Width (mm)</Label>
@@ -67,7 +71,7 @@ export function PageSetupDialog({
             />
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Orientation</Label>
+            <Label className="text-xs">{t('pages.settings.pageSetupDialog.orientation')}</Label>
             <Select
               value={draft.paper.orientation}
               onValueChange={(v) =>
@@ -79,8 +83,12 @@ export function PageSetupDialog({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="portrait">Portrait</SelectItem>
-                <SelectItem value="landscape">Landscape</SelectItem>
+                <SelectItem value="portrait">
+                  {t('pages.settings.pageSetupDialog.portrait')}
+                </SelectItem>
+                <SelectItem value="landscape">
+                  {t('pages.settings.pageSetupDialog.landscape')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -109,10 +117,12 @@ export function PageSetupDialog({
       </div>
 
       <div className="space-y-2">
-        <Label className="text-xs font-semibold tracking-wide uppercase">Output</Label>
+        <Label className="text-xs font-semibold tracking-wide uppercase">
+          {t('pages.settings.pageSetupDialog.output')}
+        </Label>
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))]">
           <div className="space-y-1">
-            <Label className="text-xs">Copies</Label>
+            <Label className="text-xs">{t('pages.settings.pageSetupDialog.copies')}</Label>
             <Input
               type="number"
               min={1}
@@ -149,7 +159,7 @@ export function PageSetupDialog({
 
         {draft.settings.duplicateCopy && (
           <div className="space-y-1">
-            <Label className="text-xs">Copy layout</Label>
+            <Label className="text-xs">{t('pages.settings.pageSetupDialog.copyLayout')}</Label>
             <Select
               value={draft.settings.duplicateCopyDirection}
               onValueChange={(v) =>
@@ -166,8 +176,12 @@ export function PageSetupDialog({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="stacked">Stacked</SelectItem>
-                <SelectItem value="side-by-side">Side by side</SelectItem>
+                <SelectItem value="stacked">
+                  {t('pages.settings.pageSetupDialog.stacked')}
+                </SelectItem>
+                <SelectItem value="side-by-side">
+                  {t('pages.settings.pageSetupDialog.sideBySide')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
