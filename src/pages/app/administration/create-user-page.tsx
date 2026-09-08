@@ -23,24 +23,44 @@ import { getAuthErrorMessage } from '@/lib/auth'
 import { errorMessage } from '@/lib/error-message'
 import { buildPath } from '@/config/nav'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 
-const createUserSchema = z.object({
-  fullName: z.string().min(2, 'Full name must be at least 2 characters').max(80),
-  mobile: z
-    .string()
-    .regex(/^\d{10}$/, 'Enter a valid 10-digit mobile number')
-    .or(z.literal('')),
-  email: z.string().min(1, 'Email is required').email('Enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters').max(128),
-  roleId: z.string().min(1, 'Select a role'),
-})
-type CreateUserInput = z.infer<typeof createUserSchema>
+/**
+ * Built from `t` rather than declared at module scope, because a zod message is baked in when
+ * the schema object is created — a module-scope schema would freeze every validation message in
+ * whichever language happened to be active at import time and never follow a language switch.
+ *
+ * The inferred type is taken from a throwaway instance so `CreateUserInput` stays a plain type
+ * and does not depend on `t` at all.
+ */
+function buildCreateUserSchema(t: TFunction) {
+  return z.object({
+    fullName: z.string().min(2, t('pages.administration.createUser.fullNameMustBeAtLeast')).max(80),
+    mobile: z
+      .string()
+      .regex(/^\d{10}$/, t('pages.administration.createUser.enterAValid10DigitMobile'))
+      .or(z.literal('')),
+    email: z
+      .string()
+      .min(1, t('pages.administration.createUser.emailIsRequired'))
+      .email(t('pages.administration.createUser.enterAValidEmailAddress')),
+    password: z
+      .string()
+      .min(6, t('pages.administration.createUser.passwordMustBeAtLeast6'))
+      .max(128),
+    roleId: z.string().min(1, t('pages.administration.createUser.selectARole')),
+  })
+}
+type CreateUserInput = z.infer<ReturnType<typeof buildCreateUserSchema>>
 
 const DRAFT_KEY = 'aim-create-user-draft'
 
 export function CreateUserPage() {
   const { t } = useTranslation()
+  // Rebuilt when the language changes, so the messages follow it.
+  const schema = useMemo(() => buildCreateUserSchema(t), [t])
   useBreadcrumbExtra(t('common.create'))
   const navigate = useNavigate()
   const { profile } = useAuth()
@@ -59,7 +79,7 @@ export function CreateUserPage() {
     reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm<CreateUserInput>({
-    resolver: zodResolver(createUserSchema),
+    resolver: zodResolver(schema),
     mode: 'onChange',
     defaultValues: (() => {
       try {

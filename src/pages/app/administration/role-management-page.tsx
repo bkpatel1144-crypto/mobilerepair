@@ -46,9 +46,9 @@ import { useTranslation } from 'react-i18next'
 type StatusFilter = 'active' | 'disabled' | 'deleted'
 
 const STATUS_LABEL: Record<StatusFilter, string> = {
-  active: 'Active Roles',
-  disabled: 'Disabled Roles',
-  deleted: 'Deleted Roles',
+  active: 'pages.administration.roleManagement.activeRoles',
+  disabled: 'pages.administration.roleManagement.disabledRoles',
+  deleted: 'pages.administration.roleManagement.deletedRoles',
 }
 
 export function RoleManagementPage() {
@@ -335,7 +335,7 @@ export function RoleManagementPage() {
       <p className="flex items-center gap-2 text-sm">
         <span className="text-muted-foreground">{t('shared.viewing')}</span>
         <span className="rounded-full border px-2.5 py-0.5 text-xs font-medium">
-          {STATUS_LABEL[statusFilter]} ({filtered.length})
+          {t(STATUS_LABEL[statusFilter])} ({filtered.length})
         </span>
       </p>
 

@@ -15,10 +15,10 @@ import { formatTimestamp } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
 const BUCKET_LABELS: Record<AgingBucket, string> = {
-  '0-30': '0-30 days',
-  '30-60': '30-60 days',
-  '60-90': '60-90 days',
-  '90+': '90+ days',
+  '0-30': 'pages.finance.receivables.030Days',
+  '30-60': 'pages.finance.receivables.3060Days',
+  '60-90': 'pages.finance.receivables.6090Days',
+  '90+': 'pages.finance.receivables.90Days',
 }
 
 export function ReceivablesPage() {
@@ -69,7 +69,7 @@ export function ReceivablesPage() {
       key: 'aging',
       header: t('pages.finance.receivables.aging'),
       sortValue: (r) => r.daysOld,
-      render: (r) => `${r.daysOld}d (${BUCKET_LABELS[r.bucket]})`,
+      render: (r) => `${r.daysOld}d (${t(BUCKET_LABELS[r.bucket])})`,
     },
     {
       key: 'outstanding',
@@ -122,7 +122,7 @@ export function ReceivablesPage() {
         {(Object.keys(BUCKET_LABELS) as AgingBucket[]).map((b) => (
           <StatCard
             key={b}
-            label={BUCKET_LABELS[b]}
+            label={t(BUCKET_LABELS[b])}
             value={`₹${data.buckets[b]}`}
             tone={b === '90+' ? 'danger' : b === '60-90' ? 'warning' : 'default'}
           />

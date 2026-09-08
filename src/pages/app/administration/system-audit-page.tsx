@@ -23,10 +23,10 @@ import type { AuditResult } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
 
 const RESULT_LABEL: Record<AuditResult, string> = {
-  success: 'Success',
-  unauthorized: 'Unauthorized',
-  blocked: 'Blocked',
-  failed: 'Failed',
+  success: 'shared.success',
+  unauthorized: 'shared.unauthorized',
+  blocked: 'shared.blocked',
+  failed: 'shared.failed',
 }
 const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
   success: 'success',
@@ -107,7 +107,9 @@ export function SystemAuditPage() {
     {
       key: 'result',
       header: t('shared.result'),
-      render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} />,
+      render: (e) => (
+        <StatusBadge status={t(RESULT_LABEL[e.result])} tone={RESULT_TONE[e.result]} />
+      ),
     },
     { key: 'ip', header: t('shared.ip'), hideOnMobile: true, render: (e) => e.ip ?? '—' },
   ]
@@ -132,7 +134,7 @@ export function SystemAuditPage() {
                   'Entity Label': e.entityLabel,
                   'Performed By': e.performedByName,
                   Target: e.targetLabel,
-                  Result: RESULT_LABEL[e.result],
+                  Result: t(RESULT_LABEL[e.result]),
                   IP: e.ip ?? '',
                 }))
               )

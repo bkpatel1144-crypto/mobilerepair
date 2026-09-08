@@ -23,10 +23,10 @@ type CardFilter =
 // 'failed' is only ever written by crash reporting, which is not a login event — it is
 // listed here because `AuditResult` is shared, not because this report can show it.
 const RESULT_LABEL: Record<AuditResult, string> = {
-  success: 'Success',
-  unauthorized: 'Unauthorized',
-  blocked: 'Blocked',
-  failed: 'Failed',
+  success: 'shared.success',
+  unauthorized: 'shared.unauthorized',
+  blocked: 'shared.blocked',
+  failed: 'shared.failed',
 }
 const RESULT_TONE: Record<AuditResult, 'success' | 'danger' | 'warning'> = {
   success: 'success',
@@ -99,7 +99,9 @@ export function LoginReportPage() {
     {
       key: 'result',
       header: t('shared.result'),
-      render: (e) => <StatusBadge status={RESULT_LABEL[e.result]} tone={RESULT_TONE[e.result]} />,
+      render: (e) => (
+        <StatusBadge status={t(RESULT_LABEL[e.result])} tone={RESULT_TONE[e.result]} />
+      ),
     },
   ]
 
@@ -209,7 +211,10 @@ export function LoginReportPage() {
           title={viewing.performedByName}
           subtitle={viewing.entityLabel}
           badges={
-            <StatusBadge status={RESULT_LABEL[viewing.result]} tone={RESULT_TONE[viewing.result]} />
+            <StatusBadge
+              status={t(RESULT_LABEL[viewing.result])}
+              tone={RESULT_TONE[viewing.result]}
+            />
           }
           sections={[
             {

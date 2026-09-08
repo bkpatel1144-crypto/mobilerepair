@@ -36,10 +36,10 @@ type InvoiceStatus = (typeof INVOICE_STATUSES)[number]
 type Tab = 'all' | InvoiceStatus
 
 const TAB_LABELS: Record<Tab, string> = {
-  all: 'All',
-  ready: 'Ready',
-  delivered: 'Delivered',
-  closed: 'Closed',
+  all: 'common.all',
+  ready: 'shared.ready',
+  delivered: 'shared.delivered',
+  closed: 'pages.sales.salesInvoices.closed',
 }
 
 function statusLabel(key: string) {
@@ -227,7 +227,7 @@ export function SalesInvoicesPage() {
                 (tab === tab ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
               }
             >
-              {TAB_LABELS[tab]} {counts[tab]}
+              {t(TAB_LABELS[tab])} {counts[tab]}
             </button>
           ))}
         </div>

@@ -6,12 +6,12 @@ import { MarketingFooter } from '@/components/marketing/marketing-footer'
 import { useTranslation } from 'react-i18next'
 
 const INCLUDED = [
-  'Unlimited job cards, technicians, and customers',
-  'Full role-based access control & Workflow Designer',
-  'Finance: receipts, ledgers, receivables & payables',
-  'Second-hand device purchase & sale tracking',
-  'All reports, dashboards, and CSV/Excel exports',
-  'Free data migration from your current system',
+  'pages.pricing.pricing.unlimitedJobCardsTechniciansAndCustomers',
+  'pages.pricing.pricing.fullRoleBasedAccessControlWorkflow',
+  'pages.pricing.pricing.financeReceiptsLedgersReceivablesPayables',
+  'pages.pricing.pricing.secondHandDevicePurchaseSaleTracking',
+  'pages.pricing.pricing.allReportsDashboardsAndCsvExcel',
+  'pages.pricing.pricing.freeDataMigrationFromYourCurrent',
 ]
 
 /** Deliberately has no plan-tier UI, no payment form, and no "trial" language — this product
@@ -40,9 +40,9 @@ export function PricingPage() {
           </p>
           <ul className="mt-6 space-y-3">
             {INCLUDED.map((item) => (
-              <li key={item} className="flex items-start gap-2 text-sm">
+              <li key={t(item)} className="flex items-start gap-2 text-sm">
                 <Check className="mt-0.5 size-4 shrink-0 text-teal-600" />
-                {item}
+                {t(item)}
               </li>
             ))}
           </ul>
