@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { FormError } from '@/components/shared/form-error'
 import { PRINT_DOCUMENT_TYPES } from '@/config/print-fields'
 import { PRINT_PRESETS } from '@/config/print-presets'
 import { buildDefaultLayout } from '@/config/print-layouts'
@@ -72,6 +71,7 @@ export function NewTemplateDialog({
 
   return (
     <FormModal
+      error={error}
       open={open}
       onOpenChange={onOpenChange}
       title={t('pages.settings.newTemplateDialog.newTemplate')}
@@ -130,8 +130,6 @@ export function NewTemplateDialog({
           }
         />
       </div>
-
-      {error && <FormError message={error} />}
     </FormModal>
   )
 }

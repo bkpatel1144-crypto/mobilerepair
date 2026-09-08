@@ -9,7 +9,6 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { FormModal } from '@/components/shared/form-modal'
-import { FormError } from '@/components/shared/form-error'
 import { SearchSelect } from '@/components/shared/search-select'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -116,6 +115,7 @@ function NewExpenseModal({
 
   return (
     <FormModal
+      error={error}
       open={open}
       onOpenChange={(o) => {
         if (!o) reset()
@@ -223,8 +223,6 @@ function NewExpenseModal({
           placeholder="e.g. September rent"
         />
       </div>
-
-      {error && <FormError message={error} />}
     </FormModal>
   )
 }

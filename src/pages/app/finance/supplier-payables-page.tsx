@@ -22,7 +22,6 @@ import { ErrorState } from '@/components/shared/error-state'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { FormModal } from '@/components/shared/form-modal'
-import { FormError } from '@/components/shared/form-error'
 import { SearchSelect } from '@/components/shared/search-select'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -147,6 +146,7 @@ function NewBillModal({
 
   return (
     <FormModal
+      error={error}
       open={open}
       onOpenChange={(o) => {
         if (!o) reset()
@@ -249,8 +249,6 @@ function NewBillModal({
         </Label>
         <Textarea id="sb-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
       </div>
-
-      {error && <FormError message={error} />}
     </FormModal>
   )
 }
@@ -306,6 +304,7 @@ function PaymentModal({
 
   return (
     <FormModal
+      error={error}
       open={!!payable}
       onOpenChange={(o) => !o && onClose()}
       title={t('shared.recordPayment')}
@@ -368,8 +367,6 @@ function PaymentModal({
       <p className="text-xs text-muted-foreground">
         {t('pages.finance.supplierPayables.recordedAsAPaymentOutSo')}
       </p>
-
-      {error && <FormError message={error} />}
     </FormModal>
   )
 }

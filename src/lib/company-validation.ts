@@ -62,8 +62,12 @@ export function validateCompany(v: CompanyFormValues): string | null {
   if (!v.legalName.trim()) return 'Legal name is required.'
   if (!v.email.trim()) return 'Email is required.'
   if (!/^\S+@\S+\.\S+$/.test(v.email.trim())) return 'That email does not look right.'
-  if (!v.phone.trim()) return 'Phone is required.'
-  if (!/^\d{10}$/.test(v.phone.trim())) return 'Phone should be a 10-digit mobile number.'
+  // Optional, but checked when given. It used to be required, which made the *first* edit of
+  // every company impossible: signup never asks for a phone and seeds `phone: ''`, so opening
+  // Edit and changing anything else failed on a field the user had never been offered. A shop
+  // contact number is useful on a printed bill, not a precondition for renaming the company.
+  if (v.phone.trim() && !/^\d{10}$/.test(v.phone.trim()))
+    return 'Phone should be a 10-digit mobile number.'
 
   // GSTIN and PAN are only required for a registered company — an unregistered shop has neither,
   // and demanding them would make the form impossible to complete honestly.

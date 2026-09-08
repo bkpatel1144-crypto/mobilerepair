@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { FormError } from '@/components/shared/form-error'
 
 interface FormModalProps {
   open: boolean
@@ -20,6 +21,16 @@ interface FormModalProps {
   onClear?: () => void
   clearLabel?: string
   children: React.ReactNode
+  /**
+   * A validation or save failure, rendered directly under the header rather than left to the
+   * caller to place after the fields.
+   *
+   * Placement is the whole point. Company Settings passed it as the last child, which put it
+   * below a form long enough to scroll — so pressing Save on a company with no phone number
+   * (which is every company at signup, since `auth.ts` seeds `phone: ''`) set an error nobody
+   * could see, and the modal just appeared to do nothing.
+   */
+  error?: string | null
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
   submitLabel?: string
   cancelLabel?: string
@@ -40,6 +51,7 @@ export function FormModal({
   onClear,
   clearLabel,
   children,
+  error,
   onSubmit,
   submitLabel,
   cancelLabel,
@@ -78,6 +90,7 @@ export function FormModal({
         </div>
 
         <form onSubmit={onSubmit} className="contents">
+          {error && <FormError message={error} />}
           <div className="space-y-4">{children}</div>
 
           <DialogFooter>
@@ -85,7 +98,7 @@ export function FormModal({
               {cancelLabel ?? t('common.cancel')}
             </Button>
             <Button type="submit" disabled={isSubmitting || submitDisabled}>
-              {isSubmitting ? 'Saving…' : submitLabel}
+              {isSubmitting ? t('common.saving') : submitLabel}
             </Button>
           </DialogFooter>
         </form>

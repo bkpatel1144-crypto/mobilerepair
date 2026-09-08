@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Upload } from 'lucide-react'
 import { FormModal } from '@/components/shared/form-modal'
-import { FormError } from '@/components/shared/form-error'
 import { Label } from '@/components/ui/label'
 import { useCreatePrintTemplate } from '@/hooks/use-print-templates'
 import { PRINT_DOCUMENT_TYPES } from '@/config/print-fields'
@@ -95,6 +94,7 @@ export function ImportTemplateDialog({
 
   return (
     <FormModal
+      error={error}
       open={open}
       onOpenChange={onOpenChange}
       title={t('pages.settings.importTemplateDialog.importTemplate')}
@@ -132,7 +132,6 @@ export function ImportTemplateDialog({
           }}
         />
       </div>
-      {error && <FormError message={error} />}
     </FormModal>
   )
 }

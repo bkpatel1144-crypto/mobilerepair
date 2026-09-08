@@ -27,7 +27,6 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { FormModal } from '@/components/shared/form-modal'
-import { FormError } from '@/components/shared/form-error'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -584,6 +583,7 @@ export function CompanySettingsPage() {
 
       {/* ---- Create ---- */}
       <FormModal
+        error={error}
         open={creating}
         onOpenChange={(o) => {
           if (!o) setError(null)
@@ -599,11 +599,11 @@ export function CompanySettingsPage() {
         className="sm:max-w-3xl"
       >
         <CompanyForm value={form} onChange={setForm} />
-        {error && <FormError message={error} />}
       </FormModal>
 
       {/* ---- Edit ---- */}
       <FormModal
+        error={error}
         open={!!editing}
         onOpenChange={(o) => {
           if (!o) {
@@ -619,7 +619,6 @@ export function CompanySettingsPage() {
         className="sm:max-w-3xl"
       >
         <CompanyForm value={form} onChange={setForm} />
-        {error && <FormError message={error} />}
       </FormModal>
 
       {/* Kept so the page still reflects the active company even before the list resolves. */}

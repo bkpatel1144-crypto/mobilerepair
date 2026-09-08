@@ -137,7 +137,7 @@ export function CompanyForm({
       </div>
 
       <div className="grid gap-4 border-t pt-5 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
-        <Field label={t('common.phone')} required>
+        <Field label={t('common.phone')}>
           <Input
             value={value.phone}
             onChange={(e) => set({ phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}

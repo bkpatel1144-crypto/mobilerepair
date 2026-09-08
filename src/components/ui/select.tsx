@@ -64,7 +64,14 @@ function Select<Value = unknown, Multiple extends boolean | undefined = false>({
   }, [children])
 
   return (
-    <SelectPrimitive.Root items={items.length > 0 ? items : undefined} {...props}>
+    // `modal={false}` by default. Base UI's Select is modal on its own, so opening one *inside*
+    // a Dialog inerts everything behind it — the Dialog included — and the dialog is left with
+    // `aria-hidden="true"` while an input inside it still holds focus. Chrome reports exactly
+    // that: "Blocked aria-hidden on an element because its descendant retained focus", and for
+    // a screen-reader user the whole form disappears mid-edit. A dropdown does not need its own
+    // modal layer when a dialog already provides one, and it still closes on outside press.
+    // Overridable, since `props` spreads after it.
+    <SelectPrimitive.Root items={items.length > 0 ? items : undefined} modal={false} {...props}>
       {children}
     </SelectPrimitive.Root>
   )
