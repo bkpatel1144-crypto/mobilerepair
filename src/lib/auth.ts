@@ -243,28 +243,24 @@ export async function signUp({
   const credential = await createUserWithEmailAndPassword(auth, email, password)
   const uid = credential.user.uid
 
-  try {
-    await updateProfile(credential.user, { displayName: fullName })
-    return await seedTenantForUser(uid, email, companyName, fullName)
-  } catch (err) {
-    // The Auth account is deliberately *kept*.
-    //
-    // This used to call `credential.user.delete()`, on the reasoning that an Auth user with no
-    // profile doc is a broken half-onboarded state. In practice that was the more destructive
-    // outcome by far: any transient failure — a rules rejection during a deploy, a sustained
-    // offline stretch, the backend refusing writes while a billing change propagated — silently
-    // destroyed the account. The user then saw "you don't have access", got signed out, and
-    // their own email came back as "Incorrect email or password" on the next attempt, because
-    // Firebase reports a missing account and a wrong password identically.
-    //
-    // There is already a recovery path for precisely this shape of failure, and deleting the
-    // account was the one thing that made it unreachable: `createUserWithEmailAndPassword` has
-    // signed the user in, `ProtectedRoute` sends a signed-in user with no profile to
-    // /complete-setup, and `completeAccountSetup()` re-runs this same bootstrap for the existing
-    // uid — and never deletes on failure either. So the account is left alone and the user
-    // finishes onboarding, on this visit or the next time they log in.
-    throw err
-  }
+  // No rollback on failure — the Auth account is deliberately kept.
+  //
+  // This used to wrap the seeding in a try/catch that called `credential.user.delete()`, on the
+  // reasoning that an Auth user with no profile doc is a broken half-onboarded state. In practice
+  // that was the far more destructive outcome: any transient failure — a rules rejection during a
+  // deploy, a sustained offline stretch, the backend refusing writes while a billing change
+  // propagated — silently destroyed the account. The user then saw "you don't have access", got
+  // signed out, and their own email came back as "Incorrect email or password" next time, because
+  // Firebase reports a missing account and a wrong password identically.
+  //
+  // A recovery path for exactly this failure already exists, and deleting the account was the one
+  // thing that made it unreachable: `createUserWithEmailAndPassword` above has signed the user in,
+  // `ProtectedRoute` sends a signed-in user with no profile to /complete-setup, and
+  // `completeAccountSetup()` re-runs this same bootstrap for the existing uid — never deleting on
+  // failure either. So a rejection here propagates to the caller with the account intact, and the
+  // user finishes onboarding on this visit or the next login.
+  await updateProfile(credential.user, { displayName: fullName })
+  return await seedTenantForUser(uid, email, companyName, fullName)
 }
 
 /**
