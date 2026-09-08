@@ -32,6 +32,9 @@ jobs:
       - name: Format check
         run: npm run format:check
 
+      # `npm test` is `vitest run`, which includes the jsdom render suite that mounts 49
+      # pages in three languages. That is the only check that catches a wrong translation
+      # key, so it must not be narrowed to a subset.
       - name: Tests
         run: npm test
 

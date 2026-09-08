@@ -1367,3 +1367,88 @@ Two of these need credentials this environment doesn't have; one needs a decisio
    is generated from `NAV_SECTIONS`, so there are no built-but-hidden pages to surface — the
    missing 11 are features that don't exist. Needs a screenshot of the competitor's expanded
    sidebar to add them as real pages rather than dead links.
+
+---
+
+## Trilingual UI: English, Hindi, Gujarati
+
+Complete. **1,599 keys in each of `en.json`, `hi.json`, `gu.json`; 1,984 `t()` call sites; the
+audit reports zero untranslated display strings.**
+
+Switch language from the header picker and everything follows: sidebar, header, all 44 menu items,
+every page title, column header, form label, placeholder, dialog, validation message, empty state,
+error, the marketing site, the auth screens, and dates (a Gujarati date reads `04 સપ્ટે 2026`).
+
+### The rollout, and why it took several passes
+
+Each pass revealed a whole _shape_ of string the previous one could not see, and each gap was
+invisible until something went looking:
+
+1. **Attributes, object props, single-line JSX text** — the first extractor's three patterns.
+2. **JSX expressions and call arguments** — `x ? 'Active' : 'Inactive'`,
+   `setError('Enter an amount')`. About a third of the app's text.
+3. **Multi-line JSX text** — every sentence Prettier wrapped at 100 characters, which is most of
+   the actual prose.
+4. **Module-scope constants** — label maps, option arrays, a zod schema, plain helper functions.
+
+### Bugs the work introduced, and what caught each
+
+Worth recording because the pattern repeats: a wrong translation key is a _valid string_, so tsc,
+eslint and the build all pass.
+
+- **Three pages shipped a `t()` call as visible text.** English quotation marks in JSX prose are
+  punctuation, but the scanner read them as string delimiters, so Company Settings, Financial
+  Years and Backup & Restore each rendered e.g.
+  `Note: Use t('pages.settings.financialYears.createNextFy') for sequential years.`
+- **A TypeScript discriminant was rewritten into a `t()` call** —
+  `useState<'Raw Material' | 'Service'>`. That changes what the code _does_.
+- **`CONFIRM_PHRASE = 'OVERWRITE'`** — the phrase a user types to confirm overwriting live data.
+- **Default parameters** (`title = t(...)`) are evaluated before the hook exists.
+- **`camera-scan-frame`'s effect closed over `t`** — adding it to the deps would restart the
+  camera on every language switch.
+- **The landing page rendered raw keys** in the job-card timeline (6) and the whole FAQ (8). Found
+  only by rendering; every static check had passed.
+- **283 strings were silently skipped** because scope attribution used brace matching, and an
+  apostrophe in JSX text ("can't") reads as an opening quote. The Dashboard and Active Sessions
+  were fully translated and still rendering English, because nothing referenced the keys.
+
+### What now enforces it
+
+- **`no-hardcoded-strings.test.ts`** scans every source file and fails on any user-visible English
+  string, with 16 allow-listed exceptions (each a _persisted value_ or the typed confirm phrase,
+  documented inline).
+- **`pages-render.test.tsx`** mounts **49 pages in all three languages — 147 cases** — and fails if
+  a dotted key reaches the screen. This is the only check that catches a wrong key, and it found
+  two live bugs the moment it existed.
+- **`locales.test.ts`** — identical key sets, no empty strings, matching `{{placeholders}}`, 12
+  month names, under 10% identical to English.
+- **`keys-used.test.ts`** — every literal `t()` key exists in `en.json`.
+
+**294 tests. tsc, eslint, Prettier and the build all clean.**
+
+### 16 strings stay English deliberately
+
+`UomDoc.type`, `PaymentModeDoc.type` and `accessoriesIncluded` are persisted as those exact
+strings — translating the array would change what is written to Firestore and stop an existing
+record matching its own option. Each has a value-to-key map beside it, so the label the shopkeeper
+reads _is_ localised while the stored value does not move. Plus `OVERWRITE`, which must be typed
+exactly.
+
+### Wants a native speaker
+
+The Gujarati and Hindi accounting vocabulary is a best effort: ખાતાવહી for ledger,
+લેણી/દેવી રકમ for receivables/payables, નફો અને નુકસાન for P&L, રોકડ ખાતાવહી for cash book,
+ઉધાર for credit. Defensible, but a shopkeeper may say otherwise — corrections are one edit each in
+`gu.json` / `hi.json`.
+
+### Still blocking production
+
+Unchanged, and neither is code work:
+
+1. **`firestore.rules` has never been deployed.** `expenses`, `expenseCategories`,
+   `supplierBills`, `printDevices`, the multi-company changes and print-template versions are all
+   written and inert; those features fail with permission-denied against the live project.
+2. **Nothing has run against the real Firebase project.** The render tests mock Firebase at the
+   module boundary — they prove the UI renders, not that a write succeeds. One real pass through
+   company → party → job card → invoice → receipt → ledger → P&L is still the highest-value
+   remaining action.
