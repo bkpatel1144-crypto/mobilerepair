@@ -45,7 +45,7 @@ export function LoginPage() {
             to="/signup"
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"
           >
-            Sign up free
+            {t('pages.login.login.signUpFree')}
           </Link>
         </>
       }
@@ -71,7 +71,7 @@ export function LoginPage() {
               to="/forgot-password"
               className="text-xs text-teal-700 hover:underline dark:text-teal-400"
             >
-              Forgot password?
+              {t('pages.login.login.forgotPassword')}
             </Link>
           </div>
           <Input

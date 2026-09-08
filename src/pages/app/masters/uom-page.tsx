@@ -390,7 +390,7 @@ function UomModal({
       <div className="space-y-2 rounded-md border border-dashed p-3">
         <p className="text-sm font-medium">{t('pages.masters.uom.conversionOptional')}</p>
         <p className="text-xs text-muted-foreground">
-          Set this only if this UOM converts to another. e.g. 1 Inch = 0.0254 Meter
+          {t('pages.masters.uom.setThisOnlyIfThisUom')}
         </p>
         <div className="grid grid-cols-2 gap-3">
           <Select value={baseUomId} onValueChange={(v) => v && setBaseUomId(v)}>

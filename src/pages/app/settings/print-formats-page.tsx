@@ -126,15 +126,15 @@ export function PrintFormatsPage() {
         </Button>
         <Button type="button" variant="outline" onClick={() => setImportOpen(true)}>
           <Upload className="size-4" />
-          Import Template
+          {t('pages.settings.printFormats.importTemplate')}
         </Button>
         <Button type="button" variant="outline" onClick={() => setDevicesOpen(true)}>
           <Monitor className="size-4" />
-          Print Devices
+          {t('pages.settings.printFormats.printDevices')}
         </Button>
         <Button type="button" onClick={() => setNewOpen(true)}>
           <Plus className="size-4" />
-          New Template
+          {t('pages.settings.printFormats.newTemplate')}
         </Button>
       </div>
 
@@ -255,7 +255,7 @@ export function PrintFormatsPage() {
                                     }
                                   >
                                     <Star />
-                                    Set as Default
+                                    {t('shared.setAsDefault')}
                                   </DropdownMenuItem>
                                 )}
                                 <DropdownMenuItem onClick={() => duplicate.mutate(tpl)}>

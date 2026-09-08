@@ -129,7 +129,7 @@ export function CreateUserPage() {
           <div>
             <h1 className="text-lg font-bold">{t('pages.administration.createUser.addNewUser')}</h1>
             <p className="text-sm text-muted-foreground">
-              Create a new user account with role and permissions
+              {t('pages.administration.createUser.createANewUserAccountWith')}
             </p>
           </div>
         </div>

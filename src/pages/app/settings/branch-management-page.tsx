@@ -250,7 +250,7 @@ export function BranchManagementPage() {
                     title: '',
                     children: (
                       <p className="text-xs text-muted-foreground">
-                        Protected system branch — cannot be deleted.
+                        {t('pages.settings.branchManagement.protectedSystemBranchCannotBeDeleted')}
                       </p>
                     ),
                   },
@@ -285,7 +285,7 @@ export function BranchManagementPage() {
             autoFocus
           />
           <p className="text-xs text-muted-foreground">
-            A unique branch code will be auto-generated from the name.
+            {t('pages.settings.branchManagement.aUniqueBranchCodeWillBe')}
           </p>
         </div>
       </FormModal>

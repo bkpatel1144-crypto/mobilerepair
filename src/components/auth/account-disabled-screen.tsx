@@ -28,7 +28,7 @@ export function AccountDisabledScreen() {
           {t('components.auth.accountDisabledScreen.thisAccountHasBeenDisabled')}
         </h1>
         <p className="max-w-sm text-sm text-muted-foreground">
-          Contact your Owner or Administrator if you believe this is a mistake.
+          {t('components.auth.accountDisabledScreen.contactYourOwnerOrAdministratorIf')}
         </p>
       </div>
       <Button type="button" variant="outline" onClick={() => logOut()}>

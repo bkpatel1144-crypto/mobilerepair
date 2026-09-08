@@ -296,7 +296,7 @@ export function PrintTemplateDesignerPage() {
                   }
                 >
                   <Star />
-                  Set as Default
+                  {t('shared.setAsDefault')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={() => duplicate.mutate(template)}>
@@ -327,11 +327,11 @@ export function PrintTemplateDesignerPage() {
                 }}
               >
                 <Download />
-                Export as JSON
+                {t('pages.settings.designer.exportAsJson')}
               </DropdownMenuItem>
               <DropdownMenuItem variant="destructive" onClick={() => setConfirmReset(true)}>
                 <RotateCcw />
-                Reset to Default
+                {t('pages.settings.designer.resetToDefault')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -654,7 +654,7 @@ export function PrintTemplateDesignerPage() {
 
               {one.type === 'field' && (
                 <label className="flex items-center justify-between gap-2 text-sm">
-                  Show caption
+                  {t('pages.settings.designer.showCaption')}
                   <Switch
                     checked={one.showLabel}
                     onCheckedChange={(v) => patchEl({ showLabel: v })}
@@ -758,8 +758,7 @@ export function PrintTemplateDesignerPage() {
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  Applies at print time, per record — useful for a row like GSTIN that only some
-                  shops have.
+                  {t('pages.settings.designer.appliesAtPrintTimePerRecord')}
                 </p>
               </div>
 

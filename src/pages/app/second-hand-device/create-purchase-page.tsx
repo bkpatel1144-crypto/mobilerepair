@@ -243,7 +243,7 @@ export function CreateSecondHandPurchasePage() {
             {t('pages.secondHandDevice.createPurchase.buySecondHandDevice')}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Record a second hand device purchase from a seller — added to stock immediately.
+            {t('pages.secondHandDevice.createPurchase.recordASecondHandDevicePurchase')}
           </p>
         </div>
         <Button type="button" variant="outline" onClick={() => navigate(-1)}>
@@ -794,7 +794,7 @@ export function CreateSecondHandPurchasePage() {
             />
           </label>
           <p className="text-xs text-muted-foreground">
-            On mobile this opens the camera directly. Saved against this seller for records.
+            {t('pages.secondHandDevice.createPurchase.onMobileThisOpensTheCamera')}
           </p>
         </div>
 
@@ -804,14 +804,14 @@ export function CreateSecondHandPurchasePage() {
               checked={imeiCheckedClean}
               onCheckedChange={(v) => setImeiCheckedClean(v === true)}
             />
-            IMEI checked against CEIR / blocked-device list
+            {t('pages.secondHandDevice.createPurchase.imeiCheckedAgainstCeirBlockedDevice')}
           </label>
           <label className="flex items-center gap-1.5">
             <Checkbox
               checked={sellerDeclaredNotStolen}
               onCheckedChange={(v) => setSellerDeclaredNotStolen(v === true)}
             />
-            Seller declared the device is theirs to sell and not stolen
+            {t('pages.secondHandDevice.createPurchase.sellerDeclaredTheDeviceIsTheirs')}
           </label>
         </div>
       </div>
@@ -919,7 +919,7 @@ export function CreateSecondHandPurchasePage() {
               }
             />
             <p className="text-xs text-muted-foreground">
-              What you plan to sell this device for. Shows on the Sale screen.
+              {t('pages.secondHandDevice.createPurchase.whatYouPlanToSellThis')}
             </p>
           </div>
         </div>

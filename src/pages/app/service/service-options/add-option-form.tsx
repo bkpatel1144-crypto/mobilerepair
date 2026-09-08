@@ -67,7 +67,7 @@ export function AddOptionForm({
       {deviceTypeOptions && (
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">
-            Device type(s) — check more than one to share this brand
+            {t('pages.service.addOptionForm.deviceTypeSCheckMoreThan')}
           </p>
           <div className="flex flex-wrap gap-x-4 gap-y-1">
             {deviceTypeOptions.map((dt) => (

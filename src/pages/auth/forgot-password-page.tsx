@@ -51,7 +51,7 @@ export function ForgotPasswordPage() {
             to="/login"
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"
           >
-            Back to log in
+            {t('pages.forgotPassword.forgotPassword.backToLogIn')}
           </Link>
         </>
       }
@@ -63,7 +63,7 @@ export function ForgotPasswordPage() {
             {t('pages.forgotPassword.forgotPassword.checkYourEmail')}
           </p>
           <p className="text-sm text-muted-foreground">
-            If an account exists for that address, a reset link is on its way.
+            {t('pages.forgotPassword.forgotPassword.ifAnAccountExistsForThat')}
           </p>
         </div>
       ) : (

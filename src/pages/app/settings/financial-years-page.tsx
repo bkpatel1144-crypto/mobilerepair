@@ -248,7 +248,7 @@ export function FinancialYearsPage() {
                   }}
                 >
                   <Star />
-                  Make Current
+                  {t('pages.settings.financialYears.makeCurrent')}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
@@ -435,8 +435,7 @@ export function FinancialYearsPage() {
                 icon={CheckCircle2}
                 title={t('pages.settings.financialYears.activeFinancialYear')}
               >
-                This is the currently active financial year. All new transactions will be recorded
-                under this period. Only one financial year can be active at a time.
+                {t('pages.settings.financialYears.thisIsTheCurrentlyActiveFinancial')}
               </DetailNote>
             )}
 
@@ -446,8 +445,7 @@ export function FinancialYearsPage() {
                 title={t('pages.settings.financialYears.closedPeriod')}
                 tone="amber"
               >
-                This year is closed. Existing records stay readable; it is reopened from the Actions
-                menu.
+                {t('pages.settings.financialYears.thisYearIsClosedExistingRecords')}
               </DetailNote>
             )}
 

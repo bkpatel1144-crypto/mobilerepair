@@ -152,7 +152,7 @@ export function PageSetupDialog({
         </div>
 
         <label className="flex items-center justify-between gap-2 text-sm">
-          Duplicate copy
+          {t('pages.settings.pageSetupDialog.duplicateCopy')}
           <Switch
             checked={draft.settings.duplicateCopy}
             onCheckedChange={(v) => onChange({ settings: { ...draft.settings, duplicateCopy: v } })}
@@ -193,10 +193,7 @@ export function PageSetupDialog({
       <div className="space-y-2 rounded-lg border border-amber-300 bg-amber-50 p-3 dark:border-amber-500/40 dark:bg-amber-500/10">
         <p className="flex gap-2 text-xs text-amber-800 dark:text-amber-400">
           <Info className="mt-0.5 size-4 shrink-0" />
-          <span>
-            Saved with the template, but only applied by the Print Agent. These are printer firmware
-            commands — printing from this browser uses its own dialog and ignores them.
-          </span>
+          <span>{t('pages.settings.pageSetupDialog.savedWithTheTemplateButOnly')}</span>
         </p>
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(7rem,1fr))]">
           {(

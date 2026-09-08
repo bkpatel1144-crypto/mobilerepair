@@ -96,8 +96,7 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
             {t('pages.settings.behaviorSubtab.autoOpenPopups')}
           </h3>
           <p className="text-xs text-muted-foreground">
-            Which popup opens automatically after an action completes — no extra click. All OFF by
-            default.
+            {t('pages.settings.behaviorSubtab.whichPopupOpensAutomaticallyAfterAn')}
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">

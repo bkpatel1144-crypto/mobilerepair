@@ -317,7 +317,7 @@ export function CompanySettingsPage() {
                   <DropdownMenuGroup>
                     <DropdownMenuLabel className="flex items-center gap-2 font-normal text-amber-700 dark:text-amber-400">
                       <Crown className="size-4" />
-                      Default Company
+                      {t('pages.settings.companySettings.defaultCompany')}
                     </DropdownMenuLabel>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
@@ -326,7 +326,7 @@ export function CompanySettingsPage() {
               {c.id !== profile?.companyId && (
                 <DropdownMenuItem onClick={() => switchCompany.mutate(c.id)}>
                   <ArrowLeftRight />
-                  Switch to this company
+                  {t('pages.settings.companySettings.switchToThisCompany')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={() => startEdit(c)}>
@@ -338,7 +338,7 @@ export function CompanySettingsPage() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem disabled>
                     <Shield />
-                    Protected: Cannot disable/delete
+                    {t('pages.settings.companySettings.protectedCannotDisableDelete')}
                   </DropdownMenuItem>
                 </>
               )}
@@ -393,7 +393,7 @@ export function CompanySettingsPage() {
             </Button>
             <Button type="button" onClick={startCreate}>
               <Plus className="size-4" />
-              Add Company
+              {t('pages.settings.companySettings.addCompany')}
             </Button>
           </>
         }
@@ -430,7 +430,7 @@ export function CompanySettingsPage() {
           render={<a href={buildPath('settings', 'branches')} />}
         >
           <SettingsIcon className="size-4" />
-          Company Preferences (active company)
+          {t('pages.settings.companySettings.companyPreferencesActiveCompany')}
         </Button>
       </div>
 
@@ -529,20 +529,20 @@ export function CompanySettingsPage() {
               {viewing.id !== profile?.companyId && (
                 <Button type="button" size="sm" onClick={() => switchCompany.mutate(viewing.id)}>
                   <ArrowLeftRight className="size-3.5" />
-                  Switch to this company
+                  {t('pages.settings.companySettings.switchToThisCompany')}
                 </Button>
               )}
               {viewing.id === profile?.companyId && (
                 <span className="inline-flex items-center gap-1.5 rounded-lg bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
                   <Check className="size-3.5" />
-                  Currently active
+                  {t('pages.settings.companySettings.currentlyActive')}
                 </span>
               )}
             </div>
 
             {viewing.protected && (
               <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-                Default company — cannot be disabled or deleted.
+                {t('pages.settings.companySettings.defaultCompanyCannotBeDisabledOr')}
               </p>
             )}
 

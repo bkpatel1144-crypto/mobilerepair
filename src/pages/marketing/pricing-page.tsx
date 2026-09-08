@@ -50,7 +50,7 @@ export function PricingPage() {
             className="mt-7 w-full gap-2 rounded-full bg-teal-600 hover:bg-teal-700"
             render={<Link to="/signup" />}
           >
-            Get Started
+            {t('shared.getStarted')}
             <ArrowRight className="size-4" />
           </Button>
         </div>

@@ -186,7 +186,7 @@ export function SupplierReportPage() {
             }
           >
             <Download className="size-4" />
-            Export Excel
+            {t('shared.exportExcel')}
           </Button>
         }
       />
@@ -291,7 +291,7 @@ export function SupplierReportPage() {
                   }
                 >
                   <Download className="size-3.5" />
-                  Export Excel
+                  {t('shared.exportExcel')}
                 </Button>
               </div>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -319,7 +319,7 @@ export function SupplierReportPage() {
               {topParts.length > 0 && (
                 <div className="space-y-1.5">
                   <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                    Top Parts by Spend
+                    {t('pages.reports.supplierReport.topPartsBySpend')}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {topParts.map(([name, stats]) => (

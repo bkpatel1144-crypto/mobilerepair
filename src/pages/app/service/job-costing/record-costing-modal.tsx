@@ -134,7 +134,7 @@ export function RecordCostingModal({
               <span className="flex size-8 items-center justify-center rounded-full bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">
                 ₹
               </span>
-              Record Actual Costing
+              {t('pages.service.recordCostingModal.recordActualCosting')}
             </h2>
           </div>
           <Button type="button" variant="ghost" size="icon" onClick={onClose}>
@@ -265,7 +265,7 @@ export function RecordCostingModal({
               className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed py-2 text-sm text-teal-700 hover:bg-muted/40 dark:text-teal-400"
             >
               <Plus className="size-4" />
-              Add Cost Item
+              {t('pages.service.recordCostingModal.addCostItem')}
             </button>
           </div>
 

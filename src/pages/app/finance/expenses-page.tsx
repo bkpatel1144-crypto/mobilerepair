@@ -206,8 +206,7 @@ function NewExpenseModal({
           placeholder={t('pages.finance.expenses.landlordSupplierStaff')}
         />
         <p className="text-xs text-muted-foreground">
-          Set this to have the expense show on that party's ledger. Leave empty for things like tea
-          or transport.
+          {t('pages.finance.expenses.setThisToHaveTheExpense')}
         </p>
       </div>
 

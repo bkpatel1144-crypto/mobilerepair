@@ -79,7 +79,7 @@ export function PermissionsSubtab({ draft, setDraft, disabled }: PermissionsSubt
 
       <div className="space-y-2">
         <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-          Status Filter
+          {t('pages.settings.permissionsSubtab.statusFilter')}
         </p>
         <Popover open={statusPickerOpen} onOpenChange={setStatusPickerOpen}>
           <PopoverTrigger
@@ -146,7 +146,7 @@ export function PermissionsSubtab({ draft, setDraft, disabled }: PermissionsSubt
               {t('pages.settings.permissionsSubtab.allowedActionsPerStatus')}
             </h3>
             <p className="text-xs text-muted-foreground">
-              Tick a box = this role can do that action while the job is in that status.
+              {t('pages.settings.permissionsSubtab.tickABoxThisRoleCan')}
             </p>
           </div>
           <span className="text-xs text-muted-foreground">{enabledCount} enabled</span>

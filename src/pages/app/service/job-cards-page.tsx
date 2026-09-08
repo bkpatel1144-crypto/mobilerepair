@@ -195,7 +195,7 @@ export function JobCardsPage() {
                 onClick={() => navigate(`${buildPath('service', 'job-cards')}/create`)}
               >
                 <Plus className="size-4" />
-                Create Job Card
+                {t('pages.service.jobCards.createJobCard')}
               </Button>
             )}
           </>

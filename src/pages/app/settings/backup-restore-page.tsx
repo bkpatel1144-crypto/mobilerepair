@@ -149,7 +149,7 @@ export function BackupRestorePage() {
         <div className="space-y-3 rounded-xl border bg-card p-4">
           <p className="flex items-center gap-1.5 text-sm font-semibold">
             <DatabaseZap className="size-4 text-muted-foreground" />
-            Current Database
+            {t('pages.settings.backupRestore.currentDatabase')}
           </p>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div className="rounded-lg border p-3">
@@ -178,7 +178,7 @@ export function BackupRestorePage() {
         <div className="space-y-3 rounded-xl border bg-card p-4">
           <p className="text-sm font-semibold">{t('pages.settings.backupRestore.createBackup')}</p>
           <p className="text-sm text-muted-foreground">
-            A backup contains your complete company data as a JSON snapshot.
+            {t('pages.settings.backupRestore.aBackupContainsYourCompleteCompany')}
           </p>
           <div className="flex flex-wrap gap-2">
             <Button
@@ -227,7 +227,7 @@ export function BackupRestorePage() {
                 onCheckedChange={(v) => setDailyEnabled(v === true)}
               />
               <Clock className="size-3.5 text-muted-foreground" />
-              Daily automatic backup
+              {t('pages.settings.backupRestore.dailyAutomaticBackup')}
             </label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
               <div className="space-y-1">
@@ -327,11 +327,10 @@ export function BackupRestorePage() {
         <div className="space-y-3 rounded-xl border border-dashed border-amber-300 bg-card p-4 dark:border-amber-500/40">
           <p className="flex items-center gap-1.5 text-sm font-semibold text-amber-700 dark:text-amber-400">
             <AlertTriangle className="size-4" />
-            Restore from File
+            {t('pages.settings.backupRestore.restoreFromFile')}
           </p>
           <p className="text-sm text-muted-foreground">
-            Upload a previously downloaded backup file (.json). You can restore it as a separate
-            read-only archive (safe) or replace your live data (dangerous).
+            {t('pages.settings.backupRestore.uploadAPreviouslyDownloadedBackupFile')}
           </p>
           <input
             ref={fileInputRef}
@@ -361,7 +360,7 @@ export function BackupRestorePage() {
               disabled={!selectedFile}
             >
               <Upload className="size-4" />
-              Overwrite Live Data (Dangerous)
+              {t('pages.settings.backupRestore.overwriteLiveDataDangerous')}
             </Button>
           </div>
         </div>

@@ -168,7 +168,7 @@ export function PeriodSummaryPage() {
             }
           >
             <Download className="size-4" />
-            Export Excel
+            {t('shared.exportExcel')}
           </Button>
         }
       />
@@ -292,7 +292,7 @@ export function PeriodSummaryPage() {
                   }
                 >
                   <Download className="size-3.5" />
-                  Export Excel
+                  {t('shared.exportExcel')}
                 </Button>
               </div>
 
@@ -381,11 +381,10 @@ export function PeriodSummaryPage() {
                 <FileText className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-400" />
                 <div className="flex-1">
                   <p className="font-medium text-amber-900 dark:text-amber-300">
-                    Shop expenses in this period
+                    {t('pages.reports.periodSummary.shopExpensesInThisPeriod')}
                   </p>
                   <p className="text-xs text-amber-800/80 dark:text-amber-400/80">
-                    Rent, electricity, wages — the shop's own costs. They belong to the period, not
-                    to any one repair.
+                    {t('pages.reports.periodSummary.rentElectricityWagesTheShopS')}
                   </p>
                 </div>
                 <span className="font-medium text-amber-900 dark:text-amber-300">
@@ -394,7 +393,7 @@ export function PeriodSummaryPage() {
               </div>
               {SHOP_EXPENSES === 0 && (
                 <p className="text-xs text-muted-foreground">
-                  No shop expenses recorded in this period.
+                  {t('pages.reports.periodSummary.noShopExpensesRecordedInThis')}
                 </p>
               )}
 

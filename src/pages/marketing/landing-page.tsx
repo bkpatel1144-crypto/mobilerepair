@@ -114,8 +114,7 @@ export function LandingPage() {
             Run your repair shop with <span className="text-teal-400">aim</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-300">
-            Manage repairs from customer intake to delivery — job cards, technician workflows,
-            customer updates, billing, payments and warranty in one connected system.
+            {t('pages.landing.landing.manageRepairsFromCustomerIntakeTo')}
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
@@ -123,7 +122,7 @@ export function LandingPage() {
               className="gap-2 rounded-full bg-teal-600 hover:bg-teal-700"
               render={<Link to="/signup" />}
             >
-              Get Started
+              {t('shared.getStarted')}
               <ArrowRight className="size-4" />
             </Button>
             <Button
@@ -132,11 +131,11 @@ export function LandingPage() {
               className="rounded-full border-white/30 bg-transparent text-white hover:bg-white/10"
               render={<a href="mailto:hello@kiwikitservice.com?subject=Book%20a%20demo" />}
             >
-              Book a demo
+              {t('pages.landing.landing.bookADemo')}
             </Button>
           </div>
           <p className="mt-6 text-sm text-slate-400">
-            No card required · Free forever · Free data migration
+            {t('pages.landing.landing.noCardRequiredFreeForeverFree')}
           </p>
         </div>
       </section>
@@ -150,7 +149,7 @@ export function LandingPage() {
       <section id="features" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold sm:text-3xl">
-            Not another billing tool. A complete system for running your repair business.
+            {t('pages.landing.landing.notAnotherBillingToolAComplete')}
           </h2>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -171,10 +170,10 @@ export function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-bold sm:text-3xl">
-              From intake to delivery, one workflow
+              {t('pages.landing.landing.fromIntakeToDeliveryOneWorkflow')}
             </h2>
             <p className="mt-2 text-muted-foreground">
-              Every job follows the same connected path — no spreadsheets in between.
+              {t('pages.landing.landing.everyJobFollowsTheSameConnected')}
             </p>
           </div>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -223,7 +222,7 @@ export function LandingPage() {
             className="mt-6 gap-2 rounded-full bg-white text-teal-700 hover:bg-teal-50"
             render={<Link to="/signup" />}
           >
-            Get Started
+            {t('shared.getStarted')}
             <ArrowRight className="size-4" />
           </Button>
         </div>

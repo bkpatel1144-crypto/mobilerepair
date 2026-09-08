@@ -200,7 +200,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={handlePrintLabel}
             disabled={!deviceTagTemplate}
           >
-            Print Label
+            {t('shared.printLabel')}
           </Button>
         )}
         {canDo(specialActionKey('service', 'printJobCard')) && (
@@ -210,7 +210,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={handlePrintJobCard}
             disabled={!jobCardTemplate}
           >
-            Print Job Card
+            {t('pages.service.actionButtons.printJobCard')}
           </Button>
         )}
         {canDo(specialActionKey('service', 'printBill')) && (
@@ -305,7 +305,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         )}
         {shows('fieldVisit') && (
           <Button type="button" variant="outline" onClick={() => setDialog('fieldVisit')}>
-            Field Visit
+            {t('pages.service.actionButtons.fieldVisit')}
           </Button>
         )}
         {shows('handover') && (
@@ -474,7 +474,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
                   checked={collectPayment}
                   onChange={(e) => setCollectPayment(e.target.checked)}
                 />
-                Collect payment now
+                {t('pages.service.actionButtons.collectPaymentNow')}
               </label>
               {collectPayment && (
                 <div className="grid grid-cols-2 gap-2">

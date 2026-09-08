@@ -87,7 +87,7 @@ export function WhatsAppPage() {
               placeholder="91"
             />
             <p className="text-xs text-muted-foreground">
-              Prefixed to a customer's 10-digit mobile before opening WhatsApp.
+              {t('pages.settings.whatsapp.prefixedToACustomerS10')}
             </p>
           </div>
 

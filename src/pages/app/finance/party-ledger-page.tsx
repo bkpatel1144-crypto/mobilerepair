@@ -309,7 +309,7 @@ function PartyLedgerDetailSheet({
                     ))}
                     <tr className="border-t-2 font-semibold">
                       <td className="p-2" colSpan={2}>
-                        Closing Balance
+                        {t('pages.finance.partyLedger.closingBalance')}
                       </td>
                       <td className="p-2 text-right text-red-600">₹{data.totalBilled}</td>
                       <td className="p-2 text-right text-emerald-600">₹{data.totalPaid}</td>

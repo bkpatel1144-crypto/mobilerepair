@@ -73,7 +73,7 @@ export function ScanJobCardModal({ open, onOpenChange }: ScanJobCardModalProps) 
             <div>
               <DialogTitle>{t('shared.scanJobCard')}</DialogTitle>
               <DialogDescription>
-                Just point — it auto-focuses, zooms and locks on instantly
+                {t('components.shared.scanJobCardModal.justPointItAutoFocusesZooms')}
               </DialogDescription>
             </div>
           </div>

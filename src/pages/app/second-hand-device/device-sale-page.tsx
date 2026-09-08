@@ -364,8 +364,7 @@ function SellDeviceModal({
             placeholder={t('shared.chargerBoxCable')}
           />
           <p className="text-xs text-muted-foreground">
-            Defaults to what was purchased with the device — edit if you're keeping anything back or
-            adding something new.
+            {t('pages.secondHandDevice.deviceSale.defaultsToWhatWasPurchasedWith')}
           </p>
         </div>
         <div className="space-y-1.5">

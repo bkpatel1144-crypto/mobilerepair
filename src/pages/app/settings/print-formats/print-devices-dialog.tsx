@@ -42,7 +42,7 @@ function PairingCode({ code, expiresAt }: { code: string; expiresAt: number | nu
   return (
     <div className="rounded-xl border border-dashed p-4 text-center">
       <p className="text-sm text-muted-foreground">
-        Enter this code in the Print Agent on the shop PC:
+        {t('pages.settings.printDevicesDialog.enterThisCodeInThePrint')}
       </p>
       <div className="mt-3 flex items-center justify-center gap-2">
         <code className="rounded-lg bg-teal-50 px-4 py-2 font-mono text-lg font-semibold tracking-wide text-foreground dark:bg-teal-500/10">
@@ -98,7 +98,7 @@ function DeviceRow({
             {device.name ?? t('pages.settings.printDevicesDialog.waitingForADevice')}
           </p>
           <p className="text-xs text-muted-foreground">
-            It will stop printing the next time it connects. You can pair it again with a new code.
+            {t('pages.settings.printDevicesDialog.itWillStopPrintingTheNext')}
           </p>
         </div>
         <Button
@@ -202,8 +202,7 @@ export function PrintDevicesDialog({
             {t('pages.settings.printDevicesDialog.printDevices')}
           </DialogTitle>
           <DialogDescription className="mt-1">
-            Shop PCs running the Print Agent. Pair one to let it print bills and labels from this
-            browser.
+            {t('pages.settings.printDevicesDialog.shopPcsRunningThePrintAgent')}
           </DialogDescription>
         </div>
 
@@ -226,7 +225,7 @@ export function PrintDevicesDialog({
           />
         ) : devices.length === 0 ? (
           <p className="py-6 text-center text-sm text-muted-foreground">
-            No print device paired yet.
+            {t('pages.settings.printDevicesDialog.noPrintDevicePairedYet')}
           </p>
         ) : (
           <div className="space-y-2">

@@ -194,7 +194,7 @@ export function PatternLockPicker({
               className="flex-1 bg-amber-500 text-white hover:bg-amber-600"
             >
               <Check className="size-3.5" />
-              Save Pattern
+              {t('components.shared.patternLock.savePattern')}
             </Button>
           </div>
         </DialogContent>

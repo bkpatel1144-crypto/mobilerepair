@@ -111,7 +111,7 @@ export function DashboardPage() {
           👋
         </h1>
         <p className="text-sm text-muted-foreground">
-          Here's what's happening in your service center.
+          {t('pages.dashboard.dashboard.hereSWhatSHappeningIn')}
         </p>
       </div>
 

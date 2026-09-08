@@ -158,7 +158,7 @@ export function PayablesPage() {
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground uppercase">
-                            Already Refunded
+                            {t('pages.finance.payables.alreadyRefunded')}
                           </p>
                           <p className="font-medium">₹{row.alreadyRefunded}</p>
                         </div>

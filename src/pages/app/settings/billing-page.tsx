@@ -96,8 +96,7 @@ export function BillingPage() {
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Every feature in this app is free, forever. No plan tiers, no upgrade prompts,
-                    nothing to pay for.
+                    {t('pages.settings.billing.everyFeatureInThisAppIs')}
                   </p>
                 </div>
                 <div className="text-right">
@@ -210,7 +209,7 @@ export function BillingPage() {
                   className="mt-5 w-full"
                   render={<Link to={buildPath('settings', 'company')} />}
                 >
-                  Edit company details
+                  {t('pages.settings.billing.editCompanyDetails')}
                   <ArrowRight className="size-4" />
                 </Button>
               )}

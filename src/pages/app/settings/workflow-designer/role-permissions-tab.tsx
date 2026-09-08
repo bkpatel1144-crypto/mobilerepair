@@ -89,7 +89,7 @@ export function RolePermissionsTab() {
 
         <div>
           <p className="mb-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-            How it works
+            {t('pages.settings.rolePermissionsTab.howItWorks')}
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
             {HOW_IT_WORKS.map((item) => (
@@ -106,7 +106,7 @@ export function RolePermissionsTab() {
 
         <div>
           <p className="mb-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-            Configured roles
+            {t('pages.settings.rolePermissionsTab.configuredRoles')}
           </p>
           {configuredRoles.length === 0 ? (
             <EmptyState

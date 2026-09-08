@@ -72,13 +72,13 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
         <div>
           <h3 className="text-sm font-semibold">Assignment &amp; Handover</h3>
           <p className="text-xs text-muted-foreground">
-            Who can be assigned jobs and where they hand off
+            {t('pages.settings.usersSubtab.whoCanBeAssignedJobsAnd')}
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-1.5">
             <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Assign To Roles
+              {t('pages.settings.usersSubtab.assignToRoles')}
             </p>
             {roleScopeSelect(
               draft.assignment.assignToRoles,
@@ -88,7 +88,7 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
           </div>
           <div className="space-y-1.5">
             <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Handover Roles
+              {t('pages.settings.usersSubtab.handoverRoles')}
             </p>
             {roleScopeSelect(
               draft.assignment.handoverRoles,
@@ -130,8 +130,7 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
             {t('pages.settings.usersSubtab.whoDidItDropdowns')}
           </h3>
           <p className="text-xs text-muted-foreground">
-            When an action happens, should the user pick who did it? Off = the logged-in user is
-            recorded automatically.
+            {t('pages.settings.usersSubtab.whenAnActionHappensShouldThe')}
           </p>
         </div>
         <div className="divide-y rounded-lg border">
@@ -140,7 +139,7 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
               <div>
                 <p className="text-sm font-medium">{t(row.labelKey)}</p>
                 <p className="text-xs text-muted-foreground">
-                  Logged-in user is recorded automatically
+                  {t('pages.settings.usersSubtab.loggedInUserIsRecordedAutomatically')}
                 </p>
               </div>
               <Switch

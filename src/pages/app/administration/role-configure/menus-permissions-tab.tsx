@@ -362,7 +362,7 @@ export function MenusPermissionsTab({
                         </span>
                         {draft.fullAccess && (
                           <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
-                            Granted via full access (*)
+                            {t('pages.administration.menusPermissionsTab.grantedViaFullAccess')}
                           </span>
                         )}
                       </div>

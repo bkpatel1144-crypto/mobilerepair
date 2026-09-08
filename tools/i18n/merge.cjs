@@ -26,6 +26,7 @@ const batch = require(`./translations/${name}.cjs`)
 const keyMap = {
   ...JSON.parse(fs.readFileSync(path.join(__dirname, 'key-map.json'), 'utf8')),
   ...JSON.parse(fs.readFileSync(path.join(__dirname, 'literal-map.json'), 'utf8')),
+  ...JSON.parse(fs.readFileSync(path.join(__dirname, 'jsx-text-map.json'), 'utf8')),
 }
 
 const problems = []

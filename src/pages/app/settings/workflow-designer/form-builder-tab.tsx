@@ -198,7 +198,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
               <SelectContent>
                 {Object.keys(templates).length === 0 ? (
                   <div className="px-2 py-1.5 text-sm text-muted-foreground">
-                    No templates saved yet
+                    {t('pages.settings.formBuilderTab.noTemplatesSavedYet')}
                   </div>
                 ) : (
                   Object.keys(templates).map((name) => (
@@ -261,7 +261,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
           </Button>
           <Button type="button" variant="outline" size="sm" onClick={handleSaveAsTemplate}>
             <Bookmark className="size-3.5" />
-            Save as template
+            {t('pages.settings.formBuilderTab.saveAsTemplate')}
           </Button>
           <Button
             type="button"
@@ -271,7 +271,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
             disabled={!isDirty}
           >
             <RotateCcw className="size-3.5" />
-            Discard changes
+            {t('pages.settings.formBuilderTab.discardChanges')}
           </Button>
           <span className="text-xs text-muted-foreground">{isDirty ? '' : 'Saved'}</span>
           <Button
@@ -288,7 +288,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
 
       <div className="space-y-2">
         <p className="text-sm text-muted-foreground">
-          Use the icons on each field below to configure it.
+          {t('pages.settings.formBuilderTab.useTheIconsOnEachField')}
         </p>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           {sections.map((section) => (

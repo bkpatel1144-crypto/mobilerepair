@@ -70,7 +70,7 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
           {t('pages.administration.dashboardLandingTab.defaultLandingPage')}
         </label>
         <p className="text-xs text-muted-foreground">
-          Where this role lands immediately after logging in.
+          {t('pages.administration.dashboardLandingTab.whereThisRoleLandsImmediatelyAfter')}
         </p>
         <Select
           value={draft.dashboardConfig.defaultLandingRoute}

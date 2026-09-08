@@ -70,7 +70,7 @@ export function ActiveSessionsPage() {
             {s.userName}
             {isCurrentSession(s) && (
               <span className="ml-1.5 rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
-                This device
+                {t('pages.administration.activeSessions.thisDevice')}
               </span>
             )}
           </p>
@@ -229,7 +229,7 @@ export function ActiveSessionsPage() {
               <ChevronRight
                 className={`size-4 transition-transform ${techDetailsOpen ? 'rotate-90' : ''}`}
               />
-              Technical details
+              {t('pages.administration.activeSessions.technicalDetails')}
             </CollapsibleTrigger>
             <CollapsibleContent>
               <p className="mt-2 rounded-md bg-muted/40 p-3 font-mono text-xs break-all text-muted-foreground">

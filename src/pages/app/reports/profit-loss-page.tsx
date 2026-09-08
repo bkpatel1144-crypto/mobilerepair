@@ -210,7 +210,7 @@ export function ProfitLossPage() {
 
               {data.expenseLines.length > 0 && (
                 <p className="pt-4 pb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-                  Operating expenses
+                  {t('pages.reports.profitLoss.operatingExpenses')}
                 </p>
               )}
               {data.expenseLines.map((line) => (
@@ -234,11 +234,7 @@ export function ProfitLossPage() {
 
           <p className="flex gap-2 rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground">
             <Info className="mt-0.5 size-4 shrink-0" />
-            <span>
-              Cash basis: a job billed but not yet paid is not revenue here until the money arrives,
-              and a supplier bill entered but unpaid is not a cost until it is settled. Outstanding
-              amounts on both sides live on Receivables and Supplier Payables.
-            </span>
+            <span>{t('pages.reports.profitLoss.cashBasisAJobBilledBut')}</span>
           </p>
         </>
       )}

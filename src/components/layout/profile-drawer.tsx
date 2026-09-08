@@ -146,13 +146,13 @@ export function ProfileDrawer({
               value="info"
               className="flex-none px-0 pb-2.5 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
             >
-              Profile Info
+              {t('components.layout.profileDrawer.profileInfo')}
             </TabsTrigger>
             <TabsTrigger
               value="password"
               className="flex-none px-0 pb-2.5 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
             >
-              Change Password
+              {t('components.layout.profileDrawer.changePassword')}
             </TabsTrigger>
           </TabsList>
 
@@ -203,8 +203,7 @@ export function ProfileDrawer({
                 />
                 {/* Worth being explicit: this is the profile record, not the Auth identity. */}
                 <p className="text-xs text-muted-foreground">
-                  Used for display and contact. Changing it does not change the email you sign in
-                  with.
+                  {t('components.layout.profileDrawer.usedForDisplayAndContactChanging')}
                 </p>
               </div>
 
@@ -212,7 +211,7 @@ export function ProfileDrawer({
               {profileSaved && !profileDirty && (
                 <p className="flex items-center gap-1.5 text-sm text-teal-600 dark:text-teal-400">
                   <Check className="size-4" />
-                  Profile updated.
+                  {t('components.layout.profileDrawer.profileUpdated')}
                 </p>
               )}
             </form>
@@ -264,7 +263,7 @@ export function ProfileDrawer({
               {passwordSaved && (
                 <p className="flex items-center gap-1.5 text-sm text-teal-600 dark:text-teal-400">
                   <Check className="size-4" />
-                  Password updated. Your other devices stay signed in.
+                  {t('components.layout.profileDrawer.passwordUpdatedYourOtherDevicesStay')}
                 </p>
               )}
             </form>

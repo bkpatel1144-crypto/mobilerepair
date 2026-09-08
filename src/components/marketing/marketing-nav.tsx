@@ -46,7 +46,7 @@ export function MarketingNav() {
             className="rounded-full bg-teal-600 hover:bg-teal-700"
             render={<Link to="/signup" />}
           >
-            Sign Up Free
+            {t('components.marketing.marketingNav.signUpFree')}
           </Button>
         </div>
 
@@ -79,7 +79,7 @@ export function MarketingNav() {
               Login
             </Button>
             <Button className="bg-teal-600 hover:bg-teal-700" render={<Link to="/signup" />}>
-              Sign Up Free
+              {t('components.marketing.marketingNav.signUpFree')}
             </Button>
           </div>
         </div>

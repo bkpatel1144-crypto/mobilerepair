@@ -58,7 +58,7 @@ export function CompleteSetupPage() {
           onClick={() => logOut()}
           className="font-medium text-teal-700 hover:underline dark:text-teal-400"
         >
-          Sign out and start over
+          {t('pages.completeSetup.completeSetup.signOutAndStartOver')}
         </button>
       }
     >

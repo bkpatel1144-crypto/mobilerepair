@@ -130,7 +130,7 @@ export function IpWhitelistPage() {
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
               <Plus className="size-4" />
-              Add IP to Whitelist
+              {t('pages.administration.ipWhitelist.addIpToWhitelist')}
             </Button>
           )
         }

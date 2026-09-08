@@ -166,10 +166,7 @@ export function ServiceItemsPage() {
       </div>
 
       <p className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-blue-50 p-3 text-sm text-blue-800 dark:bg-blue-500/10 dark:text-blue-400">
-        <span>
-          Service items are managed in Item Master. Items with Services type appear here
-          automatically. To add or edit items, use Item Master.
-        </span>
+        <span>{t('pages.service.serviceItems.serviceItemsAreManagedInItem')}</span>
         <Button
           type="button"
           size="sm"
@@ -178,7 +175,7 @@ export function ServiceItemsPage() {
           title={t('pages.service.serviceItems.itemMasterShipsInPhase7')}
         >
           <ExternalLink className="size-3.5" />
-          Item Master
+          {t('pages.service.serviceItems.itemMaster')}
         </Button>
       </p>
 

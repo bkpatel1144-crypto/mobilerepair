@@ -148,7 +148,7 @@ export function JobWiseProfitPage() {
             }
           >
             <Download className="size-4" />
-            Export Excel
+            {t('shared.exportExcel')}
           </Button>
         }
       />

@@ -17,7 +17,7 @@ export function JobCardMockup() {
           app.aim.in/service/job-cards/JC-2026-0143
         </div>
         <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-amber-700 uppercase dark:bg-amber-500/15 dark:text-amber-400">
-          Sample data
+          {t('components.marketing.jobCardMockup.sampleData')}
         </span>
       </div>
 
@@ -75,7 +75,7 @@ export function JobCardMockup() {
                 {t('components.marketing.jobCardMockup.deviceReceived')}
               </p>
               <p className="text-xs text-muted-foreground">
-                Samsung Galaxy A15 · Battery replacement
+                {t('components.marketing.jobCardMockup.samsungGalaxyA15BatteryReplacement')}
               </p>
             </div>
           </div>
@@ -124,7 +124,7 @@ export function JobCardMockup() {
                     {t('components.marketing.jobCardMockup.readyForPickup')}
                   </p>
                   <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-semibold text-white">
-                    Paid ₹1,450
+                    {t('components.marketing.jobCardMockup.paid1450')}
                   </span>
                 </div>
                 <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">

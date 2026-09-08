@@ -150,8 +150,7 @@ export function RoleConfigurePage() {
 
         {role.protected && canEdit && (
           <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-            This is the Owner role. Removing full access here could lock every Owner out of
-            administrative features — change it only if you're certain.
+            {t('pages.administration.roleConfigure.thisIsTheOwnerRoleRemoving')}
           </p>
         )}
 

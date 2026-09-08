@@ -402,7 +402,7 @@ export function CreateJobCardPage() {
         <div>
           <h1 className="text-lg font-bold">{t('pages.service.createJobCard.createJobCard')}</h1>
           <p className="text-sm text-muted-foreground">
-            Create a new service job card for customer device repair and tracking.
+            {t('pages.service.createJobCard.createANewServiceJobCard')}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -758,7 +758,7 @@ export function CreateJobCardPage() {
                       <PatternReplayPopover value={devicePinPattern}>
                         <span className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:underline">
                           <PatternLockPreview value={devicePinPattern} />
-                          Pattern drawn
+                          {t('pages.service.createJobCard.patternDrawn')}
                         </span>
                       </PatternReplayPopover>
                       <button
@@ -1146,7 +1146,7 @@ export function CreateJobCardPage() {
               <div className="space-y-1.5">
                 <Label>{t('shared.addImages')}</Label>
                 <p className="text-xs text-muted-foreground">
-                  They will be uploaded when you create the job card.
+                  {t('pages.service.createJobCard.theyWillBeUploadedWhenYou')}
                 </p>
                 <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
                   <ImagePlus className="size-5" />

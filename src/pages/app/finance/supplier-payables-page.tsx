@@ -237,7 +237,7 @@ function NewBillModal({
             onChange={(e) => setDueDate(e.target.value)}
           />
           <p className="text-xs text-muted-foreground">
-            Left empty, the bill ages from its bill date.
+            {t('pages.finance.supplierPayables.leftEmptyTheBillAgesFrom')}
           </p>
         </div>
       </div>
@@ -366,7 +366,7 @@ function PaymentModal({
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Recorded as a payment out, so it appears in Cash Book and on this supplier's ledger.
+        {t('pages.finance.supplierPayables.recordedAsAPaymentOutSo')}
       </p>
 
       {error && <FormError message={error} />}
@@ -568,7 +568,7 @@ export function SupplierPayablesPage() {
                 size="sm"
                 onClick={() => setBucketFilter('all')}
               >
-                Clear age filter
+                {t('pages.finance.supplierPayables.clearAgeFilter')}
               </Button>
             )}
           </FilterBar>
@@ -656,7 +656,7 @@ export function SupplierPayablesPage() {
                   <div className="flex flex-wrap gap-2">
                     <Button type="button" size="sm" onClick={() => setPaying(item)}>
                       <IndianRupee className="size-3.5" />
-                      Record Payment
+                      {t('pages.finance.supplierPayables.recordPayment')}
                     </Button>
                     {/* Only a bill can be voided — a device purchase is voided from its own
                      * register, where the device's status lives. */}

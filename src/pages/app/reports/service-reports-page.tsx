@@ -99,7 +99,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
       <div>
         <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
           <Package className="size-3.5" />
-          Parts / Items
+          {t('pages.reports.serviceReports.partsItems')}
         </p>
         {job.partsUsed.length === 0 ? (
           <p className="text-sm text-muted-foreground">
@@ -131,7 +131,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
               <tfoot>
                 <tr className="border-t bg-muted/20 font-medium">
                   <td className="p-2" colSpan={4}>
-                    Total Parts Cost
+                    {t('pages.reports.serviceReports.totalPartsCost')}
                   </td>
                   <td className="p-2 text-right">{formatCurrency(job.partsCost)}</td>
                 </tr>
@@ -338,7 +338,7 @@ export function ServiceReportsPage() {
               }
             >
               <Download className="size-4" />
-              Export Excel
+              {t('shared.exportExcel')}
             </Button>
           </>
         }

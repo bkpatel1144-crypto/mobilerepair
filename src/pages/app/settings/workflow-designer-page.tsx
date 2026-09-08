@@ -26,7 +26,7 @@ export function WorkflowDesignerPage() {
             {t('pages.settings.workflowDesigner.workflowDesigner')}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Control exactly what each role can see and do at every job status.
+            {t('pages.settings.workflowDesigner.controlExactlyWhatEachRoleCan')}
           </p>
         </div>
       </div>

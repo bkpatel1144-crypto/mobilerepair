@@ -104,7 +104,7 @@ export function UserManagementPage() {
         actions={
           <Button onClick={() => navigate(`${buildPath('administration', 'users')}/create`)}>
             <UserPlus />
-            Add New User
+            {t('pages.administration.userManagement.addNewUser')}
           </Button>
         }
       />

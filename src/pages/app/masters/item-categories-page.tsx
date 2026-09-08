@@ -107,7 +107,7 @@ export function ItemCategoriesPage() {
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
               <Plus className="size-4" />
-              Add Category
+              {t('shared.addCategory')}
             </Button>
           )
         }

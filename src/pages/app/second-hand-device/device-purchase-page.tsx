@@ -165,7 +165,7 @@ export function DevicePurchasePage() {
                 onClick={() => navigate(`${buildPath('second-hand-device', 'purchase')}/create`)}
               >
                 <Plus className="size-4" />
-                New Purchase
+                {t('pages.secondHandDevice.devicePurchase.newPurchase')}
               </Button>
             )}
           </>
@@ -271,7 +271,7 @@ export function DevicePurchasePage() {
                   }
                 >
                   <Wrench className="size-3.5" />
-                  Send to Refurb
+                  {t('pages.secondHandDevice.devicePurchase.sendToRefurb')}
                 </Button>
               )}
               {canReturn && (viewing.status === 'inStock' || viewing.status === 'inRefurb') && (
@@ -403,7 +403,7 @@ function EditPurchaseModal({
           onChange={(e) => setRefurbCost(Number(e.target.value) || 0)}
         />
         <p className="text-xs text-muted-foreground">
-          Spent so far getting this device sale-ready — subtracted from profit at sale time.
+          {t('pages.secondHandDevice.devicePurchase.spentSoFarGettingThisDevice')}
         </p>
       </div>
       <div className="space-y-1.5">
@@ -514,7 +514,7 @@ export function PrintButtonGroup({
           Print {purchase ? 'Receipt' : t('common.invoice')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handlePrintLabel} disabled={!labelTemplate}>
-          Print Label
+          {t('shared.printLabel')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

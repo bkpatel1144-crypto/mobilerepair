@@ -166,7 +166,7 @@ export function PaymentModesPage() {
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
               <Plus className="size-4" />
-              Add Payment Mode
+              {t('pages.masters.paymentModes.addPaymentMode')}
             </Button>
           )
         }

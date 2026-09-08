@@ -186,7 +186,7 @@ export function JobCostingPage() {
               }}
             >
               <IndianRupee className="size-4" />
-              Record Cost
+              {t('pages.service.jobCosting.recordCost')}
             </Button>
           )
         }

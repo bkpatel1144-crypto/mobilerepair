@@ -27,8 +27,7 @@ export function IpBlockedScreen({ ip }: { ip: string | null }) {
             : t('components.auth.ipBlockedScreen.yourCurrentIpCouldNotBe')}
         </p>
         <p className="max-w-sm text-xs text-muted-foreground">
-          Ask an Owner to add your IP under Administration → IP Whitelist, or connect from an
-          already-whitelisted network.
+          {t('components.auth.ipBlockedScreen.askAnOwnerToAddYour')}
         </p>
       </div>
       <Button type="button" variant="outline" onClick={() => logOut()}>

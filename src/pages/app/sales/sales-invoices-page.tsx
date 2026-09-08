@@ -233,7 +233,7 @@ export function SalesInvoicesPage() {
         </div>
         {dateRange !== 'all' && (
           <Button type="button" variant="ghost" size="sm" onClick={() => setDateRange('all')}>
-            Clear dates
+            {t('pages.sales.salesInvoices.clearDates')}
           </Button>
         )}
       </FilterBar>
