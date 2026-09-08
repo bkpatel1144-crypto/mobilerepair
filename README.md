@@ -141,3 +141,27 @@ Documented in full in `PROGRESS.md`'s per-phase "decisions" sections; the headli
   #   m o b i l e r e p a i r 
    
    
+
+## Deploying
+
+```
+npm run build
+npx firebase-tools deploy --only hosting
+npx firebase-tools deploy --only firestore:mobilerepairing
+npx firebase-tools deploy --only storage
+```
+
+Live at https://aimenterprise.web.app
+
+**Deploy the Firestore rules with `--only firestore:mobilerepairing`, not
+`--only firestore:rules`.** This project uses a _named_ database, so the `firestore` key in
+`firebase.json` is an array. The CLI's `firestore:rules` selector only understands the
+single-object form: against the array it prints "Deploy complete" and releases nothing at all —
+no error, no warning. That silent no-op is what left the rules undeployed while every attempt
+appeared to succeed, and the symptom was the app hanging on its loading spinner with
+`FirebaseError: Failed to get document because the client is offline`, because a deny-all ruleset
+rejects the listen stream and the SDK then reports itself offline rather than permission-denied.
+
+`--only firestore:indexes` crashes the CLI outright on the array form
+(`TypeError: Cannot read properties of undefined (reading 'map')`); the database-name selector
+deploys indexes and rules together and works.
