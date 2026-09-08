@@ -51,13 +51,22 @@ export interface UpdateCompanyInput {
   timezone: string
 }
 
+/**
+ * Takes the company to edit rather than assuming the active one.
+ *
+ * It previously wrote to `profile.companyId` regardless of which row the user clicked, which is
+ * why Company Settings had to *disable* Save for every company except the active one — the
+ * button did nothing and the reason was buried in the dialog's description. Passing the id makes
+ * editing any company the user belongs to work, and `firestore.rules` still gates it: the update
+ * requires `belongsToCompany(companyId)` and `hasMenuAccess(companyId, 'settings/company')`, so
+ * an id the user has no membership in is refused server-side.
+ */
 export function useUpdateCompany() {
   const { user, profile } = useAuth()
-  const companyId = profile!.companyId
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (input: UpdateCompanyInput) => {
+    mutationFn: async ({ companyId, ...input }: UpdateCompanyInput & { companyId: string }) => {
       const batch = writeBatch(db)
       batch.update(doc(db, companyDoc(companyId)), { ...input, updatedAt: serverTimestamp() })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
@@ -70,6 +79,11 @@ export function useUpdateCompany() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: companyQueryKey(companyId) }),
+    onSuccess: (_data, { companyId }) => {
+      void queryClient.invalidateQueries({ queryKey: companyQueryKey(companyId) })
+      // The list page reads every company the user belongs to from its own key, so that has to
+      // be refreshed too or the edited row keeps showing the old name until a reload.
+      void queryClient.invalidateQueries({ queryKey: ['companies'] })
+    },
   })
 }

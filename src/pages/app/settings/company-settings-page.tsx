@@ -198,6 +198,7 @@ export function CompanySettingsPage() {
     }
     try {
       await updateCompany.mutateAsync({
+        companyId: editing.id,
         ...form,
         gstin: form.gstin.trim() || null,
         pan: form.pan.trim() || null,
@@ -611,14 +612,9 @@ export function CompanySettingsPage() {
           }
         }}
         title={t('pages.settings.companySettings.editCompany')}
-        description={
-          editing && editing.id !== profile?.companyId
-            ? 'Note: only the active company can be edited — switch to it first.'
-            : t('pages.settings.companySettings.companyInformationAndSettings')
-        }
-        submitLabel={updateCompany.isPending ? 'Saving…' : t('shared.saveChanges')}
+        description={t('pages.settings.companySettings.companyInformationAndSettings')}
+        submitLabel={updateCompany.isPending ? t('common.saving') : t('shared.saveChanges')}
         isSubmitting={updateCompany.isPending}
-        submitDisabled={!!editing && editing.id !== profile?.companyId}
         onSubmit={submitEdit}
         className="sm:max-w-3xl"
       >

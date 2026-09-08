@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { useCompany } from '@/hooks/use-company'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface AppSidebarProps {
   collapsed: boolean
@@ -26,12 +28,14 @@ interface AppSidebarProps {
  */
 export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: AppSidebarProps) {
   const { t } = useTranslation()
+  const { data: company, isLoading } = useCompany()
   const [filter, setFilter] = useState('')
 
   const toggle = (
     <Button
       variant="ghost"
       size="icon-sm"
+      className="shrink-0"
       onClick={onToggleCollapse}
       aria-label={collapsed ? 'Expand sidebar' : t('components.layout.appSidebar.collapseSidebar')}
       aria-expanded={!collapsed}
@@ -47,8 +51,13 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
         collapsed ? 'w-16' : 'w-[270px]'
       )}
     >
-      {/* Wordmark + collapse toggle. Collapsed, the wordmark gives way so the toggle can centre
-       * in the rail — otherwise the two fight over 64px and both end up clipped. */}
+      {/* Company name + collapse toggle. Collapsed, the name gives way so the toggle can centre
+       * in the rail — otherwise the two fight over 64px and both end up clipped.
+       *
+       * The name comes from the *active* company: `auth-provider` rewrites `profile.companyId`
+       * to whichever company the user has switched into, so this follows a switch without any
+       * extra wiring. Falls back to the "aim" wordmark only before the company has loaded or if
+       * there genuinely isn't one — never to an empty header. */}
       <div
         className={cn(
           'flex h-16 shrink-0 items-center gap-2 px-4',
@@ -56,8 +65,18 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
         )}
       >
         {!collapsed && (
-          <Link to="/app/dashboard" className="text-lg font-bold tracking-tight">
-            aim
+          <Link
+            to="/app/dashboard"
+            // `min-w-0` is what makes `truncate` work here: without it the flex item refuses to
+            // shrink below its content and a long shop name pushes the toggle off the rail.
+            className="min-w-0 text-lg font-bold tracking-tight"
+            title={company?.name ?? undefined}
+          >
+            {isLoading ? (
+              <Skeleton className="h-5 w-32" />
+            ) : (
+              <span className="block truncate">{company?.name ?? t('shell.appName')}</span>
+            )}
           </Link>
         )}
         {collapsed ? (
