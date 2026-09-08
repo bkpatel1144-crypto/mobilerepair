@@ -25,3 +25,6 @@ dist-ssr
 
 # Firebase CLI deploy cache — a local hash index, regenerated on each deploy.
 .firebase/
+
+# Screenshots from tools/firebase/e2e-signup.mjs
+e2e-*.png

@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth'
-import { doc, getDoc, onSnapshot } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot, type DocumentSnapshot } from 'firebase/firestore'
 import { auth, db } from '@/lib/firebase'
 import { userDoc } from '@/lib/firestore-paths'
 import { logOut as firebaseLogOut } from '@/lib/auth'
@@ -111,6 +111,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       clearProfileCache(uid)
     }
 
+    /**
+     * Publishes a profile snapshot, but only one the server has acknowledged. Returns whether it
+     * did, so both callers below can fall through to a retry on the same terms.
+     *
+     * A snapshot carrying this client's own not-yet-acknowledged writes is not an answer about
+     * what exists — and publishing it anyway is what made every brand-new Owner land on an empty
+     * sidebar and "You don't have access to this page".
+     *
+     * `persistentLocalCache` applies writes to IndexedDB before the server accepts them, so
+     * signup's ~200-document batch produced a complete-looking profile while the commit was still
+     * in flight. Publishing it enabled `usePermissions`'s role query, which read `roles/{roleId}`
+     * *from the server* — where the batch had not landed yet. It came back missing, and with a
+     * five-minute `staleTime` and nothing to trigger a refetch, that one lost race denied every
+     * route and emptied the sidebar for the rest of the session. A reload fixed it, which is
+     * exactly the signature of a cached answer rather than a real permission problem.
+     *
+     * Waiting for the acknowledgement costs the tail of one round trip on a fresh signup and
+     * nothing on a reload (the cache seed at mount already covers that). It also stops a
+     * *rejected* batch from writing a profile the server never accepted into `localStorage`, where
+     * it would outlive the session that created it.
+     */
+    function publishIfConfirmed(snap: DocumentSnapshot): boolean {
+      if (!snap.exists() || snap.metadata.hasPendingWrites) return false
+      const data = withActiveCompany(snap.data() as UserDoc)
+      setProfile(data)
+      setProfileFetching(false)
+      cacheProfile(uid, data)
+      return true
+    }
+
     function scheduleRetry() {
       if (cancelled) return
       if (retries >= PROFILE_NOT_FOUND_MAX_RETRIES) {
@@ -123,14 +153,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const snap = await getDoc(doc(db, userDoc(uid)))
           if (cancelled) return
-          if (snap.exists()) {
-            const data = withActiveCompany(snap.data() as UserDoc)
-            setProfile(data)
-            setProfileFetching(false)
-            cacheProfile(uid, data)
-          } else {
-            scheduleRetry()
-          }
+          if (!publishIfConfirmed(snap)) scheduleRetry()
         } catch (err) {
           console.error('[AuthProvider] retry read of profile failed:', err)
           giveUp()
@@ -140,20 +163,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Live-subscribed, not a one-off get() — if an admin changes this user's role or a company
     // setting elsewhere, permission checks derived from `profile` update without a re-login.
+    //
+    // `includeMetadataChanges` because the handler below waits for the server to acknowledge this
+    // document, and an acknowledgement changes only metadata. Without it, a snapshot skipped for
+    // `hasPendingWrites` would never be followed by a confirmed one — the content is identical, so
+    // the default listener has nothing to report — and the profile would only ever arrive via
+    // `scheduleRetry()`'s slower polling.
     const unsubscribeProfile = onSnapshot(
       doc(db, userDoc(uid)),
+      { includeMetadataChanges: true },
       (snap) => {
-        if (snap.exists()) {
-          const data = withActiveCompany(snap.data() as UserDoc)
-          setProfile(data)
-          setProfileFetching(false)
-          cacheProfile(uid, data)
-        } else {
-          // Deliberately does *not* clear `profile` here — if a cached copy was seeded at
-          // mount, it stays visible (and correct, in the common case) while this retries in
-          // the background, rather than blanking a screen that's very likely already right.
-          scheduleRetry()
-        }
+        // Not published yet means either the document isn't there or the server hasn't confirmed
+        // it — retry either way. Deliberately does *not* clear `profile`: if a cached copy was
+        // seeded at mount it stays visible (and correct, in the common case) while this retries in
+        // the background, rather than blanking a screen that's very likely already right.
+        if (!publishIfConfirmed(snap)) scheduleRetry()
       },
       (err) => {
         console.error('[AuthProvider] profile onSnapshot error:', err)
