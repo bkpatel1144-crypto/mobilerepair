@@ -100,7 +100,7 @@ export function PrintFormatsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Printer}
-        title="Bill & Label Designer"
+        title={t('pages.settings.printFormats.billLabelDesigner')}
         subtitle={t('pages.settings.printFormats.designAndManagePrintTemplatesFor')}
       />
 

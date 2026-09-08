@@ -204,7 +204,7 @@ export function UserManagementPage() {
                   ],
                 },
                 {
-                  title: 'Role & Access',
+                  title: t('pages.administration.userManagement.roleAccess'),
                   icon: Phone,
                   rows: [{ label: t('common.role'), value: selectedUser.roleName }],
                 },

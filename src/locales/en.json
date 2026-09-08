@@ -398,7 +398,11 @@
     "search": "Search...",
     "searchNavigation": "Search navigation",
     "rowsPerPage": "Rows per page:",
-    "addNew": "Add New..."
+    "addNew": "Add New...",
+    "15DigitImeiOptional": "15-digit IMEI (optional)",
+    "notesOptional": "Notes (Optional)",
+    "optional": "(optional)",
+    "optional2": "(Optional)"
   },
   "pages": {
     "dashboard": {
@@ -433,7 +437,11 @@
         "cashBook": "Cash Book",
         "runningCashPositionAcrossEveryReceipt": "Running cash position across every receipt and payment",
         "noEntriesInThisRange": "No entries in this range",
-        "receiptsAndPaymentsRecordedHereWill": "Receipts and payments recorded here will appear in the cash book."
+        "receiptsAndPaymentsRecordedHereWill": "Receipts and payments recorded here will appear in the cash book.",
+        "creditIn": "Credit (IN)",
+        "debitOut": "Debit (OUT)",
+        "totalCreditIn": "Total Credit (IN)",
+        "totalDebitOut": "Total Debit (OUT)"
       },
       "expenses": {
         "newExpense": "New Expense",
@@ -445,7 +453,9 @@
         "voidThisExpense": "Void this expense?",
         "void": "Void",
         "expense": "Expense #",
-        "paidTo": "Paid To"
+        "paidTo": "Paid To",
+        "recordRentSalariesAndOtherRunning": "Record rent, salaries and other running costs here — they flow straight into Cash Book and Profit & Loss.",
+        "shopRunningCostsRentSalariesUtilities": "Shop running costs — rent, salaries, utilities and everything else Profit & Loss subtracts"
       },
       "partyLedger": {
         "partyLedger": "Party Ledger",
@@ -455,7 +465,9 @@
         "partiesAppearHereOnceAJob": "Parties appear here once a job card is created for them.",
         "noActivityYet": "No activity yet",
         "thisPartySJobCardsAnd": "This party's job cards and payments will appear here.",
-        "settled": "Settled ✓"
+        "settled": "Settled ✓",
+        "creditCr": "Credit (Cr)",
+        "debitDr": "Debit (Dr)"
       },
       "payables": {
         "payables": "Payables",
@@ -484,7 +496,9 @@
         "newEntry": "New Entry",
         "recordAReceiptOrPayment": "Record a receipt or payment.",
         "customer": "Customer *",
-        "amount": "Amount *"
+        "amount": "Amount *",
+        "receiptsPayments": "Receipts & Payments",
+        "notesOptional": "Notes (optional)"
       },
       "receivables": {
         "receivables": "Receivables",
@@ -522,7 +536,8 @@
         "subCategories": "Sub-Categories",
         "categoryName": "Category Name *",
         "rawMaterial": "Raw Material",
-        "parentCategory": "Parent Category"
+        "parentCategory": "Parent Category",
+        "noneRoot": "None (Root)"
       },
       "itemMaster": {
         "itemMaster": "Item Master",
@@ -567,7 +582,8 @@
         "partyType": "Party Type *",
         "gstNumber2": "GST number",
         "panNumber2": "PAN number",
-        "area": "Area"
+        "area": "Area",
+        "thisRemovesThePartyFromEvery": "This removes the party from every picker (job cards, receipts, purchases). There is no undo screen for this in the app — recovering it would mean editing Firestore directly."
       },
       "partyCategories": {
         "partyCategories": "Party Categories",
@@ -575,7 +591,9 @@
         "noPartyCategoriesYet": "No party categories yet",
         "partiesAlreadyAssignedToThisCategory": "Parties already assigned to this category will keep a reference to a category that no longer exists. This cannot be undone.",
         "creditInformation": "CREDIT INFORMATION",
-        "defaultCreditDays": "Default Credit Days"
+        "defaultCreditDays": "Default Credit Days",
+        "defaultCustomer": "Default (Customer)",
+        "defaultSupplier": "Default (Supplier)"
       },
       "paymentModes": {
         "paymentModes": "Payment Modes",
@@ -601,7 +619,8 @@
         "symbolAbbreviation": "Symbol / Abbreviation",
         "shownInDropdownsAndReports": "Shown in dropdowns and reports",
         "decimalPlaces": "Decimal Places",
-        "displayOrder": "Display Order"
+        "displayOrder": "Display Order",
+        "conversionOptional": "Conversion (Optional)"
       }
     },
     "secondHandDevice": {
@@ -622,7 +641,9 @@
         "voterId": "Voter ID",
         "dateOfPurchase": "Date of Purchase",
         "paidInFull": "Paid in full.",
-        "whoeverIsLoggedIn": "Whoever is logged in"
+        "whoeverIsLoggedIn": "Whoever is logged in",
+        "accountLockIcloudGoogle": "Account Lock (iCloud / Google)",
+        "secondImeiDualSim": "Second IMEI (dual SIM)"
       },
       "devicePurchase": {
         "devicePurchase": "Device Purchase",
@@ -633,7 +654,8 @@
         "thisIsATerminalStatusThe": "This is a terminal status — the purchase can no longer be edited, sent to refurb, or sold afterward. No refund/reversal of the purchase price is recorded automatically.",
         "returnToSeller": "Return to Seller",
         "accessoriesIncluded": "Accessories Included",
-        "conditionNotes": "Condition Notes"
+        "conditionNotes": "Condition Notes",
+        "buyUsedMobilesLaptopsOtherDevices": "Buy used mobiles, laptops & other devices from sellers"
       },
       "deviceSale": {
         "deviceSale": "Device Sale",
@@ -646,7 +668,8 @@
         "buyerName": "Buyer name",
         "buyer": "Buyer *",
         "salePrice": "Sale Price *",
-        "accessoriesGivenToBuyer": "Accessories Given to Buyer"
+        "accessoriesGivenToBuyer": "Accessories Given to Buyer",
+        "warrantyDays": "Warranty (Days)"
       },
       "deviceStock": {
         "deviceStock": "Device Stock",
@@ -671,7 +694,14 @@
         "salePrice": "Sale Price",
         "warranty": "Warranty",
         "purchased": "Purchased",
-        "sold": "Sold"
+        "sold": "Sold",
+        "sellerIdVerification": "SELLER & ID VERIFICATION",
+        "buyer": "Buyer",
+        "pinPattern": "PIN / Pattern",
+        "profit": "Profit",
+        "returnedToSeller": "Returned to Seller",
+        "saleInvoice": "Sale Invoice #",
+        "seller": "Seller"
       },
       "purchaseRegister": {
         "purchaseRegister": "Purchase Register",
@@ -686,7 +716,8 @@
         "allDeviceSalesProfitMarginAnd": "All device sales — profit, margin and export",
         "sales": "Sales",
         "noSalesYet": "No sales yet",
-        "devicesSoldFromDeviceSaleWill": "Devices sold from Device Sale will appear here."
+        "devicesSoldFromDeviceSaleWill": "Devices sold from Device Sale will appear here.",
+        "profit": "Profit (₹)"
       }
     },
     "service": {
@@ -720,7 +751,10 @@
         "clearThisDraft": "Clear this draft?",
         "everyFieldYouVeFilledIn": "Every field you've filled in so far will be wiped, including the autosaved copy. This cannot be undone.",
         "clearDraft": "Clear Draft",
-        "createJobCard": "Create Job Card"
+        "createJobCard": "Create Job Card",
+        "alternateNumberOptional": "Alternate number (optional)",
+        "secondImeiOptional": "Second IMEI (optional)",
+        "serialNumberOptional": "Serial number (optional)"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "Items at Intake",
@@ -770,7 +804,8 @@
         "costing": "Costing",
         "jobDetails": "Job Details",
         "financial": "Financial",
-        "advancePaid": "Advance Paid"
+        "advancePaid": "Advance Paid",
+        "closedJobsRecordActualPartsLabor": "Closed jobs — record actual parts, labor & overhead costs"
       },
       "serviceItems": {
         "serviceItems": "Service Items",
@@ -806,7 +841,8 @@
         "noFieldVisitsLoggedInThis": "No field visits logged in this period",
         "logAFieldVisitFromA": "Log a Field Visit from a job card to see it here.",
         "visits": "Visits",
-        "timeSpent": "Time Spent"
+        "timeSpent": "Time Spent",
+        "onFieldTechnicianLogbookTimeSpent": "On-field technician logbook — time spent & engineers per job"
       },
       "jobWiseProfit": {
         "jobWiseProfit": "Job-wise Profit",
@@ -840,7 +876,9 @@
         "grossProfit": "Gross profit",
         "totalOperatingExpenses": "Total operating expenses",
         "netProfit": "Net profit",
-        "statement": "Statement"
+        "statement": "Statement",
+        "profitLoss": "Profit & Loss",
+        "profitLossIsBuiltFromReceipts": "Profit & Loss is built from receipts and payments. Take a payment or record an expense and it appears here."
       },
       "serviceReports": {
         "serviceReports": "Service Reports",
@@ -935,7 +973,11 @@
         "handOverTheDeviceWithA": "Hand over the device with a warranty note customers can trust.",
         "frequentlyAskedQuestions": "Frequently asked questions",
         "readyToRunYourShopOn": "Ready to run your shop on aim?",
-        "freeForeverNoCardRequired": "Free forever. No card required."
+        "freeForeverNoCardRequired": "Free forever. No card required.",
+        "billingPaymentsConnected": "Billing & payments, connected",
+        "assignRepair": "Assign & repair",
+        "billCollect": "Bill & collect",
+        "deliverWarranty": "Deliver & warranty"
       }
     },
     "pricing": {
@@ -964,7 +1006,9 @@
         "autoExpiresOn": "Auto-expires on",
         "inactiveFor": "Inactive for",
         "role": "Role",
-        "branch": "Branch"
+        "branch": "Branch",
+        "networkDevice": "NETWORK & DEVICE",
+        "idle30m": "Idle (30m+)"
       },
       "createRole": {
         "backToRoles": "Back to roles",
@@ -1022,12 +1066,15 @@
         "searchMenus": "Search menus...",
         "thisWipesEveryMenuAndPermission": "This wipes every menu and permission checkbox for this role back to unchecked. It only affects the unsaved draft — you can still Cancel out of the page — but any hand-tuned selections made so far will be lost.",
         "thisReplacesEveryMenuAndPermission": "This replaces every menu and permission selection made so far in this draft with the picked role's configuration. Any hand-tuned changes not yet saved will be overwritten.",
-        "inherit": "Inherit"
+        "inherit": "Inherit",
+        "clearAllMenusPermissions": "Clear all menus & permissions?"
       },
       "roleConfigure": {
         "couldnTLoadThisRole": "Couldn't load this role",
         "onlyAnotherOwnerCanEditThe": "Only another Owner can edit the Owner role",
-        "thisRoleHasFullAccessBy": "This role has full access by definition and can only be managed by a user who also has full access."
+        "thisRoleHasFullAccessBy": "This role has full access by definition and can only be managed by a user who also has full access.",
+        "menusPermissions": "Menus & Permissions",
+        "dashboardLanding": "Dashboard & Landing"
       },
       "roleManagement": {
         "rolesManagement": "Roles Management",
@@ -1082,7 +1129,8 @@
         "disabledUsers": "Disabled Users",
         "deletedUsers": "Deleted Users",
         "noUsersFound": "No users found",
-        "contactDetails": "Contact Details"
+        "contactDetails": "Contact Details",
+        "roleAccess": "Role & Access"
       }
     },
     "settings": {
@@ -1104,13 +1152,16 @@
         "file": "File",
         "created": "Created",
         "by": "By",
-        "size": "Size"
+        "size": "Size",
+        "backupRestore": "Backup & Restore",
+        "keepForDays": "Keep for (days)"
       },
       "billing": {
         "yourPlanAndBillingDetails": "Your plan and billing details",
         "youReOnTheFreePlan": "You're on the Free plan",
         "perMonth": "per month",
-        "includedModules": "Included modules"
+        "includedModules": "Included modules",
+        "billingSubscription": "Billing & Subscription"
       },
       "branchManagement": {
         "branchManagement": "Branch Management",
@@ -1125,7 +1176,8 @@
         "branchInformation": "BRANCH INFORMATION",
         "branchCode": "Branch Code",
         "currentStatus": "Current Status",
-        "branchType": "Branch Type"
+        "branchType": "Branch Type",
+        "statusType": "STATUS & TYPE"
       },
       "companyForm": {
         "companyCode": "Company Code",
@@ -1198,7 +1250,9 @@
         "nothingOnTheCanvasYet": "Nothing on the canvas yet.",
         "visibility": "Visibility",
         "alwaysVisible": "Always visible",
-        "colour": "Colour"
+        "colour": "Colour",
+        "fontSizePt": "Font size (pt)",
+        "rotation": "Rotation (°)"
       },
       "importTemplateDialog": {
         "importTemplate": "Import Template",
@@ -1222,7 +1276,11 @@
         "copies": "Copies",
         "copyLayout": "Copy layout",
         "stacked": "Stacked",
-        "sideBySide": "Side by side"
+        "sideBySide": "Side by side",
+        "gapMm": "Gap (mm)",
+        "heightMm": "Height (mm)",
+        "marginsMm": "Margins (mm)",
+        "widthMm": "Width (mm)"
       },
       "printDevicesDialog": {
         "copyPairingCode": "Copy pairing code",
@@ -1238,7 +1296,8 @@
         "noFormatsForThisDocumentType": "No formats for this document type",
         "useAddMissingDefaultsToRestore": "Use Add Missing Defaults to restore the standard formats, or create one.",
         "deleteThisTemplate": "Delete this template?",
-        "delete": "Delete"
+        "delete": "Delete",
+        "billLabelDesigner": "Bill & Label Designer"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
@@ -1265,7 +1324,9 @@
         "afterGenerateBill": "After Generate Bill",
         "billIsGeneratedForTheJob": "Bill is generated for the job",
         "afterReceivePayment": "After Receive Payment",
-        "aPaymentIsRecordedForThe": "A payment is recorded for the job"
+        "aPaymentIsRecordedForThe": "A payment is recorded for the job",
+        "canViewPricesPaymentData": "Can view prices & payment data",
+        "collectPaymentSectionShowsInThe": "Collect Payment section shows in the Generate Bill popup (partial / split / outstanding)."
       },
       "formBuilderTab": {
         "couldnTLoadThisFormS": "Couldn't load this form's saved layout",
@@ -1276,7 +1337,10 @@
         "twoColumn": "Two Column",
         "largeDesktop": "Large Desktop",
         "template": "Template",
-        "layout": "Layout"
+        "layout": "Layout",
+        "autoAdaptsToScreenSize": "Auto (adapts to screen size)",
+        "compactPairedFields": "Compact (paired fields)",
+        "standardOneFieldPerRow": "Standard (one field per row)"
       },
       "permissionsSubtab": {
         "allowedActionsPerStatus": "Allowed Actions per Status"
@@ -1288,7 +1352,9 @@
         "pickARoleFromTheDropdown": "Pick a role from the dropdown above to set up its statuses and actions.",
         "couldnTLoadThisRoleS": "Couldn't load this role's workflow config",
         "selectARole": "Select a role",
-        "behavior": "Behavior"
+        "behavior": "Behavior",
+        "saveGoLive": "Save & go live",
+        "setVisibilityActions": "Set visibility & actions"
       },
       "usersSubtab": {
         "receivedBy": "Received By",
@@ -1296,7 +1362,10 @@
         "allUsers": "All users",
         "whoDidItDropdowns": "Who Did It — Dropdowns",
         "fieldVisitTechnician": "Field Visit Technician",
-        "whoCheckedInOnAnOn": "Who checked in on an on-site visit"
+        "whoCheckedInOnAnOn": "Who checked in on an on-site visit",
+        "noneManualSelect": "None (manual select)",
+        "cancelledBy": "Cancelled By",
+        "deliveredBy": "Delivered By"
       },
       "workflowDesigner": {
         "workflowDesigner": "Workflow Designer",

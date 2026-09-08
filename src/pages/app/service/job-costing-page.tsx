@@ -111,7 +111,7 @@ export function JobCostingPage() {
       <PageHeader
         icon={Calculator}
         title={t('pages.service.jobCosting.jobCosting')}
-        subtitle="Closed jobs — record actual parts, labor & overhead costs"
+        subtitle={t('pages.service.jobCosting.closedJobsRecordActualPartsLabor')}
       />
 
       <FilterBar

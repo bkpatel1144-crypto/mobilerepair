@@ -71,7 +71,7 @@ export function BillingPage() {
     <div className="space-y-5 p-4 sm:p-6">
       <PageHeader
         icon={CreditCard}
-        title="Billing & Subscription"
+        title={t('pages.settings.billing.billingSubscription')}
         subtitle={t('pages.settings.billing.yourPlanAndBillingDetails')}
       />
 

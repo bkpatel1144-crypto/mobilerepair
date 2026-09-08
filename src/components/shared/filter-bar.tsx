@@ -2,15 +2,19 @@ import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 export type DateRangeKey = 'today' | 'yesterday' | 'week' | 'month' | 'year' | 'custom'
 
-const RANGE_OPTIONS: { key: DateRangeKey; label: string }[] = [
-  { key: 'today', label: 'Today' },
-  { key: 'yesterday', label: 'Yesterday' },
-  { key: 'week', label: 'This Week' },
-  { key: 'month', label: 'This Month' },
-  { key: 'year', label: 'This Year' },
+// The option list is module scope, so it stores the translation *key* rather than the text —
+// `t()` only exists inside a component, and a label resolved once at module load would freeze
+// in whichever language happened to be active at import time and never follow a language switch.
+const RANGE_OPTIONS: { key: DateRangeKey; labelKey: string }[] = [
+  { key: 'today', labelKey: 'components.shared.filterBar.today' },
+  { key: 'yesterday', labelKey: 'components.shared.filterBar.yesterday' },
+  { key: 'week', labelKey: 'components.shared.filterBar.thisWeek' },
+  { key: 'month', labelKey: 'components.shared.filterBar.thisMonth' },
+  { key: 'year', labelKey: 'components.shared.filterBar.thisYear' },
 ]
 
 interface FilterBarProps {
@@ -46,6 +50,7 @@ export function FilterBar({
   children,
   className,
 }: FilterBarProps) {
+  const { t } = useTranslation()
   return (
     <div className={cn('flex flex-wrap items-center gap-2', className)}>
       {onSearchChange && (
@@ -70,7 +75,7 @@ export function FilterBar({
               variant={dateRange === opt.key ? 'default' : 'outline'}
               onClick={() => onDateRangeChange(opt.key)}
             >
-              {opt.label}
+              {t(opt.labelKey)}
             </Button>
           ))}
           {showCustomRange && (

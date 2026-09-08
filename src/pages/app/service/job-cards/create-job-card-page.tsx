@@ -504,12 +504,14 @@ export function CreateJobCardPage() {
               <div className="space-y-1.5">
                 <Label>
                   Alternative Mobile{' '}
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t('shared.optional2')}
+                  </span>
                 </Label>
                 <Input
                   value={alternativeMobile}
                   onChange={(e) => setAlternativeMobile(e.target.value)}
-                  placeholder="Alternate number (optional)"
+                  placeholder={t('pages.service.createJobCard.alternateNumberOptional')}
                 />
               </div>
             )}
@@ -556,7 +558,9 @@ export function CreateJobCardPage() {
                     {isRequired('brand') ? (
                       <span className="text-red-600">*</span>
                     ) : (
-                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t('shared.optional2')}
+                      </span>
                     )}
                   </Label>
                   <div className="flex gap-2">
@@ -610,7 +614,9 @@ export function CreateJobCardPage() {
                     {isRequired('model') ? (
                       <span className="text-red-600">*</span>
                     ) : (
-                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t('shared.optional2')}
+                      </span>
                     )}
                   </Label>
                   <div className="flex gap-2">
@@ -655,14 +661,16 @@ export function CreateJobCardPage() {
                 <div className="space-y-1.5">
                   <Label>
                     IMEI{' '}
-                    <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    <span className="text-xs font-normal text-muted-foreground">
+                      {t('shared.optional2')}
+                    </span>
                   </Label>
                   <div className="flex gap-2">
                     <Input
                       id="imei"
                       value={imei}
                       onChange={(e) => setImei(e.target.value)}
-                      placeholder="15-digit IMEI (optional)"
+                      placeholder={t('shared.15DigitImeiOptional')}
                       className="flex-1"
                     />
                     <Button
@@ -686,12 +694,14 @@ export function CreateJobCardPage() {
                   <div className="space-y-1.5">
                     <Label>
                       IMEI 2{' '}
-                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t('shared.optional2')}
+                      </span>
                     </Label>
                     <Input
                       value={imei2}
                       onChange={(e) => setImei2(e.target.value)}
-                      placeholder="Second IMEI (optional)"
+                      placeholder={t('pages.service.createJobCard.secondImeiOptional')}
                     />
                   </div>
                 )}
@@ -700,14 +710,16 @@ export function CreateJobCardPage() {
                   <div className="space-y-1.5">
                     <Label>
                       Serial No{' '}
-                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t('shared.optional2')}
+                      </span>
                     </Label>
                     <div className="flex gap-2">
                       <Input
                         id="serialNo"
                         value={serialNo}
                         onChange={(e) => setSerialNo(e.target.value)}
-                        placeholder="Serial number (optional)"
+                        placeholder={t('pages.service.createJobCard.serialNumberOptional')}
                         className="flex-1"
                       />
                       <Button
@@ -730,7 +742,9 @@ export function CreateJobCardPage() {
               <div className="space-y-1.5">
                 <Label>
                   Device PIN / Pattern{' '}
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t('shared.optional2')}
+                  </span>
                 </Label>
                 <div className="flex gap-2">
                   {pinIsPattern && devicePinPattern ? (
@@ -907,7 +921,9 @@ export function CreateJobCardPage() {
                   <div className="space-y-1.5">
                     <Label>
                       Estimated Cost{' '}
-                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t('shared.optional2')}
+                      </span>
                     </Label>
                     <Input
                       type="number"
@@ -943,7 +959,9 @@ export function CreateJobCardPage() {
                   <div className="space-y-1.5">
                     <Label>
                       Advance Received{' '}
-                      <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t('shared.optional2')}
+                      </span>
                     </Label>
                     <Input
                       type="number"
@@ -979,7 +997,9 @@ export function CreateJobCardPage() {
               <div className="space-y-1.5">
                 <Label>
                   Items received{' '}
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t('shared.optional2')}
+                  </span>
                 </Label>
                 <div className="flex gap-2">
                   <div className="flex-1">
@@ -1015,7 +1035,9 @@ export function CreateJobCardPage() {
               <div className="space-y-1.5">
                 <Label>
                   Items returned{' '}
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t('shared.optional2')}
+                  </span>
                 </Label>
                 <div className="flex gap-2">
                   <div className="flex-1">
@@ -1075,7 +1097,9 @@ export function CreateJobCardPage() {
                 <div className="space-y-1.5">
                   <Label>
                     Assign To{' '}
-                    <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                    <span className="text-xs font-normal text-muted-foreground">
+                      {t('shared.optional2')}
+                    </span>
                   </Label>
                   <SearchSelect
                     options={[
@@ -1099,7 +1123,9 @@ export function CreateJobCardPage() {
               <div className="space-y-1.5">
                 <Label>
                   Remark{' '}
-                  <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t('shared.optional2')}
+                  </span>
                 </Label>
                 <Textarea
                   value={remark}

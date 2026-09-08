@@ -146,7 +146,9 @@ function isDisplayString(s) {
   // across a comparison — `d >= bounds.from && d <= bounds.to` yields "= bounds.from && d" —
   // and rewriting that into a `t()` call would replace working code with a translation lookup.
   // Nothing in this app's user-facing copy contains these characters.
-  if (/[=&|;${}()[\]<>]/.test(t)) return false
+  // `&&`, not `&`: an ampersand is ordinary copy ("Billing & payments", "Receipts & Payments"),
+  // and rejecting it excluded real headings. The doubled form only appears in code.
+  if (/&&|\|\||=>|[=;${}[\]<>]/.test(t)) return false
   if (/\.\w/.test(t)) return false // property access, e.g. `bounds.from`
   if (/^\W/.test(t) && !/^[(“"']/.test(t)) return false // starts with an operator
   return true

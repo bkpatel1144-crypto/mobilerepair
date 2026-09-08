@@ -372,13 +372,16 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              IMEI <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              IMEI{' '}
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <div className="flex gap-2">
               <Input
                 value={imei}
                 onChange={(e) => setImei(e.target.value)}
-                placeholder="15-digit IMEI (optional)"
+                placeholder={t('shared.15DigitImeiOptional')}
                 className="flex-1"
               />
               <Button
@@ -395,13 +398,16 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              IMEI 2 <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              IMEI 2{' '}
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <div className="flex gap-2">
               <Input
                 value={imei2}
                 onChange={(e) => setImei2(e.target.value)}
-                placeholder="Second IMEI (dual SIM)"
+                placeholder={t('pages.secondHandDevice.createPurchase.secondImeiDualSim')}
                 className="flex-1"
               />
               <Button
@@ -419,7 +425,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Device PIN / Pattern{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <div className="flex items-center gap-2">
               {devicePinPattern ? (
@@ -444,14 +452,19 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              RAM <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              RAM{' '}
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input value={ram} onChange={(e) => setRam(e.target.value)} placeholder="e.g. 8 GB" />
           </div>
           <div className="space-y-1.5">
             <Label>
               Storage / ROM{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               value={storage}
@@ -461,7 +474,10 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Colour <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              Colour{' '}
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               value={colour}
@@ -472,7 +488,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Battery Health %{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               type="number"
@@ -487,7 +505,10 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Network <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              Network{' '}
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Select value={network} onValueChange={(v) => v && setNetwork(v)}>
               <SelectTrigger className="w-full">
@@ -505,7 +526,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Original Invoice Date{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               type="date"
@@ -516,7 +539,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Warranty Left (months){' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               type="number"
@@ -546,7 +571,7 @@ export function CreateSecondHandPurchasePage() {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label>Account Lock (iCloud / Google)</Label>
+            <Label>{t('pages.secondHandDevice.createPurchase.accountLockIcloudGoogle')}</Label>
             <Select
               value={accountLockStatus}
               onValueChange={(v) => v && setAccountLockStatus(v as AccountLockStatus)}
@@ -582,7 +607,9 @@ export function CreateSecondHandPurchasePage() {
         <div className="space-y-1.5">
           <Label>
             Accessories Included{' '}
-            <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
           </Label>
           <Select value={accessoriesIncluded} onValueChange={(v) => v && setAccessoriesIncluded(v)}>
             <SelectTrigger className="w-full">
@@ -600,7 +627,9 @@ export function CreateSecondHandPurchasePage() {
         <div className="space-y-1.5">
           <Label>
             Condition Notes{' '}
-            <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
           </Label>
           <Textarea
             value={conditionNotes}
@@ -612,7 +641,9 @@ export function CreateSecondHandPurchasePage() {
         <div className="space-y-1.5">
           <Label>
             Device Photos{' '}
-            <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
           </Label>
           <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
             <ImagePlus className="size-5" />
@@ -722,7 +753,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               ID Proof Number{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               value={idProofNumber}
@@ -735,7 +768,9 @@ export function CreateSecondHandPurchasePage() {
         <div className="space-y-1.5">
           <Label>
             ID Proof Photo{' '}
-            <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
           </Label>
           <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
             <ImagePlus className="size-5" />
@@ -818,7 +853,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Amount Paid{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               type="number"
@@ -835,7 +872,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Purchased By{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Select
               value={purchasedById ?? '__self__'}
@@ -859,7 +898,9 @@ export function CreateSecondHandPurchasePage() {
           <div className="space-y-1.5">
             <Label>
               Expected Sale Price{' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               type="number"
@@ -877,7 +918,10 @@ export function CreateSecondHandPurchasePage() {
 
         <div className="space-y-1.5">
           <Label>
-            Notes <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+            Notes{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
           </Label>
           <Textarea
             value={notes}

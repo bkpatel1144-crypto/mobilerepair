@@ -21,15 +21,25 @@ import { rawUserAgent } from '@/lib/user-agent'
 import { formatTimestamp } from '@/lib/utils'
 import { formatDurationLabel } from '@/lib/date-range'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 
-function statusFor(session: SessionWithId): {
+/** Takes `t` rather than reaching for it: this is a plain function, not a component, so the
+ * hook is not available here — and resolving the label at module load would freeze it in
+ * whichever language was active at import time. */
+function statusFor(
+  session: SessionWithId,
+  t: TFunction
+): {
   label: string
   tone: 'success' | 'warning' | 'neutral'
 } {
-  if (!isSessionActive(session)) return { label: 'Ended', tone: 'neutral' }
-  if (isSessionOnline(session)) return { label: 'Online', tone: 'success' }
-  if (isSessionIdle(session)) return { label: 'Idle', tone: 'warning' }
-  return { label: 'Away', tone: 'neutral' }
+  if (!isSessionActive(session))
+    return { label: t('pages.administration.activeSessions.ended'), tone: 'neutral' }
+  if (isSessionOnline(session))
+    return { label: t('pages.administration.activeSessions.online'), tone: 'success' }
+  if (isSessionIdle(session))
+    return { label: t('pages.administration.activeSessions.idle'), tone: 'warning' }
+  return { label: t('pages.administration.activeSessions.away'), tone: 'neutral' }
 }
 
 export function ActiveSessionsPage() {
@@ -79,7 +89,7 @@ export function ActiveSessionsPage() {
       key: 'status',
       header: t('shared.status'),
       render: (s) => {
-        const { label, tone } = statusFor(s)
+        const { label, tone } = statusFor(s, t)
         return <StatusBadge status={label} tone={tone} dot />
       },
     },
@@ -106,7 +116,7 @@ export function ActiveSessionsPage() {
           icon={Users}
         />
         <StatCard
-          label="Idle (30m+)"
+          label={t('pages.administration.activeSessions.idle30m')}
           value={idle.length}
           icon={Clock}
           tone={idle.length > 0 ? 'warning' : 'default'}
@@ -148,7 +158,11 @@ export function ActiveSessionsPage() {
           subtitle={viewing.deviceLabel}
           badges={
             <>
-              <StatusBadge status={statusFor(viewing).label} tone={statusFor(viewing).tone} dot />
+              <StatusBadge
+                status={statusFor(viewing, t).label}
+                tone={statusFor(viewing, t).tone}
+                dot
+              />
               {isCurrentSession(viewing) && (
                 <StatusBadge status="This is your current session" tone="info" />
               )}
@@ -194,7 +208,7 @@ export function ActiveSessionsPage() {
               ],
             },
             {
-              title: 'NETWORK & DEVICE',
+              title: t('pages.administration.activeSessions.networkDevice'),
               rows: [
                 { label: t('shared.ipAddress'), value: viewing.ip ?? '—' },
                 { label: t('shared.device'), value: viewing.deviceLabel },

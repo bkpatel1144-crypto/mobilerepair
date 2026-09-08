@@ -46,13 +46,13 @@ export function CashBookPage() {
     },
     {
       key: 'in',
-      header: 'Credit (IN)',
+      header: t('pages.finance.cashBook.creditIn'),
       render: (r) =>
         r.direction === 'in' ? <span className="text-emerald-600">₹{r.amount}</span> : '',
     },
     {
       key: 'out',
-      header: 'Debit (OUT)',
+      header: t('pages.finance.cashBook.debitOut'),
       render: (r) =>
         r.direction === 'out' ? <span className="text-red-600">₹{r.amount}</span> : '',
     },
@@ -87,8 +87,16 @@ export function CashBookPage() {
 
       <StatCardGrid>
         <StatCard label={t('common.opening')} value={`₹${data.opening}`} />
-        <StatCard label="Total Credit (IN)" value={`₹${data.totalCredit}`} tone="success" />
-        <StatCard label="Total Debit (OUT)" value={`₹${data.totalDebit}`} tone="danger" />
+        <StatCard
+          label={t('pages.finance.cashBook.totalCreditIn')}
+          value={`₹${data.totalCredit}`}
+          tone="success"
+        />
+        <StatCard
+          label={t('pages.finance.cashBook.totalDebitOut')}
+          value={`₹${data.totalDebit}`}
+          tone="danger"
+        />
         <StatCard label={t('common.closing')} value={`₹${data.closing}`} tone="info" />
       </StatCardGrid>
 

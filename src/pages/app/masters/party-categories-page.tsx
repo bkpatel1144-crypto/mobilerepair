@@ -56,7 +56,7 @@ export function PartyCategoriesPage() {
     },
     {
       key: 'customer',
-      header: 'Default (Customer)',
+      header: t('pages.masters.partyCategories.defaultCustomer'),
       hideOnMobile: true,
       render: (c) => (
         <Star
@@ -70,7 +70,7 @@ export function PartyCategoriesPage() {
     },
     {
       key: 'supplier',
-      header: 'Default (Supplier)',
+      header: t('pages.masters.partyCategories.defaultSupplier'),
       hideOnMobile: true,
       render: (c) => (
         <Star

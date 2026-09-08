@@ -398,7 +398,11 @@
     "search": "खोजें...",
     "searchNavigation": "नेविगेशन खोजें",
     "rowsPerPage": "प्रति पृष्ठ पंक्तियाँ:",
-    "addNew": "नया जोड़ें..."
+    "addNew": "नया जोड़ें...",
+    "15DigitImeiOptional": "15 अंकों का IMEI (वैकल्पिक)",
+    "notesOptional": "टिप्पणी (वैकल्पिक)",
+    "optional": "(वैकल्पिक)",
+    "optional2": "(वैकल्पिक)"
   },
   "pages": {
     "dashboard": {
@@ -433,7 +437,11 @@
         "cashBook": "रोकड़ बही",
         "runningCashPositionAcrossEveryReceipt": "हर रसीद और भुगतान के साथ चलती रोकड़ स्थिति",
         "noEntriesInThisRange": "इस अवधि में कोई प्रविष्टि नहीं",
-        "receiptsAndPaymentsRecordedHereWill": "यहाँ दर्ज रसीदें और भुगतान रोकड़ बही में दिखेंगे।"
+        "receiptsAndPaymentsRecordedHereWill": "यहाँ दर्ज रसीदें और भुगतान रोकड़ बही में दिखेंगे।",
+        "creditIn": "जमा (आया)",
+        "debitOut": "नामे (गया)",
+        "totalCreditIn": "कुल जमा (आया)",
+        "totalDebitOut": "कुल नामे (गया)"
       },
       "expenses": {
         "newExpense": "नया खर्च",
@@ -445,7 +453,9 @@
         "voidThisExpense": "यह खर्च रद्द करें?",
         "void": "रद्द करें",
         "expense": "खर्च #",
-        "paidTo": "किसे दिया"
+        "paidTo": "किसे दिया",
+        "recordRentSalariesAndOtherRunning": "किराया, वेतन और बाकी चालू खर्च यहाँ दर्ज करें — ये सीधे रोकड़ बही और लाभ-हानि में जाते हैं।",
+        "shopRunningCostsRentSalariesUtilities": "दुकान के चालू खर्च — किराया, वेतन, बिजली-पानी और बाकी सब जो लाभ-हानि में घटाया जाता है"
       },
       "partyLedger": {
         "partyLedger": "पार्टी खाता",
@@ -455,7 +465,9 @@
         "partiesAppearHereOnceAJob": "पार्टी के लिए जॉब कार्ड बनने पर वह यहाँ दिखेगी।",
         "noActivityYet": "अभी कोई गतिविधि नहीं",
         "thisPartySJobCardsAnd": "इस पार्टी के जॉब कार्ड और भुगतान यहाँ दिखेंगे।",
-        "settled": "चुकता ✓"
+        "settled": "चुकता ✓",
+        "creditCr": "जमा (Cr)",
+        "debitDr": "नामे (Dr)"
       },
       "payables": {
         "payables": "देय राशि",
@@ -484,7 +496,9 @@
         "newEntry": "नई प्रविष्टि",
         "recordAReceiptOrPayment": "रसीद या भुगतान दर्ज करें।",
         "customer": "ग्राहक *",
-        "amount": "राशि *"
+        "amount": "राशि *",
+        "receiptsPayments": "रसीद और भुगतान",
+        "notesOptional": "टिप्पणी (वैकल्पिक)"
       },
       "receivables": {
         "receivables": "प्राप्य राशि",
@@ -522,7 +536,8 @@
         "subCategories": "उप-श्रेणियाँ",
         "categoryName": "श्रेणी का नाम *",
         "rawMaterial": "कच्चा माल",
-        "parentCategory": "मूल श्रेणी"
+        "parentCategory": "मूल श्रेणी",
+        "noneRoot": "कोई नहीं (मूल)"
       },
       "itemMaster": {
         "itemMaster": "आइटम मास्टर",
@@ -567,7 +582,8 @@
         "partyType": "पार्टी का प्रकार *",
         "gstNumber2": "GST नंबर",
         "panNumber2": "PAN नंबर",
-        "area": "इलाका"
+        "area": "इलाका",
+        "thisRemovesThePartyFromEvery": "यह पार्टी को हर सूची (जॉब कार्ड, रसीदें, खरीद) से हटा देता है। ऐप में इसे वापस लाने की कोई स्क्रीन नहीं है — वापस लाने के लिए सीधे Firestore में बदलाव करना पड़ेगा।"
       },
       "partyCategories": {
         "partyCategories": "पार्टी श्रेणी",
@@ -575,7 +591,9 @@
         "noPartyCategoriesYet": "अभी कोई पार्टी श्रेणी नहीं",
         "partiesAlreadyAssignedToThisCategory": "इस श्रेणी में पहले से जुड़ी पार्टियाँ एक ऐसी श्रेणी का संदर्भ रखेंगी जो अब मौजूद नहीं है। यह पूर्ववत नहीं हो सकता।",
         "creditInformation": "उधार की जानकारी",
-        "defaultCreditDays": "डिफ़ॉल्ट उधार दिन"
+        "defaultCreditDays": "डिफ़ॉल्ट उधार दिन",
+        "defaultCustomer": "डिफ़ॉल्ट (ग्राहक)",
+        "defaultSupplier": "डिफ़ॉल्ट (सप्लायर)"
       },
       "paymentModes": {
         "paymentModes": "भुगतान के तरीके",
@@ -601,7 +619,8 @@
         "symbolAbbreviation": "चिह्न / संक्षेप",
         "shownInDropdownsAndReports": "ड्रॉपडाउन और रिपोर्ट में दिखता है",
         "decimalPlaces": "दशमलव स्थान",
-        "displayOrder": "दिखाने का क्रम"
+        "displayOrder": "दिखाने का क्रम",
+        "conversionOptional": "रूपांतरण (वैकल्पिक)"
       }
     },
     "secondHandDevice": {
@@ -622,7 +641,9 @@
         "voterId": "वोटर ID",
         "dateOfPurchase": "खरीद की तारीख",
         "paidInFull": "पूरा भुगतान हो गया।",
-        "whoeverIsLoggedIn": "जो भी लॉग इन है"
+        "whoeverIsLoggedIn": "जो भी लॉग इन है",
+        "accountLockIcloudGoogle": "खाता लॉक (iCloud / Google)",
+        "secondImeiDualSim": "दूसरा IMEI (डुअल सिम)"
       },
       "devicePurchase": {
         "devicePurchase": "डिवाइस खरीद",
@@ -633,7 +654,8 @@
         "thisIsATerminalStatusThe": "यह अंतिम स्थिति है — इसके बाद खरीद में बदलाव, मरम्मत में भेजना या बेचना नहीं हो सकेगा। खरीद कीमत की वापसी या उलट-फेर अपने आप दर्ज नहीं होती।",
         "returnToSeller": "विक्रेता को वापस करें",
         "accessoriesIncluded": "साथ मिली चीज़ें",
-        "conditionNotes": "हालत की टिप्पणी"
+        "conditionNotes": "हालत की टिप्पणी",
+        "buyUsedMobilesLaptopsOtherDevices": "विक्रेताओं से पुराने मोबाइल, लैपटॉप और दूसरी डिवाइस खरीदें"
       },
       "deviceSale": {
         "deviceSale": "डिवाइस विक्रय",
@@ -646,7 +668,8 @@
         "buyerName": "खरीदार का नाम",
         "buyer": "खरीदार *",
         "salePrice": "विक्रय कीमत *",
-        "accessoriesGivenToBuyer": "खरीदार को दी गई चीज़ें"
+        "accessoriesGivenToBuyer": "खरीदार को दी गई चीज़ें",
+        "warrantyDays": "वारंटी (दिन)"
       },
       "deviceStock": {
         "deviceStock": "डिवाइस स्टॉक",
@@ -671,7 +694,14 @@
         "salePrice": "विक्रय कीमत",
         "warranty": "वारंटी",
         "purchased": "खरीदा",
-        "sold": "बिका"
+        "sold": "बिका",
+        "sellerIdVerification": "विक्रेता और पहचान जाँच",
+        "buyer": "खरीदार",
+        "pinPattern": "PIN / पैटर्न",
+        "profit": "लाभ",
+        "returnedToSeller": "विक्रेता को वापस",
+        "saleInvoice": "विक्रय बिल #",
+        "seller": "विक्रेता"
       },
       "purchaseRegister": {
         "purchaseRegister": "खरीद रजिस्टर",
@@ -686,7 +716,8 @@
         "allDeviceSalesProfitMarginAnd": "सभी डिवाइस विक्रय — लाभ, मार्जिन और एक्सपोर्ट",
         "sales": "विक्रय",
         "noSalesYet": "अभी कोई विक्रय नहीं",
-        "devicesSoldFromDeviceSaleWill": "डिवाइस विक्रय से बेची गई डिवाइस यहाँ दिखेंगी।"
+        "devicesSoldFromDeviceSaleWill": "डिवाइस विक्रय से बेची गई डिवाइस यहाँ दिखेंगी।",
+        "profit": "लाभ (₹)"
       }
     },
     "service": {
@@ -720,7 +751,10 @@
         "clearThisDraft": "यह ड्राफ़्ट साफ़ करें?",
         "everyFieldYouVeFilledIn": "अब तक भरा हुआ हर फ़ील्ड मिट जाएगा, अपने आप सहेजी गई नकल भी। यह पूर्ववत नहीं हो सकता।",
         "clearDraft": "ड्राफ़्ट साफ़ करें",
-        "createJobCard": "जॉब कार्ड बनाएं"
+        "createJobCard": "जॉब कार्ड बनाएं",
+        "alternateNumberOptional": "दूसरा नंबर (वैकल्पिक)",
+        "secondImeiOptional": "दूसरा IMEI (वैकल्पिक)",
+        "serialNumberOptional": "सीरियल नंबर (वैकल्पिक)"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "लेते समय की चीज़ें",
@@ -770,7 +804,8 @@
         "costing": "लागत",
         "jobDetails": "जॉब का विवरण",
         "financial": "वित्तीय",
-        "advancePaid": "अग्रिम भुगतान"
+        "advancePaid": "अग्रिम भुगतान",
+        "closedJobsRecordActualPartsLabor": "बंद जॉब — असल पुर्ज़े, मज़दूरी और ऊपरी खर्च दर्ज करें"
       },
       "serviceItems": {
         "serviceItems": "सर्विस आइटम",
@@ -806,7 +841,8 @@
         "noFieldVisitsLoggedInThis": "इस अवधि में कोई फील्ड विज़िट दर्ज नहीं",
         "logAFieldVisitFromA": "किसी जॉब कार्ड से फील्ड विज़िट दर्ज करें, तो वह यहाँ दिखेगी।",
         "visits": "विज़िट",
-        "timeSpent": "लगा समय"
+        "timeSpent": "लगा समय",
+        "onFieldTechnicianLogbookTimeSpent": "फील्ड तकनीशियन लॉगबुक — हर जॉब पर लगा समय और इंजीनियर"
       },
       "jobWiseProfit": {
         "jobWiseProfit": "जॉब अनुसार लाभ",
@@ -840,7 +876,9 @@
         "grossProfit": "सकल लाभ",
         "totalOperatingExpenses": "कुल संचालन खर्च",
         "netProfit": "शुद्ध लाभ",
-        "statement": "विवरण"
+        "statement": "विवरण",
+        "profitLoss": "लाभ और हानि",
+        "profitLossIsBuiltFromReceipts": "लाभ-हानि रसीदों और भुगतानों से बनती है। कोई भुगतान लें या खर्च दर्ज करें, तो वह यहाँ दिखेगा।"
       },
       "serviceReports": {
         "serviceReports": "सर्विस रिपोर्ट",
@@ -935,7 +973,11 @@
         "handOverTheDeviceWithA": "डिवाइस ऐसी वारंटी पर्ची के साथ सौंपें जिस पर ग्राहक भरोसा कर सके।",
         "frequentlyAskedQuestions": "अक्सर पूछे जाने वाले सवाल",
         "readyToRunYourShopOn": "अपनी दुकान aim पर चलाने के लिए तैयार हैं?",
-        "freeForeverNoCardRequired": "हमेशा मुफ़्त। कार्ड की ज़रूरत नहीं।"
+        "freeForeverNoCardRequired": "हमेशा मुफ़्त। कार्ड की ज़रूरत नहीं।",
+        "billingPaymentsConnected": "बिलिंग और भुगतान, आपस में जुड़े",
+        "assignRepair": "सौंपना और मरम्मत",
+        "billCollect": "बिल और वसूली",
+        "deliverWarranty": "सौंपना और वारंटी"
       }
     },
     "pricing": {
@@ -964,7 +1006,9 @@
         "autoExpiresOn": "अपने आप समाप्त होगा",
         "inactiveFor": "कब से निष्क्रिय",
         "role": "भूमिका",
-        "branch": "शाखा"
+        "branch": "शाखा",
+        "networkDevice": "नेटवर्क और डिवाइस",
+        "idle30m": "निष्क्रिय (30 मिनट+)"
       },
       "createRole": {
         "backToRoles": "भूमिकाओं पर वापस",
@@ -1022,12 +1066,15 @@
         "searchMenus": "मेन्यू खोजें...",
         "thisWipesEveryMenuAndPermission": "यह इस भूमिका के हर मेन्यू और अनुमति के निशान हटा देता है। यह सिर्फ़ बिना सहेजे ड्राफ़्ट पर असर करता है — आप अब भी पेज से रद्द कर सकते हैं — लेकिन अब तक हाथ से किए गए चुनाव खो जाएंगे।",
         "thisReplacesEveryMenuAndPermission": "यह इस ड्राफ़्ट में अब तक किए गए हर मेन्यू और अनुमति चुनाव को चुनी हुई भूमिका की सेटिंग से बदल देता है। बिना सहेजे किए गए बदलाव मिट जाएंगे।",
-        "inherit": "लें"
+        "inherit": "लें",
+        "clearAllMenusPermissions": "सभी मेन्यू और अनुमतियाँ हटाएं?"
       },
       "roleConfigure": {
         "couldnTLoadThisRole": "यह भूमिका लोड नहीं हो सकी",
         "onlyAnotherOwnerCanEditThe": "मालिक भूमिका को सिर्फ़ कोई दूसरा मालिक बदल सकता है",
-        "thisRoleHasFullAccessBy": "इस भूमिका को परिभाषा से ही पूरी पहुँच है और इसे सिर्फ़ वही उपयोगकर्ता संभाल सकता है जिसके पास भी पूरी पहुँच हो।"
+        "thisRoleHasFullAccessBy": "इस भूमिका को परिभाषा से ही पूरी पहुँच है और इसे सिर्फ़ वही उपयोगकर्ता संभाल सकता है जिसके पास भी पूरी पहुँच हो।",
+        "menusPermissions": "मेन्यू और अनुमतियाँ",
+        "dashboardLanding": "डैशबोर्ड और शुरुआती पेज"
       },
       "roleManagement": {
         "rolesManagement": "भूमिका प्रबंधन",
@@ -1082,7 +1129,8 @@
         "disabledUsers": "बंद उपयोगकर्ता",
         "deletedUsers": "हटाए उपयोगकर्ता",
         "noUsersFound": "कोई उपयोगकर्ता नहीं मिला",
-        "contactDetails": "संपर्क विवरण"
+        "contactDetails": "संपर्क विवरण",
+        "roleAccess": "भूमिका और पहुँच"
       }
     },
     "settings": {
@@ -1104,13 +1152,16 @@
         "file": "फ़ाइल",
         "created": "बनाया",
         "by": "किसने",
-        "size": "आकार"
+        "size": "आकार",
+        "backupRestore": "बैकअप और रिस्टोर",
+        "keepForDays": "कितने दिन रखें (दिन)"
       },
       "billing": {
         "yourPlanAndBillingDetails": "आपका प्लान और बिलिंग विवरण",
         "youReOnTheFreePlan": "आप मुफ़्त प्लान पर हैं",
         "perMonth": "प्रति माह",
-        "includedModules": "शामिल मॉड्यूल"
+        "includedModules": "शामिल मॉड्यूल",
+        "billingSubscription": "बिलिंग और सदस्यता"
       },
       "branchManagement": {
         "branchManagement": "शाखा प्रबंधन",
@@ -1125,7 +1176,8 @@
         "branchInformation": "शाखा की जानकारी",
         "branchCode": "शाखा कोड",
         "currentStatus": "मौजूदा स्थिति",
-        "branchType": "शाखा का प्रकार"
+        "branchType": "शाखा का प्रकार",
+        "statusType": "स्थिति और प्रकार"
       },
       "companyForm": {
         "companyCode": "कंपनी कोड",
@@ -1198,7 +1250,9 @@
         "nothingOnTheCanvasYet": "कैनवास पर अभी कुछ नहीं।",
         "visibility": "दिखावट",
         "alwaysVisible": "हमेशा दिखे",
-        "colour": "रंग"
+        "colour": "रंग",
+        "fontSizePt": "अक्षर का आकार (pt)",
+        "rotation": "घुमाव (°)"
       },
       "importTemplateDialog": {
         "importTemplate": "टेम्पलेट इम्पोर्ट करें",
@@ -1222,7 +1276,11 @@
         "copies": "प्रतियाँ",
         "copyLayout": "नकल का लेआउट",
         "stacked": "एक के नीचे एक",
-        "sideBySide": "अगल-बगल"
+        "sideBySide": "अगल-बगल",
+        "gapMm": "अंतर (mm)",
+        "heightMm": "ऊँचाई (mm)",
+        "marginsMm": "हाशिये (mm)",
+        "widthMm": "चौड़ाई (mm)"
       },
       "printDevicesDialog": {
         "copyPairingCode": "जोड़ने का कोड कॉपी करें",
@@ -1238,7 +1296,8 @@
         "noFormatsForThisDocumentType": "इस दस्तावेज़ प्रकार के लिए कोई फ़ॉर्मेट नहीं",
         "useAddMissingDefaultsToRestore": "मानक फ़ॉर्मेट वापस लाने के लिए छूटे हुए डिफ़ॉल्ट जोड़ें का उपयोग करें, या एक नया बनाएं।",
         "deleteThisTemplate": "यह टेम्पलेट हटाएं?",
-        "delete": "हटाएं"
+        "delete": "हटाएं",
+        "billLabelDesigner": "बिल और लेबल डिज़ाइनर"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
@@ -1265,7 +1324,9 @@
         "afterGenerateBill": "बिल बनने के बाद",
         "billIsGeneratedForTheJob": "जॉब के लिए बिल बनता है",
         "afterReceivePayment": "भुगतान मिलने के बाद",
-        "aPaymentIsRecordedForThe": "जॉब के लिए भुगतान दर्ज होता है"
+        "aPaymentIsRecordedForThe": "जॉब के लिए भुगतान दर्ज होता है",
+        "canViewPricesPaymentData": "कीमतें और भुगतान की जानकारी देख सकता है",
+        "collectPaymentSectionShowsInThe": "बिल बनाएं पॉपअप में भुगतान लें वाला हिस्सा दिखता है (आंशिक / बँटा हुआ / बाकी)।"
       },
       "formBuilderTab": {
         "couldnTLoadThisFormS": "इस फ़ॉर्म का सहेजा हुआ लेआउट लोड नहीं हो सका",
@@ -1276,7 +1337,10 @@
         "twoColumn": "दो कॉलम",
         "largeDesktop": "बड़ा डेस्कटॉप",
         "template": "टेम्पलेट",
-        "layout": "लेआउट"
+        "layout": "लेआउट",
+        "autoAdaptsToScreenSize": "अपने आप (स्क्रीन के अनुसार)",
+        "compactPairedFields": "सघन (जोड़े में फ़ील्ड)",
+        "standardOneFieldPerRow": "मानक (एक पंक्ति में एक फ़ील्ड)"
       },
       "permissionsSubtab": {
         "allowedActionsPerStatus": "हर स्थिति पर अनुमत कार्रवाइयाँ"
@@ -1288,7 +1352,9 @@
         "pickARoleFromTheDropdown": "उसकी स्थितियाँ और कार्रवाइयाँ तय करने के लिए ऊपर की सूची से भूमिका चुनें।",
         "couldnTLoadThisRoleS": "इस भूमिका का वर्कफ़्लो कॉन्फ़िग लोड नहीं हो सका",
         "selectARole": "भूमिका चुनें",
-        "behavior": "व्यवहार"
+        "behavior": "व्यवहार",
+        "saveGoLive": "सहेजें और चालू करें",
+        "setVisibilityActions": "दिखावट और कार्रवाइयाँ तय करें"
       },
       "usersSubtab": {
         "receivedBy": "प्राप्तकर्ता",
@@ -1296,7 +1362,10 @@
         "allUsers": "सभी उपयोगकर्ता",
         "whoDidItDropdowns": "किसने किया — सूचियाँ",
         "fieldVisitTechnician": "फील्ड विज़िट तकनीशियन",
-        "whoCheckedInOnAnOn": "साइट पर जाकर किसने हाज़िरी दर्ज की"
+        "whoCheckedInOnAnOn": "साइट पर जाकर किसने हाज़िरी दर्ज की",
+        "noneManualSelect": "कोई नहीं (हाथ से चुनें)",
+        "cancelledBy": "रद्द करने वाला",
+        "deliveredBy": "सौंपने वाला"
       },
       "workflowDesigner": {
         "workflowDesigner": "वर्कफ़्लो डिज़ाइनर",

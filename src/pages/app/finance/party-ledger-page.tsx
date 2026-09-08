@@ -27,9 +27,13 @@ import { receiptsQueryKey } from '@/hooks/use-receipts'
 import { jobCardsQueryKey } from '@/hooks/use-job-cards'
 import { useAuth } from '@/hooks/use-auth'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 
-function balanceLabel(balance: number) {
-  if (balance === 0) return <span className="font-medium text-emerald-600">Settled ✓</span>
+function balanceLabel(balance: number, t: TFunction) {
+  if (balance === 0)
+    return (
+      <span className="font-medium text-emerald-600">{t('pages.finance.partyLedger.settled')}</span>
+    )
   if (balance < 0)
     return <span className="font-medium text-emerald-600">₹{Math.abs(balance)} Cr</span>
   return <span className="font-medium text-red-600">₹{balance}</span>
@@ -99,7 +103,7 @@ export function PartyLedgerPage() {
       key: 'balance',
       header: t('common.balance'),
       sortValue: (s) => s.balance,
-      render: (s) => balanceLabel(s.balance),
+      render: (s) => balanceLabel(s.balance, t),
     },
     {
       key: 'chevron',
@@ -238,7 +242,7 @@ function PartyLedgerDetailSheet({
               />
               <StatCard
                 label={t('common.balance')}
-                value={data ? balanceLabel(data.closingBalance) : '—'}
+                value={data ? balanceLabel(data.closingBalance, t) : '—'}
               />
               <StatCard label={t('shared.entries')} value={data?.rows.length ?? 0} />
             </div>
@@ -267,8 +271,8 @@ function PartyLedgerDetailSheet({
                     <tr>
                       <th className="p-2 text-left">{t('common.date')}</th>
                       <th className="p-2 text-left">{t('shared.particulars')}</th>
-                      <th className="p-2 text-right">Debit (Dr)</th>
-                      <th className="p-2 text-right">Credit (Cr)</th>
+                      <th className="p-2 text-right">{t('pages.finance.partyLedger.debitDr')}</th>
+                      <th className="p-2 text-right">{t('pages.finance.partyLedger.creditCr')}</th>
                       <th className="p-2 text-right">{t('common.balance')}</th>
                     </tr>
                   </thead>
@@ -295,7 +299,7 @@ function PartyLedgerDetailSheet({
                           {row.credit > 0 ? `₹${row.credit}` : ''}
                         </td>
                         <td className="p-2 text-right align-top">
-                          {balanceLabel(row.runningBalance)}
+                          {balanceLabel(row.runningBalance, t)}
                         </td>
                       </tr>
                     ))}
@@ -305,7 +309,7 @@ function PartyLedgerDetailSheet({
                       </td>
                       <td className="p-2 text-right text-red-600">₹{data.totalBilled}</td>
                       <td className="p-2 text-right text-emerald-600">₹{data.totalPaid}</td>
-                      <td className="p-2 text-right">{balanceLabel(data.closingBalance)}</td>
+                      <td className="p-2 text-right">{balanceLabel(data.closingBalance, t)}</td>
                     </tr>
                   </tbody>
                 </table>

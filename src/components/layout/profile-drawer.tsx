@@ -186,7 +186,9 @@ export function ProfileDrawer({
                 <Label htmlFor="profile-email" className="flex items-center gap-1.5">
                   <Mail className="size-3.5 text-muted-foreground" />
                   Email{' '}
-                  <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {t('shared.optional')}
+                  </span>
                 </Label>
                 <Input
                   id="profile-email"

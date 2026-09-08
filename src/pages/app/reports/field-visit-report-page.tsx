@@ -204,7 +204,7 @@ export function FieldVisitReportPage() {
       <PageHeader
         icon={MapPin}
         title={t('pages.reports.fieldVisitReport.fieldVisitReport')}
-        subtitle="On-field technician logbook — time spent & engineers per job"
+        subtitle={t('pages.reports.fieldVisitReport.onFieldTechnicianLogbookTimeSpent')}
         actions={
           <Button
             type="button"

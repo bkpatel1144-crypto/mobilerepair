@@ -672,7 +672,7 @@ export function PrintTemplateDesignerPage() {
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs">Font size (pt)</Label>
+                <Label className="text-xs">{t('pages.settings.designer.fontSizePt')}</Label>
                 <Input
                   type="number"
                   step="0.5"
@@ -716,7 +716,7 @@ export function PrintTemplateDesignerPage() {
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs">Rotation (°)</Label>
+                <Label className="text-xs">{t('pages.settings.designer.rotation')}</Label>
                 <Input
                   type="number"
                   step="1"

@@ -571,7 +571,9 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           <div className="space-y-1.5">
             <Label>
               Time Spent (minutes){' '}
-              <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Input
               type="number"
@@ -585,7 +587,10 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Note <span className="text-xs font-normal text-muted-foreground">(Optional)</span>
+              Note{' '}
+              <span className="text-xs font-normal text-muted-foreground">
+                {t('shared.optional2')}
+              </span>
             </Label>
             <Textarea
               value={descriptionInput}

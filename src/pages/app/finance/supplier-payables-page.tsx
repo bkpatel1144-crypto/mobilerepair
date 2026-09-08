@@ -50,6 +50,7 @@ import { downloadCsv } from '@/lib/csv-export'
 import { cn, toDateInputValue } from '@/lib/utils'
 import type { ReceiptDoc } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 
 const BUCKET_LABELS: {
   key: SupplierPayable['bucket']
@@ -62,8 +63,9 @@ const BUCKET_LABELS: {
   { key: '60+', label: '60+ days', tone: 'danger' },
 ]
 
-function agingBadge(p: SupplierPayable) {
-  if (p.daysOverdue <= 0) return <StatusBadge status="Current" tone="success" />
+function agingBadge(p: SupplierPayable, t: TFunction) {
+  if (p.daysOverdue <= 0)
+    return <StatusBadge status={t('pages.finance.supplierPayables.current')} tone="success" />
   if (p.daysOverdue <= 30)
     return <StatusBadge status={`${p.daysOverdue}d overdue`} tone="warning" />
   return <StatusBadge status={`${p.daysOverdue}d overdue`} tone="danger" />
@@ -178,7 +180,9 @@ function NewBillModal({
         <div className="space-y-1.5">
           <Label htmlFor="sb-ref">
             Their invoice #{' '}
-            <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional')}
+            </span>
           </Label>
           <Input
             id="sb-ref"
@@ -217,7 +221,10 @@ function NewBillModal({
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="sb-due">
-            Due date <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+            Due date{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional')}
+            </span>
           </Label>
           <Input
             id="sb-due"
@@ -233,7 +240,8 @@ function NewBillModal({
 
       <div className="space-y-1.5">
         <Label htmlFor="sb-notes">
-          Notes <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+          Notes{' '}
+          <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <Textarea id="sb-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
       </div>
@@ -338,7 +346,8 @@ function PaymentModal({
 
       <div className="space-y-1.5">
         <Label htmlFor="pay-notes">
-          Notes <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+          Notes{' '}
+          <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <Textarea
           id="pay-notes"
@@ -609,7 +618,7 @@ export function SupplierPayablesPage() {
                         Due {item.dueDate.toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                       </p>
                     </div>
-                    {agingBadge(item)}
+                    {agingBadge(item, t)}
                   </div>
 
                   <dl className="grid grid-cols-3 gap-2 text-sm">

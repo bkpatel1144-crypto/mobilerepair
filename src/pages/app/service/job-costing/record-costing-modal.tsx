@@ -301,7 +301,7 @@ export function RecordCostingModal({
               </p>
             )}
             <div className="space-y-1.5">
-              <label className="text-sm text-muted-foreground">Notes (Optional)</label>
+              <label className="text-sm text-muted-foreground">{t('shared.notesOptional')}</label>
               <Textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}

@@ -450,7 +450,7 @@ export function MenusPermissionsTab({
       <ConfirmDialog
         open={confirmingClear}
         onOpenChange={setConfirmingClear}
-        title="Clear all menus & permissions?"
+        title={t('pages.administration.menusPermissionsTab.clearAllMenusPermissions')}
         message={t('pages.administration.menusPermissionsTab.thisWipesEveryMenuAndPermission')}
         confirmLabel={t('shared.clearAll')}
         onConfirm={() => {

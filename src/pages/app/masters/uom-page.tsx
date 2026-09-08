@@ -386,7 +386,7 @@ function UomModal({
         </div>
       </div>
       <div className="space-y-2 rounded-md border border-dashed p-3">
-        <p className="text-sm font-medium">Conversion (Optional)</p>
+        <p className="text-sm font-medium">{t('pages.masters.uom.conversionOptional')}</p>
         <p className="text-xs text-muted-foreground">
           Set this only if this UOM converts to another. e.g. 1 Inch = 0.0254 Meter
         </p>

@@ -144,7 +144,7 @@ export function DevicePurchasePage() {
       <PageHeader
         icon={Smartphone}
         title={t('pages.secondHandDevice.devicePurchase.devicePurchase')}
-        subtitle="Buy used mobiles, laptops & other devices from sellers"
+        subtitle={t('pages.secondHandDevice.devicePurchase.buyUsedMobilesLaptopsOtherDevices')}
         actions={
           <>
             <Button
@@ -289,8 +289,8 @@ export function DevicePurchasePage() {
               <PrintButtonGroup purchase={viewing} />
             </>
           }
-          sections={purchaseDetailSections(viewing)}
-          timeline={purchaseTimeline(viewing)}
+          sections={purchaseDetailSections(viewing, t)}
+          timeline={purchaseTimeline(viewing, t)}
         />
       )}
 

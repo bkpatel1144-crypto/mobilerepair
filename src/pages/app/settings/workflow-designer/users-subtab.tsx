@@ -110,7 +110,9 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">None (manual select)</SelectItem>
+                <SelectItem value="none">
+                  {t('pages.settings.usersSubtab.noneManualSelect')}
+                </SelectItem>
                 {allRoles.map((role) => (
                   <SelectItem key={role.id} value={role.id}>
                     {role.name}

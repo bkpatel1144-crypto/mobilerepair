@@ -145,7 +145,10 @@ export function PurchaseRegisterPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Purchases (₹)" value={`₹${totalPurchases}`} />
+        <StatCard
+          label={t('pages.secondHandDevice.purchaseRegister.purchases')}
+          value={`₹${totalPurchases}`}
+        />
         <StatCard
           label={t('pages.secondHandDevice.purchaseRegister.purchases')}
           value={filtered.length}
@@ -221,8 +224,8 @@ export function PurchaseRegisterPage() {
             />
           }
           actions={<PrintButtonGroup purchase={viewing} />}
-          sections={purchaseDetailSections(viewing)}
-          timeline={purchaseTimeline(viewing)}
+          sections={purchaseDetailSections(viewing, t)}
+          timeline={purchaseTimeline(viewing, t)}
         />
       )}
     </div>

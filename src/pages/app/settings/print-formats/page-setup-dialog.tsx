@@ -47,7 +47,7 @@ export function PageSetupDialog({
         </Label>
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))]">
           <div className="space-y-1">
-            <Label className="text-xs">Width (mm)</Label>
+            <Label className="text-xs">{t('pages.settings.pageSetupDialog.widthMm')}</Label>
             <Input
               type="number"
               value={draft.paper.width}
@@ -59,7 +59,7 @@ export function PageSetupDialog({
             />
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Height (mm)</Label>
+            <Label className="text-xs">{t('pages.settings.pageSetupDialog.heightMm')}</Label>
             <Input
               type="number"
               value={draft.paper.height}
@@ -96,7 +96,9 @@ export function PageSetupDialog({
       </div>
 
       <div className="space-y-1.5">
-        <Label className="text-xs font-semibold tracking-wide uppercase">Margins (mm)</Label>
+        <Label className="text-xs font-semibold tracking-wide uppercase">
+          {t('pages.settings.pageSetupDialog.marginsMm')}
+        </Label>
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(6rem,1fr))]">
           {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
             <div key={side} className="space-y-1">
@@ -135,7 +137,7 @@ export function PageSetupDialog({
             />
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Gap (mm)</Label>
+            <Label className="text-xs">{t('pages.settings.pageSetupDialog.gapMm')}</Label>
             <Input
               type="number"
               step="0.5"

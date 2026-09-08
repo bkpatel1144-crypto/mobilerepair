@@ -1,6 +1,10 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+// A class component, so `useTranslation` is unavailable — the i18next singleton is the
+// supported way to translate outside a hook, and this renders after a crash where pulling in
+// more React machinery is exactly what we don't want.
+import i18next from 'i18next'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -50,12 +54,16 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           <span className="flex size-12 items-center justify-center rounded-full bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400">
             <AlertTriangle className="size-6" />
           </span>
-          <h1 className="text-lg font-semibold">Something went wrong</h1>
+          <h1 className="text-lg font-semibold">
+            {i18next.t('components.shared.errorBoundary.somethingWentWrong')}
+          </h1>
           <p className="max-w-sm text-sm text-muted-foreground">
             An unexpected error occurred. Reloading the page usually fixes this — if it keeps
             happening, please let us know.
           </p>
-          <Button onClick={() => window.location.reload()}>Reload</Button>
+          <Button onClick={() => window.location.reload()}>
+            {i18next.t('components.shared.errorBoundary.reload')}
+          </Button>
         </div>
       )
     }

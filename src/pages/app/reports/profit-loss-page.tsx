@@ -81,7 +81,7 @@ export function ProfitLossPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={TrendingUp}
-        title="Profit & Loss"
+        title={t('pages.reports.profitLoss.profitLoss')}
         subtitle={t('pages.reports.profitLoss.cashBasisMoneyActuallyReceivedAnd')}
         actions={
           <Button
@@ -132,7 +132,7 @@ export function ProfitLossPage() {
         <EmptyState
           icon={TrendingUp}
           title={t('pages.reports.profitLoss.noCashMovementsInThisPeriod')}
-          description="Profit & Loss is built from receipts and payments. Take a payment or record an expense and it appears here."
+          description={t('pages.reports.profitLoss.profitLossIsBuiltFromReceipts')}
         />
       ) : (
         <>

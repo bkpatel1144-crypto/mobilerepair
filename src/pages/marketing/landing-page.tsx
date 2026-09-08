@@ -18,58 +18,52 @@ import { useTranslation } from 'react-i18next'
 const FEATURES = [
   {
     icon: ClipboardList,
-    title: 'Job cards that run themselves',
-    description:
-      'Dynamic intake forms, status-gated actions per role, and a full audit timeline on every job.',
+    titleKey: 'pages.landing.landing.jobCardsThatRunThemselves',
+    descriptionKey: 'pages.landing.landing.dynamicIntakeFormsStatusGatedActions',
   },
   {
     icon: Users2,
-    title: 'Technician workflows, not just tasks',
-    description:
-      'Who can see what, and do what, at every status — configured per role, enforced everywhere.',
+    titleKey: 'pages.landing.landing.technicianWorkflowsNotJustTasks',
+    descriptionKey: 'pages.landing.landing.whoCanSeeWhatAndDo',
   },
   {
     icon: Bell,
-    title: 'Customers stay in the loop',
-    description:
-      'Automatic WhatsApp updates when a device is received, in progress, or ready for pickup.',
+    titleKey: 'pages.landing.landing.customersStayInTheLoop',
+    descriptionKey: 'pages.landing.landing.automaticWhatsappUpdatesWhenADevice',
   },
   {
     icon: Receipt,
-    title: 'Billing & payments, connected',
-    description:
-      'Advances, partial payments, and final bills all reconcile automatically to one ledger.',
+    titleKey: 'pages.landing.landing.billingPaymentsConnected',
+    descriptionKey: 'pages.landing.landing.advancesPartialPaymentsAndFinalBills',
   },
   {
     icon: Smartphone,
-    title: 'Second-hand device trading',
-    description:
-      'Buy, refurbish, and sell used devices with full purchase-to-sale profit tracking.',
+    titleKey: 'pages.landing.landing.secondHandDeviceTrading',
+    descriptionKey: 'pages.landing.landing.buyRefurbishAndSellUsedDevices',
   },
   {
     icon: ShieldCheck,
-    title: 'Real role-based access',
-    description:
-      'Every menu, every action, gated by a role permission you control — not hardcoded.',
+    titleKey: 'pages.landing.landing.realRoleBasedAccess',
+    descriptionKey: 'pages.landing.landing.everyMenuEveryActionGatedBy',
   },
 ]
 
 const WORKFLOW_STEPS = [
   {
-    title: 'Intake',
-    description: 'Scan or search the customer, capture device details and the reported problem.',
+    titleKey: 'pages.landing.landing.intake',
+    descriptionKey: 'pages.landing.landing.scanOrSearchTheCustomerCapture',
   },
   {
-    title: 'Assign & repair',
-    description: 'A technician takes the job — status, parts, and cost track automatically.',
+    titleKey: 'pages.landing.landing.assignRepair',
+    descriptionKey: 'pages.landing.landing.aTechnicianTakesTheJobStatus',
   },
   {
-    title: 'Bill & collect',
-    description: 'Generate the bill, collect payment, and the ledgers update themselves.',
+    titleKey: 'pages.landing.landing.billCollect',
+    descriptionKey: 'pages.landing.landing.generateTheBillCollectPaymentAnd',
   },
   {
-    title: 'Deliver & warranty',
-    description: 'Hand over the device with a warranty note customers can trust.',
+    titleKey: 'pages.landing.landing.deliverWarranty',
+    descriptionKey: 'pages.landing.landing.handOverTheDeviceWithA',
   },
 ]
 
@@ -161,12 +155,12 @@ export function LandingPage() {
         </div>
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((feature) => (
-            <div key={feature.title} className="rounded-xl border p-5">
+            <div key={t(feature.titleKey)} className="rounded-xl border p-5">
               <span className="flex size-10 items-center justify-center rounded-full bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
                 <feature.icon className="size-5" />
               </span>
-              <h3 className="mt-3 font-semibold">{feature.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{feature.description}</p>
+              <h3 className="mt-3 font-semibold">{t(feature.titleKey)}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{t(feature.descriptionKey)}</p>
             </div>
           ))}
         </div>
@@ -185,12 +179,12 @@ export function LandingPage() {
           </div>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {WORKFLOW_STEPS.map((step, i) => (
-              <div key={step.title} className="rounded-xl border bg-card p-5">
+              <div key={step.titleKey} className="rounded-xl border bg-card p-5">
                 <span className="flex size-8 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">
                   {i + 1}
                 </span>
-                <h3 className="mt-3 font-semibold">{step.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{step.description}</p>
+                <h3 className="mt-3 font-semibold">{t(step.titleKey)}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{t(step.descriptionKey)}</p>
               </div>
             ))}
           </div>

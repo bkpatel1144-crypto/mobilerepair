@@ -2,6 +2,7 @@ import { Asterisk, Eye, EyeOff, Lock, Smartphone } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { FieldPreviewInput } from './field-preview-input'
 import type { FormFieldConfig } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 function IconToggle({
   active,
@@ -67,6 +68,7 @@ export function FieldControlRow({
   quickDates,
   options,
 }: FieldControlRowProps) {
+  const { t } = useTranslation()
   const visible = structurallyLocked || config?.visible !== false
   const required = structurallyLocked || config?.required === true
 
@@ -80,7 +82,9 @@ export function FieldControlRow({
               {required ? (
                 <span className="ml-0.5 text-red-600">*</span>
               ) : (
-                <span className="ml-1 font-normal text-muted-foreground">(Optional)</span>
+                <span className="ml-1 font-normal text-muted-foreground">
+                  {t('shared.optional2')}
+                </span>
               )}
             </>
           ) : (

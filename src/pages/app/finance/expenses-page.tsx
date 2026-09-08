@@ -194,7 +194,8 @@ function NewExpenseModal({
 
       <div className="space-y-1.5">
         <Label>
-          Paid to <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+          Paid to{' '}
+          <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <SearchSelect
           options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile || undefined }))}
@@ -210,7 +211,8 @@ function NewExpenseModal({
 
       <div className="space-y-1.5">
         <Label htmlFor="exp-notes">
-          Notes <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+          Notes{' '}
+          <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <Textarea
           id="exp-notes"
@@ -346,7 +348,7 @@ export function ExpensesPage() {
       <PageHeader
         icon={Wallet}
         title={t('common.expensesLabel')}
-        subtitle="Shop running costs — rent, salaries, utilities and everything else Profit & Loss subtracts"
+        subtitle={t('pages.finance.expenses.shopRunningCostsRentSalariesUtilities')}
         actions={
           <>
             <Button
@@ -429,7 +431,7 @@ export function ExpensesPage() {
           <EmptyState
             icon={Wallet}
             title={t('pages.finance.expenses.noExpensesInThisPeriod')}
-            description="Record rent, salaries and other running costs here — they flow straight into Cash Book and Profit & Loss."
+            description={t('pages.finance.expenses.recordRentSalariesAndOtherRunning')}
             action={
               <Button type="button" onClick={() => setNewOpen(true)}>
                 <Plus className="size-4" />

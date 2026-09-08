@@ -185,8 +185,8 @@ export function DeviceSalePage() {
           title={viewing.purchaseNumber}
           subtitle={deviceLabel(viewing)}
           badges={<StatusBadge status="Available to Sell" tone="success" />}
-          sections={purchaseDetailSections(viewing)}
-          timeline={purchaseTimeline(viewing)}
+          sections={purchaseDetailSections(viewing, t)}
+          timeline={purchaseTimeline(viewing, t)}
         />
       )}
 
@@ -341,7 +341,7 @@ function SellDeviceModal({
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label>Warranty (Days)</Label>
+            <Label>{t('pages.secondHandDevice.deviceSale.warrantyDays')}</Label>
             <Input
               type="number"
               min={0}
@@ -364,7 +364,7 @@ function SellDeviceModal({
           </p>
         </div>
         <div className="space-y-1.5">
-          <Label>Notes (Optional)</Label>
+          <Label>{t('shared.notesOptional')}</Label>
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}

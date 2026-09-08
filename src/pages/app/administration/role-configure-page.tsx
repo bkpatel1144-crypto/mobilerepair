@@ -157,8 +157,12 @@ export function RoleConfigurePage() {
 
         <Tabs value={tab} onValueChange={(v) => setTab(v as 'menus' | 'dashboard')}>
           <TabsList>
-            <TabsTrigger value="menus">Menus & Permissions</TabsTrigger>
-            <TabsTrigger value="dashboard">Dashboard & Landing</TabsTrigger>
+            <TabsTrigger value="menus">
+              {t('pages.administration.roleConfigure.menusPermissions')}
+            </TabsTrigger>
+            <TabsTrigger value="dashboard">
+              {t('pages.administration.roleConfigure.dashboardLanding')}
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="menus" className="pt-4">
             <MenusPermissionsTab

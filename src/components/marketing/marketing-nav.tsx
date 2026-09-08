@@ -4,11 +4,12 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from 'react-i18next'
 
+// Module scope, so these hold keys rather than text — see filter-bar.tsx for why.
 const LINKS = [
-  { label: 'Workflow', href: '/#workflow' },
-  { label: 'Features', href: '/#features' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'FAQ', href: '/#faq' },
+  { labelKey: 'components.marketing.marketingNav.workflow', href: '/#workflow' },
+  { labelKey: 'components.marketing.marketingNav.features', href: '/#features' },
+  { labelKey: 'components.marketing.marketingNav.pricing', href: '/pricing' },
+  { labelKey: 'components.marketing.marketingNav.faq', href: '/#faq' },
 ]
 
 export function MarketingNav() {
@@ -28,11 +29,11 @@ export function MarketingNav() {
         <nav className="ml-6 hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
           {LINKS.map((link) => (
             <a
-              key={link.label}
+              key={link.labelKey}
               href={link.href}
               className="transition-colors hover:text-foreground"
             >
-              {link.label}
+              {t(link.labelKey)}
             </a>
           ))}
         </nav>
@@ -68,8 +69,8 @@ export function MarketingNav() {
         <div className="border-t bg-background px-4 py-4 sm:hidden">
           <nav className="flex flex-col gap-3 text-sm font-medium">
             {LINKS.map((link) => (
-              <a key={link.label} href={link.href} onClick={() => setMobileOpen(false)}>
-                {link.label}
+              <a key={link.labelKey} href={link.href} onClick={() => setMobileOpen(false)}>
+                {t(link.labelKey)}
               </a>
             ))}
           </nav>

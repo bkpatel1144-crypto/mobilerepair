@@ -210,7 +210,7 @@ export function ReceiptsPaymentsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Wallet}
-        title="Receipts & Payments"
+        title={t('pages.finance.receiptsPayments.receiptsPayments')}
         subtitle={t('pages.finance.receiptsPayments.allPaymentEntriesJobCardsAnd')}
         actions={
           <>
@@ -532,7 +532,7 @@ function NewEntryDialog({
         </div>
 
         <div className="space-y-1.5">
-          <Label>Notes (optional)</Label>
+          <Label>{t('pages.finance.receiptsPayments.notesOptional')}</Label>
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}

@@ -176,8 +176,8 @@ export function DeviceStockPage() {
               tone={PURCHASE_STATUS_TONE[viewing.status]}
             />
           }
-          sections={purchaseDetailSections(viewing)}
-          timeline={purchaseTimeline(viewing)}
+          sections={purchaseDetailSections(viewing, t)}
+          timeline={purchaseTimeline(viewing, t)}
         />
       )}
     </div>

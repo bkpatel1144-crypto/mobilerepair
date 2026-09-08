@@ -218,7 +218,7 @@ export function BranchManagementPage() {
               ],
             },
             {
-              title: 'STATUS & TYPE',
+              title: t('pages.settings.branchManagement.statusType'),
               rows: [
                 {
                   label: t('pages.settings.branchManagement.currentStatus'),

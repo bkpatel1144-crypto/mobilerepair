@@ -137,9 +137,9 @@ export function SaleRegisterPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Sales (₹)" value={`₹${totalSales}`} />
+        <StatCard label={t('pages.secondHandDevice.saleRegister.sales')} value={`₹${totalSales}`} />
         <StatCard
-          label="Profit (₹)"
+          label={t('pages.secondHandDevice.saleRegister.profit')}
           value={`₹${totalProfit}`}
           tone={totalProfit >= 0 ? 'success' : 'danger'}
         />
@@ -186,8 +186,8 @@ export function SaleRegisterPage() {
               subtitle={viewing.deviceLabel}
               badges={<StatusBadge status="Sold" tone="info" />}
               actions={<PrintButtonGroup sale={viewing} />}
-              sections={purchase ? purchaseDetailSections(purchase, viewing) : []}
-              timeline={purchase ? purchaseTimeline(purchase, viewing) : undefined}
+              sections={purchase ? purchaseDetailSections(purchase, t, viewing) : []}
+              timeline={purchase ? purchaseTimeline(purchase, t, viewing) : undefined}
             />
           )
         })()}

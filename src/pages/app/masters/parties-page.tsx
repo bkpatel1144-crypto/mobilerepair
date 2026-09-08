@@ -285,7 +285,7 @@ function PartyDeleteButton({ party, onDone }: { party: PartyWithId; onDone: () =
         open={confirming}
         onOpenChange={setConfirming}
         title={`Delete "${party.name}"?`}
-        message="This removes the party from every picker (job cards, receipts, purchases). There is no undo screen for this in the app — recovering it would mean editing Firestore directly."
+        message={t('pages.masters.parties.thisRemovesThePartyFromEvery')}
         confirmLabel={t('common.delete')}
         isPending={setStatus.isPending}
         onConfirm={() =>

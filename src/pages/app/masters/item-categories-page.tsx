@@ -408,10 +408,10 @@ function ItemCategoryModal({
           <Label>{t('pages.masters.itemCategories.parentCategory')}</Label>
           <Select value={parentId} onValueChange={(v) => v && setParentId(v)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="None (Root)" />
+              <SelectValue placeholder={t('pages.masters.itemCategories.noneRoot')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None (Root)</SelectItem>
+              <SelectItem value="none">{t('pages.masters.itemCategories.noneRoot')}</SelectItem>
               {parentOptions.map((c) => (
                 <SelectItem key={c.id} value={c.id}>
                   {c.name}

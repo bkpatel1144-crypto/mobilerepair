@@ -131,7 +131,7 @@ export function BackupRestorePage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={DatabaseZap}
-        title="Backup & Restore"
+        title={t('pages.settings.backupRestore.backupRestore')}
         subtitle={t('pages.settings.backupRestore.downloadBackupsScheduleDailyBackupsAnd')}
         actions={
           <Button type="button" variant="outline" onClick={() => stats.refetch()}>
@@ -235,7 +235,7 @@ export function BackupRestorePage() {
                 />
               </div>
               <div className="space-y-1">
-                <Label className="text-xs">Keep for (days)</Label>
+                <Label className="text-xs">{t('pages.settings.backupRestore.keepForDays')}</Label>
                 <Input
                   type="number"
                   min={1}
