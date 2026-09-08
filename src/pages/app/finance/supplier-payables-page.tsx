@@ -54,13 +54,13 @@ import type { TFunction } from 'i18next'
 
 const BUCKET_LABELS: {
   key: SupplierPayable['bucket']
-  label: string
+  labelKey: string
   tone: 'success' | 'warning' | 'danger'
 }[] = [
-  { key: 'current', label: 'Current', tone: 'success' },
-  { key: '1-30', label: '1–30 days', tone: 'warning' },
-  { key: '31-60', label: '31–60 days', tone: 'warning' },
-  { key: '60+', label: '60+ days', tone: 'danger' },
+  { key: 'current', labelKey: 'pages.finance.supplierPayables.current', tone: 'success' },
+  { key: '1-30', labelKey: 'pages.finance.supplierPayables.130Days', tone: 'warning' },
+  { key: '31-60', labelKey: 'pages.finance.supplierPayables.3160Days', tone: 'warning' },
+  { key: '60+', labelKey: 'pages.finance.supplierPayables.60Days', tone: 'danger' },
 ]
 
 function agingBadge(p: SupplierPayable, t: TFunction) {
@@ -529,7 +529,7 @@ export function SupplierPayablesPage() {
                   )}
                 >
                   <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                    {b.label}
+                    {t(b.labelKey)}
                   </p>
                   <p
                     className={cn(

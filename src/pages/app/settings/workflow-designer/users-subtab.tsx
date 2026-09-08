@@ -19,12 +19,12 @@ interface UsersSubtabProps {
 
 const WHO_DID_IT_ROWS: {
   key: 'receivedBy' | 'deliveredBy' | 'cancelledBy' | 'returnedBy'
-  label: string
+  labelKey: string
 }[] = [
-  { key: 'receivedBy', label: 'Received By' },
-  { key: 'deliveredBy', label: 'Delivered By' },
-  { key: 'cancelledBy', label: 'Cancelled By' },
-  { key: 'returnedBy', label: 'Returned By' },
+  { key: 'receivedBy', labelKey: 'pages.settings.usersSubtab.receivedBy' },
+  { key: 'deliveredBy', labelKey: 'pages.settings.usersSubtab.deliveredBy' },
+  { key: 'cancelledBy', labelKey: 'pages.settings.usersSubtab.cancelledBy' },
+  { key: 'returnedBy', labelKey: 'pages.settings.usersSubtab.returnedBy' },
 ]
 
 /** "Users" sub-tab of a selected role — Assignment & Handover role pickers, plus the "Who Did
@@ -138,7 +138,7 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
           {WHO_DID_IT_ROWS.map((row) => (
             <div key={row.key} className="flex items-center justify-between gap-4 p-3">
               <div>
-                <p className="text-sm font-medium">{row.label}</p>
+                <p className="text-sm font-medium">{t(row.labelKey)}</p>
                 <p className="text-xs text-muted-foreground">
                   Logged-in user is recorded automatically
                 </p>

@@ -43,14 +43,21 @@ export function purchaseDetailSections(
           value: `Grade ${p.conditionGrade}`,
         },
         ...(p.devicePinPattern
-          ? [{ label: 'PIN / Pattern', value: <PatternLockPreview value={p.devicePinPattern} /> }]
+          ? [
+              {
+                label: t('pages.secondHandDevice.purchaseDetailSections.pinPattern'),
+                value: <PatternLockPreview value={p.devicePinPattern} />,
+              },
+            ]
           : []),
       ],
     },
     {
-      title: 'SELLER & ID VERIFICATION',
+      title: t('pages.secondHandDevice.purchaseDetailSections.sellerIdVerification'),
       icon: IdCard,
-      rows: [{ label: 'Seller', value: p.sellerName }],
+      rows: [
+        { label: t('pages.secondHandDevice.purchaseDetailSections.seller'), value: p.sellerName },
+      ],
     },
     {
       title: sale
@@ -81,8 +88,11 @@ export function purchaseDetailSections(
       title: t('pages.secondHandDevice.purchaseDetailSections.sale'),
       icon: Wallet,
       rows: [
-        { label: 'Sale Invoice #', value: sale.saleNumber },
-        { label: 'Buyer', value: sale.buyerName },
+        {
+          label: t('pages.secondHandDevice.purchaseDetailSections.saleInvoice'),
+          value: sale.saleNumber,
+        },
+        { label: t('pages.secondHandDevice.purchaseDetailSections.buyer'), value: sale.buyerName },
         {
           label: t('pages.secondHandDevice.purchaseDetailSections.salePrice'),
           value: `₹${sale.salePrice}`,
@@ -92,7 +102,7 @@ export function purchaseDetailSections(
           value: `${sale.warrantyDays} days`,
         },
         {
-          label: 'Profit',
+          label: t('pages.secondHandDevice.purchaseDetailSections.profit'),
           value: `₹${sale.profit}`,
           tone: sale.profit >= 0 ? 'success' : 'danger',
         },
@@ -123,7 +133,10 @@ export function purchaseTimeline(
     })
   }
   if (p.status === 'returnedToSeller') {
-    events.push({ title: 'Returned to Seller', timestamp: formatTimestamp(p.updatedAt) })
+    events.push({
+      title: t('pages.secondHandDevice.purchaseDetailSections.returnedToSeller'),
+      timestamp: formatTimestamp(p.updatedAt),
+    })
   }
   return events
 }

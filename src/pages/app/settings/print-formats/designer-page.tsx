@@ -81,14 +81,14 @@ import { DesignerCanvas } from './designer-canvas'
 import { useDesignerState, draftFromTemplate, newElement } from './use-designer-state'
 import { useTranslation } from 'react-i18next'
 
-const PALETTE: { type: PrintElement['type']; label: string; icon: typeof Type }[] = [
-  { type: 'text', label: 'Text', icon: Type },
-  { type: 'image', label: 'Image', icon: ImageIcon },
-  { type: 'logo', label: 'Logo', icon: ImageIcon },
-  { type: 'barcode', label: 'Barcode', icon: Barcode },
-  { type: 'qrcode', label: 'QR Code', icon: QrCode },
-  { type: 'line', label: 'Line', icon: Minus },
-  { type: 'shape', label: 'Shape', icon: Square },
+const PALETTE: { type: PrintElement['type']; labelKey: string; icon: typeof Type }[] = [
+  { type: 'text', labelKey: 'pages.settings.designer.text', icon: Type },
+  { type: 'image', labelKey: 'pages.settings.designer.image', icon: ImageIcon },
+  { type: 'logo', labelKey: 'pages.settings.designer.logo', icon: ImageIcon },
+  { type: 'barcode', labelKey: 'pages.settings.designer.barcode', icon: Barcode },
+  { type: 'qrcode', labelKey: 'pages.settings.designer.qrCode', icon: QrCode },
+  { type: 'line', labelKey: 'pages.settings.designer.line', icon: Minus },
+  { type: 'shape', labelKey: 'pages.settings.designer.shape', icon: Square },
 ]
 
 const ZOOMS = [50, 75, 100, 125, 150, 200]
@@ -508,16 +508,16 @@ export function PrintTemplateDesignerPage() {
                 {t('pages.settings.designer.addElement')}
               </p>
               <div className="mt-2 grid grid-cols-2 gap-2">
-                {PALETTE.map(({ type, label, icon: Icon }) => (
+                {PALETTE.map(({ type, labelKey, icon: Icon }) => (
                   <button
-                    key={label}
+                    key={type}
                     type="button"
                     data-slot="button"
                     onClick={() => state.addElement(newElement(type, activeBand, contentWidth))}
                     className="flex flex-col items-center gap-1 rounded-lg border p-2.5 text-xs hover:border-teal-600/60 hover:bg-muted/50"
                   >
                     <Icon className="size-4" />
-                    {label}
+                    {t(labelKey)}
                   </button>
                 ))}
               </div>

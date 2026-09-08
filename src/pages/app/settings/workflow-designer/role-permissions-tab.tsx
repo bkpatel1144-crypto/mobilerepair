@@ -31,17 +31,17 @@ import { useTranslation } from 'react-i18next'
 const HOW_IT_WORKS = [
   {
     step: 1,
-    title: 'Select a role',
+    titleKey: 'pages.settings.rolePermissionsTab.selectARole',
     body: 'Pick a configured role from the dropdown above, or choose an unconfigured one to set it up fresh.',
   },
   {
     step: 2,
-    title: 'Set visibility & actions',
+    titleKey: 'pages.settings.rolePermissionsTab.setVisibilityActions',
     body: 'Control which job statuses this role can see and exactly which actions they’re allowed to take at each step.',
   },
   {
     step: 3,
-    title: 'Save & go live',
+    titleKey: 'pages.settings.rolePermissionsTab.saveGoLive',
     body: 'Hit Save Config — changes apply instantly for every user with that role. No restart needed.',
   },
 ]
@@ -97,7 +97,7 @@ export function RolePermissionsTab() {
                 <span className="mb-2 flex size-6 items-center justify-center rounded-full bg-teal-100 text-xs font-semibold text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
                   {item.step}
                 </span>
-                <p className="mb-1 text-sm font-semibold">{item.title}</p>
+                <p className="mb-1 text-sm font-semibold">{t(item.titleKey)}</p>
                 <p className="text-xs text-muted-foreground">{item.body}</p>
               </div>
             ))}

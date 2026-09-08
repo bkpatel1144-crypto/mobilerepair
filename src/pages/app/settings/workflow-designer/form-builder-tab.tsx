@@ -23,12 +23,12 @@ import { FieldControlRow } from './form-builder/field-control-row'
 import type { FormFieldConfig, FormLayout, FormSchemaDoc } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
 
-const LAYOUT_OPTIONS: { value: FormLayout; label: string }[] = [
-  { value: 'standard', label: 'Standard (one field per row)' },
-  { value: 'compact', label: 'Compact (paired fields)' },
-  { value: 'twoColumn', label: 'Two Column' },
-  { value: 'largeDesktop', label: 'Large Desktop' },
-  { value: 'auto', label: 'Auto (adapts to screen size)' },
+const LAYOUT_OPTIONS: { value: FormLayout; labelKey: string }[] = [
+  { value: 'standard', labelKey: 'pages.settings.formBuilderTab.standardOneFieldPerRow' },
+  { value: 'compact', labelKey: 'pages.settings.formBuilderTab.compactPairedFields' },
+  { value: 'twoColumn', labelKey: 'pages.settings.formBuilderTab.twoColumn' },
+  { value: 'largeDesktop', labelKey: 'pages.settings.formBuilderTab.largeDesktop' },
+  { value: 'auto', labelKey: 'pages.settings.formBuilderTab.autoAdaptsToScreenSize' },
 ]
 
 type SchemaDraft = Omit<FormSchemaDoc, 'createdAt' | 'updatedAt'>
@@ -226,7 +226,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
               <SelectContent>
                 {LAYOUT_OPTIONS.map((opt) => (
                   <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
+                    {t(opt.labelKey)}
                   </SelectItem>
                 ))}
               </SelectContent>

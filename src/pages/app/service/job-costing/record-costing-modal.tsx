@@ -20,11 +20,11 @@ import type { JobCostingDoc } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
 
 type CostItem = JobCostingDoc['costItems'][number]
-const COST_TYPES: { key: CostItem['type']; label: string }[] = [
-  { key: 'part', label: 'Part' },
-  { key: 'labor', label: 'Labor' },
-  { key: 'overhead', label: 'Overhead' },
-  { key: 'other', label: 'Other' },
+const COST_TYPES: { key: CostItem['type']; labelKey: string }[] = [
+  { key: 'part', labelKey: 'pages.service.recordCostingModal.part' },
+  { key: 'labor', labelKey: 'pages.service.recordCostingModal.labor' },
+  { key: 'overhead', labelKey: 'pages.service.recordCostingModal.overhead' },
+  { key: 'other', labelKey: 'pages.service.recordCostingModal.other' },
 ]
 
 function costItemsFromJob(job: JobCardWithId): CostItem[] {
@@ -202,7 +202,7 @@ export function RecordCostingModal({
                               : 'text-muted-foreground hover:bg-muted'
                           )}
                         >
-                          {opt.label}
+                          {t(opt.labelKey)}
                         </button>
                       ))}
                     </div>

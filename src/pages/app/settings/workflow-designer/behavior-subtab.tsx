@@ -17,35 +17,35 @@ const TOGGLE_ROWS: {
     | 'canViewPricesAndPaymentData'
     | 'allowUndoLastAction'
   >
-  title: string
-  description: string
+  titleKey: string
+  descriptionKey: string
 }[] = [
   {
     key: 'collectPaymentWithGenerateBill',
-    title: 'Collect payment with Generate Bill',
-    description:
+    titleKey: 'pages.settings.behaviorSubtab.collectPaymentWithGenerateBill',
+    descriptionKey:
       'Collect Payment section shows in the Generate Bill popup (partial / split / outstanding).',
   },
   {
     key: 'printPromptAfterJobCardCreation',
-    title: 'Print prompt after job card creation',
-    description:
+    titleKey: 'pages.settings.behaviorSubtab.printPromptAfterJobCardCreation',
+    descriptionKey:
       'After creating a job card, a popup offers Print Label / Print Receipt / WhatsApp.',
   },
   {
     key: 'requireDescriptionOnJobDone',
-    title: 'Require description on Job Done',
-    description: 'Description is optional when marking a job done.',
+    titleKey: 'pages.settings.behaviorSubtab.requireDescriptionOnJobDone',
+    descriptionKey: 'pages.settings.behaviorSubtab.descriptionIsOptionalWhenMarkingA',
   },
   {
     key: 'canViewPricesAndPaymentData',
-    title: 'Can view prices & payment data',
-    description: 'Sees estimated cost, final amount, paid, due, receipts and parts cost.',
+    titleKey: 'pages.settings.behaviorSubtab.canViewPricesPaymentData',
+    descriptionKey: 'pages.settings.behaviorSubtab.seesEstimatedCostFinalAmountPaid',
   },
   {
     key: 'allowUndoLastAction',
-    title: 'Allow undo last action',
-    description: 'Undo disabled — status changes are permanent for this role.',
+    titleKey: 'pages.settings.behaviorSubtab.allowUndoLastAction',
+    descriptionKey: 'pages.settings.behaviorSubtab.undoDisabledStatusChangesArePermanent',
   },
 ]
 
@@ -78,8 +78,8 @@ export function BehaviorSubtab({ draft, setDraft, disabled }: BehaviorSubtabProp
         {TOGGLE_ROWS.map((row) => (
           <div key={row.key} className="flex items-center justify-between gap-4 p-3">
             <div>
-              <p className="text-sm font-medium">{row.title}</p>
-              <p className="text-xs text-muted-foreground">{row.description}</p>
+              <p className="text-sm font-medium">{t(row.titleKey)}</p>
+              <p className="text-xs text-muted-foreground">{t(row.descriptionKey)}</p>
             </div>
             <Switch
               checked={draft.behavior[row.key]}
