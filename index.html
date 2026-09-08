@@ -2,7 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- SVG first for the browsers that prefer it (Chrome, Firefox, Edge), then a 32px PNG for
+       the ones that do not. Safari and iOS ignore SVG for apple-touch-icon entirely, so without
+       the 180 an iPhone "Add to Home Screen" would use a screenshot of the page instead. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>aim</title>
     <meta
