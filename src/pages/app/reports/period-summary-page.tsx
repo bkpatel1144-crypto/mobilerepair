@@ -209,7 +209,7 @@ export function PeriodSummaryPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search date..."
+        searchPlaceholder={t('pages.reports.periodSummary.searchDate')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
         showCustomRange

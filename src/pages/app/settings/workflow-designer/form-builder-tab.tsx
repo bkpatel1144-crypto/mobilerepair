@@ -171,7 +171,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
 
   function handleSaveAsTemplate() {
     if (!draft) return
-    const name = window.prompt('Save this configuration as a template named:')
+    const name = window.prompt(t('pages.settings.formBuilderTab.saveThisConfigurationAsATemplate'))
     if (!name) return
     const next = { ...templates, [name]: draft }
     writeTemplates(formType, next)

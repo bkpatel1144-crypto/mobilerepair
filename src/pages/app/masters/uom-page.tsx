@@ -230,7 +230,7 @@ export function UomPage() {
           message={
             toggleTarget.status === 'active'
               ? 'Deactivated units no longer appear as a selectable option for new items.'
-              : 'This unit will become selectable again for new items.'
+              : t('pages.masters.uom.thisUnitWillBecomeSelectableAgain')
           }
           confirmLabel={toggleTarget.status === 'active' ? 'Deactivate' : t('common.activate')}
           destructive={toggleTarget.status === 'active'}
@@ -315,7 +315,7 @@ function UomModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Create Unit of Measure' : 'Edit Unit of Measure'}
+      title={isNew ? 'Create Unit of Measure' : t('pages.masters.uom.editUnitOfMeasure')}
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create UOM' : t('common.save')}
       isSubmitting={isPending}

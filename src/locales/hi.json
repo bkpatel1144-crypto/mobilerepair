@@ -402,7 +402,22 @@
     "15DigitImeiOptional": "15 अंकों का IMEI (वैकल्पिक)",
     "notesOptional": "टिप्पणी (वैकल्पिक)",
     "optional": "(वैकल्पिक)",
-    "optional2": "(वैकल्पिक)"
+    "optional2": "(वैकल्पिक)",
+    "saveChanges": "बदलाव सहेजें",
+    "ready": "तैयार",
+    "delivered": "सौंप दिया",
+    "success": "सफल",
+    "blocked": "रोका गया",
+    "failed": "असफल",
+    "unassigned": "किसी को नहीं सौंपा",
+    "searchReceiptParty": "रसीद, पार्टी खोजें...",
+    "enterAnAmountGreaterThanZero": "शून्य से अधिक राशि डालें।",
+    "searchJobCardCustomerMobile": "जॉब कार्ड, ग्राहक, मोबाइल खोजें...",
+    "selectADeviceType": "डिवाइस प्रकार चुनें।",
+    "pickADeviceTypeFirst": "पहले डिवाइस प्रकार चुनें",
+    "pickABrandFirst": "पहले ब्रांड चुनें",
+    "receiptInvoiceBrandModel": "रसीद/बिल #, ब्रांड, मॉडल...",
+    "somethingWentWrong": "कुछ गड़बड़ हो गई।"
   },
   "pages": {
     "dashboard": {
@@ -429,7 +444,10 @@
         "newParty": "नई पार्टी",
         "newItem": "नया आइटम",
         "jobCardsByStatus": "स्थिति के अनुसार जॉब कार्ड",
-        "revenueTrend": "आय का रुझान"
+        "revenueTrend": "आय का रुझान",
+        "goodMorning": "सुप्रभात",
+        "goodAfternoon": "नमस्कार",
+        "goodEvening": "शुभ संध्या"
       }
     },
     "finance": {
@@ -441,7 +459,8 @@
         "creditIn": "जमा (आया)",
         "debitOut": "नामे (गया)",
         "totalCreditIn": "कुल जमा (आया)",
-        "totalDebitOut": "कुल नामे (गया)"
+        "totalDebitOut": "कुल नामे (गया)",
+        "manualEntry": "हाथ से दर्ज"
       },
       "expenses": {
         "newExpense": "नया खर्च",
@@ -455,7 +474,12 @@
         "expense": "खर्च #",
         "paidTo": "किसे दिया",
         "recordRentSalariesAndOtherRunning": "किराया, वेतन और बाकी चालू खर्च यहाँ दर्ज करें — ये सीधे रोकड़ बही और लाभ-हानि में जाते हैं।",
-        "shopRunningCostsRentSalariesUtilities": "दुकान के चालू खर्च — किराया, वेतन, बिजली-पानी और बाकी सब जो लाभ-हानि में घटाया जाता है"
+        "shopRunningCostsRentSalariesUtilities": "दुकान के चालू खर्च — किराया, वेतन, बिजली-पानी और बाकी सब जो लाभ-हानि में घटाया जाता है",
+        "pickACategory": "श्रेणी चुनें।",
+        "couldNotRecordThisExpense": "यह खर्च दर्ज नहीं हो सका।",
+        "recordExpense": "खर्च दर्ज करें",
+        "posted": "दर्ज हुआ",
+        "searchExpenseCategoryPartyNotes": "खर्च #, श्रेणी, पार्टी, टिप्पणी खोजें..."
       },
       "partyLedger": {
         "partyLedger": "पार्टी खाता",
@@ -467,7 +491,11 @@
         "thisPartySJobCardsAnd": "इस पार्टी के जॉब कार्ड और भुगतान यहाँ दिखेंगे।",
         "settled": "चुकता ✓",
         "creditCr": "जमा (Cr)",
-        "debitDr": "नामे (Dr)"
+        "debitDr": "नामे (Dr)",
+        "withJobCardActivity": "जॉब कार्ड गतिविधि वाली",
+        "activeJobsOnly": "सिर्फ़ चालू जॉब",
+        "inclAdvanceOnUnbilledJobs": "बिना बिल जॉब के अग्रिम सहित",
+        "pendingCollection": "वसूली बाकी"
       },
       "payables": {
         "payables": "देय राशि",
@@ -498,7 +526,13 @@
         "customer": "ग्राहक *",
         "amount": "राशि *",
         "receiptsPayments": "रसीद और भुगतान",
-        "notesOptional": "टिप्पणी (वैकल्पिक)"
+        "notesOptional": "टिप्पणी (वैकल्पिक)",
+        "manualAdvance": "हाथ से / अग्रिम",
+        "afterMoneyOut": "रकम बाहर जाने के बाद",
+        "selectACustomer": "ग्राहक चुनें।",
+        "selectAJobCard": "जॉब कार्ड चुनें।",
+        "enterAnAmountGreaterThan0": "0 से अधिक राशि डालें।",
+        "pickACustomerFirst": "पहले ग्राहक चुनें"
       },
       "receivables": {
         "receivables": "प्राप्य राशि",
@@ -506,7 +540,11 @@
         "collection": "वसूली %",
         "noOutstandingReceivables": "कोई बाकी प्राप्य नहीं",
         "allPaymentsAreUpToDate": "सभी भुगतान अद्यतन हैं।",
-        "aging": "पुरानापन"
+        "aging": "पुरानापन",
+        "030Days": "0-30 दिन",
+        "3060Days": "30-60 दिन",
+        "6090Days": "60-90 दिन",
+        "90Days": "90+ दिन"
       },
       "supplierPayables": {
         "newSupplierBill": "नया सप्लायर बिल",
@@ -522,7 +560,14 @@
         "130Days": "1–30 दिन",
         "3160Days": "31–60 दिन",
         "60Days": "60+ दिन",
-        "oldest": "सबसे पुराना"
+        "oldest": "सबसे पुराना",
+        "pickASupplier": "सप्लायर चुनें।",
+        "enterABillAmountGreaterThan": "शून्य से अधिक बिल राशि डालें।",
+        "theDueDateCannotBeBefore": "देय तारीख बिल की तारीख से पहले नहीं हो सकती।",
+        "couldNotSaveThisBill": "यह बिल सहेजा नहीं जा सका।",
+        "saveBill": "बिल सहेजें",
+        "couldNotRecordThisPayment": "यह भुगतान दर्ज नहीं हो सका।",
+        "devicePurchase": "डिवाइस खरीद"
       }
     },
     "masters": {
@@ -537,7 +582,11 @@
         "categoryName": "श्रेणी का नाम *",
         "rawMaterial": "कच्चा माल",
         "parentCategory": "मूल श्रेणी",
-        "noneRoot": "कोई नहीं (मूल)"
+        "noneRoot": "कोई नहीं (मूल)",
+        "searchCategories": "श्रेणियाँ खोजें...",
+        "thisCategoryWillBecomeSelectableAgain": "यह श्रेणी नए आइटम के लिए फिर से चुनी जा सकेगी।",
+        "thisPermanentlyDeletesTheCategoryThis": "यह श्रेणी हमेशा के लिए हट जाती है। यह पूर्ववत नहीं हो सकता।",
+        "editItemCategory": "आइटम श्रेणी बदलें"
       },
       "itemMaster": {
         "itemMaster": "आइटम मास्टर",
@@ -556,7 +605,14 @@
         "product": "उत्पाद",
         "itemName": "आइटम का नाम *",
         "gst2": "GST %",
-        "enabledIn2": "कहाँ चालू"
+        "enabledIn2": "कहाँ चालू",
+        "service": "सर्विस",
+        "sales": "विक्रय",
+        "purchase": "खरीद",
+        "production": "उत्पादन",
+        "servicePos": "सर्विस / POS",
+        "thisItemWillBecomeSelectableAgain": "यह आइटम फिर से चुना जा सकेगा।",
+        "editItem": "आइटम बदलें"
       },
       "parties": {
         "manageCustomersAndSuppliers": "ग्राहक और सप्लायर प्रबंधित करें",
@@ -583,7 +639,11 @@
         "gstNumber2": "GST नंबर",
         "panNumber2": "PAN नंबर",
         "area": "इलाका",
-        "thisRemovesThePartyFromEvery": "यह पार्टी को हर सूची (जॉब कार्ड, रसीदें, खरीद) से हटा देता है। ऐप में इसे वापस लाने की कोई स्क्रीन नहीं है — वापस लाने के लिए सीधे Firestore में बदलाव करना पड़ेगा।"
+        "thisRemovesThePartyFromEvery": "यह पार्टी को हर सूची (जॉब कार्ड, रसीदें, खरीद) से हटा देता है। ऐप में इसे वापस लाने की कोई स्क्रीन नहीं है — वापस लाने के लिए सीधे Firestore में बदलाव करना पड़ेगा।",
+        "both": "दोनों",
+        "searchByNameMobileOrParty": "नाम, मोबाइल या पार्टी कोड से खोजें...",
+        "editParty": "पार्टी बदलें",
+        "allOptionalAddWhatYouNeed": "सब वैकल्पिक — जो चाहिए वही भरें"
       },
       "partyCategories": {
         "partyCategories": "पार्टी श्रेणी",
@@ -593,7 +653,8 @@
         "creditInformation": "उधार की जानकारी",
         "defaultCreditDays": "डिफ़ॉल्ट उधार दिन",
         "defaultCustomer": "डिफ़ॉल्ट (ग्राहक)",
-        "defaultSupplier": "डिफ़ॉल्ट (सप्लायर)"
+        "defaultSupplier": "डिफ़ॉल्ट (सप्लायर)",
+        "editCategory": "श्रेणी बदलें"
       },
       "paymentModes": {
         "paymentModes": "भुगतान के तरीके",
@@ -601,7 +662,12 @@
         "noPaymentModesYet": "अभी कोई भुगतान तरीका नहीं",
         "addYourFirstPaymentModeAbove": "ऊपर अपना पहला भुगतान तरीका जोड़ें।",
         "receiptsAlreadyRecordedUnderThisPayment": "इस भुगतान तरीके से पहले दर्ज रसीदें एक ऐसे तरीके का संदर्भ रखेंगी जो अब मौजूद नहीं है। यह पूर्ववत नहीं हो सकता।",
-        "code": "कोड *"
+        "code": "कोड *",
+        "upi": "UPI",
+        "bankTransfer": "बैंक ट्रांसफ़र",
+        "searchPaymentModes": "भुगतान तरीके खोजें...",
+        "thisPaymentModeWillBecomeSelectable": "यह भुगतान तरीका फिर से चुना जा सकेगा।",
+        "editPaymentMode": "भुगतान तरीका बदलें"
       },
       "uom": {
         "unitsOfMeasure": "माप की इकाइयाँ",
@@ -620,7 +686,12 @@
         "shownInDropdownsAndReports": "ड्रॉपडाउन और रिपोर्ट में दिखता है",
         "decimalPlaces": "दशमलव स्थान",
         "displayOrder": "दिखाने का क्रम",
-        "conversionOptional": "रूपांतरण (वैकल्पिक)"
+        "conversionOptional": "रूपांतरण (वैकल्पिक)",
+        "length": "लंबाई",
+        "weight": "वज़न",
+        "volume": "आयतन",
+        "thisUnitWillBecomeSelectableAgain": "यह इकाई नए आइटम के लिए फिर से चुनी जा सकेगी।",
+        "editUnitOfMeasure": "माप की इकाई बदलें"
       }
     },
     "secondHandDevice": {
@@ -643,7 +714,17 @@
         "paidInFull": "पूरा भुगतान हो गया।",
         "whoeverIsLoggedIn": "जो भी लॉग इन है",
         "accountLockIcloudGoogle": "खाता लॉक (iCloud / Google)",
-        "secondImeiDualSim": "दूसरा IMEI (डुअल सिम)"
+        "secondImeiDualSim": "दूसरा IMEI (डुअल सिम)",
+        "chargerOnly": "सिर्फ़ चार्जर",
+        "chargerBoxCable": "चार्जर, डिब्बा, केबल",
+        "chargerBoxCableEarphones": "चार्जर, डिब्बा, केबल, ईयरफ़ोन",
+        "boxOnly": "सिर्फ़ डिब्बा",
+        "selectOrAddASeller": "विक्रेता चुनें या जोड़ें।",
+        "enterAPurchasePriceGreaterThan": "0 से अधिक खरीद कीमत डालें।",
+        "somethingWentWrongPleaseTryAgain": "कुछ गड़बड़ हो गई। कृपया फिर कोशिश करें।",
+        "captureUploadIdProofPhoto": "पहचान पत्र की तस्वीर लें / अपलोड करें",
+        "savePurchase": "खरीद सहेजें",
+        "scanImei2": "IMEI 2 स्कैन करें"
       },
       "devicePurchase": {
         "devicePurchase": "डिवाइस खरीद",
@@ -669,7 +750,11 @@
         "buyer": "खरीदार *",
         "salePrice": "विक्रय कीमत *",
         "accessoriesGivenToBuyer": "खरीदार को दी गई चीज़ें",
-        "warrantyDays": "वारंटी (दिन)"
+        "warrantyDays": "वारंटी (दिन)",
+        "searchReceiptImeiBrand": "रसीद # / IMEI / ब्रांड खोजें...",
+        "selectOrAddABuyer": "खरीदार चुनें या जोड़ें।",
+        "enterASalePriceGreaterThan": "0 से अधिक विक्रय कीमत डालें।",
+        "confirmSale": "विक्रय पक्का करें"
       },
       "deviceStock": {
         "deviceStock": "डिवाइस स्टॉक",
@@ -677,7 +762,8 @@
         "totalInvested": "कुल लगाई रकम",
         "noDevicesInStock": "स्टॉक में कोई डिवाइस नहीं",
         "devicesYouPurchaseWillShowUp": "आपकी खरीदी डिवाइस बिकने तक यहाँ दिखेंगी।",
-        "daysInStock": "स्टॉक में दिन"
+        "daysInStock": "स्टॉक में दिन",
+        "searchStock": "स्टॉक खोजें..."
       },
       "purchaseDetailSections": {
         "device": "डिवाइस",
@@ -701,7 +787,9 @@
         "profit": "लाभ",
         "returnedToSeller": "विक्रेता को वापस",
         "saleInvoice": "विक्रय बिल #",
-        "seller": "विक्रेता"
+        "seller": "विक्रेता",
+        "purchase": "खरीद",
+        "inRefurb": "मरम्मत में"
       },
       "purchaseRegister": {
         "purchaseRegister": "खरीद रजिस्टर",
@@ -734,7 +822,13 @@
         "logFieldVisit": "फील्ड विज़िट दर्ज करें",
         "whatWasDoneOnSite": "साइट पर क्या किया गया...",
         "reason": "कारण",
-        "handoverTo": "किसे सौंपें"
+        "handoverTo": "किसे सौंपें",
+        "returnDeviceCloseThisJob": "डिवाइस लौटाकर यह जॉब बंद करें?",
+        "thisIsATerminalStatusAnd": "यह अंतिम स्थिति है और इसके बाद बदली नहीं जा सकती।",
+        "returnClose": "लौटाकर बंद करें",
+        "hold": "रोकें",
+        "jobDone": "जॉब पूर्ण",
+        "logVisit": "विज़िट दर्ज करें"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "जॉब कार्ड बनाने का फ़ॉर्म लोड नहीं हो सका",
@@ -754,7 +848,13 @@
         "createJobCard": "जॉब कार्ड बनाएं",
         "alternateNumberOptional": "दूसरा नंबर (वैकल्पिक)",
         "secondImeiOptional": "दूसरा IMEI (वैकल्पिक)",
-        "serialNumberOptional": "सीरियल नंबर (वैकल्पिक)"
+        "serialNumberOptional": "सीरियल नंबर (वैकल्पिक)",
+        "enterTheNewCustomerSName": "नए ग्राहक का नाम और सही 10 अंकों का मोबाइल नंबर डालें।",
+        "selectOrAddACustomer": "ग्राहक चुनें या जोड़ें।",
+        "selectAtLeastOneProblem": "कम से कम एक समस्या चुनें।",
+        "selectABrand": "ब्रांड चुनें।",
+        "enterTheModel": "मॉडल डालें।",
+        "couldNotCreateTheJobCard": "जॉब कार्ड बनाया नहीं जा सका। फिर कोशिश करें।"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "लेते समय की चीज़ें",
@@ -785,7 +885,8 @@
         "clickAStatusCardToFilter": "फ़िल्टर करने के लिए किसी स्थिति कार्ड पर क्लिक करें",
         "createYourFirstJobCardTo": "शुरू करने के लिए अपना पहला जॉब कार्ड बनाएं।",
         "deliveredReturnedBy": "सौंपने / लौटाने वाला",
-        "noUsersYet": "अभी कोई उपयोगकर्ता नहीं।"
+        "noUsersYet": "अभी कोई उपयोगकर्ता नहीं।",
+        "searchJobCustomerMobile": "जॉब, ग्राहक, मोबाइल खोजें..."
       },
       "recordCostingModal": {
         "itemName": "आइटम का नाम",
@@ -795,7 +896,8 @@
         "labor": "मज़दूरी",
         "overhead": "ऊपरी खर्च",
         "other": "अन्य",
-        "billAmount": "बिल राशि"
+        "billAmount": "बिल राशि",
+        "saveCosting": "लागत सहेजें"
       },
       "jobCosting": {
         "jobCosting": "जॉब लागत",
@@ -805,14 +907,20 @@
         "jobDetails": "जॉब का विवरण",
         "financial": "वित्तीय",
         "advancePaid": "अग्रिम भुगतान",
-        "closedJobsRecordActualPartsLabor": "बंद जॉब — असल पुर्ज़े, मज़दूरी और ऊपरी खर्च दर्ज करें"
+        "closedJobsRecordActualPartsLabor": "बंद जॉब — असल पुर्ज़े, मज़दूरी और ऊपरी खर्च दर्ज करें",
+        "recorded": "दर्ज",
+        "pendingCosting": "लागत बाकी",
+        "costed": "लागत दर्ज"
       },
       "serviceItems": {
         "serviceItems": "सर्विस आइटम",
         "itemsAndServicesUsedInJob": "जॉब कार्ड में उपयोग होने वाले आइटम और सर्विस — आइटम मास्टर से प्रबंधित",
         "itemMasterShipsInPhase7": "आइटम मास्टर फेज़ 7 में आएगा",
         "noServiceItemsYet": "अभी कोई सर्विस आइटम नहीं",
-        "addOneToGetStarted": "शुरू करने के लिए एक जोड़ें।"
+        "addOneToGetStarted": "शुरू करने के लिए एक जोड़ें।",
+        "services": "सर्विस",
+        "searchServiceItems": "सर्विस आइटम खोजें...",
+        "editServiceItem": "सर्विस आइटम बदलें"
       },
       "addOptionForm": {
         "selectBrand": "ब्रांड चुनें..."
@@ -842,12 +950,14 @@
         "logAFieldVisitFromA": "किसी जॉब कार्ड से फील्ड विज़िट दर्ज करें, तो वह यहाँ दिखेगी।",
         "visits": "विज़िट",
         "timeSpent": "लगा समय",
-        "onFieldTechnicianLogbookTimeSpent": "फील्ड तकनीशियन लॉगबुक — हर जॉब पर लगा समय और इंजीनियर"
+        "onFieldTechnicianLogbookTimeSpent": "फील्ड तकनीशियन लॉगबुक — हर जॉब पर लगा समय और इंजीनियर",
+        "searchJobCustomer": "जॉब, ग्राहक खोजें..."
       },
       "jobWiseProfit": {
         "jobWiseProfit": "जॉब अनुसार लाभ",
         "jobWiseProfitAndLossAnalysis": "जॉब अनुसार लाभ-हानि विश्लेषण",
-        "recordActualCostingOnAClosed": "किसी बंद जॉब पर असल लागत दर्ज करें, तो उसका लाभ यहाँ दिखेगा।"
+        "recordActualCostingOnAClosed": "किसी बंद जॉब पर असल लागत दर्ज करें, तो उसका लाभ यहाँ दिखेगा।",
+        "searchJobCustomerTech": "जॉब, ग्राहक, तकनीशियन खोजें..."
       },
       "periodSummary": {
         "periodSummary": "अवधि सारांश",
@@ -863,7 +973,8 @@
         "customer": "ग्राहक",
         "assignedTo": "सौंपा गया",
         "cost": "लागत",
-        "netAfterShopExpenses": "दुकान के खर्च घटाकर शुद्ध"
+        "netAfterShopExpenses": "दुकान के खर्च घटाकर शुद्ध",
+        "searchDate": "तारीख खोजें..."
       },
       "profitLoss": {
         "cashBasisMoneyActuallyReceivedAnd": "नकद आधार — असल में मिली और दी गई रकम, इसलिए यह हमेशा रोकड़ बही से मेल खाता है",
@@ -878,7 +989,13 @@
         "netProfit": "शुद्ध लाभ",
         "statement": "विवरण",
         "profitLoss": "लाभ और हानि",
-        "profitLossIsBuiltFromReceipts": "लाभ-हानि रसीदों और भुगतानों से बनती है। कोई भुगतान लें या खर्च दर्ज करें, तो वह यहाँ दिखेगा।"
+        "profitLossIsBuiltFromReceipts": "लाभ-हानि रसीदों और भुगतानों से बनती है। कोई भुगतान लें या खर्च दर्ज करें, तो वह यहाँ दिखेगा।",
+        "thisWeek": "इस सप्ताह",
+        "thisMonth": "इस महीने",
+        "thisYear": "इस साल",
+        "lessRefunds": "घटाएं: वापसी",
+        "lessDirectCostSupplierPayments": "घटाएं: सीधी लागत (सप्लायर भुगतान)",
+        "paidToSuppliers": "सप्लायरों को दिया"
       },
       "serviceReports": {
         "serviceReports": "सर्विस रिपोर्ट",
@@ -906,7 +1023,8 @@
         "share": "हिस्सा %",
         "partName": "पुर्ज़े का नाम",
         "deviceName": "डिवाइस का नाम",
-        "jobRevenue": "जॉब से आय"
+        "jobRevenue": "जॉब से आय",
+        "searchSupplier": "सप्लायर खोजें..."
       },
       "technicianReport": {
         "technicianReport": "तकनीशियन रिपोर्ट",
@@ -915,7 +1033,8 @@
         "winRate": "सफलता दर",
         "avgJob": "औसत / जॉब",
         "avgJob2": "औसत/जॉब",
-        "performance": "प्रदर्शन"
+        "performance": "प्रदर्शन",
+        "searchTechnician": "तकनीशियन खोजें..."
       }
     },
     "sales": {
@@ -924,20 +1043,23 @@
         "allGeneratedBillsViewOrEdit": "सभी बने बिल — सौंपने के लिए तैयार, सौंपे जा चुके या बंद बिल देखें या बदलें।",
         "noBillsGeneratedYet": "अभी कोई बिल नहीं बना",
         "aJobCardAppearsHereOnce": "जॉब कार्ड के अपने बिल बनाएं विकल्प से बिल बनने पर वह यहाँ दिखेगा।",
-        "billDate": "बिल की तारीख"
+        "billDate": "बिल की तारीख",
+        "closed": "बंद"
       }
     },
     "completeSetup": {
       "completeSetup": {
         "letSFinishSettingUpYour": "चलिए आपका खाता सेट करना पूरा करें",
-        "yourLastSignUpGotInterrupted": "आपकी पिछली साइन-अप आपकी कंपनी सेट होने से पहले रुक गई थी। इसमें बस एक पल लगेगा।"
+        "yourLastSignUpGotInterrupted": "आपकी पिछली साइन-अप आपकी कंपनी सेट होने से पहले रुक गई थी। इसमें बस एक पल लगेगा।",
+        "finishSetup": "सेटअप पूरा करें"
       }
     },
     "forgotPassword": {
       "forgotPassword": {
         "resetYourPassword": "अपना पासवर्ड बदलें",
         "enterYourEmailAndWeLl": "अपना ईमेल डालें और हम आपको बदलने की लिंक भेज देंगे।",
-        "checkYourEmail": "अपना ईमेल देखें"
+        "checkYourEmail": "अपना ईमेल देखें",
+        "sendResetLink": "बदलने की लिंक भेजें"
       }
     },
     "login": {
@@ -950,7 +1072,8 @@
     "signup": {
       "signup": {
         "createYourAccount": "अपना खाता बनाएं",
-        "freeForeverNoCardRequired": "हमेशा मुफ़्त — कार्ड की ज़रूरत नहीं।"
+        "freeForeverNoCardRequired": "हमेशा मुफ़्त — कार्ड की ज़रूरत नहीं।",
+        "createAccount": "खाता बनाएं"
       }
     },
     "landing": {
@@ -977,12 +1100,26 @@
         "billingPaymentsConnected": "बिलिंग और भुगतान, आपस में जुड़े",
         "assignRepair": "सौंपना और मरम्मत",
         "billCollect": "बिल और वसूली",
-        "deliverWarranty": "सौंपना और वारंटी"
+        "deliverWarranty": "सौंपना और वारंटी",
+        "isThisReallyFree": "क्या यह सचमुच मुफ़्त है?",
+        "yesEveryFeatureInAimIs": "हाँ — aim की हर सुविधा हमेशा के लिए मुफ़्त है। कार्ड की ज़रूरत नहीं, कोई प्लान स्तर नहीं, कोई सुविधा बंद नहीं।",
+        "canIBringMyExistingData": "क्या मैं अपना पुराना डेटा ला सकता हूँ?",
+        "yesWeOfferFreeDataMigration": "हाँ — आपके ग्राहक, डिवाइस और इतिहास aim में लाने के लिए हम मुफ़्त डेटा माइग्रेशन देते हैं।",
+        "doesItWorkOnMobile": "क्या यह मोबाइल पर चलता है?",
+        "yesAimIsInstallableAsA": "हाँ — aim मोबाइल ऐप की तरह इंस्टॉल हो जाता है और शुरू से मोबाइल-पहले बनाया गया है।",
+        "canDifferentStaffSeeDifferentThings": "क्या अलग-अलग कर्मचारी अलग-अलग चीज़ें देख सकते हैं?",
+        "yesTheWorkflowDesignerLetsYou": "हाँ — वर्कफ़्लो डिज़ाइनर से आप तय कर सकते हैं कि हर जॉब स्थिति पर हर भूमिका क्या देख और कर सकती है।"
       }
     },
     "pricing": {
       "pricing": {
-        "simplePricingFree": "सीधी कीमत: मुफ़्त।"
+        "simplePricingFree": "सीधी कीमत: मुफ़्त।",
+        "unlimitedJobCardsTechniciansAndCustomers": "असीमित जॉब कार्ड, तकनीशियन और ग्राहक",
+        "fullRoleBasedAccessControlWorkflow": "पूरा भूमिका-आधारित नियंत्रण और वर्कफ़्लो डिज़ाइनर",
+        "financeReceiptsLedgersReceivablesPayables": "वित्त: रसीदें, खाते, प्राप्य और देय",
+        "secondHandDevicePurchaseSaleTracking": "सेकंड हैंड डिवाइस की खरीद और विक्रय का हिसाब",
+        "allReportsDashboardsAndCsvExcel": "सभी रिपोर्ट, डैशबोर्ड और CSV/Excel एक्सपोर्ट",
+        "freeDataMigrationFromYourCurrent": "आपके मौजूदा सिस्टम से मुफ़्त डेटा माइग्रेशन"
       }
     },
     "administration": {
@@ -1008,7 +1145,9 @@
         "role": "भूमिका",
         "branch": "शाखा",
         "networkDevice": "नेटवर्क और डिवाइस",
-        "idle30m": "निष्क्रिय (30 मिनट+)"
+        "idle30m": "निष्क्रिय (30 मिनट+)",
+        "searchByUserDeviceIp": "उपयोगकर्ता, डिवाइस, IP से खोजें...",
+        "thisIsYourCurrentSession": "यह आपका मौजूदा सत्र है"
       },
       "createRole": {
         "backToRoles": "भूमिकाओं पर वापस",
@@ -1017,7 +1156,12 @@
         "afterCreatingTheRole": "भूमिका बनाने के बाद",
         "assignPermissionsToDefineWhatUsers": "तय करें कि इस भूमिका वाले उपयोगकर्ता क्या कर सकते हैं",
         "assignMenusToControlNavigationAccess": "नेविगेशन की पहुँच तय करने के लिए मेन्यू चुनें",
-        "assignUsersToThisRole": "इस भूमिका में उपयोगकर्ता जोड़ें"
+        "assignUsersToThisRole": "इस भूमिका में उपयोगकर्ता जोड़ें",
+        "roleNameMustBeAtLeast": "भूमिका का नाम कम से कम 2 अक्षरों का होना चाहिए।",
+        "roleCodeIsRequired": "भूमिका कोड ज़रूरी है।",
+        "aRoleWithThatNameAlready": "उस नाम की भूमिका पहले से मौजूद है।",
+        "couldNotCreateThisRole": "यह भूमिका बनाई नहीं जा सकी।",
+        "createRole": "भूमिका बनाएं"
       },
       "createUser": {
         "enterFullName": "पूरा नाम लिखें",
@@ -1029,7 +1173,15 @@
         "emailAddress": "ईमेल पता *",
         "password": "पासवर्ड *",
         "role": "भूमिका *",
-        "securityNote": "सुरक्षा सूचना:"
+        "securityNote": "सुरक्षा सूचना:",
+        "fullNameMustBeAtLeast": "पूरा नाम कम से कम 2 अक्षरों का होना चाहिए",
+        "enterAValid10DigitMobile": "सही 10 अंकों का मोबाइल नंबर डालें",
+        "emailIsRequired": "ईमेल ज़रूरी है",
+        "enterAValidEmailAddress": "सही ईमेल पता डालें",
+        "passwordMustBeAtLeast6": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए",
+        "incomplete": "अपूर्ण",
+        "showPassword": "पासवर्ड दिखाएं",
+        "createUser": "उपयोगकर्ता बनाएं"
       },
       "ipWhitelist": {
         "ipWhitelist": "IP व्हाइटलिस्ट",
@@ -1039,7 +1191,11 @@
         "label": "नाम",
         "ipCidr": "IP / CIDR",
         "label2": "नाम *",
-        "ipCidr2": "IP / CIDR *"
+        "ipCidr2": "IP / CIDR *",
+        "searchByLabelOrIp": "नाम या IP से खोजें...",
+        "thisPermanentlyRemovesThisIpRestriction": "यह इस IP पाबंदी को हमेशा के लिए हटा देता है। यह पूर्ववत नहीं हो सकता।",
+        "thisIpCidrWillStartAuthorizing": "यह IP/CIDR मालिक के अलावा बाकी लोगों के लॉग इन को फिर से अनुमति देने लगेगा।",
+        "editWhitelistEntry": "व्हाइटलिस्ट प्रविष्टि बदलें"
       },
       "loginReport": {
         "loginReport": "लॉगिन रिपोर्ट",
@@ -1067,7 +1223,8 @@
         "thisWipesEveryMenuAndPermission": "यह इस भूमिका के हर मेन्यू और अनुमति के निशान हटा देता है। यह सिर्फ़ बिना सहेजे ड्राफ़्ट पर असर करता है — आप अब भी पेज से रद्द कर सकते हैं — लेकिन अब तक हाथ से किए गए चुनाव खो जाएंगे।",
         "thisReplacesEveryMenuAndPermission": "यह इस ड्राफ़्ट में अब तक किए गए हर मेन्यू और अनुमति चुनाव को चुनी हुई भूमिका की सेटिंग से बदल देता है। बिना सहेजे किए गए बदलाव मिट जाएंगे।",
         "inherit": "लें",
-        "clearAllMenusPermissions": "सभी मेन्यू और अनुमतियाँ हटाएं?"
+        "clearAllMenusPermissions": "सभी मेन्यू और अनुमतियाँ हटाएं?",
+        "grantFullAccess": "पूरी पहुँच दें"
       },
       "roleConfigure": {
         "couldnTLoadThisRole": "यह भूमिका लोड नहीं हो सकी",
@@ -1098,7 +1255,10 @@
         "type": "प्रकार",
         "status": "स्थिति",
         "actions": "कार्रवाई",
-        "configureRole": "भूमिका कॉन्फ़िगर करें"
+        "configureRole": "भूमिका कॉन्फ़िगर करें",
+        "enableRole": "भूमिका चालू करें",
+        "customRole": "कस्टम भूमिका",
+        "enableThisRole": "यह भूमिका चालू करें?"
       },
       "systemAudit": {
         "systemAudit": "सिस्टम ऑडिट",
@@ -1130,7 +1290,11 @@
         "deletedUsers": "हटाए उपयोगकर्ता",
         "noUsersFound": "कोई उपयोगकर्ता नहीं मिला",
         "contactDetails": "संपर्क विवरण",
-        "roleAccess": "भूमिका और पहुँच"
+        "roleAccess": "भूमिका और पहुँच",
+        "protected": "सुरक्षित",
+        "searchByNameEmailOrMobile": "नाम, ईमेल या मोबाइल से खोजें...",
+        "enableUser": "उपयोगकर्ता चालू करें",
+        "thisRestoresTheirAbilityToSign": "इससे उनकी लॉग इन करने की सुविधा वापस आ जाती है।"
       }
     },
     "settings": {
@@ -1154,14 +1318,29 @@
         "by": "किसने",
         "size": "आकार",
         "backupRestore": "बैकअप और रिस्टोर",
-        "keepForDays": "कितने दिन रखें (दिन)"
+        "keepForDays": "कितने दिन रखें (दिन)",
+        "overwrite": "OVERWRITE",
+        "restoreFailed": "वापस लाना असफल रहा।",
+        "backupNow": "अभी बैकअप लें",
+        "downloadBackup": "बैकअप डाउनलोड करें",
+        "restoreAsArchiveSafe": "संग्रह के रूप में वापस लाएं (सुरक्षित)"
       },
       "billing": {
         "yourPlanAndBillingDetails": "आपका प्लान और बिलिंग विवरण",
         "youReOnTheFreePlan": "आप मुफ़्त प्लान पर हैं",
         "perMonth": "प्रति माह",
         "includedModules": "शामिल मॉड्यूल",
-        "billingSubscription": "बिलिंग और सदस्यता"
+        "billingSubscription": "बिलिंग और सदस्यता",
+        "unlimitedAddAsManyTeammatesAs": "असीमित — जितने साथी चाहिए जोड़ें",
+        "unlimitedEveryLocationOneAccount": "असीमित — हर जगह, एक ही खाता",
+        "jobCardsInvoices": "जॉब कार्ड और बिल",
+        "unlimitedWithNoMonthlyCap": "असीमित, कोई मासिक सीमा नहीं",
+        "dataBackups": "डेटा और बैकअप",
+        "yoursExportableAtAnyTime": "आपका, कभी भी एक्सपोर्ट कर सकते हैं",
+        "organization": "संगठन",
+        "billingContact": "बिलिंग संपर्क",
+        "currency": "मुद्रा",
+        "customerSince": "कब से ग्राहक"
       },
       "branchManagement": {
         "branchManagement": "शाखा प्रबंधन",
@@ -1177,7 +1356,12 @@
         "branchCode": "शाखा कोड",
         "currentStatus": "मौजूदा स्थिति",
         "branchType": "शाखा का प्रकार",
-        "statusType": "स्थिति और प्रकार"
+        "statusType": "स्थिति और प्रकार",
+        "main": "मुख्य",
+        "searchBranchesByNameOrCode": "शाखाएं नाम या कोड से खोजें...",
+        "customBranch": "कस्टम शाखा",
+        "createBranch": "शाखा बनाएं",
+        "thisBranchWillBecomeSelectableAgain": "यह शाखा फिर से चुनी जा सकेगी।"
       },
       "companyForm": {
         "companyCode": "कंपनी कोड",
@@ -1186,7 +1370,10 @@
         "sunriseEnterprisesPvtLtd": "Sunrise Enterprises Pvt Ltd",
         "regular": "नियमित",
         "composition": "कंपोज़िशन",
-        "note": "सूचना:"
+        "note": "सूचना:",
+        "currencySelected": "मुद्रा चुन ली",
+        "timezoneSelected": "समय-क्षेत्र चुन लिया",
+        "unregistered": "अपंजीकृत"
       },
       "companySettings": {
         "companyManagement": "कंपनी प्रबंधन",
@@ -1198,7 +1385,12 @@
         "lastUpdated": "आख़िरी बदलाव",
         "createCompany": "कंपनी बनाएं",
         "aSecondShopUnderThisAccount": "इस खाते के अंतर्गत दूसरी दुकान। इसे अपनी अलग भूमिकाएं, शाखा, वित्तीय वर्ष, मास्टर और प्रिंट टेम्पलेट मिलते हैं।",
-        "editCompany": "कंपनी बदलें"
+        "editCompany": "कंपनी बदलें",
+        "couldNotCreateThisCompany": "यह कंपनी बनाई नहीं जा सकी।",
+        "couldNotSaveTheseChanges": "ये बदलाव सहेजे नहीं जा सके।",
+        "nothingHereRightNow": "अभी यहाँ कुछ नहीं।",
+        "unregisteredNoGst": "अपंजीकृत (GST नहीं)",
+        "companyInformationAndSettings": "कंपनी की जानकारी और सेटिंग्स।"
       },
       "financialYears": {
         "financialYears": "वित्तीय वर्ष",
@@ -1216,7 +1408,16 @@
         "endDate": "अंत की तारीख",
         "duration": "अवधि",
         "startDate2": "शुरू की तारीख *",
-        "endDate2": "अंत की तारीख *"
+        "endDate2": "अंत की तारीख *",
+        "nameStartDateAndEndDate": "नाम, शुरू की तारीख और अंत की तारीख — सब ज़रूरी हैं।",
+        "theEndDateMustBeAfter": "अंत की तारीख शुरू की तारीख के बाद होनी चाहिए।",
+        "couldNotSaveThisFinancialYear": "यह वित्तीय वर्ष सहेजा नहीं जा सका।",
+        "createNextFy": "अगला वित्तीय वर्ष बनाएं",
+        "activateAFinancialYearFirst": "पहले कोई वित्तीय वर्ष सक्रिय करें",
+        "lock": "लॉक करें",
+        "createFinancialYear": "वित्तीय वर्ष बनाएं",
+        "addANewFinancialYearFor": "अपने संगठन के लिए नया वित्तीय वर्ष जोड़ें",
+        "lockingThisPeriodIsAdvisoryIn": "इस बिल्ड में इस अवधि को लॉक करना सिर्फ़ सलाह है — नया लेन-देन दर्ज करने से पहले कोई भी सुविधा इसे नहीं जाँचती।"
       },
       "designer": {
         "couldnTLoadThisTemplate": "यह टेम्पलेट लोड नहीं हो सका",
@@ -1252,18 +1453,37 @@
         "alwaysVisible": "हमेशा दिखे",
         "colour": "रंग",
         "fontSizePt": "अक्षर का आकार (pt)",
-        "rotation": "घुमाव (°)"
+        "rotation": "घुमाव (°)",
+        "yourShop": "आपकी दुकान",
+        "alignLeft": "बाएं जमाएं",
+        "alignCentre": "बीच में जमाएं",
+        "alignRight": "दाएं जमाएं",
+        "alignTop": "ऊपर जमाएं",
+        "selectAnElementToEditIts": "गुण बदलने के लिए कोई तत्व चुनें।",
+        "imageUrl": "तस्वीर का URL"
       },
       "importTemplateDialog": {
         "importTemplate": "टेम्पलेट इम्पोर्ट करें",
         "loadATemplateJsonExportedFrom": "इस ऐप से एक्सपोर्ट किया गया टेम्पलेट JSON लोड करें। यह एक नए, ग़ैर-डिफ़ॉल्ट फ़ॉर्मेट के रूप में जुड़ जाता है।",
-        "templateFile": "टेम्पलेट फ़ाइल"
+        "templateFile": "टेम्पलेट फ़ाइल",
+        "thatFileIsNotATemplate": "वह फ़ाइल टेम्पलेट नहीं है।",
+        "theFileHasNoElementsArray": "फ़ाइल में `elements` सूची नहीं है।",
+        "theFileHasNoValidPaper": "फ़ाइल में सही `paper` आकार नहीं है।",
+        "chooseATemplateJsonFileFirst": "पहले कोई टेम्पलेट JSON फ़ाइल चुनें।",
+        "thatFileIsNotValidJson": "वह फ़ाइल सही JSON नहीं है।",
+        "importedTemplate": "इम्पोर्ट किया टेम्पलेट",
+        "exportedFromTheDesigner": "डिज़ाइनर से एक्सपोर्ट किया"
       },
       "newTemplateDialog": {
         "newTemplate": "नया टेम्पलेट",
         "pickADocumentTypeAndA": "शुरू करने के लिए दस्तावेज़ का प्रकार और कागज़ का आकार चुनें। डिज़ाइनर में सब कुछ बदला जा सकता है।",
         "documentType": "दस्तावेज़ का प्रकार",
-        "startFrom": "यहाँ से शुरू करें"
+        "startFrom": "यहाँ से शुरू करें",
+        "template": "टेम्पलेट",
+        "thatDocumentTypeHasNoBase": "उस दस्तावेज़ प्रकार के लिए कोई आधार फ़ॉर्मेट नहीं है।",
+        "aTemplateWithThatNameAlready": "उस नाम का टेम्पलेट पहले से मौजूद है।",
+        "createDesign": "बनाएं और डिज़ाइन करें",
+        "templateName": "टेम्पलेट का नाम"
       },
       "pageSetupDialog": {
         "pageSetup": "पेज सेटअप",
@@ -1280,12 +1500,18 @@
         "gapMm": "अंतर (mm)",
         "heightMm": "ऊँचाई (mm)",
         "marginsMm": "हाशिये (mm)",
-        "widthMm": "चौड़ाई (mm)"
+        "widthMm": "चौड़ाई (mm)",
+        "labelsAcross": "एक पंक्ति में लेबल",
+        "printSpeed": "प्रिंट गति",
+        "printDensity": "प्रिंट गहराई"
       },
       "printDevicesDialog": {
         "copyPairingCode": "जोड़ने का कोड कॉपी करें",
         "couldnTLoadYourPrintDevices": "आपके प्रिंट डिवाइस लोड नहीं हो सके",
-        "printDevices": "प्रिंट डिवाइस"
+        "printDevices": "प्रिंट डिवाइस",
+        "waitingForADevice": "किसी डिवाइस का इंतज़ार…",
+        "codeNotUsedYet": "कोड अभी इस्तेमाल नहीं हुआ",
+        "pendingDevice": "बाकी डिवाइस"
       },
       "printFormats": {
         "designAndManagePrintTemplatesFor": "बिल, रसीद और लेबल के लिए प्रिंट टेम्पलेट बनाएं और प्रबंधित करें",
@@ -1297,7 +1523,9 @@
         "useAddMissingDefaultsToRestore": "मानक फ़ॉर्मेट वापस लाने के लिए छूटे हुए डिफ़ॉल्ट जोड़ें का उपयोग करें, या एक नया बनाएं।",
         "deleteThisTemplate": "यह टेम्पलेट हटाएं?",
         "delete": "हटाएं",
-        "billLabelDesigner": "बिल और लेबल डिज़ाइनर"
+        "billLabelDesigner": "बिल और लेबल डिज़ाइनर",
+        "addMissingDefaults": "छूटे हुए डिफ़ॉल्ट जोड़ें",
+        "deleteOnlyFormat": "हटाएं — एकमात्र फ़ॉर्मेट"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
@@ -1340,7 +1568,8 @@
         "layout": "लेआउट",
         "autoAdaptsToScreenSize": "अपने आप (स्क्रीन के अनुसार)",
         "compactPairedFields": "सघन (जोड़े में फ़ील्ड)",
-        "standardOneFieldPerRow": "मानक (एक पंक्ति में एक फ़ील्ड)"
+        "standardOneFieldPerRow": "मानक (एक पंक्ति में एक फ़ील्ड)",
+        "saveThisConfigurationAsATemplate": "इस सेटिंग को इस नाम के टेम्पलेट के रूप में सहेजें:"
       },
       "permissionsSubtab": {
         "allowedActionsPerStatus": "हर स्थिति पर अनुमत कार्रवाइयाँ"
@@ -1354,7 +1583,11 @@
         "selectARole": "भूमिका चुनें",
         "behavior": "व्यवहार",
         "saveGoLive": "सहेजें और चालू करें",
-        "setVisibilityActions": "दिखावट और कार्रवाइयाँ तय करें"
+        "setVisibilityActions": "दिखावट और कार्रवाइयाँ तय करें",
+        "pickAConfiguredRoleFromThe": "ऊपर की सूची से कोई कॉन्फ़िगर की हुई भूमिका चुनें, या किसी बिना कॉन्फ़िगर भूमिका को नए सिरे से सेट करें।",
+        "controlWhichJobStatusesThisRole": "तय करें कि यह भूमिका कौन-कौन सी जॉब स्थितियाँ देख सकती है और हर चरण पर ठीक कौन-सी कार्रवाइयाँ कर सकती है।",
+        "hitSaveConfigChangesApplyInstantly": "सेटिंग सहेजें दबाएं — उस भूमिका वाले हर उपयोगकर्ता पर बदलाव तुरंत लागू हो जाते हैं। कुछ दोबारा शुरू करने की ज़रूरत नहीं।",
+        "saveConfig": "सेटिंग सहेजें"
       },
       "usersSubtab": {
         "receivedBy": "प्राप्तकर्ता",
@@ -1365,13 +1598,28 @@
         "whoCheckedInOnAnOn": "साइट पर जाकर किसने हाज़िरी दर्ज की",
         "noneManualSelect": "कोई नहीं (हाथ से चुनें)",
         "cancelledBy": "रद्द करने वाला",
-        "deliveredBy": "सौंपने वाला"
+        "deliveredBy": "सौंपने वाला",
+        "allUsersCanBeSelected": "सभी उपयोगकर्ता चुने जा सकते हैं",
+        "oneRoleCanBeSelected": "एक भूमिका चुनी जा सकती है"
       },
       "workflowDesigner": {
         "workflowDesigner": "वर्कफ़्लो डिज़ाइनर",
         "rolePermissions": "भूमिका अनुमतियाँ",
         "jobCardForm": "जॉब कार्ड फ़ॉर्म",
         "leadForm": "लीड फ़ॉर्म"
+      },
+      "fieldControlRow": {
+        "hiddenClickToShow": "छिपा — दिखाने के लिए क्लिक करें",
+        "requiredClickToMakeOptional": "ज़रूरी — वैकल्पिक करने के लिए क्लिक करें",
+        "optionalClickToRequire": "वैकल्पिक — ज़रूरी करने के लिए क्लिक करें",
+        "lockedAfterFirstSaveClickTo": "पहली बार सहेजने के बाद लॉक — खोलने के लिए क्लिक करें",
+        "clickToLockAfterFirstSave": "पहली बार सहेजने के बाद लॉक करने के लिए क्लिक करें",
+        "mobileAppOnlyClickToShow": "सिर्फ़ मोबाइल ऐप — हर जगह दिखाने के लिए क्लिक करें",
+        "clickToRestrictToTheMobile": "सिर्फ़ मोबाइल ऐप तक सीमित करने के लिए क्लिक करें"
+      },
+      "fieldPreviewInput": {
+        "searchUser": "उपयोगकर्ता खोजें...",
+        "select": "चुनें..."
       }
     }
   },
@@ -1383,7 +1631,10 @@
         "rahulKInProgress": "राहुल के. · चल रहा है",
         "customerUpdated": "ग्राहक को बताया",
         "autoMessageSentViaWhatsapp": "WhatsApp से अपने आप संदेश भेजा",
-        "readyForPickup": "लेने के लिए तैयार"
+        "readyForPickup": "लेने के लिए तैयार",
+        "received": "मिला",
+        "diagnosis": "जाँच",
+        "qualityCheck": "गुणवत्ता जाँच"
       },
       "marketingNav": {
         "toggleMenu": "मेन्यू दिखाएं/छिपाएं",
@@ -1398,7 +1649,8 @@
         "thisAccountHasBeenDisabled": "यह खाता बंद कर दिया गया है"
       },
       "ipBlockedScreen": {
-        "accessBlockedFromThisNetwork": "इस नेटवर्क से पहुँच रोकी गई है"
+        "accessBlockedFromThisNetwork": "इस नेटवर्क से पहुँच रोकी गई है",
+        "yourCurrentIpCouldNotBe": " आपका मौजूदा IP पता नहीं चल सका।"
       },
       "requireMenuAccess": {
         "youDonTHaveAccessTo": "आपको इस पेज की अनुमति नहीं है",
@@ -1407,7 +1659,8 @@
     },
     "layout": {
       "appSidebar": {
-        "expandSidebar": "साइडबार खोलें"
+        "expandSidebar": "साइडबार खोलें",
+        "collapseSidebar": "साइडबार समेटें"
       },
       "commandPalette": {
         "jumpToAnyPage": "किसी भी पेज पर जाएं",
@@ -1415,7 +1668,13 @@
         "noMatchingPage": "कोई मिलता-जुलता पेज नहीं।"
       },
       "profileDrawer": {
-        "atLeast6Characters": "कम से कम 6 अक्षर।"
+        "atLeast6Characters": "कम से कम 6 अक्षर।",
+        "fullNameIsRequired": "पूरा नाम ज़रूरी है।",
+        "couldNotSaveYourProfile": "आपकी प्रोफ़ाइल सहेजी नहीं जा सकी।",
+        "newPasswordMustBeAtLeast": "नया पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+        "theTwoNewPasswordsDoNot": "दोनों नए पासवर्ड मेल नहीं खाते।",
+        "theNewPasswordMustBeDifferent": "नया पासवर्ड मौजूदा पासवर्ड से अलग होना चाहिए।",
+        "updatePassword": "पासवर्ड बदलें"
       },
       "topBar": {
         "openNavigation": "नेविगेशन खोलें",
@@ -1427,7 +1686,8 @@
     },
     "shared": {
       "cameraScanFrame": {
-        "cameraUnavailable": "कैमरा उपलब्ध नहीं"
+        "cameraUnavailable": "कैमरा उपलब्ध नहीं",
+        "couldNotStartCamera": "कैमरा चालू नहीं हो सका"
       },
       "errorBoundary": {
         "somethingWentWrong": "कुछ गड़बड़ हो गई",
@@ -1453,6 +1713,9 @@
       "searchSelect": {
         "typeToSearch": "खोजने के लिए टाइप करें...",
         "noMatches": "कोई मेल नहीं।"
+      },
+      "errorState": {
+        "couldnTLoadThisData": "यह जानकारी लोड नहीं हो सकी"
       }
     }
   }

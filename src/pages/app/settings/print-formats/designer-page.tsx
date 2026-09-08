@@ -183,7 +183,10 @@ export function PrintTemplateDesignerPage() {
   const isLabel = template.category === 'label'
   const contentWidth = draft.paper.width - draft.margins.left - draft.margins.right
   const fields = PRINT_FIELDS[template.documentType] ?? []
-  const values = samplePrintContext(template.documentType, company?.name ?? 'Your Shop')
+  const values = samplePrintContext(
+    template.documentType,
+    company?.name ?? t('pages.settings.designer.yourShop')
+  )
   const one = state.selected.length === 1 ? state.selected[0] : null
 
   function patchStyle(patch: Partial<PrintElementStyle>) {
@@ -404,9 +407,9 @@ export function PrintTemplateDesignerPage() {
         <span className="mx-1 h-5 w-px bg-border" />
         {(
           [
-            ['Align left', AlignLeft, () => patchEl({ x: 0 })],
+            [t('pages.settings.designer.alignLeft'), AlignLeft, () => patchEl({ x: 0 })],
             [
-              'Align centre',
+              t('pages.settings.designer.alignCentre'),
               AlignCenter,
               () =>
                 state.updateElements(state.selectedIds, (el) => ({
@@ -415,7 +418,7 @@ export function PrintTemplateDesignerPage() {
                 })),
             ],
             [
-              'Align right',
+              t('pages.settings.designer.alignRight'),
               AlignRight,
               () =>
                 state.updateElements(state.selectedIds, (el) => ({
@@ -423,7 +426,7 @@ export function PrintTemplateDesignerPage() {
                   x: Math.max(0, contentWidth - el.w),
                 })),
             ],
-            ['Align top', AlignStartVertical, () => patchEl({ y: 0 })],
+            [t('pages.settings.designer.alignTop'), AlignStartVertical, () => patchEl({ y: 0 })],
           ] as const
         ).map(([label, Icon, fn]) => (
           <Tooltip key={label}>
@@ -621,7 +624,7 @@ export function PrintTemplateDesignerPage() {
             <p className="p-4 text-center text-sm text-muted-foreground">
               {state.selectedIds.length > 1
                 ? `${state.selectedIds.length} elements selected.`
-                : 'Select an element to edit its properties.'}
+                : t('pages.settings.designer.selectAnElementToEditIts')}
             </p>
           ) : (
             <div className="space-y-3">
@@ -639,7 +642,7 @@ export function PrintTemplateDesignerPage() {
                     {one.type === 'field'
                       ? 'Caption'
                       : one.type === 'image'
-                        ? 'Image URL'
+                        ? t('pages.settings.designer.imageUrl')
                         : t('pages.settings.designer.text')}
                   </Label>
                   <Input

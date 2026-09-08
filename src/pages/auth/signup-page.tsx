@@ -97,7 +97,7 @@ export function SignupPage() {
           {errors.password && <p className="text-xs text-red-600">{errors.password.message}</p>}
         </div>
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Creating account…' : 'Create account'}
+          {isSubmitting ? 'Creating account…' : t('pages.signup.signup.createAccount')}
         </Button>
       </form>
     </AuthLayout>

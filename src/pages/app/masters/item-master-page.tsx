@@ -267,10 +267,10 @@ export function ItemMasterPage() {
               children: (
                 <div className="flex flex-wrap gap-1.5">
                   {[
-                    ['Sales', viewing.enabledInSales],
-                    ['Purchase', viewing.enabledInPurchase],
-                    ['Production', viewing.enabledInProduction],
-                    ['Service / POS', viewing.enabledInServicePos],
+                    [t('pages.masters.itemMaster.sales'), viewing.enabledInSales],
+                    [t('pages.masters.itemMaster.purchase'), viewing.enabledInPurchase],
+                    [t('pages.masters.itemMaster.production'), viewing.enabledInProduction],
+                    [t('pages.masters.itemMaster.servicePos'), viewing.enabledInServicePos],
                   ].map(([label, on]) => (
                     <span
                       key={label as string}
@@ -323,7 +323,7 @@ function ItemStatusButton({ item }: { item: ItemWithId }) {
         message={
           willDeactivate
             ? 'Deactivated items no longer appear as a selectable option in job cards, purchases, or sales.'
-            : 'This item will become selectable again.'
+            : t('pages.masters.itemMaster.thisItemWillBecomeSelectableAgain')
         }
         confirmLabel={willDeactivate ? 'Deactivate' : t('common.activate')}
         destructive={willDeactivate}
@@ -411,7 +411,7 @@ function ItemModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Add Item' : 'Edit Item'}
+      title={isNew ? 'Add Item' : t('pages.masters.itemMaster.editItem')}
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create Item' : t('common.save')}
       isSubmitting={isPending}

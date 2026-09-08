@@ -285,7 +285,7 @@ function PartyCategoryModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Create New Category' : 'Edit Category'}
+      title={isNew ? 'Create New Category' : t('pages.masters.partyCategories.editCategory')}
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create Category' : t('common.save')}
       isSubmitting={isPending}

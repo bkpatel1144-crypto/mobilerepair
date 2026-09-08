@@ -332,7 +332,9 @@ export function FieldVisitReportPage() {
           searchValue={search}
           onSearchChange={setSearch}
           searchPlaceholder={
-            view === 'technician' ? 'Search technician...' : 'Search job, customer...'
+            view === 'technician'
+              ? 'Search technician...'
+              : t('pages.reports.fieldVisitReport.searchJobCustomer')
           }
         >
           <div className="flex gap-1 rounded-lg border p-0.5">

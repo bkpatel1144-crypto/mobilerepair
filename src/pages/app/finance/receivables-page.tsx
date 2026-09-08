@@ -132,7 +132,7 @@ export function ReceivablesPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search job card, customer, mobile..."
+        searchPlaceholder={t('shared.searchJobCardCustomerMobile')}
       />
 
       <DataTable

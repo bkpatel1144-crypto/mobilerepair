@@ -139,15 +139,15 @@ export function CreateSecondHandPurchasePage() {
     let finalSellerName: string
 
     if (!finalSellerId && !quickAddSeller) {
-      setFormError('Select or add a seller.')
+      setFormError(t('pages.secondHandDevice.createPurchase.selectOrAddASeller'))
       return
     }
     if (!deviceTypeId) {
-      setFormError('Select a device type.')
+      setFormError(t('shared.selectADeviceType'))
       return
     }
     if (purchasePrice === '' || Number(purchasePrice) <= 0) {
-      setFormError('Enter a purchase price greater than 0.')
+      setFormError(t('pages.secondHandDevice.createPurchase.enterAPurchasePriceGreaterThan'))
       return
     }
 
@@ -222,7 +222,11 @@ export function CreateSecondHandPurchasePage() {
 
       navigate(buildPath('second-hand-device', 'purchase'))
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+      setFormError(
+        err instanceof Error
+          ? err.message
+          : t('pages.secondHandDevice.createPurchase.somethingWentWrongPleaseTryAgain')
+      )
     } finally {
       setSubmitting(false)
     }
@@ -302,7 +306,7 @@ export function CreateSecondHandPurchasePage() {
                     setBrandId(id)
                     setModel('')
                   }}
-                  placeholder={deviceTypeId ? 'Select brand...' : 'Pick a device type first'}
+                  placeholder={deviceTypeId ? 'Select brand...' : t('shared.pickADeviceTypeFirst')}
                   disabled={!deviceTypeId}
                   open={brandOpen}
                   onOpenChange={setBrandOpen}
@@ -344,7 +348,7 @@ export function CreateSecondHandPurchasePage() {
                   options={modelsForBrand.map((m) => ({ id: m.id, label: m.label }))}
                   value={modelsForBrand.find((m) => m.label === model)?.id ?? null}
                   onChange={(id) => setModel(modelsForBrand.find((m) => m.id === id)?.label ?? '')}
-                  placeholder={brandId ? 'Enter model name...' : 'Pick a brand first'}
+                  placeholder={brandId ? 'Enter model name...' : t('shared.pickABrandFirst')}
                   disabled={!brandId}
                   open={modelOpen}
                   onOpenChange={setModelOpen}
@@ -777,7 +781,9 @@ export function CreateSecondHandPurchasePage() {
           <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
             <ImagePlus className="size-5" />
             <span className="text-sm">
-              {pendingIdProofPhoto ? pendingIdProofPhoto.name : 'Capture / Upload ID proof photo'}
+              {pendingIdProofPhoto
+                ? pendingIdProofPhoto.name
+                : t('pages.secondHandDevice.createPurchase.captureUploadIdProofPhoto')}
             </span>
             <input
               type="file"
@@ -939,14 +945,18 @@ export function CreateSecondHandPurchasePage() {
           Cancel
         </Button>
         <Button type="button" onClick={handleSubmit} disabled={submitting}>
-          {submitting ? 'Saving…' : 'Save Purchase'}
+          {submitting ? 'Saving…' : t('pages.secondHandDevice.createPurchase.savePurchase')}
         </Button>
       </div>
 
       <ScanTextModal
         open={scanningField != null}
         onOpenChange={(open) => !open && setScanningField(null)}
-        title={scanningField === 'imei' ? 'Scan IMEI' : 'Scan IMEI 2'}
+        title={
+          scanningField === 'imei'
+            ? 'Scan IMEI'
+            : t('pages.secondHandDevice.createPurchase.scanImei2')
+        }
         description={t('shared.pointTheCameraAtTheBarcode')}
         onScanned={(text) => {
           if (scanningField === 'imei') setImei(text)

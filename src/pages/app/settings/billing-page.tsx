@@ -110,10 +110,19 @@ export function BillingPage() {
 
               <div className="grid gap-3 p-6 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))]">
                 {[
-                  [t('common.users'), 'Unlimited — add as many teammates as you need'],
-                  [t('common.branches'), 'Unlimited — every location, one account'],
-                  ['Job cards & invoices', 'Unlimited, with no monthly cap'],
-                  ['Data & backups', 'Yours, exportable at any time'],
+                  [t('common.users'), t('pages.settings.billing.unlimitedAddAsManyTeammatesAs')],
+                  [
+                    t('common.branches'),
+                    t('pages.settings.billing.unlimitedEveryLocationOneAccount'),
+                  ],
+                  [
+                    t('pages.settings.billing.jobCardsInvoices'),
+                    t('pages.settings.billing.unlimitedWithNoMonthlyCap'),
+                  ],
+                  [
+                    t('pages.settings.billing.dataBackups'),
+                    t('pages.settings.billing.yoursExportableAtAnyTime'),
+                  ],
                 ].map(([title, detail]) => (
                   <div key={title} className="flex gap-2.5">
                     <InfinityIcon className="mt-0.5 size-4 shrink-0 text-teal-600 dark:text-teal-400" />
@@ -174,11 +183,14 @@ export function BillingPage() {
               <dl className="mt-4 space-y-3 text-sm">
                 {(
                   [
-                    ['Organization', company?.name],
+                    [t('pages.settings.billing.organization'), company?.name],
                     [t('common.code'), company?.code],
-                    ['Billing contact', company?.email],
-                    ['Currency', company?.currency],
-                    ['Customer since', company && formatTimestamp(company.createdAt, false)],
+                    [t('pages.settings.billing.billingContact'), company?.email],
+                    [t('pages.settings.billing.currency'), company?.currency],
+                    [
+                      t('pages.settings.billing.customerSince'),
+                      company && formatTimestamp(company.createdAt, false),
+                    ],
                   ] as const
                 ).map(([label, value]) => (
                   <div key={label} className="flex items-baseline justify-between gap-3">

@@ -75,7 +75,7 @@ export function PartiesPage() {
     )
 
   function typeLabel(p: PartyWithId) {
-    if (p.partyTypes.length > 1) return 'Both'
+    if (p.partyTypes.length > 1) return t('pages.masters.parties.both')
     return p.partyTypes.includes('supplier') ? 'Supplier' : t('common.customer')
   }
 
@@ -127,7 +127,7 @@ export function PartiesPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search by name, mobile, or party code..."
+        searchPlaceholder={t('pages.masters.parties.searchByNameMobileOrParty')}
       />
 
       <div className="space-y-2">
@@ -137,7 +137,7 @@ export function PartiesPage() {
               ['all', t('common.all')],
               ['customer', t('common.customers')],
               ['supplier', t('common.suppliers')],
-              ['both', 'Both'],
+              ['both', t('pages.masters.parties.both')],
             ] as [PartyTypeFilter, string][]
           ).map(([key, label]) => (
             <Button
@@ -379,7 +379,7 @@ function PartyModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Create Party' : 'Edit Party'}
+      title={isNew ? 'Create Party' : t('pages.masters.parties.editParty')}
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create Party' : t('common.save')}
       isSubmitting={isPending}
@@ -442,7 +442,7 @@ function PartyModal({
         className="flex items-center gap-1 text-sm text-teal-700 hover:underline dark:text-teal-400"
       >
         {showExtra ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
-        {showExtra ? 'Hide extra details' : 'All optional — add what you need'}
+        {showExtra ? 'Hide extra details' : t('pages.masters.parties.allOptionalAddWhatYouNeed')}
       </button>
 
       {showExtra && (

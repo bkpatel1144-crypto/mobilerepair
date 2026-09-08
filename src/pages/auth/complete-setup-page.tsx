@@ -87,7 +87,7 @@ export function CompleteSetupPage() {
           {errors.fullName && <p className="text-xs text-red-600">{errors.fullName.message}</p>}
         </div>
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Setting up…' : 'Finish setup'}
+          {isSubmitting ? 'Setting up…' : t('pages.completeSetup.completeSetup.finishSetup')}
         </Button>
       </form>
     </AuthLayout>

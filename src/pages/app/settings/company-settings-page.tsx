@@ -181,7 +181,11 @@ export function CompanySettingsPage() {
       // nothing on screen is left showing the company that was just switched away from.
       navigate('/app/dashboard')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not create this company.')
+      setError(
+        err instanceof Error
+          ? err.message
+          : t('pages.settings.companySettings.couldNotCreateThisCompany')
+      )
     }
   }
 
@@ -200,7 +204,11 @@ export function CompanySettingsPage() {
       })
       setEditing(null)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save these changes.')
+      setError(
+        err instanceof Error
+          ? err.message
+          : t('pages.settings.companySettings.couldNotSaveTheseChanges')
+      )
     }
   }
 
@@ -463,7 +471,7 @@ export function CompanySettingsPage() {
               description={
                 statusFilter === 'active'
                   ? 'Add a company to manage a second shop from this account.'
-                  : 'Nothing here right now.'
+                  : t('pages.settings.companySettings.nothingHereRightNow')
               }
             />
           }
@@ -543,7 +551,7 @@ export function CompanySettingsPage() {
                 label={t('shared.gstRegistration')}
                 value={
                   viewing.gstRegistration === 'Unregistered'
-                    ? 'Unregistered (No GST)'
+                    ? t('pages.settings.companySettings.unregisteredNoGst')
                     : `${viewing.gstRegistration} — ${viewing.gstin ?? '—'}`
                 }
               />
@@ -606,9 +614,9 @@ export function CompanySettingsPage() {
         description={
           editing && editing.id !== profile?.companyId
             ? 'Note: only the active company can be edited — switch to it first.'
-            : 'Company information and settings.'
+            : t('pages.settings.companySettings.companyInformationAndSettings')
         }
-        submitLabel={updateCompany.isPending ? 'Saving…' : 'Save Changes'}
+        submitLabel={updateCompany.isPending ? 'Saving…' : t('shared.saveChanges')}
         isSubmitting={updateCompany.isPending}
         submitDisabled={!!editing && editing.id !== profile?.companyId}
         onSubmit={submitEdit}

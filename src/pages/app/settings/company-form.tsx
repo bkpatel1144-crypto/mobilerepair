@@ -148,7 +148,11 @@ export function CompanyForm({
         <Field
           label={t('shared.currency')}
           required
-          hint={value.currency ? <Confirmed text="Currency selected" /> : undefined}
+          hint={
+            value.currency ? (
+              <Confirmed text={t('pages.settings.companyForm.currencySelected')} />
+            ) : undefined
+          }
         >
           <Select value={value.currency} onValueChange={(v) => v && set({ currency: v })}>
             <SelectTrigger className="w-full">
@@ -166,7 +170,11 @@ export function CompanyForm({
         <Field
           label={t('shared.timezone')}
           required
-          hint={value.timezone ? <Confirmed text="Timezone selected" /> : undefined}
+          hint={
+            value.timezone ? (
+              <Confirmed text={t('pages.settings.companyForm.timezoneSelected')} />
+            ) : undefined
+          }
         >
           <Select value={value.timezone} onValueChange={(v) => v && set({ timezone: v })}>
             <SelectTrigger className="w-full">
@@ -191,8 +199,8 @@ export function CompanyForm({
           </p>
           <p className="mt-0.5 text-blue-900/80 dark:text-blue-300/80">
             All fields marked with * are required. GSTIN is only required for registered companies
-            (Regular/Composition) — pick "Unregistered" if this company isn't GST-registered. Ensure
-            GSTIN and PAN match correctly.
+            (Regular/Composition) — pick t('pages.settings.companyForm.unregistered') if this
+            company isn't GST-registered. Ensure GSTIN and PAN match correctly.
           </p>
         </div>
       </div>

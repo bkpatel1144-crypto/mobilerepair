@@ -49,14 +49,14 @@ export function ImportTemplateDialog({
   async function handleSubmit() {
     setError(null)
     if (!file) {
-      setError('Choose a template JSON file first.')
+      setError(t('pages.settings.importTemplateDialog.chooseATemplateJsonFileFirst'))
       return
     }
     let parsed: unknown
     try {
       parsed = JSON.parse(await file.text())
     } catch {
-      setError('That file is not valid JSON.')
+      setError(t('pages.settings.importTemplateDialog.thatFileIsNotValidJson'))
       return
     }
     const result = parseTemplate(parsed)
@@ -66,7 +66,7 @@ export function ImportTemplateDialog({
     }
     const v = result.value
     await create.mutateAsync({
-      name: `${v.name ?? 'Imported Template'} (Imported)`,
+      name: `${v.name ?? t('pages.settings.importTemplateDialog.importedTemplate')} (Imported)`,
       documentType: v.documentType,
       category: v.category ?? 'bill',
       presetKey: v.presetKey ?? null,
@@ -110,7 +110,9 @@ export function ImportTemplateDialog({
               {file ? file.name : 'Choose a .json file'}
             </span>
             <span className="block text-xs text-muted-foreground">
-              {file ? `${(file.size / 1024).toFixed(1)} KB` : 'Exported from the designer'}
+              {file
+                ? `${(file.size / 1024).toFixed(1)} KB`
+                : t('pages.settings.importTemplateDialog.exportedFromTheDesigner')}
             </span>
           </span>
         </label>

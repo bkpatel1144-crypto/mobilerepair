@@ -71,9 +71,9 @@ export function ProfitLossPage() {
       : {
           today: t('common.today'),
           yesterday: t('common.yesterday'),
-          week: 'This week',
-          month: 'This month',
-          year: 'This year',
+          week: t('pages.reports.profitLoss.thisWeek'),
+          month: t('pages.reports.profitLoss.thisMonth'),
+          year: t('pages.reports.profitLoss.thisYear'),
           custom: t('common.custom'),
         }[range]
 
@@ -91,9 +91,12 @@ export function ProfitLossPage() {
             onClick={() =>
               downloadCsv('profit-and-loss.csv', [
                 { Line: t('pages.reports.profitLoss.revenueReceived'), Amount: data.revenue },
-                { Line: 'Less: refunds', Amount: -data.refunds },
+                { Line: t('pages.reports.profitLoss.lessRefunds'), Amount: -data.refunds },
                 { Line: t('pages.reports.profitLoss.netRevenue'), Amount: data.netRevenue },
-                { Line: 'Less: direct cost (supplier payments)', Amount: -data.directCost },
+                {
+                  Line: t('pages.reports.profitLoss.lessDirectCostSupplierPayments'),
+                  Amount: -data.directCost,
+                },
                 { Line: t('pages.reports.profitLoss.grossProfit'), Amount: data.grossProfit },
                 ...data.expenseLines.map((l) => ({
                   Line: `Expense — ${l.label}`,
@@ -194,7 +197,7 @@ export function ProfitLossPage() {
 
               <Row
                 label={t('pages.reports.profitLoss.directCost')}
-                sublabel="paid to suppliers"
+                sublabel={t('pages.reports.profitLoss.paidToSuppliers')}
                 amount={data.directCost}
                 negative
               />

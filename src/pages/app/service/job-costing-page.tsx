@@ -99,9 +99,9 @@ export function JobCostingPage() {
       header: t('pages.service.jobCosting.costing'),
       render: (j) =>
         costingByJobId.has(j.id) ? (
-          <StatusBadge status="Recorded" tone="success" />
+          <StatusBadge status={t('pages.service.jobCosting.recorded')} tone="success" />
         ) : (
-          <StatusBadge status="Pending Costing" tone="warning" />
+          <StatusBadge status={t('pages.service.jobCosting.pendingCosting')} tone="warning" />
         ),
     },
   ]
@@ -165,9 +165,9 @@ export function JobCostingPage() {
             <>
               <StatusBadge status={t('shared.closed')} tone="neutral" />
               {costingByJobId.has(selectedJob.id) ? (
-                <StatusBadge status="Costed" tone="success" />
+                <StatusBadge status={t('pages.service.jobCosting.costed')} tone="success" />
               ) : (
-                <StatusBadge status="Pending Costing" tone="warning" />
+                <StatusBadge status={t('pages.service.jobCosting.pendingCosting')} tone="warning" />
               )}
             </>
           )

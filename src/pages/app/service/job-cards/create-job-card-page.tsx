@@ -300,27 +300,27 @@ export function CreateJobCardPage() {
 
     if (!finalCustomerId && quickAddCustomer) {
       if (!quickAddCustomer.name.trim() || !/^\d{10}$/.test(quickAddCustomer.mobile)) {
-        setFormError("Enter the new customer's name and a valid 10-digit mobile number.")
+        setFormError(t('pages.service.createJobCard.enterTheNewCustomerSName'))
         return
       }
     } else if (!finalCustomerId) {
-      setFormError('Select or add a customer.')
+      setFormError(t('pages.service.createJobCard.selectOrAddACustomer'))
       return
     }
     if (isVisible('deviceType') && !deviceTypeId) {
-      setFormError('Select a device type.')
+      setFormError(t('shared.selectADeviceType'))
       return
     }
     if (problemIds.length === 0) {
-      setFormError('Select at least one problem.')
+      setFormError(t('pages.service.createJobCard.selectAtLeastOneProblem'))
       return
     }
     if (isVisible('brand') && isRequired('brand') && !brandId) {
-      setFormError('Select a brand.')
+      setFormError(t('pages.service.createJobCard.selectABrand'))
       return
     }
     if (isVisible('model') && isRequired('model') && !model.trim()) {
-      setFormError('Enter the model.')
+      setFormError(t('pages.service.createJobCard.enterTheModel'))
       return
     }
 
@@ -387,7 +387,11 @@ export function CreateJobCardPage() {
       localStorage.removeItem(DRAFT_KEY)
       navigate(buildPath('service', 'job-cards') + `/${result.id}`)
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : 'Could not create the job card. Try again.')
+      setFormError(
+        err instanceof Error
+          ? err.message
+          : t('pages.service.createJobCard.couldNotCreateTheJobCard')
+      )
       setSubmitting(false)
     }
   }
@@ -572,7 +576,9 @@ export function CreateJobCardPage() {
                           setBrandId(id)
                           setModel('')
                         }}
-                        placeholder={deviceTypeId ? 'Select brand...' : 'Pick a device type first'}
+                        placeholder={
+                          deviceTypeId ? 'Select brand...' : t('shared.pickADeviceTypeFirst')
+                        }
                         disabled={!deviceTypeId}
                         open={brandOpen}
                         onOpenChange={setBrandOpen}
@@ -628,7 +634,7 @@ export function CreateJobCardPage() {
                           const m = modelsForBrand.find((x) => x.id === id)
                           setModel(m?.label ?? '')
                         }}
-                        placeholder={brandId ? 'Enter model name...' : 'Pick a brand first'}
+                        placeholder={brandId ? 'Enter model name...' : t('shared.pickABrandFirst')}
                         disabled={!brandId}
                         open={modelOpen}
                         onOpenChange={setModelOpen}

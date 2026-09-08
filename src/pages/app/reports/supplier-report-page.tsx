@@ -213,7 +213,7 @@ export function SupplierReportPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search supplier..."
+        searchPlaceholder={t('pages.reports.supplierReport.searchSupplier')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
         showCustomRange

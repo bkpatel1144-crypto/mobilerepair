@@ -82,7 +82,7 @@ export function ForgotPasswordPage() {
             {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
           </div>
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending…' : 'Send reset link'}
+            {isSubmitting ? 'Sending…' : t('pages.forgotPassword.forgotPassword.sendResetLink')}
           </Button>
         </form>
       )}

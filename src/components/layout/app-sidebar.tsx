@@ -33,7 +33,7 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
       variant="ghost"
       size="icon-sm"
       onClick={onToggleCollapse}
-      aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+      aria-label={collapsed ? 'Expand sidebar' : t('components.layout.appSidebar.collapseSidebar')}
       aria-expanded={!collapsed}
     >
       <PanelLeft className="size-4.5" />

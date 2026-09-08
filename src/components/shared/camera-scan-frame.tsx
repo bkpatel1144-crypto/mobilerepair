@@ -21,7 +21,7 @@ export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
   const { t } = useTranslation()
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [cameraError, setCameraError] = useState<string | null>(null)
+  const [cameraFailed, setCameraFailed] = useState(false)
 
   // Kept in a ref, not the effect's own dep array, so a caller passing an inline arrow function
   // (a fresh identity every render) never restarts the camera — only mount/unmount should.
@@ -83,7 +83,7 @@ export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
         }
         tick()
       } catch {
-        if (!cancelled) setCameraError('Could not start camera')
+        if (!cancelled) setCameraFailed(true)
       }
     }
 
@@ -98,11 +98,13 @@ export function CameraScanFrame({ onDecode }: CameraScanFrameProps) {
     <div className="relative aspect-video overflow-hidden rounded-lg bg-black">
       <video ref={videoRef} className="size-full object-cover" muted playsInline />
       <canvas ref={canvasRef} className="hidden" />
-      {cameraError && (
+      {cameraFailed && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black px-4 text-center text-white">
           <AlertCircle className="size-8 text-red-500" />
           <p className="font-medium">{t('components.shared.cameraScanFrame.cameraUnavailable')}</p>
-          <p className="text-sm text-white/70">{cameraError}</p>
+          <p className="text-sm text-white/70">
+            {t('components.shared.cameraScanFrame.couldNotStartCamera')}
+          </p>
         </div>
       )}
     </div>

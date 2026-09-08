@@ -402,7 +402,22 @@
     "15DigitImeiOptional": "15-digit IMEI (optional)",
     "notesOptional": "Notes (Optional)",
     "optional": "(optional)",
-    "optional2": "(Optional)"
+    "optional2": "(Optional)",
+    "saveChanges": "Save Changes",
+    "ready": "Ready",
+    "delivered": "Delivered",
+    "success": "Success",
+    "blocked": "Blocked",
+    "failed": "Failed",
+    "unassigned": "Unassigned",
+    "searchReceiptParty": "Search receipt, party...",
+    "enterAnAmountGreaterThanZero": "Enter an amount greater than zero.",
+    "searchJobCardCustomerMobile": "Search job card, customer, mobile...",
+    "selectADeviceType": "Select a device type.",
+    "pickADeviceTypeFirst": "Pick a device type first",
+    "pickABrandFirst": "Pick a brand first",
+    "receiptInvoiceBrandModel": "Receipt/invoice #, brand, model...",
+    "somethingWentWrong": "Something went wrong."
   },
   "pages": {
     "dashboard": {
@@ -429,7 +444,10 @@
         "newParty": "New Party",
         "newItem": "New Item",
         "jobCardsByStatus": "Job Cards by Status",
-        "revenueTrend": "Revenue Trend"
+        "revenueTrend": "Revenue Trend",
+        "goodMorning": "Good morning",
+        "goodAfternoon": "Good afternoon",
+        "goodEvening": "Good evening"
       }
     },
     "finance": {
@@ -441,7 +459,8 @@
         "creditIn": "Credit (IN)",
         "debitOut": "Debit (OUT)",
         "totalCreditIn": "Total Credit (IN)",
-        "totalDebitOut": "Total Debit (OUT)"
+        "totalDebitOut": "Total Debit (OUT)",
+        "manualEntry": "Manual entry"
       },
       "expenses": {
         "newExpense": "New Expense",
@@ -455,7 +474,12 @@
         "expense": "Expense #",
         "paidTo": "Paid To",
         "recordRentSalariesAndOtherRunning": "Record rent, salaries and other running costs here — they flow straight into Cash Book and Profit & Loss.",
-        "shopRunningCostsRentSalariesUtilities": "Shop running costs — rent, salaries, utilities and everything else Profit & Loss subtracts"
+        "shopRunningCostsRentSalariesUtilities": "Shop running costs — rent, salaries, utilities and everything else Profit & Loss subtracts",
+        "pickACategory": "Pick a category.",
+        "couldNotRecordThisExpense": "Could not record this expense.",
+        "recordExpense": "Record Expense",
+        "posted": "Posted",
+        "searchExpenseCategoryPartyNotes": "Search expense #, category, party, notes..."
       },
       "partyLedger": {
         "partyLedger": "Party Ledger",
@@ -467,7 +491,11 @@
         "thisPartySJobCardsAnd": "This party's job cards and payments will appear here.",
         "settled": "Settled ✓",
         "creditCr": "Credit (Cr)",
-        "debitDr": "Debit (Dr)"
+        "debitDr": "Debit (Dr)",
+        "withJobCardActivity": "With job card activity",
+        "activeJobsOnly": "Active jobs only",
+        "inclAdvanceOnUnbilledJobs": "Incl. advance on unbilled jobs",
+        "pendingCollection": "Pending collection"
       },
       "payables": {
         "payables": "Payables",
@@ -498,7 +526,13 @@
         "customer": "Customer *",
         "amount": "Amount *",
         "receiptsPayments": "Receipts & Payments",
-        "notesOptional": "Notes (optional)"
+        "notesOptional": "Notes (optional)",
+        "manualAdvance": "Manual / Advance",
+        "afterMoneyOut": "After money out",
+        "selectACustomer": "Select a customer.",
+        "selectAJobCard": "Select a job card.",
+        "enterAnAmountGreaterThan0": "Enter an amount greater than 0.",
+        "pickACustomerFirst": "Pick a customer first"
       },
       "receivables": {
         "receivables": "Receivables",
@@ -506,7 +540,11 @@
         "collection": "Collection %",
         "noOutstandingReceivables": "No outstanding receivables",
         "allPaymentsAreUpToDate": "All payments are up to date.",
-        "aging": "Aging"
+        "aging": "Aging",
+        "030Days": "0-30 days",
+        "3060Days": "30-60 days",
+        "6090Days": "60-90 days",
+        "90Days": "90+ days"
       },
       "supplierPayables": {
         "newSupplierBill": "New Supplier Bill",
@@ -522,7 +560,14 @@
         "130Days": "1–30 days",
         "3160Days": "31–60 days",
         "60Days": "60+ days",
-        "oldest": "Oldest"
+        "oldest": "Oldest",
+        "pickASupplier": "Pick a supplier.",
+        "enterABillAmountGreaterThan": "Enter a bill amount greater than zero.",
+        "theDueDateCannotBeBefore": "The due date cannot be before the bill date.",
+        "couldNotSaveThisBill": "Could not save this bill.",
+        "saveBill": "Save Bill",
+        "couldNotRecordThisPayment": "Could not record this payment.",
+        "devicePurchase": "Device purchase"
       }
     },
     "masters": {
@@ -537,7 +582,11 @@
         "categoryName": "Category Name *",
         "rawMaterial": "Raw Material",
         "parentCategory": "Parent Category",
-        "noneRoot": "None (Root)"
+        "noneRoot": "None (Root)",
+        "searchCategories": "Search categories...",
+        "thisCategoryWillBecomeSelectableAgain": "This category will become selectable again for new items.",
+        "thisPermanentlyDeletesTheCategoryThis": "This permanently deletes the category. This cannot be undone.",
+        "editItemCategory": "Edit Item Category"
       },
       "itemMaster": {
         "itemMaster": "Item Master",
@@ -556,7 +605,14 @@
         "product": "Product",
         "itemName": "Item Name *",
         "gst2": "GST %",
-        "enabledIn2": "Enabled In"
+        "enabledIn2": "Enabled In",
+        "service": "Service",
+        "sales": "Sales",
+        "purchase": "Purchase",
+        "production": "Production",
+        "servicePos": "Service / POS",
+        "thisItemWillBecomeSelectableAgain": "This item will become selectable again.",
+        "editItem": "Edit Item"
       },
       "parties": {
         "manageCustomersAndSuppliers": "Manage customers and suppliers",
@@ -583,7 +639,11 @@
         "gstNumber2": "GST number",
         "panNumber2": "PAN number",
         "area": "Area",
-        "thisRemovesThePartyFromEvery": "This removes the party from every picker (job cards, receipts, purchases). There is no undo screen for this in the app — recovering it would mean editing Firestore directly."
+        "thisRemovesThePartyFromEvery": "This removes the party from every picker (job cards, receipts, purchases). There is no undo screen for this in the app — recovering it would mean editing Firestore directly.",
+        "both": "Both",
+        "searchByNameMobileOrParty": "Search by name, mobile, or party code...",
+        "editParty": "Edit Party",
+        "allOptionalAddWhatYouNeed": "All optional — add what you need"
       },
       "partyCategories": {
         "partyCategories": "Party Categories",
@@ -593,7 +653,8 @@
         "creditInformation": "CREDIT INFORMATION",
         "defaultCreditDays": "Default Credit Days",
         "defaultCustomer": "Default (Customer)",
-        "defaultSupplier": "Default (Supplier)"
+        "defaultSupplier": "Default (Supplier)",
+        "editCategory": "Edit Category"
       },
       "paymentModes": {
         "paymentModes": "Payment Modes",
@@ -601,7 +662,12 @@
         "noPaymentModesYet": "No payment modes yet",
         "addYourFirstPaymentModeAbove": "Add your first payment mode above.",
         "receiptsAlreadyRecordedUnderThisPayment": "Receipts already recorded under this payment mode will keep a reference to a mode that no longer exists. This cannot be undone.",
-        "code": "Code *"
+        "code": "Code *",
+        "upi": "UPI",
+        "bankTransfer": "Bank Transfer",
+        "searchPaymentModes": "Search payment modes...",
+        "thisPaymentModeWillBecomeSelectable": "This payment mode will become selectable again.",
+        "editPaymentMode": "Edit Payment Mode"
       },
       "uom": {
         "unitsOfMeasure": "Units of Measure",
@@ -620,7 +686,12 @@
         "shownInDropdownsAndReports": "Shown in dropdowns and reports",
         "decimalPlaces": "Decimal Places",
         "displayOrder": "Display Order",
-        "conversionOptional": "Conversion (Optional)"
+        "conversionOptional": "Conversion (Optional)",
+        "length": "Length",
+        "weight": "Weight",
+        "volume": "Volume",
+        "thisUnitWillBecomeSelectableAgain": "This unit will become selectable again for new items.",
+        "editUnitOfMeasure": "Edit Unit of Measure"
       }
     },
     "secondHandDevice": {
@@ -643,7 +714,17 @@
         "paidInFull": "Paid in full.",
         "whoeverIsLoggedIn": "Whoever is logged in",
         "accountLockIcloudGoogle": "Account Lock (iCloud / Google)",
-        "secondImeiDualSim": "Second IMEI (dual SIM)"
+        "secondImeiDualSim": "Second IMEI (dual SIM)",
+        "chargerOnly": "Charger only",
+        "chargerBoxCable": "Charger, box, cable",
+        "chargerBoxCableEarphones": "Charger, box, cable, earphones",
+        "boxOnly": "Box only",
+        "selectOrAddASeller": "Select or add a seller.",
+        "enterAPurchasePriceGreaterThan": "Enter a purchase price greater than 0.",
+        "somethingWentWrongPleaseTryAgain": "Something went wrong. Please try again.",
+        "captureUploadIdProofPhoto": "Capture / Upload ID proof photo",
+        "savePurchase": "Save Purchase",
+        "scanImei2": "Scan IMEI 2"
       },
       "devicePurchase": {
         "devicePurchase": "Device Purchase",
@@ -669,7 +750,11 @@
         "buyer": "Buyer *",
         "salePrice": "Sale Price *",
         "accessoriesGivenToBuyer": "Accessories Given to Buyer",
-        "warrantyDays": "Warranty (Days)"
+        "warrantyDays": "Warranty (Days)",
+        "searchReceiptImeiBrand": "Search receipt # / IMEI / brand...",
+        "selectOrAddABuyer": "Select or add a buyer.",
+        "enterASalePriceGreaterThan": "Enter a sale price greater than 0.",
+        "confirmSale": "Confirm Sale"
       },
       "deviceStock": {
         "deviceStock": "Device Stock",
@@ -677,7 +762,8 @@
         "totalInvested": "Total Invested",
         "noDevicesInStock": "No devices in stock",
         "devicesYouPurchaseWillShowUp": "Devices you purchase will show up here until sold.",
-        "daysInStock": "Days in Stock"
+        "daysInStock": "Days in Stock",
+        "searchStock": "Search stock..."
       },
       "purchaseDetailSections": {
         "device": "DEVICE",
@@ -701,7 +787,9 @@
         "profit": "Profit",
         "returnedToSeller": "Returned to Seller",
         "saleInvoice": "Sale Invoice #",
-        "seller": "Seller"
+        "seller": "Seller",
+        "purchase": "PURCHASE",
+        "inRefurb": "In Refurb"
       },
       "purchaseRegister": {
         "purchaseRegister": "Purchase Register",
@@ -734,7 +822,13 @@
         "logFieldVisit": "Log Field Visit",
         "whatWasDoneOnSite": "What was done on-site...",
         "reason": "Reason",
-        "handoverTo": "Handover to"
+        "handoverTo": "Handover to",
+        "returnDeviceCloseThisJob": "Return device & close this job?",
+        "thisIsATerminalStatusAnd": "This is a terminal status and cannot be changed afterward.",
+        "returnClose": "Return & Close",
+        "hold": "Hold",
+        "jobDone": "Job Done",
+        "logVisit": "Log Visit"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "Couldn't load the Create Job Card form",
@@ -754,7 +848,13 @@
         "createJobCard": "Create Job Card",
         "alternateNumberOptional": "Alternate number (optional)",
         "secondImeiOptional": "Second IMEI (optional)",
-        "serialNumberOptional": "Serial number (optional)"
+        "serialNumberOptional": "Serial number (optional)",
+        "enterTheNewCustomerSName": "Enter the new customer's name and a valid 10-digit mobile number.",
+        "selectOrAddACustomer": "Select or add a customer.",
+        "selectAtLeastOneProblem": "Select at least one problem.",
+        "selectABrand": "Select a brand.",
+        "enterTheModel": "Enter the model.",
+        "couldNotCreateTheJobCard": "Could not create the job card. Try again."
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "Items at Intake",
@@ -785,7 +885,8 @@
         "clickAStatusCardToFilter": "Click a status card to filter",
         "createYourFirstJobCardTo": "Create your first job card to get started.",
         "deliveredReturnedBy": "Delivered / Returned By",
-        "noUsersYet": "No users yet."
+        "noUsersYet": "No users yet.",
+        "searchJobCustomerMobile": "Search job, customer, mobile..."
       },
       "recordCostingModal": {
         "itemName": "Item name",
@@ -795,7 +896,8 @@
         "labor": "Labor",
         "overhead": "Overhead",
         "other": "Other",
-        "billAmount": "Bill Amount"
+        "billAmount": "Bill Amount",
+        "saveCosting": "Save Costing"
       },
       "jobCosting": {
         "jobCosting": "Job Costing",
@@ -805,14 +907,20 @@
         "jobDetails": "Job Details",
         "financial": "Financial",
         "advancePaid": "Advance Paid",
-        "closedJobsRecordActualPartsLabor": "Closed jobs — record actual parts, labor & overhead costs"
+        "closedJobsRecordActualPartsLabor": "Closed jobs — record actual parts, labor & overhead costs",
+        "recorded": "Recorded",
+        "pendingCosting": "Pending Costing",
+        "costed": "Costed"
       },
       "serviceItems": {
         "serviceItems": "Service Items",
         "itemsAndServicesUsedInJob": "Items and services used in job cards — managed via Item Master",
         "itemMasterShipsInPhase7": "Item Master ships in Phase 7",
         "noServiceItemsYet": "No service items yet",
-        "addOneToGetStarted": "Add one to get started."
+        "addOneToGetStarted": "Add one to get started.",
+        "services": "Services",
+        "searchServiceItems": "Search service items...",
+        "editServiceItem": "Edit Service Item"
       },
       "addOptionForm": {
         "selectBrand": "Select brand..."
@@ -842,12 +950,14 @@
         "logAFieldVisitFromA": "Log a Field Visit from a job card to see it here.",
         "visits": "Visits",
         "timeSpent": "Time Spent",
-        "onFieldTechnicianLogbookTimeSpent": "On-field technician logbook — time spent & engineers per job"
+        "onFieldTechnicianLogbookTimeSpent": "On-field technician logbook — time spent & engineers per job",
+        "searchJobCustomer": "Search job, customer..."
       },
       "jobWiseProfit": {
         "jobWiseProfit": "Job-wise Profit",
         "jobWiseProfitAndLossAnalysis": "Job-wise profit and loss analysis",
-        "recordActualCostingOnAClosed": "Record actual costing on a closed job to see its profit here."
+        "recordActualCostingOnAClosed": "Record actual costing on a closed job to see its profit here.",
+        "searchJobCustomerTech": "Search job, customer, tech..."
       },
       "periodSummary": {
         "periodSummary": "Period Summary",
@@ -863,7 +973,8 @@
         "customer": "Customer",
         "assignedTo": "Assigned To",
         "cost": "Cost",
-        "netAfterShopExpenses": "Net after shop expenses"
+        "netAfterShopExpenses": "Net after shop expenses",
+        "searchDate": "Search date..."
       },
       "profitLoss": {
         "cashBasisMoneyActuallyReceivedAnd": "Cash basis — money actually received and paid, so it always agrees with Cash Book",
@@ -878,7 +989,13 @@
         "netProfit": "Net profit",
         "statement": "Statement",
         "profitLoss": "Profit & Loss",
-        "profitLossIsBuiltFromReceipts": "Profit & Loss is built from receipts and payments. Take a payment or record an expense and it appears here."
+        "profitLossIsBuiltFromReceipts": "Profit & Loss is built from receipts and payments. Take a payment or record an expense and it appears here.",
+        "thisWeek": "This week",
+        "thisMonth": "This month",
+        "thisYear": "This year",
+        "lessRefunds": "Less: refunds",
+        "lessDirectCostSupplierPayments": "Less: direct cost (supplier payments)",
+        "paidToSuppliers": "paid to suppliers"
       },
       "serviceReports": {
         "serviceReports": "Service Reports",
@@ -906,7 +1023,8 @@
         "share": "Share %",
         "partName": "Part Name",
         "deviceName": "Device Name",
-        "jobRevenue": "Job Revenue"
+        "jobRevenue": "Job Revenue",
+        "searchSupplier": "Search supplier..."
       },
       "technicianReport": {
         "technicianReport": "Technician Report",
@@ -915,7 +1033,8 @@
         "winRate": "Win Rate",
         "avgJob": "Avg / Job",
         "avgJob2": "Avg/Job",
-        "performance": "Performance"
+        "performance": "Performance",
+        "searchTechnician": "Search technician..."
       }
     },
     "sales": {
@@ -924,20 +1043,23 @@
         "allGeneratedBillsViewOrEdit": "All generated bills — view or edit bills that are ready for delivery, delivered, or closed.",
         "noBillsGeneratedYet": "No bills generated yet",
         "aJobCardAppearsHereOnce": "A job card appears here once its bill has been generated from the job card's own Generate Bill action.",
-        "billDate": "Bill Date"
+        "billDate": "Bill Date",
+        "closed": "Closed"
       }
     },
     "completeSetup": {
       "completeSetup": {
         "letSFinishSettingUpYour": "Let's finish setting up your account",
-        "yourLastSignUpGotInterrupted": "Your last sign-up got interrupted before we could set up your company. This will only take a moment."
+        "yourLastSignUpGotInterrupted": "Your last sign-up got interrupted before we could set up your company. This will only take a moment.",
+        "finishSetup": "Finish setup"
       }
     },
     "forgotPassword": {
       "forgotPassword": {
         "resetYourPassword": "Reset your password",
         "enterYourEmailAndWeLl": "Enter your email and we'll send you a reset link.",
-        "checkYourEmail": "Check your email"
+        "checkYourEmail": "Check your email",
+        "sendResetLink": "Send reset link"
       }
     },
     "login": {
@@ -950,7 +1072,8 @@
     "signup": {
       "signup": {
         "createYourAccount": "Create your account",
-        "freeForeverNoCardRequired": "Free forever — no card required."
+        "freeForeverNoCardRequired": "Free forever — no card required.",
+        "createAccount": "Create account"
       }
     },
     "landing": {
@@ -977,12 +1100,26 @@
         "billingPaymentsConnected": "Billing & payments, connected",
         "assignRepair": "Assign & repair",
         "billCollect": "Bill & collect",
-        "deliverWarranty": "Deliver & warranty"
+        "deliverWarranty": "Deliver & warranty",
+        "isThisReallyFree": "Is this really free?",
+        "yesEveryFeatureInAimIs": "Yes — every feature in aim is free, forever. No card required, no plan tiers, no feature paywalls.",
+        "canIBringMyExistingData": "Can I bring my existing data?",
+        "yesWeOfferFreeDataMigration": "Yes — we offer free data migration to get your customers, devices, and history into aim.",
+        "doesItWorkOnMobile": "Does it work on mobile?",
+        "yesAimIsInstallableAsA": "Yes — aim is installable as a mobile app and built mobile-first from the ground up.",
+        "canDifferentStaffSeeDifferentThings": "Can different staff see different things?",
+        "yesTheWorkflowDesignerLetsYou": "Yes — the Workflow Designer lets you control exactly what each role can see and do, at every job status."
       }
     },
     "pricing": {
       "pricing": {
-        "simplePricingFree": "Simple pricing: free."
+        "simplePricingFree": "Simple pricing: free.",
+        "unlimitedJobCardsTechniciansAndCustomers": "Unlimited job cards, technicians, and customers",
+        "fullRoleBasedAccessControlWorkflow": "Full role-based access control & Workflow Designer",
+        "financeReceiptsLedgersReceivablesPayables": "Finance: receipts, ledgers, receivables & payables",
+        "secondHandDevicePurchaseSaleTracking": "Second-hand device purchase & sale tracking",
+        "allReportsDashboardsAndCsvExcel": "All reports, dashboards, and CSV/Excel exports",
+        "freeDataMigrationFromYourCurrent": "Free data migration from your current system"
       }
     },
     "administration": {
@@ -1008,7 +1145,9 @@
         "role": "Role",
         "branch": "Branch",
         "networkDevice": "NETWORK & DEVICE",
-        "idle30m": "Idle (30m+)"
+        "idle30m": "Idle (30m+)",
+        "searchByUserDeviceIp": "Search by user, device, IP...",
+        "thisIsYourCurrentSession": "This is your current session"
       },
       "createRole": {
         "backToRoles": "Back to roles",
@@ -1017,7 +1156,12 @@
         "afterCreatingTheRole": "After creating the role",
         "assignPermissionsToDefineWhatUsers": "Assign permissions to define what users with this role can do",
         "assignMenusToControlNavigationAccess": "Assign menus to control navigation access",
-        "assignUsersToThisRole": "Assign users to this role"
+        "assignUsersToThisRole": "Assign users to this role",
+        "roleNameMustBeAtLeast": "Role name must be at least 2 characters.",
+        "roleCodeIsRequired": "Role code is required.",
+        "aRoleWithThatNameAlready": "A role with that name already exists.",
+        "couldNotCreateThisRole": "Could not create this role.",
+        "createRole": "Create Role"
       },
       "createUser": {
         "enterFullName": "Enter full name",
@@ -1029,7 +1173,15 @@
         "emailAddress": "Email Address *",
         "password": "Password *",
         "role": "Role *",
-        "securityNote": "Security Note:"
+        "securityNote": "Security Note:",
+        "fullNameMustBeAtLeast": "Full name must be at least 2 characters",
+        "enterAValid10DigitMobile": "Enter a valid 10-digit mobile number",
+        "emailIsRequired": "Email is required",
+        "enterAValidEmailAddress": "Enter a valid email address",
+        "passwordMustBeAtLeast6": "Password must be at least 6 characters",
+        "incomplete": "Incomplete",
+        "showPassword": "Show password",
+        "createUser": "Create User"
       },
       "ipWhitelist": {
         "ipWhitelist": "IP Whitelist",
@@ -1039,7 +1191,11 @@
         "label": "Label",
         "ipCidr": "IP / CIDR",
         "label2": "Label *",
-        "ipCidr2": "IP / CIDR *"
+        "ipCidr2": "IP / CIDR *",
+        "searchByLabelOrIp": "Search by label or IP...",
+        "thisPermanentlyRemovesThisIpRestriction": "This permanently removes this IP restriction. This cannot be undone.",
+        "thisIpCidrWillStartAuthorizing": "This IP/CIDR will start authorizing non-Owner sign-ins again.",
+        "editWhitelistEntry": "Edit Whitelist Entry"
       },
       "loginReport": {
         "loginReport": "Login Report",
@@ -1067,7 +1223,8 @@
         "thisWipesEveryMenuAndPermission": "This wipes every menu and permission checkbox for this role back to unchecked. It only affects the unsaved draft — you can still Cancel out of the page — but any hand-tuned selections made so far will be lost.",
         "thisReplacesEveryMenuAndPermission": "This replaces every menu and permission selection made so far in this draft with the picked role's configuration. Any hand-tuned changes not yet saved will be overwritten.",
         "inherit": "Inherit",
-        "clearAllMenusPermissions": "Clear all menus & permissions?"
+        "clearAllMenusPermissions": "Clear all menus & permissions?",
+        "grantFullAccess": "Grant Full Access"
       },
       "roleConfigure": {
         "couldnTLoadThisRole": "Couldn't load this role",
@@ -1098,7 +1255,10 @@
         "type": "TYPE",
         "status": "STATUS",
         "actions": "ACTIONS",
-        "configureRole": "Configure Role"
+        "configureRole": "Configure Role",
+        "enableRole": "Enable Role",
+        "customRole": "Custom Role",
+        "enableThisRole": "Enable this role?"
       },
       "systemAudit": {
         "systemAudit": "System Audit",
@@ -1130,7 +1290,11 @@
         "deletedUsers": "Deleted Users",
         "noUsersFound": "No users found",
         "contactDetails": "Contact Details",
-        "roleAccess": "Role & Access"
+        "roleAccess": "Role & Access",
+        "protected": "Protected",
+        "searchByNameEmailOrMobile": "Search by name, email, or mobile...",
+        "enableUser": "Enable User",
+        "thisRestoresTheirAbilityToSign": "This restores their ability to sign in."
       }
     },
     "settings": {
@@ -1154,14 +1318,29 @@
         "by": "By",
         "size": "Size",
         "backupRestore": "Backup & Restore",
-        "keepForDays": "Keep for (days)"
+        "keepForDays": "Keep for (days)",
+        "overwrite": "OVERWRITE",
+        "restoreFailed": "Restore failed.",
+        "backupNow": "Backup Now",
+        "downloadBackup": "Download Backup",
+        "restoreAsArchiveSafe": "Restore as Archive (Safe)"
       },
       "billing": {
         "yourPlanAndBillingDetails": "Your plan and billing details",
         "youReOnTheFreePlan": "You're on the Free plan",
         "perMonth": "per month",
         "includedModules": "Included modules",
-        "billingSubscription": "Billing & Subscription"
+        "billingSubscription": "Billing & Subscription",
+        "unlimitedAddAsManyTeammatesAs": "Unlimited — add as many teammates as you need",
+        "unlimitedEveryLocationOneAccount": "Unlimited — every location, one account",
+        "jobCardsInvoices": "Job cards & invoices",
+        "unlimitedWithNoMonthlyCap": "Unlimited, with no monthly cap",
+        "dataBackups": "Data & backups",
+        "yoursExportableAtAnyTime": "Yours, exportable at any time",
+        "organization": "Organization",
+        "billingContact": "Billing contact",
+        "currency": "Currency",
+        "customerSince": "Customer since"
       },
       "branchManagement": {
         "branchManagement": "Branch Management",
@@ -1177,7 +1356,12 @@
         "branchCode": "Branch Code",
         "currentStatus": "Current Status",
         "branchType": "Branch Type",
-        "statusType": "STATUS & TYPE"
+        "statusType": "STATUS & TYPE",
+        "main": "Main",
+        "searchBranchesByNameOrCode": "Search branches by name or code...",
+        "customBranch": "Custom Branch",
+        "createBranch": "Create Branch",
+        "thisBranchWillBecomeSelectableAgain": "This branch will become selectable again."
       },
       "companyForm": {
         "companyCode": "Company Code",
@@ -1186,7 +1370,10 @@
         "sunriseEnterprisesPvtLtd": "Sunrise Enterprises Pvt Ltd",
         "regular": "Regular",
         "composition": "Composition",
-        "note": "Note:"
+        "note": "Note:",
+        "currencySelected": "Currency selected",
+        "timezoneSelected": "Timezone selected",
+        "unregistered": "Unregistered"
       },
       "companySettings": {
         "companyManagement": "Company Management",
@@ -1198,7 +1385,12 @@
         "lastUpdated": "Last updated",
         "createCompany": "Create Company",
         "aSecondShopUnderThisAccount": "A second shop under this account. It gets its own roles, branch, financial year, masters and print templates.",
-        "editCompany": "Edit Company"
+        "editCompany": "Edit Company",
+        "couldNotCreateThisCompany": "Could not create this company.",
+        "couldNotSaveTheseChanges": "Could not save these changes.",
+        "nothingHereRightNow": "Nothing here right now.",
+        "unregisteredNoGst": "Unregistered (No GST)",
+        "companyInformationAndSettings": "Company information and settings."
       },
       "financialYears": {
         "financialYears": "Financial Years",
@@ -1216,7 +1408,16 @@
         "endDate": "End Date",
         "duration": "Duration",
         "startDate2": "Start Date *",
-        "endDate2": "End Date *"
+        "endDate2": "End Date *",
+        "nameStartDateAndEndDate": "Name, start date and end date are all required.",
+        "theEndDateMustBeAfter": "The end date must be after the start date.",
+        "couldNotSaveThisFinancialYear": "Could not save this financial year.",
+        "createNextFy": "Create Next FY",
+        "activateAFinancialYearFirst": "Activate a financial year first",
+        "lock": "Lock",
+        "createFinancialYear": "Create Financial Year",
+        "addANewFinancialYearFor": "Add a new financial year for your organization",
+        "lockingThisPeriodIsAdvisoryIn": "Locking this period is advisory in this build — no other feature currently checks it before posting a new transaction."
       },
       "designer": {
         "couldnTLoadThisTemplate": "Couldn't load this template",
@@ -1252,18 +1453,37 @@
         "alwaysVisible": "Always visible",
         "colour": "Colour",
         "fontSizePt": "Font size (pt)",
-        "rotation": "Rotation (°)"
+        "rotation": "Rotation (°)",
+        "yourShop": "Your Shop",
+        "alignLeft": "Align left",
+        "alignCentre": "Align centre",
+        "alignRight": "Align right",
+        "alignTop": "Align top",
+        "selectAnElementToEditIts": "Select an element to edit its properties.",
+        "imageUrl": "Image URL"
       },
       "importTemplateDialog": {
         "importTemplate": "Import Template",
         "loadATemplateJsonExportedFrom": "Load a template JSON exported from this app. It is added as a new, non-default format.",
-        "templateFile": "Template file"
+        "templateFile": "Template file",
+        "thatFileIsNotATemplate": "That file is not a template object.",
+        "theFileHasNoElementsArray": "The file has no `elements` array.",
+        "theFileHasNoValidPaper": "The file has no valid `paper` size.",
+        "chooseATemplateJsonFileFirst": "Choose a template JSON file first.",
+        "thatFileIsNotValidJson": "That file is not valid JSON.",
+        "importedTemplate": "Imported Template",
+        "exportedFromTheDesigner": "Exported from the designer"
       },
       "newTemplateDialog": {
         "newTemplate": "New Template",
         "pickADocumentTypeAndA": "Pick a document type and a paper size to start from. You can change everything in the designer.",
         "documentType": "Document Type",
-        "startFrom": "Start From"
+        "startFrom": "Start From",
+        "template": "Template",
+        "thatDocumentTypeHasNoBase": "That document type has no base format to start from.",
+        "aTemplateWithThatNameAlready": "A template with that name already exists.",
+        "createDesign": "Create & Design",
+        "templateName": "Template name"
       },
       "pageSetupDialog": {
         "pageSetup": "Page Setup",
@@ -1280,12 +1500,18 @@
         "gapMm": "Gap (mm)",
         "heightMm": "Height (mm)",
         "marginsMm": "Margins (mm)",
-        "widthMm": "Width (mm)"
+        "widthMm": "Width (mm)",
+        "labelsAcross": "Labels across",
+        "printSpeed": "Print speed",
+        "printDensity": "Print density"
       },
       "printDevicesDialog": {
         "copyPairingCode": "Copy pairing code",
         "couldnTLoadYourPrintDevices": "Couldn't load your print devices",
-        "printDevices": "Print Devices"
+        "printDevices": "Print Devices",
+        "waitingForADevice": "Waiting for a device…",
+        "codeNotUsedYet": "Code not used yet",
+        "pendingDevice": "pending device"
       },
       "printFormats": {
         "designAndManagePrintTemplatesFor": "Design and manage print templates for bills, receipts and labels",
@@ -1297,7 +1523,9 @@
         "useAddMissingDefaultsToRestore": "Use Add Missing Defaults to restore the standard formats, or create one.",
         "deleteThisTemplate": "Delete this template?",
         "delete": "Delete",
-        "billLabelDesigner": "Bill & Label Designer"
+        "billLabelDesigner": "Bill & Label Designer",
+        "addMissingDefaults": "Add Missing Defaults",
+        "deleteOnlyFormat": "Delete — only format"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
@@ -1340,7 +1568,8 @@
         "layout": "Layout",
         "autoAdaptsToScreenSize": "Auto (adapts to screen size)",
         "compactPairedFields": "Compact (paired fields)",
-        "standardOneFieldPerRow": "Standard (one field per row)"
+        "standardOneFieldPerRow": "Standard (one field per row)",
+        "saveThisConfigurationAsATemplate": "Save this configuration as a template named:"
       },
       "permissionsSubtab": {
         "allowedActionsPerStatus": "Allowed Actions per Status"
@@ -1354,7 +1583,11 @@
         "selectARole": "Select a role",
         "behavior": "Behavior",
         "saveGoLive": "Save & go live",
-        "setVisibilityActions": "Set visibility & actions"
+        "setVisibilityActions": "Set visibility & actions",
+        "pickAConfiguredRoleFromThe": "Pick a configured role from the dropdown above, or choose an unconfigured one to set it up fresh.",
+        "controlWhichJobStatusesThisRole": "Control which job statuses this role can see and exactly which actions they’re allowed to take at each step.",
+        "hitSaveConfigChangesApplyInstantly": "Hit Save Config — changes apply instantly for every user with that role. No restart needed.",
+        "saveConfig": "Save Config"
       },
       "usersSubtab": {
         "receivedBy": "Received By",
@@ -1365,13 +1598,28 @@
         "whoCheckedInOnAnOn": "Who checked in on an on-site visit",
         "noneManualSelect": "None (manual select)",
         "cancelledBy": "Cancelled By",
-        "deliveredBy": "Delivered By"
+        "deliveredBy": "Delivered By",
+        "allUsersCanBeSelected": "All users can be selected",
+        "oneRoleCanBeSelected": "One role can be selected"
       },
       "workflowDesigner": {
         "workflowDesigner": "Workflow Designer",
         "rolePermissions": "Role Permissions",
         "jobCardForm": "Job Card Form",
         "leadForm": "Lead Form"
+      },
+      "fieldControlRow": {
+        "hiddenClickToShow": "Hidden — click to show",
+        "requiredClickToMakeOptional": "Required — click to make optional",
+        "optionalClickToRequire": "Optional — click to require",
+        "lockedAfterFirstSaveClickTo": "Locked after first save — click to unlock",
+        "clickToLockAfterFirstSave": "Click to lock after first save",
+        "mobileAppOnlyClickToShow": "Mobile-app only — click to show everywhere",
+        "clickToRestrictToTheMobile": "Click to restrict to the mobile app"
+      },
+      "fieldPreviewInput": {
+        "searchUser": "Search user...",
+        "select": "Select..."
       }
     }
   },
@@ -1383,7 +1631,10 @@
         "rahulKInProgress": "Rahul K. · In progress",
         "customerUpdated": "Customer Updated",
         "autoMessageSentViaWhatsapp": "Auto-message sent via WhatsApp",
-        "readyForPickup": "Ready for Pickup"
+        "readyForPickup": "Ready for Pickup",
+        "received": "Received",
+        "diagnosis": "Diagnosis",
+        "qualityCheck": "Quality check"
       },
       "marketingNav": {
         "toggleMenu": "Toggle menu",
@@ -1398,7 +1649,8 @@
         "thisAccountHasBeenDisabled": "This account has been disabled"
       },
       "ipBlockedScreen": {
-        "accessBlockedFromThisNetwork": "Access blocked from this network"
+        "accessBlockedFromThisNetwork": "Access blocked from this network",
+        "yourCurrentIpCouldNotBe": " Your current IP could not be detected."
       },
       "requireMenuAccess": {
         "youDonTHaveAccessTo": "You don't have access to this page",
@@ -1407,7 +1659,8 @@
     },
     "layout": {
       "appSidebar": {
-        "expandSidebar": "Expand sidebar"
+        "expandSidebar": "Expand sidebar",
+        "collapseSidebar": "Collapse sidebar"
       },
       "commandPalette": {
         "jumpToAnyPage": "Jump to any page",
@@ -1415,7 +1668,13 @@
         "noMatchingPage": "No matching page."
       },
       "profileDrawer": {
-        "atLeast6Characters": "At least 6 characters."
+        "atLeast6Characters": "At least 6 characters.",
+        "fullNameIsRequired": "Full name is required.",
+        "couldNotSaveYourProfile": "Could not save your profile.",
+        "newPasswordMustBeAtLeast": "New password must be at least 6 characters.",
+        "theTwoNewPasswordsDoNot": "The two new passwords do not match.",
+        "theNewPasswordMustBeDifferent": "The new password must be different from the current one.",
+        "updatePassword": "Update Password"
       },
       "topBar": {
         "openNavigation": "Open navigation",
@@ -1427,7 +1686,8 @@
     },
     "shared": {
       "cameraScanFrame": {
-        "cameraUnavailable": "Camera unavailable"
+        "cameraUnavailable": "Camera unavailable",
+        "couldNotStartCamera": "Could not start camera"
       },
       "errorBoundary": {
         "somethingWentWrong": "Something went wrong",
@@ -1453,6 +1713,9 @@
       "searchSelect": {
         "typeToSearch": "Type to search...",
         "noMatches": "No matches."
+      },
+      "errorState": {
+        "couldnTLoadThisData": "Couldn't load this data"
       }
     }
   }

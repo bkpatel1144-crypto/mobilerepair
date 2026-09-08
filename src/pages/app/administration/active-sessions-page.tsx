@@ -126,7 +126,7 @@ export function ActiveSessionsPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search by user, device, IP..."
+        searchPlaceholder={t('pages.administration.activeSessions.searchByUserDeviceIp')}
       />
 
       <DataTable
@@ -164,7 +164,10 @@ export function ActiveSessionsPage() {
                 dot
               />
               {isCurrentSession(viewing) && (
-                <StatusBadge status="This is your current session" tone="info" />
+                <StatusBadge
+                  status={t('pages.administration.activeSessions.thisIsYourCurrentSession')}
+                  tone="info"
+                />
               )}
             </>
           }

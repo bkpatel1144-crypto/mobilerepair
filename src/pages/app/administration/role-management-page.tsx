@@ -222,7 +222,9 @@ export function RoleManagementPage() {
                     }
                   >
                     <EyeOff />
-                    {r.status === 'active' ? 'Disable Role' : 'Enable Role'}
+                    {r.status === 'active'
+                      ? 'Disable Role'
+                      : t('pages.administration.roleManagement.enableRole')}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
@@ -492,7 +494,9 @@ export function RoleManagementPage() {
                     ) : (
                       <Shield className="size-4 text-purple-500" />
                     )}
-                    {selectedRole.type === 'owner' ? 'Owner Role' : 'Custom Role'}
+                    {selectedRole.type === 'owner'
+                      ? 'Owner Role'
+                      : t('pages.administration.roleManagement.customRole')}
                   </span>
                 }
               />
@@ -529,7 +533,7 @@ export function RoleManagementPage() {
         onOpenChange={(open) => !open && setEditing(null)}
         title={t('pages.administration.roleManagement.editRole')}
         description={t('pages.administration.roleManagement.renameThisRoleOrChangeIts')}
-        submitLabel={renameRole.isPending ? 'Saving…' : 'Save Changes'}
+        submitLabel={renameRole.isPending ? 'Saving…' : t('shared.saveChanges')}
         isSubmitting={renameRole.isPending}
         onSubmit={async () => {
           if (!editing || !editName.trim()) return
@@ -576,7 +580,7 @@ export function RoleManagementPage() {
             ? 'Delete this role?'
             : confirmAction?.kind === 'disable'
               ? 'Disable this role?'
-              : 'Enable this role?'
+              : t('pages.administration.roleManagement.enableThisRole')
         }
         message={
           confirmAction

@@ -149,7 +149,7 @@ export function IpWhitelistPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search by label or IP..."
+        searchPlaceholder={t('pages.administration.ipWhitelist.searchByLabelOrIp')}
       />
 
       <DataTable
@@ -178,7 +178,7 @@ export function IpWhitelistPage() {
           message={
             deleteTarget.active && activeCount <= 1
               ? `This is your only active whitelist entry — deleting it removes every IP restriction, letting non-Owner sign-ins succeed from any network. This cannot be undone.`
-              : 'This permanently removes this IP restriction. This cannot be undone.'
+              : t('pages.administration.ipWhitelist.thisPermanentlyRemovesThisIpRestriction')
           }
           confirmLabel={t('common.delete')}
           isPending={deleteEntry.isPending}
@@ -213,7 +213,7 @@ function ToggleActiveItem({ entry }: { entry: IpWhitelistWithId }) {
         message={
           entry.active
             ? 'Deactivating this entry stops it from authorizing sign-ins from this network — a non-Owner relying on it may be locked out immediately.'
-            : 'This IP/CIDR will start authorizing non-Owner sign-ins again.'
+            : t('pages.administration.ipWhitelist.thisIpCidrWillStartAuthorizing')
         }
         confirmLabel={entry.active ? 'Deactivate' : t('common.activate')}
         destructive={entry.active}
@@ -273,7 +273,9 @@ function IpWhitelistModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Add IP to Whitelist' : 'Edit Whitelist Entry'}
+      title={
+        isNew ? 'Add IP to Whitelist' : t('pages.administration.ipWhitelist.editWhitelistEntry')
+      }
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Add' : t('common.save')}
       isSubmitting={isPending}

@@ -184,7 +184,7 @@ export function JobWiseProfitPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search job, customer, tech..."
+        searchPlaceholder={t('pages.reports.jobWiseProfit.searchJobCustomerTech')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
         showCustomRange

@@ -140,24 +140,24 @@ export function PartyLedgerPage() {
         <StatCard
           label={t('pages.finance.partyLedger.totalParties')}
           value={summaries.length}
-          sublabel="With job card activity"
+          sublabel={t('pages.finance.partyLedger.withJobCardActivity')}
         />
         <StatCard
           label={t('shared.totalBilled')}
           value={`₹${totalBilled}`}
-          sublabel="Active jobs only"
+          sublabel={t('pages.finance.partyLedger.activeJobsOnly')}
           tone="purple"
         />
         <StatCard
           label={t('shared.totalCollected')}
           value={`₹${totalCollected}`}
-          sublabel="Incl. advance on unbilled jobs"
+          sublabel={t('pages.finance.partyLedger.inclAdvanceOnUnbilledJobs')}
           tone="success"
         />
         <StatCard
           label={t('shared.totalOutstanding')}
           value={`₹${totalOutstanding}`}
-          sublabel="Pending collection"
+          sublabel={t('pages.finance.partyLedger.pendingCollection')}
           tone="danger"
         />
       </StatCardGrid>

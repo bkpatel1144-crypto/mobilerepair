@@ -91,7 +91,7 @@ export function TechnicianReportPage() {
   const dateFiltered = rows.filter((r) => !bounds || (r.date >= bounds.from && r.date <= bounds.to))
   const groups = groupByTechnician(dateFiltered)
   const allTechnicians = Array.from(
-    new Set(dateFiltered.map((r) => r.job.assignedToName ?? 'Unassigned'))
+    new Set(dateFiltered.map((r) => r.job.assignedToName ?? t('shared.unassigned')))
   ).sort()
 
   const filtered = groups
@@ -227,7 +227,7 @@ export function TechnicianReportPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search technician..."
+        searchPlaceholder={t('pages.reports.technicianReport.searchTechnician')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
         showCustomRange

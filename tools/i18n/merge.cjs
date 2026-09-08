@@ -20,7 +20,13 @@ if (!name) {
 }
 
 const batch = require(`./translations/${name}.cjs`)
-const keyMap = JSON.parse(fs.readFileSync(path.join(__dirname, 'key-map.json'), 'utf8'))
+// Both maps: key-map.json holds the attribute/prop/JSX-text strings, literal-map.json the ones
+// found inside expressions. A batch may name keys from either, and the English always comes from
+// whichever map extracted it — never from the batch file — so it cannot drift from the source.
+const keyMap = {
+  ...JSON.parse(fs.readFileSync(path.join(__dirname, 'key-map.json'), 'utf8')),
+  ...JSON.parse(fs.readFileSync(path.join(__dirname, 'literal-map.json'), 'utf8')),
+}
 
 const problems = []
 for (const key of Object.keys(batch)) {

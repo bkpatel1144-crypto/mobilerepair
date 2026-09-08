@@ -225,7 +225,7 @@ export function JobCardsPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search job, customer, mobile..."
+        searchPlaceholder={t('pages.service.jobCards.searchJobCustomerMobile')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >

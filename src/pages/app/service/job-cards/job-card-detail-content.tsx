@@ -222,7 +222,9 @@ export function JobCardDetailContent({
                 {(job.assignedToName ?? '—').slice(0, 2).toUpperCase()}
               </span>
               <div>
-                <p className="text-sm font-medium">{job.assignedToName ?? 'Unassigned'}</p>
+                <p className="text-sm font-medium">
+                  {job.assignedToName ?? t('shared.unassigned')}
+                </p>
                 <p className="text-xs text-muted-foreground">{t('common.technician')}</p>
               </div>
             </div>

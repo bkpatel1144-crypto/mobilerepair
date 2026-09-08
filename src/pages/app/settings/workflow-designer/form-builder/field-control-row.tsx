@@ -105,7 +105,11 @@ export function FieldControlRow({
                 active={config.visible}
                 activeClassName="border-transparent bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400"
                 icon={config.visible ? Eye : EyeOff}
-                label={config.visible ? 'Visible — click to hide' : 'Hidden — click to show'}
+                label={
+                  config.visible
+                    ? 'Visible — click to hide'
+                    : t('pages.settings.fieldControlRow.hiddenClickToShow')
+                }
                 onClick={() => onChange({ visible: !config.visible })}
                 disabled={disabled}
               />
@@ -115,8 +119,8 @@ export function FieldControlRow({
                 icon={Asterisk}
                 label={
                   config.required
-                    ? 'Required — click to make optional'
-                    : 'Optional — click to require'
+                    ? t('pages.settings.fieldControlRow.requiredClickToMakeOptional')
+                    : t('pages.settings.fieldControlRow.optionalClickToRequire')
                 }
                 onClick={() => onChange({ required: !config.required })}
                 disabled={disabled}
@@ -127,8 +131,8 @@ export function FieldControlRow({
                 icon={Lock}
                 label={
                   config.locked
-                    ? 'Locked after first save — click to unlock'
-                    : 'Click to lock after first save'
+                    ? t('pages.settings.fieldControlRow.lockedAfterFirstSaveClickTo')
+                    : t('pages.settings.fieldControlRow.clickToLockAfterFirstSave')
                 }
                 onClick={() => onChange({ locked: !config.locked })}
                 disabled={disabled}
@@ -139,8 +143,8 @@ export function FieldControlRow({
                 icon={Smartphone}
                 label={
                   config.deviceOnly
-                    ? 'Mobile-app only — click to show everywhere'
-                    : 'Click to restrict to the mobile app'
+                    ? t('pages.settings.fieldControlRow.mobileAppOnlyClickToShow')
+                    : t('pages.settings.fieldControlRow.clickToRestrictToTheMobile')
                 }
                 onClick={() => onChange({ deviceOnly: !config.deviceOnly })}
                 disabled={disabled}

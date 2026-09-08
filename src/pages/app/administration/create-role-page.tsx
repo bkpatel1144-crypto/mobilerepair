@@ -36,11 +36,11 @@ export function CreateRolePage() {
     setError(null)
     const trimmed = name.trim()
     if (trimmed.length < 2) {
-      setError('Role name must be at least 2 characters.')
+      setError(t('pages.administration.createRole.roleNameMustBeAtLeast'))
       return
     }
     if (!code) {
-      setError('Role code is required.')
+      setError(t('pages.administration.createRole.roleCodeIsRequired'))
       return
     }
     if (roles.some((r) => r.code.toUpperCase() === code.toUpperCase())) {
@@ -48,7 +48,7 @@ export function CreateRolePage() {
       return
     }
     if (roles.some((r) => r.name.trim().toLowerCase() === trimmed.toLowerCase())) {
-      setError('A role with that name already exists.')
+      setError(t('pages.administration.createRole.aRoleWithThatNameAlready'))
       return
     }
     try {
@@ -57,7 +57,11 @@ export function CreateRolePage() {
       // list would leave a role that exists but does nothing, with no prompt to fix it.
       navigate(`${buildPath('administration', 'roles')}/${roleId}/configure`)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not create this role.')
+      setError(
+        err instanceof Error
+          ? err.message
+          : t('pages.administration.createRole.couldNotCreateThisRole')
+      )
     }
   }
 
@@ -124,7 +128,7 @@ export function CreateRolePage() {
               Cancel
             </Button>
             <Button type="submit" disabled={createRole.isPending}>
-              {createRole.isPending ? 'Creating…' : 'Create Role'}
+              {createRole.isPending ? 'Creating…' : t('pages.administration.createRole.createRole')}
             </Button>
           </div>
         </div>

@@ -185,7 +185,7 @@ export function PaymentModesPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search payment modes..."
+        searchPlaceholder={t('pages.masters.paymentModes.searchPaymentModes')}
       />
 
       <DataTable
@@ -216,7 +216,7 @@ export function PaymentModesPage() {
           message={
             toggleTarget.status === 'active'
               ? 'Deactivated payment modes no longer appear as a selectable option when recording a receipt or payment.'
-              : 'This payment mode will become selectable again.'
+              : t('pages.masters.paymentModes.thisPaymentModeWillBecomeSelectable')
           }
           confirmLabel={toggleTarget.status === 'active' ? 'Deactivate' : t('common.activate')}
           destructive={toggleTarget.status === 'active'}
@@ -284,7 +284,7 @@ function PaymentModeModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Add Payment Mode' : 'Edit Payment Mode'}
+      title={isNew ? 'Add Payment Mode' : t('pages.masters.paymentModes.editPaymentMode')}
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create' : t('common.save')}
       isSubmitting={isPending}

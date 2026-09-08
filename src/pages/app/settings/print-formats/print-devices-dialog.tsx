@@ -94,7 +94,9 @@ function DeviceRow({
       <div className="flex flex-wrap items-center gap-3 rounded-xl border border-red-300 bg-red-50/60 p-3 dark:border-red-500/40 dark:bg-red-500/10">
         <Monitor className="size-4 shrink-0 text-muted-foreground" />
         <div className="min-w-0 flex-1">
-          <p className="truncate font-medium">{device.name ?? 'Waiting for a device…'}</p>
+          <p className="truncate font-medium">
+            {device.name ?? t('pages.settings.printDevicesDialog.waitingForADevice')}
+          </p>
           <p className="text-xs text-muted-foreground">
             It will stop printing the next time it connects. You can pair it again with a new code.
           </p>
@@ -131,7 +133,9 @@ function DeviceRow({
         )}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate font-medium">{device.name ?? 'Waiting for a device…'}</p>
+        <p className="truncate font-medium">
+          {device.name ?? t('pages.settings.printDevicesDialog.waitingForADevice')}
+        </p>
         <p className="text-xs text-muted-foreground">
           {device.status === 'paired'
             ? [device.platform, device.agentVersion && `Agent ${device.agentVersion}`]
@@ -139,7 +143,7 @@ function DeviceRow({
                 .join(' · ') || 'Paired'
             : expired
               ? 'Code expired'
-              : 'Code not used yet'}
+              : t('pages.settings.printDevicesDialog.codeNotUsedYet')}
         </p>
       </div>
       <span
@@ -164,7 +168,7 @@ function DeviceRow({
         type="button"
         variant="ghost"
         size="icon-sm"
-        aria-label={`Remove ${device.name ?? 'pending device'}`}
+        aria-label={`Remove ${device.name ?? t('pages.settings.printDevicesDialog.pendingDevice')}`}
         className="text-red-600"
         onClick={() => setConfirming(true)}
       >

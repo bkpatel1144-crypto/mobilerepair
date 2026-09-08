@@ -155,7 +155,7 @@ export function DeviceSalePage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search receipt # / IMEI / brand..."
+        searchPlaceholder={t('pages.secondHandDevice.deviceSale.searchReceiptImeiBrand')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       />
@@ -229,11 +229,11 @@ function SellDeviceModal({
     let finalBuyerId = buyerId
     let finalBuyerName: string
     if (!finalBuyerId && !quickAddBuyer) {
-      setError('Select or add a buyer.')
+      setError(t('pages.secondHandDevice.deviceSale.selectOrAddABuyer'))
       return
     }
     if (salePrice <= 0) {
-      setError('Enter a sale price greater than 0.')
+      setError(t('pages.secondHandDevice.deviceSale.enterASalePriceGreaterThan'))
       return
     }
     try {
@@ -260,7 +260,7 @@ function SellDeviceModal({
       queryClient.invalidateQueries({ queryKey: secondHandSalesQueryKey(profile?.companyId) })
       onClose()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : t('shared.somethingWentWrong'))
     }
   }
 
@@ -385,7 +385,7 @@ function SellDeviceModal({
             Cancel
           </Button>
           <Button type="button" onClick={handleConfirm} disabled={createSale.isPending}>
-            {createSale.isPending ? 'Saving…' : 'Confirm Sale'}
+            {createSale.isPending ? 'Saving…' : t('pages.secondHandDevice.deviceSale.confirmSale')}
           </Button>
         </div>
       </DialogContent>

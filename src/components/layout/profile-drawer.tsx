@@ -73,7 +73,7 @@ export function ProfileDrawer({
     setProfileError(null)
     setProfileSaved(false)
     if (!effectiveName.trim()) {
-      setProfileError('Full name is required.')
+      setProfileError(t('components.layout.profileDrawer.fullNameIsRequired'))
       return
     }
     try {
@@ -82,7 +82,11 @@ export function ProfileDrawer({
       setEmail(null)
       setProfileSaved(true)
     } catch (err) {
-      setProfileError(err instanceof Error ? err.message : 'Could not save your profile.')
+      setProfileError(
+        err instanceof Error
+          ? err.message
+          : t('components.layout.profileDrawer.couldNotSaveYourProfile')
+      )
     }
   }
 
@@ -91,15 +95,15 @@ export function ProfileDrawer({
     setPasswordError(null)
     setPasswordSaved(false)
     if (newPassword.length < 6) {
-      setPasswordError('New password must be at least 6 characters.')
+      setPasswordError(t('components.layout.profileDrawer.newPasswordMustBeAtLeast'))
       return
     }
     if (newPassword !== confirmPassword) {
-      setPasswordError('The two new passwords do not match.')
+      setPasswordError(t('components.layout.profileDrawer.theTwoNewPasswordsDoNot'))
       return
     }
     if (newPassword === currentPassword) {
-      setPasswordError('The new password must be different from the current one.')
+      setPasswordError(t('components.layout.profileDrawer.theNewPasswordMustBeDifferent'))
       return
     }
     try {
@@ -276,7 +280,7 @@ export function ProfileDrawer({
                 disabled={!profileDirty || updateProfile.isPending}
               >
                 <Check className="size-4" />
-                {updateProfile.isPending ? 'Saving…' : 'Save Changes'}
+                {updateProfile.isPending ? 'Saving…' : t('shared.saveChanges')}
               </Button>
             </TabsContent>
             <TabsContent value="password" className="m-0">
@@ -290,7 +294,9 @@ export function ProfileDrawer({
                 }
               >
                 <KeyRound className="size-4" />
-                {changePassword.isPending ? 'Updating…' : 'Update Password'}
+                {changePassword.isPending
+                  ? 'Updating…'
+                  : t('components.layout.profileDrawer.updatePassword')}
               </Button>
             </TabsContent>
           </div>

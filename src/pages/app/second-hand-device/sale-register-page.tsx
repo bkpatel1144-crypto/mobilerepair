@@ -152,7 +152,7 @@ export function SaleRegisterPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Receipt/invoice #, brand, model..."
+        searchPlaceholder={t('shared.receiptInvoiceBrandModel')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       />

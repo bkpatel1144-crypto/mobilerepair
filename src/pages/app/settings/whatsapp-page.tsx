@@ -59,7 +59,7 @@ export function WhatsAppPage() {
             disabled={isLoading || !dirty || updateConfig.isPending}
           >
             <Save className="size-4" />
-            {updateConfig.isPending ? 'Saving…' : 'Save Changes'}
+            {updateConfig.isPending ? 'Saving…' : t('shared.saveChanges')}
           </Button>
         }
       />

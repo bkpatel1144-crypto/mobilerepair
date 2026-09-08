@@ -55,7 +55,9 @@ export function FieldPreviewInput({
       return (
         <div className={cn(baseInputClasses, 'gap-2')}>
           <UserRound className="size-4 shrink-0" />
-          <span className="truncate">{placeholder ?? 'Search user...'}</span>
+          <span className="truncate">
+            {placeholder ?? t('pages.settings.fieldPreviewInput.searchUser')}
+          </span>
         </div>
       )
     case 'scanText':
@@ -128,7 +130,7 @@ export function FieldPreviewInput({
     case 'select':
       return (
         <div className={cn(baseInputClasses, 'justify-between')}>
-          <span>{options?.[0] ?? 'Select...'}</span>
+          <span>{options?.[0] ?? t('pages.settings.fieldPreviewInput.select')}</span>
         </div>
       )
     case 'date':

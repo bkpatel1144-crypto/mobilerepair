@@ -201,9 +201,9 @@ export function PageSetupDialog({
         <div className="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(7rem,1fr))]">
           {(
             [
-              ['Labels across', 'ups'],
-              ['Print speed', 'printSpeed'],
-              ['Print density', 'printDensity'],
+              [t('pages.settings.pageSetupDialog.labelsAcross'), 'ups'],
+              [t('pages.settings.pageSetupDialog.printSpeed'), 'printSpeed'],
+              [t('pages.settings.pageSetupDialog.printDensity'), 'printDensity'],
             ] as const
           ).map(([label, key]) => (
             <div key={key} className="space-y-1">

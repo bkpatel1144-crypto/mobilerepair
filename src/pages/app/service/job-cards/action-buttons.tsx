@@ -351,14 +351,18 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         open={confirmingTerminal !== null}
         onOpenChange={(o) => !o && setConfirmingTerminal(null)}
         title={
-          confirmingTerminal === 'close' ? 'Close this job?' : 'Return device & close this job?'
+          confirmingTerminal === 'close'
+            ? 'Close this job?'
+            : t('pages.service.actionButtons.returnDeviceCloseThisJob')
         }
         message={
           allowUndo
             ? 'This is a terminal status — once closed, "Undo Last Action" is no longer available for it.'
-            : 'This is a terminal status and cannot be changed afterward.'
+            : t('pages.service.actionButtons.thisIsATerminalStatusAnd')
         }
-        confirmLabel={confirmingTerminal === 'close' ? 'Close' : 'Return & Close'}
+        confirmLabel={
+          confirmingTerminal === 'close' ? 'Close' : t('pages.service.actionButtons.returnClose')
+        }
         destructive={false}
         isPending={applyAction.isPending}
         onConfirm={() => {
@@ -375,7 +379,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('pages.service.actionButtons.holdJob')}
         onSubmit={submitDialog}
-        submitLabel="Hold"
+        submitLabel={t('pages.service.actionButtons.hold')}
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">
@@ -425,7 +429,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('pages.service.actionButtons.markJobDone')}
         onSubmit={submitDialog}
-        submitLabel="Job Done"
+        submitLabel={t('pages.service.actionButtons.jobDone')}
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">
@@ -564,7 +568,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('pages.service.actionButtons.logFieldVisit')}
         onSubmit={submitDialog}
-        submitLabel="Log Visit"
+        submitLabel={t('pages.service.actionButtons.logVisit')}
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-3">

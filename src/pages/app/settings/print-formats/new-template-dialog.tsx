@@ -43,13 +43,14 @@ export function NewTemplateDialog({
 
   async function handleSubmit() {
     setError(null)
-    const finalName = name.trim() || `${preset?.name ?? 'Template'} (Copy)`
+    const finalName =
+      name.trim() || `${preset?.name ?? t('pages.settings.newTemplateDialog.template')} (Copy)`
     if (!preset) {
-      setError('That document type has no base format to start from.')
+      setError(t('pages.settings.newTemplateDialog.thatDocumentTypeHasNoBase'))
       return
     }
     if (existing.some((tpl) => tpl.name.trim().toLowerCase() === finalName.toLowerCase())) {
-      setError('A template with that name already exists.')
+      setError(t('pages.settings.newTemplateDialog.aTemplateWithThatNameAlready'))
       return
     }
     const layout = buildDefaultLayout(preset)
@@ -75,7 +76,7 @@ export function NewTemplateDialog({
       onOpenChange={onOpenChange}
       title={t('pages.settings.newTemplateDialog.newTemplate')}
       description={t('pages.settings.newTemplateDialog.pickADocumentTypeAndA')}
-      submitLabel="Create & Design"
+      submitLabel={t('pages.settings.newTemplateDialog.createDesign')}
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >
@@ -124,7 +125,9 @@ export function NewTemplateDialog({
           id="tpl-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={preset ? `${preset.name} (Copy)` : 'Template name'}
+          placeholder={
+            preset ? `${preset.name} (Copy)` : t('pages.settings.newTemplateDialog.templateName')
+          }
         />
       </div>
 

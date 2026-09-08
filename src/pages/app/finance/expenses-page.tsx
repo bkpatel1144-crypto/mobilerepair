@@ -87,11 +87,11 @@ function NewExpenseModal({
     setError(null)
     const value = Number(amount)
     if (!category) {
-      setError('Pick a category.')
+      setError(t('pages.finance.expenses.pickACategory'))
       return
     }
     if (!Number.isFinite(value) || value <= 0) {
-      setError('Enter an amount greater than zero.')
+      setError(t('shared.enterAnAmountGreaterThanZero'))
       return
     }
     try {
@@ -108,7 +108,9 @@ function NewExpenseModal({
       reset()
       onOpenChange(false)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not record this expense.')
+      setError(
+        err instanceof Error ? err.message : t('pages.finance.expenses.couldNotRecordThisExpense')
+      )
     }
   }
 
@@ -121,7 +123,7 @@ function NewExpenseModal({
       }}
       title={t('pages.finance.expenses.newExpense')}
       description={t('pages.finance.expenses.recordedAsMoneyOutItAppears')}
-      submitLabel={create.isPending ? 'Saving…' : 'Record Expense'}
+      submitLabel={create.isPending ? 'Saving…' : t('pages.finance.expenses.recordExpense')}
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >
@@ -317,7 +319,7 @@ export function ExpensesPage() {
         e.voided ? (
           <StatusBadge status={t('common.voided')} tone="neutral" />
         ) : (
-          <StatusBadge status="Posted" tone="success" />
+          <StatusBadge status={t('pages.finance.expenses.posted')} tone="success" />
         ),
     },
     {
@@ -396,7 +398,7 @@ export function ExpensesPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search expense #, category, party, notes..."
+        searchPlaceholder={t('pages.finance.expenses.searchExpenseCategoryPartyNotes')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >

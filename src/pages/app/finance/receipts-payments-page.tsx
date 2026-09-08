@@ -143,7 +143,7 @@ export function ReceiptsPaymentsPage() {
       key: 'against',
       header: t('pages.finance.receiptsPayments.against'),
       hideOnMobile: true,
-      render: (r) => r.jobCardNumber ?? 'Manual / Advance',
+      render: (r) => r.jobCardNumber ?? t('pages.finance.receiptsPayments.manualAdvance'),
     },
     {
       key: 'mode',
@@ -246,7 +246,7 @@ export function ReceiptsPaymentsPage() {
           label={t('pages.finance.receiptsPayments.netAmount')}
           icon={IndianRupee}
           value={`₹${netAmount}`}
-          sublabel="After money out"
+          sublabel={t('pages.finance.receiptsPayments.afterMoneyOut')}
           tone="info"
         />
         <StatCard
@@ -259,7 +259,7 @@ export function ReceiptsPaymentsPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search receipt, party..."
+        searchPlaceholder={t('shared.searchReceiptParty')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >
@@ -356,15 +356,15 @@ function NewEntryDialog({
   async function handleSubmit() {
     setError(null)
     if (!party) {
-      setError('Select a customer.')
+      setError(t('pages.finance.receiptsPayments.selectACustomer'))
       return
     }
     if (against === 'jobCard' && !selectedJob) {
-      setError('Select a job card.')
+      setError(t('pages.finance.receiptsPayments.selectAJobCard'))
       return
     }
     if (amount <= 0) {
-      setError('Enter an amount greater than 0.')
+      setError(t('pages.finance.receiptsPayments.enterAnAmountGreaterThan0'))
       return
     }
     await createEntry.mutateAsync({
@@ -495,7 +495,11 @@ function NewEntryDialog({
               }))}
               value={jobCardId}
               onChange={setJobCardId}
-              placeholder={partyId ? "Select this customer's job card..." : 'Pick a customer first'}
+              placeholder={
+                partyId
+                  ? "Select this customer's job card..."
+                  : t('pages.finance.receiptsPayments.pickACustomerFirst')
+              }
               disabled={!partyId}
             />
           </div>

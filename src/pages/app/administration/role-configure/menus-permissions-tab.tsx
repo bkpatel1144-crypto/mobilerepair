@@ -230,7 +230,9 @@ export function MenusPermissionsTab({
             disabled={disabled}
           >
             <ShieldCheck className="size-3.5" />
-            {draft.fullAccess ? 'Full Access Granted' : 'Grant Full Access'}
+            {draft.fullAccess
+              ? 'Full Access Granted'
+              : t('pages.administration.menusPermissionsTab.grantFullAccess')}
           </Button>
         </div>
       </div>

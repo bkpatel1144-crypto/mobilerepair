@@ -135,7 +135,7 @@ export function CreateUserPage() {
         </div>
         <div className="flex items-center gap-2">
           <StatusBadge
-            status={isComplete ? 'Complete' : 'Incomplete'}
+            status={isComplete ? 'Complete' : t('pages.administration.createUser.incomplete')}
             tone={isComplete ? 'success' : 'warning'}
           />
           {savedAt && (
@@ -208,7 +208,9 @@ export function CreateUserPage() {
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
                 className="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={
+                  showPassword ? 'Hide password' : t('pages.administration.createUser.showPassword')
+                }
               >
                 {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
               </button>
@@ -273,7 +275,7 @@ export function CreateUserPage() {
             Cancel
           </Button>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Creating…' : 'Create User'}
+            {isSubmitting ? 'Creating…' : t('pages.administration.createUser.createUser')}
           </Button>
         </div>
       </form>

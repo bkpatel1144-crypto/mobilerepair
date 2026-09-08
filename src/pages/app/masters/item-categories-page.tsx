@@ -123,7 +123,7 @@ export function ItemCategoriesPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search categories..."
+        searchPlaceholder={t('pages.masters.itemCategories.searchCategories')}
       />
 
       <DataTable
@@ -262,7 +262,7 @@ function ItemCategoryStatusButton({ category }: { category: ItemCategoryWithId }
         message={
           willDeactivate
             ? 'Deactivated categories no longer appear as a selectable option for new items.'
-            : 'This category will become selectable again for new items.'
+            : t('pages.masters.itemCategories.thisCategoryWillBecomeSelectableAgain')
         }
         confirmLabel={willDeactivate ? 'Deactivate' : t('common.activate')}
         destructive={willDeactivate}
@@ -317,7 +317,7 @@ function ItemCategoryDeleteButton({
         message={
           hasDependents
             ? `This category still has ${itemCount} item(s) and ${subCategoryCount} sub-categor${subCategoryCount === 1 ? 'y' : 'ies'}. Deleting it will leave them pointing at a category that no longer exists. This cannot be undone.`
-            : 'This permanently deletes the category. This cannot be undone.'
+            : t('pages.masters.itemCategories.thisPermanentlyDeletesTheCategoryThis')
         }
         confirmLabel={t('common.delete')}
         isPending={deleteCategory.isPending}
@@ -376,7 +376,7 @@ function ItemCategoryModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Create Item Category' : 'Edit Item Category'}
+      title={isNew ? 'Create Item Category' : t('pages.masters.itemCategories.editItemCategory')}
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create Category' : t('common.save')}
       isSubmitting={isPending}

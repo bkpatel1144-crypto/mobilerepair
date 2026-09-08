@@ -105,7 +105,9 @@ export function ServiceItemsPage() {
     {
       key: 'type',
       header: t('common.type'),
-      render: () => <StatusBadge status="Services" tone="success" />,
+      render: () => (
+        <StatusBadge status={t('pages.service.serviceItems.services')} tone="success" />
+      ),
     },
     { key: 'uom', header: t('shared.uom'), hideOnMobile: true, render: (i) => i.uom },
     {
@@ -183,7 +185,7 @@ export function ServiceItemsPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search service items..."
+        searchPlaceholder={t('pages.service.serviceItems.searchServiceItems')}
       />
 
       <DataTable
@@ -205,7 +207,9 @@ export function ServiceItemsPage() {
       <FormModal
         open={!!modalItem}
         onOpenChange={(o) => !o && setModalItem(null)}
-        title={modalItem === 'new' ? 'Add Service Item' : 'Edit Service Item'}
+        title={
+          modalItem === 'new' ? 'Add Service Item' : t('pages.service.serviceItems.editServiceItem')
+        }
         onSubmit={handleSubmit}
         isSubmitting={createItem.isPending || updateItem.isPending}
       >

@@ -141,7 +141,7 @@ export function DeviceStockPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search stock..."
+        searchPlaceholder={t('pages.secondHandDevice.deviceStock.searchStock')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       />

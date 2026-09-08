@@ -315,7 +315,9 @@ export function RecordCostingModal({
               onClick={handleSave}
               disabled={saveCosting.isPending}
             >
-              {saveCosting.isPending ? 'Saving…' : 'Save Costing'}
+              {saveCosting.isPending
+                ? 'Saving…'
+                : t('pages.service.recordCostingModal.saveCosting')}
             </Button>
             <button
               type="button"

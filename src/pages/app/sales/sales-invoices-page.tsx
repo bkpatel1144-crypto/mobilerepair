@@ -210,7 +210,7 @@ export function SalesInvoicesPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search job card, customer, mobile..."
+        searchPlaceholder={t('shared.searchJobCardCustomerMobile')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       >

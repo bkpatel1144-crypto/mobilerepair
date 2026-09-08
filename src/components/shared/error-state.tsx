@@ -2,6 +2,7 @@ import { AlertTriangle, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { errorMessage } from '@/lib/error-message'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 interface ErrorStateProps {
   /** The thrown value from a failed query — `error` off a TanStack `useQuery` result. */
@@ -21,12 +22,8 @@ interface ErrorStateProps {
  * look exactly like "you haven't added anything yet." A shop owner would reasonably start
  * re-entering data that is actually still there. Never collapse an error into an empty state.
  */
-export function ErrorState({
-  error,
-  onRetry,
-  title = "Couldn't load this data",
-  className,
-}: ErrorStateProps) {
+export function ErrorState({ error, onRetry, title, className }: ErrorStateProps) {
+  const { t } = useTranslation()
   return (
     <div
       role="alert"
@@ -36,7 +33,9 @@ export function ErrorState({
       )}
     >
       <AlertTriangle className="mb-1 size-8 text-destructive/70" />
-      <p className="text-sm font-medium text-foreground">{title}</p>
+      <p className="text-sm font-medium text-foreground">
+        {title ?? t('components.shared.errorState.couldnTLoadThisData')}
+      </p>
       <p className="max-w-sm text-sm text-muted-foreground">{errorMessage(error)}</p>
       {onRetry && (
         <Button type="button" variant="outline" size="sm" className="mt-3" onClick={onRetry}>

@@ -39,7 +39,8 @@ export function CashBookPage() {
         <div>
           <p className="font-medium">{r.partyName}</p>
           <p className="text-xs text-muted-foreground">
-            {r.receiptNumber} · {r.jobCardNumber ?? 'Manual entry'} · {r.mode.toUpperCase()}
+            {r.receiptNumber} · {r.jobCardNumber ?? t('pages.finance.cashBook.manualEntry')} ·{' '}
+            {r.mode.toUpperCase()}
           </p>
         </div>
       ),
@@ -103,7 +104,7 @@ export function CashBookPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search receipt, party..."
+        searchPlaceholder={t('shared.searchReceiptParty')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
       />

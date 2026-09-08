@@ -415,7 +415,22 @@
     "15DigitImeiOptional": "15 અંકનો IMEI (વૈકલ્પિક)",
     "notesOptional": "નોંધ (વૈકલ્પિક)",
     "optional": "(વૈકલ્પિક)",
-    "optional2": "(વૈકલ્પિક)"
+    "optional2": "(વૈકલ્પિક)",
+    "saveChanges": "ફેરફાર સાચવો",
+    "ready": "તૈયાર",
+    "delivered": "આપી દીધું",
+    "success": "સફળ",
+    "blocked": "અટકાવેલ",
+    "failed": "નિષ્ફળ",
+    "unassigned": "કોઈને સોંપ્યું નથી",
+    "searchReceiptParty": "રસીદ, પાર્ટી શોધો...",
+    "enterAnAmountGreaterThanZero": "શૂન્યથી વધુ રકમ નાખો.",
+    "searchJobCardCustomerMobile": "જોબ કાર્ડ, ગ્રાહક, મોબાઇલ શોધો...",
+    "selectADeviceType": "ડિવાઇસ પ્રકાર પસંદ કરો.",
+    "pickADeviceTypeFirst": "પહેલાં ડિવાઇસ પ્રકાર પસંદ કરો",
+    "pickABrandFirst": "પહેલાં બ્રાન્ડ પસંદ કરો",
+    "receiptInvoiceBrandModel": "રસીદ/બિલ #, બ્રાન્ડ, મોડેલ...",
+    "somethingWentWrong": "કંઈક ખોટું થયું."
   },
   "pages": {
     "dashboard": {
@@ -442,7 +457,10 @@
         "newParty": "નવી પાર્ટી",
         "newItem": "નવું આઇટમ",
         "jobCardsByStatus": "સ્થિતિ પ્રમાણે જોબ કાર્ડ",
-        "revenueTrend": "આવકનો પ્રવાહ"
+        "revenueTrend": "આવકનો પ્રવાહ",
+        "goodMorning": "સુપ્રભાત",
+        "goodAfternoon": "નમસ્કાર",
+        "goodEvening": "શુભ સાંજ"
       }
     },
     "finance": {
@@ -454,7 +472,8 @@
         "creditIn": "જમા (આવ્યું)",
         "debitOut": "ઉધાર (ગયું)",
         "totalCreditIn": "કુલ જમા (આવ્યું)",
-        "totalDebitOut": "કુલ ઉધાર (ગયું)"
+        "totalDebitOut": "કુલ ઉધાર (ગયું)",
+        "manualEntry": "હાથે નોંધેલ"
       },
       "expenses": {
         "newExpense": "નવો ખર્ચ",
@@ -468,7 +487,12 @@
         "expense": "ખર્ચ #",
         "paidTo": "કોને ચૂકવ્યું",
         "recordRentSalariesAndOtherRunning": "ભાડું, પગાર અને બાકીના ચાલુ ખર્ચ અહીં નોંધો — તે સીધા રોકડ ખાતાવહી અને નફા-નુકસાનમાં જાય છે.",
-        "shopRunningCostsRentSalariesUtilities": "દુકાનના ચાલુ ખર્ચ — ભાડું, પગાર, વીજળી-પાણી અને બાકીનું બધું જે નફા-નુકસાનમાં બાદ થાય છે"
+        "shopRunningCostsRentSalariesUtilities": "દુકાનના ચાલુ ખર્ચ — ભાડું, પગાર, વીજળી-પાણી અને બાકીનું બધું જે નફા-નુકસાનમાં બાદ થાય છે",
+        "pickACategory": "શ્રેણી પસંદ કરો.",
+        "couldNotRecordThisExpense": "આ ખર્ચ નોંધી શકાયો નથી.",
+        "recordExpense": "ખર્ચ નોંધો",
+        "posted": "નોંધાયું",
+        "searchExpenseCategoryPartyNotes": "ખર્ચ #, શ્રેણી, પાર્ટી, નોંધ શોધો..."
       },
       "partyLedger": {
         "partyLedger": "પાર્ટી ખાતાવહી",
@@ -480,7 +504,11 @@
         "thisPartySJobCardsAnd": "આ પાર્ટીના જોબ કાર્ડ અને ચુકવણી અહીં દેખાશે.",
         "settled": "ચૂકતે ✓",
         "creditCr": "જમા (Cr)",
-        "debitDr": "ઉધાર (Dr)"
+        "debitDr": "ઉધાર (Dr)",
+        "withJobCardActivity": "જોબ કાર્ડ પ્રવૃત્તિ સાથે",
+        "activeJobsOnly": "ફક્ત ચાલુ જોબ",
+        "inclAdvanceOnUnbilledJobs": "બિલ વગરના જોબના એડવાન્સ સહિત",
+        "pendingCollection": "વસૂલાત બાકી"
       },
       "payables": {
         "payables": "દેવી રકમ",
@@ -511,7 +539,13 @@
         "customer": "ગ્રાહક *",
         "amount": "રકમ *",
         "receiptsPayments": "રસીદ અને ચુકવણી",
-        "notesOptional": "નોંધ (વૈકલ્પિક)"
+        "notesOptional": "નોંધ (વૈકલ્પિક)",
+        "manualAdvance": "હાથે / એડવાન્સ",
+        "afterMoneyOut": "રકમ બહાર ગયા પછી",
+        "selectACustomer": "ગ્રાહક પસંદ કરો.",
+        "selectAJobCard": "જોબ કાર્ડ પસંદ કરો.",
+        "enterAnAmountGreaterThan0": "0 થી વધુ રકમ નાખો.",
+        "pickACustomerFirst": "પહેલાં ગ્રાહક પસંદ કરો"
       },
       "receivables": {
         "receivables": "લેણી રકમ",
@@ -519,7 +553,11 @@
         "collection": "વસૂલાત %",
         "noOutstandingReceivables": "કોઈ બાકી લેણું નથી",
         "allPaymentsAreUpToDate": "બધી ચુકવણી અદ્યતન છે.",
-        "aging": "જૂનાપણું"
+        "aging": "જૂનાપણું",
+        "030Days": "0-30 દિવસ",
+        "3060Days": "30-60 દિવસ",
+        "6090Days": "60-90 દિવસ",
+        "90Days": "90+ દિવસ"
       },
       "supplierPayables": {
         "newSupplierBill": "નવું સપ્લાયર બિલ",
@@ -535,7 +573,14 @@
         "130Days": "1–30 દિવસ",
         "3160Days": "31–60 દિવસ",
         "60Days": "60+ દિવસ",
-        "oldest": "સૌથી જૂનું"
+        "oldest": "સૌથી જૂનું",
+        "pickASupplier": "સપ્લાયર પસંદ કરો.",
+        "enterABillAmountGreaterThan": "શૂન્યથી વધુ બિલ રકમ નાખો.",
+        "theDueDateCannotBeBefore": "ચુકવણી તારીખ બિલની તારીખ પહેલાં હોઈ શકતી નથી.",
+        "couldNotSaveThisBill": "આ બિલ સાચવી શકાયું નથી.",
+        "saveBill": "બિલ સાચવો",
+        "couldNotRecordThisPayment": "આ ચુકવણી નોંધી શકાઈ નથી.",
+        "devicePurchase": "ડિવાઇસ ખરીદી"
       }
     },
     "masters": {
@@ -550,7 +595,11 @@
         "categoryName": "શ્રેણીનું નામ *",
         "rawMaterial": "કાચો માલ",
         "parentCategory": "મુખ્ય શ્રેણી",
-        "noneRoot": "કોઈ નહીં (મૂળ)"
+        "noneRoot": "કોઈ નહીં (મૂળ)",
+        "searchCategories": "શ્રેણીઓ શોધો...",
+        "thisCategoryWillBecomeSelectableAgain": "આ શ્રેણી નવાં આઇટમ માટે ફરી પસંદ કરી શકાશે.",
+        "thisPermanentlyDeletesTheCategoryThis": "આ શ્રેણી કાયમ માટે કાઢી નાખે છે. આ પાછું લઈ શકાતું નથી.",
+        "editItemCategory": "આઇટમ શ્રેણી બદલો"
       },
       "itemMaster": {
         "itemMaster": "આઇટમ માસ્ટર",
@@ -569,7 +618,14 @@
         "product": "પ્રોડક્ટ",
         "itemName": "આઇટમનું નામ *",
         "gst2": "GST %",
-        "enabledIn2": "ક્યાં ચાલુ"
+        "enabledIn2": "ક્યાં ચાલુ",
+        "service": "સર્વિસ",
+        "sales": "વેચાણ",
+        "purchase": "ખરીદી",
+        "production": "ઉત્પાદન",
+        "servicePos": "સર્વિસ / POS",
+        "thisItemWillBecomeSelectableAgain": "આ આઇટમ ફરી પસંદ કરી શકાશે.",
+        "editItem": "આઇટમ બદલો"
       },
       "parties": {
         "manageCustomersAndSuppliers": "ગ્રાહકો અને સપ્લાયર સંભાળો",
@@ -596,7 +652,11 @@
         "gstNumber2": "GST નંબર",
         "panNumber2": "PAN નંબર",
         "area": "વિસ્તાર",
-        "thisRemovesThePartyFromEvery": "આ પાર્ટીને દરેક યાદી (જોબ કાર્ડ, રસીદો, ખરીદી) માંથી કાઢી નાખે છે. એપમાં તેને પાછી લાવવાની કોઈ સ્ક્રીન નથી — પાછી લાવવા સીધા Firestore માં ફેરફાર કરવો પડશે."
+        "thisRemovesThePartyFromEvery": "આ પાર્ટીને દરેક યાદી (જોબ કાર્ડ, રસીદો, ખરીદી) માંથી કાઢી નાખે છે. એપમાં તેને પાછી લાવવાની કોઈ સ્ક્રીન નથી — પાછી લાવવા સીધા Firestore માં ફેરફાર કરવો પડશે.",
+        "both": "બંને",
+        "searchByNameMobileOrParty": "નામ, મોબાઇલ કે પાર્ટી કોડથી શોધો...",
+        "editParty": "પાર્ટી બદલો",
+        "allOptionalAddWhatYouNeed": "બધું વૈકલ્પિક — જે જોઈએ તે ભરો"
       },
       "partyCategories": {
         "partyCategories": "પાર્ટી શ્રેણી",
@@ -606,7 +666,8 @@
         "creditInformation": "ઉધાર માહિતી",
         "defaultCreditDays": "ડિફોલ્ટ ઉધાર દિવસ",
         "defaultCustomer": "ડિફોલ્ટ (ગ્રાહક)",
-        "defaultSupplier": "ડિફોલ્ટ (સપ્લાયર)"
+        "defaultSupplier": "ડિફોલ્ટ (સપ્લાયર)",
+        "editCategory": "શ્રેણી બદલો"
       },
       "paymentModes": {
         "paymentModes": "ચુકવણીની રીતો",
@@ -614,7 +675,12 @@
         "noPaymentModesYet": "હજી કોઈ ચુકવણી રીત નથી",
         "addYourFirstPaymentModeAbove": "ઉપર તમારી પહેલી ચુકવણી રીત ઉમેરો.",
         "receiptsAlreadyRecordedUnderThisPayment": "આ ચુકવણી રીત હેઠળ પહેલેથી નોંધેલી રસીદો એવી રીતનો સંદર્ભ રાખશે જે હવે અસ્તિત્વમાં નથી. આ પાછું લઈ શકાતું નથી.",
-        "code": "કોડ *"
+        "code": "કોડ *",
+        "upi": "UPI",
+        "bankTransfer": "બેંક ટ્રાન્સફર",
+        "searchPaymentModes": "ચુકવણી રીતો શોધો...",
+        "thisPaymentModeWillBecomeSelectable": "આ ચુકવણી રીત ફરી પસંદ કરી શકાશે.",
+        "editPaymentMode": "ચુકવણી રીત બદલો"
       },
       "uom": {
         "unitsOfMeasure": "માપના એકમો",
@@ -633,7 +699,12 @@
         "shownInDropdownsAndReports": "ડ્રોપડાઉન અને રિપોર્ટમાં દેખાય છે",
         "decimalPlaces": "દશાંશ સ્થાન",
         "displayOrder": "દેખાવાનો ક્રમ",
-        "conversionOptional": "રૂપાંતરણ (વૈકલ્પિક)"
+        "conversionOptional": "રૂપાંતરણ (વૈકલ્પિક)",
+        "length": "લંબાઈ",
+        "weight": "વજન",
+        "volume": "ઘનફળ",
+        "thisUnitWillBecomeSelectableAgain": "આ એકમ નવાં આઇટમ માટે ફરી પસંદ કરી શકાશે.",
+        "editUnitOfMeasure": "માપનો એકમ બદલો"
       }
     },
     "secondHandDevice": {
@@ -656,7 +727,17 @@
         "paidInFull": "પૂરી ચુકવણી થઈ ગઈ.",
         "whoeverIsLoggedIn": "જે લોગ ઇન હોય તે",
         "accountLockIcloudGoogle": "ખાતા લોક (iCloud / Google)",
-        "secondImeiDualSim": "બીજું IMEI (ડ્યુઅલ સિમ)"
+        "secondImeiDualSim": "બીજું IMEI (ડ્યુઅલ સિમ)",
+        "chargerOnly": "ફક્ત ચાર્જર",
+        "chargerBoxCable": "ચાર્જર, બોક્સ, કેબલ",
+        "chargerBoxCableEarphones": "ચાર્જર, બોક્સ, કેબલ, ઈયરફોન",
+        "boxOnly": "ફક્ત બોક્સ",
+        "selectOrAddASeller": "વેચનાર પસંદ કરો કે ઉમેરો.",
+        "enterAPurchasePriceGreaterThan": "0 થી વધુ ખરીદ કિંમત નાખો.",
+        "somethingWentWrongPleaseTryAgain": "કંઈક ખોટું થયું. કૃપા કરીને ફરી પ્રયાસ કરો.",
+        "captureUploadIdProofPhoto": "ઓળખપત્રનો ફોટો લો / અપલોડ કરો",
+        "savePurchase": "ખરીદી સાચવો",
+        "scanImei2": "IMEI 2 સ્કેન કરો"
       },
       "devicePurchase": {
         "devicePurchase": "ડિવાઇસ ખરીદી",
@@ -682,7 +763,11 @@
         "buyer": "ખરીદનાર *",
         "salePrice": "વેચાણ કિંમત *",
         "accessoriesGivenToBuyer": "ખરીદનારને આપેલી વસ્તુઓ",
-        "warrantyDays": "વોરંટી (દિવસ)"
+        "warrantyDays": "વોરંટી (દિવસ)",
+        "searchReceiptImeiBrand": "રસીદ # / IMEI / બ્રાન્ડ શોધો...",
+        "selectOrAddABuyer": "ખરીદનાર પસંદ કરો કે ઉમેરો.",
+        "enterASalePriceGreaterThan": "0 થી વધુ વેચાણ કિંમત નાખો.",
+        "confirmSale": "વેચાણ ખાતરી કરો"
       },
       "deviceStock": {
         "deviceStock": "ડિવાઇસ સ્ટોક",
@@ -690,7 +775,8 @@
         "totalInvested": "કુલ રોકેલી રકમ",
         "noDevicesInStock": "સ્ટોકમાં કોઈ ડિવાઇસ નથી",
         "devicesYouPurchaseWillShowUp": "તમે ખરીદેલી ડિવાઇસ વેચાય ત્યાં સુધી અહીં દેખાશે.",
-        "daysInStock": "સ્ટોકમાં દિવસ"
+        "daysInStock": "સ્ટોકમાં દિવસ",
+        "searchStock": "સ્ટોક શોધો..."
       },
       "purchaseDetailSections": {
         "device": "ડિવાઇસ",
@@ -714,7 +800,9 @@
         "profit": "નફો",
         "returnedToSeller": "વેચનારને પરત",
         "saleInvoice": "વેચાણ બિલ #",
-        "seller": "વેચનાર"
+        "seller": "વેચનાર",
+        "purchase": "ખરીદી",
+        "inRefurb": "રિફર્બમાં"
       },
       "purchaseRegister": {
         "purchaseRegister": "ખરીદી રજિસ્ટર",
@@ -747,7 +835,13 @@
         "logFieldVisit": "ફીલ્ડ વિઝિટ નોંધો",
         "whatWasDoneOnSite": "સ્થળ પર શું કર્યું...",
         "reason": "કારણ",
-        "handoverTo": "કોને સોંપવું"
+        "handoverTo": "કોને સોંપવું",
+        "returnDeviceCloseThisJob": "ડિવાઇસ પરત કરીને આ જોબ બંધ કરવી?",
+        "thisIsATerminalStatusAnd": "આ આખરી સ્થિતિ છે અને તે પછી બદલી શકાતી નથી.",
+        "returnClose": "પરત કરીને બંધ કરો",
+        "hold": "અટકાવો",
+        "jobDone": "જોબ પૂર્ણ",
+        "logVisit": "વિઝિટ નોંધો"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "જોબ કાર્ડ બનાવવાનું ફોર્મ લોડ થઈ શક્યું નથી",
@@ -767,7 +861,13 @@
         "createJobCard": "જોબ કાર્ડ બનાવો",
         "alternateNumberOptional": "બીજો નંબર (વૈકલ્પિક)",
         "secondImeiOptional": "બીજું IMEI (વૈકલ્પિક)",
-        "serialNumberOptional": "સિરિયલ નંબર (વૈકલ્પિક)"
+        "serialNumberOptional": "સિરિયલ નંબર (વૈકલ્પિક)",
+        "enterTheNewCustomerSName": "નવા ગ્રાહકનું નામ અને સાચો 10 અંકનો મોબાઇલ નંબર નાખો.",
+        "selectOrAddACustomer": "ગ્રાહક પસંદ કરો કે ઉમેરો.",
+        "selectAtLeastOneProblem": "ઓછામાં ઓછી એક સમસ્યા પસંદ કરો.",
+        "selectABrand": "બ્રાન્ડ પસંદ કરો.",
+        "enterTheModel": "મોડેલ નાખો.",
+        "couldNotCreateTheJobCard": "જોબ કાર્ડ બનાવી શકાયું નથી. ફરી પ્રયાસ કરો."
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "લેતી વખતની વસ્તુઓ",
@@ -798,7 +898,8 @@
         "clickAStatusCardToFilter": "ફિલ્ટર કરવા કોઈ સ્થિતિ કાર્ડ પર ક્લિક કરો",
         "createYourFirstJobCardTo": "શરૂ કરવા તમારું પહેલું જોબ કાર્ડ બનાવો.",
         "deliveredReturnedBy": "આપનાર / પરત કરનાર",
-        "noUsersYet": "હજી કોઈ વપરાશકર્તા નથી."
+        "noUsersYet": "હજી કોઈ વપરાશકર્તા નથી.",
+        "searchJobCustomerMobile": "જોબ, ગ્રાહક, મોબાઇલ શોધો..."
       },
       "recordCostingModal": {
         "itemName": "આઇટમનું નામ",
@@ -808,7 +909,8 @@
         "labor": "મજૂરી",
         "overhead": "ઉપરી ખર્ચ",
         "other": "અન્ય",
-        "billAmount": "બિલ રકમ"
+        "billAmount": "બિલ રકમ",
+        "saveCosting": "ખર્ચ સાચવો"
       },
       "jobCosting": {
         "jobCosting": "જોબ ખર્ચ",
@@ -818,14 +920,20 @@
         "jobDetails": "જોબની વિગતો",
         "financial": "નાણાકીય",
         "advancePaid": "એડવાન્સ ચૂકવેલ",
-        "closedJobsRecordActualPartsLabor": "બંધ જોબ — ખરા પાર્ટ્સ, મજૂરી અને ઉપરી ખર્ચ નોંધો"
+        "closedJobsRecordActualPartsLabor": "બંધ જોબ — ખરા પાર્ટ્સ, મજૂરી અને ઉપરી ખર્ચ નોંધો",
+        "recorded": "નોંધાયેલ",
+        "pendingCosting": "ખર્ચ બાકી",
+        "costed": "ખર્ચ નોંધાયો"
       },
       "serviceItems": {
         "serviceItems": "સર્વિસ આઇટમ",
         "itemsAndServicesUsedInJob": "જોબ કાર્ડમાં વપરાતાં આઇટમ અને સર્વિસ — આઇટમ માસ્ટરથી સંભાળાય",
         "itemMasterShipsInPhase7": "આઇટમ માસ્ટર ફેઝ 7 માં આવશે",
         "noServiceItemsYet": "હજી કોઈ સર્વિસ આઇટમ નથી",
-        "addOneToGetStarted": "શરૂ કરવા એક ઉમેરો."
+        "addOneToGetStarted": "શરૂ કરવા એક ઉમેરો.",
+        "services": "સર્વિસ",
+        "searchServiceItems": "સર્વિસ આઇટમ શોધો...",
+        "editServiceItem": "સર્વિસ આઇટમ બદલો"
       },
       "addOptionForm": {
         "selectBrand": "બ્રાન્ડ પસંદ કરો..."
@@ -855,12 +963,14 @@
         "logAFieldVisitFromA": "કોઈ જોબ કાર્ડમાંથી ફીલ્ડ વિઝિટ નોંધો, તો તે અહીં દેખાશે.",
         "visits": "વિઝિટ",
         "timeSpent": "લાગેલો સમય",
-        "onFieldTechnicianLogbookTimeSpent": "ફીલ્ડ ટેકનિશિયન લોગબુક — દરેક જોબ પર લાગેલો સમય અને એન્જિનિયર"
+        "onFieldTechnicianLogbookTimeSpent": "ફીલ્ડ ટેકનિશિયન લોગબુક — દરેક જોબ પર લાગેલો સમય અને એન્જિનિયર",
+        "searchJobCustomer": "જોબ, ગ્રાહક શોધો..."
       },
       "jobWiseProfit": {
         "jobWiseProfit": "જોબ પ્રમાણે નફો",
         "jobWiseProfitAndLossAnalysis": "જોબ પ્રમાણે નફા-નુકસાનનું વિશ્લેષણ",
-        "recordActualCostingOnAClosed": "કોઈ બંધ જોબ પર ખરો ખર્ચ નોંધો, તો તેનો નફો અહીં દેખાશે."
+        "recordActualCostingOnAClosed": "કોઈ બંધ જોબ પર ખરો ખર્ચ નોંધો, તો તેનો નફો અહીં દેખાશે.",
+        "searchJobCustomerTech": "જોબ, ગ્રાહક, ટેકનિશિયન શોધો..."
       },
       "periodSummary": {
         "periodSummary": "સમયગાળાનો સારાંશ",
@@ -876,7 +986,8 @@
         "customer": "ગ્રાહક",
         "assignedTo": "સોંપેલ",
         "cost": "ખર્ચ",
-        "netAfterShopExpenses": "દુકાનના ખર્ચ બાદ ચોખ્ખું"
+        "netAfterShopExpenses": "દુકાનના ખર્ચ બાદ ચોખ્ખું",
+        "searchDate": "તારીખ શોધો..."
       },
       "profitLoss": {
         "cashBasisMoneyActuallyReceivedAnd": "રોકડ ધોરણ — ખરેખર મળેલી અને ચૂકવેલી રકમ, તેથી તે હંમેશાં રોકડ ખાતાવહી સાથે મેળ ખાય છે",
@@ -891,7 +1002,13 @@
         "netProfit": "ચોખ્ખો નફો",
         "statement": "પત્રક",
         "profitLoss": "નફો અને નુકસાન",
-        "profitLossIsBuiltFromReceipts": "નફો-નુકસાન રસીદો અને ચુકવણીમાંથી બને છે. કોઈ ચુકવણી લો કે ખર્ચ નોંધો, તો તે અહીં દેખાશે."
+        "profitLossIsBuiltFromReceipts": "નફો-નુકસાન રસીદો અને ચુકવણીમાંથી બને છે. કોઈ ચુકવણી લો કે ખર્ચ નોંધો, તો તે અહીં દેખાશે.",
+        "thisWeek": "આ અઠવાડિયે",
+        "thisMonth": "આ મહિને",
+        "thisYear": "આ વર્ષે",
+        "lessRefunds": "બાદ: રિફંડ",
+        "lessDirectCostSupplierPayments": "બાદ: સીધો ખર્ચ (સપ્લાયર ચુકવણી)",
+        "paidToSuppliers": "સપ્લાયરોને ચૂકવ્યું"
       },
       "serviceReports": {
         "serviceReports": "સર્વિસ રિપોર્ટ",
@@ -919,7 +1036,8 @@
         "share": "હિસ્સો %",
         "partName": "પાર્ટનું નામ",
         "deviceName": "ડિવાઇસનું નામ",
-        "jobRevenue": "જોબની આવક"
+        "jobRevenue": "જોબની આવક",
+        "searchSupplier": "સપ્લાયર શોધો..."
       },
       "technicianReport": {
         "technicianReport": "ટેકનિશિયન રિપોર્ટ",
@@ -928,7 +1046,8 @@
         "winRate": "સફળતા દર",
         "avgJob": "સરેરાશ / જોબ",
         "avgJob2": "સરેરાશ/જોબ",
-        "performance": "કામગીરી"
+        "performance": "કામગીરી",
+        "searchTechnician": "ટેકનિશિયન શોધો..."
       }
     },
     "sales": {
@@ -937,20 +1056,23 @@
         "allGeneratedBillsViewOrEdit": "બધાં બનેલાં બિલ — આપવા માટે તૈયાર, આપી દીધેલાં કે બંધ બિલ જુઓ કે ફેરફાર કરો.",
         "noBillsGeneratedYet": "હજી કોઈ બિલ બન્યું નથી",
         "aJobCardAppearsHereOnce": "જોબ કાર્ડના પોતાના બિલ બનાવો વિકલ્પથી બિલ બનતાં તે અહીં દેખાશે.",
-        "billDate": "બિલની તારીખ"
+        "billDate": "બિલની તારીખ",
+        "closed": "બંધ"
       }
     },
     "completeSetup": {
       "completeSetup": {
         "letSFinishSettingUpYour": "ચાલો તમારું ખાતું સેટ કરવાનું પૂરું કરીએ",
-        "yourLastSignUpGotInterrupted": "તમારું છેલ્લું સાઇન-અપ તમારી કંપની સેટ થાય તે પહેલાં અટકી ગયું હતું. આમાં ફક્ત એક ક્ષણ લાગશે."
+        "yourLastSignUpGotInterrupted": "તમારું છેલ્લું સાઇન-અપ તમારી કંપની સેટ થાય તે પહેલાં અટકી ગયું હતું. આમાં ફક્ત એક ક્ષણ લાગશે.",
+        "finishSetup": "સેટઅપ પૂરું કરો"
       }
     },
     "forgotPassword": {
       "forgotPassword": {
         "resetYourPassword": "તમારો પાસવર્ડ બદલો",
         "enterYourEmailAndWeLl": "તમારું ઈમેલ નાખો અને અમે તમને બદલવાની લિંક મોકલીશું.",
-        "checkYourEmail": "તમારું ઈમેલ જુઓ"
+        "checkYourEmail": "તમારું ઈમેલ જુઓ",
+        "sendResetLink": "બદલવાની લિંક મોકલો"
       }
     },
     "login": {
@@ -963,7 +1085,8 @@
     "signup": {
       "signup": {
         "createYourAccount": "તમારું ખાતું બનાવો",
-        "freeForeverNoCardRequired": "હંમેશાં મફત — કાર્ડની જરૂર નથી."
+        "freeForeverNoCardRequired": "હંમેશાં મફત — કાર્ડની જરૂર નથી.",
+        "createAccount": "ખાતું બનાવો"
       }
     },
     "landing": {
@@ -990,12 +1113,26 @@
         "billingPaymentsConnected": "બિલિંગ અને ચુકવણી, એકબીજા સાથે જોડાયેલાં",
         "assignRepair": "સોંપણી અને મરામત",
         "billCollect": "બિલ અને વસૂલાત",
-        "deliverWarranty": "સોંપણી અને વોરંટી"
+        "deliverWarranty": "સોંપણી અને વોરંટી",
+        "isThisReallyFree": "શું આ ખરેખર મફત છે?",
+        "yesEveryFeatureInAimIs": "હા — aim ની દરેક સુવિધા હંમેશાં મફત છે. કાર્ડની જરૂર નથી, કોઈ પ્લાન સ્તર નથી, કોઈ સુવિધા બંધ નથી.",
+        "canIBringMyExistingData": "શું હું મારો જૂનો ડેટા લાવી શકું?",
+        "yesWeOfferFreeDataMigration": "હા — તમારા ગ્રાહકો, ડિવાઇસ અને ઇતિહાસ aim માં લાવવા અમે મફત ડેટા માઇગ્રેશન આપીએ છીએ.",
+        "doesItWorkOnMobile": "શું આ મોબાઇલ પર ચાલે છે?",
+        "yesAimIsInstallableAsA": "હા — aim મોબાઇલ એપ જેમ ઇન્સ્ટોલ થાય છે અને શરૂઆતથી મોબાઇલ-પ્રથમ બનાવેલું છે.",
+        "canDifferentStaffSeeDifferentThings": "શું અલગ અલગ કર્મચારી અલગ અલગ વસ્તુ જોઈ શકે?",
+        "yesTheWorkflowDesignerLetsYou": "હા — વર્કફ્લો ડિઝાઇનરથી તમે નક્કી કરી શકો કે દરેક જોબ સ્થિતિ પર દરેક ભૂમિકા શું જોઈ અને કરી શકે."
       }
     },
     "pricing": {
       "pricing": {
-        "simplePricingFree": "સીધી કિંમત: મફત."
+        "simplePricingFree": "સીધી કિંમત: મફત.",
+        "unlimitedJobCardsTechniciansAndCustomers": "અમર્યાદિત જોબ કાર્ડ, ટેકનિશિયન અને ગ્રાહકો",
+        "fullRoleBasedAccessControlWorkflow": "સંપૂર્ણ ભૂમિકા-આધારિત નિયંત્રણ અને વર્કફ્લો ડિઝાઇનર",
+        "financeReceiptsLedgersReceivablesPayables": "નાણાં: રસીદો, ખાતાં, લેણું અને દેવું",
+        "secondHandDevicePurchaseSaleTracking": "સેકન્ડ હેન્ડ ડિવાઇસની ખરીદી અને વેચાણનો હિસાબ",
+        "allReportsDashboardsAndCsvExcel": "બધી રિપોર્ટ, ડેશબોર્ડ અને CSV/Excel એક્સપોર્ટ",
+        "freeDataMigrationFromYourCurrent": "તમારી હાલની સિસ્ટમમાંથી મફત ડેટા માઇગ્રેશન"
       }
     },
     "administration": {
@@ -1021,7 +1158,9 @@
         "role": "ભૂમિકા",
         "branch": "શાખા",
         "networkDevice": "નેટવર્ક અને ડિવાઇસ",
-        "idle30m": "નિષ્ક્રિય (30 મિનિટ+)"
+        "idle30m": "નિષ્ક્રિય (30 મિનિટ+)",
+        "searchByUserDeviceIp": "વપરાશકર્તા, ડિવાઇસ, IP થી શોધો...",
+        "thisIsYourCurrentSession": "આ તમારું હાલનું સેશન છે"
       },
       "createRole": {
         "backToRoles": "ભૂમિકાઓ પર પાછા",
@@ -1030,7 +1169,12 @@
         "afterCreatingTheRole": "ભૂમિકા બનાવ્યા પછી",
         "assignPermissionsToDefineWhatUsers": "નક્કી કરો કે આ ભૂમિકાવાળા વપરાશકર્તા શું કરી શકે",
         "assignMenusToControlNavigationAccess": "નેવિગેશનની પહોંચ નક્કી કરવા મેન્યુ પસંદ કરો",
-        "assignUsersToThisRole": "આ ભૂમિકામાં વપરાશકર્તા ઉમેરો"
+        "assignUsersToThisRole": "આ ભૂમિકામાં વપરાશકર્તા ઉમેરો",
+        "roleNameMustBeAtLeast": "ભૂમિકાનું નામ ઓછામાં ઓછા 2 અક્ષરનું હોવું જોઈએ.",
+        "roleCodeIsRequired": "ભૂમિકા કોડ જરૂરી છે.",
+        "aRoleWithThatNameAlready": "તે નામની ભૂમિકા પહેલેથી છે.",
+        "couldNotCreateThisRole": "આ ભૂમિકા બનાવી શકાઈ નથી.",
+        "createRole": "ભૂમિકા બનાવો"
       },
       "createUser": {
         "enterFullName": "પૂરું નામ લખો",
@@ -1042,7 +1186,15 @@
         "emailAddress": "ઈમેલ સરનામું *",
         "password": "પાસવર્ડ *",
         "role": "ભૂમિકા *",
-        "securityNote": "સુરક્ષા નોંધ:"
+        "securityNote": "સુરક્ષા નોંધ:",
+        "fullNameMustBeAtLeast": "પૂરું નામ ઓછામાં ઓછા 2 અક્ષરનું હોવું જોઈએ",
+        "enterAValid10DigitMobile": "સાચો 10 અંકનો મોબાઇલ નંબર નાખો",
+        "emailIsRequired": "ઈમેલ જરૂરી છે",
+        "enterAValidEmailAddress": "સાચું ઈમેલ સરનામું નાખો",
+        "passwordMustBeAtLeast6": "પાસવર્ડ ઓછામાં ઓછા 6 અક્ષરનો હોવો જોઈએ",
+        "incomplete": "અપૂર્ણ",
+        "showPassword": "પાસવર્ડ બતાવો",
+        "createUser": "વપરાશકર્તા બનાવો"
       },
       "ipWhitelist": {
         "ipWhitelist": "IP વ્હાઇટલિસ્ટ",
@@ -1052,7 +1204,11 @@
         "label": "નામ",
         "ipCidr": "IP / CIDR",
         "label2": "નામ *",
-        "ipCidr2": "IP / CIDR *"
+        "ipCidr2": "IP / CIDR *",
+        "searchByLabelOrIp": "નામ કે IP થી શોધો...",
+        "thisPermanentlyRemovesThisIpRestriction": "આ આ IP પ્રતિબંધ કાયમ માટે કાઢી નાખે છે. આ પાછું લઈ શકાતું નથી.",
+        "thisIpCidrWillStartAuthorizing": "આ IP/CIDR માલિક સિવાયના લોકોના લોગ ઇનને ફરી મંજૂરી આપવા લાગશે.",
+        "editWhitelistEntry": "વ્હાઇટલિસ્ટ નોંધ બદલો"
       },
       "loginReport": {
         "loginReport": "લોગિન રિપોર્ટ",
@@ -1080,7 +1236,8 @@
         "thisWipesEveryMenuAndPermission": "આ આ ભૂમિકાના દરેક મેન્યુ અને પરવાનગીના નિશાન કાઢી નાખે છે. આ ફક્ત સાચવ્યા વગરના ડ્રાફ્ટ પર અસર કરે છે — તમે હજી પાના પરથી રદ કરી શકો છો — પણ અત્યાર સુધી હાથે કરેલી પસંદગી ખોવાઈ જશે.",
         "thisReplacesEveryMenuAndPermission": "આ આ ડ્રાફ્ટમાં અત્યાર સુધી કરેલી દરેક મેન્યુ અને પરવાનગી પસંદગીને પસંદ કરેલી ભૂમિકાની ગોઠવણથી બદલી નાખે છે. સાચવ્યા વગરના ફેરફાર ભૂંસાઈ જશે.",
         "inherit": "લો",
-        "clearAllMenusPermissions": "બધા મેન્યુ અને પરવાનગીઓ કાઢી નાખવી?"
+        "clearAllMenusPermissions": "બધા મેન્યુ અને પરવાનગીઓ કાઢી નાખવી?",
+        "grantFullAccess": "પૂરી પહોંચ આપો"
       },
       "roleConfigure": {
         "couldnTLoadThisRole": "આ ભૂમિકા લોડ થઈ શકી નથી",
@@ -1111,7 +1268,10 @@
         "type": "પ્રકાર",
         "status": "સ્થિતિ",
         "actions": "ક્રિયાઓ",
-        "configureRole": "ભૂમિકા કોન્ફિગર કરો"
+        "configureRole": "ભૂમિકા કોન્ફિગર કરો",
+        "enableRole": "ભૂમિકા ચાલુ કરો",
+        "customRole": "કસ્ટમ ભૂમિકા",
+        "enableThisRole": "આ ભૂમિકા ચાલુ કરવી?"
       },
       "systemAudit": {
         "systemAudit": "સિસ્ટમ ઓડિટ",
@@ -1143,7 +1303,11 @@
         "deletedUsers": "કાઢેલા વપરાશકર્તા",
         "noUsersFound": "કોઈ વપરાશકર્તા મળ્યો નથી",
         "contactDetails": "સંપર્ક વિગતો",
-        "roleAccess": "ભૂમિકા અને પહોંચ"
+        "roleAccess": "ભૂમિકા અને પહોંચ",
+        "protected": "સુરક્ષિત",
+        "searchByNameEmailOrMobile": "નામ, ઈમેલ કે મોબાઇલથી શોધો...",
+        "enableUser": "વપરાશકર્તા ચાલુ કરો",
+        "thisRestoresTheirAbilityToSign": "આનાથી તેમની લોગ ઇન કરવાની સુવિધા પાછી આવે છે."
       }
     },
     "settings": {
@@ -1167,14 +1331,29 @@
         "by": "કોણે",
         "size": "કદ",
         "backupRestore": "બેકઅપ અને રિસ્ટોર",
-        "keepForDays": "કેટલા દિવસ રાખવું (દિવસ)"
+        "keepForDays": "કેટલા દિવસ રાખવું (દિવસ)",
+        "overwrite": "OVERWRITE",
+        "restoreFailed": "પાછું લાવવું નિષ્ફળ ગયું.",
+        "backupNow": "હમણાં બેકઅપ લો",
+        "downloadBackup": "બેકઅપ ડાઉનલોડ કરો",
+        "restoreAsArchiveSafe": "આર્કાઇવ તરીકે પાછું લાવો (સુરક્ષિત)"
       },
       "billing": {
         "yourPlanAndBillingDetails": "તમારો પ્લાન અને બિલિંગ વિગતો",
         "youReOnTheFreePlan": "તમે મફત પ્લાન પર છો",
         "perMonth": "દર મહિને",
         "includedModules": "સામેલ મોડ્યુલ",
-        "billingSubscription": "બિલિંગ અને સબ્સ્ક્રિપ્શન"
+        "billingSubscription": "બિલિંગ અને સબ્સ્ક્રિપ્શન",
+        "unlimitedAddAsManyTeammatesAs": "અમર્યાદિત — જેટલા સાથી જોઈએ ઉમેરો",
+        "unlimitedEveryLocationOneAccount": "અમર્યાદિત — દરેક સ્થળ, એક જ ખાતું",
+        "jobCardsInvoices": "જોબ કાર્ડ અને બિલ",
+        "unlimitedWithNoMonthlyCap": "અમર્યાદિત, કોઈ માસિક મર્યાદા નહીં",
+        "dataBackups": "ડેટા અને બેકઅપ",
+        "yoursExportableAtAnyTime": "તમારો, ક્યારેય એક્સપોર્ટ કરી શકો",
+        "organization": "સંસ્થા",
+        "billingContact": "બિલિંગ સંપર્ક",
+        "currency": "ચલણ",
+        "customerSince": "ક્યારથી ગ્રાહક"
       },
       "branchManagement": {
         "branchManagement": "શાખા વ્યવસ્થાપન",
@@ -1190,7 +1369,12 @@
         "branchCode": "શાખા કોડ",
         "currentStatus": "હાલની સ્થિતિ",
         "branchType": "શાખાનો પ્રકાર",
-        "statusType": "સ્થિતિ અને પ્રકાર"
+        "statusType": "સ્થિતિ અને પ્રકાર",
+        "main": "મુખ્ય",
+        "searchBranchesByNameOrCode": "શાખાઓ નામ કે કોડથી શોધો...",
+        "customBranch": "કસ્ટમ શાખા",
+        "createBranch": "શાખા બનાવો",
+        "thisBranchWillBecomeSelectableAgain": "આ શાખા ફરી પસંદ કરી શકાશે."
       },
       "companyForm": {
         "companyCode": "કંપની કોડ",
@@ -1199,7 +1383,10 @@
         "sunriseEnterprisesPvtLtd": "Sunrise Enterprises Pvt Ltd",
         "regular": "નિયમિત",
         "composition": "કમ્પોઝિશન",
-        "note": "નોંધ:"
+        "note": "નોંધ:",
+        "currencySelected": "ચલણ પસંદ થયું",
+        "timezoneSelected": "સમય ઝોન પસંદ થયો",
+        "unregistered": "નોંધણી વગરનું"
       },
       "companySettings": {
         "companyManagement": "કંપની વ્યવસ્થાપન",
@@ -1211,7 +1398,12 @@
         "lastUpdated": "છેલ્લો ફેરફાર",
         "createCompany": "કંપની બનાવો",
         "aSecondShopUnderThisAccount": "આ ખાતા હેઠળ બીજી દુકાન. તેને પોતાની અલગ ભૂમિકાઓ, શાખા, નાણાકીય વર્ષ, માસ્ટર અને પ્રિન્ટ ટેમ્પલેટ મળે છે.",
-        "editCompany": "કંપની બદલો"
+        "editCompany": "કંપની બદલો",
+        "couldNotCreateThisCompany": "આ કંપની બનાવી શકાઈ નથી.",
+        "couldNotSaveTheseChanges": "આ ફેરફાર સાચવી શકાયા નથી.",
+        "nothingHereRightNow": "હાલ અહીં કંઈ નથી.",
+        "unregisteredNoGst": "નોંધણી વગરનું (GST નહીં)",
+        "companyInformationAndSettings": "કંપનીની માહિતી અને સેટિંગ્સ."
       },
       "financialYears": {
         "financialYears": "નાણાકીય વર્ષ",
@@ -1229,7 +1421,16 @@
         "endDate": "અંતિમ તારીખ",
         "duration": "સમયગાળો",
         "startDate2": "શરૂ તારીખ *",
-        "endDate2": "અંતિમ તારીખ *"
+        "endDate2": "અંતિમ તારીખ *",
+        "nameStartDateAndEndDate": "નામ, શરૂ તારીખ અને અંતિમ તારીખ — બધું જરૂરી છે.",
+        "theEndDateMustBeAfter": "અંતિમ તારીખ શરૂ તારીખ પછીની હોવી જોઈએ.",
+        "couldNotSaveThisFinancialYear": "આ નાણાકીય વર્ષ સાચવી શકાયું નથી.",
+        "createNextFy": "આગલું નાણાકીય વર્ષ બનાવો",
+        "activateAFinancialYearFirst": "પહેલાં કોઈ નાણાકીય વર્ષ સક્રિય કરો",
+        "lock": "લોક કરો",
+        "createFinancialYear": "નાણાકીય વર્ષ બનાવો",
+        "addANewFinancialYearFor": "તમારી સંસ્થા માટે નવું નાણાકીય વર્ષ ઉમેરો",
+        "lockingThisPeriodIsAdvisoryIn": "આ બિલ્ડમાં આ સમયગાળો લોક કરવો ફક્ત સલાહ છે — નવો વ્યવહાર નોંધતાં પહેલાં કોઈ સુવિધા તેને તપાસતી નથી."
       },
       "designer": {
         "couldnTLoadThisTemplate": "આ ટેમ્પલેટ લોડ થઈ શક્યું નથી",
@@ -1265,18 +1466,37 @@
         "alwaysVisible": "હંમેશાં દેખાય",
         "colour": "રંગ",
         "fontSizePt": "અક્ષરનું માપ (pt)",
-        "rotation": "ફેરવણી (°)"
+        "rotation": "ફેરવણી (°)",
+        "yourShop": "તમારી દુકાન",
+        "alignLeft": "ડાબે ગોઠવો",
+        "alignCentre": "મધ્યમાં ગોઠવો",
+        "alignRight": "જમણે ગોઠવો",
+        "alignTop": "ઉપર ગોઠવો",
+        "selectAnElementToEditIts": "ગુણ બદલવા કોઈ તત્વ પસંદ કરો.",
+        "imageUrl": "ફોટાનું URL"
       },
       "importTemplateDialog": {
         "importTemplate": "ટેમ્પલેટ ઇમ્પોર્ટ કરો",
         "loadATemplateJsonExportedFrom": "આ એપમાંથી એક્સપોર્ટ કરેલું ટેમ્પલેટ JSON લોડ કરો. તે નવા, બિન-ડિફોલ્ટ ફોર્મેટ તરીકે ઉમેરાય છે.",
-        "templateFile": "ટેમ્પલેટ ફાઇલ"
+        "templateFile": "ટેમ્પલેટ ફાઇલ",
+        "thatFileIsNotATemplate": "તે ફાઇલ ટેમ્પલેટ નથી.",
+        "theFileHasNoElementsArray": "ફાઇલમાં `elements` યાદી નથી.",
+        "theFileHasNoValidPaper": "ફાઇલમાં સાચું `paper` માપ નથી.",
+        "chooseATemplateJsonFileFirst": "પહેલાં કોઈ ટેમ્પલેટ JSON ફાઇલ પસંદ કરો.",
+        "thatFileIsNotValidJson": "તે ફાઇલ સાચી JSON નથી.",
+        "importedTemplate": "ઇમ્પોર્ટ કરેલું ટેમ્પલેટ",
+        "exportedFromTheDesigner": "ડિઝાઇનરમાંથી એક્સપોર્ટ કરેલું"
       },
       "newTemplateDialog": {
         "newTemplate": "નવું ટેમ્પલેટ",
         "pickADocumentTypeAndA": "શરૂ કરવા દસ્તાવેજનો પ્રકાર અને કાગળનું માપ પસંદ કરો. ડિઝાઇનરમાં બધું બદલી શકાય છે.",
         "documentType": "દસ્તાવેજનો પ્રકાર",
-        "startFrom": "અહીંથી શરૂ કરો"
+        "startFrom": "અહીંથી શરૂ કરો",
+        "template": "ટેમ્પલેટ",
+        "thatDocumentTypeHasNoBase": "તે દસ્તાવેજ પ્રકાર માટે કોઈ પાયાનું ફોર્મેટ નથી.",
+        "aTemplateWithThatNameAlready": "તે નામનું ટેમ્પલેટ પહેલેથી છે.",
+        "createDesign": "બનાવો અને ડિઝાઇન કરો",
+        "templateName": "ટેમ્પલેટનું નામ"
       },
       "pageSetupDialog": {
         "pageSetup": "પાના સેટઅપ",
@@ -1293,12 +1513,18 @@
         "gapMm": "અંતર (mm)",
         "heightMm": "ઊંચાઈ (mm)",
         "marginsMm": "હાંસિયા (mm)",
-        "widthMm": "પહોળાઈ (mm)"
+        "widthMm": "પહોળાઈ (mm)",
+        "labelsAcross": "એક પંક્તિમાં લેબલ",
+        "printSpeed": "પ્રિન્ટ ઝડપ",
+        "printDensity": "પ્રિન્ટ ઘનતા"
       },
       "printDevicesDialog": {
         "copyPairingCode": "જોડવાનો કોડ કોપી કરો",
         "couldnTLoadYourPrintDevices": "તમારાં પ્રિન્ટ ડિવાઇસ લોડ થઈ શક્યાં નથી",
-        "printDevices": "પ્રિન્ટ ડિવાઇસ"
+        "printDevices": "પ્રિન્ટ ડિવાઇસ",
+        "waitingForADevice": "કોઈ ડિવાઇસની રાહ…",
+        "codeNotUsedYet": "કોડ હજી વપરાયો નથી",
+        "pendingDevice": "બાકી ડિવાઇસ"
       },
       "printFormats": {
         "designAndManagePrintTemplatesFor": "બિલ, રસીદ અને લેબલ માટે પ્રિન્ટ ટેમ્પલેટ બનાવો અને સંભાળો",
@@ -1310,7 +1536,9 @@
         "useAddMissingDefaultsToRestore": "પ્રમાણભૂત ફોર્મેટ પાછાં લાવવા ખૂટતાં ડિફોલ્ટ ઉમેરો વાપરો, અથવા નવું બનાવો.",
         "deleteThisTemplate": "આ ટેમ્પલેટ કાઢી નાખવું?",
         "delete": "કાઢી નાખો",
-        "billLabelDesigner": "બિલ અને લેબલ ડિઝાઇનર"
+        "billLabelDesigner": "બિલ અને લેબલ ડિઝાઇનર",
+        "addMissingDefaults": "ખૂટતાં ડિફોલ્ટ ઉમેરો",
+        "deleteOnlyFormat": "કાઢી નાખો — એકમાત્ર ફોર્મેટ"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
@@ -1353,7 +1581,8 @@
         "layout": "લેઆઉટ",
         "autoAdaptsToScreenSize": "આપોઆપ (સ્ક્રીન પ્રમાણે)",
         "compactPairedFields": "સઘન (જોડીમાં ફીલ્ડ)",
-        "standardOneFieldPerRow": "પ્રમાણભૂત (એક પંક્તિમાં એક ફીલ્ડ)"
+        "standardOneFieldPerRow": "પ્રમાણભૂત (એક પંક્તિમાં એક ફીલ્ડ)",
+        "saveThisConfigurationAsATemplate": "આ ગોઠવણને આ નામના ટેમ્પલેટ તરીકે સાચવો:"
       },
       "permissionsSubtab": {
         "allowedActionsPerStatus": "દરેક સ્થિતિ પર માન્ય ક્રિયાઓ"
@@ -1367,7 +1596,11 @@
         "selectARole": "ભૂમિકા પસંદ કરો",
         "behavior": "વર્તન",
         "saveGoLive": "સાચવો અને ચાલુ કરો",
-        "setVisibilityActions": "દેખાવ અને ક્રિયાઓ ગોઠવો"
+        "setVisibilityActions": "દેખાવ અને ક્રિયાઓ ગોઠવો",
+        "pickAConfiguredRoleFromThe": "ઉપરની યાદીમાંથી કોઈ કોન્ફિગર કરેલી ભૂમિકા પસંદ કરો, અથવા કોઈ કોન્ફિગર ન કરેલી ભૂમિકા નવેસરથી ગોઠવો.",
+        "controlWhichJobStatusesThisRole": "નક્કી કરો કે આ ભૂમિકા કઈ કઈ જોબ સ્થિતિ જોઈ શકે અને દરેક પગલે બરાબર કઈ ક્રિયાઓ કરી શકે.",
+        "hitSaveConfigChangesApplyInstantly": "ગોઠવણ સાચવો દબાવો — તે ભૂમિકાવાળા દરેક વપરાશકર્તા પર ફેરફાર તરત લાગુ થાય છે. કંઈ ફરી શરૂ કરવાની જરૂર નથી.",
+        "saveConfig": "ગોઠવણ સાચવો"
       },
       "usersSubtab": {
         "receivedBy": "સ્વીકારનાર",
@@ -1378,13 +1611,28 @@
         "whoCheckedInOnAnOn": "સ્થળ પર જઈને કોણે હાજરી નોંધી",
         "noneManualSelect": "કોઈ નહીં (હાથે પસંદ કરો)",
         "cancelledBy": "રદ કરનાર",
-        "deliveredBy": "આપનાર"
+        "deliveredBy": "આપનાર",
+        "allUsersCanBeSelected": "બધા વપરાશકર્તા પસંદ કરી શકાય",
+        "oneRoleCanBeSelected": "એક ભૂમિકા પસંદ કરી શકાય"
       },
       "workflowDesigner": {
         "workflowDesigner": "વર્કફ્લો ડિઝાઇનર",
         "rolePermissions": "ભૂમિકા પરવાનગીઓ",
         "jobCardForm": "જોબ કાર્ડ ફોર્મ",
         "leadForm": "લીડ ફોર્મ"
+      },
+      "fieldControlRow": {
+        "hiddenClickToShow": "છુપાયેલ — બતાવવા ક્લિક કરો",
+        "requiredClickToMakeOptional": "જરૂરી — વૈકલ્પિક કરવા ક્લિક કરો",
+        "optionalClickToRequire": "વૈકલ્પિક — જરૂરી કરવા ક્લિક કરો",
+        "lockedAfterFirstSaveClickTo": "પહેલી વાર સાચવ્યા પછી લોક — ખોલવા ક્લિક કરો",
+        "clickToLockAfterFirstSave": "પહેલી વાર સાચવ્યા પછી લોક કરવા ક્લિક કરો",
+        "mobileAppOnlyClickToShow": "ફક્ત મોબાઇલ એપ — બધે બતાવવા ક્લિક કરો",
+        "clickToRestrictToTheMobile": "ફક્ત મોબાઇલ એપ પૂરતું મર્યાદિત કરવા ક્લિક કરો"
+      },
+      "fieldPreviewInput": {
+        "searchUser": "વપરાશકર્તા શોધો...",
+        "select": "પસંદ કરો..."
       }
     }
   },
@@ -1396,7 +1644,10 @@
         "rahulKInProgress": "રાહુલ કે. · ચાલુ છે",
         "customerUpdated": "ગ્રાહકને જણાવ્યું",
         "autoMessageSentViaWhatsapp": "WhatsApp થી આપોઆપ સંદેશ મોકલ્યો",
-        "readyForPickup": "લેવા માટે તૈયાર"
+        "readyForPickup": "લેવા માટે તૈયાર",
+        "received": "મળ્યું",
+        "diagnosis": "તપાસ",
+        "qualityCheck": "ગુણવત્તા તપાસ"
       },
       "marketingNav": {
         "toggleMenu": "મેન્યુ બતાવો/છુપાવો",
@@ -1411,7 +1662,8 @@
         "thisAccountHasBeenDisabled": "આ ખાતું બંધ કરી દેવાયું છે"
       },
       "ipBlockedScreen": {
-        "accessBlockedFromThisNetwork": "આ નેટવર્કથી પ્રવેશ અટકાવેલો છે"
+        "accessBlockedFromThisNetwork": "આ નેટવર્કથી પ્રવેશ અટકાવેલો છે",
+        "yourCurrentIpCouldNotBe": " તમારું હાલનું IP જાણી શકાયું નથી."
       },
       "requireMenuAccess": {
         "youDonTHaveAccessTo": "તમને આ પાનાની પરવાનગી નથી",
@@ -1420,7 +1672,8 @@
     },
     "layout": {
       "appSidebar": {
-        "expandSidebar": "સાઇડબાર ખોલો"
+        "expandSidebar": "સાઇડબાર ખોલો",
+        "collapseSidebar": "સાઇડબાર સંકોચો"
       },
       "commandPalette": {
         "jumpToAnyPage": "કોઈ પણ પાના પર જાઓ",
@@ -1428,7 +1681,13 @@
         "noMatchingPage": "કોઈ મળતું પાનું નથી."
       },
       "profileDrawer": {
-        "atLeast6Characters": "ઓછામાં ઓછા 6 અક્ષર."
+        "atLeast6Characters": "ઓછામાં ઓછા 6 અક્ષર.",
+        "fullNameIsRequired": "પૂરું નામ જરૂરી છે.",
+        "couldNotSaveYourProfile": "તમારી પ્રોફાઇલ સાચવી શકાઈ નથી.",
+        "newPasswordMustBeAtLeast": "નવો પાસવર્ડ ઓછામાં ઓછા 6 અક્ષરનો હોવો જોઈએ.",
+        "theTwoNewPasswordsDoNot": "બંને નવા પાસવર્ડ મેળ ખાતા નથી.",
+        "theNewPasswordMustBeDifferent": "નવો પાસવર્ડ હાલના પાસવર્ડથી અલગ હોવો જોઈએ.",
+        "updatePassword": "પાસવર્ડ બદલો"
       },
       "topBar": {
         "openNavigation": "નેવિગેશન ખોલો",
@@ -1440,7 +1699,8 @@
     },
     "shared": {
       "cameraScanFrame": {
-        "cameraUnavailable": "કેમેરા ઉપલબ્ધ નથી"
+        "cameraUnavailable": "કેમેરા ઉપલબ્ધ નથી",
+        "couldNotStartCamera": "કેમેરા ચાલુ થઈ શક્યો નથી"
       },
       "errorBoundary": {
         "somethingWentWrong": "કંઈક ખોટું થયું",
@@ -1466,6 +1726,9 @@
       "searchSelect": {
         "typeToSearch": "શોધવા માટે ટાઇપ કરો...",
         "noMatches": "કોઈ મેળ નથી."
+      },
+      "errorState": {
+        "couldnTLoadThisData": "આ માહિતી લોડ થઈ શકી નથી"
       }
     }
   }

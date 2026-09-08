@@ -175,8 +175,8 @@ export function UsersSubtab({ draft, setDraft, disabled, allRoles }: UsersSubtab
                 )}
                 <p className="mt-1 text-xs text-muted-foreground">
                   {draft.whoDidIt.fieldVisitTechnicianRoles === 'all'
-                    ? 'All users can be selected'
-                    : 'One role can be selected'}
+                    ? t('pages.settings.usersSubtab.allUsersCanBeSelected')
+                    : t('pages.settings.usersSubtab.oneRoleCanBeSelected')}
                 </p>
               </div>
             )}

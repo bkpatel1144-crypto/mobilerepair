@@ -122,7 +122,7 @@ export function PrintFormatsPage() {
           onClick={() => addMissing.mutate(templates)}
         >
           <Sparkles className="size-4" />
-          {addMissing.isPending ? 'Adding…' : 'Add Missing Defaults'}
+          {addMissing.isPending ? 'Adding…' : t('pages.settings.printFormats.addMissingDefaults')}
         </Button>
         <Button type="button" variant="outline" onClick={() => setImportOpen(true)}>
           <Upload className="size-4" />
@@ -273,7 +273,7 @@ export function PrintFormatsPage() {
                                 >
                                   <Trash2 />
                                   {formats.length <= 1
-                                    ? 'Delete — only format'
+                                    ? t('pages.settings.printFormats.deleteOnlyFormat')
                                     : t('common.delete')}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>

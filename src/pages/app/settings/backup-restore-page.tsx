@@ -107,7 +107,9 @@ export function BackupRestorePage() {
       setSelectedFile(null)
       if (fileInputRef.current) fileInputRef.current.value = ''
     } catch (err) {
-      setRestoreError(err instanceof Error ? err.message : 'Restore failed.')
+      setRestoreError(
+        err instanceof Error ? err.message : t('pages.settings.backupRestore.restoreFailed')
+      )
     }
   }
 
@@ -122,7 +124,9 @@ export function BackupRestorePage() {
       setSelectedFile(null)
       if (fileInputRef.current) fileInputRef.current.value = ''
     } catch (err) {
-      setRestoreError(err instanceof Error ? err.message : 'Restore failed.')
+      setRestoreError(
+        err instanceof Error ? err.message : t('pages.settings.backupRestore.restoreFailed')
+      )
       setConfirmOverwrite(false)
     }
   }
@@ -183,7 +187,7 @@ export function BackupRestorePage() {
               disabled={!profile || createBackup.isPending}
             >
               <Save className="size-4" />
-              {createBackup.isPending ? 'Backing up…' : 'Backup Now'}
+              {createBackup.isPending ? 'Backing up…' : t('pages.settings.backupRestore.backupNow')}
             </Button>
             <Button
               type="button"
@@ -192,7 +196,9 @@ export function BackupRestorePage() {
               disabled={!profile || downloadBackup.isPending}
             >
               <Download className="size-4" />
-              {downloadBackup.isPending ? 'Preparing…' : 'Download Backup'}
+              {downloadBackup.isPending
+                ? 'Preparing…'
+                : t('pages.settings.backupRestore.downloadBackup')}
             </Button>
           </div>
           {createBackup.isError && (
@@ -200,7 +206,7 @@ export function BackupRestorePage() {
               Backup failed:{' '}
               {createBackup.error instanceof Error
                 ? createBackup.error.message
-                : 'Something went wrong.'}{' '}
+                : t('shared.somethingWentWrong')}{' '}
               Please try again.
             </p>
           )}
@@ -209,7 +215,7 @@ export function BackupRestorePage() {
               Download failed:{' '}
               {downloadBackup.error instanceof Error
                 ? downloadBackup.error.message
-                : 'Something went wrong.'}{' '}
+                : t('shared.somethingWentWrong')}{' '}
               Please try again.
             </p>
           )}
@@ -258,8 +264,8 @@ export function BackupRestorePage() {
             </div>
             <p className="text-xs text-muted-foreground">
               Persists your preference, but can't fire itself unattended — this project has no
-              server/Cloud Function/cron to run a schedule. Use "Backup Now" for a real backup
-              today.
+              server/Cloud Function/cron to run a schedule. Use
+              t('pages.settings.backupRestore.backupNow') for a real backup today.
             </p>
           </div>
         </div>
@@ -343,7 +349,9 @@ export function BackupRestorePage() {
               disabled={!selectedFile || restoreAsArchive.isPending}
             >
               <ArchiveIcon className="size-4" />
-              {restoreAsArchive.isPending ? 'Restoring…' : 'Restore as Archive (Safe)'}
+              {restoreAsArchive.isPending
+                ? 'Restoring…'
+                : t('pages.settings.backupRestore.restoreAsArchiveSafe')}
             </Button>
             <Button
               type="button"

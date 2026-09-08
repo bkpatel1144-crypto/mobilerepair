@@ -315,7 +315,7 @@ function SelectedRolePanel({
             Cancel
           </Button>
           <Button type="button" onClick={handleSave} disabled={!isDirty || saveConfig.isPending}>
-            {saveConfig.isPending ? 'Saving…' : 'Save Config'}
+            {saveConfig.isPending ? 'Saving…' : t('pages.settings.rolePermissionsTab.saveConfig')}
           </Button>
         </div>
       </div>

@@ -113,15 +113,15 @@ function NewBillModal({
     setError(null)
     const value = Number(amount)
     if (!supplier) {
-      setError('Pick a supplier.')
+      setError(t('pages.finance.supplierPayables.pickASupplier'))
       return
     }
     if (!Number.isFinite(value) || value <= 0) {
-      setError('Enter a bill amount greater than zero.')
+      setError(t('pages.finance.supplierPayables.enterABillAmountGreaterThan'))
       return
     }
     if (dueDate && dueDate < billDate) {
-      setError('The due date cannot be before the bill date.')
+      setError(t('pages.finance.supplierPayables.theDueDateCannotBeBefore'))
       return
     }
     try {
@@ -137,7 +137,11 @@ function NewBillModal({
       reset()
       onOpenChange(false)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save this bill.')
+      setError(
+        err instanceof Error
+          ? err.message
+          : t('pages.finance.supplierPayables.couldNotSaveThisBill')
+      )
     }
   }
 
@@ -150,7 +154,7 @@ function NewBillModal({
       }}
       title={t('pages.finance.supplierPayables.newSupplierBill')}
       description={t('pages.finance.supplierPayables.aPurchaseInvoiceYouOwePayments')}
-      submitLabel={create.isPending ? 'Saving…' : 'Save Bill'}
+      submitLabel={create.isPending ? 'Saving…' : t('pages.finance.supplierPayables.saveBill')}
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >
@@ -281,7 +285,7 @@ function PaymentModal({
     setError(null)
     const value = Number(amount)
     if (!Number.isFinite(value) || value <= 0) {
-      setError('Enter an amount greater than zero.')
+      setError(t('shared.enterAnAmountGreaterThanZero'))
       return
     }
     if (value > payable.outstanding) {
@@ -292,7 +296,11 @@ function PaymentModal({
       await pay.mutateAsync({ payable, amount: value, mode, notes: notes.trim() || null })
       onClose()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not record this payment.')
+      setError(
+        err instanceof Error
+          ? err.message
+          : t('pages.finance.supplierPayables.couldNotRecordThisPayment')
+      )
     }
   }
 
@@ -467,7 +475,10 @@ export function SupplierPayablesPage() {
                     g.items.map((i) => ({
                       Supplier: g.supplierName,
                       Reference: i.reference,
-                      Type: i.kind === 'bill' ? 'Bill' : 'Device purchase',
+                      Type:
+                        i.kind === 'bill'
+                          ? 'Bill'
+                          : t('pages.finance.supplierPayables.devicePurchase'),
                       'Due Date': i.dueDate.toLocaleDateString('en-IN'),
                       Amount: i.amount,
                       Paid: i.amountPaid,

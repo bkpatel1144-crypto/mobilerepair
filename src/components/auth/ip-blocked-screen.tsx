@@ -24,7 +24,7 @@ export function IpBlockedScreen({ ip }: { ip: string | null }) {
           Your account's role requires signing in from a whitelisted IP address.
           {ip
             ? ` Your current IP (${ip}) isn't on the list.`
-            : ' Your current IP could not be detected.'}
+            : t('components.auth.ipBlockedScreen.yourCurrentIpCouldNotBe')}
         </p>
         <p className="max-w-sm text-xs text-muted-foreground">
           Ask an Owner to add your IP under Administration → IP Whitelist, or connect from an

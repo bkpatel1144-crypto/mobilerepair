@@ -78,7 +78,9 @@ export function BranchManagementPage() {
             <p className="font-medium">{b.name}</p>
             <p className="text-xs text-muted-foreground">{b.code}</p>
           </span>
-          {b.type === 'system' && <StatusBadge status="Main" tone="warning" />}
+          {b.type === 'system' && (
+            <StatusBadge status={t('pages.settings.branchManagement.main')} tone="warning" />
+          )}
         </span>
       ),
     },
@@ -143,7 +145,7 @@ export function BranchManagementPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search branches by name or code..."
+        searchPlaceholder={t('pages.settings.branchManagement.searchBranchesByNameOrCode')}
       />
 
       <DataTable
@@ -234,7 +236,10 @@ export function BranchManagementPage() {
                 },
                 {
                   label: t('pages.settings.branchManagement.branchType'),
-                  value: viewing.type === 'system' ? 'System Branch' : 'Custom Branch',
+                  value:
+                    viewing.type === 'system'
+                      ? 'System Branch'
+                      : t('pages.settings.branchManagement.customBranch'),
                   tone: viewing.type === 'system' ? 'purple' : 'default',
                 },
               ],
@@ -268,7 +273,7 @@ export function BranchManagementPage() {
         title={t('pages.settings.branchManagement.createNewBranch')}
         description={t('pages.settings.branchManagement.addANewBranchToYour')}
         onSubmit={handleCreate}
-        submitLabel="Create Branch"
+        submitLabel={t('pages.settings.branchManagement.createBranch')}
         isSubmitting={createBranch.isPending}
       >
         <div className="space-y-1.5">
@@ -295,7 +300,7 @@ export function BranchManagementPage() {
         }}
         title={t('pages.settings.branchManagement.editBranch')}
         onSubmit={handleEdit}
-        submitLabel="Save Changes"
+        submitLabel={t('shared.saveChanges')}
         isSubmitting={updateBranch.isPending}
       >
         <div className="space-y-1.5">
@@ -318,7 +323,7 @@ export function BranchManagementPage() {
               ? 'This permanently deletes the branch. This cannot be undone.'
               : viewing.status === 'active'
                 ? 'Deactivated branches no longer appear as a selectable option for new job cards or transactions.'
-                : 'This branch will become selectable again.'
+                : t('pages.settings.branchManagement.thisBranchWillBecomeSelectableAgain')
           }
           confirmLabel={
             confirmAction === 'delete'

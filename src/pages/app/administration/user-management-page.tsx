@@ -63,7 +63,12 @@ export function UserManagementPage() {
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
               <span className="truncate font-medium">{u.fullName}</span>
-              {u.protected && <StatusBadge status="Protected" tone="warning" />}
+              {u.protected && (
+                <StatusBadge
+                  status={t('pages.administration.userManagement.protected')}
+                  tone="warning"
+                />
+              )}
             </div>
             <p className="truncate text-xs text-muted-foreground">{u.email}</p>
           </div>
@@ -137,7 +142,7 @@ export function UserManagementPage() {
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search by name, email, or mobile..."
+        searchPlaceholder={t('pages.administration.userManagement.searchByNameEmailOrMobile')}
       />
 
       <DataTable
@@ -168,7 +173,12 @@ export function UserManagementPage() {
             <>
               <StatusBadge status={selectedUser.roleName} tone="warning" />
               <StatusBadge status={selectedUser.status} />
-              {selectedUser.protected && <StatusBadge status="Protected" tone="warning" />}
+              {selectedUser.protected && (
+                <StatusBadge
+                  status={t('pages.administration.userManagement.protected')}
+                  tone="warning"
+                />
+              )}
             </>
           )
         }
@@ -188,7 +198,9 @@ export function UserManagementPage() {
               ) : (
                 <CheckCircle2 className="size-3.5" />
               )}
-              {selectedUser.status === 'active' ? 'Disable User' : 'Enable User'}
+              {selectedUser.status === 'active'
+                ? 'Disable User'
+                : t('pages.administration.userManagement.enableUser')}
             </Button>
           )
         }
@@ -230,9 +242,13 @@ export function UserManagementPage() {
           message={
             selectedUser.status === 'active'
               ? 'This immediately signs them out and blocks every future sign-in until re-enabled — including a session already in progress.'
-              : 'This restores their ability to sign in.'
+              : t('pages.administration.userManagement.thisRestoresTheirAbilityToSign')
           }
-          confirmLabel={selectedUser.status === 'active' ? 'Disable User' : 'Enable User'}
+          confirmLabel={
+            selectedUser.status === 'active'
+              ? 'Disable User'
+              : t('pages.administration.userManagement.enableUser')
+          }
           destructive={selectedUser.status === 'active'}
           isPending={setStatus.isPending}
           onConfirm={() =>

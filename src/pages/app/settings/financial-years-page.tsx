@@ -86,13 +86,13 @@ export function FinancialYearsPage() {
     e.preventDefault()
     setFormError(null)
     if (!nameInput.trim() || !startInput || !endInput) {
-      setFormError('Name, start date and end date are all required.')
+      setFormError(t('pages.settings.financialYears.nameStartDateAndEndDate'))
       return
     }
     const startDate = new Date(`${startInput}T00:00:00`)
     const endDate = new Date(`${endInput}T00:00:00`)
     if (endDate <= startDate) {
-      setFormError('The end date must be after the start date.')
+      setFormError(t('pages.settings.financialYears.theEndDateMustBeAfter'))
       return
     }
     try {
@@ -108,7 +108,11 @@ export function FinancialYearsPage() {
         await createFy.mutateAsync({ name: nameInput.trim(), startDate, endDate })
       }
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : 'Could not save this financial year.')
+      setFormError(
+        err instanceof Error
+          ? err.message
+          : t('pages.settings.financialYears.couldNotSaveThisFinancialYear')
+      )
       return
     }
     setCreating(false)
@@ -303,12 +307,14 @@ export function FinancialYearsPage() {
           disabled={isLoading || createFy.isPending || !mostRecent}
         >
           <CalendarPlus className="size-4" />
-          {createFy.isPending ? 'Creating…' : 'Create Next FY'}
+          {createFy.isPending ? 'Creating…' : t('pages.settings.financialYears.createNextFy')}
         </Button>
         {/* The reference shows this hint whenever nothing is marked current; it explains why
          * Create Next FY has nothing to count forward from. */}
         <p className="text-sm text-muted-foreground">
-          {currentFy ? `Current: ${currentFy.name}` : 'Activate a financial year first'}
+          {currentFy
+            ? `Current: ${currentFy.name}`
+            : t('pages.settings.financialYears.activateAFinancialYearFirst')}
         </p>
       </div>
 
@@ -388,7 +394,7 @@ export function FinancialYearsPage() {
                 size="sm"
                 onClick={() => setConfirming('lock')}
               >
-                {viewing.isLocked ? 'Unlock' : 'Lock'}
+                {viewing.isLocked ? 'Unlock' : t('pages.settings.financialYears.lock')}
               </Button>
             </>
           }
@@ -497,14 +503,18 @@ export function FinancialYearsPage() {
           setEditing(null)
           setFormError(null)
         }}
-        title={editing ? 'Edit Financial Year' : 'Create Financial Year'}
+        title={
+          editing ? 'Edit Financial Year' : t('pages.settings.financialYears.createFinancialYear')
+        }
         description={
           editing
             ? 'Rename this period or correct its dates.'
-            : 'Add a new financial year for your organization'
+            : t('pages.settings.financialYears.addANewFinancialYearFor')
         }
         onSubmit={handleManualCreate}
-        submitLabel={editing ? 'Save Changes' : 'Create Financial Year'}
+        submitLabel={
+          editing ? 'Save Changes' : t('pages.settings.financialYears.createFinancialYear')
+        }
         isSubmitting={createFy.isPending || updateFy.isPending}
       >
         <div className="space-y-1.5">
@@ -529,7 +539,8 @@ export function FinancialYearsPage() {
         </div>
         {formError && <FormError message={formError} />}
         <p className="rounded-lg bg-blue-50 p-2.5 text-xs text-blue-800 dark:bg-blue-500/10 dark:text-blue-400">
-          Note: Use "Create Next FY" for sequential years. This form is for manual creation only.
+          Note: Use t('pages.settings.financialYears.createNextFy') for sequential years. This form
+          is for manual creation only.
         </p>
       </FormModal>
 
@@ -540,17 +551,21 @@ export function FinancialYearsPage() {
           title={
             confirming === 'activate'
               ? `Make "${viewing.name}" the current financial year?`
-              : `${viewing.isLocked ? 'Unlock' : 'Lock'} "${viewing.name}"?`
+              : `${viewing.isLocked ? 'Unlock' : t('pages.settings.financialYears.lock')} "${viewing.name}"?`
           }
           message={
             confirming === 'activate'
               ? `This deactivates "${currentFy?.name ?? 'the current FY'}" and makes this one current instead. Only one financial year can be active at a time.`
               : viewing.isLocked
                 ? 'Unlocking reopens this period — a closed accounting period becomes editable again.'
-                : 'Locking this period is advisory in this build — no other feature currently checks it before posting a new transaction.'
+                : t('pages.settings.financialYears.lockingThisPeriodIsAdvisoryIn')
           }
           confirmLabel={
-            confirming === 'activate' ? 'Activate' : viewing.isLocked ? 'Unlock' : 'Lock'
+            confirming === 'activate'
+              ? 'Activate'
+              : viewing.isLocked
+                ? 'Unlock'
+                : t('pages.settings.financialYears.lock')
           }
           destructive={confirming === 'activate' || viewing.isLocked}
           isPending={confirming === 'activate' ? activateFy.isPending : setLock.isPending}
