@@ -267,7 +267,22 @@ service cloud.firestore {
       // pickers need these regardless of who's creating the job card.
       match /serviceOptions/{optionType}/items/{id} {
         allow read: if belongsToCompany(companyId);
-        allow write: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/options');
+        // `isBootstrapping()` is required here, and it is not obvious why: this collection is not
+        // tenant-root data like the company or its roles, but `seedTenantForUser()` writes its 136
+        // seeded device types/brands/models into the *same atomic batch* as the profile doc. A
+        // batch is all-or-nothing, so one denied service option rejected the entire signup — every
+        // new Owner was left with an Auth account, no company and no roles, which surfaced as an
+        // empty sidebar and "You don't have access to this page" on every route. It stayed hidden
+        // for as long as the database was still on its 30-day test-mode ruleset (which allows
+        // everything, so evaluates none of these functions) and appeared the moment real rules
+        // were first deployed. Same reasoning for the four Masters collections below. Verified
+        // against the live database by `tools/firebase/probe-signup.mjs`, which exists because an
+        // atomic batch reports one anonymous rejection and names none of the documents that caused
+        // it.
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'service/options'));
+        allow update, delete: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'service/options');
       }
 
       // ---- companies/{companyId}/jobCards/{jobId} --------------------------------------------
@@ -345,25 +360,41 @@ service cloud.firestore {
       // just keyed by a field name that matches this phase's own `UomDoc`/etc. shape.
       match /uom/{id} {
         allow read: if belongsToCompany(companyId);
-        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/uom');
+        // `isBootstrapping()` because `seedTenantForUser()` seeds this collection's system
+        // defaults inside the signup batch — see the note above `serviceOptions`.
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/uom'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/uom');
         allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/uom') &&
           resource.data.source != 'system';
       }
       match /itemCategories/{id} {
         allow read: if belongsToCompany(companyId);
-        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/item-categories');
+        // `isBootstrapping()` because `seedTenantForUser()` seeds this collection's system
+        // defaults inside the signup batch — see the note above `serviceOptions`.
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/item-categories'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/item-categories');
         allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/item-categories') &&
           resource.data.source != 'system';
       }
       match /paymentModes/{id} {
         allow read: if belongsToCompany(companyId);
-        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes');
+        // `isBootstrapping()` because `seedTenantForUser()` seeds this collection's system
+        // defaults inside the signup batch — see the note above `serviceOptions`.
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes');
         allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes') &&
           resource.data.source != 'system';
       }
       match /partyCategories/{id} {
         allow read: if belongsToCompany(companyId);
-        allow create, update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/party-categories');
+        // `isBootstrapping()` because `seedTenantForUser()` seeds this collection's system
+        // defaults inside the signup batch — see the note above `serviceOptions`.
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/party-categories'));
+        allow update: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/party-categories');
         allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/party-categories') &&
           resource.data.source != 'system';
       }

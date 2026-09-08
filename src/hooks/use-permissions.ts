@@ -9,6 +9,15 @@ export function roleQueryKey(companyId: string | undefined, roleId: string | und
   return ['role', companyId, roleId] as const
 }
 
+/** Thrown when the profile's `roleId` points at a role document that isn't there — see the
+ *  queryFn below for why that has to be retried rather than reported as "no access". */
+class RoleDocMissingError extends Error {
+  constructor() {
+    super('Role document not found')
+    this.name = 'RoleDocMissingError'
+  }
+}
+
 /**
  * The one place every route guard, sidebar item, and action button in the app checks
  * permissions through — per BUILD_PLAN.md Phase 3, nothing else should hardcode
@@ -25,10 +34,31 @@ export function usePermissions() {
     queryKey: roleQueryKey(companyId, roleId),
     queryFn: async () => {
       const snap = await getDoc(doc(db, roleDoc(companyId!, roleId!)))
-      return snap.exists() ? (snap.data() as RoleDoc) : null
+      // Absent is a *retryable* condition, not an answer. A profile naming a role document that
+      // isn't there is never a legitimate "this user lacks access" — the two are written in the
+      // same batch, so it means the tenant is incomplete or this read simply lost a race with a
+      // write that is still propagating. Returning null here instead reported it as a definitive
+      // denial, and every route then rendered "You don't have access to this page" with an empty
+      // sidebar — to the shop's own Owner, whose role grants `fullAccess`. Throwing keeps the
+      // query pending through the retries below, so that window shows a loading state, and if the
+      // document really never appears `AuthProvider` clears the cached profile and
+      // `ProtectedRoute` routes to /complete-setup, which is where a tenant this broken belongs.
+      if (!snap.exists()) throw new RoleDocMissingError()
+      return snap.data() as RoleDoc
     },
     enabled: !!companyId && !!roleId,
     staleTime: 5 * 60_000,
+    retry: (failureCount, error) => {
+      // Longer than the default for a missing document, since that's the case worth waiting out.
+      if (error instanceof RoleDocMissingError) return failureCount < 5
+      // A `permission-denied` is a real answer from the backend — retrying only delays showing
+      // the user something. Everything else (offline, a dropped stream) keeps the library's own
+      // default budget; this callback replaces it wholesale, so not restating it here would have
+      // quietly turned one transient network blip into a locked-out session.
+      if ((error as { code?: string }).code === 'permission-denied') return false
+      return failureCount < 3
+    },
+    retryDelay: 800,
   })
 
   const role = query.data ?? null
