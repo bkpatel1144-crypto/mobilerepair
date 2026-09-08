@@ -81,9 +81,12 @@ for (const file of [
     if (!occurrences.has(s)) occurrences.set(s, new Set())
     occurrences.get(s).add(namespaceFor(file))
   }
-  for (const m of src.matchAll(new RegExp(`\\b(${ATTRS.join('|')})=("([^"\\n]*)"|'([^'\\n]*)')`, 'g')))
+  for (const m of src.matchAll(
+    new RegExp(`\\b(${ATTRS.join('|')})=("([^"\\n]*)"|'([^'\\n]*)')`, 'g')
+  ))
     push(m[3] ?? m[4] ?? '')
-  for (const m of src.matchAll(new RegExp(`\\b(${PROPS.join('|')}):\\s*'([^'\\n]*)'`, 'g'))) push(m[2])
+  for (const m of src.matchAll(new RegExp(`\\b(${PROPS.join('|')}):\\s*'([^'\\n]*)'`, 'g')))
+    push(m[2])
   for (const m of src.matchAll(/>([^<>{}\n]{2,80})</g)) push(m[1])
   if (hits.length) perFile.set(file, hits)
 }

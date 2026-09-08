@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import i18next from 'i18next'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -52,7 +53,7 @@ export function formatTimestamp(
  * so a date column would read differently depending on the user's browser and OS. Table columns
  * also align better with a fixed-width day.
  */
-const MONTHS_SHORT = [
+const MONTHS_SHORT_EN = [
   'Jan',
   'Feb',
   'Mar',
@@ -67,10 +68,25 @@ const MONTHS_SHORT = [
   'Dec',
 ]
 
+/**
+ * Short month names in the active language.
+ *
+ * Read from i18next at call time rather than captured at module load, so a language switch takes
+ * effect immediately — these run during render, not once at import. The English list above stays
+ * as the fallback for the reason it existed before translation: `Intl` is not stable across ICU
+ * builds ("Sep" vs "Sept"), so a date column would otherwise read differently per browser.
+ */
+function monthsShort(): string[] {
+  const fromLocale = i18next.t('months.short', { returnObjects: true })
+  return Array.isArray(fromLocale) && fromLocale.length === 12
+    ? (fromLocale as string[])
+    : MONTHS_SHORT_EN
+}
+
 export function formatDateShort(ts: { toDate?: () => Date } | Date | null | undefined): string {
   const d = ts instanceof Date ? ts : ts?.toDate?.()
   if (!d) return '—'
-  return `${String(d.getDate()).padStart(2, '0')} ${MONTHS_SHORT[d.getMonth()]} ${d.getFullYear()}`
+  return `${String(d.getDate()).padStart(2, '0')} ${monthsShort()[d.getMonth()]} ${d.getFullYear()}`
 }
 
 /** `Sep 04, 2026 • 11:58 AM` — the long form used in detail drawers' Timeline blocks. */
@@ -78,7 +94,7 @@ export function formatDateTimeLong(ts: { toDate?: () => Date } | Date | null | u
   const d = ts instanceof Date ? ts : ts?.toDate?.()
   if (!d) return '—'
   const time = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-  return `${MONTHS_SHORT[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()} • ${time}`
+  return `${monthsShort()[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()} • ${time}`
 }
 
 /**

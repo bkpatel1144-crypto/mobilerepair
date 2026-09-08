@@ -61,7 +61,7 @@ const ATTR_FORBIDDEN = new Set([
 ])
 
 /** Object-literal properties that hold display text in this codebase's table/column configs. */
-const PROP_DISPLAY = ['header', 'label', 'title', 'description'];
+const PROP_DISPLAY = ['header', 'label', 'title', 'description']
 
 /**
  * Top-level function bodies, as [start, end) character ranges keyed by name. Used to answer

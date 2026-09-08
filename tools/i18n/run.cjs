@@ -78,7 +78,9 @@ for (const file of files) {
   if (skipped.length) allSkipped.push({ file, skipped })
 }
 
-console.log(`${dryRun ? '[dry run] ' : ''}${totalApplied} replacements in ${changedFiles.length} files`)
+console.log(
+  `${dryRun ? '[dry run] ' : ''}${totalApplied} replacements in ${changedFiles.length} files`
+)
 for (const c of changedFiles) console.log(`  ${c.appliedCount.toString().padStart(3)}  ${c.file}`)
 
 // The skip list is the handover: these are strings a person still has to place, with the reason

@@ -198,3 +198,28 @@ describe('toDateInputValue', () => {
     expect(toDateInputValue(new Date(2026, 3, 1, 23, 59))).toBe('2026-04-01')
   })
 })
+
+describe('month names follow the active language', () => {
+  it('uses the Gujarati month list once i18next has those resources', async () => {
+    // The suite otherwise exercises the English fallback, because i18next is uninitialised here
+    // and `t('months.short')` returns the key rather than an array. That fallback is deliberate,
+    // but it means every assertion above would still pass if the localisation were never wired
+    // up at all — so this test initialises i18next and checks a date actually comes back in
+    // Gujarati.
+    const i18next = (await import('i18next')).default
+    const gu = (await import('@/locales/gu.json')).default
+    const en = (await import('@/locales/en.json')).default
+
+    await i18next.init({
+      lng: 'gu',
+      resources: { gu: { translation: gu }, en: { translation: en } },
+      interpolation: { escapeValue: false },
+    })
+
+    expect(formatDateShort(new Date(2026, 8, 4))).toBe('04 સપ્ટે 2026')
+    expect(formatDateTimeLong(new Date(2026, 8, 4, 11, 58))).toContain('સપ્ટે 04, 2026')
+
+    await i18next.changeLanguage('en')
+    expect(formatDateShort(new Date(2026, 8, 4))).toBe('04 Sep 2026')
+  })
+})
