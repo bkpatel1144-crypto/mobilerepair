@@ -127,7 +127,7 @@ export function CreateUserPage() {
             Back
           </Button>
           <div>
-            <h1 className="text-lg font-bold">Add New User</h1>
+            <h1 className="text-lg font-bold">{t('pages.administration.createUser.addNewUser')}</h1>
             <p className="text-sm text-muted-foreground">
               Create a new user account with role and permissions
             </p>
@@ -160,17 +160,17 @@ export function CreateUserPage() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="fullName">Full Name *</Label>
+            <Label htmlFor="fullName">{t('pages.administration.createUser.fullName')}</Label>
             <Input
               id="fullName"
-              placeholder="Enter full name"
+              placeholder={t('pages.administration.createUser.enterFullName')}
               aria-invalid={!!errors.fullName}
               {...register('fullName')}
             />
             {errors.fullName && <p className="text-xs text-red-600">{errors.fullName.message}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="mobile">Mobile Number</Label>
+            <Label htmlFor="mobile">{t('pages.administration.createUser.mobileNumber')}</Label>
             <Input
               id="mobile"
               placeholder={t('common.tenDigitMobile')}
@@ -183,7 +183,7 @@ export function CreateUserPage() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="email">Email Address *</Label>
+            <Label htmlFor="email">{t('pages.administration.createUser.emailAddress')}</Label>
             <Input
               id="email"
               type="email"
@@ -194,12 +194,12 @@ export function CreateUserPage() {
             {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="password">Password *</Label>
+            <Label htmlFor="password">{t('pages.administration.createUser.password')}</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Strong password"
+                placeholder={t('pages.administration.createUser.strongPassword')}
                 aria-invalid={!!errors.password}
                 className="pr-9"
                 {...register('password')}
@@ -218,14 +218,14 @@ export function CreateUserPage() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="roleId">Role *</Label>
+          <Label htmlFor="roleId">{t('pages.administration.createUser.role')}</Label>
           <Controller
             control={control}
             name="roleId"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger id="roleId" className="w-full" aria-invalid={!!errors.roleId}>
-                  <SelectValue placeholder="Select a role..." />
+                  <SelectValue placeholder={t('pages.administration.createUser.selectARole')} />
                 </SelectTrigger>
                 <SelectContent>
                   {assignableRoles.map((role) => (
@@ -264,8 +264,8 @@ export function CreateUserPage() {
         </div>
 
         <div className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-          <span className="font-semibold">Security Note:</span> Communicate password securely to the
-          user
+          <span className="font-semibold">{t('pages.administration.createUser.securityNote')}</span>{' '}
+          Communicate password securely to the user
         </div>
 
         <div className="flex justify-end gap-2">

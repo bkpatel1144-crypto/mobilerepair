@@ -942,6 +942,148 @@
       "pricing": {
         "simplePricingFree": "Simple pricing: free."
       }
+    },
+    "administration": {
+      "activeSessions": {
+        "activeSessions": "Active Sessions",
+        "signedInDevicesAcrossYourTeam": "Signed-in devices across your team",
+        "currentlyOnline": "Currently Online",
+        "uniqueUsers": "Unique Users",
+        "noSessionsYet": "No sessions yet",
+        "sessionsAppearHereAsYourTeam": "Sessions appear here as your team signs in.",
+        "ended": "Ended",
+        "online": "Online",
+        "idle": "Idle",
+        "away": "Away",
+        "user": "User",
+        "lastActivity": "Last Activity",
+        "session": "SESSION",
+        "signedIn": "Signed in",
+        "lastActivity2": "Last activity",
+        "signedInFor": "Signed in for",
+        "autoExpiresOn": "Auto-expires on",
+        "inactiveFor": "Inactive for",
+        "role": "Role",
+        "branch": "Branch"
+      },
+      "createRole": {
+        "backToRoles": "Back to roles",
+        "addNewRole": "Add New Role",
+        "createANewRoleWithCustom": "Create a new role with custom permissions",
+        "afterCreatingTheRole": "After creating the role",
+        "assignPermissionsToDefineWhatUsers": "Assign permissions to define what users with this role can do",
+        "assignMenusToControlNavigationAccess": "Assign menus to control navigation access",
+        "assignUsersToThisRole": "Assign users to this role"
+      },
+      "createUser": {
+        "enterFullName": "Enter full name",
+        "strongPassword": "Strong password",
+        "selectARole": "Select a role...",
+        "addNewUser": "Add New User",
+        "fullName": "Full Name *",
+        "mobileNumber": "Mobile Number",
+        "emailAddress": "Email Address *",
+        "password": "Password *",
+        "role": "Role *",
+        "securityNote": "Security Note:"
+      },
+      "ipWhitelist": {
+        "ipWhitelist": "IP Whitelist",
+        "restrictNonOwnerSignInsTo": "Restrict non-Owner sign-ins to trusted networks — advisory only, not a hard security boundary",
+        "noIpRestrictionsYet": "No IP restrictions yet",
+        "everyNonOwnerSignInIs": "Every non-Owner sign-in is currently allowed from any network. Add an entry to start restricting access.",
+        "label": "Label",
+        "ipCidr": "IP / CIDR",
+        "label2": "Label *",
+        "ipCidr2": "IP / CIDR *"
+      },
+      "loginReport": {
+        "loginReport": "Login Report",
+        "everyAccountSignInAcrossYour": "Every account sign-in across your company",
+        "onlineRightNow": "Online Right Now",
+        "loginsToday": "Logins Today",
+        "usersToday": "Users Today",
+        "ipAddresses": "IP Addresses",
+        "failedAttempts": "Failed Attempts",
+        "blockedIps": "Blocked IPs",
+        "busiestTimeToday": "Busiest Time Today",
+        "filterByIp": "Filter by IP...",
+        "noLoginsFound": "No logins found",
+        "signInsWillAppearHereAs": "Sign-ins will appear here as your team logs in."
+      },
+      "dashboardLandingTab": {
+        "clearAllDashboardWidgets": "Clear all dashboard widgets?",
+        "thisTurnsOffEveryDashboardWidget": "This turns off every dashboard widget for this role — its dashboard will show nothing until widgets are re-enabled. It only affects the unsaved draft.",
+        "defaultLandingPage": "Default Landing Page",
+        "visibleDashboardWidgets": "Visible Dashboard Widgets"
+      },
+      "menusPermissionsTab": {
+        "inheritFromRole": "Inherit from role",
+        "searchMenus": "Search menus...",
+        "thisWipesEveryMenuAndPermission": "This wipes every menu and permission checkbox for this role back to unchecked. It only affects the unsaved draft — you can still Cancel out of the page — but any hand-tuned selections made so far will be lost.",
+        "thisReplacesEveryMenuAndPermission": "This replaces every menu and permission selection made so far in this draft with the picked role's configuration. Any hand-tuned changes not yet saved will be overwritten.",
+        "inherit": "Inherit"
+      },
+      "roleConfigure": {
+        "couldnTLoadThisRole": "Couldn't load this role",
+        "onlyAnotherOwnerCanEditThe": "Only another Owner can edit the Owner role",
+        "thisRoleHasFullAccessBy": "This role has full access by definition and can only be managed by a user who also has full access."
+      },
+      "roleManagement": {
+        "rolesManagement": "Roles Management",
+        "manageUserRolesPermissionsAndMenu": "Manage user roles, permissions, and menu access",
+        "totalRoles": "Total Roles",
+        "activeRoles": "Active Roles",
+        "disabledRoles": "Disabled Roles",
+        "deletedRoles": "Deleted Roles",
+        "searchByRoleNameOrCode": "Search by role name or code...",
+        "noRolesFound": "No roles found",
+        "roleDetails": "Role Details",
+        "roleInformation": "Role Information",
+        "roleName": "Role Name",
+        "roleCode": "Role Code",
+        "roleType": "Role Type",
+        "ownerRole": "Owner Role",
+        "editRole": "Edit Role",
+        "renameThisRoleOrChangeIts": "Rename this role or change its code. Permissions are edited in Configure.",
+        "roleName2": "ROLE NAME",
+        "code": "CODE",
+        "type": "TYPE",
+        "status": "STATUS",
+        "actions": "ACTIONS",
+        "configureRole": "Configure Role"
+      },
+      "systemAudit": {
+        "systemAudit": "System Audit",
+        "fullTrailOfEveryMutationAcross": "Full trail of every mutation across your company",
+        "totalEvents": "Total Events",
+        "critical": "Critical",
+        "allModules": "All Modules",
+        "allResults": "All Results",
+        "noAuditEventsYet": "No audit events yet",
+        "everyWriteYourTeamMakesWill": "Every write your team makes will show up here.",
+        "action": "Action",
+        "performedBy": "Performed By",
+        "target": "Target",
+        "entity": "ENTITY",
+        "id": "ID",
+        "performedBy2": "PERFORMED BY",
+        "additionalDetails": "ADDITIONAL DETAILS",
+        "success": "Success",
+        "blocked": "Blocked",
+        "failed": "Failed",
+        "noAdditionalDetailsRecorded": "No additional details recorded."
+      },
+      "userManagement": {
+        "userManagement": "User Management",
+        "manageSystemUsersRolesAndPermissions": "Manage system users, roles, and permissions",
+        "totalUsers": "Total Users",
+        "activeUsers": "Active Users",
+        "disabledUsers": "Disabled Users",
+        "deletedUsers": "Deleted Users",
+        "noUsersFound": "No users found",
+        "contactDetails": "Contact Details"
+      }
     }
   },
   "components": {

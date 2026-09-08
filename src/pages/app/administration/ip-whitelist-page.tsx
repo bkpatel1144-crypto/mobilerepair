@@ -50,13 +50,13 @@ export function IpWhitelistPage() {
   const columns: DataTableColumn<IpWhitelistWithId>[] = [
     {
       key: 'label',
-      header: 'Label',
+      header: t('pages.administration.ipWhitelist.label'),
       sortValue: (e) => e.label,
       render: (e) => <span className="font-medium">{e.label}</span>,
     },
     {
       key: 'ip',
-      header: 'IP / CIDR',
+      header: t('pages.administration.ipWhitelist.ipCidr'),
       render: (e) => <span className="font-mono text-xs">{e.ipOrCidr}</span>,
     },
     { key: 'notes', header: t('common.notes'), hideOnMobile: true, render: (e) => e.notes || '—' },
@@ -124,8 +124,8 @@ export function IpWhitelistPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={ShieldCheck}
-        title="IP Whitelist"
-        subtitle="Restrict non-Owner sign-ins to trusted networks — advisory only, not a hard security boundary"
+        title={t('pages.administration.ipWhitelist.ipWhitelist')}
+        subtitle={t('pages.administration.ipWhitelist.restrictNonOwnerSignInsTo')}
         actions={
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
@@ -162,8 +162,8 @@ export function IpWhitelistPage() {
         emptyState={
           <EmptyState
             icon={ShieldCheck}
-            title="No IP restrictions yet"
-            description="Every non-Owner sign-in is currently allowed from any network. Add an entry to start restricting access."
+            title={t('pages.administration.ipWhitelist.noIpRestrictionsYet')}
+            description={t('pages.administration.ipWhitelist.everyNonOwnerSignInIs')}
           />
         }
       />
@@ -278,7 +278,7 @@ function IpWhitelistModal({
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">
-        <Label>Label *</Label>
+        <Label>{t('pages.administration.ipWhitelist.label2')}</Label>
         <Input
           value={label}
           onChange={(e) => setLabel(e.target.value)}
@@ -287,7 +287,7 @@ function IpWhitelistModal({
         />
       </div>
       <div className="space-y-1.5">
-        <Label>IP / CIDR *</Label>
+        <Label>{t('pages.administration.ipWhitelist.ipCidr2')}</Label>
         <Input
           value={ipOrCidr}
           onChange={(e) => setIpOrCidr(e.target.value)}

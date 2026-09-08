@@ -209,7 +209,9 @@ export function MenusPermissionsTab({
           {otherRoles.length > 0 && (
             <Select onValueChange={setPendingInheritRoleId} disabled={disabled || draft.fullAccess}>
               <SelectTrigger size="sm" className="w-[160px]">
-                <SelectValue placeholder="Inherit from role" />
+                <SelectValue
+                  placeholder={t('pages.administration.menusPermissionsTab.inheritFromRole')}
+                />
               </SelectTrigger>
               <SelectContent>
                 {otherRoles.map((r) => (
@@ -239,7 +241,7 @@ export function MenusPermissionsTab({
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search menus..."
+            placeholder={t('pages.administration.menusPermissionsTab.searchMenus')}
             className="pl-8"
           />
         </div>
@@ -449,7 +451,7 @@ export function MenusPermissionsTab({
         open={confirmingClear}
         onOpenChange={setConfirmingClear}
         title="Clear all menus & permissions?"
-        message="This wipes every menu and permission checkbox for this role back to unchecked. It only affects the unsaved draft — you can still Cancel out of the page — but any hand-tuned selections made so far will be lost."
+        message={t('pages.administration.menusPermissionsTab.thisWipesEveryMenuAndPermission')}
         confirmLabel={t('shared.clearAll')}
         onConfirm={() => {
           handleClearAll()
@@ -461,8 +463,8 @@ export function MenusPermissionsTab({
         open={!!pendingInheritRoleId}
         onOpenChange={(open) => !open && setPendingInheritRoleId(null)}
         title={`Inherit permissions from "${pendingInheritRole?.name ?? ''}"?`}
-        message="This replaces every menu and permission selection made so far in this draft with the picked role's configuration. Any hand-tuned changes not yet saved will be overwritten."
-        confirmLabel="Inherit"
+        message={t('pages.administration.menusPermissionsTab.thisReplacesEveryMenuAndPermission')}
+        confirmLabel={t('pages.administration.menusPermissionsTab.inherit')}
         onConfirm={() => {
           if (pendingInheritRoleId) applyInherit(pendingInheritRoleId)
           setPendingInheritRoleId(null)

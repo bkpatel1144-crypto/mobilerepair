@@ -942,6 +942,148 @@
       "pricing": {
         "simplePricingFree": "सीधी कीमत: मुफ़्त।"
       }
+    },
+    "administration": {
+      "activeSessions": {
+        "activeSessions": "सक्रिय सत्र",
+        "signedInDevicesAcrossYourTeam": "आपकी टीम में लॉग इन डिवाइस",
+        "currentlyOnline": "अभी ऑनलाइन",
+        "uniqueUsers": "अलग-अलग उपयोगकर्ता",
+        "noSessionsYet": "अभी कोई सत्र नहीं",
+        "sessionsAppearHereAsYourTeam": "आपकी टीम के लॉग इन करते ही सत्र यहाँ दिखेंगे।",
+        "ended": "समाप्त",
+        "online": "ऑनलाइन",
+        "idle": "निष्क्रिय",
+        "away": "दूर",
+        "user": "उपयोगकर्ता",
+        "lastActivity": "आख़िरी गतिविधि",
+        "session": "सत्र",
+        "signedIn": "लॉग इन हुआ",
+        "lastActivity2": "आख़िरी गतिविधि",
+        "signedInFor": "कब से लॉग इन",
+        "autoExpiresOn": "अपने आप समाप्त होगा",
+        "inactiveFor": "कब से निष्क्रिय",
+        "role": "भूमिका",
+        "branch": "शाखा"
+      },
+      "createRole": {
+        "backToRoles": "भूमिकाओं पर वापस",
+        "addNewRole": "नई भूमिका जोड़ें",
+        "createANewRoleWithCustom": "अपनी पसंद की अनुमतियों के साथ नई भूमिका बनाएं",
+        "afterCreatingTheRole": "भूमिका बनाने के बाद",
+        "assignPermissionsToDefineWhatUsers": "तय करें कि इस भूमिका वाले उपयोगकर्ता क्या कर सकते हैं",
+        "assignMenusToControlNavigationAccess": "नेविगेशन की पहुँच तय करने के लिए मेन्यू चुनें",
+        "assignUsersToThisRole": "इस भूमिका में उपयोगकर्ता जोड़ें"
+      },
+      "createUser": {
+        "enterFullName": "पूरा नाम लिखें",
+        "strongPassword": "मज़बूत पासवर्ड",
+        "selectARole": "भूमिका चुनें...",
+        "addNewUser": "नया उपयोगकर्ता जोड़ें",
+        "fullName": "पूरा नाम *",
+        "mobileNumber": "मोबाइल नंबर",
+        "emailAddress": "ईमेल पता *",
+        "password": "पासवर्ड *",
+        "role": "भूमिका *",
+        "securityNote": "सुरक्षा सूचना:"
+      },
+      "ipWhitelist": {
+        "ipWhitelist": "IP व्हाइटलिस्ट",
+        "restrictNonOwnerSignInsTo": "मालिक के अलावा बाकी लोगों के लॉग इन को भरोसेमंद नेटवर्क तक सीमित करें — यह सलाह भर है, पक्की सुरक्षा दीवार नहीं",
+        "noIpRestrictionsYet": "अभी कोई IP पाबंदी नहीं",
+        "everyNonOwnerSignInIs": "अभी मालिक के अलावा हर लॉग इन किसी भी नेटवर्क से हो सकता है। पाबंदी शुरू करने के लिए एक प्रविष्टि जोड़ें।",
+        "label": "नाम",
+        "ipCidr": "IP / CIDR",
+        "label2": "नाम *",
+        "ipCidr2": "IP / CIDR *"
+      },
+      "loginReport": {
+        "loginReport": "लॉगिन रिपोर्ट",
+        "everyAccountSignInAcrossYour": "आपकी कंपनी में हर खाते का लॉग इन",
+        "onlineRightNow": "अभी ऑनलाइन",
+        "loginsToday": "आज के लॉगिन",
+        "usersToday": "आज के उपयोगकर्ता",
+        "ipAddresses": "IP पते",
+        "failedAttempts": "असफल कोशिशें",
+        "blockedIps": "रोके गए IP",
+        "busiestTimeToday": "आज का व्यस्ततम समय",
+        "filterByIp": "IP से फ़िल्टर करें...",
+        "noLoginsFound": "कोई लॉगिन नहीं मिला",
+        "signInsWillAppearHereAs": "आपकी टीम के लॉग इन करते ही वे यहाँ दिखेंगे।"
+      },
+      "dashboardLandingTab": {
+        "clearAllDashboardWidgets": "सभी डैशबोर्ड विजेट हटाएं?",
+        "thisTurnsOffEveryDashboardWidget": "यह इस भूमिका के लिए हर डैशबोर्ड विजेट बंद कर देता है — विजेट दोबारा चालू होने तक इसका डैशबोर्ड खाली रहेगा। यह सिर्फ़ बिना सहेजे ड्राफ़्ट पर असर करता है।",
+        "defaultLandingPage": "डिफ़ॉल्ट शुरुआती पेज",
+        "visibleDashboardWidgets": "दिखने वाले डैशबोर्ड विजेट"
+      },
+      "menusPermissionsTab": {
+        "inheritFromRole": "भूमिका से लें",
+        "searchMenus": "मेन्यू खोजें...",
+        "thisWipesEveryMenuAndPermission": "यह इस भूमिका के हर मेन्यू और अनुमति के निशान हटा देता है। यह सिर्फ़ बिना सहेजे ड्राफ़्ट पर असर करता है — आप अब भी पेज से रद्द कर सकते हैं — लेकिन अब तक हाथ से किए गए चुनाव खो जाएंगे।",
+        "thisReplacesEveryMenuAndPermission": "यह इस ड्राफ़्ट में अब तक किए गए हर मेन्यू और अनुमति चुनाव को चुनी हुई भूमिका की सेटिंग से बदल देता है। बिना सहेजे किए गए बदलाव मिट जाएंगे।",
+        "inherit": "लें"
+      },
+      "roleConfigure": {
+        "couldnTLoadThisRole": "यह भूमिका लोड नहीं हो सकी",
+        "onlyAnotherOwnerCanEditThe": "मालिक भूमिका को सिर्फ़ कोई दूसरा मालिक बदल सकता है",
+        "thisRoleHasFullAccessBy": "इस भूमिका को परिभाषा से ही पूरी पहुँच है और इसे सिर्फ़ वही उपयोगकर्ता संभाल सकता है जिसके पास भी पूरी पहुँच हो।"
+      },
+      "roleManagement": {
+        "rolesManagement": "भूमिका प्रबंधन",
+        "manageUserRolesPermissionsAndMenu": "उपयोगकर्ता भूमिकाएं, अनुमतियाँ और मेन्यू पहुँच प्रबंधित करें",
+        "totalRoles": "कुल भूमिकाएं",
+        "activeRoles": "सक्रिय भूमिकाएं",
+        "disabledRoles": "बंद भूमिकाएं",
+        "deletedRoles": "हटाई भूमिकाएं",
+        "searchByRoleNameOrCode": "भूमिका के नाम या कोड से खोजें...",
+        "noRolesFound": "कोई भूमिका नहीं मिली",
+        "roleDetails": "भूमिका का विवरण",
+        "roleInformation": "भूमिका की जानकारी",
+        "roleName": "भूमिका का नाम",
+        "roleCode": "भूमिका कोड",
+        "roleType": "भूमिका का प्रकार",
+        "ownerRole": "मालिक भूमिका",
+        "editRole": "भूमिका बदलें",
+        "renameThisRoleOrChangeIts": "इस भूमिका का नाम या कोड बदलें। अनुमतियाँ कॉन्फ़िगर में बदली जाती हैं।",
+        "roleName2": "भूमिका का नाम",
+        "code": "कोड",
+        "type": "प्रकार",
+        "status": "स्थिति",
+        "actions": "कार्रवाई",
+        "configureRole": "भूमिका कॉन्फ़िगर करें"
+      },
+      "systemAudit": {
+        "systemAudit": "सिस्टम ऑडिट",
+        "fullTrailOfEveryMutationAcross": "आपकी कंपनी में हुए हर बदलाव का पूरा रिकॉर्ड",
+        "totalEvents": "कुल घटनाएं",
+        "critical": "गंभीर",
+        "allModules": "सभी मॉड्यूल",
+        "allResults": "सभी परिणाम",
+        "noAuditEventsYet": "अभी कोई ऑडिट घटना नहीं",
+        "everyWriteYourTeamMakesWill": "आपकी टीम का हर बदलाव यहाँ दिखेगा।",
+        "action": "कार्रवाई",
+        "performedBy": "करने वाला",
+        "target": "लक्ष्य",
+        "entity": "इकाई",
+        "id": "ID",
+        "performedBy2": "करने वाला",
+        "additionalDetails": "अतिरिक्त विवरण",
+        "success": "सफल",
+        "blocked": "रोका गया",
+        "failed": "असफल",
+        "noAdditionalDetailsRecorded": "कोई अतिरिक्त विवरण दर्ज नहीं।"
+      },
+      "userManagement": {
+        "userManagement": "उपयोगकर्ता प्रबंधन",
+        "manageSystemUsersRolesAndPermissions": "सिस्टम के उपयोगकर्ता, भूमिकाएं और अनुमतियाँ प्रबंधित करें",
+        "totalUsers": "कुल उपयोगकर्ता",
+        "activeUsers": "सक्रिय उपयोगकर्ता",
+        "disabledUsers": "बंद उपयोगकर्ता",
+        "deletedUsers": "हटाए उपयोगकर्ता",
+        "noUsersFound": "कोई उपयोगकर्ता नहीं मिला",
+        "contactDetails": "संपर्क विवरण"
+      }
     }
   },
   "components": {

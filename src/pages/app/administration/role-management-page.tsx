@@ -86,7 +86,7 @@ export function RoleManagementPage() {
   const columns: DataTableColumn<RoleWithId>[] = [
     {
       key: 'name',
-      header: 'ROLE NAME',
+      header: t('pages.administration.roleManagement.roleName2'),
       sortValue: (r) => r.name,
       render: (r) => (
         <span className="flex items-center gap-2.5">
@@ -108,7 +108,7 @@ export function RoleManagementPage() {
     },
     {
       key: 'code',
-      header: 'CODE',
+      header: t('pages.administration.roleManagement.code'),
       render: (r) => (
         <span
           className={cn(
@@ -124,7 +124,7 @@ export function RoleManagementPage() {
     },
     {
       key: 'type',
-      header: 'TYPE',
+      header: t('pages.administration.roleManagement.type'),
       render: (r) =>
         r.type === 'owner' ? (
           <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-medium text-white">
@@ -138,7 +138,7 @@ export function RoleManagementPage() {
     },
     {
       key: 'status',
-      header: 'STATUS',
+      header: t('pages.administration.roleManagement.status'),
       render: (r) =>
         r.status === 'active' ? (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
@@ -153,7 +153,7 @@ export function RoleManagementPage() {
     },
     {
       key: 'actions',
-      header: 'ACTIONS',
+      header: t('pages.administration.roleManagement.actions'),
       className: 'text-right',
       render: (r) => (
         <div className="flex items-center justify-end gap-1">
@@ -194,7 +194,9 @@ export function RoleManagementPage() {
                 }
               >
                 <ShieldCheck />
-                <span className="font-medium text-teal-700 dark:text-teal-400">Configure Role</span>
+                <span className="font-medium text-teal-700 dark:text-teal-400">
+                  {t('pages.administration.roleManagement.configureRole')}
+                </span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -243,8 +245,8 @@ export function RoleManagementPage() {
     <div className="space-y-6 p-4 sm:p-6">
       <PageHeader
         icon={ShieldCheck}
-        title="Roles Management"
-        subtitle="Manage user roles, permissions, and menu access"
+        title={t('pages.administration.roleManagement.rolesManagement')}
+        subtitle={t('pages.administration.roleManagement.manageUserRolesPermissionsAndMenu')}
         actions={
           <>
             <Button type="button" variant="outline" onClick={() => void refetch()}>
@@ -263,10 +265,13 @@ export function RoleManagementPage() {
       />
 
       <StatPillRow>
-        <StatPill label="Total Roles" count={counts.total} />
+        <StatPill
+          label={t('pages.administration.roleManagement.totalRoles')}
+          count={counts.total}
+        />
         <StatPill
           icon={ShieldCheck}
-          label="Active Roles"
+          label={t('pages.administration.roleManagement.activeRoles')}
           count={counts.active}
           tone="success"
           selected={statusFilter === 'active'}
@@ -274,7 +279,7 @@ export function RoleManagementPage() {
         />
         <StatPill
           icon={EyeOff}
-          label="Disabled Roles"
+          label={t('pages.administration.roleManagement.disabledRoles')}
           count={counts.disabled}
           tone="warning"
           selected={statusFilter === 'disabled'}
@@ -282,7 +287,7 @@ export function RoleManagementPage() {
         />
         <StatPill
           icon={Trash2}
-          label="Deleted Roles"
+          label={t('pages.administration.roleManagement.deletedRoles')}
           count={counts.deleted}
           tone="danger"
           selected={statusFilter === 'deleted'}
@@ -294,7 +299,7 @@ export function RoleManagementPage() {
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by role name or code..."
+          placeholder={t('pages.administration.roleManagement.searchByRoleNameOrCode')}
           className="h-10 max-w-md flex-1 rounded-full"
         />
         <Button
@@ -348,7 +353,7 @@ export function RoleManagementPage() {
         emptyState={
           <EmptyState
             icon={ShieldCheck}
-            title="No roles found"
+            title={t('pages.administration.roleManagement.noRolesFound')}
             description={t('common.noResultsHint')}
           />
         }
@@ -357,12 +362,14 @@ export function RoleManagementPage() {
       <DetailDrawer
         open={!!selectedRole}
         onOpenChange={(open) => !open && setSelectedRole(null)}
-        title="Role Details"
+        title={t('pages.administration.roleManagement.roleDetails')}
         pinHeader
         header={
           selectedRole && (
             <div className="space-y-3">
-              <h2 className="text-xl font-bold">Role Details</h2>
+              <h2 className="text-xl font-bold">
+                {t('pages.administration.roleManagement.roleDetails')}
+              </h2>
               <div className="flex items-start gap-3">
                 <span
                   className={cn(
@@ -459,12 +466,16 @@ export function RoleManagementPage() {
           <>
             <DetailBlock
               icon={selectedRole.type === 'owner' ? Crown : Shield}
-              title="Role Information"
+              title={t('pages.administration.roleManagement.roleInformation')}
               tone={selectedRole.type === 'owner' ? 'amber' : 'purple'}
             >
-              <DetailValue label="Role Name" value={selectedRole.name} divider />
               <DetailValue
-                label="Role Code"
+                label={t('pages.administration.roleManagement.roleName')}
+                value={selectedRole.name}
+                divider
+              />
+              <DetailValue
+                label={t('pages.administration.roleManagement.roleCode')}
                 value={
                   <span className="inline-block rounded-md border bg-background px-2 py-1 font-mono text-sm">
                     {selectedRole.code}
@@ -473,7 +484,7 @@ export function RoleManagementPage() {
                 divider
               />
               <DetailValue
-                label="Role Type"
+                label={t('pages.administration.roleManagement.roleType')}
                 value={
                   <span className="inline-flex items-center gap-1.5">
                     {selectedRole.type === 'owner' ? (
@@ -500,7 +511,11 @@ export function RoleManagementPage() {
             </DetailBlock>
 
             {selectedRole.protected && (
-              <DetailNote icon={Crown} title="Owner Role" tone="amber">
+              <DetailNote
+                icon={Crown}
+                title={t('pages.administration.roleManagement.ownerRole')}
+                tone="amber"
+              >
                 This role has full access by definition and can only be managed by another Owner, so
                 it can't be disabled or deleted.
               </DetailNote>
@@ -512,8 +527,8 @@ export function RoleManagementPage() {
       <FormModal
         open={!!editing}
         onOpenChange={(open) => !open && setEditing(null)}
-        title="Edit Role"
-        description="Rename this role or change its code. Permissions are edited in Configure."
+        title={t('pages.administration.roleManagement.editRole')}
+        description={t('pages.administration.roleManagement.renameThisRoleOrChangeIts')}
         submitLabel={renameRole.isPending ? 'Saving…' : 'Save Changes'}
         isSubmitting={renameRole.isPending}
         onSubmit={async () => {

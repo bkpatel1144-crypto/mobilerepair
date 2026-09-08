@@ -66,7 +66,9 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <label className="text-sm font-medium">Default Landing Page</label>
+        <label className="text-sm font-medium">
+          {t('pages.administration.dashboardLandingTab.defaultLandingPage')}
+        </label>
         <p className="text-xs text-muted-foreground">
           Where this role lands immediately after logging in.
         </p>
@@ -97,7 +99,9 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <div>
-            <label className="text-sm font-medium">Visible Dashboard Widgets</label>
+            <label className="text-sm font-medium">
+              {t('pages.administration.dashboardLandingTab.visibleDashboardWidgets')}
+            </label>
             <p className="text-xs text-muted-foreground">
               {enabledCount}/{DASHBOARD_WIDGETS.length} widgets shown on this role's dashboard.
             </p>
@@ -143,8 +147,8 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
       <ConfirmDialog
         open={confirmingClear}
         onOpenChange={setConfirmingClear}
-        title="Clear all dashboard widgets?"
-        message="This turns off every dashboard widget for this role — its dashboard will show nothing until widgets are re-enabled. It only affects the unsaved draft."
+        title={t('pages.administration.dashboardLandingTab.clearAllDashboardWidgets')}
+        message={t('pages.administration.dashboardLandingTab.thisTurnsOffEveryDashboardWidget')}
         confirmLabel={t('shared.clearAll')}
         onConfirm={() => {
           setAllWidgets(false)

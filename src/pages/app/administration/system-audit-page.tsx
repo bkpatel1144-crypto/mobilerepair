@@ -74,7 +74,7 @@ export function SystemAuditPage() {
     },
     {
       key: 'action',
-      header: 'Action',
+      header: t('pages.administration.systemAudit.action'),
       render: (e) => (
         <span className="inline-flex items-center gap-1.5 font-medium">
           {e.critical && <AlertTriangle className="size-3.5 text-red-600" />}
@@ -94,11 +94,16 @@ export function SystemAuditPage() {
     },
     {
       key: 'performedBy',
-      header: 'Performed By',
+      header: t('pages.administration.systemAudit.performedBy'),
       hideOnMobile: true,
       render: (e) => e.performedByName,
     },
-    { key: 'target', header: 'Target', hideOnMobile: true, render: (e) => e.targetLabel },
+    {
+      key: 'target',
+      header: t('pages.administration.systemAudit.target'),
+      hideOnMobile: true,
+      render: (e) => e.targetLabel,
+    },
     {
       key: 'result',
       header: t('shared.result'),
@@ -111,8 +116,8 @@ export function SystemAuditPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={ClipboardList}
-        title="System Audit"
-        subtitle="Full trail of every mutation across your company"
+        title={t('pages.administration.systemAudit.systemAudit')}
+        subtitle={t('pages.administration.systemAudit.fullTrailOfEveryMutationAcross')}
         actions={
           <Button
             type="button"
@@ -140,9 +145,13 @@ export function SystemAuditPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Total Events" value={events.length} icon={ClipboardList} />
         <StatCard
-          label="Critical"
+          label={t('pages.administration.systemAudit.totalEvents')}
+          value={events.length}
+          icon={ClipboardList}
+        />
+        <StatCard
+          label={t('pages.administration.systemAudit.critical')}
           value={criticalCount}
           icon={AlertTriangle}
           tone={criticalCount > 0 ? 'danger' : 'default'}
@@ -159,10 +168,10 @@ export function SystemAuditPage() {
       >
         <Select value={moduleFilter} onValueChange={(v) => v && setModuleFilter(v)}>
           <SelectTrigger className="w-36">
-            <SelectValue placeholder="All Modules" />
+            <SelectValue placeholder={t('pages.administration.systemAudit.allModules')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Modules</SelectItem>
+            <SelectItem value="all">{t('pages.administration.systemAudit.allModules')}</SelectItem>
             {modules.map((m) => (
               <SelectItem key={m} value={m}>
                 {m}
@@ -175,14 +184,14 @@ export function SystemAuditPage() {
           onValueChange={(v) => v && setResultFilter(v as typeof resultFilter)}
         >
           <SelectTrigger className="w-36">
-            <SelectValue placeholder="All Results" />
+            <SelectValue placeholder={t('pages.administration.systemAudit.allResults')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Results</SelectItem>
-            <SelectItem value="success">Success</SelectItem>
+            <SelectItem value="all">{t('pages.administration.systemAudit.allResults')}</SelectItem>
+            <SelectItem value="success">{t('pages.administration.systemAudit.success')}</SelectItem>
             <SelectItem value="unauthorized">{t('shared.unauthorized')}</SelectItem>
-            <SelectItem value="blocked">Blocked</SelectItem>
-            <SelectItem value="failed">Failed</SelectItem>
+            <SelectItem value="blocked">{t('pages.administration.systemAudit.blocked')}</SelectItem>
+            <SelectItem value="failed">{t('pages.administration.systemAudit.failed')}</SelectItem>
           </SelectContent>
         </Select>
       </FilterBar>
@@ -198,8 +207,8 @@ export function SystemAuditPage() {
         emptyState={
           <EmptyState
             icon={ClipboardList}
-            title="No audit events yet"
-            description="Every write your team makes will show up here."
+            title={t('pages.administration.systemAudit.noAuditEventsYet')}
+            description={t('pages.administration.systemAudit.everyWriteYourTeamMakesWill')}
           />
         }
       />
@@ -224,15 +233,15 @@ export function SystemAuditPage() {
           }
           sections={[
             {
-              title: 'ENTITY',
+              title: t('pages.administration.systemAudit.entity'),
               rows: [
                 { label: t('common.type'), value: viewing.entityType },
-                { label: 'ID', value: viewing.entityId ?? '—' },
-                { label: 'Target', value: viewing.targetLabel },
+                { label: t('pages.administration.systemAudit.id'), value: viewing.entityId ?? '—' },
+                { label: t('pages.administration.systemAudit.target'), value: viewing.targetLabel },
               ],
             },
             {
-              title: 'PERFORMED BY',
+              title: t('pages.administration.systemAudit.performedBy2'),
               rows: [
                 { label: t('common.name'), value: viewing.performedByName },
                 { label: t('common.role'), value: viewing.performedByRole },
@@ -248,14 +257,16 @@ export function SystemAuditPage() {
               ],
             },
             {
-              title: 'ADDITIONAL DETAILS',
+              title: t('pages.administration.systemAudit.additionalDetails'),
               children:
                 Object.keys(viewing.details).length > 0 ? (
                   <pre className="overflow-x-auto rounded-lg bg-muted/40 p-3 text-xs">
                     {JSON.stringify(viewing.details, null, 2)}
                   </pre>
                 ) : (
-                  <p className="text-sm text-muted-foreground">No additional details recorded.</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t('pages.administration.systemAudit.noAdditionalDetailsRecorded')}
+                  </p>
                 ),
             },
           ]}

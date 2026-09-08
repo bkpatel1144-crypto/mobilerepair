@@ -107,13 +107,13 @@ export function LoginReportPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={LogIn}
-        title="Login Report"
-        subtitle="Every account sign-in across your company"
+        title={t('pages.administration.loginReport.loginReport')}
+        subtitle={t('pages.administration.loginReport.everyAccountSignInAcrossYour')}
       />
 
       <StatCardGrid>
         <StatCard
-          label="Online Right Now"
+          label={t('pages.administration.loginReport.onlineRightNow')}
           value={data.onlineRightNow}
           icon={Wifi}
           tone="success"
@@ -121,28 +121,28 @@ export function LoginReportPage() {
           onClick={() => setCardFilter(cardFilter === 'online' ? 'all' : 'online')}
         />
         <StatCard
-          label="Logins Today"
+          label={t('pages.administration.loginReport.loginsToday')}
           value={data.loginsToday}
           icon={LogIn}
           selected={cardFilter === 'today'}
           onClick={() => setCardFilter(cardFilter === 'today' ? 'all' : 'today')}
         />
         <StatCard
-          label="Users Today"
+          label={t('pages.administration.loginReport.usersToday')}
           value={data.usersToday}
           icon={Users}
           selected={cardFilter === 'users'}
           onClick={() => setCardFilter(cardFilter === 'users' ? 'all' : 'users')}
         />
         <StatCard
-          label="IP Addresses"
+          label={t('pages.administration.loginReport.ipAddresses')}
           value={data.ipAddressesToday}
           icon={Globe}
           selected={cardFilter === 'ips'}
           onClick={() => setCardFilter(cardFilter === 'ips' ? 'all' : 'ips')}
         />
         <StatCard
-          label="Failed Attempts"
+          label={t('pages.administration.loginReport.failedAttempts')}
           value={data.failedAttemptsToday}
           icon={ShieldAlert}
           tone="warning"
@@ -158,14 +158,18 @@ export function LoginReportPage() {
           onClick={() => setCardFilter(cardFilter === 'unauthorized' ? 'all' : 'unauthorized')}
         />
         <StatCard
-          label="Blocked IPs"
+          label={t('pages.administration.loginReport.blockedIps')}
           value={data.blockedIpsToday}
           icon={Ban}
           tone="danger"
           selected={cardFilter === 'blocked'}
           onClick={() => setCardFilter(cardFilter === 'blocked' ? 'all' : 'blocked')}
         />
-        <StatCard label="Busiest Time Today" value={data.busiestHourLabel ?? '—'} icon={Clock} />
+        <StatCard
+          label={t('pages.administration.loginReport.busiestTimeToday')}
+          value={data.busiestHourLabel ?? '—'}
+          icon={Clock}
+        />
       </StatCardGrid>
 
       <FilterBar
@@ -175,7 +179,7 @@ export function LoginReportPage() {
         <Input
           value={ipFilter}
           onChange={(e) => setIpFilter(e.target.value)}
-          placeholder="Filter by IP..."
+          placeholder={t('pages.administration.loginReport.filterByIp')}
           className="w-40"
         />
       </FilterBar>
@@ -191,8 +195,8 @@ export function LoginReportPage() {
         emptyState={
           <EmptyState
             icon={LogIn}
-            title="No logins found"
-            description="Sign-ins will appear here as your team logs in."
+            title={t('pages.administration.loginReport.noLoginsFound')}
+            description={t('pages.administration.loginReport.signInsWillAppearHereAs')}
           />
         }
       />

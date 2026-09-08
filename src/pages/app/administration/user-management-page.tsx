@@ -94,8 +94,8 @@ export function UserManagementPage() {
     <div className="space-y-6 p-4 sm:p-6">
       <PageHeader
         icon={Users}
-        title="User Management"
-        subtitle="Manage system users, roles, and permissions"
+        title={t('pages.administration.userManagement.userManagement')}
+        subtitle={t('pages.administration.userManagement.manageSystemUsersRolesAndPermissions')}
         actions={
           <Button onClick={() => navigate(`${buildPath('administration', 'users')}/create`)}>
             <UserPlus />
@@ -106,27 +106,27 @@ export function UserManagementPage() {
 
       <div className="flex flex-wrap gap-3">
         <StatCard
-          label="Total Users"
+          label={t('pages.administration.userManagement.totalUsers')}
           value={counts.total}
           onClick={() => setStatusFilter(null)}
           selected={statusFilter === null}
         />
         <StatCard
-          label="Active Users"
+          label={t('pages.administration.userManagement.activeUsers')}
           value={counts.active}
           tone="success"
           onClick={() => setStatusFilter('active')}
           selected={statusFilter === 'active'}
         />
         <StatCard
-          label="Disabled Users"
+          label={t('pages.administration.userManagement.disabledUsers')}
           value={counts.disabled}
           tone="warning"
           onClick={() => setStatusFilter('disabled')}
           selected={statusFilter === 'disabled'}
         />
         <StatCard
-          label="Deleted Users"
+          label={t('pages.administration.userManagement.deletedUsers')}
           value={counts.deleted}
           tone="danger"
           onClick={() => setStatusFilter('deleted')}
@@ -149,7 +149,11 @@ export function UserManagementPage() {
         error={loadError}
         onRetry={() => void refetch()}
         emptyState={
-          <EmptyState icon={Users} title="No users found" description={t('common.noResultsHint')} />
+          <EmptyState
+            icon={Users}
+            title={t('pages.administration.userManagement.noUsersFound')}
+            description={t('common.noResultsHint')}
+          />
         }
       />
 
@@ -192,7 +196,7 @@ export function UserManagementPage() {
           selectedUser
             ? [
                 {
-                  title: 'Contact Details',
+                  title: t('pages.administration.userManagement.contactDetails'),
                   icon: Mail,
                   rows: [
                     { label: t('common.email'), value: selectedUser.email },

@@ -955,6 +955,148 @@
       "pricing": {
         "simplePricingFree": "સીધી કિંમત: મફત."
       }
+    },
+    "administration": {
+      "activeSessions": {
+        "activeSessions": "સક્રિય સેશન",
+        "signedInDevicesAcrossYourTeam": "તમારી ટીમમાં લોગ ઇન ડિવાઇસ",
+        "currentlyOnline": "હાલ ઓનલાઇન",
+        "uniqueUsers": "અલગ અલગ વપરાશકર્તા",
+        "noSessionsYet": "હજી કોઈ સેશન નથી",
+        "sessionsAppearHereAsYourTeam": "તમારી ટીમ લોગ ઇન કરતાં જ સેશન અહીં દેખાશે.",
+        "ended": "સમાપ્ત",
+        "online": "ઓનલાઇન",
+        "idle": "નિષ્ક્રિય",
+        "away": "દૂર",
+        "user": "વપરાશકર્તા",
+        "lastActivity": "છેલ્લી પ્રવૃત્તિ",
+        "session": "સેશન",
+        "signedIn": "લોગ ઇન થયું",
+        "lastActivity2": "છેલ્લી પ્રવૃત્તિ",
+        "signedInFor": "ક્યારથી લોગ ઇન",
+        "autoExpiresOn": "આપોઆપ સમાપ્ત થશે",
+        "inactiveFor": "ક્યારથી નિષ્ક્રિય",
+        "role": "ભૂમિકા",
+        "branch": "શાખા"
+      },
+      "createRole": {
+        "backToRoles": "ભૂમિકાઓ પર પાછા",
+        "addNewRole": "નવી ભૂમિકા ઉમેરો",
+        "createANewRoleWithCustom": "તમારી પસંદની પરવાનગીઓ સાથે નવી ભૂમિકા બનાવો",
+        "afterCreatingTheRole": "ભૂમિકા બનાવ્યા પછી",
+        "assignPermissionsToDefineWhatUsers": "નક્કી કરો કે આ ભૂમિકાવાળા વપરાશકર્તા શું કરી શકે",
+        "assignMenusToControlNavigationAccess": "નેવિગેશનની પહોંચ નક્કી કરવા મેન્યુ પસંદ કરો",
+        "assignUsersToThisRole": "આ ભૂમિકામાં વપરાશકર્તા ઉમેરો"
+      },
+      "createUser": {
+        "enterFullName": "પૂરું નામ લખો",
+        "strongPassword": "મજબૂત પાસવર્ડ",
+        "selectARole": "ભૂમિકા પસંદ કરો...",
+        "addNewUser": "નવો વપરાશકર્તા ઉમેરો",
+        "fullName": "પૂરું નામ *",
+        "mobileNumber": "મોબાઇલ નંબર",
+        "emailAddress": "ઈમેલ સરનામું *",
+        "password": "પાસવર્ડ *",
+        "role": "ભૂમિકા *",
+        "securityNote": "સુરક્ષા નોંધ:"
+      },
+      "ipWhitelist": {
+        "ipWhitelist": "IP વ્હાઇટલિસ્ટ",
+        "restrictNonOwnerSignInsTo": "માલિક સિવાયના લોકોના લોગ ઇનને ભરોસાપાત્ર નેટવર્ક પૂરતા મર્યાદિત કરો — આ ફક્ત સલાહ છે, પાકી સુરક્ષા દીવાલ નથી",
+        "noIpRestrictionsYet": "હજી કોઈ IP પ્રતિબંધ નથી",
+        "everyNonOwnerSignInIs": "હાલ માલિક સિવાયનું દરેક લોગ ઇન કોઈ પણ નેટવર્કથી થઈ શકે છે. પ્રતિબંધ શરૂ કરવા એક નોંધ ઉમેરો.",
+        "label": "નામ",
+        "ipCidr": "IP / CIDR",
+        "label2": "નામ *",
+        "ipCidr2": "IP / CIDR *"
+      },
+      "loginReport": {
+        "loginReport": "લોગિન રિપોર્ટ",
+        "everyAccountSignInAcrossYour": "તમારી કંપનીમાં દરેક ખાતાનું લોગ ઇન",
+        "onlineRightNow": "હમણાં ઓનલાઇન",
+        "loginsToday": "આજના લોગિન",
+        "usersToday": "આજના વપરાશકર્તા",
+        "ipAddresses": "IP સરનામાં",
+        "failedAttempts": "નિષ્ફળ પ્રયાસો",
+        "blockedIps": "અટકાવેલા IP",
+        "busiestTimeToday": "આજનો સૌથી વ્યસ્ત સમય",
+        "filterByIp": "IP થી ફિલ્ટર કરો...",
+        "noLoginsFound": "કોઈ લોગિન મળ્યું નથી",
+        "signInsWillAppearHereAs": "તમારી ટીમ લોગ ઇન કરતાં જ તે અહીં દેખાશે."
+      },
+      "dashboardLandingTab": {
+        "clearAllDashboardWidgets": "બધા ડેશબોર્ડ વિજેટ કાઢી નાખવા?",
+        "thisTurnsOffEveryDashboardWidget": "આ આ ભૂમિકા માટે દરેક ડેશબોર્ડ વિજેટ બંધ કરે છે — વિજેટ ફરી ચાલુ થાય ત્યાં સુધી તેનું ડેશબોર્ડ ખાલી રહેશે. આ ફક્ત સાચવ્યા વગરના ડ્રાફ્ટ પર અસર કરે છે.",
+        "defaultLandingPage": "ડિફોલ્ટ શરૂઆતનું પાનું",
+        "visibleDashboardWidgets": "દેખાતા ડેશબોર્ડ વિજેટ"
+      },
+      "menusPermissionsTab": {
+        "inheritFromRole": "ભૂમિકામાંથી લો",
+        "searchMenus": "મેન્યુ શોધો...",
+        "thisWipesEveryMenuAndPermission": "આ આ ભૂમિકાના દરેક મેન્યુ અને પરવાનગીના નિશાન કાઢી નાખે છે. આ ફક્ત સાચવ્યા વગરના ડ્રાફ્ટ પર અસર કરે છે — તમે હજી પાના પરથી રદ કરી શકો છો — પણ અત્યાર સુધી હાથે કરેલી પસંદગી ખોવાઈ જશે.",
+        "thisReplacesEveryMenuAndPermission": "આ આ ડ્રાફ્ટમાં અત્યાર સુધી કરેલી દરેક મેન્યુ અને પરવાનગી પસંદગીને પસંદ કરેલી ભૂમિકાની ગોઠવણથી બદલી નાખે છે. સાચવ્યા વગરના ફેરફાર ભૂંસાઈ જશે.",
+        "inherit": "લો"
+      },
+      "roleConfigure": {
+        "couldnTLoadThisRole": "આ ભૂમિકા લોડ થઈ શકી નથી",
+        "onlyAnotherOwnerCanEditThe": "માલિક ભૂમિકા ફક્ત બીજો માલિક જ બદલી શકે",
+        "thisRoleHasFullAccessBy": "આ ભૂમિકાને વ્યાખ્યાથી જ પૂરી પહોંચ છે અને તેને ફક્ત એવો વપરાશકર્તા સંભાળી શકે જેની પાસે પણ પૂરી પહોંચ હોય."
+      },
+      "roleManagement": {
+        "rolesManagement": "ભૂમિકા વ્યવસ્થાપન",
+        "manageUserRolesPermissionsAndMenu": "વપરાશકર્તા ભૂમિકાઓ, પરવાનગીઓ અને મેન્યુ પહોંચ સંભાળો",
+        "totalRoles": "કુલ ભૂમિકાઓ",
+        "activeRoles": "સક્રિય ભૂમિકાઓ",
+        "disabledRoles": "બંધ ભૂમિકાઓ",
+        "deletedRoles": "કાઢેલી ભૂમિકાઓ",
+        "searchByRoleNameOrCode": "ભૂમિકાના નામ કે કોડથી શોધો...",
+        "noRolesFound": "કોઈ ભૂમિકા મળી નથી",
+        "roleDetails": "ભૂમિકાની વિગતો",
+        "roleInformation": "ભૂમિકાની માહિતી",
+        "roleName": "ભૂમિકાનું નામ",
+        "roleCode": "ભૂમિકા કોડ",
+        "roleType": "ભૂમિકાનો પ્રકાર",
+        "ownerRole": "માલિક ભૂમિકા",
+        "editRole": "ભૂમિકા બદલો",
+        "renameThisRoleOrChangeIts": "આ ભૂમિકાનું નામ કે કોડ બદલો. પરવાનગીઓ કોન્ફિગરમાં બદલાય છે.",
+        "roleName2": "ભૂમિકાનું નામ",
+        "code": "કોડ",
+        "type": "પ્રકાર",
+        "status": "સ્થિતિ",
+        "actions": "ક્રિયાઓ",
+        "configureRole": "ભૂમિકા કોન્ફિગર કરો"
+      },
+      "systemAudit": {
+        "systemAudit": "સિસ્ટમ ઓડિટ",
+        "fullTrailOfEveryMutationAcross": "તમારી કંપનીમાં થયેલા દરેક ફેરફારનો સંપૂર્ણ રેકોર્ડ",
+        "totalEvents": "કુલ ઘટનાઓ",
+        "critical": "ગંભીર",
+        "allModules": "બધા મોડ્યુલ",
+        "allResults": "બધાં પરિણામ",
+        "noAuditEventsYet": "હજી કોઈ ઓડિટ ઘટના નથી",
+        "everyWriteYourTeamMakesWill": "તમારી ટીમનો દરેક ફેરફાર અહીં દેખાશે.",
+        "action": "ક્રિયા",
+        "performedBy": "કરનાર",
+        "target": "લક્ષ્ય",
+        "entity": "એકમ",
+        "id": "ID",
+        "performedBy2": "કરનાર",
+        "additionalDetails": "વધારાની વિગતો",
+        "success": "સફળ",
+        "blocked": "અટકાવેલ",
+        "failed": "નિષ્ફળ",
+        "noAdditionalDetailsRecorded": "કોઈ વધારાની વિગત નોંધાઈ નથી."
+      },
+      "userManagement": {
+        "userManagement": "વપરાશકર્તા વ્યવસ્થાપન",
+        "manageSystemUsersRolesAndPermissions": "સિસ્ટમના વપરાશકર્તા, ભૂમિકાઓ અને પરવાનગીઓ સંભાળો",
+        "totalUsers": "કુલ વપરાશકર્તા",
+        "activeUsers": "સક્રિય વપરાશકર્તા",
+        "disabledUsers": "બંધ વપરાશકર્તા",
+        "deletedUsers": "કાઢેલા વપરાશકર્તા",
+        "noUsersFound": "કોઈ વપરાશકર્તા મળ્યો નથી",
+        "contactDetails": "સંપર્ક વિગતો"
+      }
     }
   },
   "components": {
