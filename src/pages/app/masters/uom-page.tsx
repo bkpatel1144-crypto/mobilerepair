@@ -40,6 +40,17 @@ import { useTranslation } from 'react-i18next'
 
 const TYPE_OPTIONS = ['Quantity', 'Length', 'Weight', 'Volume', 'Time', 'Other']
 
+// These strings are the *stored* value of `UomDoc.type`, so the array itself must stay English —
+// translating it would change what gets written to Firestore. Only the label is localised.
+const TYPE_OPTION_KEYS: Record<string, string> = {
+  Quantity: 'common.quantity',
+  Length: 'pages.masters.uom.length',
+  Weight: 'pages.masters.uom.weight',
+  Volume: 'pages.masters.uom.volume',
+  Time: 'common.time',
+  Other: 'pages.service.recordCostingModal.other',
+}
+
 export function UomPage() {
   const { t } = useTranslation()
   const { data: uoms = [], isLoading, error: loadError, refetch } = useUoms()
@@ -197,7 +208,7 @@ export function UomPage() {
             <SelectItem value="all">{t('common.allTypes')}</SelectItem>
             {TYPE_OPTIONS.map((opt) => (
               <SelectItem key={opt} value={opt}>
-                {opt}
+                {t(TYPE_OPTION_KEYS[opt] ?? opt)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -345,7 +356,7 @@ function UomModal({
             <SelectContent>
               {TYPE_OPTIONS.map((opt) => (
                 <SelectItem key={opt} value={opt}>
-                  {opt}
+                  {t(TYPE_OPTION_KEYS[opt] ?? opt)}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -75,7 +75,7 @@ export function DeviceStockPage() {
       header: t('common.status'),
       render: (p) => (
         <StatusBadge
-          status={PURCHASE_STATUS_LABEL[p.status]}
+          status={t(PURCHASE_STATUS_LABEL[p.status])}
           tone={PURCHASE_STATUS_TONE[p.status]}
         />
       ),
@@ -172,7 +172,7 @@ export function DeviceStockPage() {
           subtitle={deviceLabel(viewing)}
           badges={
             <StatusBadge
-              status={PURCHASE_STATUS_LABEL[viewing.status]}
+              status={t(PURCHASE_STATUS_LABEL[viewing.status])}
               tone={PURCHASE_STATUS_TONE[viewing.status]}
             />
           }

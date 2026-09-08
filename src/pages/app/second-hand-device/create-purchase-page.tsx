@@ -40,6 +40,17 @@ const ACCESSORIES_OPTIONS = [
   'Box only',
 ]
 
+// The chosen string is written to Firestore as `accessoriesIncluded`, so the option values above
+// must stay English — translating them would change what is stored, and an existing record would
+// stop matching its own option. Only the label the shopkeeper reads is localised.
+const ACCESSORIES_OPTION_KEYS: Record<string, string> = {
+  'Charger only': 'pages.secondHandDevice.createPurchase.chargerOnly',
+  'Charger, box, cable': 'pages.secondHandDevice.createPurchase.chargerBoxCable',
+  'Charger, box, cable, earphones':
+    'pages.secondHandDevice.createPurchase.chargerBoxCableEarphones',
+  'Box only': 'pages.secondHandDevice.createPurchase.boxOnly',
+}
+
 export function CreateSecondHandPurchasePage() {
   const { t } = useTranslation()
   useBreadcrumbExtra(t('common.create'))
@@ -624,7 +635,7 @@ export function CreateSecondHandPurchasePage() {
             <SelectContent>
               {ACCESSORIES_OPTIONS.map((a) => (
                 <SelectItem key={a} value={a}>
-                  {a}
+                  {ACCESSORIES_OPTION_KEYS[a] ? t(ACCESSORIES_OPTION_KEYS[a]) : a}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -1332,7 +1332,8 @@
         "enableThisRole": "Enable this role?",
         "showActiveRoles": "Show active roles",
         "reloadFromServer": "Reload from server",
-        "thisRoleHasFullAccessBy": "This role has full access by definition and can only be managed by another Owner, so it can't be disabled or deleted."
+        "thisRoleHasFullAccessBy": "This role has full access by definition and can only be managed by another Owner, so it can't be disabled or deleted.",
+        "disableRole": "Disable Role"
       },
       "systemAudit": {
         "systemAudit": "System Audit",
@@ -1446,7 +1447,8 @@
         "createBranch": "Create Branch",
         "thisBranchWillBecomeSelectableAgain": "This branch will become selectable again.",
         "protectedSystemBranchCannotBeDeleted": "Protected system branch — cannot be deleted.",
-        "aUniqueBranchCodeWillBe": "A unique branch code will be auto-generated from the name."
+        "aUniqueBranchCodeWillBe": "A unique branch code will be auto-generated from the name.",
+        "systemBranch": "System Branch"
       },
       "companyForm": {
         "companyCode": "Company Code",
@@ -1482,7 +1484,8 @@
         "addCompany": "Add Company",
         "companyPreferencesActiveCompany": "Company Preferences (active company)",
         "currentlyActive": "Currently active",
-        "defaultCompanyCannotBeDisabledOr": "Default company — cannot be disabled or deleted."
+        "defaultCompanyCannotBeDisabledOr": "Default company — cannot be disabled or deleted.",
+        "addACompanyToManageA": "Add a company to manage a second shop from this account."
       },
       "financialYears": {
         "financialYears": "Financial Years",
@@ -1739,7 +1742,8 @@
         "lockedAfterFirstSaveClickTo": "Locked after first save — click to unlock",
         "clickToLockAfterFirstSave": "Click to lock after first save",
         "mobileAppOnlyClickToShow": "Mobile-app only — click to show everywhere",
-        "clickToRestrictToTheMobile": "Click to restrict to the mobile app"
+        "clickToRestrictToTheMobile": "Click to restrict to the mobile app",
+        "visibleClickToHide": "Visible — click to hide"
       },
       "fieldPreviewInput": {
         "searchUser": "Search user...",

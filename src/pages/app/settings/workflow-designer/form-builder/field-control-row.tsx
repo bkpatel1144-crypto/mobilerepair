@@ -107,7 +107,7 @@ export function FieldControlRow({
                 icon={config.visible ? Eye : EyeOff}
                 label={
                   config.visible
-                    ? 'Visible — click to hide'
+                    ? t('pages.settings.fieldControlRow.visibleClickToHide')
                     : t('pages.settings.fieldControlRow.hiddenClickToShow')
                 }
                 onClick={() => onChange({ visible: !config.visible })}

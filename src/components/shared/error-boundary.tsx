@@ -58,8 +58,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             {i18next.t('components.shared.errorBoundary.somethingWentWrong')}
           </h1>
           <p className="max-w-sm text-sm text-muted-foreground">
-            An unexpected error occurred. Reloading the page usually fixes this — if it keeps
-            happening, please let us know.
+            {i18next.t('components.shared.errorBoundary.anUnexpectedErrorOccurredReloadingThe')}
           </p>
           <Button onClick={() => window.location.reload()}>
             {i18next.t('components.shared.errorBoundary.reload')}

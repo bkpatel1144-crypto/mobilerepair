@@ -59,9 +59,9 @@ const CHART_TONE_HEX: Record<string, string> = {
 
 function greeting() {
   const hour = new Date().getHours()
-  if (hour < 12) return 'Good morning'
-  if (hour < 17) return 'Good afternoon'
-  return 'Good evening'
+  if (hour < 12) return 'pages.dashboard.dashboard.goodMorning'
+  if (hour < 17) return 'pages.dashboard.dashboard.goodAfternoon'
+  return 'pages.dashboard.dashboard.goodEvening'
 }
 
 export function DashboardPage() {
@@ -102,7 +102,7 @@ export function DashboardPage() {
     <div className="space-y-6 p-4 sm:p-6">
       <div className="rounded-lg border bg-gradient-to-br from-teal-50 to-background p-5 dark:from-teal-500/10">
         <h1 className="text-xl font-bold">
-          {greeting()},{' '}
+          {t(greeting())},{' '}
           {isLoading ? (
             <Skeleton className="inline-block h-6 w-32 align-middle" />
           ) : (

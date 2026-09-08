@@ -32,17 +32,17 @@ const HOW_IT_WORKS = [
   {
     step: 1,
     titleKey: 'pages.settings.rolePermissionsTab.selectARole',
-    body: 'Pick a configured role from the dropdown above, or choose an unconfigured one to set it up fresh.',
+    bodyKey: 'pages.settings.rolePermissionsTab.pickAConfiguredRoleFromThe',
   },
   {
     step: 2,
     titleKey: 'pages.settings.rolePermissionsTab.setVisibilityActions',
-    body: 'Control which job statuses this role can see and exactly which actions they’re allowed to take at each step.',
+    bodyKey: 'pages.settings.rolePermissionsTab.controlWhichJobStatusesThisRole',
   },
   {
     step: 3,
     titleKey: 'pages.settings.rolePermissionsTab.saveGoLive',
-    body: 'Hit Save Config — changes apply instantly for every user with that role. No restart needed.',
+    bodyKey: 'pages.settings.rolePermissionsTab.hitSaveConfigChangesApplyInstantly',
   },
 ]
 
@@ -98,7 +98,7 @@ export function RolePermissionsTab() {
                   {item.step}
                 </span>
                 <p className="mb-1 text-sm font-semibold">{t(item.titleKey)}</p>
-                <p className="text-xs text-muted-foreground">{item.body}</p>
+                <p className="text-xs text-muted-foreground">{t(item.bodyKey)}</p>
               </div>
             ))}
           </div>

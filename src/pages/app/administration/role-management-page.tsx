@@ -223,7 +223,7 @@ export function RoleManagementPage() {
                   >
                     <EyeOff />
                     {r.status === 'active'
-                      ? 'Disable Role'
+                      ? t('pages.administration.roleManagement.disableRole')
                       : t('pages.administration.roleManagement.enableRole')}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -495,7 +495,7 @@ export function RoleManagementPage() {
                       <Shield className="size-4 text-purple-500" />
                     )}
                     {selectedRole.type === 'owner'
-                      ? 'Owner Role'
+                      ? t('pages.administration.roleManagement.ownerRole')
                       : t('pages.administration.roleManagement.customRole')}
                   </span>
                 }

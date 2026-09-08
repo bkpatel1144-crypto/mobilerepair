@@ -63,8 +63,8 @@ export function purchaseDetailSections(
       title: sale
         ? 'PURCHASE'
         : p.status === 'inStock' || p.status === 'inRefurb'
-          ? 'PRICING'
-          : 'PURCHASE',
+          ? t('pages.masters.itemMaster.pricing')
+          : t('pages.secondHandDevice.purchaseDetailSections.purchase'),
       icon: ShoppingCart,
       rows: [
         {
@@ -149,8 +149,8 @@ export const PURCHASE_STATUS_TONE: Record<SecondHandPurchaseWithId['status'], Ba
 }
 
 export const PURCHASE_STATUS_LABEL: Record<SecondHandPurchaseWithId['status'], string> = {
-  inStock: 'In Stock',
-  inRefurb: 'In Refurb',
-  sold: 'Sold',
-  returnedToSeller: 'Returned to Seller',
+  inStock: 'shared.inStock',
+  inRefurb: 'shared.inRefurb',
+  sold: 'common.sold',
+  returnedToSeller: 'shared.returnedToSeller',
 }

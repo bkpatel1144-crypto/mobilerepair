@@ -1,7 +1,14 @@
 import { Check, Smartphone, User, MessageCircle, PackageCheck, ShieldCheck } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-const TIMELINE_STEPS = ['Received', 'Diagnosis', 'Repair', 'Quality check', 'Ready', 'Delivered']
+const TIMELINE_STEPS = [
+  'components.marketing.jobCardMockup.received',
+  'components.marketing.jobCardMockup.diagnosis',
+  'common.repair',
+  'components.marketing.jobCardMockup.qualityCheck',
+  'shared.ready',
+  'shared.delivered',
+]
 const ACTIVE_STEP_INDEX = 4 // "Ready" — matches the info cards below (device is ready for pickup)
 
 export function JobCardMockup() {

@@ -56,9 +56,9 @@ import { useTranslation } from 'react-i18next'
 type StatusFilter = 'active' | 'disabled' | 'deleted'
 
 const STATUS_LABEL: Record<StatusFilter, string> = {
-  active: 'Active',
-  disabled: 'Inactive',
-  deleted: 'Deleted',
+  active: 'common.active',
+  disabled: 'common.inactive',
+  deleted: 'common.deleted',
 }
 
 function formValuesFrom(c: CompanyWithId): CompanyFormValues {
@@ -446,7 +446,7 @@ export function CompanySettingsPage() {
       <p className="flex items-center gap-2 text-sm">
         <span className="text-muted-foreground">{t('shared.viewing')}</span>
         <span className="rounded-full border px-2.5 py-0.5 text-xs font-medium">
-          {STATUS_LABEL[statusFilter]} Companies ({filtered.length})
+          {t(STATUS_LABEL[statusFilter])} {t('common.company')} ({filtered.length})
         </span>
       </p>
 
@@ -467,10 +467,10 @@ export function CompanySettingsPage() {
           emptyState={
             <EmptyState
               icon={Store}
-              title={`No ${STATUS_LABEL[statusFilter].toLowerCase()} companies`}
+              title={`${t('common.noResults')} — ${t(STATUS_LABEL[statusFilter]).toLowerCase()}`}
               description={
                 statusFilter === 'active'
-                  ? 'Add a company to manage a second shop from this account.'
+                  ? t('pages.settings.companySettings.addACompanyToManageA')
                   : t('pages.settings.companySettings.nothingHereRightNow')
               }
             />

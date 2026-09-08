@@ -7,11 +7,15 @@ import { useCreatePrintTemplate } from '@/hooks/use-print-templates'
 import { PRINT_DOCUMENT_TYPES } from '@/config/print-fields'
 import type { PrintTemplateDoc } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 
 /** Accepts a template exported from this app (the designer's "Export JSON" action writes the
  * same shape). Validated rather than trusted: an imported file becomes a document other people
  * print from, so a malformed one must fail here with a reason, not at the printer. */
-function parseTemplate(raw: unknown):
+function parseTemplate(
+  raw: unknown,
+  t: TFunction
+):
   | {
       ok: true
       value: Omit<
@@ -21,15 +25,16 @@ function parseTemplate(raw: unknown):
     }
   | { ok: false; error: string } {
   if (!raw || typeof raw !== 'object')
-    return { ok: false, error: 'That file is not a template object.' }
+    return { ok: false, error: t('pages.settings.importTemplateDialog.thatFileIsNotATemplate') }
   const obj = raw as Record<string, unknown>
   if (!obj.documentType || !PRINT_DOCUMENT_TYPES.some((d) => d.key === obj.documentType)) {
     return { ok: false, error: `Unknown document type "${String(obj.documentType)}".` }
   }
-  if (!Array.isArray(obj.elements)) return { ok: false, error: 'The file has no `elements` array.' }
+  if (!Array.isArray(obj.elements))
+    return { ok: false, error: t('pages.settings.importTemplateDialog.theFileHasNoElementsArray') }
   const paper = obj.paper as Record<string, unknown> | undefined
   if (!paper || typeof paper.width !== 'number' || typeof paper.height !== 'number') {
-    return { ok: false, error: 'The file has no valid `paper` size.' }
+    return { ok: false, error: t('pages.settings.importTemplateDialog.theFileHasNoValidPaper') }
   }
   return { ok: true, value: obj as never }
 }
@@ -59,7 +64,7 @@ export function ImportTemplateDialog({
       setError(t('pages.settings.importTemplateDialog.thatFileIsNotValidJson'))
       return
     }
-    const result = parseTemplate(parsed)
+    const result = parseTemplate(parsed, t)
     if (!result.ok) {
       setError(result.error)
       return

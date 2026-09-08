@@ -238,7 +238,7 @@ export function BranchManagementPage() {
                   label: t('pages.settings.branchManagement.branchType'),
                   value:
                     viewing.type === 'system'
-                      ? 'System Branch'
+                      ? t('pages.settings.branchManagement.systemBranch')
                       : t('pages.settings.branchManagement.customBranch'),
                   tone: viewing.type === 'system' ? 'purple' : 'default',
                 },

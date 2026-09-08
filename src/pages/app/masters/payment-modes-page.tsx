@@ -49,6 +49,15 @@ import { useTranslation } from 'react-i18next'
 
 const TYPE_OPTIONS = ['Cash', 'UPI', 'Card', 'Bank Transfer', 'Other']
 
+// Stored as `PaymentModeDoc.type`, so the array stays English; only the label is localised.
+const TYPE_OPTION_KEYS: Record<string, string> = {
+  Cash: 'common.cash',
+  UPI: 'pages.masters.paymentModes.upi',
+  Card: 'common.cardMode',
+  'Bank Transfer': 'pages.masters.paymentModes.bankTransfer',
+  Other: 'pages.service.recordCostingModal.other',
+}
+
 export function PaymentModesPage() {
   const { t } = useTranslation()
   const { data: modes = [], isLoading, error: loadError, refetch } = usePaymentModes()
@@ -311,7 +320,7 @@ function PaymentModeModal({
           <SelectContent>
             {TYPE_OPTIONS.map((opt) => (
               <SelectItem key={opt} value={opt}>
-                {opt}
+                {t(TYPE_OPTION_KEYS[opt] ?? opt)}
               </SelectItem>
             ))}
           </SelectContent>

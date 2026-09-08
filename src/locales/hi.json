@@ -1332,7 +1332,8 @@
         "enableThisRole": "यह भूमिका चालू करें?",
         "showActiveRoles": "सक्रिय भूमिकाएं दिखाएं",
         "reloadFromServer": "सर्वर से दोबारा लोड करें",
-        "thisRoleHasFullAccessBy": "इस भूमिका को परिभाषा से ही पूरी पहुँच है और इसे सिर्फ़ कोई दूसरा मालिक संभाल सकता है, इसलिए इसे बंद या हटाया नहीं जा सकता।"
+        "thisRoleHasFullAccessBy": "इस भूमिका को परिभाषा से ही पूरी पहुँच है और इसे सिर्फ़ कोई दूसरा मालिक संभाल सकता है, इसलिए इसे बंद या हटाया नहीं जा सकता।",
+        "disableRole": "भूमिका बंद करें"
       },
       "systemAudit": {
         "systemAudit": "सिस्टम ऑडिट",
@@ -1446,7 +1447,8 @@
         "createBranch": "शाखा बनाएं",
         "thisBranchWillBecomeSelectableAgain": "यह शाखा फिर से चुनी जा सकेगी।",
         "protectedSystemBranchCannotBeDeleted": "सुरक्षित सिस्टम शाखा — हटाई नहीं जा सकती।",
-        "aUniqueBranchCodeWillBe": "नाम से एक अनोखा शाखा कोड अपने आप बन जाएगा।"
+        "aUniqueBranchCodeWillBe": "नाम से एक अनोखा शाखा कोड अपने आप बन जाएगा।",
+        "systemBranch": "सिस्टम शाखा"
       },
       "companyForm": {
         "companyCode": "कंपनी कोड",
@@ -1482,7 +1484,8 @@
         "addCompany": "कंपनी जोड़ें",
         "companyPreferencesActiveCompany": "कंपनी की पसंद (चालू कंपनी)",
         "currentlyActive": "अभी चालू",
-        "defaultCompanyCannotBeDisabledOr": "डिफ़ॉल्ट कंपनी — बंद या हटाई नहीं जा सकती।"
+        "defaultCompanyCannotBeDisabledOr": "डिफ़ॉल्ट कंपनी — बंद या हटाई नहीं जा सकती।",
+        "addACompanyToManageA": "इस खाते से दूसरी दुकान संभालने के लिए कंपनी जोड़ें।"
       },
       "financialYears": {
         "financialYears": "वित्तीय वर्ष",
@@ -1739,7 +1742,8 @@
         "lockedAfterFirstSaveClickTo": "पहली बार सहेजने के बाद लॉक — खोलने के लिए क्लिक करें",
         "clickToLockAfterFirstSave": "पहली बार सहेजने के बाद लॉक करने के लिए क्लिक करें",
         "mobileAppOnlyClickToShow": "सिर्फ़ मोबाइल ऐप — हर जगह दिखाने के लिए क्लिक करें",
-        "clickToRestrictToTheMobile": "सिर्फ़ मोबाइल ऐप तक सीमित करने के लिए क्लिक करें"
+        "clickToRestrictToTheMobile": "सिर्फ़ मोबाइल ऐप तक सीमित करने के लिए क्लिक करें",
+        "visibleClickToHide": "दिख रहा — छिपाने के लिए क्लिक करें"
       },
       "fieldPreviewInput": {
         "searchUser": "उपयोगकर्ता खोजें...",

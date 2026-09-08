@@ -94,7 +94,7 @@ export function PurchaseRegisterPage() {
       header: t('common.status'),
       render: (p) => (
         <StatusBadge
-          status={PURCHASE_STATUS_LABEL[p.status]}
+          status={t(PURCHASE_STATUS_LABEL[p.status])}
           tone={PURCHASE_STATUS_TONE[p.status]}
         />
       ),
@@ -120,7 +120,7 @@ export function PurchaseRegisterPage() {
                     Device: deviceLabel(p),
                     Seller: p.sellerName,
                     'Purchase Price': p.purchasePrice,
-                    Status: PURCHASE_STATUS_LABEL[p.status],
+                    Status: t(PURCHASE_STATUS_LABEL[p.status]),
                   }))
                 )
               }
@@ -219,7 +219,7 @@ export function PurchaseRegisterPage() {
           subtitle={deviceLabel(viewing)}
           badges={
             <StatusBadge
-              status={PURCHASE_STATUS_LABEL[viewing.status]}
+              status={t(PURCHASE_STATUS_LABEL[viewing.status])}
               tone={PURCHASE_STATUS_TONE[viewing.status]}
             />
           }

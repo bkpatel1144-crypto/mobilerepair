@@ -1345,7 +1345,8 @@
         "enableThisRole": "આ ભૂમિકા ચાલુ કરવી?",
         "showActiveRoles": "સક્રિય ભૂમિકાઓ બતાવો",
         "reloadFromServer": "સર્વરથી ફરી લોડ કરો",
-        "thisRoleHasFullAccessBy": "આ ભૂમિકાને વ્યાખ્યાથી જ પૂરી પહોંચ છે અને તેને ફક્ત બીજો માલિક સંભાળી શકે, તેથી તેને બંધ કે કાઢી શકાતી નથી."
+        "thisRoleHasFullAccessBy": "આ ભૂમિકાને વ્યાખ્યાથી જ પૂરી પહોંચ છે અને તેને ફક્ત બીજો માલિક સંભાળી શકે, તેથી તેને બંધ કે કાઢી શકાતી નથી.",
+        "disableRole": "ભૂમિકા બંધ કરો"
       },
       "systemAudit": {
         "systemAudit": "સિસ્ટમ ઓડિટ",
@@ -1459,7 +1460,8 @@
         "createBranch": "શાખા બનાવો",
         "thisBranchWillBecomeSelectableAgain": "આ શાખા ફરી પસંદ કરી શકાશે.",
         "protectedSystemBranchCannotBeDeleted": "સુરક્ષિત સિસ્ટમ શાખા — કાઢી શકાતી નથી.",
-        "aUniqueBranchCodeWillBe": "નામથી એક અનન્ય શાખા કોડ આપોઆપ બની જશે."
+        "aUniqueBranchCodeWillBe": "નામથી એક અનન્ય શાખા કોડ આપોઆપ બની જશે.",
+        "systemBranch": "સિસ્ટમ શાખા"
       },
       "companyForm": {
         "companyCode": "કંપની કોડ",
@@ -1495,7 +1497,8 @@
         "addCompany": "કંપની ઉમેરો",
         "companyPreferencesActiveCompany": "કંપનીની પસંદ (ચાલુ કંપની)",
         "currentlyActive": "હાલ ચાલુ",
-        "defaultCompanyCannotBeDisabledOr": "ડિફોલ્ટ કંપની — બંધ કે કાઢી શકાતી નથી."
+        "defaultCompanyCannotBeDisabledOr": "ડિફોલ્ટ કંપની — બંધ કે કાઢી શકાતી નથી.",
+        "addACompanyToManageA": "આ ખાતાથી બીજી દુકાન સંભાળવા કંપની ઉમેરો."
       },
       "financialYears": {
         "financialYears": "નાણાકીય વર્ષ",
@@ -1752,7 +1755,8 @@
         "lockedAfterFirstSaveClickTo": "પહેલી વાર સાચવ્યા પછી લોક — ખોલવા ક્લિક કરો",
         "clickToLockAfterFirstSave": "પહેલી વાર સાચવ્યા પછી લોક કરવા ક્લિક કરો",
         "mobileAppOnlyClickToShow": "ફક્ત મોબાઇલ એપ — બધે બતાવવા ક્લિક કરો",
-        "clickToRestrictToTheMobile": "ફક્ત મોબાઇલ એપ પૂરતું મર્યાદિત કરવા ક્લિક કરો"
+        "clickToRestrictToTheMobile": "ફક્ત મોબાઇલ એપ પૂરતું મર્યાદિત કરવા ક્લિક કરો",
+        "visibleClickToHide": "દેખાય છે — છુપાવવા ક્લિક કરો"
       },
       "fieldPreviewInput": {
         "searchUser": "વપરાશકર્તા શોધો...",

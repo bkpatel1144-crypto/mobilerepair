@@ -69,20 +69,20 @@ const WORKFLOW_STEPS = [
 
 const FAQS = [
   {
-    q: 'Is this really free?',
-    a: 'Yes — every feature in aim is free, forever. No card required, no plan tiers, no feature paywalls.',
+    q: 'pages.landing.landing.isThisReallyFree',
+    a: 'pages.landing.landing.yesEveryFeatureInAimIs',
   },
   {
-    q: 'Can I bring my existing data?',
-    a: 'Yes — we offer free data migration to get your customers, devices, and history into aim.',
+    q: 'pages.landing.landing.canIBringMyExistingData',
+    a: 'pages.landing.landing.yesWeOfferFreeDataMigration',
   },
   {
-    q: 'Does it work on mobile?',
-    a: 'Yes — aim is installable as a mobile app and built mobile-first from the ground up.',
+    q: 'pages.landing.landing.doesItWorkOnMobile',
+    a: 'pages.landing.landing.yesAimIsInstallableAsA',
   },
   {
-    q: 'Can different staff see different things?',
-    a: 'Yes — the Workflow Designer lets you control exactly what each role can see and do, at every job status.',
+    q: 'pages.landing.landing.canDifferentStaffSeeDifferentThings',
+    a: 'pages.landing.landing.yesTheWorkflowDesignerLetsYou',
   },
 ]
 

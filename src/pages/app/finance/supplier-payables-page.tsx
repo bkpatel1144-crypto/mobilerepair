@@ -477,7 +477,7 @@ export function SupplierPayablesPage() {
                       Reference: i.reference,
                       Type:
                         i.kind === 'bill'
-                          ? 'Bill'
+                          ? t('common.bill')
                           : t('pages.finance.supplierPayables.devicePurchase'),
                       'Due Date': i.dueDate.toLocaleDateString('en-IN'),
                       Amount: i.amount,

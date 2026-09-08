@@ -23,14 +23,12 @@ const TOGGLE_ROWS: {
   {
     key: 'collectPaymentWithGenerateBill',
     titleKey: 'pages.settings.behaviorSubtab.collectPaymentWithGenerateBill',
-    descriptionKey:
-      'Collect Payment section shows in the Generate Bill popup (partial / split / outstanding).',
+    descriptionKey: 'pages.settings.behaviorSubtab.collectPaymentSectionShowsInThe',
   },
   {
     key: 'printPromptAfterJobCardCreation',
     titleKey: 'pages.settings.behaviorSubtab.printPromptAfterJobCardCreation',
-    descriptionKey:
-      'After creating a job card, a popup offers Print Label / Print Receipt / WhatsApp.',
+    descriptionKey: 'pages.settings.behaviorSubtab.afterCreatingAJobCardA',
   },
   {
     key: 'requireDescriptionOnJobDone',

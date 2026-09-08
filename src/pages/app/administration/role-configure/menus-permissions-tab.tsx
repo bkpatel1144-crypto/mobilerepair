@@ -35,10 +35,10 @@ import type { RoleDraft } from './types'
 import { useTranslation } from 'react-i18next'
 
 const CRUD_LABELS: Record<CrudOp, string> = {
-  create: 'Create',
-  delete: 'Delete',
-  update: 'Update',
-  view: 'View',
+  create: 'common.create',
+  delete: 'common.delete',
+  update: 'common.update',
+  view: 'common.view',
 }
 type VisibilityFilter = 'all' | 'selected' | 'unselected'
 
@@ -378,7 +378,7 @@ export function MenusPermissionsTab({
                                 <th className="p-2 text-left">{t('shared.entity')}</th>
                                 {CRUD_OPS.map((op) => (
                                   <th key={op} className="p-2 text-center">
-                                    {CRUD_LABELS[op]}
+                                    {t(CRUD_LABELS[op])}
                                   </th>
                                 ))}
                               </tr>

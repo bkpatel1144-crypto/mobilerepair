@@ -38,9 +38,9 @@ import type { ItemType } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
 
 const TYPE_LABEL: Record<ItemType, string> = {
-  service: 'Service',
-  part: 'Part',
-  product: 'Product',
+  service: 'pages.masters.itemMaster.service',
+  part: 'pages.service.recordCostingModal.part',
+  product: 'pages.masters.itemMaster.product',
 }
 
 export function ItemMasterPage() {
@@ -94,7 +94,7 @@ export function ItemMasterPage() {
               : 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400')
           }
         >
-          {TYPE_LABEL[i.type]}
+          {t(TYPE_LABEL[i.type])}
         </span>
       ),
     },
@@ -225,7 +225,7 @@ export function ItemMasterPage() {
             {
               title: t('pages.masters.itemMaster.classification'),
               rows: [
-                { label: t('common.type'), value: TYPE_LABEL[viewing.type].toUpperCase() },
+                { label: t('common.type'), value: t(TYPE_LABEL[viewing.type]).toUpperCase() },
                 { label: t('pages.masters.itemMaster.nature'), value: viewing.nature },
                 { label: t('common.category'), value: viewing.categoryName ?? '—' },
                 { label: t('pages.masters.itemMaster.primaryUom'), value: viewing.uom },

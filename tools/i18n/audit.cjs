@@ -80,6 +80,38 @@ function isCodeContext(before, after, text) {
   return false
 }
 
+/**
+ * Strings that stay English on purpose, with the reason. Each is a *value*, not copy:
+ *
+ * - `UomDoc.type`, `PaymentModeDoc.type` and `accessoriesIncluded` are written to Firestore as
+ *   these exact strings. Translating the array would change what gets stored and would stop an
+ *   existing record matching its own option. Each has a value -> key map beside it so the label
+ *   the shopkeeper reads *is* localised.
+ * - `OVERWRITE` is the phrase a user types to confirm replacing live data, compared against
+ *   CONFIRM_PHRASE. It has to be typeable on a stock keyboard and match exactly.
+ */
+const INTENTIONALLY_ENGLISH = new Set([
+  // UomDoc.type
+  'Quantity',
+  'Length',
+  'Weight',
+  'Volume',
+  'Time',
+  'Other',
+  // PaymentModeDoc.type
+  'Cash',
+  'UPI',
+  'Card',
+  'Bank Transfer',
+  // SecondHandPurchaseDoc.accessoriesIncluded
+  'Charger only',
+  'Charger, box, cable',
+  'Charger, box, cable, earphones',
+  'Box only',
+  // backup-restore CONFIRM_PHRASE
+  'OVERWRITE',
+])
+
 const findings = []
 
 for (const file of walk(path.join(ROOT, 'src'))) {
@@ -95,6 +127,7 @@ for (const file of walk(path.join(ROOT, 'src'))) {
     const before = stripped.slice(Math.max(0, m.index - 120), m.index)
     const after = stripped.slice(m.index + m[0].length, m.index + m[0].length + 20)
     if (isCodeContext(before, after, text)) continue
+    if (INTENTIONALLY_ENGLISH.has(text)) continue
     const line = stripped.slice(0, m.index).split('\n').length
     findings.push({ file: path.relative(ROOT, file).replace(/\\/g, '/'), line, text })
   }
