@@ -16,6 +16,7 @@ import { downloadCsv } from '@/lib/csv-export'
 import { formatCurrency, formatPercent, cn } from '@/lib/utils'
 import { dayKey, monthKey, formatMonthLabel, marginPct } from '@/lib/reports'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
+import { useTranslation } from 'react-i18next'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -35,6 +36,7 @@ interface PeriodGroup {
  * calendar month (`monthKey`) — both off `CostedJobRow.date` (a job's `closedAt`), same as every
  * other profit report. */
 export function PeriodSummaryPage() {
+  const { t } = useTranslation()
   const { data: rows, isLoading, error: loadError, refetch } = useCostedJobs()
   const [search, setSearch] = useState('')
   const [granularity, setGranularity] = useState<'daily' | 'monthly'>('daily')
@@ -98,14 +100,27 @@ export function PeriodSummaryPage() {
   }
 
   const columns: ExpandableTableColumn<PeriodGroup>[] = [
-    { key: 'date', header: 'Date', render: (g) => <span className="font-medium">{g.label}</span> },
-    { key: 'jobs', header: 'Jobs', render: (g) => g.jobs.length },
-    { key: 'revenue', header: 'Revenue', render: (g) => formatCurrency(g.revenue) },
-    { key: 'jobCost', header: 'Job Cost', render: (g) => formatCurrency(g.jobCost) },
-    { key: 'shopExpenses', header: 'Shop Expenses', hideOnMobile: true, render: () => '—' },
+    {
+      key: 'date',
+      header: t('pages.reports.periodSummary.date'),
+      render: (g) => <span className="font-medium">{g.label}</span>,
+    },
+    { key: 'jobs', header: t('pages.reports.periodSummary.jobs'), render: (g) => g.jobs.length },
+    { key: 'revenue', header: t('shared.revenue'), render: (g) => formatCurrency(g.revenue) },
+    {
+      key: 'jobCost',
+      header: t('pages.reports.periodSummary.jobCost'),
+      render: (g) => formatCurrency(g.jobCost),
+    },
+    {
+      key: 'shopExpenses',
+      header: t('pages.reports.periodSummary.shopExpenses'),
+      hideOnMobile: true,
+      render: () => '—',
+    },
     {
       key: 'netProfit',
-      header: 'Net Profit',
+      header: t('shared.netProfit'),
       render: (g) => (
         <span
           className={
@@ -118,7 +133,7 @@ export function PeriodSummaryPage() {
     },
     {
       key: 'margin',
-      header: 'Margin',
+      header: t('pages.reports.periodSummary.margin'),
       render: (g) => (
         <span className={g.grossProfit < 0 ? 'text-red-600' : 'text-emerald-600'}>
           {formatPercent(marginPct(g.grossProfit, g.revenue))}
@@ -131,8 +146,8 @@ export function PeriodSummaryPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Calendar}
-        title="Period Summary"
-        subtitle="Daily and monthly revenue, cost, and profit summary"
+        title={t('pages.reports.periodSummary.periodSummary')}
+        subtitle={t('pages.reports.periodSummary.dailyAndMonthlyRevenueCostAnd')}
         actions={
           <Button
             type="button"
@@ -159,22 +174,33 @@ export function PeriodSummaryPage() {
       />
 
       <StatCardGrid>
-        <StatCard label="Jobs" value={totals.jobs} />
-        <StatCard label="Revenue" value={formatCurrency(totals.revenue)} tone="success" />
-        <StatCard label="Job Cost" value={formatCurrency(totals.jobCost)} tone="warning" />
+        <StatCard label={t('pages.reports.periodSummary.jobs')} value={totals.jobs} />
         <StatCard
-          label="Gross Profit"
+          label={t('shared.revenue')}
+          value={formatCurrency(totals.revenue)}
+          tone="success"
+        />
+        <StatCard
+          label={t('pages.reports.periodSummary.jobCost')}
+          value={formatCurrency(totals.jobCost)}
+          tone="warning"
+        />
+        <StatCard
+          label={t('shared.grossProfit')}
           value={formatCurrency(totals.grossProfit)}
           tone={totals.grossProfit < 0 ? 'danger' : 'success'}
         />
-        <StatCard label="Shop Expenses" value={formatCurrency(SHOP_EXPENSES)} />
         <StatCard
-          label="Net Profit"
+          label={t('pages.reports.periodSummary.shopExpenses')}
+          value={formatCurrency(SHOP_EXPENSES)}
+        />
+        <StatCard
+          label={t('shared.netProfit')}
           value={formatCurrency(totals.netProfit)}
           tone={totals.netProfit < 0 ? 'danger' : 'success'}
         />
         <StatCard
-          label="Net Margin"
+          label={t('pages.reports.periodSummary.netMargin')}
           value={formatPercent(totals.netMargin)}
           tone={totals.netMargin < 0 ? 'danger' : 'default'}
         />
@@ -222,8 +248,8 @@ export function PeriodSummaryPage() {
         emptyState={
           <EmptyState
             icon={Calendar}
-            title="No costed jobs yet"
-            description="Period totals appear once jobs have recorded costing."
+            title={t('shared.noCostedJobsYet')}
+            description={t('pages.reports.periodSummary.periodTotalsAppearOnceJobsHave')}
           />
         }
         renderExpanded={(g) => {
@@ -274,15 +300,17 @@ export function PeriodSummaryPage() {
                 <table className="w-full min-w-[900px] text-sm whitespace-nowrap">
                   <thead className="bg-muted/40 text-xs text-muted-foreground uppercase">
                     <tr>
-                      <th className="p-2 text-left">Job Card</th>
-                      <th className="p-2 text-left">Customer</th>
-                      <th className="p-2 text-left">Assigned To</th>
-                      <th className="p-2 text-left">Device</th>
-                      <th className="p-2 text-left">Status</th>
-                      <th className="p-2 text-right">Revenue</th>
-                      <th className="p-2 text-right">Cost</th>
-                      <th className="p-2 text-right">Profit</th>
-                      <th className="p-2 text-right">Margin</th>
+                      <th className="p-2 text-left">{t('pages.reports.periodSummary.jobCard')}</th>
+                      <th className="p-2 text-left">{t('pages.reports.periodSummary.customer')}</th>
+                      <th className="p-2 text-left">
+                        {t('pages.reports.periodSummary.assignedTo')}
+                      </th>
+                      <th className="p-2 text-left">{t('shared.device')}</th>
+                      <th className="p-2 text-left">{t('shared.status')}</th>
+                      <th className="p-2 text-right">{t('shared.revenue')}</th>
+                      <th className="p-2 text-right">{t('pages.reports.periodSummary.cost')}</th>
+                      <th className="p-2 text-right">{t('shared.profit')}</th>
+                      <th className="p-2 text-right">{t('pages.reports.periodSummary.margin')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -371,7 +399,7 @@ export function PeriodSummaryPage() {
               )}
 
               <div className="flex items-center justify-between border-t pt-2 text-sm font-medium">
-                <span>Net after shop expenses</span>
+                <span>{t('pages.reports.periodSummary.netAfterShopExpenses')}</span>
                 <span className={netAfterExpenses < 0 ? 'text-red-600' : 'text-emerald-600'}>
                   {formatCurrency(netAfterExpenses)}
                 </span>

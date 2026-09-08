@@ -10,6 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ErrorState } from '@/components/shared/error-state'
 import { useWhatsAppConfig, useUpdateWhatsAppConfig } from '@/hooks/use-whatsapp-config'
 import type { WhatsAppTemplateDoc } from '@/types/firestore'
+import { useTranslation } from 'react-i18next'
 
 const PLACEHOLDER_HINT = '{{customerName}} {{jobNumber}} {{status}} {{amount}} {{shopName}}'
 
@@ -17,6 +18,7 @@ const PLACEHOLDER_HINT = '{{customerName}} {{jobNumber}} {{status}} {{amount}} {
  * (previously a single hardcoded message string) — editing a template here changes what that
  * button, and every other lifecycle-event send, actually sends. */
 export function WhatsAppPage() {
+  const { t } = useTranslation()
   const { data: config, isLoading, error: loadError, refetch } = useWhatsAppConfig()
   const updateConfig = useUpdateWhatsAppConfig()
   const [countryCode, setCountryCode] = useState<string | null>(null)
@@ -48,8 +50,8 @@ export function WhatsAppPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={MessageCircle}
-        title="WhatsApp"
-        subtitle="Message templates sent to customers as their job progresses"
+        title={t('pages.settings.whatsapp.whatsapp')}
+        subtitle={t('pages.settings.whatsapp.messageTemplatesSentToCustomersAs')}
         actions={
           <Button
             type="button"
@@ -73,12 +75,12 @@ export function WhatsAppPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load your WhatsApp templates"
+          title={t('pages.settings.whatsapp.couldnTLoadYourWhatsappTemplates')}
         />
       ) : (
         <>
           <div className="max-w-xs space-y-1.5">
-            <Label>Country Code</Label>
+            <Label>{t('pages.settings.whatsapp.countryCode')}</Label>
             <Input
               value={effectiveCountryCode}
               onChange={(e) => setCountryCode(e.target.value.replace(/\D/g, '').slice(0, 3))}

@@ -100,7 +100,13 @@ function topLevelFunctions(src) {
         }
       }
     }
-    if (end > i) ranges.push({ name, start: i, end })
+    // Record the declaration even when the brace walk above failed to find a matching `}`. It
+    // fails on ordinary code — an apostrophe in JSX text reads as an opening quote and throws the
+    // depth count off — and dropping the function entirely was worse than an imprecise `end`:
+    // `enclosing()` attributes by `start` alone, so a missing entry meant every string in that
+    // component was silently skipped. That is what left ActiveSessionsPage untranslated while
+    // its strings sat fully translated in the locale files.
+    ranges.push({ name, start: i, end: end > i ? end : src.length })
   }
   return ranges
 }

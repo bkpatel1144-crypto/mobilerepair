@@ -31,6 +31,7 @@ import {
   useRestoreOverwriteLive,
 } from '@/hooks/use-backups'
 import { formatTimestamp } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
@@ -46,6 +47,7 @@ const CONFIRM_PHRASE = 'OVERWRITE'
  * project is client-SDK-only with no server to run that OAuth handshake, so backups go straight
  * to this company's own Firebase Storage path instead (BUILD_PLAN's own explicit spec). */
 export function BackupRestorePage() {
+  const { t } = useTranslation()
   const { profile } = useAuth()
   const stats = useDatabaseStats()
   const {
@@ -130,7 +132,7 @@ export function BackupRestorePage() {
       <PageHeader
         icon={DatabaseZap}
         title="Backup & Restore"
-        subtitle="Download backups, schedule daily backups, and restore data safely"
+        subtitle={t('pages.settings.backupRestore.downloadBackupsScheduleDailyBackupsAnd')}
         actions={
           <Button type="button" variant="outline" onClick={() => stats.refetch()}>
             <RefreshCw className="size-4" />
@@ -148,23 +150,29 @@ export function BackupRestorePage() {
           <div className="grid grid-cols-3 gap-2 text-center">
             <div className="rounded-lg border p-3">
               <p className="text-2xl font-bold tabular-nums">{stats.data?.dataSets ?? '—'}</p>
-              <p className="text-xs text-muted-foreground">Data Sets</p>
+              <p className="text-xs text-muted-foreground">
+                {t('pages.settings.backupRestore.dataSets')}
+              </p>
             </div>
             <div className="rounded-lg border p-3">
               <p className="text-2xl font-bold tabular-nums">{stats.data?.records ?? '—'}</p>
-              <p className="text-xs text-muted-foreground">Records</p>
+              <p className="text-xs text-muted-foreground">
+                {t('pages.settings.backupRestore.records')}
+              </p>
             </div>
             <div className="rounded-lg border p-3">
               <p className="text-2xl font-bold tabular-nums">
                 {stats.data ? formatBytes(stats.data.approxSizeBytes) : '—'}
               </p>
-              <p className="text-xs text-muted-foreground">Data Size</p>
+              <p className="text-xs text-muted-foreground">
+                {t('pages.settings.backupRestore.dataSize')}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="space-y-3 rounded-xl border bg-card p-4">
-          <p className="text-sm font-semibold">Create Backup</p>
+          <p className="text-sm font-semibold">{t('pages.settings.backupRestore.createBackup')}</p>
           <p className="text-sm text-muted-foreground">
             A backup contains your complete company data as a JSON snapshot.
           </p>
@@ -217,7 +225,7 @@ export function BackupRestorePage() {
             </label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
               <div className="space-y-1">
-                <Label className="text-xs">Time</Label>
+                <Label className="text-xs">{t('pages.settings.backupRestore.time')}</Label>
                 <Input
                   type="time"
                   value={effectiveTime}
@@ -275,23 +283,23 @@ export function BackupRestorePage() {
           <ErrorState
             error={backupsError}
             onRetry={() => void refetchBackups()}
-            title="Couldn't load your backups"
+            title={t('pages.settings.backupRestore.couldnTLoadYourBackups')}
           />
         ) : backups.length === 0 ? (
           <EmptyState
             icon={Clock}
-            title="No backups yet."
-            description="Create your first backup above."
+            title={t('pages.settings.backupRestore.noBackupsYet')}
+            description={t('pages.settings.backupRestore.createYourFirstBackupAbove')}
           />
         ) : (
           <div className="overflow-x-auto rounded-lg border">
             <table className="w-full min-w-[560px] text-sm whitespace-nowrap">
               <thead className="bg-muted/40 text-xs text-muted-foreground uppercase">
                 <tr>
-                  <th className="p-2 text-left">File</th>
-                  <th className="p-2 text-left">Created</th>
-                  <th className="p-2 text-left">By</th>
-                  <th className="p-2 text-right">Size</th>
+                  <th className="p-2 text-left">{t('pages.settings.backupRestore.file')}</th>
+                  <th className="p-2 text-left">{t('pages.settings.backupRestore.created')}</th>
+                  <th className="p-2 text-left">{t('pages.settings.backupRestore.by')}</th>
+                  <th className="p-2 text-right">{t('pages.settings.backupRestore.size')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -368,13 +376,13 @@ export function BackupRestorePage() {
             <ErrorState
               error={archivesError}
               onRetry={() => void refetchArchives()}
-              title="Couldn't load your archives"
+              title={t('pages.settings.backupRestore.couldnTLoadYourArchives')}
             />
           ) : archives.length === 0 ? (
             <EmptyState
               icon={ArchiveIcon}
-              title="No archives."
-              description="Restoring a backup as an archive creates a separate read-only copy of your data — useful for viewing old records without touching what's live."
+              title={t('pages.settings.backupRestore.noArchives')}
+              description={t('pages.settings.backupRestore.restoringABackupAsAnArchive')}
             />
           ) : (
             <div className="space-y-2">
@@ -405,8 +413,8 @@ export function BackupRestorePage() {
           setConfirmOverwrite(o)
           if (!o) setConfirmText('')
         }}
-        title="Overwrite Live Data"
-        description="This writes every document from the uploaded file back into your live company data, overwriting anything with a matching ID. This cannot be undone from within the app."
+        title={t('pages.settings.backupRestore.overwriteLiveData')}
+        description={t('pages.settings.backupRestore.thisWritesEveryDocumentFromThe')}
         onSubmit={handleConfirmOverwrite}
         submitLabel="Overwrite Live Data"
         submitDisabled={confirmText !== CONFIRM_PHRASE}

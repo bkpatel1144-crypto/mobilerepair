@@ -39,6 +39,7 @@ import { uploadJobCardImage } from '@/lib/job-card-images'
 import { getInitials } from '@/lib/utils'
 import { deviceTypeIcon } from '@/config/service-options'
 import { buildPath } from '@/config/nav'
+import { useTranslation } from 'react-i18next'
 
 const ADVANCE_QUICK_AMOUNTS = [0, 100, 200, 500, 1000]
 const COST_QUICK_AMOUNTS = [200, 500, 1000, 1500, 2000, 3000, 5000]
@@ -101,6 +102,7 @@ function readDraft(): Partial<JobCardDraft> {
  * `job-card-form-fields.ts`.
  */
 export function CreateJobCardPage() {
+  const { t } = useTranslation()
   useBreadcrumbExtra('Create')
   const navigate = useNavigate()
   const { user, profile } = useAuth()
@@ -262,7 +264,7 @@ export function CreateJobCardPage() {
         <ErrorState
           error={setupError}
           onRetry={() => void (schemaError ? refetchSchema() : refetchOptions())}
-          title="Couldn't load the Create Job Card form"
+          title={t('pages.service.createJobCard.couldnTLoadTheCreateJob')}
         />
       </div>
     )
@@ -394,7 +396,7 @@ export function CreateJobCardPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-lg font-bold">Create Job Card</h1>
+          <h1 className="text-lg font-bold">{t('pages.service.createJobCard.createJobCard')}</h1>
           <p className="text-sm text-muted-foreground">
             Create a new service job card for customer device repair and tracking.
           </p>
@@ -448,7 +450,7 @@ export function CreateJobCardPage() {
                       setCustomerId(id)
                       if (id) setQuickAddCustomer(null)
                     }}
-                    placeholder="Search customer by name or mobile..."
+                    placeholder={t('pages.service.createJobCard.searchCustomerByNameOrMobile')}
                     onCreateNew={(query) => setQuickAddCustomer({ name: query, mobile: '' })}
                     open={customerOpen}
                     onOpenChange={setCustomerOpen}
@@ -471,7 +473,7 @@ export function CreateJobCardPage() {
                     onChange={(e) =>
                       setQuickAddCustomer({ ...quickAddCustomer, name: e.target.value })
                     }
-                    placeholder="Customer name"
+                    placeholder={t('shared.customerName')}
                     className="h-8 text-sm"
                   />
                   <Input
@@ -482,7 +484,7 @@ export function CreateJobCardPage() {
                         mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
                       })
                     }
-                    placeholder="10-digit mobile"
+                    placeholder={t('pages.service.createJobCard.10DigitMobile')}
                     className="h-8 text-sm"
                   />
                   <Button
@@ -530,7 +532,7 @@ export function CreateJobCardPage() {
                         setDeviceTypeId(id ?? undefined)
                         setBrandId(null)
                       }}
-                      placeholder="Search device type..."
+                      placeholder={t('shared.searchDeviceType')}
                       open={deviceTypeOpen}
                       onOpenChange={setDeviceTypeOpen}
                     />
@@ -668,7 +670,7 @@ export function CreateJobCardPage() {
                       variant="outline"
                       size="icon"
                       className="shrink-0"
-                      title="Scan IMEI"
+                      title={t('pages.service.createJobCard.scanImei')}
                       onClick={() => setScanningField('imei')}
                     >
                       <ScanLine className="size-4" />
@@ -713,7 +715,7 @@ export function CreateJobCardPage() {
                         variant="outline"
                         size="icon"
                         className="shrink-0"
-                        title="Scan Serial No"
+                        title={t('pages.service.createJobCard.scanSerialNo')}
                         onClick={() => setScanningField('serialNo')}
                       >
                         <ScanLine className="size-4" />
@@ -782,7 +784,7 @@ export function CreateJobCardPage() {
                     options={options.problems.map((p) => ({ id: p.id, label: p.label }))}
                     selectedIds={problemIds}
                     onChange={setProblemIds}
-                    placeholder="Select problems..."
+                    placeholder={t('pages.service.createJobCard.selectProblems')}
                     open={problemsOpen}
                     onOpenChange={setProblemsOpen}
                     onCreateNew={(label) =>
@@ -831,7 +833,7 @@ export function CreateJobCardPage() {
                         ])
                         setEstimatedCost((prev) => prev + (item.sellingPrice ?? 0))
                       }}
-                      placeholder="Add items from catalog"
+                      placeholder={t('pages.service.createJobCard.addItemsFromCatalog')}
                       open={serviceItemsOpen}
                       onOpenChange={setServiceItemsOpen}
                       onCreateNew={(name) =>
@@ -985,7 +987,7 @@ export function CreateJobCardPage() {
                       options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
                       selectedIds={itemsReceived}
                       onChange={setItemsReceived}
-                      placeholder="Select items received with device..."
+                      placeholder={t('pages.service.createJobCard.selectItemsReceivedWithDevice')}
                       open={itemsReceivedOpen}
                       onOpenChange={setItemsReceivedOpen}
                       onCreateNew={(label) =>
@@ -1021,7 +1023,7 @@ export function CreateJobCardPage() {
                       options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
                       selectedIds={itemsReturned}
                       onChange={setItemsReturned}
-                      placeholder="Select items returned to customer..."
+                      placeholder={t('pages.service.createJobCard.selectItemsReturnedToCustomer')}
                       open={itemsReturnedOpen}
                       onOpenChange={setItemsReturnedOpen}
                       onCreateNew={(label) =>
@@ -1087,7 +1089,7 @@ export function CreateJobCardPage() {
                     ]}
                     value={assignedToId ?? '__unassigned__'}
                     onChange={(id) => setAssignedToId(id === '__unassigned__' || !id ? null : id)}
-                    placeholder="Search user..."
+                    placeholder={t('pages.service.createJobCard.searchUser')}
                   />
                 </div>
               )}
@@ -1102,7 +1104,7 @@ export function CreateJobCardPage() {
                 <Textarea
                   value={remark}
                   onChange={(e) => setRemark(e.target.value)}
-                  placeholder="Any additional note about the device / job..."
+                  placeholder={t('pages.service.createJobCard.anyAdditionalNoteAboutTheDevice')}
                   rows={3}
                 />
               </div>
@@ -1110,13 +1112,13 @@ export function CreateJobCardPage() {
 
             {isVisible('images') && (
               <div className="space-y-1.5">
-                <Label>Add Images</Label>
+                <Label>{t('shared.addImages')}</Label>
                 <p className="text-xs text-muted-foreground">
                   They will be uploaded when you create the job card.
                 </p>
                 <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
                   <ImagePlus className="size-5" />
-                  <span className="text-sm">Add Images</span>
+                  <span className="text-sm">{t('shared.addImages')}</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -1172,7 +1174,7 @@ export function CreateJobCardPage() {
         open={scanningField != null}
         onOpenChange={(open) => !open && setScanningField(null)}
         title={scanningField === 'imei' ? 'Scan IMEI' : 'Scan Serial No'}
-        description="Point the camera at the barcode or QR on the device or its box"
+        description={t('shared.pointTheCameraAtTheBarcode')}
         onScanned={(text) => {
           if (scanningField === 'imei') setImei(text)
           else if (scanningField === 'serialNo') setSerialNo(text)
@@ -1182,9 +1184,9 @@ export function CreateJobCardPage() {
       <ConfirmDialog
         open={confirmingClear}
         onOpenChange={setConfirmingClear}
-        title="Clear this draft?"
-        message="Every field you've filled in so far will be wiped, including the autosaved copy. This cannot be undone."
-        confirmLabel="Clear Draft"
+        title={t('pages.service.createJobCard.clearThisDraft')}
+        message={t('pages.service.createJobCard.everyFieldYouVeFilledIn')}
+        confirmLabel={t('pages.service.createJobCard.clearDraft')}
         onConfirm={() => {
           clearDraft()
           setConfirmingClear(false)

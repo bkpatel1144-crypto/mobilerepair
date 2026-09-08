@@ -8,6 +8,7 @@ import { FormError } from '@/components/shared/form-error'
 import { useRoles, useCreateRole } from '@/hooks/use-roles'
 import { slugifyCode } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
+import { useTranslation } from 'react-i18next'
 
 /**
  * A full page rather than a modal, matching the reference — and it earns it: the Next Steps
@@ -16,6 +17,7 @@ import { buildPath } from '@/config/nav'
  * can't see anything.
  */
 export function CreateRolePage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { data: roles = [] } = useRoles()
   const createRole = useCreateRole()
@@ -66,14 +68,16 @@ export function CreateRolePage() {
           type="button"
           variant="ghost"
           size="icon"
-          aria-label="Back to roles"
+          aria-label={t('pages.administration.createRole.backToRoles')}
           onClick={() => navigate(buildPath('administration', 'roles'))}
         >
           <ArrowLeft className="size-5" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold">Add New Role</h1>
-          <p className="text-sm text-muted-foreground">Create a new role with custom permissions</p>
+          <h1 className="text-2xl font-bold">{t('pages.administration.createRole.addNewRole')}</h1>
+          <p className="text-sm text-muted-foreground">
+            {t('pages.administration.createRole.createANewRoleWithCustom')}
+          </p>
         </div>
       </div>
 
@@ -130,7 +134,9 @@ export function CreateRolePage() {
             <AlertCircle className="size-5 text-muted-foreground" />
             Next Steps
           </h2>
-          <p className="mt-1 text-sm text-muted-foreground">After creating the role</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t('pages.administration.createRole.afterCreatingTheRole')}
+          </p>
 
           <div className="mt-5 flex gap-3 rounded-xl bg-blue-50 p-4 text-sm dark:bg-blue-500/10">
             <ShieldCheck className="mt-0.5 size-5 shrink-0 text-blue-600 dark:text-blue-400" />
@@ -139,9 +145,9 @@ export function CreateRolePage() {
                 After creating this role, you'll need to:
               </p>
               <ol className="list-decimal space-y-1.5 pl-5 text-blue-900/90 dark:text-blue-300/90">
-                <li>Assign permissions to define what users with this role can do</li>
-                <li>Assign menus to control navigation access</li>
-                <li>Assign users to this role</li>
+                <li>{t('pages.administration.createRole.assignPermissionsToDefineWhatUsers')}</li>
+                <li>{t('pages.administration.createRole.assignMenusToControlNavigationAccess')}</li>
+                <li>{t('pages.administration.createRole.assignUsersToThisRole')}</li>
               </ol>
               <p className="font-semibold text-blue-900 dark:text-blue-300">
                 By default, new roles have no permissions and no menu access.

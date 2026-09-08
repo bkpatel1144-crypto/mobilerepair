@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Wrench, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
 
 const LINKS = [
   { label: 'Workflow', href: '/#workflow' },
@@ -11,6 +12,7 @@ const LINKS = [
 ]
 
 export function MarketingNav() {
+  const { t } = useTranslation()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
@@ -55,7 +57,7 @@ export function MarketingNav() {
           // left to index.css's coarse-pointer rule, since this one is worth guaranteeing on
           // every pointer type.
           className="-mr-2 ml-auto inline-flex size-11 items-center justify-center rounded-lg hover:bg-muted sm:hidden"
-          aria-label="Toggle menu"
+          aria-label={t('components.marketing.marketingNav.toggleMenu')}
           aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}

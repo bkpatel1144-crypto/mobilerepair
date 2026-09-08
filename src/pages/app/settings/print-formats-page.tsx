@@ -45,11 +45,13 @@ import type { PrintDocumentType } from '@/types/firestore'
 import { ImportTemplateDialog } from './print-formats/import-template-dialog'
 import { PrintDevicesDialog } from './print-formats/print-devices-dialog'
 import { NewTemplateDialog } from './print-formats/new-template-dialog'
+import { useTranslation } from 'react-i18next'
 
 /** `Bill & Label Designer` — every document type as a collapsible group, each holding the
  * formats defined for it (58mm / 80mm / A4 …), exactly one of which is the default the app's
  * real print buttons resolve to. */
 export function PrintFormatsPage() {
+  const { t } = useTranslation()
   const { data: templates = [], isLoading, error: loadError, refetch } = usePrintTemplates()
   const { profile } = useAuth()
   const queryClient = useQueryClient()
@@ -99,7 +101,7 @@ export function PrintFormatsPage() {
       <PageHeader
         icon={Printer}
         title="Bill & Label Designer"
-        subtitle="Design and manage print templates for bills, receipts and labels"
+        subtitle={t('pages.settings.printFormats.designAndManagePrintTemplatesFor')}
       />
 
       <div className="flex flex-wrap items-center gap-2">
@@ -141,7 +143,7 @@ export function PrintFormatsPage() {
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search document types or templates..."
+          placeholder={t('pages.settings.printFormats.searchDocumentTypesOrTemplates')}
           className="h-10 rounded-full pl-9"
         />
       </div>
@@ -156,13 +158,13 @@ export function PrintFormatsPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load your print templates"
+          title={t('pages.settings.printFormats.couldnTLoadYourPrintTemplates')}
         />
       ) : groups.length === 0 ? (
         <EmptyState
           icon={Printer}
-          title="No matches"
-          description="No document type or template matches that search."
+          title={t('pages.settings.printFormats.noMatches')}
+          description={t('pages.settings.printFormats.noDocumentTypeOrTemplateMatches')}
         />
       ) : (
         <div className="overflow-hidden rounded-xl border">
@@ -200,8 +202,10 @@ export function PrintFormatsPage() {
                     {formats.length === 0 ? (
                       <EmptyState
                         icon={Printer}
-                        title="No formats for this document type"
-                        description="Use Add Missing Defaults to restore the standard formats, or create one."
+                        title={t('pages.settings.printFormats.noFormatsForThisDocumentType')}
+                        description={t(
+                          'pages.settings.printFormats.useAddMissingDefaultsToRestore'
+                        )}
                       />
                     ) : (
                       <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))]">
@@ -287,7 +291,7 @@ export function PrintFormatsPage() {
       <ConfirmDialog
         open={!!deleteTarget}
         onOpenChange={(open) => !open && setDeleteTarget(null)}
-        title="Delete this template?"
+        title={t('pages.settings.printFormats.deleteThisTemplate')}
         message={
           deleteTarget
             ? `"${deleteTarget.name}" will be removed. ${
@@ -297,7 +301,7 @@ export function PrintFormatsPage() {
               }${deleteTarget.protected ? ' Add Missing Defaults can restore it later.' : ''}`
             : ''
         }
-        confirmLabel="Delete"
+        confirmLabel={t('pages.settings.printFormats.delete')}
         destructive
         onConfirm={() => {
           if (deleteTarget) deleteTemplate.mutate(deleteTarget)

@@ -17,6 +17,7 @@ import { NAV_SECTIONS, menuKey } from '@/config/nav'
 import { PERMISSION_SCHEMA, allKeysForModule } from '@/config/permission-schema'
 import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
+import { useTranslation } from 'react-i18next'
 
 const ALL_LEAF_KEYS = NAV_SECTIONS.flatMap((s) =>
   s.children.filter((l) => !l.locked).map((l) => menuKey(s.key, l.slug))
@@ -45,6 +46,7 @@ function draftsEqual(a: RoleDraft, b: RoleDraft): boolean {
 }
 
 export function RoleConfigurePage() {
+  const { t } = useTranslation()
   const { roleId } = useParams<{ roleId: string }>()
   const navigate = useNavigate()
   const { data: role, isLoading, error: loadError, refetch } = useRole(roleId)
@@ -73,7 +75,7 @@ export function RoleConfigurePage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load this role"
+          title={t('pages.administration.roleConfigure.couldnTLoadThisRole')}
         />
       </div>
     )
@@ -141,8 +143,8 @@ export function RoleConfigurePage() {
         {!canEdit && (
           <EmptyState
             icon={ShieldCheck}
-            title="Only another Owner can edit the Owner role"
-            description="This role has full access by definition and can only be managed by a user who also has full access."
+            title={t('pages.administration.roleConfigure.onlyAnotherOwnerCanEditThe')}
+            description={t('pages.administration.roleConfigure.thisRoleHasFullAccessBy')}
           />
         )}
 

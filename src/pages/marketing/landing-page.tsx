@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { MarketingNav } from '@/components/marketing/marketing-nav'
 import { MarketingFooter } from '@/components/marketing/marketing-footer'
 import { JobCardMockup } from '@/components/marketing/job-card-mockup'
+import { useTranslation } from 'react-i18next'
 
 const FEATURES = [
   {
@@ -92,6 +93,7 @@ const FAQS = [
 ]
 
 export function LandingPage() {
+  const { t } = useTranslation()
   return (
     <div className="flex min-h-dvh flex-col">
       <MarketingNav />
@@ -197,7 +199,9 @@ export function LandingPage() {
 
       {/* FAQ */}
       <section id="faq" className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <h2 className="text-center text-2xl font-bold sm:text-3xl">Frequently asked questions</h2>
+        <h2 className="text-center text-2xl font-bold sm:text-3xl">
+          {t('pages.landing.landing.frequentlyAskedQuestions')}
+        </h2>
         <div className="mt-8 divide-y rounded-xl border">
           {FAQS.map((faq) => (
             <details key={faq.q} className="group p-4 sm:p-5">
@@ -214,8 +218,12 @@ export function LandingPage() {
       {/* Bottom CTA */}
       <section className="border-t bg-teal-600 text-white">
         <div className="mx-auto max-w-4xl px-4 py-14 text-center sm:px-6">
-          <h2 className="text-2xl font-bold sm:text-3xl">Ready to run your shop on aim?</h2>
-          <p className="mt-2 text-teal-50">Free forever. No card required.</p>
+          <h2 className="text-2xl font-bold sm:text-3xl">
+            {t('pages.landing.landing.readyToRunYourShopOn')}
+          </h2>
+          <p className="mt-2 text-teal-50">
+            {t('pages.landing.landing.freeForeverNoCardRequired')}
+          </p>
           <Button
             size="lg"
             className="mt-6 gap-2 rounded-full bg-white text-teal-700 hover:bg-teal-50"

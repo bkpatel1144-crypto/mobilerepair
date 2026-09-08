@@ -43,6 +43,7 @@ import { ScanJobCardModal } from '@/components/shared/scan-job-card-modal'
 import { useDashboardStats } from '@/hooks/use-dashboard-stats'
 import { useAuth } from '@/hooks/use-auth'
 import { toneFromStatus } from '@/lib/status-tone'
+import { useTranslation } from 'react-i18next'
 
 // Tailwind's compiler needs literal class strings, not template interpolation — these hex values
 // intentionally mirror the same tones (emerald/amber/red/blue/purple/neutral) `status-tone.ts`
@@ -64,6 +65,7 @@ function greeting() {
 }
 
 export function DashboardPage() {
+  const { t } = useTranslation()
   const [range, setRange] = useState<DateRangeKey | 'all'>('all')
   const [scanOpen, setScanOpen] = useState(false)
   const { data: stats, isLoading, error: loadError, refetch } = useDashboardStats(range)
@@ -71,25 +73,25 @@ export function DashboardPage() {
 
   const quickActions = [
     {
-      label: 'Scan Job Card',
+      label: t('shared.scanJobCard'),
       icon: ScanLine,
       tone: 'bg-muted text-foreground',
       onClick: () => setScanOpen(true),
     },
     {
-      label: 'New Job Card',
+      label: t('pages.dashboard.dashboard.newJobCard'),
       icon: Plus,
       tone: 'bg-teal-600 text-white',
       to: '/app/service/job-cards/create',
     },
     {
-      label: 'New Party',
+      label: t('pages.dashboard.dashboard.newParty'),
       icon: UserPlus,
       tone: 'bg-blue-600 text-white',
       to: '/app/masters/parties',
     },
     {
-      label: 'New Item',
+      label: t('pages.dashboard.dashboard.newItem'),
       icon: PackagePlus,
       tone: 'bg-purple-600 text-white',
       to: '/app/masters/items',
@@ -165,45 +167,98 @@ export function DashboardPage() {
         <ErrorState
           error={loadError}
           onRetry={() => void refetch()}
-          title="Couldn't load your dashboard"
+          title={t('pages.dashboard.dashboard.couldnTLoadYourDashboard')}
         />
       ) : (
         <>
           <StatCardGrid>
-            <StatCard label="Total Job Cards" value={stats.totalJobCards} icon={FileText} />
             <StatCard
-              label="Total in Pipeline"
+              label={t('pages.dashboard.dashboard.totalJobCards')}
+              value={stats.totalJobCards}
+              icon={FileText}
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.totalInPipeline')}
               value={stats.totalInPipeline}
               icon={Activity}
               tone="info"
             />
-            <StatCard label="All Job Cards" value={stats.allJobCards} icon={Wrench} tone="purple" />
             <StatCard
-              label="Revenue"
+              label={t('pages.dashboard.dashboard.allJobCards')}
+              value={stats.allJobCards}
+              icon={Wrench}
+              tone="purple"
+            />
+            <StatCard
+              label={t('shared.revenue')}
               value={`₹${stats.revenue}`}
               icon={IndianRupee}
               tone="success"
             />
             <StatCard
-              label="Outstanding"
+              label={t('pages.dashboard.dashboard.outstanding')}
               value={`₹${stats.outstanding}`}
               icon={AlertTriangle}
               tone="warning"
             />
-            <StatCard label="In Progress" value={stats.inProgress} icon={Activity} tone="info" />
-
-            <StatCard label="Pending" value={stats.pending} icon={Clock} tone="warning" />
-            <StatCard label="Avg Turnaround" value={stats.avgTurnaroundLabel ?? '—'} icon={Clock} />
-            <StatCard label="Cancelled" value={stats.cancelled} icon={XCircle} tone="danger" />
-            <StatCard label="In Queue" value={stats.inQueue} icon={ListOrdered} tone="warning" />
-            <StatCard label="On Hold" value={stats.onHold} icon={PauseCircle} tone="warning" />
-            <StatCard label="Tech Done" value={stats.techDone} icon={CheckCircle2} tone="success" />
-
-            <StatCard label="Ready" value={stats.ready} icon={PackageCheck} tone="success" />
-            <StatCard label="Delivered" value={stats.delivered} icon={Truck} tone="purple" />
-            <StatCard label="Closed" value={stats.closed} icon={Lock} />
             <StatCard
-              label="Pending Return"
+              label={t('shared.inProgress')}
+              value={stats.inProgress}
+              icon={Activity}
+              tone="info"
+            />
+
+            <StatCard
+              label={t('pages.dashboard.dashboard.pending')}
+              value={stats.pending}
+              icon={Clock}
+              tone="warning"
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.avgTurnaround')}
+              value={stats.avgTurnaroundLabel ?? '—'}
+              icon={Clock}
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.cancelled')}
+              value={stats.cancelled}
+              icon={XCircle}
+              tone="danger"
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.inQueue')}
+              value={stats.inQueue}
+              icon={ListOrdered}
+              tone="warning"
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.onHold')}
+              value={stats.onHold}
+              icon={PauseCircle}
+              tone="warning"
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.techDone')}
+              value={stats.techDone}
+              icon={CheckCircle2}
+              tone="success"
+            />
+
+            <StatCard
+              label={t('pages.dashboard.dashboard.ready')}
+              value={stats.ready}
+              icon={PackageCheck}
+              tone="success"
+            />
+            <StatCard
+              label={t('pages.dashboard.dashboard.delivered')}
+              value={stats.delivered}
+              icon={Truck}
+              tone="purple"
+            />
+            <StatCard label={t('shared.closed')} value={stats.closed} icon={Lock} />
+            <StatCard
+              label={t('pages.dashboard.dashboard.pendingReturn')}
               value={stats.pendingReturn}
               icon={Undo2}
               tone="warning"
@@ -212,12 +267,14 @@ export function DashboardPage() {
 
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-lg border p-4">
-              <h2 className="mb-2 text-sm font-semibold">Job Cards by Status</h2>
+              <h2 className="mb-2 text-sm font-semibold">
+                {t('pages.dashboard.dashboard.jobCardsByStatus')}
+              </h2>
               {stats.jobCardsByStatus.length === 0 ? (
                 <EmptyState
                   icon={FileText}
-                  title="No job cards yet"
-                  description="This chart fills in once job cards start moving through your workflow."
+                  title={t('pages.dashboard.dashboard.noJobCardsYet')}
+                  description={t('pages.dashboard.dashboard.thisChartFillsInOnceJob')}
                 />
               ) : (
                 <div className="relative h-64">
@@ -263,12 +320,14 @@ export function DashboardPage() {
               )}
             </div>
             <div className="rounded-lg border p-4">
-              <h2 className="mb-2 text-sm font-semibold">Revenue Trend</h2>
+              <h2 className="mb-2 text-sm font-semibold">
+                {t('pages.dashboard.dashboard.revenueTrend')}
+              </h2>
               {stats.revenueTrend.length === 0 ? (
                 <EmptyState
                   icon={IndianRupee}
-                  title="No revenue yet"
-                  description="This chart fills in once bills start getting generated."
+                  title={t('pages.dashboard.dashboard.noRevenueYet')}
+                  description={t('pages.dashboard.dashboard.thisChartFillsInOnceBills')}
                 />
               ) : (
                 <div className="h-64">

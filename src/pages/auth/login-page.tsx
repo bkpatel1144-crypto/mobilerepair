@@ -9,8 +9,10 @@ import { Button } from '@/components/ui/button'
 import { FormError } from '@/components/shared/form-error'
 import { logIn, getAuthErrorMessage } from '@/lib/auth'
 import { loginSchema, type LoginInput } from '@/lib/validation/auth-schemas'
+import { useTranslation } from 'react-i18next'
 
 export function LoginPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const [formError, setFormError] = useState<string | null>(null)
@@ -34,8 +36,8 @@ export function LoginPage() {
 
   return (
     <AuthLayout
-      title="Log in"
-      subtitle="Welcome back — enter your details to continue."
+      title={t('pages.login.login.logIn')}
+      subtitle={t('pages.login.login.welcomeBackEnterYourDetailsTo')}
       footer={
         <>
           Don't have an account?{' '}
@@ -51,7 +53,7 @@ export function LoginPage() {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormError message={formError} />
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('pages.login.login.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -64,7 +66,7 @@ export function LoginPage() {
         </div>
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('shared.password')}</Label>
             <Link
               to="/forgot-password"
               className="text-xs text-teal-700 hover:underline dark:text-teal-400"

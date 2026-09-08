@@ -20,6 +20,7 @@ import {
 import { rawUserAgent } from '@/lib/user-agent'
 import { formatTimestamp } from '@/lib/utils'
 import { formatDurationLabel } from '@/lib/date-range'
+import { useTranslation } from 'react-i18next'
 
 function statusFor(session: SessionWithId): {
   label: string
@@ -32,6 +33,7 @@ function statusFor(session: SessionWithId): {
 }
 
 export function ActiveSessionsPage() {
+  const { t } = useTranslation()
   const { data: sessions = [], isLoading, error: loadError, refetch } = useSessions()
   const [search, setSearch] = useState('')
   const [viewing, setViewing] = useState<SessionWithId | null>(null)
@@ -50,7 +52,7 @@ export function ActiveSessionsPage() {
   const columns: DataTableColumn<SessionWithId>[] = [
     {
       key: 'user',
-      header: 'User',
+      header: t('pages.administration.activeSessions.user'),
       sortValue: (s) => s.userName,
       render: (s) => (
         <div>
@@ -66,16 +68,16 @@ export function ActiveSessionsPage() {
         </div>
       ),
     },
-    { key: 'device', header: 'Device', hideOnMobile: true, render: (s) => s.deviceLabel },
-    { key: 'ip', header: 'IP', hideOnMobile: true, render: (s) => s.ip ?? '—' },
+    { key: 'device', header: t('shared.device'), hideOnMobile: true, render: (s) => s.deviceLabel },
+    { key: 'ip', header: t('shared.ip'), hideOnMobile: true, render: (s) => s.ip ?? '—' },
     {
       key: 'lastActivity',
-      header: 'Last Activity',
+      header: t('pages.administration.activeSessions.lastActivity'),
       render: (s) => formatTimestamp(s.lastActivityAt),
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t('shared.status'),
       render: (s) => {
         const { label, tone } = statusFor(s)
         return <StatusBadge status={label} tone={tone} dot />
@@ -87,13 +89,22 @@ export function ActiveSessionsPage() {
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
         icon={Monitor}
-        title="Active Sessions"
-        subtitle="Signed-in devices across your team"
+        title={t('pages.administration.activeSessions.activeSessions')}
+        subtitle={t('pages.administration.activeSessions.signedInDevicesAcrossYourTeam')}
       />
 
       <StatCardGrid>
-        <StatCard label="Currently Online" value={online.length} icon={Wifi} tone="success" />
-        <StatCard label="Unique Users" value={uniqueUsers} icon={Users} />
+        <StatCard
+          label={t('pages.administration.activeSessions.currentlyOnline')}
+          value={online.length}
+          icon={Wifi}
+          tone="success"
+        />
+        <StatCard
+          label={t('pages.administration.activeSessions.uniqueUsers')}
+          value={uniqueUsers}
+          icon={Users}
+        />
         <StatCard
           label="Idle (30m+)"
           value={idle.length}
@@ -122,8 +133,8 @@ export function ActiveSessionsPage() {
         emptyState={
           <EmptyState
             icon={Monitor}
-            title="No sessions yet"
-            description="Sessions appear here as your team signs in."
+            title={t('pages.administration.activeSessions.noSessionsYet')}
+            description={t('pages.administration.activeSessions.sessionsAppearHereAsYourTeam')}
           />
         }
       />
@@ -145,12 +156,18 @@ export function ActiveSessionsPage() {
           }
           sections={[
             {
-              title: 'SESSION',
+              title: t('pages.administration.activeSessions.session'),
               rows: [
-                { label: 'Signed in', value: formatTimestamp(viewing.signedInAt) },
-                { label: 'Last activity', value: formatTimestamp(viewing.lastActivityAt) },
                 {
-                  label: 'Signed in for',
+                  label: t('pages.administration.activeSessions.signedIn'),
+                  value: formatTimestamp(viewing.signedInAt),
+                },
+                {
+                  label: t('pages.administration.activeSessions.lastActivity2'),
+                  value: formatTimestamp(viewing.lastActivityAt),
+                },
+                {
+                  label: t('pages.administration.activeSessions.signedInFor'),
                   // `new Date().getTime()`, not the bare `Date.now()` call — see this project's
                   // own established fix for this exact React Compiler purity flag (Phase 6/7).
                   value: formatDurationLabel(
@@ -158,11 +175,14 @@ export function ActiveSessionsPage() {
                       (viewing.signedInAt?.toDate?.()?.getTime() ?? new Date().getTime())
                   ),
                 },
-                { label: 'Auto-expires on', value: formatTimestamp(viewing.expiresAt) },
+                {
+                  label: t('pages.administration.activeSessions.autoExpiresOn'),
+                  value: formatTimestamp(viewing.expiresAt),
+                },
                 ...(isSessionActive(viewing) && !isSessionOnline(viewing)
                   ? [
                       {
-                        label: 'Inactive for',
+                        label: t('pages.administration.activeSessions.inactiveFor'),
                         value: formatDurationLabel(
                           new Date().getTime() -
                             (viewing.lastActivityAt?.toDate?.()?.getTime() ?? new Date().getTime())
@@ -176,10 +196,13 @@ export function ActiveSessionsPage() {
             {
               title: 'NETWORK & DEVICE',
               rows: [
-                { label: 'IP Address', value: viewing.ip ?? '—' },
-                { label: 'Device', value: viewing.deviceLabel },
-                { label: 'Role', value: viewing.roleName },
-                { label: 'Branch', value: viewing.branchName },
+                { label: t('shared.ipAddress'), value: viewing.ip ?? '—' },
+                { label: t('shared.device'), value: viewing.deviceLabel },
+                { label: t('pages.administration.activeSessions.role'), value: viewing.roleName },
+                {
+                  label: t('pages.administration.activeSessions.branch'),
+                  value: viewing.branchName,
+                },
               ],
             },
           ]}
