@@ -10,10 +10,14 @@ import type { UserDoc } from '@/types/firestore'
 
 // Fallback for when no local cache is available (a different browser/device, or a cleared
 // cache) — a signed-in user's own profile doc reporting "not found" is treated as a transient
-// propagation race, not a real deleted-account signal, until retried this many times. Sized
-// generously since the only cost of over-provisioning is a longer loading spinner in an already
-// rare edge case, versus the alternative of confidently showing the wrong thing. In the common
-// case (see profile-cache.ts) this fallback never even gets exercised.
+// propagation race, not a real deleted-account signal, for this long. Sized generously since the
+// only cost of over-provisioning is a longer loading spinner in an already rare edge case, versus
+// the alternative of confidently showing the wrong thing. In the common case (see
+// profile-cache.ts) this fallback never even gets exercised.
+//
+// Their product is a wall-clock budget, not a retry count: the two are only equivalent when
+// nothing else can consume an attempt, and the listener below can now ask many times per second
+// while a write is in flight. See the deadline in the effect for what that cost.
 const PROFILE_NOT_FOUND_MAX_RETRIES = 12
 const PROFILE_NOT_FOUND_RETRY_DELAY_MS = 800
 
@@ -102,7 +106,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const uid = user.uid
     let cancelled = false
-    let retries = 0
+    // A wall-clock deadline, not a retry counter, and a single-flight guard alongside it.
+    //
+    // The budget used to be a shared `retries` count that both the listener and the retry chain
+    // incremented, which was fine only while the listener fired once. It now fires repeatedly
+    // during a write (see `includeMetadataChanges` below), and each unconfirmed firing burned a
+    // retry: the whole 12 × 800ms allowance was spent in milliseconds, `giveUp()` cleared a
+    // perfectly good profile, and a brand-new Owner was redirected to /complete-setup while their
+    // signup batch was still committing. A deadline cannot be consumed by being asked more often.
+    const deadline = Date.now() + PROFILE_NOT_FOUND_MAX_RETRIES * PROFILE_NOT_FOUND_RETRY_DELAY_MS
+    let retryScheduled = false
 
     function giveUp() {
       if (cancelled) return
@@ -143,12 +156,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     function scheduleRetry() {
       if (cancelled) return
-      if (retries >= PROFILE_NOT_FOUND_MAX_RETRIES) {
+      // One chain at a time. Without this, every listener firing started another overlapping
+      // chain, each polling the same document on its own timer.
+      if (retryScheduled) return
+      if (Date.now() >= deadline) {
         giveUp()
         return
       }
-      retries++
+      retryScheduled = true
       setTimeout(async () => {
+        retryScheduled = false
         if (cancelled) return
         try {
           const snap = await getDoc(doc(db, userDoc(uid)))

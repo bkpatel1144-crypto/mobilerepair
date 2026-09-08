@@ -25,6 +25,15 @@ export function ProtectedRoute() {
   if (!profile && location.pathname !== '/complete-setup') {
     return <Navigate to="/complete-setup" replace />
   }
+  // And back out again once a profile does resolve. The redirect above is not always right in
+  // hindsight: a signup whose batch is still committing when the profile wait expires gets sent
+  // here, and its profile lands moments later. Without this, that user sat on a "finish setting up
+  // your account" form for a company that already existed, with no way back to the app — the one
+  // screen where re-submitting would have been the natural thing to try. Pairing the two makes the
+  // decision self-correcting rather than one-way.
+  if (profile && location.pathname === '/complete-setup') {
+    return <Navigate to="/app/dashboard" replace />
+  }
   // Backstop for a race `logIn()`'s own disabled-account check can lose: Firebase Auth flips
   // global auth state (and `GuestOnlyRoute`'s reactive redirect here) the instant credentials
   // check out, which can beat `logIn()`'s own async profile-status read and sign-out — see

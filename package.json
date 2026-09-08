@@ -11,7 +11,8 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify:build": "node tools/verify-build.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

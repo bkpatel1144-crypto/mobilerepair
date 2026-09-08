@@ -25,20 +25,41 @@ export default defineConfig({
          * itself changes, which is what makes the year-long immutable caching in vercel.json
          * actually pay off for returning users.
          *
-         * `priority` decides ties: firebase and recharts must be claimed before the catch-all
-         * vendor group, or they'd be swallowed by it.
+         * `priority` decides ties, and React must win every one of them. It is claimed first, by a
+         * pattern covering every `react*` package rather than a hand-listed few, because the
+         * narrow version shipped a blank page to production.
+         *
+         * `/(react|react-dom|react-router|scheduler)[\\/]/` looks exhaustive and is not: the
+         * separator means it matches `react/` and `react-dom/` but never `react-is/`,
+         * `react-redux/` or `use-sync-external-store/`. Those three are recharts' own
+         * dependencies, so React's graph was split — part in `vendor-react`, part pulled into
+         * `vendor-charts`, with the CommonJS ones duplicated into both. Cross-chunk CJS interop
+         * depends on initialization order, and chunk ordering here is not deterministic: the same
+         * commit built twice produces different chunk hashes and different contents. Roughly one
+         * build in a few ordered the chunks so that `vendor-charts` held a React binding that was
+         * still null when it was read, and the app rendered nothing at all — `Cannot read
+         * properties of null (reading 'useContext')`, no route, no error boundary, a white screen.
+         *
+         * Which build you got was luck, so this was not reproducible by rebuilding and did not
+         * correlate with any source change. `npm run verify:build` exists to catch it: it builds
+         * repeatedly and loads each result in a real browser, because `tsc`, `eslint` and the unit
+         * tests all pass on a bundle that renders a blank page.
+         *
+         * Keeping React whole costs some cache granularity — an edit to any React-adjacent
+         * dependency now invalidates one larger chunk — which is a straightforward trade against
+         * a white screen.
          */
         advancedChunks: {
           groups: [
+            {
+              name: 'vendor-react',
+              test: /node_modules[\\/](react[\w.-]*|scheduler|use-sync-external-store)[\\/]/,
+              priority: 40,
+            },
             { name: 'vendor-firebase', test: /node_modules[\\/]@?firebase/, priority: 30 },
             {
               name: 'vendor-charts',
               test: /node_modules[\\/](recharts|d3-|victory)/,
-              priority: 30,
-            },
-            {
-              name: 'vendor-react',
-              test: /node_modules[\\/](react|react-dom|react-router|scheduler)[\\/]/,
               priority: 20,
             },
             { name: 'vendor', test: /node_modules/, priority: 10 },
