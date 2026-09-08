@@ -32,6 +32,10 @@ const CODE_ATTR =
 
 /** Contexts that make a literal code rather than copy. */
 function isCodeContext(before, after, text) {
+  // An apostrophe inside JSX text, not a string delimiter. `Here's what's happening` made the
+  // scanner see a "literal" of `s what`. A real string literal is never preceded directly by an
+  // identifier character — `foo'bar'` is not valid JS — so that is the tell.
+  if (/[A-Za-z0-9_]$/.test(before)) return true
   if (CODE_ATTR.test(before)) return true
   // Already translated, or being passed to a translation call.
   if (/\bt\(\s*$/.test(before)) return true
@@ -41,7 +45,11 @@ function isCodeContext(before, after, text) {
   // Object *keys*, not values: `'some key':`
   if (/^\s*:/.test(after)) return true
   // Query keys and Firestore paths are arrays/props of identifiers.
-  if (/\b(queryKey|collection|doc|orderBy|where|field|fieldKey|eventKey|statusKey)\b[^=]*$/.test(before))
+  if (
+    /\b(queryKey|collection|doc|orderBy|where|field|fieldKey|eventKey|statusKey)\b[^=]*$/.test(
+      before
+    )
+  )
     return true
   // A comparison against a literal is logic, not display.
   if (/[=!]==?\s*$/.test(before)) return true
@@ -56,7 +64,11 @@ function isCodeContext(before, after, text) {
   if (/(?<!\|)\|\s*$/.test(before)) return true
   if (/<\s*$/.test(before)) return true
   // `includes('x')`, `startsWith('x')`, `split('x')` etc.
-  if (/\.(includes|startsWith|endsWith|split|join|replace|replaceAll|match|test|indexOf|localeCompare)\(\s*$/.test(before))
+  if (
+    /\.(includes|startsWith|endsWith|split|join|replace|replaceAll|match|test|indexOf|localeCompare)\(\s*$/.test(
+      before
+    )
+  )
     return true
   return false
 }
@@ -66,7 +78,9 @@ const findings = []
 for (const file of walk(path.join(ROOT, 'src'))) {
   const src = fs.readFileSync(file, 'utf8')
   // Strip comments so prose in a doc comment isn't reported.
-  const stripped = src.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' ')).replace(/\/\/[^\n]*/g, (m) => ' '.repeat(m.length))
+  const stripped = src
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/\/\/[^\n]*/g, (m) => ' '.repeat(m.length))
 
   for (const m of stripped.matchAll(/'([^'\\\n]{2,120})'|"([^"\\\n]{2,120})"/g)) {
     const text = m[1] ?? m[2] ?? ''

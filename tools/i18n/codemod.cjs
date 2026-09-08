@@ -141,6 +141,29 @@ function isDisplayString(s) {
   if (t.startsWith('/') || t.startsWith('#') || t.startsWith('http')) return false
   if (/^[a-z]+[A-Z]/.test(t) && !t.includes(' ')) return false // camelCase identifier
   if (/(^|\s)(bg|text|flex|grid|border|rounded|size|p|px|py|m|mx|my|w|h)-/.test(t)) return false
+  // Tailwind class strings passed as a variable rather than inline — `cursor-pointer
+  // active:bg-muted/50`. The prefix list above misses these, and a translated class name
+  // silently removes the styling.
+  if (
+    /(^|\s)(cursor|ring|outline|shadow|opacity|gap|space|transition|duration|min|max|inset|top|left|right|bottom|z|overflow|whitespace|truncate|font|leading|tracking|justify|items|self|order|col|row|divide|placeholder|caret|accent|fill|stroke)-/.test(
+      t
+    )
+  )
+    return false
+  if (
+    /(^|\s)(hover|focus|focus-visible|active|disabled|group|peer|first|last|odd|even|sm|md|lg|xl|2xl|dark|print|data-\[|aria-\[):/.test(
+      t
+    )
+  )
+    return false
+  // A BCP-47 locale tag (`en-IN`), not copy.
+  if (/^[a-z]{2}(-[A-Za-z]{2,4})+$/.test(t)) return false
+  // Sentinel values used as select-option ids (`__unassigned__`, `__brand_global__`) and DOM
+  // targets (`_blank`). They are compared against, never read by a person.
+  if (/^__.*__$/.test(t) || /^_[a-z]+$/.test(t)) return false
+  // CSS values and a storage-key prefix.
+  if (/^(linear-gradient|radial-gradient|url|rgba?|hsla?)\(/.test(t)) return false
+  if (/^[a-z][a-z0-9-]*:$/.test(t)) return false
 
   // Reject anything that is code rather than copy. The `>...<` JSX-text pattern happily matches
   // across a comparison — `d >= bounds.from && d <= bounds.to` yields "= bounds.from && d" —

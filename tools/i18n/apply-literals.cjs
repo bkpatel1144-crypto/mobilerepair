@@ -22,12 +22,20 @@ const CODE_ATTR =
   /\b(className|class|type|variant|size|key|value|name|id|htmlFor|to|href|src|path|align|side|role|slug|mode|direction|accept|autoComplete|inputMode|pattern|data-\w+)=\s*$/
 
 function isCodeContext(before, after, text) {
+  // An apostrophe inside JSX text, not a string delimiter. `Here's what's happening` made the
+  // scanner see a "literal" of `s what`. A real string literal is never preceded directly by an
+  // identifier character — `foo'bar'` is not valid JS — so that is the tell.
+  if (/[A-Za-z0-9_]$/.test(before)) return true
   if (CODE_ATTR.test(before)) return true
   if (/\bt\(\s*$/.test(before)) return true
   if (/\bdefaultValue:\s*$/.test(before)) return true
   if (/\b(from|import|require\()\s*$/.test(before)) return true
   if (/^\s*:/.test(after)) return true
-  if (/\b(queryKey|collection|doc|orderBy|where|field|fieldKey|eventKey|statusKey)\b[^=]*$/.test(before))
+  if (
+    /\b(queryKey|collection|doc|orderBy|where|field|fieldKey|eventKey|statusKey)\b[^=]*$/.test(
+      before
+    )
+  )
     return true
   if (/[=!]==?\s*$/.test(before)) return true
   if (/^\s*[=!]==?/.test(after)) return true
@@ -150,10 +158,7 @@ if (process.argv.includes('--map')) {
     used.add(key)
     map[key] = text
   }
-  fs.writeFileSync(
-    path.join(__dirname, 'literal-map.json'),
-    JSON.stringify(map, null, 2) + '\n'
-  )
+  fs.writeFileSync(path.join(__dirname, 'literal-map.json'), JSON.stringify(map, null, 2) + '\n')
   const fresh = Object.keys(map).filter((k) => !(k in existing)).length
   console.log(
     `${Object.keys(map).length} literals, ${fresh} needing new keys (the rest reuse an existing key)`
@@ -195,7 +200,9 @@ for (const file of walk(path.join(ROOT, 'src'))) {
     const key = dict[l.text]
     if (!key) continue
     if (!l.fn || !/^[A-Z]/.test(l.fn)) {
-      skipped.push(`${path.relative(ROOT, file)}: "${l.text}" (${l.fn ? l.fn + '()' : 'module scope'})`)
+      skipped.push(
+        `${path.relative(ROOT, file)}: "${l.text}" (${l.fn ? l.fn + '()' : 'module scope'})`
+      )
       continue
     }
     components.add(l.fn)
