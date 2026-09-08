@@ -184,7 +184,12 @@ export function DeviceSalePage() {
           icon={ShoppingBag}
           title={viewing.purchaseNumber}
           subtitle={deviceLabel(viewing)}
-          badges={<StatusBadge status="Available to Sell" tone="success" />}
+          badges={
+            <StatusBadge
+              status={t('pages.secondHandDevice.deviceSale.availableToSell')}
+              tone="success"
+            />
+          }
           sections={purchaseDetailSections(viewing, t)}
           timeline={purchaseTimeline(viewing, t)}
         />

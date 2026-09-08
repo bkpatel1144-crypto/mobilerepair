@@ -76,7 +76,7 @@ export function PartiesPage() {
 
   function typeLabel(p: PartyWithId) {
     if (p.partyTypes.length > 1) return 'Both'
-    return p.partyTypes.includes('supplier') ? 'Supplier' : 'Customer'
+    return p.partyTypes.includes('supplier') ? 'Supplier' : t('common.customer')
   }
 
   const columns: DataTableColumn<PartyWithId>[] = [
@@ -102,7 +102,9 @@ export function PartiesPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: (p) => <StatusBadge status={p.status === 'active' ? 'Active' : 'Inactive'} />,
+      render: (p) => (
+        <StatusBadge status={p.status === 'active' ? 'Active' : t('common.inactive')} />
+      ),
     },
   ]
 
@@ -132,9 +134,9 @@ export function PartiesPage() {
         <div className="flex flex-wrap gap-1.5">
           {(
             [
-              ['all', 'All'],
-              ['customer', 'Customers'],
-              ['supplier', 'Suppliers'],
+              ['all', t('common.all')],
+              ['customer', t('common.customers')],
+              ['supplier', t('common.suppliers')],
               ['both', 'Both'],
             ] as [PartyTypeFilter, string][]
           ).map(([key, label]) => (
@@ -208,7 +210,9 @@ export function PartiesPage() {
               {viewing.partyNumber} · 📞 {viewing.mobile}
             </>
           }
-          badges={<StatusBadge status={viewing.status === 'active' ? 'Active' : 'Inactive'} />}
+          badges={
+            <StatusBadge status={viewing.status === 'active' ? 'Active' : t('common.inactive')} />
+          }
           actions={
             canManage && (
               <>
@@ -377,7 +381,7 @@ function PartyModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Create Party' : 'Edit Party'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create Party' : 'Save'}
+      submitLabel={isNew ? 'Create Party' : t('common.save')}
       isSubmitting={isPending}
       className="sm:max-w-xl"
     >

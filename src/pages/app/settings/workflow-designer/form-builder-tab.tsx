@@ -281,7 +281,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
             disabled={!isDirty || saveSchema.isPending}
           >
             <Check className="size-3.5" />
-            {saveSchema.isPending ? 'Saving…' : 'Save'}
+            {saveSchema.isPending ? 'Saving…' : t('common.save')}
           </Button>
         </div>
       </div>

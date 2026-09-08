@@ -92,7 +92,9 @@ export function PaymentModesPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: (m) => <StatusBadge status={m.status === 'active' ? 'Active' : 'Inactive'} />,
+      render: (m) => (
+        <StatusBadge status={m.status === 'active' ? 'Active' : t('common.inactive')} />
+      ),
     },
     {
       key: 'actions',
@@ -134,7 +136,7 @@ export function PaymentModesPage() {
                 ) : (
                   <CheckCircle2 className="size-4" />
                 )}
-                {m.status === 'active' ? 'Deactivate' : 'Activate'}
+                {m.status === 'active' ? 'Deactivate' : t('common.activate')}
               </DropdownMenuItem>
               {m.source === 'custom' && (
                 <DropdownMenuItem
@@ -210,13 +212,13 @@ export function PaymentModesPage() {
         <ConfirmDialog
           open
           onOpenChange={(o) => !o && setToggleTarget(null)}
-          title={`${toggleTarget.status === 'active' ? 'Deactivate' : 'Activate'} "${toggleTarget.name}"?`}
+          title={`${toggleTarget.status === 'active' ? 'Deactivate' : t('common.activate')} "${toggleTarget.name}"?`}
           message={
             toggleTarget.status === 'active'
               ? 'Deactivated payment modes no longer appear as a selectable option when recording a receipt or payment.'
               : 'This payment mode will become selectable again.'
           }
-          confirmLabel={toggleTarget.status === 'active' ? 'Deactivate' : 'Activate'}
+          confirmLabel={toggleTarget.status === 'active' ? 'Deactivate' : t('common.activate')}
           destructive={toggleTarget.status === 'active'}
           isPending={setStatus.isPending}
           onConfirm={() =>
@@ -284,7 +286,7 @@ function PaymentModeModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Add Payment Mode' : 'Edit Payment Mode'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create' : 'Save'}
+      submitLabel={isNew ? 'Create' : t('common.save')}
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">

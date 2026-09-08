@@ -315,7 +315,7 @@ export function ExpensesPage() {
       header: t('common.status'),
       render: (e) =>
         e.voided ? (
-          <StatusBadge status="Voided" tone="neutral" />
+          <StatusBadge status={t('common.voided')} tone="neutral" />
         ) : (
           <StatusBadge status="Posted" tone="success" />
         ),

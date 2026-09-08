@@ -112,7 +112,7 @@ export function CompanyForm({
           <Input
             value={value.gstin}
             onChange={(e) => set({ gstin: e.target.value.toUpperCase() })}
-            placeholder={registered ? '29PQRSX6789L1Z2' : 'Not applicable'}
+            placeholder={registered ? '29PQRSX6789L1Z2' : t('common.notApplicable')}
             disabled={!registered}
             maxLength={15}
           />
@@ -121,7 +121,7 @@ export function CompanyForm({
           <Input
             value={value.pan}
             onChange={(e) => set({ pan: e.target.value.toUpperCase() })}
-            placeholder={registered ? 'PQRSX6789L' : 'Not applicable'}
+            placeholder={registered ? 'PQRSX6789L' : t('common.notApplicable')}
             disabled={!registered}
             maxLength={10}
           />

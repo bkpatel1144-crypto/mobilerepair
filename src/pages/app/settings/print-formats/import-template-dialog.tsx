@@ -94,7 +94,7 @@ export function ImportTemplateDialog({
       onOpenChange={onOpenChange}
       title={t('pages.settings.importTemplateDialog.importTemplate')}
       description={t('pages.settings.importTemplateDialog.loadATemplateJsonExportedFrom')}
-      submitLabel="Import"
+      submitLabel={t('common.import')}
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >

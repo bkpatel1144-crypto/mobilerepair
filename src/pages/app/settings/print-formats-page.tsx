@@ -272,7 +272,9 @@ export function PrintFormatsPage() {
                                   onClick={() => setDeleteTarget(tpl)}
                                 >
                                   <Trash2 />
-                                  {formats.length <= 1 ? 'Delete — only format' : 'Delete'}
+                                  {formats.length <= 1
+                                    ? 'Delete — only format'
+                                    : t('common.delete')}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>

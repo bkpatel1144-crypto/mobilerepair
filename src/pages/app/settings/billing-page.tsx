@@ -110,8 +110,8 @@ export function BillingPage() {
 
               <div className="grid gap-3 p-6 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))]">
                 {[
-                  ['Users', 'Unlimited — add as many teammates as you need'],
-                  ['Branches', 'Unlimited — every location, one account'],
+                  [t('common.users'), 'Unlimited — add as many teammates as you need'],
+                  [t('common.branches'), 'Unlimited — every location, one account'],
                   ['Job cards & invoices', 'Unlimited, with no monthly cap'],
                   ['Data & backups', 'Yours, exportable at any time'],
                 ].map(([title, detail]) => (
@@ -175,7 +175,7 @@ export function BillingPage() {
                 {(
                   [
                     ['Organization', company?.name],
-                    ['Code', company?.code],
+                    [t('common.code'), company?.code],
                     ['Billing contact', company?.email],
                     ['Currency', company?.currency],
                     ['Customer since', company && formatTimestamp(company.createdAt, false)],

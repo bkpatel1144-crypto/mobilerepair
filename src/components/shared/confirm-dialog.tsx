@@ -7,6 +7,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
 
 interface ConfirmDialogProps {
   open: boolean
@@ -38,12 +39,13 @@ export function ConfirmDialog({
   onOpenChange,
   title,
   message,
-  confirmLabel = 'Confirm',
-  cancelLabel = 'Cancel',
+  confirmLabel,
+  cancelLabel,
   destructive = true,
   isPending,
   onConfirm,
 }: ConfirmDialogProps) {
+  const { t } = useTranslation()
   return (
     <Dialog open={open} onOpenChange={(o) => !isPending && onOpenChange(o)}>
       <DialogContent>
@@ -58,7 +60,7 @@ export function ConfirmDialog({
             onClick={() => onOpenChange(false)}
             disabled={isPending}
           >
-            {cancelLabel}
+            {cancelLabel ?? t('common.cancel')}
           </Button>
           <Button
             type="button"

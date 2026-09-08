@@ -416,7 +416,7 @@ export function BackupRestorePage() {
         title={t('pages.settings.backupRestore.overwriteLiveData')}
         description={t('pages.settings.backupRestore.thisWritesEveryDocumentFromThe')}
         onSubmit={handleConfirmOverwrite}
-        submitLabel="Overwrite Live Data"
+        submitLabel={t('pages.settings.backupRestore.overwriteLiveData')}
         submitDisabled={confirmText !== CONFIRM_PHRASE}
         isSubmitting={restoreOverwrite.isPending}
       >

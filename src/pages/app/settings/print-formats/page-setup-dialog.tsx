@@ -38,7 +38,7 @@ export function PageSetupDialog({
       onOpenChange={onOpenChange}
       title={t('pages.settings.pageSetupDialog.pageSetup')}
       description={t('pages.settings.pageSetupDialog.paperSizeMarginsAndOutputSettings')}
-      submitLabel="Done"
+      submitLabel={t('common.done')}
       onSubmit={() => onOpenChange(false)}
     >
       <div className="space-y-1.5">

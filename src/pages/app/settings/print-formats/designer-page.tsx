@@ -265,7 +265,7 @@ export function PrintTemplateDesignerPage() {
           </Button>
           <Button type="button" onClick={handleSave} disabled={!state.isDirty || update.isPending}>
             <Save className="size-4" />
-            {update.isPending ? 'Saving…' : 'Save'}
+            {update.isPending ? 'Saving…' : t('common.save')}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger
@@ -636,7 +636,11 @@ export function PrintTemplateDesignerPage() {
                 one.type === 'image') && (
                 <div className="space-y-1.5">
                   <Label className="text-xs">
-                    {one.type === 'field' ? 'Caption' : one.type === 'image' ? 'Image URL' : 'Text'}
+                    {one.type === 'field'
+                      ? 'Caption'
+                      : one.type === 'image'
+                        ? 'Image URL'
+                        : t('pages.settings.designer.text')}
                   </Label>
                   <Input
                     value={one.text ?? ''}

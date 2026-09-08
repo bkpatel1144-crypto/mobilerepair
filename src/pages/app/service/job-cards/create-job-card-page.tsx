@@ -103,7 +103,7 @@ function readDraft(): Partial<JobCardDraft> {
  */
 export function CreateJobCardPage() {
   const { t } = useTranslation()
-  useBreadcrumbExtra('Create')
+  useBreadcrumbExtra(t('common.create'))
   const navigate = useNavigate()
   const { user, profile } = useAuth()
   const {
@@ -1191,7 +1191,7 @@ export function CreateJobCardPage() {
             Cancel
           </Button>
           <Button type="button" onClick={handleSubmit} disabled={submitting || !user}>
-            {submitting ? 'Creating…' : 'Create Job Card'}
+            {submitting ? 'Creating…' : t('pages.service.createJobCard.createJobCard')}
           </Button>
         </div>
       </div>
@@ -1199,7 +1199,9 @@ export function CreateJobCardPage() {
       <ScanTextModal
         open={scanningField != null}
         onOpenChange={(open) => !open && setScanningField(null)}
-        title={scanningField === 'imei' ? 'Scan IMEI' : 'Scan Serial No'}
+        title={
+          scanningField === 'imei' ? 'Scan IMEI' : t('pages.service.createJobCard.scanSerialNo')
+        }
         description={t('shared.pointTheCameraAtTheBarcode')}
         onScanned={(text) => {
           if (scanningField === 'imei') setImei(text)

@@ -85,13 +85,15 @@ export function BranchManagementPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: (b) => <StatusBadge status={b.status === 'active' ? 'Active' : 'Disabled'} dot />,
+      render: (b) => (
+        <StatusBadge status={b.status === 'active' ? 'Active' : t('common.disabled')} dot />
+      ),
     },
     {
       key: 'type',
       header: t('common.type'),
       hideOnMobile: true,
-      render: (b) => (b.type === 'system' ? 'System' : 'Custom'),
+      render: (b) => (b.type === 'system' ? 'System' : t('common.custom')),
     },
     {
       key: 'created',
@@ -169,8 +171,13 @@ export function BranchManagementPage() {
           subtitle={`Code: ${viewing.code}`}
           badges={
             <>
-              <StatusBadge status={viewing.status === 'active' ? 'Active' : 'Disabled'} dot />
-              {viewing.type === 'system' && <StatusBadge status="System" tone="purple" />}
+              <StatusBadge
+                status={viewing.status === 'active' ? 'Active' : t('common.disabled')}
+                dot
+              />
+              {viewing.type === 'system' && (
+                <StatusBadge status={t('common.system')} tone="purple" />
+              )}
             </>
           }
           actions={
@@ -194,7 +201,7 @@ export function BranchManagementPage() {
                 onClick={() => setConfirmAction('toggle')}
                 disabled={viewing.type === 'system'}
               >
-                {viewing.status === 'active' ? 'Deactivate' : 'Activate'}
+                {viewing.status === 'active' ? 'Deactivate' : t('common.activate')}
               </Button>
               {!viewing.protected && (
                 <Button
@@ -222,7 +229,7 @@ export function BranchManagementPage() {
               rows: [
                 {
                   label: t('pages.settings.branchManagement.currentStatus'),
-                  value: viewing.status === 'active' ? 'Active' : 'Disabled',
+                  value: viewing.status === 'active' ? 'Active' : t('common.disabled'),
                   tone: viewing.status === 'active' ? 'success' : 'warning',
                 },
                 {
@@ -304,7 +311,7 @@ export function BranchManagementPage() {
           title={
             confirmAction === 'delete'
               ? `Delete "${viewing.name}"?`
-              : `${viewing.status === 'active' ? 'Deactivate' : 'Activate'} "${viewing.name}"?`
+              : `${viewing.status === 'active' ? 'Deactivate' : t('common.activate')} "${viewing.name}"?`
           }
           message={
             confirmAction === 'delete'
@@ -318,7 +325,7 @@ export function BranchManagementPage() {
               ? 'Delete'
               : viewing.status === 'active'
                 ? 'Deactivate'
-                : 'Activate'
+                : t('common.activate')
           }
           destructive={confirmAction === 'delete' || viewing.status === 'active'}
           isPending={confirmAction === 'delete' ? deleteBranch.isPending : setStatus.isPending}

@@ -85,7 +85,7 @@ export function LoginPage() {
           {errors.password && <p className="text-xs text-red-600">{errors.password.message}</p>}
         </div>
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Logging in…' : 'Log in'}
+          {isSubmitting ? 'Logging in…' : t('pages.login.login.logIn')}
         </Button>
       </form>
     </AuthLayout>

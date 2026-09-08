@@ -390,7 +390,7 @@ export function RoleManagementPage() {
                       {selectedRole.code}
                     </span>
                     <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                      {selectedRole.type === 'owner' ? 'Owner' : 'Custom'}
+                      {selectedRole.type === 'owner' ? 'Owner' : t('common.custom')}
                     </span>
                   </div>
                   {selectedRole.status === 'active' ? (
@@ -447,7 +447,7 @@ export function RoleManagementPage() {
                     }
                   >
                     <EyeOff />
-                    {selectedRole.status === 'active' ? 'Disable' : 'Enable'}
+                    {selectedRole.status === 'active' ? 'Disable' : t('common.enable')}
                   </Button>
                   <Button
                     variant="destructive"
@@ -592,7 +592,7 @@ export function RoleManagementPage() {
             ? 'Delete'
             : confirmAction?.kind === 'disable'
               ? 'Disable'
-              : 'Enable'
+              : t('common.enable')
         }
         destructive={confirmAction?.kind !== 'enable'}
         isPending={setRoleStatus.isPending}

@@ -506,7 +506,7 @@ export function CompanySettingsPage() {
                 <p className="text-sm text-muted-foreground">{viewing.legalName}</p>
                 <div className="mt-1">
                   <StatusBadge
-                    status={viewing.status === 'active' ? 'Active' : 'Inactive'}
+                    status={viewing.status === 'active' ? 'Active' : t('common.inactive')}
                     tone={viewing.status === 'active' ? 'success' : 'neutral'}
                   />
                 </div>
@@ -582,7 +582,9 @@ export function CompanySettingsPage() {
         }}
         title={t('pages.settings.companySettings.createCompany')}
         description={t('pages.settings.companySettings.aSecondShopUnderThisAccount')}
-        submitLabel={createCompany.isPending ? 'Creating…' : 'Create Company'}
+        submitLabel={
+          createCompany.isPending ? 'Creating…' : t('pages.settings.companySettings.createCompany')
+        }
         isSubmitting={createCompany.isPending}
         onSubmit={submitCreate}
         className="sm:max-w-3xl"

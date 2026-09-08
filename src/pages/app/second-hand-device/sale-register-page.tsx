@@ -184,7 +184,7 @@ export function SaleRegisterPage() {
               icon={Receipt}
               title={viewing.saleNumber}
               subtitle={viewing.deviceLabel}
-              badges={<StatusBadge status="Sold" tone="info" />}
+              badges={<StatusBadge status={t('common.sold')} tone="info" />}
               actions={<PrintButtonGroup sale={viewing} />}
               sections={purchase ? purchaseDetailSections(purchase, t, viewing) : []}
               timeline={purchase ? purchaseTimeline(purchase, t, viewing) : undefined}

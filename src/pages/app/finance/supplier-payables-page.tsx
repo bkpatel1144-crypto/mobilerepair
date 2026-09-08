@@ -302,7 +302,7 @@ function PaymentModal({
       onOpenChange={(o) => !o && onClose()}
       title={t('shared.recordPayment')}
       description={payable ? `${payable.supplierName} · ${payable.reference}` : ''}
-      submitLabel={pay.isPending ? 'Saving…' : 'Record Payment'}
+      submitLabel={pay.isPending ? 'Saving…' : t('shared.recordPayment')}
       isSubmitting={pay.isPending}
       onSubmit={handleSubmit}
     >
@@ -433,7 +433,7 @@ export function SupplierPayablesPage() {
       sortValue: (g) => g.oldestDaysOverdue,
       render: (g) =>
         g.oldestDaysOverdue <= 0 ? (
-          <StatusBadge status="Current" tone="success" />
+          <StatusBadge status={t('pages.finance.supplierPayables.current')} tone="success" />
         ) : (
           <StatusBadge
             status={`${g.oldestDaysOverdue}d`}

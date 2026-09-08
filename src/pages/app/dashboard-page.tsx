@@ -355,7 +355,9 @@ export function DashboardPage() {
                         width={56}
                       />
                       <Tooltip
-                        formatter={(v: unknown) => [`₹${String(v)}`, 'Revenue'] as [string, string]}
+                        formatter={(v: unknown) =>
+                          [`₹${String(v)}`, t('common.revenue')] as [string, string]
+                        }
                       />
                       <Line
                         type="monotone"

@@ -3,6 +3,7 @@ import { PRINT_BANDS, type PrintBand, type PrintElement } from '@/types/firestor
 import { cn } from '@/lib/utils'
 import type { DesignerDraft } from './use-designer-state'
 import type { PrintContext } from '@/lib/print-contexts'
+import { useTranslation } from 'react-i18next'
 
 /** Screen pixels per millimetre at 100% zoom. 3.78 is the CSS definition (96dpi ÷ 25.4), so a
  * template drawn at 100% is genuinely life-size on a typical monitor. */
@@ -18,6 +19,7 @@ function snap(value: number, enabled: boolean): number {
  * into the live DOM with selection chrome, sample values and band-relative positioning. Sharing
  * one renderer between them would mean the print output carrying editor affordances. */
 function ElementView({ el, values }: { el: PrintElement; values: PrintContext }) {
+  const { t } = useTranslation()
   const s = el.style
   const text = (() => {
     if (el.type === 'field' && el.fieldKey) {
@@ -67,7 +69,7 @@ function ElementView({ el, values }: { el: PrintElement; values: PrintContext })
       if (!src) {
         return (
           <div className="flex size-full items-center justify-center border border-dashed border-muted-foreground/40 text-[8px] text-muted-foreground">
-            {el.type === 'logo' ? 'Logo' : 'Image'}
+            {el.type === 'logo' ? 'Logo' : t('pages.settings.designer.image')}
           </div>
         )
       }
@@ -82,7 +84,7 @@ function ElementView({ el, values }: { el: PrintElement; values: PrintContext })
           className="flex size-full items-center justify-center border border-dashed border-muted-foreground/50 font-mono"
           style={{ fontSize: `${Math.min(s.fontSize, 7)}pt`, letterSpacing: '0.5px' }}
         >
-          {text || (el.type === 'qrcode' ? 'QR' : 'Barcode')}
+          {text || (el.type === 'qrcode' ? 'QR' : t('pages.settings.designer.barcode'))}
         </div>
       )
     case 'field':

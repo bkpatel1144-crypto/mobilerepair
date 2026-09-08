@@ -41,7 +41,7 @@ const DRAFT_KEY = 'aim-create-user-draft'
 
 export function CreateUserPage() {
   const { t } = useTranslation()
-  useBreadcrumbExtra('Create')
+  useBreadcrumbExtra(t('common.create'))
   const navigate = useNavigate()
   const { profile } = useAuth()
   const { data: roles = [], error: rolesError, refetch: refetchRoles } = useRoles()

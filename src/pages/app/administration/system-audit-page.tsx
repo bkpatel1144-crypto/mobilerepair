@@ -227,7 +227,11 @@ export function SystemAuditPage() {
                 tone={RESULT_TONE[viewing.result]}
               />
               {viewing.critical && (
-                <StatusBadge status="Critical" tone="danger" icon={AlertTriangle} />
+                <StatusBadge
+                  status={t('pages.administration.systemAudit.critical')}
+                  tone="danger"
+                  icon={AlertTriangle}
+                />
               )}
             </>
           }

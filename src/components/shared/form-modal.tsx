@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 interface FormModalProps {
   open: boolean
@@ -37,15 +38,16 @@ export function FormModal({
   description,
   autosaveLabel,
   onClear,
-  clearLabel = 'Clear',
+  clearLabel,
   children,
   onSubmit,
-  submitLabel = 'Save',
-  cancelLabel = 'Cancel',
+  submitLabel,
+  cancelLabel,
   isSubmitting,
   submitDisabled,
   className,
 }: FormModalProps) {
+  const { t } = useTranslation()
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -68,7 +70,7 @@ export function FormModal({
               {autosaveLabel && <span>{autosaveLabel}</span>}
               {onClear && (
                 <button type="button" onClick={onClear} className="underline hover:text-foreground">
-                  {clearLabel}
+                  {clearLabel ?? t('common.clear')}
                 </button>
               )}
             </div>
@@ -80,7 +82,7 @@ export function FormModal({
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              {cancelLabel}
+              {cancelLabel ?? t('common.cancel')}
             </Button>
             <Button type="submit" disabled={isSubmitting || submitDisabled}>
               {isSubmitting ? 'Saving…' : submitLabel}

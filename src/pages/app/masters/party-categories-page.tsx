@@ -85,7 +85,9 @@ export function PartyCategoriesPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: (c) => <StatusBadge status={c.status === 'active' ? 'Active' : 'Inactive'} />,
+      render: (c) => (
+        <StatusBadge status={c.status === 'active' ? 'Active' : t('common.inactive')} />
+      ),
     },
     {
       key: 'created',
@@ -150,7 +152,9 @@ export function PartyCategoriesPage() {
           icon={FolderClosed}
           title={viewing.name}
           subtitle={viewing.code}
-          badges={<StatusBadge status={viewing.status === 'active' ? 'Active' : 'Inactive'} />}
+          badges={
+            <StatusBadge status={viewing.status === 'active' ? 'Active' : t('common.inactive')} />
+          }
           actions={
             canManage && (
               <>
@@ -283,7 +287,7 @@ function PartyCategoryModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Create New Category' : 'Edit Category'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create Category' : 'Save'}
+      submitLabel={isNew ? 'Create Category' : t('common.save')}
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">

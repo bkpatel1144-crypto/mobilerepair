@@ -223,7 +223,7 @@ export function FinancialYearsPage() {
                 }}
               >
                 {f.isLocked ? <LockOpen /> : <CircleX />}
-                {f.isLocked ? 'Reopen' : 'Close'}
+                {f.isLocked ? 'Reopen' : t('common.close')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -359,13 +359,15 @@ export function FinancialYearsPage() {
           subtitle={`${formatDateShort(viewing.startDate)} – ${formatDateShort(viewing.endDate)}`}
           badges={
             <>
-              {viewing.isCurrent && <StatusBadge status="Current" tone="warning" />}
+              {viewing.isCurrent && (
+                <StatusBadge status={t('pages.finance.supplierPayables.current')} tone="warning" />
+              )}
               <StatusBadge
-                status={viewing.isActive ? 'Active' : 'Inactive'}
+                status={viewing.isActive ? 'Active' : t('common.inactive')}
                 tone={viewing.isActive ? 'success' : 'neutral'}
                 dot
               />
-              {viewing.isLocked && <StatusBadge status="Locked" icon={Lock} />}
+              {viewing.isLocked && <StatusBadge status={t('common.locked')} icon={Lock} />}
             </>
           }
           actions={
@@ -399,7 +401,7 @@ export function FinancialYearsPage() {
             >
               <DetailValue
                 label={t('pages.settings.financialYears.activeStatus')}
-                value={viewing.isActive ? 'Yes' : 'No'}
+                value={viewing.isActive ? 'Yes' : t('common.no')}
                 divider
                 trailing={
                   viewing.isActive ? (
@@ -411,7 +413,7 @@ export function FinancialYearsPage() {
               />
               <DetailValue
                 label={t('pages.settings.financialYears.lockedStatus')}
-                value={viewing.isLocked ? 'Yes' : 'No'}
+                value={viewing.isLocked ? 'Yes' : t('common.no')}
                 trailing={
                   viewing.isLocked ? (
                     <Lock className="size-6 text-amber-600 dark:text-amber-400" />

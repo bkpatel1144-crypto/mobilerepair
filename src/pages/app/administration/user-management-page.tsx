@@ -226,7 +226,7 @@ export function UserManagementPage() {
         <ConfirmDialog
           open={confirmingToggle}
           onOpenChange={setConfirmingToggle}
-          title={`${selectedUser.status === 'active' ? 'Disable' : 'Enable'} "${selectedUser.fullName}"?`}
+          title={`${selectedUser.status === 'active' ? 'Disable' : t('common.enable')} "${selectedUser.fullName}"?`}
           message={
             selectedUser.status === 'active'
               ? 'This immediately signs them out and blocks every future sign-in until re-enabled — including a session already in progress.'

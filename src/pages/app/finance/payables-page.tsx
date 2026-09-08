@@ -98,7 +98,11 @@ export function PayablesPage() {
                   variant={tab === tab ? 'default' : 'outline'}
                   onClick={() => setTab(tab)}
                 >
-                  {tab === 'all' ? 'All' : tab === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                  {tab === 'all'
+                    ? 'All'
+                    : tab === 'refundDue'
+                      ? 'Refund Due'
+                      : t('pages.finance.payables.unusedAdvance')}
                 </Button>
               ))}
             </div>
@@ -135,7 +139,11 @@ export function PayablesPage() {
                         </p>
                       </div>
                       <StatusBadge
-                        status={row.kind === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                        status={
+                          row.kind === 'refundDue'
+                            ? 'Refund Due'
+                            : t('pages.finance.payables.unusedAdvance')
+                        }
                         tone={row.kind === 'refundDue' ? 'warning' : 'info'}
                       />
                       <span className="font-semibold text-red-600">₹{row.amountDue}</span>
@@ -156,7 +164,9 @@ export function PayablesPage() {
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground uppercase">
-                            {row.kind === 'refundDue' ? 'Refund Due' : 'Unused Advance'}
+                            {row.kind === 'refundDue'
+                              ? 'Refund Due'
+                              : t('pages.finance.payables.unusedAdvance')}
                           </p>
                           <p className="font-medium text-red-600">₹{row.amountDue}</p>
                         </div>

@@ -92,14 +92,16 @@ export function UomPage() {
       hideOnMobile: true,
       render: (u) => (
         <span className="text-xs text-muted-foreground">
-          {u.source === 'system' ? 'System' : 'Custom'}
+          {u.source === 'system' ? 'System' : t('common.custom')}
         </span>
       ),
     },
     {
       key: 'status',
       header: t('common.status'),
-      render: (u) => <StatusBadge status={u.status === 'active' ? 'Active' : 'Inactive'} />,
+      render: (u) => (
+        <StatusBadge status={u.status === 'active' ? 'Active' : t('common.inactive')} />
+      ),
     },
     {
       key: 'actions',
@@ -141,7 +143,7 @@ export function UomPage() {
                 ) : (
                   <CheckCircle2 className="size-4" />
                 )}
-                {u.status === 'active' ? 'Deactivate' : 'Activate'}
+                {u.status === 'active' ? 'Deactivate' : t('common.activate')}
               </DropdownMenuItem>
               {u.source === 'custom' && (
                 <DropdownMenuItem
@@ -224,13 +226,13 @@ export function UomPage() {
         <ConfirmDialog
           open
           onOpenChange={(o) => !o && setToggleTarget(null)}
-          title={`${toggleTarget.status === 'active' ? 'Deactivate' : 'Activate'} "${toggleTarget.name}"?`}
+          title={`${toggleTarget.status === 'active' ? 'Deactivate' : t('common.activate')} "${toggleTarget.name}"?`}
           message={
             toggleTarget.status === 'active'
               ? 'Deactivated units no longer appear as a selectable option for new items.'
               : 'This unit will become selectable again for new items.'
           }
-          confirmLabel={toggleTarget.status === 'active' ? 'Deactivate' : 'Activate'}
+          confirmLabel={toggleTarget.status === 'active' ? 'Deactivate' : t('common.activate')}
           destructive={toggleTarget.status === 'active'}
           isPending={setStatus.isPending}
           onConfirm={() =>
@@ -315,7 +317,7 @@ function UomModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Create Unit of Measure' : 'Edit Unit of Measure'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create UOM' : 'Save'}
+      submitLabel={isNew ? 'Create UOM' : t('common.save')}
       isSubmitting={isPending}
     >
       <div className="grid grid-cols-2 gap-3">

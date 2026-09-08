@@ -63,7 +63,7 @@ export function IpWhitelistPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: (e) => <StatusBadge status={e.active ? 'Active' : 'Inactive'} />,
+      render: (e) => <StatusBadge status={e.active ? 'Active' : t('common.inactive')} />,
     },
     {
       key: 'created',
@@ -192,6 +192,7 @@ export function IpWhitelistPage() {
 }
 
 function ToggleActiveItem({ entry }: { entry: IpWhitelistWithId }) {
+  const { t } = useTranslation()
   const update = useUpdateIpWhitelistEntry()
   const [confirming, setConfirming] = useState(false)
   return (
@@ -203,18 +204,18 @@ function ToggleActiveItem({ entry }: { entry: IpWhitelistWithId }) {
         }}
       >
         {entry.active ? <Ban className="size-4" /> : <CheckCircle2 className="size-4" />}
-        {entry.active ? 'Deactivate' : 'Activate'}
+        {entry.active ? 'Deactivate' : t('common.activate')}
       </DropdownMenuItem>
       <ConfirmDialog
         open={confirming}
         onOpenChange={setConfirming}
-        title={`${entry.active ? 'Deactivate' : 'Activate'} "${entry.label}"?`}
+        title={`${entry.active ? 'Deactivate' : t('common.activate')} "${entry.label}"?`}
         message={
           entry.active
             ? 'Deactivating this entry stops it from authorizing sign-ins from this network — a non-Owner relying on it may be locked out immediately.'
             : 'This IP/CIDR will start authorizing non-Owner sign-ins again.'
         }
-        confirmLabel={entry.active ? 'Deactivate' : 'Activate'}
+        confirmLabel={entry.active ? 'Deactivate' : t('common.activate')}
         destructive={entry.active}
         isPending={update.isPending}
         onConfirm={() =>
@@ -274,7 +275,7 @@ function IpWhitelistModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Add IP to Whitelist' : 'Edit Whitelist Entry'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Add' : 'Save'}
+      submitLabel={isNew ? 'Add' : t('common.save')}
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">

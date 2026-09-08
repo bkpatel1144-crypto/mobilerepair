@@ -77,7 +77,9 @@ export function PartyLedgerPage() {
     {
       key: 'type',
       header: t('common.type'),
-      render: (s) => <StatusBadge status={s.party.type === 'customer' ? 'Customer' : 'Supplier'} />,
+      render: (s) => (
+        <StatusBadge status={s.party.type === 'customer' ? 'Customer' : t('common.supplier')} />
+      ),
     },
     {
       key: 'jobs',
@@ -174,7 +176,7 @@ export function PartyLedgerPage() {
               variant={typeFilter === tab ? 'default' : 'outline'}
               onClick={() => setTypeFilter(tab)}
             >
-              {tab === 'all' ? 'All' : tab === 'customer' ? 'Customers' : 'Suppliers'}
+              {tab === 'all' ? 'All' : tab === 'customer' ? 'Customers' : t('common.suppliers')}
             </Button>
           ))}
         </div>
@@ -226,7 +228,9 @@ function PartyLedgerDetailSheet({
             <SheetHeader>
               <SheetTitle className="flex items-center gap-2">
                 {party.party.name}
-                <StatusBadge status={party.party.type === 'customer' ? 'Customer' : 'Supplier'} />
+                <StatusBadge
+                  status={party.party.type === 'customer' ? 'Customer' : t('common.supplier')}
+                />
               </SheetTitle>
               <SheetDescription>
                 {party.party.mobile} · {party.party.partyNumber}

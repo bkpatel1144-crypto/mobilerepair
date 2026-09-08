@@ -125,7 +125,7 @@ export function RoleConfigurePage() {
           )}
           <h1 className="text-lg font-bold">{role.name}</h1>
           <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{role.code}</span>
-          {role.protected && <StatusBadge status="System" tone="neutral" />}
+          {role.protected && <StatusBadge status={t('common.system')} tone="neutral" />}
 
           {/* Who is doing the editing, matching the reference. On a screen that hands out
            * permissions it is worth being explicit about whose account is making the change —
@@ -215,7 +215,7 @@ export function RoleConfigurePage() {
               Cancel
             </Button>
             <Button type="button" onClick={handleSave} disabled={!isDirty || updateRole.isPending}>
-              {updateRole.isPending ? 'Saving…' : 'Save'}
+              {updateRole.isPending ? 'Saving…' : t('common.save')}
             </Button>
           </div>
         </div>

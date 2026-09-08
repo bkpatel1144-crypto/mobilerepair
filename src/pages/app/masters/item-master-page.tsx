@@ -108,7 +108,9 @@ export function ItemMasterPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: (i) => <StatusBadge status={i.status === 'active' ? 'Active' : 'Inactive'} />,
+      render: (i) => (
+        <StatusBadge status={i.status === 'active' ? 'Active' : t('common.inactive')} />
+      ),
     },
   ]
 
@@ -197,7 +199,9 @@ export function ItemMasterPage() {
           icon={viewing.type === 'service' ? Wrench : Package}
           title={viewing.name}
           subtitle={viewing.itemCode}
-          badges={<StatusBadge status={viewing.status === 'active' ? 'Active' : 'Inactive'} />}
+          badges={
+            <StatusBadge status={viewing.status === 'active' ? 'Active' : t('common.inactive')} />
+          }
           actions={
             canManage && (
               <>
@@ -254,7 +258,7 @@ export function ItemMasterPage() {
               rows: [
                 {
                   label: t('pages.masters.itemMaster.stockTracked'),
-                  value: viewing.stockTracked ? 'Yes' : 'No',
+                  value: viewing.stockTracked ? 'Yes' : t('common.no'),
                 },
               ],
             },
@@ -301,6 +305,7 @@ export function ItemMasterPage() {
 }
 
 function ItemStatusButton({ item }: { item: ItemWithId }) {
+  const { t } = useTranslation()
   const setStatus = useSetItemStatus()
   const [confirming, setConfirming] = useState(false)
   const willDeactivate = item.status === 'active'
@@ -309,18 +314,18 @@ function ItemStatusButton({ item }: { item: ItemWithId }) {
     <>
       <Button type="button" variant="outline" size="sm" onClick={() => setConfirming(true)}>
         {willDeactivate ? <Ban className="size-3.5" /> : <CheckCircle2 className="size-3.5" />}
-        {willDeactivate ? 'Deactivate' : 'Activate'}
+        {willDeactivate ? 'Deactivate' : t('common.activate')}
       </Button>
       <ConfirmDialog
         open={confirming}
         onOpenChange={setConfirming}
-        title={`${willDeactivate ? 'Deactivate' : 'Activate'} "${item.name}"?`}
+        title={`${willDeactivate ? 'Deactivate' : t('common.activate')} "${item.name}"?`}
         message={
           willDeactivate
             ? 'Deactivated items no longer appear as a selectable option in job cards, purchases, or sales.'
             : 'This item will become selectable again.'
         }
-        confirmLabel={willDeactivate ? 'Deactivate' : 'Activate'}
+        confirmLabel={willDeactivate ? 'Deactivate' : t('common.activate')}
         destructive={willDeactivate}
         isPending={setStatus.isPending}
         onConfirm={() =>
@@ -408,7 +413,7 @@ function ItemModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Add Item' : 'Edit Item'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create Item' : 'Save'}
+      submitLabel={isNew ? 'Create Item' : t('common.save')}
       isSubmitting={isPending}
       className="sm:max-w-xl"
     >

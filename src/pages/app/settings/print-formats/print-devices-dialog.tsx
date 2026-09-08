@@ -78,6 +78,7 @@ function DeviceRow({
   onRemove: () => void
   removing: boolean
 }) {
+  const { t } = useTranslation()
   const [confirming, setConfirming] = useState(false)
   const now = new Date().getTime() // see the note in useCountdown
   const expired = isCodeExpired(device, now)
@@ -157,7 +158,7 @@ function DeviceRow({
             : 'Offline'
           : expired
             ? 'Expired'
-            : 'Pending'}
+            : t('common.pending')}
       </span>
       <Button
         type="button"

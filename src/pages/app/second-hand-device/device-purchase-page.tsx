@@ -361,7 +361,7 @@ function EditPurchaseModal({
       onOpenChange={(open) => !open && onClose()}
       title={`Edit ${purchase.purchaseNumber}`}
       onSubmit={handleSubmit}
-      submitLabel="Save"
+      submitLabel={t('common.save')}
       isSubmitting={updatePurchase.isPending}
     >
       <div className="grid grid-cols-2 gap-3">
@@ -447,6 +447,7 @@ export function PrintButtonGroup({
   purchase?: SecondHandPurchaseWithId
   sale?: SecondHandSaleWithId
 }) {
+  const { t } = useTranslation()
   const { data: company } = useCompany()
   const { defaultTemplate: purchaseReceiptTemplate } = usePrintTemplatesFor(
     'secondHandPurchaseReceipt'
@@ -510,7 +511,7 @@ export function PrintButtonGroup({
           onClick={handlePrintReceiptOrInvoice}
           disabled={purchase ? !purchaseReceiptTemplate : !saleInvoiceTemplate}
         >
-          Print {purchase ? 'Receipt' : 'Invoice'}
+          Print {purchase ? 'Receipt' : t('common.invoice')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handlePrintLabel} disabled={!labelTemplate}>
           Print Label

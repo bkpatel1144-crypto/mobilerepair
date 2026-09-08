@@ -153,9 +153,13 @@ export function TechnicianReportPage() {
       header: t('pages.reports.technicianReport.performance'),
       render: (g) =>
         g.profit < 0 ? (
-          <StatusBadge status="Loss" tone="danger" icon={TrendingDown} />
+          <StatusBadge status={t('common.loss')} tone="danger" icon={TrendingDown} />
         ) : (
-          <StatusBadge status="Profit" tone="success" icon={TrendingUp} />
+          <StatusBadge
+            status={t('pages.secondHandDevice.purchaseDetailSections.profit')}
+            tone="success"
+            icon={TrendingUp}
+          />
         ),
     },
   ]

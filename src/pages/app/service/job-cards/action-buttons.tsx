@@ -400,7 +400,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('pages.service.actionButtons.cancelJob')}
         onSubmit={submitDialog}
-        submitLabel="Cancel Job"
+        submitLabel={t('pages.service.actionButtons.cancelJob')}
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">
@@ -449,7 +449,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('pages.service.actionButtons.generateBill')}
         onSubmit={submitDialog}
-        submitLabel="Generate Bill"
+        submitLabel={t('pages.service.actionButtons.generateBill')}
         isSubmitting={applyAction.isPending || recordPayment.isPending}
       >
         <div className="space-y-3">
@@ -502,7 +502,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('shared.recordPayment')}
         onSubmit={submitDialog}
-        submitLabel="Record Payment"
+        submitLabel={t('shared.recordPayment')}
         isSubmitting={recordPayment.isPending}
       >
         <div className="grid grid-cols-2 gap-2">
@@ -539,7 +539,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onOpenChange={(o) => !o && closeDialog()}
         title={t('pages.service.actionButtons.handover')}
         onSubmit={submitDialog}
-        submitLabel="Handover"
+        submitLabel={t('pages.service.actionButtons.handover')}
         isSubmitting={applyAction.isPending}
       >
         <div className="space-y-1.5">

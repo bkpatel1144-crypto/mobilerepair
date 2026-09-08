@@ -42,7 +42,7 @@ const ACCESSORIES_OPTIONS = [
 
 export function CreateSecondHandPurchasePage() {
   const { t } = useTranslation()
-  useBreadcrumbExtra('Create')
+  useBreadcrumbExtra(t('common.create'))
   const navigate = useNavigate()
   const { user, profile } = useAuth()
   const { data: parties = [] } = useParties()
@@ -92,7 +92,9 @@ export function CreateSecondHandPurchasePage() {
   const [quickAddSeller, setQuickAddSeller] = useState<{ name: string; mobile: string } | null>(
     null
   )
-  const [idProofType, setIdProofType] = useState('Not Captured')
+  const [idProofType, setIdProofType] = useState(
+    t('pages.secondHandDevice.createPurchase.notCaptured')
+  )
   const [idProofNumber, setIdProofNumber] = useState('')
   const [pendingIdProofPhoto, setPendingIdProofPhoto] = useState<File | null>(null)
   const [imeiCheckedClean, setImeiCheckedClean] = useState(false)

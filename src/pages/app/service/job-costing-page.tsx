@@ -92,7 +92,7 @@ export function JobCostingPage() {
     {
       key: 'status',
       header: t('common.status'),
-      render: () => <StatusBadge status="Closed" tone="neutral" />,
+      render: () => <StatusBadge status={t('shared.closed')} tone="neutral" />,
     },
     {
       key: 'costing',
@@ -163,7 +163,7 @@ export function JobCostingPage() {
         badges={
           selectedJob && (
             <>
-              <StatusBadge status="Closed" tone="neutral" />
+              <StatusBadge status={t('shared.closed')} tone="neutral" />
               {costingByJobId.has(selectedJob.id) ? (
                 <StatusBadge status="Costed" tone="success" />
               ) : (

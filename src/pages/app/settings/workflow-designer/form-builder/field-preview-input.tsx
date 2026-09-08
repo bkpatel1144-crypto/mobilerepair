@@ -44,7 +44,7 @@ export function FieldPreviewInput({
         <div className="flex gap-2">
           <div className={cn(baseInputClasses, 'flex-1 gap-2')}>
             <Search className="size-4 shrink-0" />
-            <span className="truncate">{placeholder ?? 'Search...'}</span>
+            <span className="truncate">{placeholder ?? t('shared.search')}</span>
           </div>
           <Button type="button" variant="outline" size="icon" disabled className="shrink-0">
             <Plus className="size-4" />

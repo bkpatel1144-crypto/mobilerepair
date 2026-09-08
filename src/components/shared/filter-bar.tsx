@@ -39,7 +39,7 @@ interface FilterBarProps {
 export function FilterBar({
   searchValue,
   onSearchChange,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder,
   dateRange,
   onDateRangeChange,
   showCustomRange,
@@ -59,7 +59,7 @@ export function FilterBar({
           <Input
             value={searchValue}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder={searchPlaceholder}
+            placeholder={searchPlaceholder ?? t('shared.search')}
             className="pl-8"
           />
         </div>

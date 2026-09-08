@@ -120,7 +120,7 @@ export function ReceiptsPaymentsPage() {
                 : 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400')
             }
           >
-            {r.direction === 'in' ? 'Advance' : 'Payment'}
+            {r.direction === 'in' ? 'Advance' : t('common.payment')}
           </span>
           {r.voided && (
             <span className="rounded-full bg-red-100 px-1.5 py-0.5 text-[10px] font-medium text-red-700 dark:bg-red-500/15 dark:text-red-400">
@@ -552,7 +552,7 @@ function NewEntryDialog({
               ? 'Saving…'
               : direction === 'in'
                 ? 'Record Receipt'
-                : 'Record Payment'}
+                : t('shared.recordPayment')}
           </Button>
         </div>
       </DialogContent>

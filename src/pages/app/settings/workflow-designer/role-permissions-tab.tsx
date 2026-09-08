@@ -257,7 +257,7 @@ function SelectedRolePanel({
                 draft.active ? 'text-teal-700 dark:text-teal-400' : 'text-muted-foreground'
               }
             >
-              {draft.active ? 'Active' : 'Inactive'}
+              {draft.active ? 'Active' : t('common.inactive')}
             </span>
             <Switch
               checked={draft.active}

@@ -161,7 +161,7 @@ export function ItemCategoriesPage() {
           badges={
             <>
               <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">
-                {viewing.status === 'active' ? 'Active' : 'Inactive'}
+                {viewing.status === 'active' ? 'Active' : t('common.inactive')}
               </span>
               {viewing.source === 'system' && (
                 <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">
@@ -244,6 +244,7 @@ export function ItemCategoriesPage() {
 }
 
 function ItemCategoryStatusButton({ category }: { category: ItemCategoryWithId }) {
+  const { t } = useTranslation()
   const setStatus = useSetItemCategoryStatus()
   const [confirming, setConfirming] = useState(false)
   const willDeactivate = category.status === 'active'
@@ -252,18 +253,18 @@ function ItemCategoryStatusButton({ category }: { category: ItemCategoryWithId }
     <>
       <Button type="button" variant="outline" size="sm" onClick={() => setConfirming(true)}>
         {willDeactivate ? <Ban className="size-3.5" /> : <CheckCircle2 className="size-3.5" />}
-        {willDeactivate ? 'Deactivate' : 'Activate'}
+        {willDeactivate ? 'Deactivate' : t('common.activate')}
       </Button>
       <ConfirmDialog
         open={confirming}
         onOpenChange={setConfirming}
-        title={`${willDeactivate ? 'Deactivate' : 'Activate'} "${category.name}"?`}
+        title={`${willDeactivate ? 'Deactivate' : t('common.activate')} "${category.name}"?`}
         message={
           willDeactivate
             ? 'Deactivated categories no longer appear as a selectable option for new items.'
             : 'This category will become selectable again for new items.'
         }
-        confirmLabel={willDeactivate ? 'Deactivate' : 'Activate'}
+        confirmLabel={willDeactivate ? 'Deactivate' : t('common.activate')}
         destructive={willDeactivate}
         isPending={setStatus.isPending}
         onConfirm={() =>
@@ -377,7 +378,7 @@ function ItemCategoryModal({
       onOpenChange={(open) => !open && onClose()}
       title={isNew ? 'Create Item Category' : 'Edit Item Category'}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create Category' : 'Save'}
+      submitLabel={isNew ? 'Create Category' : t('common.save')}
       isSubmitting={isPending}
     >
       <div className="space-y-1.5">

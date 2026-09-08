@@ -407,7 +407,7 @@ export function JobCardDetailContent({
                   <img
                     key={url}
                     src={url}
-                    alt="Job"
+                    alt={t('common.job')}
                     className="aspect-square rounded-md object-cover"
                   />
                 ))}
@@ -480,7 +480,7 @@ export function JobCardDetailContent({
           if (!o) setNoteText('')
         }}
         title={t('pages.service.jobCardDetailContent.addNote')}
-        submitLabel="Add Note"
+        submitLabel={t('pages.service.jobCardDetailContent.addNote')}
         isSubmitting={applyAction.isPending}
         onSubmit={(e) => {
           e.preventDefault()

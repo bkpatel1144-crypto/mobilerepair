@@ -69,12 +69,12 @@ export function ProfitLossPage() {
     range === 'all'
       ? 'All time'
       : {
-          today: 'Today',
-          yesterday: 'Yesterday',
+          today: t('common.today'),
+          yesterday: t('common.yesterday'),
           week: 'This week',
           month: 'This month',
           year: 'This year',
-          custom: 'Custom',
+          custom: t('common.custom'),
         }[range]
 
   return (
@@ -90,17 +90,20 @@ export function ProfitLossPage() {
             disabled={isLoading || data.entryCount === 0}
             onClick={() =>
               downloadCsv('profit-and-loss.csv', [
-                { Line: 'Revenue received', Amount: data.revenue },
+                { Line: t('pages.reports.profitLoss.revenueReceived'), Amount: data.revenue },
                 { Line: 'Less: refunds', Amount: -data.refunds },
-                { Line: 'Net revenue', Amount: data.netRevenue },
+                { Line: t('pages.reports.profitLoss.netRevenue'), Amount: data.netRevenue },
                 { Line: 'Less: direct cost (supplier payments)', Amount: -data.directCost },
-                { Line: 'Gross profit', Amount: data.grossProfit },
+                { Line: t('pages.reports.profitLoss.grossProfit'), Amount: data.grossProfit },
                 ...data.expenseLines.map((l) => ({
                   Line: `Expense — ${l.label}`,
                   Amount: -l.amount,
                 })),
-                { Line: 'Total operating expenses', Amount: -data.operatingExpenses },
-                { Line: 'Net profit', Amount: data.netProfit },
+                {
+                  Line: t('pages.reports.profitLoss.totalOperatingExpenses'),
+                  Amount: -data.operatingExpenses,
+                },
+                { Line: t('pages.reports.profitLoss.netProfit'), Amount: data.netProfit },
               ])
             }
           >
