@@ -10,6 +10,7 @@ import { FormError } from '@/components/shared/form-error'
 import { signUp, getAuthErrorMessage } from '@/lib/auth'
 import { signupSchema, type SignupInput } from '@/lib/validation/auth-schemas'
 import { useTranslation } from 'react-i18next'
+import { auth } from '@/lib/firebase'
 
 export function SignupPage() {
   const { t } = useTranslation()
@@ -29,6 +30,12 @@ export function SignupPage() {
       navigate('/app/dashboard', { replace: true })
     } catch (err) {
       setFormError(getAuthErrorMessage(err))
+      // If the Auth account was created and only the tenant seeding failed, the user is already
+      // signed in — send them to the recovery form rather than leaving them on a signup page
+      // they can no longer use (the email is taken, by their own new account). Read
+      // `auth.currentUser` rather than the context's `user`, because that is set by an
+      // onAuthStateChanged callback and this runs synchronously inside the rejection.
+      if (auth.currentUser) navigate('/complete-setup', { replace: true })
     }
   }
 

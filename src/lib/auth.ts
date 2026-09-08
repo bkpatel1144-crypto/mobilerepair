@@ -247,21 +247,22 @@ export async function signUp({
     await updateProfile(credential.user, { displayName: fullName })
     return await seedTenantForUser(uid, email, companyName, fullName)
   } catch (err) {
-    // The Auth account was created but seeding failed (e.g. Firestore rules not yet deployed).
-    // Leaving an Auth user with no profile doc would make every future login attempt for this
-    // email hit a broken, half-onboarded state — clean it up so the email is free to retry.
+    // The Auth account is deliberately *kept*.
     //
-    // Note this can no longer fire from an in-flight batch write simply losing a race with a
-    // page reload/close — `db` uses `persistentLocalCache` (see firebase.ts), so `commit()`
-    // enqueues to IndexedDB and survives that. It's still here for a *genuine* failure (rules
-    // rejection, sustained offline, quota) that happens while the tab stays open and the
-    // rejection actually reaches this catch. A reload/close mid-write instead leaves an Auth
-    // account whose queued write completes later in the background — `completeAccountSetup()`
-    // below is the net for the rarer case where even that doesn't land.
-    await credential.user.delete().catch(() => {
-      // If even delete() fails (e.g. requires-recent-login edge case), there's nothing more we
-      // can safely do client-side; the original error is what the caller needs to see anyway.
-    })
+    // This used to call `credential.user.delete()`, on the reasoning that an Auth user with no
+    // profile doc is a broken half-onboarded state. In practice that was the more destructive
+    // outcome by far: any transient failure — a rules rejection during a deploy, a sustained
+    // offline stretch, the backend refusing writes while a billing change propagated — silently
+    // destroyed the account. The user then saw "you don't have access", got signed out, and
+    // their own email came back as "Incorrect email or password" on the next attempt, because
+    // Firebase reports a missing account and a wrong password identically.
+    //
+    // There is already a recovery path for precisely this shape of failure, and deleting the
+    // account was the one thing that made it unreachable: `createUserWithEmailAndPassword` has
+    // signed the user in, `ProtectedRoute` sends a signed-in user with no profile to
+    // /complete-setup, and `completeAccountSetup()` re-runs this same bootstrap for the existing
+    // uid — and never deletes on failure either. So the account is left alone and the user
+    // finishes onboarding, on this visit or the next time they log in.
     throw err
   }
 }
