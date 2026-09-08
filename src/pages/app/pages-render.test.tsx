@@ -133,6 +133,13 @@ const PAGES: [
   ['WhatsApp', () => import('./settings/whatsapp-page')],
   ['Backup & Restore', () => import('./settings/backup-restore-page')],
   ['Sales Invoices', () => import('../app/sales/sales-invoices-page')],
+  // The form pages, which take no route param. These carry the most labels per screen and the
+  // most validation copy, so they are the likeliest place for a key to slip through.
+  ['Create Job Card', () => import('./service/job-cards/create-job-card-page')],
+  ['Create Purchase', () => import('./second-hand-device/create-purchase-page')],
+  ['Create User', () => import('./administration/create-user-page')],
+  ['Create Role', () => import('./administration/create-role-page')],
+  ['Workflow Designer', () => import('./settings/workflow-designer-page')],
 ]
 
 /** The page component is the module's only exported component. */

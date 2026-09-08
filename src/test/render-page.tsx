@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthContext, type AuthContextValue } from '@/contexts/auth-context'
+import { BreadcrumbExtraContext } from '@/contexts/breadcrumb-context'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from '@/locales/en.json'
@@ -81,7 +82,11 @@ export function renderPage(ui: React.ReactNode, route = '/app') {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthContext.Provider value={AUTH}>
-          <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
+          {/* The form pages set a trailing breadcrumb while mounted, and the hook throws without
+           * a provider — the same contract as in the real app shell. */}
+          <BreadcrumbExtraContext.Provider value={{ extra: null, setExtra: () => {} }}>
+            <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
+          </BreadcrumbExtraContext.Provider>
         </AuthContext.Provider>
       </TooltipProvider>
     </QueryClientProvider>

@@ -21,7 +21,10 @@ const ROOT = path.resolve(__dirname, '../..')
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
     const full = path.join(dir, e.name)
-    if (e.isDirectory()) return e.name === 'ui' ? [] : walk(full)
+    if (e.isDirectory()) return e.name === 'ui' || e.name === 'test' ? [] : walk(full)
+    // Skips `ui/` (vendored primitives) and `test/` (fixtures are data for assertions, never
+    // rendered to a user) — the same scope as no-hardcoded-strings.test.ts, so the tool and the
+    // test can never disagree about what counts.
     return /\.tsx$/.test(e.name) && !/\.test\.tsx$/.test(e.name) ? [full] : []
   })
 }
