@@ -1,0 +1,730 @@
+{
+    "data": [
+        {
+            "_id": "6a9651aa5655009beacf3303",
+            "itemCode": "SRV009",
+            "itemName": "Back Panel / Housing Replacement",
+            "description": "Back cover and housing replacement",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf32fd",
+            "itemCode": "SRV003",
+            "itemName": "Battery Replacement",
+            "description": "Battery replacement labour",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3302",
+            "itemCode": "SRV008",
+            "itemName": "Button / Key Repair",
+            "description": "Power, volume and home button repair",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf32ff",
+            "itemCode": "SRV005",
+            "itemName": "Camera Repair / Replacement",
+            "description": "Front or rear camera module work",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf32fe",
+            "itemCode": "SRV004",
+            "itemName": "Charging Port Repair",
+            "description": "Charging connector / port repair or replacement",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3308",
+            "itemCode": "SRV014",
+            "itemName": "Data Backup / Transfer",
+            "description": "Customer data backup and transfer",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf32fb",
+            "itemCode": "SRV001",
+            "itemName": "Diagnosis / Inspection",
+            "description": "Device checking and fault diagnosis",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.136Z",
+            "updatedAt": "2026-09-01T04:16:42.136Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf330a",
+            "itemCode": "SRV016",
+            "itemName": "General Service Charges",
+            "description": "Any other labour or service charge",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3301",
+            "itemCode": "SRV007",
+            "itemName": "Microphone Repair",
+            "description": "Mic repair or replacement",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3305",
+            "itemCode": "SRV011",
+            "itemName": "Motherboard / Chip Level Repair",
+            "description": "Chip-level motherboard repair",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 10,
+        "total": 16,
+        "pages": 2
+    }
+}

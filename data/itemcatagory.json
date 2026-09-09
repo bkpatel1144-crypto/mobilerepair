@@ -1,0 +1,354 @@
+{
+    "success": true,
+    "message": "Categories retrieved successfully",
+    "data": [
+        {
+            "_id": "6a9651a95655009beacf322e",
+            "categoryCode": "SPARE_PARTS",
+            "categoryName": "Spare Parts",
+            "parentCategory": null,
+            "level": 0,
+            "path": "SPARE_PARTS",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Mobile repair साठी लागणारे सर्व spare parts",
+            "icon": "screwdriver-wrench",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 1,
+            "color": "#e74c3c",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.830Z",
+            "updatedAt": "2026-09-01T04:16:41.830Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3230",
+            "categoryCode": "SPARE_SCREENS",
+            "categoryName": "Screens & Displays",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_SCREENS",
+            "categoryType": "RAW_MATERIAL",
+            "description": "LCD, AMOLED, OLED displays आणि touch panels",
+            "icon": "mobile-screen",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 1,
+            "color": "#c0392b",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.835Z",
+            "updatedAt": "2026-09-01T04:16:41.954Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3232",
+            "categoryCode": "SPARE_BATTERIES",
+            "categoryName": "Batteries",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_BATTERIES",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Mobile batteries — original आणि compatible",
+            "icon": "battery-full",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 2,
+            "color": "#e67e22",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.841Z",
+            "updatedAt": "2026-09-01T04:16:41.959Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3234",
+            "categoryCode": "SPARE_CHARGING",
+            "categoryName": "Charging Ports & Flex",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_CHARGING",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Charging connectors, USB ports, flex cables",
+            "icon": "plug",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 3,
+            "color": "#f39c12",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.845Z",
+            "updatedAt": "2026-09-01T04:16:41.964Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3236",
+            "categoryCode": "SPARE_CAMERAS",
+            "categoryName": "Camera Modules",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_CAMERAS",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Front आणि back camera modules",
+            "icon": "camera",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 4,
+            "color": "#8e44ad",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.852Z",
+            "updatedAt": "2026-09-01T04:16:41.967Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3238",
+            "categoryCode": "SPARE_SPEAKERS",
+            "categoryName": "Speakers & Mic",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_SPEAKERS",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Earpiece speakers, loud speakers, microphones",
+            "icon": "volume-high",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 5,
+            "color": "#2980b9",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.856Z",
+            "updatedAt": "2026-09-01T04:16:41.970Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf323a",
+            "categoryCode": "SPARE_BUTTONS",
+            "categoryName": "Buttons & Keys",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_BUTTONS",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Power button, volume keys, home button flex",
+            "icon": "circle-dot",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 6,
+            "color": "#16a085",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.860Z",
+            "updatedAt": "2026-09-01T04:16:41.973Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf323c",
+            "categoryCode": "SPARE_BACK_PANEL",
+            "categoryName": "Back Panel & Housing",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_BACK_PANEL",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Back cover, middle frame, housing parts",
+            "icon": "mobile",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 7,
+            "color": "#27ae60",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.863Z",
+            "updatedAt": "2026-09-01T04:16:41.976Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf323e",
+            "categoryCode": "SPARE_IC_CHIPS",
+            "categoryName": "IC & Chips",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf322e",
+                "categoryCode": "SPARE_PARTS",
+                "categoryName": "Spare Parts",
+                "path": "SPARE_PARTS"
+            },
+            "level": 0,
+            "path": "SPARE_IC_CHIPS",
+            "categoryType": "RAW_MATERIAL",
+            "description": "Charging IC, network IC, display IC chips",
+            "icon": "microchip",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 8,
+            "color": "#2c3e50",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.869Z",
+            "updatedAt": "2026-09-01T04:16:41.979Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3240",
+            "categoryCode": "ACCESSORIES",
+            "categoryName": "Accessories",
+            "parentCategory": null,
+            "level": 0,
+            "path": "ACCESSORIES",
+            "categoryType": "FINISHED_GOODS",
+            "description": "विक्रीसाठी mobile accessories",
+            "icon": "bag-shopping",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 2,
+            "color": "#3498db",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.872Z",
+            "updatedAt": "2026-09-01T04:16:41.872Z",
+            "__v": 0
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 10,
+        "total": 27,
+        "totalPages": 3,
+        "hasNextPage": true,
+        "hasPrevPage": false
+    }
+}

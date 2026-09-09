@@ -7,6 +7,7 @@ import {
   partyCategoriesCollection,
   uomCollection,
 } from '@/lib/firestore-paths'
+import { SEED_CATEGORIES } from '@/lib/masters-seed-data'
 import type {
   ItemCategoryDoc,
   PartyCategoryDoc,
@@ -217,18 +218,6 @@ const PARTY_CATEGORY_SEED: Omit<
 // Root "Spare Parts" + the 8 sub-categories `preview (58)` documents under it — the reference
 // screenshot's own "Total 27" isn't reproducible from what's actually documented, so this seeds
 // exactly what's confirmed rather than padding the count with invented rows (see file doc comment).
-const ITEM_CATEGORY_SEED: { name: string; code: string; parentCode: string | null }[] = [
-  { name: 'Spare Parts', code: 'SPARE_PARTS', parentCode: null },
-  { name: 'Screens & Displays', code: 'SPARE_SCREENS', parentCode: 'SPARE_PARTS' },
-  { name: 'Batteries', code: 'SPARE_BATTERIES', parentCode: 'SPARE_PARTS' },
-  { name: 'Charging Ports & Flex', code: 'SPARE_CHARGING', parentCode: 'SPARE_PARTS' },
-  { name: 'Camera Modules', code: 'SPARE_CAMERAS', parentCode: 'SPARE_PARTS' },
-  { name: 'Speakers & Mic', code: 'SPARE_SPEAKERS', parentCode: 'SPARE_PARTS' },
-  { name: 'Buttons & Keys', code: 'SPARE_BUTTONS', parentCode: 'SPARE_PARTS' },
-  { name: 'Back Panel & Housing', code: 'SPARE_BACK_PANEL', parentCode: 'SPARE_PARTS' },
-  { name: 'IC & Chips', code: 'SPARE_IC_CHIPS', parentCode: 'SPARE_PARTS' },
-  { name: 'Repair Services', code: 'REPAIR_SERVICES', parentCode: null },
-]
 
 /** Adds every default Masters document to `batch` (not committed here — `seedTenantForUser()`
  * commits everything together, same as `addDefaultServiceOptionsToBatch`). */
@@ -290,19 +279,33 @@ export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, n
     batch.set(ref, data)
   }
 
+  // Two passes, because a child needs its parent's Firestore id and the ids are minted here
+  // rather than returned by a server. The seed itself now comes from
+  // `masters-seed-data.ts`, generated from the client's own export — see
+  // `tools/data/build-masters-seed.cjs` for what is copied verbatim and what is corrected.
   const categoryIdByCode = new Map<string, string>()
-  for (const seed of ITEM_CATEGORY_SEED) {
+  for (const seed of SEED_CATEGORIES) {
     const ref = doc(collection(db, itemCategoriesCollection(companyId)))
     categoryIdByCode.set(seed.code, ref.id)
   }
-  for (const seed of ITEM_CATEGORY_SEED) {
+  for (const seed of SEED_CATEGORIES) {
     const ref = doc(db, itemCategoriesCollection(companyId), categoryIdByCode.get(seed.code)!)
     const data: ItemCategoryDoc = {
       name: seed.name,
       code: seed.code,
-      type: seed.code === 'REPAIR_SERVICES' ? 'Service' : 'Raw Material',
+      // From the export, not inferred from the code. The old version tested for
+      // `code === 'REPAIR_SERVICES'`, a code the reference does not use — it says `SERVICES` —
+      // so every category was typed Raw Material regardless.
+      type: seed.type,
       parentId: seed.parentCode ? (categoryIdByCode.get(seed.parentCode) ?? null) : null,
-      description: null,
+      description: seed.description,
+      icon: seed.icon,
+      color: seed.color,
+      displayOrder: seed.displayOrder,
+      applicableAttributes: seed.applicableAttributes,
+      settings: seed.settings,
+      level: seed.level,
+      path: seed.path,
       source: 'system',
       status: 'active',
       createdAt: now as never,

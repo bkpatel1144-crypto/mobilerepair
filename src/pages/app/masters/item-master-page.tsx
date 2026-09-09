@@ -319,7 +319,7 @@ function ItemStatusButton({ item }: { item: ItemWithId }) {
       <ConfirmDialog
         open={confirming}
         onOpenChange={setConfirming}
-        title={`${willDeactivate ? 'Deactivate' : t('common.activate')} "${item.name}"?`}
+        title={`${willDeactivate ? t('common.deactivate') : t('common.activate')} "${item.name}"?`}
         message={
           willDeactivate
             ? 'Deactivated items no longer appear as a selectable option in job cards, purchases, or sales.'
@@ -411,9 +411,9 @@ function ItemModal({
     <FormModal
       open
       onOpenChange={(open) => !open && onClose()}
-      title={isNew ? 'Add Item' : t('pages.masters.itemMaster.editItem')}
+      title={isNew ? t('pages.masters.itemMaster.addItem') : t('pages.masters.itemMaster.editItem')}
       onSubmit={handleSubmit}
-      submitLabel={isNew ? 'Create Item' : t('common.save')}
+      submitLabel={isNew ? t('pages.masters.itemMaster.createItem') : t('common.save')}
       isSubmitting={isPending}
       className="sm:max-w-xl"
     >

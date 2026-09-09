@@ -1,12 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, orderBy, query, serverTimestamp, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  orderBy,
+  query,
+  serverTimestamp,
+  writeBatch,
+} from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { useLiveQuery } from '@/hooks/use-live-query'
 import { itemCategoriesCollection, itemCategoryDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { slugifyCode } from '@/lib/utils'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
-import type { EntityStatus, ItemCategoryDoc } from '@/types/firestore'
+import type { EntityStatus, ItemCategoryDoc, ItemCategorySettings } from '@/types/firestore'
 
 export interface ItemCategoryWithId extends ItemCategoryDoc {
   id: string
@@ -48,6 +56,32 @@ export interface ItemCategoryInput {
   type: 'Raw Material' | 'Service'
   parentId: string | null
   description: string | null
+  /** Presentation and tracking defaults, all optional — the create form does not collect them
+   *  yet, and a category without them behaves exactly as before. */
+  icon?: string | null
+  color?: string | null
+  displayOrder?: number
+  applicableAttributes?: string[]
+  settings?: ItemCategorySettings
+}
+
+/**
+ * Reads the parent's depth and ancestry so a child can extend them.
+ *
+ * A `getDoc` rather than a lookup in whatever list the caller happens to hold: the mutation is
+ * reachable from more than one screen, and a caller passing a stale or filtered list would write
+ * a wrong `level` that nothing would ever correct. One read on a create is cheap.
+ */
+async function readParent(
+  companyId: string,
+  parentId: string | null
+): Promise<{ level: number; path: string } | null> {
+  if (!parentId) return null
+  const snap = await getDoc(doc(db, itemCategoryDoc(companyId, parentId)))
+  if (!snap.exists()) return null
+  const data = snap.data() as ItemCategoryDoc
+  // Tolerates a document written before `level`/`path` existed.
+  return { level: data.level ?? 0, path: data.path ?? data.code }
 }
 
 export function useCreateItemCategory() {
@@ -59,12 +93,30 @@ export function useCreateItemCategory() {
     mutationFn: async (input: ItemCategoryInput) => {
       const ref = doc(collection(db, itemCategoriesCollection(companyId)))
       const now = serverTimestamp()
+      const code = input.code || slugifyCode(input.name, 20)
+      // Depth and ancestry are derived from the parent at write time, so a query can filter by
+      // level or find everything under a category with a prefix match on `path`. The reference
+      // app stores `level: 0` and a bare path on every record, including children — see
+      // `ItemCategoryDoc` for why that is not copied.
+      const parent = await readParent(companyId, input.parentId)
       const data: ItemCategoryDoc = {
         name: input.name,
-        code: input.code || slugifyCode(input.name, 20),
+        code,
         type: input.type,
         parentId: input.parentId,
         description: input.description,
+        icon: input.icon ?? null,
+        color: input.color ?? null,
+        displayOrder: input.displayOrder ?? 0,
+        applicableAttributes: input.applicableAttributes ?? [],
+        settings: input.settings ?? {
+          enableBatchTracking: false,
+          enableExpiryTracking: false,
+          enableSerialTracking: false,
+          defaultShelfLifeDays: null,
+        },
+        level: parent ? parent.level + 1 : 0,
+        path: parent ? `${parent.path}/${code}` : code,
         source: 'custom',
         status: 'active',
         createdAt: now as never,
@@ -94,11 +146,18 @@ export function useUpdateItemCategory() {
   return useMutation({
     mutationFn: async (input: ItemCategoryInput & { id: string }) => {
       const batch = writeBatch(db)
+      // `level` and `path` are recomputed here too. Editing a category's parent without
+      // updating them would leave a child claiming the old depth and ancestry, which is the
+      // state the reference data is permanently in.
+      const parent = await readParent(companyId, input.parentId)
+      const code = input.code || slugifyCode(input.name, 20)
       batch.update(doc(db, itemCategoryDoc(companyId, input.id)), {
         name: input.name,
         type: input.type,
         parentId: input.parentId,
         description: input.description,
+        level: parent ? parent.level + 1 : 0,
+        path: parent ? `${parent.path}/${code}` : code,
         updatedAt: serverTimestamp(),
       })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {

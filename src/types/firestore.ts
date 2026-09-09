@@ -628,6 +628,19 @@ export interface UomDoc {
 /** `companies/{companyId}/itemCategories/{id}` (`preview (58)`) — a flat table keyed by
  * `parentId` rather than a nested subcollection, so "which categories sit under X" is a single
  * `where('parentId','==',X)` query, and a category can be re-parented by writing one field. */
+/**
+ * Category tracking flags. Mirror the reference app's `settings` object one-for-one, because a
+ * category is where an item inherits its defaults from — a battery category that enables expiry
+ * tracking is how every battery item gets it without being told individually.
+ */
+export interface ItemCategorySettings {
+  enableBatchTracking: boolean
+  enableExpiryTracking: boolean
+  enableSerialTracking: boolean
+  /** Days. `null` where the category does not imply one. */
+  defaultShelfLifeDays: number | null
+}
+
 export interface ItemCategoryDoc {
   name: string
   code: string // "SPARE_PARTS"
@@ -636,6 +649,33 @@ export interface ItemCategoryDoc {
   description: string | null
   source: 'system' | 'custom'
   status: EntityStatus
+
+  /**
+   * Depth in the tree: 0 for a root, 1 for its child, and so on.
+   *
+   * Stored rather than derived so a query can filter by depth without loading the whole tree.
+   * Deliberately *correct*, which the reference data is not: all ten of its records carry
+   * `level: 0`, including the eight whose `parentCategory` is Spare Parts — which is why its own
+   * UI shows "Level: Root" directly beside "Under: Spare Parts". Copying that was considered and
+   * rejected; a sub-category labelled Root is a defect, not a spec.
+   */
+  level: number
+  /**
+   * Slash-joined ancestry, e.g. `SPARE_PARTS/SPARE_BATTERIES`.
+   *
+   * Also corrected: the reference stores the bare code, so its `path` cannot be used to find
+   * everything beneath a category. With the ancestry included, a prefix match does it.
+   */
+  path: string
+
+  /** Presentation, carried through from the reference so the UI can match it. */
+  icon: string | null
+  color: string | null
+  displayOrder: number
+  /** Attribute names items in this category are expected to carry. Empty in the seed data. */
+  applicableAttributes: string[]
+  settings: ItemCategorySettings
+
   createdAt: Timestamp
   updatedAt: Timestamp
 }

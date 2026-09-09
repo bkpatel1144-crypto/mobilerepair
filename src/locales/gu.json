@@ -646,7 +646,9 @@
         "production": "ઉત્પાદન",
         "servicePos": "સર્વિસ / POS",
         "thisItemWillBecomeSelectableAgain": "આ આઇટમ ફરી પસંદ કરી શકાશે.",
-        "editItem": "આઇટમ બદલો"
+        "editItem": "આઇટમ બદલો",
+        "addItem": "આઇટમ ઉમેરો",
+        "createItem": "આઇટમ બનાવો"
       },
       "parties": {
         "manageCustomersAndSuppliers": "ગ્રાહકો અને સપ્લાયર સંભાળો",
