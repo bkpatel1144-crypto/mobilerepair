@@ -66,84 +66,110 @@ export function MarketingNav() {
     }
   }, [mobileOpen])
 
+  // The capsule stands down while the mobile drawer is open: the drawer hangs off the bar's
+  // bottom edge, and a rounded, inset bar leaves it visibly detached with the page showing
+  // through the gap on both sides.
+  const capsule = scrolled && !mobileOpen
+
   return (
     <header
-      className={cn(
-        'sticky top-0 z-50 transition-colors duration-200',
-        scrolled || mobileOpen
-          ? 'border-b bg-background/85 backdrop-blur-xl'
-          : 'border-b border-transparent'
-      )}
+      className={cn('sticky top-0 z-50 transition-all duration-300', capsule && 'pt-3 sm:pt-4')}
     >
-      <Container className="flex h-16 items-center gap-3 lg:h-18">
-        <Link to="/" className="shrink-0" aria-label={t('marketing.nav.home')}>
-          <Wordmark />
-        </Link>
+      <Container className={cn('transition-all duration-300', capsule && 'px-3 sm:px-6 lg:px-8')}>
+        {/* Two states in one element rather than two elements, so width, height, radius and
+         * padding animate between them instead of swapping.
+         *
+         * Glass in both: `backdrop-blur` with no colour wash at the top of the page, because a
+         * tinted bar there would either be a white strip across the dark hero or a dark strip
+         * across the light interior heroes — the blur alone reads as glass over both. Once
+         * scrolled it gains the tint, a border and a shadow, which it needs to separate itself
+         * from whatever content is now passing underneath. */}
+        <div
+          className={cn(
+            'flex items-center gap-3 transition-all duration-300',
+            // 90% opaque, not 70%. The backdrop under this capsule is not predictable — the hero
+            // is dark and everything below it is light, and the bar crosses that boundary while
+            // scrolling. At 70% in the light theme it came out a mid-grey slab wherever the dark
+            // hero was behind it, and `text-muted-foreground` on mid-grey is unreadable. The blur
+            // is what reads as glass; the opacity only has to keep the text legible, so it wins.
+            capsule
+              ? 'h-14 rounded-full border bg-background/90 px-4 shadow-lg shadow-black/5 backdrop-blur-2xl sm:px-5 lg:h-16 dark:shadow-black/20'
+              : 'h-16 backdrop-blur-md lg:h-18',
+            mobileOpen && 'border-b bg-background'
+          )}
+        >
+          <Link to="/" className="shrink-0" aria-label={t('marketing.nav.home')}>
+            <Wordmark />
+          </Link>
 
-        <nav className="ml-4 hidden items-center lg:flex xl:ml-8">
-          {LINKS.map((link) => {
-            const active = pathname === link.to
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                aria-current={active ? 'page' : undefined}
-                className={cn(
-                  'rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
-                  active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {t(link.labelKey)}
-              </Link>
-            )
-          })}
-        </nav>
+          <nav className="ml-4 hidden items-center lg:flex xl:ml-8">
+            {LINKS.map((link) => {
+              const active = pathname === link.to
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
+                    active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {t(link.labelKey)}
+                </Link>
+              )
+            })}
+          </nav>
 
-        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
-          {/* Each language is named in its own script: someone who has landed in the wrong
-           * language cannot read "Gujarati" to get back out of it, but can read ગુજરાતી. */}
-          <div className="hidden items-center rounded-full border p-0.5 md:flex">
-            {LANGUAGES.map((l) => (
-              <button
-                key={l.code}
-                type="button"
-                onClick={() => void setLanguage(l.code)}
-                aria-current={language === l.code ? 'true' : undefined}
-                className={cn(
-                  'rounded-full px-2.5 py-1 text-xs font-medium transition-colors',
-                  language === l.code
-                    ? 'bg-foreground text-background'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {l.nativeLabel}
-              </button>
-            ))}
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+            {/* Each language is named in its own script: someone who has landed in the wrong
+             * language cannot read "Gujarati" to get back out of it, but can read ગુજરાતી. */}
+            <div className="hidden items-center rounded-full border p-0.5 md:flex">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  onClick={() => void setLanguage(l.code)}
+                  aria-current={language === l.code ? 'true' : undefined}
+                  className={cn(
+                    'rounded-full px-2.5 py-1 text-xs font-medium transition-colors',
+                    language === l.code
+                      ? 'bg-foreground text-background'
+                      : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {l.nativeLabel}
+                </button>
+              ))}
+            </div>
+
+            <Button variant="ghost" className="hidden sm:inline-flex" render={<Link to="/login" />}>
+              {t('marketing.nav.login')}
+            </Button>
+            <Button className="rounded-full px-4 shadow-sm sm:px-5" render={<Link to="/signup" />}>
+              {t('marketing.nav.signUpFree')}
+            </Button>
+
+            <button
+              type="button"
+              onClick={() => setMobileOpen((o) => !o)}
+              // The icon is `size-5`, so without an explicit box this was a 20x20 tap target — and
+              // it is the only way to open the nav on a phone.
+              className="-mr-1.5 inline-flex size-11 items-center justify-center rounded-xl hover:bg-muted lg:hidden"
+              aria-label={t('marketing.nav.toggleMenu')}
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
           </div>
-
-          <Button variant="ghost" className="hidden sm:inline-flex" render={<Link to="/login" />}>
-            {t('marketing.nav.login')}
-          </Button>
-          <Button className="rounded-full px-4 shadow-sm sm:px-5" render={<Link to="/signup" />}>
-            {t('marketing.nav.signUpFree')}
-          </Button>
-
-          <button
-            type="button"
-            onClick={() => setMobileOpen((o) => !o)}
-            // The icon is `size-5`, so without an explicit box this was a 20x20 tap target — and
-            // it is the only way to open the nav on a phone.
-            className="-mr-1.5 inline-flex size-11 items-center justify-center rounded-xl hover:bg-muted lg:hidden"
-            aria-label={t('marketing.nav.toggleMenu')}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
         </div>
       </Container>
 
       {mobileOpen && (
-        <div className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto border-t bg-background lg:hidden">
+        /* `top-full`, not `top-16`. The bar is 64px at the top of the page, 56px as a capsule and
+         * 72px at `lg`, so any fixed offset detaches the drawer from it at one of those sizes.
+         * Anchoring to the header's own bottom edge tracks all three. */
+        <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-t bg-background lg:hidden">
           <Container className="py-6">
             <nav className="flex flex-col">
               {LINKS.map((link) => (

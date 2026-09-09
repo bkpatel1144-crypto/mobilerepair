@@ -83,8 +83,18 @@
   --spacing-section: clamp(3.5rem, 1.5rem + 6vw, 7.5rem);
   --spacing-section-sm: clamp(2.5rem, 1.2rem + 4vw, 5rem);
 
-  /* Wide by design. `max-w-6xl` (1152px) left roughly a third of a 1440px screen as margin. */
-  --container-page: 92rem;
+  /* Full width, with a stop only where line length genuinely breaks down.
+   *
+   * This started at `max-w-6xl` (1152px), which left a third of a 1440px screen as margin. 92rem
+   * (1472px) fixed that for 1440 and then failed the same way one size up: on a 1890px window the
+   * cap plus the gutter left roughly 270px of dead space down each side, which is the complaint
+   * this is the second attempt at.
+   *
+   * 120rem is 1920px, so every common desktop width — 1440, 1536, 1680, 1890 — never reaches the
+   * cap at all and is bounded only by the gutter. It still catches a 2560px or ultrawide monitor,
+   * where a genuinely edge-to-edge paragraph runs past 200 characters and stops being readable.
+   * Full width is the goal; unbounded is not the same thing. */
+  --container-page: 120rem;
 }
 
 :root {
