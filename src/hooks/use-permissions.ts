@@ -3,7 +3,40 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { roleDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
+import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
 import type { RoleDoc } from '@/types/firestore'
+
+/** Widgets the product has actually implemented, by key — a widget the reference lists but this
+ *  app does not render can never be shown, whatever a role document says. */
+const AVAILABLE_WIDGETS = new Set(DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => w.key))
+
+/**
+ * Is one dashboard widget shown for a role?
+ *
+ * Deliberately unlike `canView`/`canDo` in two ways:
+ *
+ *  - `fullAccess` does *not* bypass it. Widget visibility is a layout preference, not a
+ *    privilege, so an Owner who switches Revenue off on the Dashboard & Landing tab has to see it
+ *    stay off — that tab is the whole reason the flag exists.
+ *  - Absent means visible (`!== false`), not hidden. A role document is written once at signup
+ *    with the widgets that existed *then*; keying off `=== true` would make every widget added
+ *    later invisible to every existing role until someone re-saved each one by hand.
+ *
+ * Hiding is therefore always explicit, which is exactly how `default-roles.ts` writes it. A role
+ * that has not loaded yet shows the default set rather than an empty dashboard — the Dashboard
+ * holds itself behind a skeleton while `isLoading`, so that fallback only applies to a tenant
+ * whose role document is genuinely missing.
+ *
+ * Exported as a plain function so it can be tested without a rendered hook.
+ */
+export function isWidgetVisible(
+  role: Pick<RoleDoc, 'dashboardConfig'> | null,
+  key: string
+): boolean {
+  if (!AVAILABLE_WIDGETS.has(key)) return false
+  if (!role) return true
+  return role.dashboardConfig?.visibleWidgets?.[key] !== false
+}
 
 export function roleQueryKey(companyId: string | undefined, roleId: string | undefined) {
   return ['role', companyId, roleId] as const
@@ -87,12 +120,18 @@ export function usePermissions() {
     return role.actionPermissions[key] === true
   }
 
+  /** Is this dashboard widget shown for the current role? See `isWidgetVisible`. */
+  function canSeeWidget(key: string): boolean {
+    return isWidgetVisible(role, key)
+  }
+
   return {
     role,
     isLoading,
     isOwner: role?.fullAccess === true,
     canView,
     canDo,
+    canSeeWidget,
   }
 }
 

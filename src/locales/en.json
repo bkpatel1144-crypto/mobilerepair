@@ -266,7 +266,8 @@
     "allCategories": "All Categories",
     "allBranches": "All Branches",
     "allRoles": "All Roles",
-    "tenDigitMobile": "10-digit mobile"
+    "tenDigitMobile": "10-digit mobile",
+    "others": "Others"
   },
   "shell": {
     "appName": "aim",
@@ -474,7 +475,18 @@
         "goodMorning": "Good morning",
         "goodAfternoon": "Good afternoon",
         "goodEvening": "Good evening",
-        "hereSWhatSHappeningIn": "Here's what's happening in your service center."
+        "hereSWhatSHappeningIn": "Here's what's happening in your service center.",
+        "periodJobCards": "Period Job Cards",
+        "jobCardsTrend": "Job Cards Trend",
+        "jobsByTechnician": "Jobs by Technician",
+        "recentJobCards": "Recent Job Cards",
+        "viewAll": "View all",
+        "thisChartFillsInAsJobCards": "This chart fills in as job cards are created.",
+        "noJobsAssignedYet": "No jobs assigned yet",
+        "thisChartFillsInOnceJobsAreAssigned": "This chart fills in once jobs are assigned to a technician.",
+        "theTenNewestJobCardsAppear": "The ten newest job cards appear here.",
+        "noWidgetsEnabled": "No widgets enabled",
+        "yourRoleHasEveryDashboardWidget": "Your role has every dashboard widget switched off. An administrator can turn them back on under Role Management."
       }
     },
     "finance": {
@@ -771,7 +783,12 @@
         "onMobileThisOpensTheCamera": "On mobile this opens the camera directly. Saved against this seller for records.",
         "imeiCheckedAgainstCeirBlockedDevice": "IMEI checked against CEIR / blocked-device list",
         "sellerDeclaredTheDeviceIsTheirs": "Seller declared the device is theirs to sell and not stolen",
-        "whatYouPlanToSellThis": "What you plan to sell this device for. Shows on the Sale screen."
+        "whatYouPlanToSellThis": "What you plan to sell this device for. Shows on the Sale screen.",
+        "sections": {
+          "deviceDetails": "Device Details",
+          "sellerVerification": "Seller & ID Verification",
+          "purchaseDetails": "Purchase Details"
+        }
       },
       "devicePurchase": {
         "devicePurchase": "Device Purchase",
@@ -930,7 +947,16 @@
           "assignTo": "Assign To",
           "remark": "Remark"
         },
-        "draftSavedAt": "Draft saved at"
+        "draftSavedAt": "Draft saved at",
+        "sections": {
+          "customerInformation": "Customer Information",
+          "deviceInformation": "Device Information",
+          "repairInformation": "Repair Information",
+          "financial": "Financial",
+          "accessories": "Accessories",
+          "internalDetails": "Internal Details",
+          "images": "Images"
+        }
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "Items at Intake",
@@ -1326,7 +1352,12 @@
         "thisTurnsOffEveryDashboardWidget": "This turns off every dashboard widget for this role — its dashboard will show nothing until widgets are re-enabled. It only affects the unsaved draft.",
         "defaultLandingPage": "Default Landing Page",
         "visibleDashboardWidgets": "Visible Dashboard Widgets",
-        "whereThisRoleLandsImmediatelyAfter": "Where this role lands immediately after logging in."
+        "whereThisRoleLandsImmediatelyAfter": "Where this role lands immediately after logging in.",
+        "addedCount": "{{added}} / {{total}} added",
+        "activeCount": "{{count}} active",
+        "widgetsShownOnThisRoleSDashboard": "Widgets shown on this role’s dashboard.",
+        "notBuiltYet": "Not built yet",
+        "thisWidgetIsInTheReference": "Listed for parity with the reference app, but this build does not render it yet — so it cannot be switched on."
       },
       "menusPermissionsTab": {
         "inheritFromRole": "Inherit from role",
@@ -1901,6 +1932,9 @@
       },
       "errorState": {
         "couldnTLoadThisData": "Couldn't load this data"
+      },
+      "devicePinField": {
+        "eG1234OrTapDraw": "e.g. 1234 or tap Draw"
       }
     }
   },
@@ -2488,5 +2522,14 @@
     "highContrastHint": "Stronger text and border contrast, and a thicker focus outline.",
     "dyslexiaFontHint": "A wider typeface with more space between letters, words and lines.",
     "appliesImmediately": "Changes apply immediately and are saved on this device."
+  },
+  "widgets": {
+    "groups": {
+      "personal": "Personal",
+      "quick": "Quick Actions",
+      "kpi": "KPI Cards",
+      "chart": "Charts & Graphs",
+      "list": "Lists"
+    }
   }
 }

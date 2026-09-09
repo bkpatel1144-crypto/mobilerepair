@@ -1,0 +1,4922 @@
+{
+    "role": "OWNER",
+    "assignedMenus": [
+        "administration",
+        "users",
+        "roles",
+        "sessions",
+        "settings",
+        "company",
+        "branches",
+        "financial-years",
+        "billing",
+        "service",
+        "job-cards",
+        "service-options",
+        "service-items",
+        "job-costing",
+        "masters",
+        "parties",
+        "party-categories",
+        "items",
+        "categories",
+        "uom",
+        "payment-modes",
+        "second-hand-device",
+        "device-purchase",
+        "device-sale",
+        "device-stock",
+        "device-purchase-register",
+        "device-sale-register",
+        "finance",
+        "receipts",
+        "invoices",
+        "ledger",
+        "cashbook",
+        "receivables",
+        "payables",
+        "supplier-payables",
+        "expenses",
+        "reports",
+        "period-summary",
+        "pnl-report",
+        "profit-loss",
+        "technician-report",
+        "supplier-report",
+        "field-visit-report",
+        "service-reports",
+        "workflow-designer",
+        "whatsapp-settings",
+        "print-formats",
+        "backup",
+        "ip-whitelist",
+        "login-report",
+        "system-audit",
+        "sales"
+    ],
+    "menuHierarchy": [
+        {
+            "type": "module",
+            "key": "administration",
+            "label": "Administration",
+            "icon": "Settings",
+            "description": "User management, roles, and system settings",
+            "permissions": [
+                {
+                    "key": "ADMIN_MODULE_ACCESS",
+                    "label": "Access Administration Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_VIEW",
+                    "label": "View User Management",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_CREATE",
+                    "label": "Create User Management",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_UPDATE",
+                    "label": "Update User Management",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_DELETE",
+                    "label": "Delete User Management",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_RESET_PASSWORD",
+                    "label": "Reset Password",
+                    "type": "custom",
+                    "action": "reset-password"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_CHANGE_SELF_PASSWORD",
+                    "label": "Change Self Password",
+                    "type": "custom",
+                    "action": "change-self-password"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_STATUS_CHANGE",
+                    "label": "Status Change User",
+                    "type": "custom",
+                    "action": "status-change"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_IMPERSONATE",
+                    "label": "Impersonate User",
+                    "type": "custom",
+                    "action": "impersonate"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_TOGGLE_IP_RESTRICTION",
+                    "label": "Toggle IP Restriction",
+                    "type": "custom",
+                    "action": "toggle-ip-restriction"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_VIEW",
+                    "label": "View Role Management",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_CREATE",
+                    "label": "Create Role Management",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_UPDATE",
+                    "label": "Update Role Management",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_DELETE",
+                    "label": "Delete Role Management",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_ASSIGN_PERMISSIONS",
+                    "label": "Assign Role Permissions",
+                    "type": "custom",
+                    "action": "assign-permissions"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_ASSIGN_MENUS",
+                    "label": "Assign Role Menus",
+                    "type": "custom",
+                    "action": "assign-menus"
+                },
+                {
+                    "key": "ADMINISTRATION_SESSIONS_VIEW",
+                    "label": "View Active Sessions",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_SESSIONS_TERMINATE",
+                    "label": "Terminate Session",
+                    "type": "custom",
+                    "action": "terminate"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_VIEW",
+                    "label": "View IP Whitelist",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_CREATE",
+                    "label": "Create IP Whitelist",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_UPDATE",
+                    "label": "Update IP Whitelist",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_DELETE",
+                    "label": "Delete IP Whitelist",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "ADMINISTRATION_LOGIN_REPORT_VIEW",
+                    "label": "View Login Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_LOGIN_REPORT_EXPORT",
+                    "label": "Export Login Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "ADMINISTRATION_SYSTEM_AUDIT_VIEW",
+                    "label": "View System Audit",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_SYSTEM_AUDIT_EXPORT",
+                    "label": "Export Logs",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "users",
+            "label": "User Management",
+            "icon": "Users",
+            "description": "Manage system users",
+            "module": {
+                "key": "administration",
+                "label": "Administration"
+            },
+            "permissions": [
+                {
+                    "key": "ADMINISTRATION_USERS_VIEW",
+                    "label": "View User Management",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_CREATE",
+                    "label": "Create User Management",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_UPDATE",
+                    "label": "Update User Management",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_DELETE",
+                    "label": "Delete User Management",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_RESET_PASSWORD",
+                    "label": "Reset Password",
+                    "type": "custom",
+                    "action": "reset-password"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_CHANGE_SELF_PASSWORD",
+                    "label": "Change Self Password",
+                    "type": "custom",
+                    "action": "change-self-password"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_STATUS_CHANGE",
+                    "label": "Status Change User",
+                    "type": "custom",
+                    "action": "status-change"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_IMPERSONATE",
+                    "label": "Impersonate User",
+                    "type": "custom",
+                    "action": "impersonate"
+                },
+                {
+                    "key": "ADMINISTRATION_USERS_TOGGLE_IP_RESTRICTION",
+                    "label": "Toggle IP Restriction",
+                    "type": "custom",
+                    "action": "toggle-ip-restriction"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "roles",
+            "label": "Role Management",
+            "icon": "Shield",
+            "description": "Manage user roles",
+            "module": {
+                "key": "administration",
+                "label": "Administration"
+            },
+            "permissions": [
+                {
+                    "key": "ADMINISTRATION_ROLES_VIEW",
+                    "label": "View Role Management",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_CREATE",
+                    "label": "Create Role Management",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_UPDATE",
+                    "label": "Update Role Management",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_DELETE",
+                    "label": "Delete Role Management",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_ASSIGN_PERMISSIONS",
+                    "label": "Assign Role Permissions",
+                    "type": "custom",
+                    "action": "assign-permissions"
+                },
+                {
+                    "key": "ADMINISTRATION_ROLES_ASSIGN_MENUS",
+                    "label": "Assign Role Menus",
+                    "type": "custom",
+                    "action": "assign-menus"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "sessions",
+            "label": "Active Sessions",
+            "icon": "Activity",
+            "description": "View and terminate active login sessions",
+            "module": {
+                "key": "administration",
+                "label": "Administration"
+            },
+            "permissions": [
+                {
+                    "key": "ADMINISTRATION_SESSIONS_VIEW",
+                    "label": "View Active Sessions",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_SESSIONS_TERMINATE",
+                    "label": "Terminate Session",
+                    "type": "custom",
+                    "action": "terminate"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "settings",
+            "label": "Settings",
+            "icon": "Sliders",
+            "description": "System settings and configuration",
+            "permissions": [
+                {
+                    "key": "SETTINGS_MODULE_ACCESS",
+                    "label": "Access Settings Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_VIEW",
+                    "label": "View Branch Management",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_CREATE",
+                    "label": "Create Branch Management",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_UPDATE",
+                    "label": "Update Branch Management",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_DELETE",
+                    "label": "Delete Branch Management",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_DEPARTMENTS_VIEW",
+                    "label": "View Departments",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_DEPARTMENTS_CREATE",
+                    "label": "Create Departments",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_DEPARTMENTS_UPDATE",
+                    "label": "Update Departments",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_DEPARTMENTS_DELETE",
+                    "label": "Delete Departments",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_VIEW",
+                    "label": "View Workflow Designer",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_MANAGE",
+                    "label": "Manage Workflow Config",
+                    "type": "custom",
+                    "action": "manage"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_VIEW_FORM_BUILDER",
+                    "label": "View Form Builder",
+                    "type": "custom",
+                    "action": "view_form_builder"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_EDIT_FORM_BUILDER",
+                    "label": "Edit Form Builder",
+                    "type": "custom",
+                    "action": "edit_form_builder"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_PUBLISH_FORM_BUILDER",
+                    "label": "Publish Form Builder Configuration",
+                    "type": "custom",
+                    "action": "publish_form_builder"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_VIEW",
+                    "label": "View Company Settings",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_CREATE",
+                    "label": "Create Company Settings",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_UPDATE",
+                    "label": "Update Company Settings",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_DELETE",
+                    "label": "Delete Company Settings",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_RESTORE",
+                    "label": "Restore Company Settings",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_SET_DEFAULT",
+                    "label": "Set Default Company",
+                    "type": "custom",
+                    "action": "set_default"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_STATUS",
+                    "label": "Enable / Disable Company",
+                    "type": "custom",
+                    "action": "status"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_VIEW",
+                    "label": "View Financial Years",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_CREATE",
+                    "label": "Create Financial Years",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_UPDATE",
+                    "label": "Update Financial Years",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_DELETE",
+                    "label": "Delete Financial Years",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_ACTIVATE",
+                    "label": "Activate Financial Year",
+                    "type": "custom",
+                    "action": "activate"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_CLOSE",
+                    "label": "Close Financial Year",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_ROLLBACK_CLOSE",
+                    "label": "Reopen a Closed Financial Year",
+                    "type": "custom",
+                    "action": "rollback-close"
+                },
+                {
+                    "key": "SETTINGS_DOCUMENT_SERIES_VIEW",
+                    "label": "View Document Numbering",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_DOCUMENT_SERIES_CREATE",
+                    "label": "Create Document Numbering",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_DOCUMENT_SERIES_UPDATE",
+                    "label": "Update Document Numbering",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_DOCUMENT_SERIES_DELETE",
+                    "label": "Delete Document Numbering",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_TAXES_VIEW",
+                    "label": "View Tax Configuration",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_TAXES_CREATE",
+                    "label": "Create Tax Configuration",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_TAXES_UPDATE",
+                    "label": "Update Tax Configuration",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_TAXES_DELETE",
+                    "label": "Delete Tax Configuration",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_PAYMENT_TERMS_VIEW",
+                    "label": "View Payment Terms",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_PAYMENT_TERMS_CREATE",
+                    "label": "Create Payment Terms",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_PAYMENT_TERMS_UPDATE",
+                    "label": "Update Payment Terms",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_PAYMENT_TERMS_DELETE",
+                    "label": "Delete Payment Terms",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_CURRENCIES_VIEW",
+                    "label": "View Currencies",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_CURRENCIES_CREATE",
+                    "label": "Create Currencies",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_CURRENCIES_UPDATE",
+                    "label": "Update Currencies",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_CURRENCIES_DELETE",
+                    "label": "Delete Currencies",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_BILLING_VIEW",
+                    "label": "View Billing & Subscription",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_BILLING_UPDATE",
+                    "label": "Update Billing & Subscription",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_PREFERENCES_VIEW",
+                    "label": "View System Preferences",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_PREFERENCES_UPDATE",
+                    "label": "Update System Preferences",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_EMAIL_TEMPLATES_VIEW",
+                    "label": "View Email Templates",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_EMAIL_TEMPLATES_CREATE",
+                    "label": "Create Email Templates",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_EMAIL_TEMPLATES_UPDATE",
+                    "label": "Update Email Templates",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_EMAIL_TEMPLATES_DELETE",
+                    "label": "Delete Email Templates",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_VIEW",
+                    "label": "View Print Formats",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_CREATE",
+                    "label": "Create Print Formats",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_UPDATE",
+                    "label": "Update Print Formats",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_DELETE",
+                    "label": "Delete Print Formats",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_DUPLICATE",
+                    "label": "Duplicate Template",
+                    "type": "custom",
+                    "action": "duplicate"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_SET_DEFAULT",
+                    "label": "Set Default Template",
+                    "type": "custom",
+                    "action": "set_default"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_RESTORE_VERSION",
+                    "label": "Restore Template Version",
+                    "type": "custom",
+                    "action": "restore_version"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_BULK_PRINT",
+                    "label": "Bulk Print Labels",
+                    "type": "custom",
+                    "action": "bulk_print"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_VIEW",
+                    "label": "View WhatsApp",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_CREATE",
+                    "label": "Create WhatsApp",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_UPDATE",
+                    "label": "Update WhatsApp",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_DELETE",
+                    "label": "Delete WhatsApp",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_DATA_IMPORT_VIEW",
+                    "label": "View Data Import / Export",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_DATA_IMPORT_IMPORT",
+                    "label": "Import Data",
+                    "type": "custom",
+                    "action": "import"
+                },
+                {
+                    "key": "SETTINGS_DATA_IMPORT_EXPORT",
+                    "label": "Export Data",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_VIEW",
+                    "label": "View Backup & Restore",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_BACKUP",
+                    "label": "Create Backup",
+                    "type": "custom",
+                    "action": "backup"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_RESTORE",
+                    "label": "Restore Backup",
+                    "type": "custom",
+                    "action": "restore"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_DOWNLOAD",
+                    "label": "Download Backup",
+                    "type": "custom",
+                    "action": "download"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "company",
+            "label": "Company Settings",
+            "icon": "Building2",
+            "description": "Company profile and details",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_COMPANY_VIEW",
+                    "label": "View Company Settings",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_CREATE",
+                    "label": "Create Company Settings",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_UPDATE",
+                    "label": "Update Company Settings",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_DELETE",
+                    "label": "Delete Company Settings",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_RESTORE",
+                    "label": "Restore Company Settings",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_SET_DEFAULT",
+                    "label": "Set Default Company",
+                    "type": "custom",
+                    "action": "set_default"
+                },
+                {
+                    "key": "SETTINGS_COMPANY_STATUS",
+                    "label": "Enable / Disable Company",
+                    "type": "custom",
+                    "action": "status"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "branches",
+            "label": "Branch Management",
+            "icon": "Building",
+            "description": "Manage company branches",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_BRANCHES_VIEW",
+                    "label": "View Branch Management",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_CREATE",
+                    "label": "Create Branch Management",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_UPDATE",
+                    "label": "Update Branch Management",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_BRANCHES_DELETE",
+                    "label": "Delete Branch Management",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "financial-years",
+            "label": "Financial Years",
+            "icon": "Calendar",
+            "description": "Fiscal year management",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_VIEW",
+                    "label": "View Financial Years",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_CREATE",
+                    "label": "Create Financial Years",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_UPDATE",
+                    "label": "Update Financial Years",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_DELETE",
+                    "label": "Delete Financial Years",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_ACTIVATE",
+                    "label": "Activate Financial Year",
+                    "type": "custom",
+                    "action": "activate"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_CLOSE",
+                    "label": "Close Financial Year",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SETTINGS_FINANCIAL_YEARS_ROLLBACK_CLOSE",
+                    "label": "Reopen a Closed Financial Year",
+                    "type": "custom",
+                    "action": "rollback-close"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "billing",
+            "label": "Billing & Subscription",
+            "icon": "CreditCard",
+            "description": "Plan, renewal and payment history",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_BILLING_VIEW",
+                    "label": "View Billing & Subscription",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_BILLING_UPDATE",
+                    "label": "Update Billing & Subscription",
+                    "type": "crud",
+                    "action": "update"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "service",
+            "label": "Service",
+            "icon": "Wrench",
+            "description": "Service operations and job card management",
+            "permissions": [
+                {
+                    "key": "SERVICE_MODULE_ACCESS",
+                    "label": "Access Service Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_VIEW",
+                    "label": "View Job Cards",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CREATE",
+                    "label": "Create Job Cards",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_UPDATE",
+                    "label": "Update Job Cards",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_DELETE",
+                    "label": "Delete Job Cards",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_RESTORE",
+                    "label": "Restore Job Cards",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_ASSIGN",
+                    "label": "Assign Technician",
+                    "type": "custom",
+                    "action": "assign"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CLOSE",
+                    "label": "Close Job Card",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CANCEL",
+                    "label": "Cancel Job Card",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_INVOICE",
+                    "label": "Convert To Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_REPEAT",
+                    "label": "Repeat Job Card",
+                    "type": "custom",
+                    "action": "repeat"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print_receipt"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                    "label": "Print Label",
+                    "type": "custom",
+                    "action": "print_label"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_VIEW",
+                    "label": "View Service Options",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_MANAGE",
+                    "label": "Manage Options (Create / Edit / Delete)",
+                    "type": "custom",
+                    "action": "manage"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_VIEW",
+                    "label": "View Job Costing",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_CREATE",
+                    "label": "Create Job Costing",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_UPDATE",
+                    "label": "Update Job Costing",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_DELETE",
+                    "label": "Delete Job Costing",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_VIEW",
+                    "label": "View Service Items",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_CREATE",
+                    "label": "Create Service Items",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_UPDATE",
+                    "label": "Update Service Items",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_DELETE",
+                    "label": "Delete Service Items",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "job-cards",
+            "label": "Job Cards",
+            "icon": "ClipboardList",
+            "description": "Manage service job cards",
+            "module": {
+                "key": "service",
+                "label": "Service"
+            },
+            "permissions": [
+                {
+                    "key": "SERVICE_JOB_CARDS_VIEW",
+                    "label": "View Job Cards",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CREATE",
+                    "label": "Create Job Cards",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_UPDATE",
+                    "label": "Update Job Cards",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_DELETE",
+                    "label": "Delete Job Cards",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_RESTORE",
+                    "label": "Restore Job Cards",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_ASSIGN",
+                    "label": "Assign Technician",
+                    "type": "custom",
+                    "action": "assign"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CLOSE",
+                    "label": "Close Job Card",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CANCEL",
+                    "label": "Cancel Job Card",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_INVOICE",
+                    "label": "Convert To Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_REPEAT",
+                    "label": "Repeat Job Card",
+                    "type": "custom",
+                    "action": "repeat"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print_receipt"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                    "label": "Print Label",
+                    "type": "custom",
+                    "action": "print_label"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "service-options",
+            "label": "Service Options",
+            "icon": "Settings2",
+            "description": "Manage dynamic options for device types, brands, problems, etc.",
+            "module": {
+                "key": "service",
+                "label": "Service"
+            },
+            "permissions": [
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_VIEW",
+                    "label": "View Service Options",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_MANAGE",
+                    "label": "Manage Options (Create / Edit / Delete)",
+                    "type": "custom",
+                    "action": "manage"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "service-items",
+            "label": "Service Items",
+            "icon": "Tool",
+            "description": "Repair services and spare parts",
+            "module": {
+                "key": "service",
+                "label": "Service"
+            },
+            "permissions": [
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_VIEW",
+                    "label": "View Service Items",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_CREATE",
+                    "label": "Create Service Items",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_UPDATE",
+                    "label": "Update Service Items",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_DELETE",
+                    "label": "Delete Service Items",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "job-costing",
+            "label": "Job Costing",
+            "icon": "Calculator",
+            "description": "View closed jobs and record actual costs (parts, labor, overhead)",
+            "module": {
+                "key": "service",
+                "label": "Service"
+            },
+            "permissions": [
+                {
+                    "key": "SERVICE_JOB_COSTING_VIEW",
+                    "label": "View Job Costing",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_CREATE",
+                    "label": "Create Job Costing",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_UPDATE",
+                    "label": "Update Job Costing",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_DELETE",
+                    "label": "Delete Job Costing",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "masters",
+            "label": "Masters",
+            "icon": "Database",
+            "description": "Core master data management",
+            "permissions": [
+                {
+                    "key": "MASTERS_MODULE_ACCESS",
+                    "label": "Access Masters Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "MASTERS_UOM_VIEW",
+                    "label": "View Units of Measure",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_UOM_CREATE",
+                    "label": "Create Units of Measure",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_UOM_UPDATE",
+                    "label": "Update Units of Measure",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_UOM_DELETE",
+                    "label": "Delete Units of Measure",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_UOM_RESTORE",
+                    "label": "Restore Units of Measure",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_VIEW",
+                    "label": "View Item Categories",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_CREATE",
+                    "label": "Create Item Categories",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_UPDATE",
+                    "label": "Update Item Categories",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_DELETE",
+                    "label": "Delete Item Categories",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_RESTORE",
+                    "label": "Restore Item Categories",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_ATTRIBUTES_VIEW",
+                    "label": "View Attributes",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_ATTRIBUTES_CREATE",
+                    "label": "Create Attributes",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_ATTRIBUTES_UPDATE",
+                    "label": "Update Attributes",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_ATTRIBUTES_DELETE",
+                    "label": "Delete Attributes",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_ITEMS_VIEW",
+                    "label": "View Item Master",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_ITEMS_CREATE",
+                    "label": "Create Item Master",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_ITEMS_UPDATE",
+                    "label": "Update Item Master",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_ITEMS_DELETE",
+                    "label": "Delete Item Master",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_ITEMS_RESTORE",
+                    "label": "Restore Item Master",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_ITEMS_IMPORT",
+                    "label": "Import Items",
+                    "type": "custom",
+                    "action": "import"
+                },
+                {
+                    "key": "MASTERS_ITEMS_EXPORT",
+                    "label": "Export Items",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_VIEW",
+                    "label": "View Payment Modes",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_CREATE",
+                    "label": "Create Payment Modes",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_UPDATE",
+                    "label": "Update Payment Modes",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_DELETE",
+                    "label": "Delete Payment Modes",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_VIEW",
+                    "label": "View Party Categories",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_CREATE",
+                    "label": "Create Party Categories",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_UPDATE",
+                    "label": "Update Party Categories",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_DELETE",
+                    "label": "Delete Party Categories",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_RESTORE",
+                    "label": "Restore Party Categories",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_PARTIES_VIEW",
+                    "label": "View Parties",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_PARTIES_CREATE",
+                    "label": "Create Parties",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_PARTIES_UPDATE",
+                    "label": "Update Parties",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_PARTIES_DELETE",
+                    "label": "Delete Parties",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_PARTIES_RESTORE",
+                    "label": "Restore Parties",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_PARTIES_LEDGER_VIEW",
+                    "label": "View Party Ledger",
+                    "type": "custom",
+                    "action": "ledger_view"
+                },
+                {
+                    "key": "MASTERS_PARTIES_OUTSTANDING_VIEW",
+                    "label": "View Outstanding",
+                    "type": "custom",
+                    "action": "outstanding_view"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "parties",
+            "label": "Parties",
+            "icon": "Users",
+            "description": "Customers, suppliers and business contacts",
+            "module": {
+                "key": "masters",
+                "label": "Masters"
+            },
+            "permissions": [
+                {
+                    "key": "MASTERS_PARTIES_VIEW",
+                    "label": "View Parties",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_PARTIES_CREATE",
+                    "label": "Create Parties",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_PARTIES_UPDATE",
+                    "label": "Update Parties",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_PARTIES_DELETE",
+                    "label": "Delete Parties",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_PARTIES_RESTORE",
+                    "label": "Restore Parties",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_PARTIES_LEDGER_VIEW",
+                    "label": "View Party Ledger",
+                    "type": "custom",
+                    "action": "ledger_view"
+                },
+                {
+                    "key": "MASTERS_PARTIES_OUTSTANDING_VIEW",
+                    "label": "View Outstanding",
+                    "type": "custom",
+                    "action": "outstanding_view"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "party-categories",
+            "label": "Party Categories",
+            "icon": "Layers",
+            "description": "Classify parties — walk-in, wholesale, corporate, etc.",
+            "module": {
+                "key": "masters",
+                "label": "Masters"
+            },
+            "permissions": [
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_VIEW",
+                    "label": "View Party Categories",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_CREATE",
+                    "label": "Create Party Categories",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_UPDATE",
+                    "label": "Update Party Categories",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_DELETE",
+                    "label": "Delete Party Categories",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_PARTY_CATEGORIES_RESTORE",
+                    "label": "Restore Party Categories",
+                    "type": "crud",
+                    "action": "restore"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "items",
+            "label": "Item Master",
+            "icon": "Package",
+            "description": "Full product/service catalog — single source of truth",
+            "module": {
+                "key": "masters",
+                "label": "Masters"
+            },
+            "permissions": [
+                {
+                    "key": "MASTERS_ITEMS_VIEW",
+                    "label": "View Item Master",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_ITEMS_CREATE",
+                    "label": "Create Item Master",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_ITEMS_UPDATE",
+                    "label": "Update Item Master",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_ITEMS_DELETE",
+                    "label": "Delete Item Master",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_ITEMS_RESTORE",
+                    "label": "Restore Item Master",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "MASTERS_ITEMS_IMPORT",
+                    "label": "Import Items",
+                    "type": "custom",
+                    "action": "import"
+                },
+                {
+                    "key": "MASTERS_ITEMS_EXPORT",
+                    "label": "Export Items",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "categories",
+            "label": "Item Categories",
+            "icon": "FolderTree",
+            "description": "Manage item/product categories with hierarchy",
+            "module": {
+                "key": "masters",
+                "label": "Masters"
+            },
+            "permissions": [
+                {
+                    "key": "MASTERS_CATEGORIES_VIEW",
+                    "label": "View Item Categories",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_CREATE",
+                    "label": "Create Item Categories",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_UPDATE",
+                    "label": "Update Item Categories",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_DELETE",
+                    "label": "Delete Item Categories",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_CATEGORIES_RESTORE",
+                    "label": "Restore Item Categories",
+                    "type": "crud",
+                    "action": "restore"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "uom",
+            "label": "Units of Measure",
+            "icon": "Ruler",
+            "description": "Manage units used across items, stock, purchase and sales",
+            "module": {
+                "key": "masters",
+                "label": "Masters"
+            },
+            "permissions": [
+                {
+                    "key": "MASTERS_UOM_VIEW",
+                    "label": "View Units of Measure",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_UOM_CREATE",
+                    "label": "Create Units of Measure",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_UOM_UPDATE",
+                    "label": "Update Units of Measure",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_UOM_DELETE",
+                    "label": "Delete Units of Measure",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "MASTERS_UOM_RESTORE",
+                    "label": "Restore Units of Measure",
+                    "type": "crud",
+                    "action": "restore"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "payment-modes",
+            "label": "Payment Modes",
+            "icon": "CreditCard",
+            "description": "Cash, UPI, Card, cheque and other payment modes",
+            "module": {
+                "key": "masters",
+                "label": "Masters"
+            },
+            "permissions": [
+                {
+                    "key": "MASTERS_PAYMENT_MODES_VIEW",
+                    "label": "View Payment Modes",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_CREATE",
+                    "label": "Create Payment Modes",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_UPDATE",
+                    "label": "Update Payment Modes",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "MASTERS_PAYMENT_MODES_DELETE",
+                    "label": "Delete Payment Modes",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "second-hand-device",
+            "label": "Second Hand Device",
+            "icon": "Smartphone",
+            "description": "Buy, refurbish and resell second hand mobiles, laptops and other devices",
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_MODULE_ACCESS",
+                    "label": "Access Second Hand Device Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_VIEW",
+                    "label": "View Device Purchase",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CREATE",
+                    "label": "Create Device Purchase",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE",
+                    "label": "Update Device Purchase",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CANCEL",
+                    "label": "Return Device to Seller",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_PRINT",
+                    "label": "Print Purchase Receipt",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_EXPORT",
+                    "label": "Export Device Purchases",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_VIEW",
+                    "label": "View Device Sale",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CREATE",
+                    "label": "Create Device Sale",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CANCEL",
+                    "label": "Cancel Sale",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_PRINT",
+                    "label": "Print Sale Invoice",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_EXPORT",
+                    "label": "Export Available Devices",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+                    "label": "View Device Stock",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+                    "label": "Export Device Stock",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+                    "label": "View Purchase Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+                    "label": "Export Purchase Register",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+                    "label": "View Sale Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+                    "label": "Export Sale Register",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-purchase",
+            "label": "Device Purchase",
+            "icon": "PackagePlus",
+            "description": "Buy second hand devices from sellers — IMEI/Serial tracked stock",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_VIEW",
+                    "label": "View Device Purchase",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CREATE",
+                    "label": "Create Device Purchase",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE",
+                    "label": "Update Device Purchase",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CANCEL",
+                    "label": "Return Device to Seller",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_PRINT",
+                    "label": "Print Purchase Receipt",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_EXPORT",
+                    "label": "Export Device Purchases",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-sale",
+            "label": "Device Sale",
+            "icon": "ShoppingBag",
+            "description": "Sell devices from stock to a buyer",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_VIEW",
+                    "label": "View Device Sale",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CREATE",
+                    "label": "Create Device Sale",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CANCEL",
+                    "label": "Cancel Sale",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_PRINT",
+                    "label": "Print Sale Invoice",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_EXPORT",
+                    "label": "Export Available Devices",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-stock",
+            "label": "Device Stock",
+            "icon": "BarChart3",
+            "description": "Devices currently in stock — aging, invested amount",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+                    "label": "View Device Stock",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+                    "label": "Export Device Stock",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-purchase-register",
+            "label": "Purchase Register",
+            "icon": "PackagePlus",
+            "description": "All device purchases — filterable register with CSV export",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+                    "label": "View Purchase Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+                    "label": "Export Purchase Register",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-sale-register",
+            "label": "Sale Register",
+            "icon": "ShoppingBag",
+            "description": "All device sales — profit/margin, filterable register with CSV export",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+                    "label": "View Sale Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+                    "label": "Export Sale Register",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "finance",
+            "label": "Finance",
+            "icon": "DollarSign",
+            "description": "Accounting, payments, and financial management",
+            "permissions": [
+                {
+                    "key": "FINANCE_MODULE_ACCESS",
+                    "label": "Access Finance Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_VIEW",
+                    "label": "View Receipts & Payments",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_CREATE",
+                    "label": "Create Receipts & Payments",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_VOID",
+                    "label": "Void Receipt",
+                    "type": "custom",
+                    "action": "void"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_VIEW",
+                    "label": "View Chart of Accounts",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_CREATE",
+                    "label": "Create Chart of Accounts",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_UPDATE",
+                    "label": "Update Chart of Accounts",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_DELETE",
+                    "label": "Delete Chart of Accounts",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_VIEW",
+                    "label": "View Journal Entries",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_CREATE",
+                    "label": "Create Journal Entries",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_UPDATE",
+                    "label": "Update Journal Entries",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_DELETE",
+                    "label": "Delete Journal Entries",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_APPROVE",
+                    "label": "Approve Entry",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_CANCEL",
+                    "label": "Cancel Entry",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_PRINT",
+                    "label": "Print Entry",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_VIEW",
+                    "label": "View Payment Entries",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_CREATE",
+                    "label": "Create Payment Entries",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_UPDATE",
+                    "label": "Update Payment Entries",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_DELETE",
+                    "label": "Delete Payment Entries",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_APPROVE",
+                    "label": "Approve Payment",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_CANCEL",
+                    "label": "Cancel Payment",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_PRINT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_VIEW",
+                    "label": "View Bank Accounts",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_CREATE",
+                    "label": "Create Bank Accounts",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_UPDATE",
+                    "label": "Update Bank Accounts",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_DELETE",
+                    "label": "Delete Bank Accounts",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_VIEW",
+                    "label": "View Bank Reconciliation",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_CREATE",
+                    "label": "Create Bank Reconciliation",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_UPDATE",
+                    "label": "Update Bank Reconciliation",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_DELETE",
+                    "label": "Delete Bank Reconciliation",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_APPROVE",
+                    "label": "Approve Reconciliation",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_VIEW",
+                    "label": "View Budgets",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_CREATE",
+                    "label": "Create Budgets",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_UPDATE",
+                    "label": "Update Budgets",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_DELETE",
+                    "label": "Delete Budgets",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_VIEW",
+                    "label": "View Cost Centers",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_CREATE",
+                    "label": "Create Cost Centers",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_UPDATE",
+                    "label": "Update Cost Centers",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_DELETE",
+                    "label": "Delete Cost Centers",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_FINANCIAL_REPORTS_VIEW",
+                    "label": "View Financial Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_FINANCIAL_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_FINANCIAL_REPORTS_PRINT",
+                    "label": "Print Reports",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "FINANCE_LEDGER_VIEW",
+                    "label": "View Party Ledger",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_LEDGER_EXPORT",
+                    "label": "Export Ledger",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_CASHBOOK_VIEW",
+                    "label": "View Cash Book",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_CASHBOOK_EXPORT",
+                    "label": "Export Cash Book",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_RECEIVABLES_VIEW",
+                    "label": "View Receivables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIVABLES_EXPORT",
+                    "label": "Export Receivables",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_PAYABLES_VIEW",
+                    "label": "View Customer Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_PAYABLES_EXPORT",
+                    "label": "Export Payables",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_VIEW",
+                    "label": "View Supplier Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+                    "label": "Export Supplier Payables",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_VIEW",
+                    "label": "View Expenses",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CREATE",
+                    "label": "Create Expenses",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CANCEL",
+                    "label": "Cancel Expense",
+                    "type": "custom",
+                    "action": "cancel"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "receipts",
+            "label": "Receipts & Payments",
+            "icon": "Receipt",
+            "description": "Record and track all customer payments and receipts",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_RECEIPTS_VIEW",
+                    "label": "View Receipts & Payments",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_CREATE",
+                    "label": "Create Receipts & Payments",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_VOID",
+                    "label": "Void Receipt",
+                    "type": "custom",
+                    "action": "void"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "invoices",
+            "label": "Sales Invoices",
+            "icon": "Receipt",
+            "description": "Sales invoices management",
+            "module": {
+                "key": "sales",
+                "label": "Sales"
+            },
+            "permissions": [
+                {
+                    "key": "SALES_INVOICES_VIEW",
+                    "label": "View Sales Invoices",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_INVOICES_CREATE",
+                    "label": "Create Sales Invoices",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_INVOICES_UPDATE",
+                    "label": "Update Sales Invoices",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_INVOICES_DELETE",
+                    "label": "Delete Sales Invoices",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_INVOICES_APPROVE",
+                    "label": "Approve Invoice",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "SALES_INVOICES_CANCEL",
+                    "label": "Cancel Invoice",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SALES_INVOICES_PAYMENT",
+                    "label": "Record Payment",
+                    "type": "custom",
+                    "action": "payment"
+                },
+                {
+                    "key": "SALES_INVOICES_PRINT",
+                    "label": "Print Invoice",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SALES_INVOICES_EMAIL",
+                    "label": "Email Invoice",
+                    "type": "custom",
+                    "action": "email"
+                },
+                {
+                    "key": "SALES_INVOICES_EXPORT",
+                    "label": "Export Data",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "ledger",
+            "label": "Party Ledger",
+            "icon": "BookOpen",
+            "description": "Party-wise account ledger with full history",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_LEDGER_VIEW",
+                    "label": "View Party Ledger",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_LEDGER_EXPORT",
+                    "label": "Export Ledger",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "cashbook",
+            "label": "Cash Book",
+            "icon": "BookText",
+            "description": "All transactions — receipts and payments register",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_CASHBOOK_VIEW",
+                    "label": "View Cash Book",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_CASHBOOK_EXPORT",
+                    "label": "Export Cash Book",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "receivables",
+            "label": "Receivables",
+            "icon": "TrendingUp",
+            "description": "Outstanding receivables from customers",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_RECEIVABLES_VIEW",
+                    "label": "View Receivables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIVABLES_EXPORT",
+                    "label": "Export Receivables",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "payables",
+            "label": "Customer Payables",
+            "icon": "TrendingDown",
+            "description": "Refunds due and un-billed advances owed back to customers",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_PAYABLES_VIEW",
+                    "label": "View Customer Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_PAYABLES_EXPORT",
+                    "label": "Export Payables",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "supplier-payables",
+            "label": "Supplier Payables",
+            "icon": "Building",
+            "description": "Outstanding bills owed to suppliers, with aging and supplier ledger",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_VIEW",
+                    "label": "View Supplier Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+                    "label": "Export Supplier Payables",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "expenses",
+            "label": "Expenses",
+            "icon": "Receipt",
+            "description": "The shop's own spending — rent, electricity, salaries and the rest",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_EXPENSES_VIEW",
+                    "label": "View Expenses",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CREATE",
+                    "label": "Create Expenses",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CANCEL",
+                    "label": "Cancel Expense",
+                    "type": "custom",
+                    "action": "cancel"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "reports",
+            "label": "Reports",
+            "icon": "BarChart",
+            "description": "Business reports and analytics",
+            "permissions": [
+                {
+                    "key": "REPORTS_MODULE_ACCESS",
+                    "label": "Access Reports Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "REPORTS_SERVICE_REPORTS_VIEW",
+                    "label": "View Service Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PROFIT_LOSS_VIEW",
+                    "label": "View Profit & Loss",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PROFIT_LOSS_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_PNL_REPORT_VIEW",
+                    "label": "View Job-wise Profit",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PNL_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_VIEW",
+                    "label": "View Supplier Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_TECHNICIAN_REPORT_VIEW",
+                    "label": "View Technician Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_TECHNICIAN_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_VIEW",
+                    "label": "View Period Summary",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_FIELD_VISIT_REPORT_VIEW",
+                    "label": "View Field Visit Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_FIELD_VISIT_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_SALES_REPORTS_VIEW",
+                    "label": "View Sales Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_SALES_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_SALES_REPORTS_SCHEDULE",
+                    "label": "Schedule Reports",
+                    "type": "custom",
+                    "action": "schedule"
+                },
+                {
+                    "key": "REPORTS_PURCHASE_REPORTS_VIEW",
+                    "label": "View Purchase Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PURCHASE_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_INVENTORY_REPORTS_VIEW",
+                    "label": "View Inventory Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_INVENTORY_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_FINANCE_REPORTS_VIEW",
+                    "label": "View Finance Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_FINANCE_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_FINANCE_REPORTS_PRINT",
+                    "label": "Print Reports",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_VIEW",
+                    "label": "View Custom Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_CREATE",
+                    "label": "Create Custom Reports",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_UPDATE",
+                    "label": "Update Custom Reports",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_DELETE",
+                    "label": "Delete Custom Reports",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "period-summary",
+            "label": "Period Summary",
+            "icon": "CalendarDays",
+            "description": "Daily and monthly revenue and profit summary",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_VIEW",
+                    "label": "View Period Summary",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "pnl-report",
+            "label": "Job-wise Profit",
+            "icon": "TrendingUp",
+            "description": "Job-wise profit and loss analysis",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_PNL_REPORT_VIEW",
+                    "label": "View Job-wise Profit",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PNL_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "profit-loss",
+            "label": "Profit & Loss",
+            "icon": "Scale",
+            "description": "Head-wise profit and loss statement for a period",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_PROFIT_LOSS_VIEW",
+                    "label": "View Profit & Loss",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PROFIT_LOSS_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "technician-report",
+            "label": "Technician Report",
+            "icon": "UserCog",
+            "description": "Technician-wise job profitability",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_TECHNICIAN_REPORT_VIEW",
+                    "label": "View Technician Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_TECHNICIAN_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "supplier-report",
+            "label": "Supplier Report",
+            "icon": "Package",
+            "description": "Supplier-wise parts cost analysis",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_VIEW",
+                    "label": "View Supplier Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "field-visit-report",
+            "label": "Field Visit Report",
+            "icon": "MapPin",
+            "description": "On-field technician visit log — time spent and engineers per job",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_FIELD_VISIT_REPORT_VIEW",
+                    "label": "View Field Visit Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_FIELD_VISIT_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "service-reports",
+            "label": "Service Reports",
+            "icon": "BarChart3",
+            "description": "Job tracking, supplier parts, and user task reports",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_SERVICE_REPORTS_VIEW",
+                    "label": "View Service Reports",
+                    "type": "crud",
+                    "action": "view"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "workflow-designer",
+            "label": "Workflow Designer",
+            "icon": "Settings2",
+            "description": "Configure role-based workflow actions for job cards",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_VIEW",
+                    "label": "View Workflow Designer",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_MANAGE",
+                    "label": "Manage Workflow Config",
+                    "type": "custom",
+                    "action": "manage"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_VIEW_FORM_BUILDER",
+                    "label": "View Form Builder",
+                    "type": "custom",
+                    "action": "view_form_builder"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_EDIT_FORM_BUILDER",
+                    "label": "Edit Form Builder",
+                    "type": "custom",
+                    "action": "edit_form_builder"
+                },
+                {
+                    "key": "SETTINGS_WORKFLOW_DESIGNER_PUBLISH_FORM_BUILDER",
+                    "label": "Publish Form Builder Configuration",
+                    "type": "custom",
+                    "action": "publish_form_builder"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "whatsapp-settings",
+            "label": "WhatsApp",
+            "icon": "MessageCircle",
+            "description": "Configure WhatsApp messaging provider",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_VIEW",
+                    "label": "View WhatsApp",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_CREATE",
+                    "label": "Create WhatsApp",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_UPDATE",
+                    "label": "Update WhatsApp",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_WHATSAPP_SETTINGS_DELETE",
+                    "label": "Delete WhatsApp",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "print-formats",
+            "label": "Print Formats",
+            "icon": "Printer",
+            "description": "Document print templates",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_VIEW",
+                    "label": "View Print Formats",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_CREATE",
+                    "label": "Create Print Formats",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_UPDATE",
+                    "label": "Update Print Formats",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_DELETE",
+                    "label": "Delete Print Formats",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_DUPLICATE",
+                    "label": "Duplicate Template",
+                    "type": "custom",
+                    "action": "duplicate"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_SET_DEFAULT",
+                    "label": "Set Default Template",
+                    "type": "custom",
+                    "action": "set_default"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_RESTORE_VERSION",
+                    "label": "Restore Template Version",
+                    "type": "custom",
+                    "action": "restore_version"
+                },
+                {
+                    "key": "SETTINGS_PRINT_FORMATS_BULK_PRINT",
+                    "label": "Bulk Print Labels",
+                    "type": "custom",
+                    "action": "bulk_print"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "backup",
+            "label": "Backup & Restore",
+            "icon": "Database",
+            "description": "Database backup management",
+            "module": {
+                "key": "settings",
+                "label": "Settings"
+            },
+            "permissions": [
+                {
+                    "key": "SETTINGS_BACKUP_VIEW",
+                    "label": "View Backup & Restore",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_BACKUP",
+                    "label": "Create Backup",
+                    "type": "custom",
+                    "action": "backup"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_RESTORE",
+                    "label": "Restore Backup",
+                    "type": "custom",
+                    "action": "restore"
+                },
+                {
+                    "key": "SETTINGS_BACKUP_DOWNLOAD",
+                    "label": "Download Backup",
+                    "type": "custom",
+                    "action": "download"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "ip-whitelist",
+            "label": "IP Whitelist",
+            "icon": "Shield",
+            "description": "Manage allowed IPs / CIDR ranges for IP-restricted users",
+            "module": {
+                "key": "administration",
+                "label": "Administration"
+            },
+            "permissions": [
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_VIEW",
+                    "label": "View IP Whitelist",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_CREATE",
+                    "label": "Create IP Whitelist",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_UPDATE",
+                    "label": "Update IP Whitelist",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "ADMINISTRATION_IP_WHITELIST_DELETE",
+                    "label": "Delete IP Whitelist",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "login-report",
+            "label": "Login Report",
+            "icon": "LogIn",
+            "description": "Who logged in, when, from where — plus failed attempts",
+            "module": {
+                "key": "administration",
+                "label": "Administration"
+            },
+            "permissions": [
+                {
+                    "key": "ADMINISTRATION_LOGIN_REPORT_VIEW",
+                    "label": "View Login Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_LOGIN_REPORT_EXPORT",
+                    "label": "Export Login Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "system-audit",
+            "label": "System Audit",
+            "icon": "FileText",
+            "description": "System audit logs",
+            "module": {
+                "key": "administration",
+                "label": "Administration"
+            },
+            "permissions": [
+                {
+                    "key": "ADMINISTRATION_SYSTEM_AUDIT_VIEW",
+                    "label": "View System Audit",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "ADMINISTRATION_SYSTEM_AUDIT_EXPORT",
+                    "label": "Export Logs",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "sales",
+            "label": "Sales",
+            "icon": "ShoppingCart",
+            "description": "Manage sales operations including quotations, orders, invoices, and customers",
+            "permissions": [
+                {
+                    "key": "SALES_MODULE_ACCESS",
+                    "label": "Access Sales Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_VIEW",
+                    "label": "View Quotations",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_CREATE",
+                    "label": "Create Quotations",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_UPDATE",
+                    "label": "Update Quotations",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_DELETE",
+                    "label": "Delete Quotations",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_APPROVE",
+                    "label": "Approve Quotation",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_REJECT",
+                    "label": "Reject Quotation",
+                    "type": "custom",
+                    "action": "reject"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_CONVERT",
+                    "label": "Convert to Order",
+                    "type": "custom",
+                    "action": "convert"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_PRINT",
+                    "label": "Print Quotation",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_EMAIL",
+                    "label": "Email Quotation",
+                    "type": "custom",
+                    "action": "email"
+                },
+                {
+                    "key": "SALES_QUOTATIONS_EXPORT",
+                    "label": "Export Data",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_VIEW",
+                    "label": "View Sales Orders",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_CREATE",
+                    "label": "Create Sales Orders",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_UPDATE",
+                    "label": "Update Sales Orders",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_DELETE",
+                    "label": "Delete Sales Orders",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_APPROVE",
+                    "label": "Approve Sales Order",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_CANCEL",
+                    "label": "Cancel Sales Order",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_FULFILL",
+                    "label": "Fulfill Order",
+                    "type": "custom",
+                    "action": "fulfill"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_INVOICE",
+                    "label": "Create Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_PRINT",
+                    "label": "Print Sales Order",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SALES_SALES_ORDERS_EXPORT",
+                    "label": "Export Data",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SALES_INVOICES_VIEW",
+                    "label": "View Sales Invoices",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_INVOICES_CREATE",
+                    "label": "Create Sales Invoices",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_INVOICES_UPDATE",
+                    "label": "Update Sales Invoices",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_INVOICES_DELETE",
+                    "label": "Delete Sales Invoices",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_INVOICES_APPROVE",
+                    "label": "Approve Invoice",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "SALES_INVOICES_CANCEL",
+                    "label": "Cancel Invoice",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SALES_INVOICES_PAYMENT",
+                    "label": "Record Payment",
+                    "type": "custom",
+                    "action": "payment"
+                },
+                {
+                    "key": "SALES_INVOICES_PRINT",
+                    "label": "Print Invoice",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SALES_INVOICES_EMAIL",
+                    "label": "Email Invoice",
+                    "type": "custom",
+                    "action": "email"
+                },
+                {
+                    "key": "SALES_INVOICES_EXPORT",
+                    "label": "Export Data",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_VIEW",
+                    "label": "View Customers",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_CREATE",
+                    "label": "Create Customers",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_UPDATE",
+                    "label": "Update Customers",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_DELETE",
+                    "label": "Delete Customers",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_EXPORT",
+                    "label": "Export Customers",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_IMPORT",
+                    "label": "Import Customers",
+                    "type": "custom",
+                    "action": "import"
+                },
+                {
+                    "key": "SALES_CUSTOMERS_MERGE",
+                    "label": "Merge Customers",
+                    "type": "custom",
+                    "action": "merge"
+                },
+                {
+                    "key": "SALES_DELIVERY_NOTES_VIEW",
+                    "label": "View Delivery Notes",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_DELIVERY_NOTES_CREATE",
+                    "label": "Create Delivery Notes",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_DELIVERY_NOTES_UPDATE",
+                    "label": "Update Delivery Notes",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_DELIVERY_NOTES_DELETE",
+                    "label": "Delete Delivery Notes",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_DELIVERY_NOTES_APPROVE",
+                    "label": "Approve Delivery",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "SALES_DELIVERY_NOTES_PRINT",
+                    "label": "Print Delivery Note",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SALES_CREDIT_NOTES_VIEW",
+                    "label": "View Credit Notes",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_CREDIT_NOTES_CREATE",
+                    "label": "Create Credit Notes",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_CREDIT_NOTES_UPDATE",
+                    "label": "Update Credit Notes",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_CREDIT_NOTES_DELETE",
+                    "label": "Delete Credit Notes",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_CREDIT_NOTES_APPROVE",
+                    "label": "Approve Credit Note",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "SALES_CREDIT_NOTES_PRINT",
+                    "label": "Print Credit Note",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SALES_NEW_SALE_VIEW",
+                    "label": "View New Sale",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_NEW_SALE_CREATE",
+                    "label": "Create New Sale",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_RETURNS_VIEW",
+                    "label": "View Sales Returns",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SALES_RETURNS_CREATE",
+                    "label": "Create Sales Returns",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SALES_RETURNS_UPDATE",
+                    "label": "Update Sales Returns",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SALES_RETURNS_DELETE",
+                    "label": "Delete Sales Returns",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SALES_RETURNS_APPROVE",
+                    "label": "Approve Return",
+                    "type": "custom",
+                    "action": "approve"
+                }
+            ]
+        }
+    ],
+    "permissionsByMenu": {
+        "ADMIN": {
+            "module": "ADMIN",
+            "moduleAccess": "ADMIN_MODULE_ACCESS",
+            "features": {}
+        },
+        "ADMINISTRATION": {
+            "module": "ADMINISTRATION",
+            "moduleAccess": null,
+            "features": {
+                "USERS": {
+                    "feature": "USERS",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_USERS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "ADMINISTRATION_USERS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_USERS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_USERS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_USERS_IMPERSONATE",
+                            "action": "IMPERSONATE"
+                        }
+                    ]
+                },
+                "USERS_RESET": {
+                    "feature": "USERS_RESET",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_USERS_RESET_PASSWORD",
+                            "action": "PASSWORD"
+                        }
+                    ]
+                },
+                "USERS_CHANGE_SELF": {
+                    "feature": "USERS_CHANGE_SELF",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_USERS_CHANGE_SELF_PASSWORD",
+                            "action": "PASSWORD"
+                        }
+                    ]
+                },
+                "USERS_STATUS": {
+                    "feature": "USERS_STATUS",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_USERS_STATUS_CHANGE",
+                            "action": "CHANGE"
+                        }
+                    ]
+                },
+                "USERS_TOGGLE_IP": {
+                    "feature": "USERS_TOGGLE_IP",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_USERS_TOGGLE_IP_RESTRICTION",
+                            "action": "RESTRICTION"
+                        }
+                    ]
+                },
+                "ROLES": {
+                    "feature": "ROLES",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_ROLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "ADMINISTRATION_ROLES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_ROLES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_ROLES_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                },
+                "ROLES_ASSIGN": {
+                    "feature": "ROLES_ASSIGN",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_ROLES_ASSIGN_PERMISSIONS",
+                            "action": "PERMISSIONS"
+                        },
+                        {
+                            "key": "ADMINISTRATION_ROLES_ASSIGN_MENUS",
+                            "action": "MENUS"
+                        }
+                    ]
+                },
+                "SESSIONS": {
+                    "feature": "SESSIONS",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_SESSIONS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "ADMINISTRATION_SESSIONS_TERMINATE",
+                            "action": "TERMINATE"
+                        }
+                    ]
+                },
+                "IP_WHITELIST": {
+                    "feature": "IP_WHITELIST",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_IP_WHITELIST_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "ADMINISTRATION_IP_WHITELIST_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_IP_WHITELIST_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "ADMINISTRATION_IP_WHITELIST_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                },
+                "LOGIN_REPORT": {
+                    "feature": "LOGIN_REPORT",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_LOGIN_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "ADMINISTRATION_LOGIN_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "SYSTEM_AUDIT": {
+                    "feature": "SYSTEM_AUDIT",
+                    "permissions": [
+                        {
+                            "key": "ADMINISTRATION_SYSTEM_AUDIT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "ADMINISTRATION_SYSTEM_AUDIT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                }
+            }
+        },
+        "SETTINGS": {
+            "module": "SETTINGS",
+            "moduleAccess": "SETTINGS_MODULE_ACCESS",
+            "features": {
+                "COMPANY": {
+                    "feature": "COMPANY",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_COMPANY_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_COMPANY_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SETTINGS_COMPANY_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SETTINGS_COMPANY_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SETTINGS_COMPANY_RESTORE",
+                            "action": "RESTORE"
+                        },
+                        {
+                            "key": "SETTINGS_COMPANY_STATUS",
+                            "action": "STATUS"
+                        }
+                    ]
+                },
+                "COMPANY_SET": {
+                    "feature": "COMPANY_SET",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_COMPANY_SET_DEFAULT",
+                            "action": "DEFAULT"
+                        }
+                    ]
+                },
+                "BRANCHES": {
+                    "feature": "BRANCHES",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_BRANCHES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_BRANCHES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SETTINGS_BRANCHES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SETTINGS_BRANCHES_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                },
+                "FINANCIAL_YEARS": {
+                    "feature": "FINANCIAL_YEARS",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_ACTIVATE",
+                            "action": "ACTIVATE"
+                        },
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_CLOSE",
+                            "action": "CLOSE"
+                        }
+                    ]
+                },
+                "FINANCIAL_YEARS_ROLLBACK": {
+                    "feature": "FINANCIAL_YEARS_ROLLBACK",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_FINANCIAL_YEARS_ROLLBACK_CLOSE",
+                            "action": "CLOSE"
+                        }
+                    ]
+                },
+                "BILLING": {
+                    "feature": "BILLING",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_BILLING_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_BILLING_UPDATE",
+                            "action": "UPDATE"
+                        }
+                    ]
+                },
+                "WORKFLOW_DESIGNER": {
+                    "feature": "WORKFLOW_DESIGNER",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_WORKFLOW_DESIGNER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_WORKFLOW_DESIGNER_MANAGE",
+                            "action": "MANAGE"
+                        }
+                    ]
+                },
+                "WORKFLOW_DESIGNER_VIEW_FORM": {
+                    "feature": "WORKFLOW_DESIGNER_VIEW_FORM",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_WORKFLOW_DESIGNER_VIEW_FORM_BUILDER",
+                            "action": "BUILDER"
+                        }
+                    ]
+                },
+                "WORKFLOW_DESIGNER_EDIT_FORM": {
+                    "feature": "WORKFLOW_DESIGNER_EDIT_FORM",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_WORKFLOW_DESIGNER_EDIT_FORM_BUILDER",
+                            "action": "BUILDER"
+                        }
+                    ]
+                },
+                "WORKFLOW_DESIGNER_PUBLISH_FORM": {
+                    "feature": "WORKFLOW_DESIGNER_PUBLISH_FORM",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_WORKFLOW_DESIGNER_PUBLISH_FORM_BUILDER",
+                            "action": "BUILDER"
+                        }
+                    ]
+                },
+                "WHATSAPP_SETTINGS": {
+                    "feature": "WHATSAPP_SETTINGS",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_WHATSAPP_SETTINGS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_WHATSAPP_SETTINGS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SETTINGS_WHATSAPP_SETTINGS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SETTINGS_WHATSAPP_SETTINGS_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                },
+                "PRINT_FORMATS": {
+                    "feature": "PRINT_FORMATS",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_DUPLICATE",
+                            "action": "DUPLICATE"
+                        }
+                    ]
+                },
+                "PRINT_FORMATS_SET": {
+                    "feature": "PRINT_FORMATS_SET",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_SET_DEFAULT",
+                            "action": "DEFAULT"
+                        }
+                    ]
+                },
+                "PRINT_FORMATS_RESTORE": {
+                    "feature": "PRINT_FORMATS_RESTORE",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_RESTORE_VERSION",
+                            "action": "VERSION"
+                        }
+                    ]
+                },
+                "PRINT_FORMATS_BULK": {
+                    "feature": "PRINT_FORMATS_BULK",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_PRINT_FORMATS_BULK_PRINT",
+                            "action": "PRINT"
+                        }
+                    ]
+                },
+                "BACKUP": {
+                    "feature": "BACKUP",
+                    "permissions": [
+                        {
+                            "key": "SETTINGS_BACKUP_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SETTINGS_BACKUP_BACKUP",
+                            "action": "BACKUP"
+                        },
+                        {
+                            "key": "SETTINGS_BACKUP_RESTORE",
+                            "action": "RESTORE"
+                        },
+                        {
+                            "key": "SETTINGS_BACKUP_DOWNLOAD",
+                            "action": "DOWNLOAD"
+                        }
+                    ]
+                }
+            }
+        },
+        "SERVICE": {
+            "module": "SERVICE",
+            "moduleAccess": "SERVICE_MODULE_ACCESS",
+            "features": {
+                "JOB_CARDS": {
+                    "feature": "JOB_CARDS",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_CARDS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_RESTORE",
+                            "action": "RESTORE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_ASSIGN",
+                            "action": "ASSIGN"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CLOSE",
+                            "action": "CLOSE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CANCEL",
+                            "action": "CANCEL"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_INVOICE",
+                            "action": "INVOICE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_REPEAT",
+                            "action": "REPEAT"
+                        }
+                    ]
+                },
+                "JOB_CARDS_PRINT": {
+                    "feature": "JOB_CARDS_PRINT",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                            "action": "RECEIPT"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                            "action": "LABEL"
+                        }
+                    ]
+                },
+                "SERVICE_OPTIONS": {
+                    "feature": "SERVICE_OPTIONS",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_SERVICE_OPTIONS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SERVICE_SERVICE_OPTIONS_MANAGE",
+                            "action": "MANAGE"
+                        }
+                    ]
+                },
+                "SERVICE_ITEMS": {
+                    "feature": "SERVICE_ITEMS",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_SERVICE_ITEMS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SERVICE_SERVICE_ITEMS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SERVICE_SERVICE_ITEMS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SERVICE_SERVICE_ITEMS_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                },
+                "JOB_COSTING": {
+                    "feature": "JOB_COSTING",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_COSTING_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SERVICE_JOB_COSTING_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_COSTING_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_COSTING_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                }
+            }
+        },
+        "MASTERS": {
+            "module": "MASTERS",
+            "moduleAccess": "MASTERS_MODULE_ACCESS",
+            "features": {
+                "PARTIES": {
+                    "feature": "PARTIES",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_PARTIES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "MASTERS_PARTIES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "MASTERS_PARTIES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "MASTERS_PARTIES_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "MASTERS_PARTIES_RESTORE",
+                            "action": "RESTORE"
+                        }
+                    ]
+                },
+                "PARTIES_LEDGER": {
+                    "feature": "PARTIES_LEDGER",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_PARTIES_LEDGER_VIEW",
+                            "action": "VIEW"
+                        }
+                    ]
+                },
+                "PARTIES_OUTSTANDING": {
+                    "feature": "PARTIES_OUTSTANDING",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_PARTIES_OUTSTANDING_VIEW",
+                            "action": "VIEW"
+                        }
+                    ]
+                },
+                "PARTY_CATEGORIES": {
+                    "feature": "PARTY_CATEGORIES",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_PARTY_CATEGORIES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "MASTERS_PARTY_CATEGORIES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "MASTERS_PARTY_CATEGORIES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "MASTERS_PARTY_CATEGORIES_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "MASTERS_PARTY_CATEGORIES_RESTORE",
+                            "action": "RESTORE"
+                        }
+                    ]
+                },
+                "ITEMS": {
+                    "feature": "ITEMS",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_ITEMS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "MASTERS_ITEMS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "MASTERS_ITEMS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "MASTERS_ITEMS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "MASTERS_ITEMS_RESTORE",
+                            "action": "RESTORE"
+                        },
+                        {
+                            "key": "MASTERS_ITEMS_IMPORT",
+                            "action": "IMPORT"
+                        },
+                        {
+                            "key": "MASTERS_ITEMS_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "CATEGORIES": {
+                    "feature": "CATEGORIES",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_CATEGORIES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "MASTERS_CATEGORIES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "MASTERS_CATEGORIES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "MASTERS_CATEGORIES_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "MASTERS_CATEGORIES_RESTORE",
+                            "action": "RESTORE"
+                        }
+                    ]
+                },
+                "UOM": {
+                    "feature": "UOM",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_UOM_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "MASTERS_UOM_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "MASTERS_UOM_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "MASTERS_UOM_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "MASTERS_UOM_RESTORE",
+                            "action": "RESTORE"
+                        }
+                    ]
+                },
+                "PAYMENT_MODES": {
+                    "feature": "PAYMENT_MODES",
+                    "permissions": [
+                        {
+                            "key": "MASTERS_PAYMENT_MODES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "MASTERS_PAYMENT_MODES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "MASTERS_PAYMENT_MODES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "MASTERS_PAYMENT_MODES_DELETE",
+                            "action": "DELETE"
+                        }
+                    ]
+                }
+            }
+        },
+        "SECOND_HAND_DEVICE": {
+            "module": "SECOND_HAND_DEVICE",
+            "moduleAccess": "SECOND_HAND_DEVICE_MODULE_ACCESS",
+            "features": {}
+        },
+        "SECOND": {
+            "module": "SECOND",
+            "moduleAccess": null,
+            "features": {
+                "HAND_DEVICE_DEVICE_PURCHASE": {
+                    "feature": "HAND_DEVICE_DEVICE_PURCHASE",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CANCEL",
+                            "action": "CANCEL"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_PRINT",
+                            "action": "PRINT"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "HAND_DEVICE_DEVICE_SALE": {
+                    "feature": "HAND_DEVICE_DEVICE_SALE",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CANCEL",
+                            "action": "CANCEL"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_PRINT",
+                            "action": "PRINT"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "HAND_DEVICE_DEVICE_STOCK": {
+                    "feature": "HAND_DEVICE_DEVICE_STOCK",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "HAND_DEVICE_DEVICE_PURCHASE_REGISTER": {
+                    "feature": "HAND_DEVICE_DEVICE_PURCHASE_REGISTER",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "HAND_DEVICE_DEVICE_SALE_REGISTER": {
+                    "feature": "HAND_DEVICE_DEVICE_SALE_REGISTER",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                }
+            }
+        },
+        "FINANCE": {
+            "module": "FINANCE",
+            "moduleAccess": "FINANCE_MODULE_ACCESS",
+            "features": {
+                "RECEIPTS": {
+                    "feature": "RECEIPTS",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_RECEIPTS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_RECEIPTS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "FINANCE_RECEIPTS_VOID",
+                            "action": "VOID"
+                        }
+                    ]
+                },
+                "LEDGER": {
+                    "feature": "LEDGER",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_LEDGER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_LEDGER_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "CASHBOOK": {
+                    "feature": "CASHBOOK",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_CASHBOOK_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_CASHBOOK_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "RECEIVABLES": {
+                    "feature": "RECEIVABLES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_RECEIVABLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_RECEIVABLES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "PAYABLES": {
+                    "feature": "PAYABLES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_PAYABLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_PAYABLES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "SUPPLIER_PAYABLES": {
+                    "feature": "SUPPLIER_PAYABLES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_SUPPLIER_PAYABLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "EXPENSES": {
+                    "feature": "EXPENSES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_EXPENSES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_EXPENSES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "FINANCE_EXPENSES_CANCEL",
+                            "action": "CANCEL"
+                        }
+                    ]
+                }
+            }
+        },
+        "SALES": {
+            "module": "SALES",
+            "moduleAccess": null,
+            "features": {
+                "INVOICES": {
+                    "feature": "INVOICES",
+                    "permissions": [
+                        {
+                            "key": "SALES_INVOICES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SALES_INVOICES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SALES_INVOICES_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SALES_INVOICES_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SALES_INVOICES_APPROVE",
+                            "action": "APPROVE"
+                        },
+                        {
+                            "key": "SALES_INVOICES_CANCEL",
+                            "action": "CANCEL"
+                        },
+                        {
+                            "key": "SALES_INVOICES_PAYMENT",
+                            "action": "PAYMENT"
+                        },
+                        {
+                            "key": "SALES_INVOICES_PRINT",
+                            "action": "PRINT"
+                        },
+                        {
+                            "key": "SALES_INVOICES_EMAIL",
+                            "action": "EMAIL"
+                        },
+                        {
+                            "key": "SALES_INVOICES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                }
+            }
+        },
+        "REPORTS": {
+            "module": "REPORTS",
+            "moduleAccess": "REPORTS_MODULE_ACCESS",
+            "features": {
+                "PERIOD_SUMMARY": {
+                    "feature": "PERIOD_SUMMARY",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_PERIOD_SUMMARY_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_PERIOD_SUMMARY_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "PNL_REPORT": {
+                    "feature": "PNL_REPORT",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_PNL_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_PNL_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "PROFIT_LOSS": {
+                    "feature": "PROFIT_LOSS",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_PROFIT_LOSS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_PROFIT_LOSS_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "TECHNICIAN_REPORT": {
+                    "feature": "TECHNICIAN_REPORT",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_TECHNICIAN_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_TECHNICIAN_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "SUPPLIER_REPORT": {
+                    "feature": "SUPPLIER_REPORT",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_SUPPLIER_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_SUPPLIER_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "FIELD_VISIT_REPORT": {
+                    "feature": "FIELD_VISIT_REPORT",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_FIELD_VISIT_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_FIELD_VISIT_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "SERVICE_REPORTS": {
+                    "feature": "SERVICE_REPORTS",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_SERVICE_REPORTS_VIEW",
+                            "action": "VIEW"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "permissions": [
+        "ADMINISTRATION_IP_WHITELIST_CREATE",
+        "ADMINISTRATION_IP_WHITELIST_DELETE",
+        "ADMINISTRATION_IP_WHITELIST_UPDATE",
+        "ADMINISTRATION_IP_WHITELIST_VIEW",
+        "ADMINISTRATION_LOGIN_REPORT_EXPORT",
+        "ADMINISTRATION_LOGIN_REPORT_VIEW",
+        "ADMINISTRATION_ROLES_ASSIGN_MENUS",
+        "ADMINISTRATION_ROLES_ASSIGN_PERMISSIONS",
+        "ADMINISTRATION_ROLES_CREATE",
+        "ADMINISTRATION_ROLES_DELETE",
+        "ADMINISTRATION_ROLES_UPDATE",
+        "ADMINISTRATION_ROLES_VIEW",
+        "ADMINISTRATION_SESSIONS_TERMINATE",
+        "ADMINISTRATION_SESSIONS_VIEW",
+        "ADMINISTRATION_SYSTEM_AUDIT_EXPORT",
+        "ADMINISTRATION_SYSTEM_AUDIT_VIEW",
+        "ADMINISTRATION_USERS_CHANGE_SELF_PASSWORD",
+        "ADMINISTRATION_USERS_CREATE",
+        "ADMINISTRATION_USERS_DELETE",
+        "ADMINISTRATION_USERS_IMPERSONATE",
+        "ADMINISTRATION_USERS_RESET_PASSWORD",
+        "ADMINISTRATION_USERS_STATUS_CHANGE",
+        "ADMINISTRATION_USERS_TOGGLE_IP_RESTRICTION",
+        "ADMINISTRATION_USERS_UPDATE",
+        "ADMINISTRATION_USERS_VIEW",
+        "ADMIN_MODULE_ACCESS",
+        "FINANCE_CASHBOOK_EXPORT",
+        "FINANCE_CASHBOOK_VIEW",
+        "FINANCE_EXPENSES_CANCEL",
+        "FINANCE_EXPENSES_CREATE",
+        "FINANCE_EXPENSES_VIEW",
+        "FINANCE_LEDGER_EXPORT",
+        "FINANCE_LEDGER_VIEW",
+        "FINANCE_MODULE_ACCESS",
+        "FINANCE_PAYABLES_EXPORT",
+        "FINANCE_PAYABLES_VIEW",
+        "FINANCE_RECEIPTS_CREATE",
+        "FINANCE_RECEIPTS_VIEW",
+        "FINANCE_RECEIPTS_VOID",
+        "FINANCE_RECEIVABLES_EXPORT",
+        "FINANCE_RECEIVABLES_VIEW",
+        "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+        "FINANCE_SUPPLIER_PAYABLES_VIEW",
+        "MASTERS_CATEGORIES_CREATE",
+        "MASTERS_CATEGORIES_DELETE",
+        "MASTERS_CATEGORIES_RESTORE",
+        "MASTERS_CATEGORIES_UPDATE",
+        "MASTERS_CATEGORIES_VIEW",
+        "MASTERS_ITEMS_CREATE",
+        "MASTERS_ITEMS_DELETE",
+        "MASTERS_ITEMS_EXPORT",
+        "MASTERS_ITEMS_IMPORT",
+        "MASTERS_ITEMS_RESTORE",
+        "MASTERS_ITEMS_UPDATE",
+        "MASTERS_ITEMS_VIEW",
+        "MASTERS_MODULE_ACCESS",
+        "MASTERS_PARTIES_CREATE",
+        "MASTERS_PARTIES_DELETE",
+        "MASTERS_PARTIES_LEDGER_VIEW",
+        "MASTERS_PARTIES_OUTSTANDING_VIEW",
+        "MASTERS_PARTIES_RESTORE",
+        "MASTERS_PARTIES_UPDATE",
+        "MASTERS_PARTIES_VIEW",
+        "MASTERS_PARTY_CATEGORIES_CREATE",
+        "MASTERS_PARTY_CATEGORIES_DELETE",
+        "MASTERS_PARTY_CATEGORIES_RESTORE",
+        "MASTERS_PARTY_CATEGORIES_UPDATE",
+        "MASTERS_PARTY_CATEGORIES_VIEW",
+        "MASTERS_PAYMENT_MODES_CREATE",
+        "MASTERS_PAYMENT_MODES_DELETE",
+        "MASTERS_PAYMENT_MODES_UPDATE",
+        "MASTERS_PAYMENT_MODES_VIEW",
+        "MASTERS_UOM_CREATE",
+        "MASTERS_UOM_DELETE",
+        "MASTERS_UOM_RESTORE",
+        "MASTERS_UOM_UPDATE",
+        "MASTERS_UOM_VIEW",
+        "REPORTS_FIELD_VISIT_REPORT_EXPORT",
+        "REPORTS_FIELD_VISIT_REPORT_VIEW",
+        "REPORTS_MODULE_ACCESS",
+        "REPORTS_PERIOD_SUMMARY_EXPORT",
+        "REPORTS_PERIOD_SUMMARY_VIEW",
+        "REPORTS_PNL_REPORT_EXPORT",
+        "REPORTS_PNL_REPORT_VIEW",
+        "REPORTS_PROFIT_LOSS_EXPORT",
+        "REPORTS_PROFIT_LOSS_VIEW",
+        "REPORTS_SERVICE_REPORTS_VIEW",
+        "REPORTS_SUPPLIER_REPORT_EXPORT",
+        "REPORTS_SUPPLIER_REPORT_VIEW",
+        "REPORTS_TECHNICIAN_REPORT_EXPORT",
+        "REPORTS_TECHNICIAN_REPORT_VIEW",
+        "SALES_INVOICES_APPROVE",
+        "SALES_INVOICES_CANCEL",
+        "SALES_INVOICES_CREATE",
+        "SALES_INVOICES_DELETE",
+        "SALES_INVOICES_EMAIL",
+        "SALES_INVOICES_EXPORT",
+        "SALES_INVOICES_PAYMENT",
+        "SALES_INVOICES_PRINT",
+        "SALES_INVOICES_UPDATE",
+        "SALES_INVOICES_VIEW",
+        "SALES_MODULE_ACCESS",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CANCEL",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CREATE",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_PRINT",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_CANCEL",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_CREATE",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_PRINT",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+        "SECOND_HAND_DEVICE_MODULE_ACCESS",
+        "SERVICE_JOB_CARDS_ASSIGN",
+        "SERVICE_JOB_CARDS_CANCEL",
+        "SERVICE_JOB_CARDS_CLOSE",
+        "SERVICE_JOB_CARDS_CREATE",
+        "SERVICE_JOB_CARDS_DELETE",
+        "SERVICE_JOB_CARDS_INVOICE",
+        "SERVICE_JOB_CARDS_PRINT_LABEL",
+        "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+        "SERVICE_JOB_CARDS_REPEAT",
+        "SERVICE_JOB_CARDS_RESTORE",
+        "SERVICE_JOB_CARDS_UPDATE",
+        "SERVICE_JOB_CARDS_VIEW",
+        "SERVICE_JOB_COSTING_CREATE",
+        "SERVICE_JOB_COSTING_DELETE",
+        "SERVICE_JOB_COSTING_UPDATE",
+        "SERVICE_JOB_COSTING_VIEW",
+        "SERVICE_MODULE_ACCESS",
+        "SERVICE_SERVICE_ITEMS_CREATE",
+        "SERVICE_SERVICE_ITEMS_DELETE",
+        "SERVICE_SERVICE_ITEMS_UPDATE",
+        "SERVICE_SERVICE_ITEMS_VIEW",
+        "SERVICE_SERVICE_OPTIONS_MANAGE",
+        "SERVICE_SERVICE_OPTIONS_VIEW",
+        "SETTINGS_BACKUP_BACKUP",
+        "SETTINGS_BACKUP_DOWNLOAD",
+        "SETTINGS_BACKUP_RESTORE",
+        "SETTINGS_BACKUP_VIEW",
+        "SETTINGS_BILLING_UPDATE",
+        "SETTINGS_BILLING_VIEW",
+        "SETTINGS_BRANCHES_CREATE",
+        "SETTINGS_BRANCHES_DELETE",
+        "SETTINGS_BRANCHES_UPDATE",
+        "SETTINGS_BRANCHES_VIEW",
+        "SETTINGS_COMPANY_CREATE",
+        "SETTINGS_COMPANY_DELETE",
+        "SETTINGS_COMPANY_RESTORE",
+        "SETTINGS_COMPANY_SET_DEFAULT",
+        "SETTINGS_COMPANY_STATUS",
+        "SETTINGS_COMPANY_UPDATE",
+        "SETTINGS_COMPANY_VIEW",
+        "SETTINGS_FINANCIAL_YEARS_ACTIVATE",
+        "SETTINGS_FINANCIAL_YEARS_CLOSE",
+        "SETTINGS_FINANCIAL_YEARS_CREATE",
+        "SETTINGS_FINANCIAL_YEARS_DELETE",
+        "SETTINGS_FINANCIAL_YEARS_ROLLBACK_CLOSE",
+        "SETTINGS_FINANCIAL_YEARS_UPDATE",
+        "SETTINGS_FINANCIAL_YEARS_VIEW",
+        "SETTINGS_MODULE_ACCESS",
+        "SETTINGS_PRINT_FORMATS_BULK_PRINT",
+        "SETTINGS_PRINT_FORMATS_CREATE",
+        "SETTINGS_PRINT_FORMATS_DELETE",
+        "SETTINGS_PRINT_FORMATS_DUPLICATE",
+        "SETTINGS_PRINT_FORMATS_RESTORE_VERSION",
+        "SETTINGS_PRINT_FORMATS_SET_DEFAULT",
+        "SETTINGS_PRINT_FORMATS_UPDATE",
+        "SETTINGS_PRINT_FORMATS_VIEW",
+        "SETTINGS_WHATSAPP_SETTINGS_CREATE",
+        "SETTINGS_WHATSAPP_SETTINGS_DELETE",
+        "SETTINGS_WHATSAPP_SETTINGS_UPDATE",
+        "SETTINGS_WHATSAPP_SETTINGS_VIEW",
+        "SETTINGS_WORKFLOW_DESIGNER_EDIT_FORM_BUILDER",
+        "SETTINGS_WORKFLOW_DESIGNER_MANAGE",
+        "SETTINGS_WORKFLOW_DESIGNER_PUBLISH_FORM_BUILDER",
+        "SETTINGS_WORKFLOW_DESIGNER_VIEW",
+        "SETTINGS_WORKFLOW_DESIGNER_VIEW_FORM_BUILDER"
+    ],
+    "summary": {
+        "totalMenus": 52,
+        "totalPermissions": 185,
+        "moduleCount": 8,
+        "featureCount": 44
+    }
+	}

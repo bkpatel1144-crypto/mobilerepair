@@ -1,0 +1,116 @@
+{
+    "success": true,
+    "message": "Dashboard config retrieved successfully",
+    "data": {
+        "role": "OWNER",
+        "dashboardConfig": {
+            "widgets": [
+                {
+                    "key": "personal.welcome",
+                    "visible": true
+                },
+                {
+                    "key": "quick.scan_jobcard",
+                    "visible": true
+                },
+                {
+                    "key": "quick.new_jobcard",
+                    "visible": true
+                },
+                {
+                    "key": "quick.new_party",
+                    "visible": true
+                },
+                {
+                    "key": "quick.new_item",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.total",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.pipeline",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.today",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.revenue",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.outstanding",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.in_progress",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.pending",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.turnaround",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.cancelled",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.queued",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.hold",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.tech_done",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.ready",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.delivered",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.closed",
+                    "visible": true
+                },
+                {
+                    "key": "kpi.jobcards.pending_return",
+                    "visible": true
+                },
+                {
+                    "key": "chart.jobcards.by_status",
+                    "visible": true
+                },
+                {
+                    "key": "chart.revenue.trend",
+                    "visible": true
+                },
+                {
+                    "key": "chart.jobcards.trend",
+                    "visible": true
+                },
+                {
+                    "key": "chart.jobcards.by_tech",
+                    "visible": true
+                },
+                {
+                    "key": "list.jobcards.recent",
+                    "visible": true
+                }
+            ]
+        },
+        "defaultLanding": null
+    }
+}

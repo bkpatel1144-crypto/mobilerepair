@@ -266,7 +266,8 @@
     "allCategories": "બધી શ્રેણી",
     "allBranches": "બધી શાખાઓ",
     "allRoles": "બધી ભૂમિકાઓ",
-    "tenDigitMobile": "10 અંકનો મોબાઇલ"
+    "tenDigitMobile": "10 અંકનો મોબાઇલ",
+    "others": "અન્ય"
   },
   "shell": {
     "appName": "aim",
@@ -474,7 +475,18 @@
         "goodMorning": "સુપ્રભાત",
         "goodAfternoon": "નમસ્કાર",
         "goodEvening": "શુભ સાંજ",
-        "hereSWhatSHappeningIn": "તમારા સર્વિસ સેન્ટરમાં શું ચાલી રહ્યું છે, તે જુઓ."
+        "hereSWhatSHappeningIn": "તમારા સર્વિસ સેન્ટરમાં શું ચાલી રહ્યું છે, તે જુઓ.",
+        "periodJobCards": "સમયગાળાના જોબ કાર્ડ",
+        "jobCardsTrend": "જોબ કાર્ડ ટ્રેન્ડ",
+        "jobsByTechnician": "ટેકનિશિયન પ્રમાણે જોબ",
+        "recentJobCards": "તાજેતરના જોબ કાર્ડ",
+        "viewAll": "બધા જુઓ",
+        "thisChartFillsInAsJobCards": "જોબ કાર્ડ બનતાં આ ચાર્ટ ભરાતો જશે.",
+        "noJobsAssignedYet": "હજી કોઈ જોબ સોંપાયેલ નથી",
+        "thisChartFillsInOnceJobsAreAssigned": "જોબ ટેકનિશિયનને સોંપાય પછી આ ચાર્ટ ભરાશે.",
+        "theTenNewestJobCardsAppear": "દસ સૌથી નવા જોબ કાર્ડ અહીં દેખાશે.",
+        "noWidgetsEnabled": "કોઈ વિજેટ ચાલુ નથી",
+        "yourRoleHasEveryDashboardWidget": "તમારી ભૂમિકા માટે બધા ડેશબોર્ડ વિજેટ બંધ છે. વ્યવસ્થાપક તેને રોલ મેનેજમેન્ટમાંથી ફરી ચાલુ કરી શકે છે."
       }
     },
     "finance": {
@@ -771,7 +783,12 @@
         "onMobileThisOpensTheCamera": "મોબાઇલ પર આ સીધો કેમેરા ખોલે છે. રેકોર્ડ માટે આ વેચનાર સાથે સચવાય છે.",
         "imeiCheckedAgainstCeirBlockedDevice": "IMEI ને CEIR / અટકાવેલી ડિવાઇસ યાદી સામે તપાસ્યું",
         "sellerDeclaredTheDeviceIsTheirs": "વેચનારે જણાવ્યું કે ડિવાઇસ તેમની છે, વેચવાનો હક છે અને ચોરીની નથી",
-        "whatYouPlanToSellThis": "તમે આ ડિવાઇસ કેટલામાં વેચવા માગો છો. વેચાણ સ્ક્રીન પર દેખાય છે."
+        "whatYouPlanToSellThis": "તમે આ ડિવાઇસ કેટલામાં વેચવા માગો છો. વેચાણ સ્ક્રીન પર દેખાય છે.",
+        "sections": {
+          "deviceDetails": "ડિવાઇસ વિગતો",
+          "sellerVerification": "વિક્રેતા અને ઓળખ ચકાસણી",
+          "purchaseDetails": "ખરીદી વિગતો"
+        }
       },
       "devicePurchase": {
         "devicePurchase": "ડિવાઇસ ખરીદી",
@@ -930,7 +947,16 @@
           "assignTo": "કોને સોંપવું",
           "remark": "ટિપ્પણી"
         },
-        "draftSavedAt": "ડ્રાફ્ટ સેવ થયો"
+        "draftSavedAt": "ડ્રાફ્ટ સેવ થયો",
+        "sections": {
+          "customerInformation": "ગ્રાહક માહિતી",
+          "deviceInformation": "ડિવાઇસ માહિતી",
+          "repairInformation": "રિપેર માહિતી",
+          "financial": "નાણાકીય",
+          "accessories": "એક્સેસરીઝ",
+          "internalDetails": "આંતરિક વિગતો",
+          "images": "છબીઓ"
+        }
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "લેતી વખતની વસ્તુઓ",
@@ -1326,7 +1352,12 @@
         "thisTurnsOffEveryDashboardWidget": "આ આ ભૂમિકા માટે દરેક ડેશબોર્ડ વિજેટ બંધ કરે છે — વિજેટ ફરી ચાલુ થાય ત્યાં સુધી તેનું ડેશબોર્ડ ખાલી રહેશે. આ ફક્ત સાચવ્યા વગરના ડ્રાફ્ટ પર અસર કરે છે.",
         "defaultLandingPage": "ડિફોલ્ટ શરૂઆતનું પાનું",
         "visibleDashboardWidgets": "દેખાતા ડેશબોર્ડ વિજેટ",
-        "whereThisRoleLandsImmediatelyAfter": "લોગ ઇન કરતાં જ આ ભૂમિકા ક્યાં પહોંચે છે."
+        "whereThisRoleLandsImmediatelyAfter": "લોગ ઇન કરતાં જ આ ભૂમિકા ક્યાં પહોંચે છે.",
+        "addedCount": "{{added}} / {{total}} ઉમેરાયા",
+        "activeCount": "{{count}} સક્રિય",
+        "widgetsShownOnThisRoleSDashboard": "આ ભૂમિકાના ડેશબોર્ડ પર દેખાતા વિજેટ.",
+        "notBuiltYet": "હજી બન્યું નથી",
+        "thisWidgetIsInTheReference": "સંદર્ભ એપ સાથે મેળ માટે યાદીમાં છે, પણ આ બિલ્ડ તેને હજી બતાવતું નથી — તેથી તે ચાલુ કરી શકાતું નથી."
       },
       "menusPermissionsTab": {
         "inheritFromRole": "ભૂમિકામાંથી લો",
@@ -1901,6 +1932,9 @@
       },
       "errorState": {
         "couldnTLoadThisData": "આ માહિતી લોડ થઈ શકી નથી"
+      },
+      "devicePinField": {
+        "eG1234OrTapDraw": "જેમ કે 1234 અથવા Draw દબાવો"
       }
     }
   },
@@ -2488,5 +2522,14 @@
     "highContrastHint": "ટેક્સ્ટ અને બોર્ડરનો કોન્ટ્રાસ્ટ વધુ, અને ફોકસ આઉટલાઇન જાડી.",
     "dyslexiaFontHint": "પહોળો ટાઇપફેસ, અક્ષરો, શબ્દો અને લીટીઓ વચ્ચે વધુ જગ્યા.",
     "appliesImmediately": "ફેરફાર તરત લાગુ થાય છે અને આ ડિવાઇસ પર સેવ થાય છે."
+  },
+  "widgets": {
+    "groups": {
+      "personal": "વ્યક્તિગત",
+      "quick": "ઝડપી ક્રિયાઓ",
+      "kpi": "KPI કાર્ડ",
+      "chart": "ચાર્ટ અને ગ્રાફ",
+      "list": "યાદીઓ"
+    }
   }
 }

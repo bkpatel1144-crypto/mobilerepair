@@ -91,8 +91,11 @@ export function RoleConfigurePage() {
 
   const checkedMenus = ALL_LEAF_KEYS.filter((k) => draft.menuPermissions[k]).length
   const checkedPermissions = ALL_ACTION_KEYS.filter((k) => draft.actionPermissions[k]).length
+  // Only the widgets the Dashboard can actually render. Counting every catalogue key would let a
+  // stale `true` for an unbuilt widget — or one left behind by a rename — inflate the badge past
+  // what the Widget Library below it shows as added.
   const checkedWidgets = DASHBOARD_WIDGETS.filter(
-    (w) => draft.dashboardConfig.visibleWidgets[w.key]
+    (w) => w.available && draft.dashboardConfig.visibleWidgets[w.key]
   ).length
 
   function handleCancel() {

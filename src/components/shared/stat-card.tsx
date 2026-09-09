@@ -33,6 +33,10 @@ interface StatCardBaseProps {
   trend?: { direction: 'up' | 'down'; label: string }
   selected?: boolean
   className?: string
+  /** Dashboard widget key, emitted as `data-widget`. The Dashboard gates every tile on a role's
+   *  `visibleWidgets`, and this is what lets a test assert that a widget the catalogue advertises
+   *  as built is genuinely on the screen — see `dashboard-widgets-rendered.test.tsx`. */
+  widgetKey?: string
 }
 
 type StatCardProps = StatCardBaseProps & ({ onClick?: undefined } | { onClick: () => void })
@@ -52,6 +56,7 @@ export function StatCard({
   selected,
   onClick,
   className,
+  widgetKey,
 }: StatCardProps) {
   const content = (
     <>
@@ -112,11 +117,21 @@ export function StatCard({
 
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} className={sharedClassName} aria-pressed={selected}>
+      <button
+        type="button"
+        onClick={onClick}
+        className={sharedClassName}
+        aria-pressed={selected}
+        data-widget={widgetKey}
+      >
         {content}
       </button>
     )
   }
 
-  return <div className={sharedClassName}>{content}</div>
+  return (
+    <div className={sharedClassName} data-widget={widgetKey}>
+      {content}
+    </div>
+  )
 }

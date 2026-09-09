@@ -152,7 +152,11 @@ export const DEFAULT_ROLE_SEEDS: DefaultRoleSeed[] = [
     menuPermissions: menusForSections(['service']),
     actionPermissions: grantModules({ service: 'createViewUpdate' }),
     // Technicians don't handle money — hide the financial stat tiles on their dashboard.
-    dashboardConfig: defaultDashboardConfig(['revenue', 'outstanding']),
+    // These are `DASHBOARD_WIDGETS` keys, asserted in `default-roles.test.ts`: they were
+    // `['revenue', 'outstanding']` against a catalogue that had renamed them to `kpi.*`, and
+    // since `visibleWidgets` is a `Record<string, boolean>` the stale keys were a silent no-op
+    // rather than a type error.
+    dashboardConfig: defaultDashboardConfig(['kpi.revenue', 'kpi.outstanding']),
   },
   {
     name: 'Accountant',

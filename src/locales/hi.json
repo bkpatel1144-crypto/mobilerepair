@@ -266,7 +266,8 @@
     "allCategories": "सभी श्रेणियाँ",
     "allBranches": "सभी शाखाएं",
     "allRoles": "सभी भूमिकाएं",
-    "tenDigitMobile": "10 अंकों का मोबाइल"
+    "tenDigitMobile": "10 अंकों का मोबाइल",
+    "others": "अन्य"
   },
   "shell": {
     "appName": "aim",
@@ -474,7 +475,18 @@
         "goodMorning": "सुप्रभात",
         "goodAfternoon": "नमस्कार",
         "goodEvening": "शुभ संध्या",
-        "hereSWhatSHappeningIn": "आपके सर्विस सेंटर में क्या चल रहा है, यह देखिए।"
+        "hereSWhatSHappeningIn": "आपके सर्विस सेंटर में क्या चल रहा है, यह देखिए।",
+        "periodJobCards": "अवधि के जॉब कार्ड",
+        "jobCardsTrend": "जॉब कार्ड ट्रेंड",
+        "jobsByTechnician": "तकनीशियन अनुसार जॉब",
+        "recentJobCards": "हाल के जॉब कार्ड",
+        "viewAll": "सभी देखें",
+        "thisChartFillsInAsJobCards": "जॉब कार्ड बनने के साथ यह चार्ट भरता जाएगा।",
+        "noJobsAssignedYet": "अभी कोई जॉब असाइन नहीं",
+        "thisChartFillsInOnceJobsAreAssigned": "जॉब किसी तकनीशियन को असाइन होने पर यह चार्ट भरता जाएगा।",
+        "theTenNewestJobCardsAppear": "दस सबसे नए जॉब कार्ड यहाँ दिखेंगे।",
+        "noWidgetsEnabled": "कोई विजेट चालू नहीं",
+        "yourRoleHasEveryDashboardWidget": "आपकी भूमिका के लिए सभी डैशबोर्ड विजेट बंद हैं। व्यवस्थापक इन्हें रोल मैनेजमेंट से फिर चालू कर सकते हैं।"
       }
     },
     "finance": {
@@ -771,7 +783,12 @@
         "onMobileThisOpensTheCamera": "मोबाइल पर यह सीधे कैमरा खोलता है। रिकॉर्ड के लिए इस विक्रेता के साथ सहेजा जाता है।",
         "imeiCheckedAgainstCeirBlockedDevice": "IMEI को CEIR / रोकी गई डिवाइस सूची से जाँचा गया",
         "sellerDeclaredTheDeviceIsTheirs": "विक्रेता ने बताया कि डिवाइस उनकी है, बेचने का हक़ है और चोरी की नहीं है",
-        "whatYouPlanToSellThis": "आप यह डिवाइस कितने में बेचना चाहते हैं। विक्रय स्क्रीन पर दिखता है।"
+        "whatYouPlanToSellThis": "आप यह डिवाइस कितने में बेचना चाहते हैं। विक्रय स्क्रीन पर दिखता है।",
+        "sections": {
+          "deviceDetails": "डिवाइस विवरण",
+          "sellerVerification": "विक्रेता और आईडी सत्यापन",
+          "purchaseDetails": "खरीद विवरण"
+        }
       },
       "devicePurchase": {
         "devicePurchase": "डिवाइस खरीद",
@@ -930,7 +947,16 @@
           "assignTo": "किसे सौंपें",
           "remark": "टिप्पणी"
         },
-        "draftSavedAt": "ड्राफ़्ट सेव हुआ"
+        "draftSavedAt": "ड्राफ़्ट सेव हुआ",
+        "sections": {
+          "customerInformation": "ग्राहक जानकारी",
+          "deviceInformation": "डिवाइस जानकारी",
+          "repairInformation": "मरम्मत जानकारी",
+          "financial": "वित्तीय",
+          "accessories": "सहायक सामान",
+          "internalDetails": "आंतरिक विवरण",
+          "images": "तस्वीरें"
+        }
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "लेते समय की चीज़ें",
@@ -1326,7 +1352,12 @@
         "thisTurnsOffEveryDashboardWidget": "यह इस भूमिका के लिए हर डैशबोर्ड विजेट बंद कर देता है — विजेट दोबारा चालू होने तक इसका डैशबोर्ड खाली रहेगा। यह सिर्फ़ बिना सहेजे ड्राफ़्ट पर असर करता है।",
         "defaultLandingPage": "डिफ़ॉल्ट शुरुआती पेज",
         "visibleDashboardWidgets": "दिखने वाले डैशबोर्ड विजेट",
-        "whereThisRoleLandsImmediatelyAfter": "लॉग इन करते ही यह भूमिका कहाँ पहुँचती है।"
+        "whereThisRoleLandsImmediatelyAfter": "लॉग इन करते ही यह भूमिका कहाँ पहुँचती है।",
+        "addedCount": "{{added}} / {{total}} जोड़े गए",
+        "activeCount": "{{count}} सक्रिय",
+        "widgetsShownOnThisRoleSDashboard": "इस भूमिका के डैशबोर्ड पर दिखने वाले विजेट।",
+        "notBuiltYet": "अभी नहीं बना",
+        "thisWidgetIsInTheReference": "संदर्भ ऐप से मेल के लिए सूचीबद्ध है, पर यह बिल्ड इसे अभी नहीं दिखाता — इसलिए इसे चालू नहीं किया जा सकता।"
       },
       "menusPermissionsTab": {
         "inheritFromRole": "भूमिका से लें",
@@ -1901,6 +1932,9 @@
       },
       "errorState": {
         "couldnTLoadThisData": "यह जानकारी लोड नहीं हो सकी"
+      },
+      "devicePinField": {
+        "eG1234OrTapDraw": "जैसे 1234 या Draw दबाएँ"
       }
     }
   },
@@ -2488,5 +2522,14 @@
     "highContrastHint": "टेक्स्ट और बॉर्डर का कॉन्ट्रास्ट ज़्यादा, और फ़ोकस आउटलाइन मोटी।",
     "dyslexiaFontHint": "चौड़ा टाइपफ़ेस, अक्षरों, शब्दों और पंक्तियों के बीच ज़्यादा जगह।",
     "appliesImmediately": "बदलाव तुरंत लागू होते हैं और इस डिवाइस पर सेव हो जाते हैं।"
+  },
+  "widgets": {
+    "groups": {
+      "personal": "व्यक्तिगत",
+      "quick": "त्वरित कार्य",
+      "kpi": "KPI कार्ड",
+      "chart": "चार्ट और ग्राफ़",
+      "list": "सूचियाँ"
+    }
   }
 }
