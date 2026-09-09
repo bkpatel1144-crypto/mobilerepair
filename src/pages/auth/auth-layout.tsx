@@ -94,8 +94,9 @@ export function AuthLayout({
                 type="button"
                 onClick={() => void setLanguage(l.code)}
                 aria-current={language === l.code ? 'true' : undefined}
+                data-tap
                 className={cn(
-                  'rounded-full px-2.5 py-1 text-xs font-medium transition-colors',
+                  'inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
                   language === l.code
                     ? 'bg-foreground text-background'
                     : 'text-muted-foreground hover:text-foreground'
@@ -118,6 +119,7 @@ export function AuthLayout({
             <div className="mt-8">{children}</div>
             <p className="mt-8 text-sm text-muted-foreground">{footer}</p>
             <Link
+              data-tap
               to="/"
               className="mt-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >

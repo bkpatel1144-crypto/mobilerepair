@@ -275,6 +275,12 @@
  * controls already at or above 44px are untouched.
  * ------------------------------------------------------------------------------------- */
 @media (pointer: coarse) {
+  /* `[data-tap]` is for plain links that act as navigation — the marketing footer's four link
+   * columns, chiefly. They are `<a>` elements, not `[data-slot='button']`, so the list below
+   * never covered them and they measured 18px tall on a phone: legible, but a miss as often as
+   * a hit. Deliberately opt-in rather than a blanket `a` rule, which would also inflate every
+   * inline link inside a paragraph and wreck the legal pages' line spacing. */
+  [data-tap],
   [data-slot='button'],
   [data-slot='input'],
   [data-slot='select-trigger'],

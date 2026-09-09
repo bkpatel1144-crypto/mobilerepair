@@ -52,7 +52,7 @@ export function Wordmark({
         {showCompany && (
           <span
             className={cn(
-              'mt-0.5 truncate text-[0.6rem] font-semibold uppercase tracking-[0.16em]',
+              'mt-0.5 truncate text-[0.66rem] font-semibold uppercase tracking-[0.14em]',
               inverse ? 'text-slate-400' : 'text-muted-foreground'
             )}
           >

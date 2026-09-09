@@ -69,8 +69,9 @@ export function MarketingFooter() {
                 {column.links.map((link) => (
                   <li key={link.to}>
                     <Link
+                      data-tap
                       to={link.to}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="inline-flex items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {t(link.labelKey)}
                     </Link>
@@ -88,13 +89,18 @@ export function MarketingFooter() {
             {address.city}, {address.state} {address.postalCode}
           </FooterDetail>
           <FooterDetail icon={Phone} label={t('marketing.footer.phone')}>
-            <a className="hover:text-foreground" href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}>
+            <a
+              data-tap
+              className="inline-flex items-center hover:text-foreground"
+              href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}
+            >
               {COMPANY.phone}
             </a>
           </FooterDetail>
           <FooterDetail icon={MessageCircle} label={t('marketing.footer.whatsapp')}>
             <a
-              className="hover:text-foreground"
+              data-tap
+              className="inline-flex items-center hover:text-foreground"
               href={whatsappLink(t('marketing.contact.whatsappPrefill'))}
               target="_blank"
               rel="noreferrer"
@@ -103,7 +109,11 @@ export function MarketingFooter() {
             </a>
           </FooterDetail>
           <FooterDetail icon={Mail} label={t('marketing.footer.email')}>
-            <a className="hover:text-foreground" href={mailto(COMPANY.supportEmail)}>
+            <a
+              data-tap
+              className="inline-flex items-center hover:text-foreground"
+              href={mailto(COMPANY.supportEmail)}
+            >
               {COMPANY.supportEmail}
             </a>
           </FooterDetail>

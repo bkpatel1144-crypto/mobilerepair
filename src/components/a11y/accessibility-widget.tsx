@@ -54,8 +54,18 @@ export function AccessibilityWidget() {
   const percent = Math.round(prefs.fontScale * 100)
 
   return (
-    <div ref={panelRef} className="fixed left-0 top-1/2 z-50 -translate-y-1/2">
-      <div className="flex items-start">
+    // Bottom-left on a phone, vertically centred from `lg` up.
+    //
+    // Centred everywhere put the tab straight on top of the hero paragraph at 390px — it covered
+    // the start of a line, so the copy read "...arranty in one connected system". On a wide screen
+    // the tab sits in the gutter beside the content and overlaps nothing, but a phone has no
+    // gutter to sit in, and a floating control that hides the words underneath it is a poor trade
+    // on the one page that has to be read.
+    <div
+      ref={panelRef}
+      className="fixed bottom-6 left-0 z-50 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2"
+    >
+      <div className="flex items-end lg:items-start">
         {/* The edge tab. Vertical text so it takes almost no horizontal room on a phone, where
          * the panel itself would otherwise cover most of the screen. */}
         <button
@@ -64,12 +74,21 @@ export function AccessibilityWidget() {
           aria-expanded={open}
           aria-label={t('a11y.title')}
           className={cn(
-            'flex w-9 flex-col items-center gap-1.5 rounded-r-xl bg-slate-900 py-3 text-white shadow-lg transition-colors hover:bg-slate-800',
+            // A round 44px button on a phone, the labelled edge tab from `lg` up.
+            //
+            // The tab shape only works where there is a gutter for it to live in. On a phone the
+            // content runs to both edges, so a 40x72 tab clipped whatever it happened to be over
+            // — after moving it out of the hero paragraph it landed on the product mockup's first
+            // status label instead. A circle is the smallest footprint that stays a 44px target,
+            // and bottom-left is where a phone user already expects a floating control.
+            'flex items-center justify-center bg-slate-900 text-white shadow-lg transition-colors hover:bg-slate-800',
+            'ml-3 size-11 rounded-full',
+            'lg:ml-0 lg:h-auto lg:w-10 lg:flex-col lg:gap-1.5 lg:rounded-full lg:rounded-l-none lg:py-3.5',
             open && 'bg-primary hover:bg-primary'
           )}
         >
           <Accessibility className="size-5" />
-          <span className="text-[0.6rem] font-semibold uppercase tracking-wider [writing-mode:vertical-rl]">
+          <span className="hidden text-[0.6rem] font-semibold uppercase tracking-wider [writing-mode:vertical-rl] lg:inline">
             {t('a11y.tab')}
           </span>
         </button>

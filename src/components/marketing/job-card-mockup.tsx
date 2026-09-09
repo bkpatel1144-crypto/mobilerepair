@@ -24,45 +24,57 @@ export function JobCardMockup() {
   return (
     <div className="bg-card">
       <div className="space-y-6 p-5 sm:p-6">
-        {/* Horizontal status timeline */}
-        <div className="flex items-center">
-          {TIMELINE_STEPS.map((step, i) => {
-            const isDone = i < ACTIVE_STEP_INDEX
-            const isCurrent = i === ACTIVE_STEP_INDEX
-            return (
-              <div key={step} className="flex flex-1 items-center last:flex-none">
-                <div className="flex flex-col items-center gap-1.5">
-                  <span
-                    className={
-                      isDone || isCurrent
-                        ? 'flex size-6 items-center justify-center rounded-full bg-teal-600 text-white'
-                        : 'flex size-6 items-center justify-center rounded-full border-2 border-muted-foreground/30 text-transparent'
-                    }
-                  >
-                    {(isDone || isCurrent) && <Check className="size-3.5" />}
-                  </span>
-                  <span
-                    className={
-                      isCurrent
-                        ? 'text-[11px] font-semibold whitespace-nowrap text-teal-700 dark:text-teal-400'
-                        : 'text-[11px] whitespace-nowrap text-muted-foreground'
-                    }
-                  >
-                    {t(step)}
-                  </span>
+        {/* Horizontal status timeline.
+         *
+         * Scrolls inside its own container on a narrow screen. Six `whitespace-nowrap` labels
+         * need about 340px, and now that the hero's grid columns are allowed to shrink the frame
+         * itself can be narrower than that. Letting the strip scroll keeps every status readable
+         * at full size; compressing it instead would either wrap the labels into a ragged two
+         * lines or shrink them past legibility on exactly the device where that matters most.
+         *
+         * The negative margin lets it scroll to the card's own edges rather than stopping inside
+         * the padding, which is what makes it read as a strip that continues rather than one
+         * that is cut off. */}
+        <div className="-mx-5 overflow-x-auto px-5 sm:mx-0 sm:overflow-visible sm:px-0">
+          <div className="flex min-w-[20rem] items-center">
+            {TIMELINE_STEPS.map((step, i) => {
+              const isDone = i < ACTIVE_STEP_INDEX
+              const isCurrent = i === ACTIVE_STEP_INDEX
+              return (
+                <div key={step} className="flex flex-1 items-center last:flex-none">
+                  <div className="flex flex-col items-center gap-1.5">
+                    <span
+                      className={
+                        isDone || isCurrent
+                          ? 'flex size-6 items-center justify-center rounded-full bg-teal-600 text-white'
+                          : 'flex size-6 items-center justify-center rounded-full border-2 border-muted-foreground/30 text-transparent'
+                      }
+                    >
+                      {(isDone || isCurrent) && <Check className="size-3.5" />}
+                    </span>
+                    <span
+                      className={
+                        isCurrent
+                          ? 'text-[11px] font-semibold whitespace-nowrap text-teal-700 dark:text-teal-400'
+                          : 'text-[11px] whitespace-nowrap text-muted-foreground'
+                      }
+                    >
+                      {t(step)}
+                    </span>
+                  </div>
+                  {i < TIMELINE_STEPS.length - 1 && (
+                    <span
+                      className={
+                        isDone
+                          ? 'mx-1 h-0.5 flex-1 bg-teal-600'
+                          : 'mx-1 h-0.5 flex-1 bg-muted-foreground/20'
+                      }
+                    />
+                  )}
                 </div>
-                {i < TIMELINE_STEPS.length - 1 && (
-                  <span
-                    className={
-                      isDone
-                        ? 'mx-1 h-0.5 flex-1 bg-teal-600'
-                        : 'mx-1 h-0.5 flex-1 bg-muted-foreground/20'
-                    }
-                  />
-                )}
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
 
         {/* Info cards */}

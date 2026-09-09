@@ -134,8 +134,20 @@ export function LandingPage() {
         <Container className="relative py-(--spacing-section)">
           {/* Text and product side by side from `lg` up, so a wide screen is filled by content
            * instead of by margins around a centred column. Below that they stack, text first. */}
+          {/* `min-w-0` on both children is load-bearing on a phone.
+           *
+           * A grid item's automatic minimum size is its min-content width, and the product frame
+           * contains a six-step timeline with `whitespace-nowrap` labels — about 388px of
+           * min-content. On a 375px screen that floor made the single implicit column 388px wide,
+           * so the column, and the text column with it, ran 33px past the viewport. Because the
+           * section is `overflow-hidden` the excess was clipped rather than scrolled, which meant
+           * `scrollWidth === clientWidth` and every overflow check reported the page clean while
+           * the hero was visibly cutting words in half: "WhatsApp update", "one connecte".
+           *
+           * The `lg` template already used `minmax(0,…)` for the same reason; the implicit
+           * single-column layout below `lg` needed it too. */}
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
-            <div>
+            <div className="min-w-0">
               <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-200 backdrop-blur">
                 <span className="size-1.5 rounded-full bg-emerald-400" />
                 {t('marketing.home.hero.badge')}
@@ -185,7 +197,7 @@ export function LandingPage() {
             {/* Nudged slightly wider than its column on large screens so the frame reaches toward
              * the edge — the shot is the most persuasive thing here and shouldn't sit small in
              * the middle of a dark field. */}
-            <div className="lg:-mr-6 xl:-mr-12">
+            <div className="min-w-0 lg:-mr-6 xl:-mr-12">
               <ProductFrame url="app.aimenterprise.in/service/job-cards/JC-2026-0143">
                 <JobCardMockup />
               </ProductFrame>
