@@ -423,7 +423,11 @@
     "exportExcel": "Export Excel",
     "printLabel": "Print Label",
     "setAsDefault": "Set as Default",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "custom": "Custom",
+    "to": "to",
+    "back": "Back",
+    "clear": "Clear"
   },
   "pages": {
     "dashboard": {
@@ -889,7 +893,26 @@
         "couldNotCreateTheJobCard": "Could not create the job card. Try again.",
         "createANewServiceJobCard": "Create a new service job card for customer device repair and tracking.",
         "patternDrawn": "Pattern drawn",
-        "theyWillBeUploadedWhenYou": "They will be uploaded when you create the job card."
+        "theyWillBeUploadedWhenYou": "They will be uploaded when you create the job card.",
+        "labels": {
+          "customer": "Customer",
+          "alternativeMobile": "Alternative Mobile",
+          "deviceType": "Device Type",
+          "brand": "Brand",
+          "model": "Model",
+          "serialNo": "Serial No",
+          "devicePin": "Device PIN / Pattern",
+          "problems": "Problems",
+          "serviceItems": "Service Items",
+          "estimatedCost": "Estimated Cost",
+          "advanceReceived": "Advance Received",
+          "itemsReceived": "Items received",
+          "itemsReturned": "Items returned",
+          "receivedBy": "Received By",
+          "assignTo": "Assign To",
+          "remark": "Remark"
+        },
+        "draftSavedAt": "Draft saved at"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "Items at Intake",

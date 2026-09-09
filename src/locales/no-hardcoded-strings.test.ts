@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import BASELINE from './hardcoded-baseline.json'
 
 /**
  * Fails if any user-visible English string is added back into the source.
@@ -146,13 +147,46 @@ describe('no hardcoded display strings', () => {
     const found: string[] = []
     for (const [path, raw] of files) {
       if (!/\.tsx$/.test(path)) continue
-      for (const m of raw.matchAll(/>\s*\n\s*([A-Z][^<>{}]{10,300}?)\s*\n\s*</g)) {
+      // Terminates on a sibling element or an expression, not just on the closing tag.
+      //
+      // The original required the text node to be a tag's *only* child, matching all the way to
+      // a newline and a closing bracket. That let through every label with a marker beside it,
+      // which is the commonest shape in this codebase — a required-field asterisk or an
+      // "(Optional)" hint in a sibling span. Three shipped bugs came through the hole: the
+      // landing page's h1, the job-card mockup's warranty line, and eighteen field labels on
+      // Create Job Card, the most-used form in the app, left entirely in English for Hindi and
+      // Gujarati users. The minimum length drops to 3 for the same reason: "Brand" and "Model"
+      // are labels, not noise.
+      for (const m of raw.matchAll(/>\s*\n\s*([A-Z][^<>{}\n]{3,300}?)\s*(?:<|\{)/g)) {
         const text = m[1].replace(/\s+/g, ' ').trim()
         if (!/[a-z]/.test(text)) continue
         if (text.includes('&') && /&[a-z]+;/.test(text)) continue
         found.push(`${path}: ${JSON.stringify(text.slice(0, 60))}`)
       }
     }
-    expect(found).toEqual([])
+
+    // A ratchet, not a clean assertion, and deliberately so.
+    //
+    // Relaxing the pattern above exposed 286 strings this test had never been able to see —
+    // roughly forty files' worth of field labels, dialog copy and column headers that are still
+    // English in Hindi and Gujarati. Asserting `[]` would leave the suite red for as long as that
+    // backlog exists, and a permanently failing test is one nobody reads. Reverting the pattern
+    // would hide the problem again.
+    //
+    // So the baseline is checked in, and the only rule enforced is that it cannot grow. A newly
+    // hardcoded string fails immediately, which is the property that actually matters; the
+    // backlog is visible in `hardcoded-baseline.json` and shrinks as it is worked through.
+    //
+    // Stale entries fail too, so fixing a string forces the baseline down rather than letting it
+    // drift out of date. Regenerate with `node tools/i18n/baseline.cjs`.
+    const baseline = new Set(BASELINE as string[])
+    const added = found.filter((f) => !baseline.has(f))
+    const fixed = [...baseline].filter((b) => !found.includes(b))
+
+    expect(added, 'newly hardcoded English strings — wrap these in t()').toEqual([])
+    expect(
+      fixed,
+      'these are fixed; run node tools/i18n/baseline.cjs to update the baseline'
+    ).toEqual([])
   })
 })

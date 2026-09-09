@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { ScrollRow } from '@/components/shared/scroll-row'
 
 export type DateRangeKey = 'today' | 'yesterday' | 'week' | 'month' | 'year' | 'custom'
 
@@ -52,9 +53,12 @@ export function FilterBar({
 }: FilterBarProps) {
   const { t } = useTranslation()
   return (
-    <div className={cn('flex flex-wrap items-center gap-2', className)}>
+    // A column on a phone, the original wrapping row from `sm` up. The search field wants the
+    // full width on a narrow screen; the chips want a single scrolling line rather than three
+    // ragged wrapped ones.
+    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center', className)}>
       {onSearchChange && (
-        <div className="relative min-w-[200px] flex-1 sm:flex-none sm:basis-72">
+        <div className="relative w-full sm:min-w-[200px] sm:flex-none sm:basis-72">
           <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={searchValue}
@@ -65,51 +69,63 @@ export function FilterBar({
         </div>
       )}
 
-      {onDateRangeChange && (
-        <div className="flex flex-wrap gap-1.5">
-          {RANGE_OPTIONS.map((opt) => (
-            <Button
-              key={opt.key}
-              type="button"
-              size="sm"
-              variant={dateRange === opt.key ? 'default' : 'outline'}
-              onClick={() => onDateRangeChange(opt.key)}
-            >
-              {t(opt.labelKey)}
-            </Button>
-          ))}
-          {showCustomRange && (
+      {/* Chips and any extra controls share one scrolling line on a phone.
+       *
+       * `sm:contents` is what keeps the desktop layout byte-for-byte as it was: from `sm` up the
+       * wrapper stops being a box at all, so its children become direct flex items of the bar
+       * above and wrap exactly as they did before this was introduced. Without it, 35 pages'
+       * filter bars would each gain a nesting level and a slightly different wrap point.
+       *
+       * `children` is included deliberately — the Dashboard passes its "All Time" chip in that
+       * way, and leaving it outside the row was what stranded it alone on a third line. */}
+      {(onDateRangeChange || children) && (
+        <ScrollRow className="gap-1.5 sm:contents">
+          {onDateRangeChange &&
+            RANGE_OPTIONS.map((opt) => (
+              <Button
+                key={opt.key}
+                type="button"
+                size="sm"
+                variant={dateRange === opt.key ? 'default' : 'outline'}
+                onClick={() => onDateRangeChange(opt.key)}
+              >
+                {t(opt.labelKey)}
+              </Button>
+            ))}
+          {onDateRangeChange && showCustomRange && (
             <Button
               type="button"
               size="sm"
               variant={dateRange === 'custom' ? 'default' : 'outline'}
               onClick={() => onDateRangeChange('custom')}
             >
-              Custom
+              {t('shared.custom')}
             </Button>
           )}
-        </div>
+          {children}
+        </ScrollRow>
       )}
 
       {dateRange === 'custom' && showCustomRange && (
-        <div className="flex items-center gap-1.5">
+        // The two date fields share the width on a phone: at a fixed 150px each plus the
+        // separator they came to 316px, which fits a 390px screen only until the gutter is
+        // subtracted.
+        <div className="flex w-full items-center gap-1.5 sm:w-auto">
           <Input
             type="date"
             value={customFrom}
             onChange={(e) => onCustomFromChange?.(e.target.value)}
-            className="w-[150px]"
+            className="min-w-0 flex-1 sm:w-[150px] sm:flex-none"
           />
-          <span className="text-sm text-muted-foreground">to</span>
+          <span className="shrink-0 text-sm text-muted-foreground">{t('shared.to')}</span>
           <Input
             type="date"
             value={customTo}
             onChange={(e) => onCustomToChange?.(e.target.value)}
-            className="w-[150px]"
+            className="min-w-0 flex-1 sm:w-[150px] sm:flex-none"
           />
         </div>
       )}
-
-      {children}
     </div>
   )
 }

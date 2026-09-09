@@ -423,7 +423,11 @@
     "exportExcel": "Excel एक्सपोर्ट",
     "printLabel": "लेबल प्रिंट करें",
     "setAsDefault": "डिफ़ॉल्ट बनाएं",
-    "getStarted": "शुरू करें"
+    "getStarted": "शुरू करें",
+    "custom": "कस्टम",
+    "to": "से",
+    "back": "वापस",
+    "clear": "साफ़ करें"
   },
   "pages": {
     "dashboard": {
@@ -889,7 +893,26 @@
         "couldNotCreateTheJobCard": "जॉब कार्ड बनाया नहीं जा सका। फिर कोशिश करें।",
         "createANewServiceJobCard": "ग्राहक की डिवाइस की मरम्मत और उसका हिसाब रखने के लिए नया सर्विस जॉब कार्ड बनाएं।",
         "patternDrawn": "पैटर्न बना दिया",
-        "theyWillBeUploadedWhenYou": "जॉब कार्ड बनाते समय ये अपलोड हो जाएंगी।"
+        "theyWillBeUploadedWhenYou": "जॉब कार्ड बनाते समय ये अपलोड हो जाएंगी।",
+        "labels": {
+          "customer": "ग्राहक",
+          "alternativeMobile": "वैकल्पिक मोबाइल",
+          "deviceType": "डिवाइस टाइप",
+          "brand": "ब्रांड",
+          "model": "मॉडल",
+          "serialNo": "सीरियल नंबर",
+          "devicePin": "डिवाइस पिन / पैटर्न",
+          "problems": "ख़राबी",
+          "serviceItems": "सर्विस आइटम",
+          "estimatedCost": "अनुमानित लागत",
+          "advanceReceived": "एडवांस मिला",
+          "itemsReceived": "मिले आइटम",
+          "itemsReturned": "लौटाए आइटम",
+          "receivedBy": "किसने लिया",
+          "assignTo": "किसे सौंपें",
+          "remark": "टिप्पणी"
+        },
+        "draftSavedAt": "ड्राफ़्ट सेव हुआ"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "लेते समय की चीज़ें",

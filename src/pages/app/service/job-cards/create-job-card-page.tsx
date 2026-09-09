@@ -56,7 +56,11 @@ const COST_QUICK_AMOUNTS = [200, 500, 1000, 1500, 2000, 3000, 5000]
  * evenly. It also gives the mobile stack for free: below ~32rem the tracks no longer fit
  * side by side and drop to one column, with no breakpoint to keep in sync.
  */
-const FIELD_ROW = 'grid gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))]'
+// `min-w-0` on the row and its children for the same reason as the outer grid below: without it
+// a grid item cannot shrink under its min-content width, and the row's contribution — a 15rem
+// track plus an icon button — held the whole form 37px wider than the screen.
+const FIELD_ROW =
+  'grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))] [&>*]:min-w-0'
 
 const DRAFT_KEY = 'aim-create-job-card-draft'
 
@@ -398,8 +402,10 @@ export function CreateJobCardPage() {
 
   return (
     <div className="space-y-4 p-4 sm:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <div>
+      {/* Stacks on a phone. Side by side, the title and its two buttons left "Create Job Card"
+       * wrapping onto three lines in the space the buttons did not take. */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
           <h1 className="text-lg font-bold">{t('pages.service.createJobCard.createJobCard')}</h1>
           <p className="text-sm text-muted-foreground">
             {t('pages.service.createJobCard.createANewServiceJobCard')}
@@ -409,7 +415,7 @@ export function CreateJobCardPage() {
           {savedAt && (
             <span className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex">
               <Clock className="size-3.5" />
-              Draft saved at{' '}
+              {t('pages.service.createJobCard.draftSavedAt')}{' '}
               {savedAt.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
             </span>
           )}
@@ -426,7 +432,7 @@ export function CreateJobCardPage() {
           )}
           <Button type="button" variant="outline" size="sm" onClick={() => navigate(-1)}>
             <ArrowLeft />
-            Back
+            {t('shared.back')}
           </Button>
         </div>
       </div>
@@ -434,7 +440,16 @@ export function CreateJobCardPage() {
       <FormError message={formError} />
 
       <div className="rounded-lg border bg-card p-4 sm:p-6">
-        <div className="grid gap-x-4 gap-y-4 lg:grid-cols-2">
+        {/* `[&>*]:min-w-0` is what makes this form fit a phone.
+         *
+         * A grid item's automatic minimum size is its min-content width, so the two column
+         * stacks refused to go below 361px inside a 324px grid and every field row's trailing
+         * icon button — add customer, add device type, scan IMEI, Draw — was pushed off the
+         * right edge and clipped, along with the card's own border. Measured, not guessed: the
+         * grid reported 324px with children of 361px each.
+         *
+         * Exactly the failure the marketing hero had, for exactly the same reason. */}
+        <div className="grid gap-x-4 gap-y-4 lg:grid-cols-2 [&>*]:min-w-0">
           {/* LEFT COLUMN — Customer / Device / Repair info (job-card-form-fields.ts sections
            * `customerInformation` + `deviceInformation` + `repairInformation`). Its own
            * independent vertical stack, not row-paired with the right column — matches the
@@ -443,10 +458,11 @@ export function CreateJobCardPage() {
           <div className="space-y-4">
             <div className="space-y-1.5">
               <Label>
-                Customer <span className="text-red-600">*</span>
+                {t('pages.service.createJobCard.labels.customer')}{' '}
+                <span className="text-red-600">*</span>
               </Label>
               <div className="flex gap-2">
-                <div className="flex-1">
+                <div className="min-w-0 flex-1">
                   <SearchSelect
                     options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
                     value={customerId}
@@ -507,7 +523,7 @@ export function CreateJobCardPage() {
             {isVisible('alternativeMobile') && (
               <div className="space-y-1.5">
                 <Label>
-                  Alternative Mobile{' '}
+                  {t('pages.service.createJobCard.labels.alternativeMobile')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     {t('shared.optional2')}
                   </span>
@@ -523,10 +539,11 @@ export function CreateJobCardPage() {
             <div className={FIELD_ROW}>
               <div className="space-y-1.5">
                 <Label>
-                  Device Type <span className="text-red-600">*</span>
+                  {t('pages.service.createJobCard.labels.deviceType')}{' '}
+                  <span className="text-red-600">*</span>
                 </Label>
                 <div className="flex gap-2">
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <SearchSelect
                       options={options.deviceTypes.map((dt) => ({
                         id: dt.id,
@@ -558,7 +575,7 @@ export function CreateJobCardPage() {
               {isVisible('brand') && (
                 <div className="space-y-1.5">
                   <Label>
-                    Brand{' '}
+                    {t('pages.service.createJobCard.labels.brand')}{' '}
                     {isRequired('brand') ? (
                       <span className="text-red-600">*</span>
                     ) : (
@@ -568,7 +585,7 @@ export function CreateJobCardPage() {
                     )}
                   </Label>
                   <div className="flex gap-2">
-                    <div className="flex-1">
+                    <div className="min-w-0 flex-1">
                       <SearchSelect
                         options={brandsForDeviceType.map((b) => ({ id: b.id, label: b.label }))}
                         value={brandId}
@@ -616,7 +633,7 @@ export function CreateJobCardPage() {
               {isVisible('model') && (
                 <div className="space-y-1.5">
                   <Label>
-                    Model{' '}
+                    {t('pages.service.createJobCard.labels.model')}{' '}
                     {isRequired('model') ? (
                       <span className="text-red-600">*</span>
                     ) : (
@@ -626,7 +643,7 @@ export function CreateJobCardPage() {
                     )}
                   </Label>
                   <div className="flex gap-2">
-                    <div className="flex-1">
+                    <div className="min-w-0 flex-1">
                       <SearchSelect
                         options={modelsForBrand.map((m) => ({ id: m.id, label: m.label }))}
                         value={selectedModelOption?.id ?? null}
@@ -677,7 +694,7 @@ export function CreateJobCardPage() {
                       value={imei}
                       onChange={(e) => setImei(e.target.value)}
                       placeholder={t('shared.15DigitImeiOptional')}
-                      className="flex-1"
+                      className="min-w-0 flex-1"
                     />
                     <Button
                       type="button"
@@ -715,7 +732,7 @@ export function CreateJobCardPage() {
                 {isVisible('serialNo') && (
                   <div className="space-y-1.5">
                     <Label>
-                      Serial No{' '}
+                      {t('pages.service.createJobCard.labels.serialNo')}{' '}
                       <span className="text-xs font-normal text-muted-foreground">
                         {t('shared.optional2')}
                       </span>
@@ -726,7 +743,7 @@ export function CreateJobCardPage() {
                         value={serialNo}
                         onChange={(e) => setSerialNo(e.target.value)}
                         placeholder={t('pages.service.createJobCard.serialNumberOptional')}
-                        className="flex-1"
+                        className="min-w-0 flex-1"
                       />
                       <Button
                         type="button"
@@ -747,7 +764,7 @@ export function CreateJobCardPage() {
             {isVisible('devicePinPattern') && (
               <div className="space-y-1.5">
                 <Label>
-                  Device PIN / Pattern{' '}
+                  {t('pages.service.createJobCard.labels.devicePin')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     {t('shared.optional2')}
                   </span>
@@ -769,7 +786,7 @@ export function CreateJobCardPage() {
                           setPinIsPattern(false)
                         }}
                       >
-                        Clear
+                        {t('shared.clear')}
                       </button>
                     </div>
                   ) : (
@@ -780,7 +797,7 @@ export function CreateJobCardPage() {
                         setPinIsPattern(false)
                       }}
                       placeholder="e.g. 1234 or tap Draw"
-                      className="flex-1"
+                      className="min-w-0 flex-1"
                     />
                   )}
                   <PatternLockPicker
@@ -796,10 +813,11 @@ export function CreateJobCardPage() {
 
             <div className="space-y-1.5">
               <Label>
-                Problems <span className="text-red-600">*</span>
+                {t('pages.service.createJobCard.labels.problems')}{' '}
+                <span className="text-red-600">*</span>
               </Label>
               <div className="flex gap-2">
-                <div className="flex-1">
+                <div className="min-w-0 flex-1">
                   <MultiSelectPopover
                     options={options.problems.map((p) => ({ id: p.id, label: p.label }))}
                     selectedIds={problemIds}
@@ -830,13 +848,13 @@ export function CreateJobCardPage() {
             {isVisible('serviceItems') && (
               <div className="space-y-1.5">
                 <Label>
-                  Service Items{' '}
+                  {t('pages.service.createJobCard.labels.serviceItems')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     (Optional — adds to estimated cost)
                   </span>
                 </Label>
                 <div className="flex gap-2">
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <SearchSelect
                       options={serviceItemOptions.map((i) => ({
                         id: i.id,
@@ -926,7 +944,7 @@ export function CreateJobCardPage() {
                 {isVisible('estimatedCost') && (
                   <div className="space-y-1.5">
                     <Label>
-                      Estimated Cost{' '}
+                      {t('pages.service.createJobCard.labels.estimatedCost')}{' '}
                       <span className="text-xs font-normal text-muted-foreground">
                         {t('shared.optional2')}
                       </span>
@@ -964,7 +982,7 @@ export function CreateJobCardPage() {
                 {isVisible('advanceReceived') && (
                   <div className="space-y-1.5">
                     <Label>
-                      Advance Received{' '}
+                      {t('pages.service.createJobCard.labels.advanceReceived')}{' '}
                       <span className="text-xs font-normal text-muted-foreground">
                         {t('shared.optional2')}
                       </span>
@@ -1002,13 +1020,13 @@ export function CreateJobCardPage() {
             {isVisible('itemsReceived') && (
               <div className="space-y-1.5">
                 <Label>
-                  Items received{' '}
+                  {t('pages.service.createJobCard.labels.itemsReceived')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     {t('shared.optional2')}
                   </span>
                 </Label>
                 <div className="flex gap-2">
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <MultiSelectPopover
                       options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
                       selectedIds={itemsReceived}
@@ -1040,13 +1058,13 @@ export function CreateJobCardPage() {
             {isVisible('itemsReturned') && (
               <div className="space-y-1.5">
                 <Label>
-                  Items returned{' '}
+                  {t('pages.service.createJobCard.labels.itemsReturned')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     {t('shared.optional2')}
                   </span>
                 </Label>
                 <div className="flex gap-2">
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <MultiSelectPopover
                       options={options.customerItems.map((c) => ({ id: c.id, label: c.label }))}
                       selectedIds={itemsReturned}
@@ -1078,7 +1096,8 @@ export function CreateJobCardPage() {
             <div className={FIELD_ROW}>
               <div className="space-y-1.5">
                 <Label>
-                  Received By <span className="text-red-600">*</span>
+                  {t('pages.service.createJobCard.labels.receivedBy')}{' '}
+                  <span className="text-red-600">*</span>
                 </Label>
                 <SearchSelect
                   options={
@@ -1102,7 +1121,7 @@ export function CreateJobCardPage() {
               {isVisible('assignTo') && (
                 <div className="space-y-1.5">
                   <Label>
-                    Assign To{' '}
+                    {t('pages.service.createJobCard.labels.assignTo')}{' '}
                     <span className="text-xs font-normal text-muted-foreground">
                       {t('shared.optional2')}
                     </span>
@@ -1128,7 +1147,7 @@ export function CreateJobCardPage() {
             {isVisible('remark') && (
               <div className="space-y-1.5">
                 <Label>
-                  Remark{' '}
+                  {t('pages.service.createJobCard.labels.remark')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     {t('shared.optional2')}
                   </span>

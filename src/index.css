@@ -186,6 +186,24 @@
 }
 
 /* ---------------------------------------------------------------------------------------
+ * Scroll containers with no visible scrollbar.
+ *
+ * For the horizontal card and chip rows on mobile (see `ScrollRow`). A desktop scrollbar across
+ * a row of stat tiles reads as a rendering artefact rather than an affordance — on a phone the
+ * gesture is the affordance, and a partially visible next card is what says "there is more".
+ *
+ * Deliberately not applied to vertical scroll regions: hiding the bar there removes the only
+ * indication of how far down a long list someone is.
+ * ------------------------------------------------------------------------------------- */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------------------
  * Accessibility preferences — see src/lib/accessibility.ts.
  *
  * Both are attributes on `<html>` rather than classes, so they cannot collide with a Tailwind

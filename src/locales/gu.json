@@ -436,7 +436,11 @@
     "exportExcel": "Excel એક્સપોર્ટ",
     "printLabel": "લેબલ પ્રિન્ટ કરો",
     "setAsDefault": "ડિફોલ્ટ બનાવો",
-    "getStarted": "શરૂ કરો"
+    "getStarted": "શરૂ કરો",
+    "custom": "કસ્ટમ",
+    "to": "થી",
+    "back": "પાછા",
+    "clear": "સાફ કરો"
   },
   "pages": {
     "dashboard": {
@@ -902,7 +906,26 @@
         "couldNotCreateTheJobCard": "જોબ કાર્ડ બનાવી શકાયું નથી. ફરી પ્રયાસ કરો.",
         "createANewServiceJobCard": "ગ્રાહકની ડિવાઇસની મરામત અને તેનો હિસાબ રાખવા નવું સર્વિસ જોબ કાર્ડ બનાવો.",
         "patternDrawn": "પેટર્ન દોરી દીધી",
-        "theyWillBeUploadedWhenYou": "જોબ કાર્ડ બનાવતી વખતે તે અપલોડ થઈ જશે."
+        "theyWillBeUploadedWhenYou": "જોબ કાર્ડ બનાવતી વખતે તે અપલોડ થઈ જશે.",
+        "labels": {
+          "customer": "ગ્રાહક",
+          "alternativeMobile": "વૈકલ્પિક મોબાઇલ",
+          "deviceType": "ડિવાઇસ પ્રકાર",
+          "brand": "બ્રાન્ડ",
+          "model": "મોડલ",
+          "serialNo": "સીરિયલ નંબર",
+          "devicePin": "ડિવાઇસ પિન / પેટર્ન",
+          "problems": "ખામી",
+          "serviceItems": "સર્વિસ આઇટમ",
+          "estimatedCost": "અંદાજિત ખર્ચ",
+          "advanceReceived": "એડવાન્સ મળ્યું",
+          "itemsReceived": "મળેલ આઇટમ",
+          "itemsReturned": "પરત કરેલ આઇટમ",
+          "receivedBy": "કોણે લીધું",
+          "assignTo": "કોને સોંપવું",
+          "remark": "ટિપ્પણી"
+        },
+        "draftSavedAt": "ડ્રાફ્ટ સેવ થયો"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "લેતી વખતની વસ્તુઓ",
