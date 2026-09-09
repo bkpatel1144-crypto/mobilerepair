@@ -1765,7 +1765,8 @@
         "qualityCheck": "Quality check",
         "sampleData": "Sample data",
         "samsungGalaxyA15BatteryReplacement": "Samsung Galaxy A15 · Battery replacement",
-        "paid1450": "Paid ₹1,450"
+        "paid1450": "Paid ₹1,450",
+        "warrantyOnRepair": "90-day warranty on repair"
       },
       "marketingNav": {
         "toggleMenu": "Toggle menu",
@@ -1860,5 +1861,580 @@
         "couldnTLoadThisData": "Couldn't load this data"
       }
     }
+  },
+  "marketing": {
+    "nav": {
+      "home": "Home",
+      "features": "Features",
+      "solutions": "Solutions",
+      "pricing": "Pricing",
+      "about": "About",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "login": "Log in",
+      "signUpFree": "Sign up free",
+      "toggleMenu": "Toggle menu",
+      "language": "Language",
+      "skipToContent": "Skip to content"
+    },
+    "footer": {
+      "tagline": "Repair-shop and second-hand-device software built for Indian shops — job cards, technicians, billing and stock in one place.",
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "privacy": "Privacy policy",
+      "terms": "Terms of use",
+      "address": "Address",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "chatWithUs": "Chat with us",
+      "copyright": "© {{year}} {{company}}. All rights reserved.",
+      "builtIn": "Built in India"
+    },
+    "contact": {
+      "hoursValue": "Monday to Saturday, 10am to 8pm IST",
+      "whatsappPrefill": "Hello, I'd like to know more about aim for my repair shop.",
+      "title": "Talk to a person",
+      "lead": "WhatsApp is fastest. There is no ticket queue and no chatbot in the way.",
+      "channelsTitle": "Ways to reach us",
+      "hoursTitle": "Hours",
+      "demoTitle": "Ask for a demo",
+      "demoLead": "We will walk through the software on your own shop’s example. Mention these four things and we can make the call useful straight away:",
+      "demoPoints": {
+        "shopName": "Your shop name and city",
+        "staffCount": "How many people work there",
+        "currentSystem": "What you use today",
+        "language": "Which language you prefer"
+      },
+      "channels": {
+        "whatsapp": {
+          "title": "WhatsApp",
+          "note": "Usually the fastest reply"
+        },
+        "phone": {
+          "title": "Call us",
+          "note": "During working hours"
+        },
+        "support": {
+          "title": "Support",
+          "note": "For an existing account"
+        },
+        "sales": {
+          "title": "Demo and setup",
+          "note": "For a new shop"
+        }
+      },
+      "selfServeTitle": "Or skip the conversation entirely",
+      "selfServeLead": "Nothing here needs a sales call. Create an account and the software sets your shop up on its own."
+    },
+    "pricing": {
+      "planName": "Every shop",
+      "amount": "₹0",
+      "period": "forever",
+      "includes": {
+        "unlimited": "Unlimited job cards, technicians and customers",
+        "rbac": "Full role-based access control and Workflow Designer",
+        "finance": "Receipts, ledgers, receivables and payables",
+        "secondHand": "Second-hand device purchase and sale tracking",
+        "reports": "Every report, dashboard and CSV or Excel export",
+        "migration": "Free data migration from your current system",
+        "languages": "English, Hindi and Gujarati throughout",
+        "branches": "Unlimited branches",
+        "print": "Print format designer for bills and labels",
+        "updates": "Every future update"
+      },
+      "title": "Free forever, and here is why",
+      "lead": "One plan, no tiers, no card. The unusual part is not the price — it is that nothing is held back — so this page explains what that means and what it does not.",
+      "planNote": "Everything in the product, for every member of your staff, with no expiry date.",
+      "includedTitle": "What's included",
+      "assuranceEyebrow": "The obvious questions",
+      "assuranceTitle": "Free usually has a catch. These are the three things worth asking about.",
+      "ctaTitle": "Start today, decide later",
+      "ctaLead": "There is no commitment to make and no card to enter, so the only way to find out if it fits is to use it.",
+      "assurances": {
+        "why": {
+          "title": "Why is it free?",
+          "body": "AIM ENTERPRISE builds this for the repair trade it already works in. It is not funded by advertising and your data is not the product — if that ever changes, it will be said plainly here first."
+        },
+        "data": {
+          "title": "Whose data is it?",
+          "body": "Yours. Backup & Restore inside the app exports everything you have entered, at any time, without asking anyone."
+        },
+        "noLockIn": {
+          "title": "Can I leave?",
+          "body": "Yes, and you can take your data with you as CSV or Excel. Nothing here is designed to make leaving expensive."
+        }
+      }
+    },
+    "home": {
+      "hero": {
+        "badge": "Free forever for every repair shop",
+        "titleLead": "Run your whole repair shop on",
+        "subtitle": "From the moment a customer walks in to the moment they collect a repaired device — job cards, technician workflows, WhatsApp updates, billing, payments and warranty in one connected system.",
+        "primaryCta": "Start free",
+        "secondaryCta": "Book a demo",
+        "demoSubject": "Demo request for aim",
+        "trust": {
+          "freeForever": "Free forever",
+          "noCard": "No card required",
+          "migration": "Free data migration"
+        }
+      },
+      "replaces": {
+        "title": "One system in place of the four you are using now",
+        "notebook": "The counter notebook",
+        "whatsapp": "WhatsApp messages typed by hand",
+        "spreadsheet": "Excel sheets for stock and dues",
+        "billingApp": "A separate billing app"
+      },
+      "capabilities": {
+        "eyebrow": "What you get",
+        "title": "Not another billing tool. A complete system for running the business.",
+        "lead": "Every part of a repair shop that normally lives in someone’s head, a notebook or a chat thread — given a place in the software.",
+        "jobCards": {
+          "title": "Job cards that run themselves",
+          "body": "A dynamic intake form for every device type, actions that unlock only at the right status, and a full audit timeline on every job — so nobody has to remember what happened or ask who touched it last."
+        },
+        "workflows": {
+          "title": "Technician workflows",
+          "body": "Who can see what, and do what, at every status — configured by you, enforced everywhere."
+        },
+        "updates": {
+          "title": "Customers stay informed",
+          "body": "Automatic WhatsApp updates when a device is received, in progress, or ready for pickup."
+        },
+        "money": {
+          "title": "Billing and payments",
+          "body": "Advances, part payments and final bills all reconcile into one ledger automatically."
+        },
+        "secondHand": {
+          "title": "Second-hand trading",
+          "body": "Buy, refurbish and sell used devices with purchase-to-sale profit tracked per unit."
+        },
+        "access": {
+          "title": "Access you actually control",
+          "body": "Every menu and every action is gated by a permission you set, not hardcoded by us. A salesman never sees purchase cost, a technician never sees the ledger, and you decide the rest — down to the individual button."
+        }
+      },
+      "workflow": {
+        "eyebrow": "How it works",
+        "title": "From intake to delivery, one path",
+        "lead": "Every job follows the same connected path, with no spreadsheet in between.",
+        "intake": {
+          "title": "Intake",
+          "body": "Find the customer or add them, capture the device details and the reported problem."
+        },
+        "assign": {
+          "title": "Assign and repair",
+          "body": "A technician picks up the job. Status, parts used and cost are tracked as work happens."
+        },
+        "bill": {
+          "title": "Bill and collect",
+          "body": "Generate the bill, take payment by any mode, and the ledgers update themselves."
+        },
+        "deliver": {
+          "title": "Deliver with warranty",
+          "body": "Hand over the device with a printed warranty note the customer can hold on to."
+        }
+      },
+      "language": {
+        "title": "Your staff work in the language they think in",
+        "lead": "The entire system — every screen, every button, every report — in English, Hindi and Gujarati. Each person picks their own; nobody has to work around somebody else’s choice.",
+        "names": {
+          "en": "English",
+          "hi": "Hindi",
+          "gu": "Gujarati"
+        }
+      },
+      "pricing": {
+        "eyebrow": "Pricing",
+        "title": "Free forever. Not a trial, not a starter tier.",
+        "lead": "Every feature, every report, unlimited staff and jobs — with no card, no expiry and nothing held back for a paid plan that does not exist.",
+        "cta": "See what is included"
+      },
+      "cta": {
+        "title": "Set up your shop in the next ten minutes",
+        "lead": "Create an account, add your branch, and start writing job cards today. Bring your existing data across and we will help you move it."
+      }
+    },
+    "features": {
+      "title": "Every part of the shop, in one place",
+      "lead": "Grouped the way the software itself is grouped, so what you read here is where you will find it after signing up.",
+      "ctaTitle": "All of it, on the free plan",
+      "ctaLead": "Nothing on this page is held back for a paid tier. There is no paid tier.",
+      "groups": {
+        "service": {
+          "title": "Service and repairs",
+          "body": "The core of the shop: taking a device in, tracking the work, and keeping the customer informed until they collect it."
+        },
+        "finance": {
+          "title": "Money and accounts",
+          "body": "Every rupee that comes in or goes out, reconciled to the job or party it belongs to."
+        },
+        "secondHand": {
+          "title": "Second-hand devices",
+          "body": "Buying, refurbishing and reselling used devices, with the profit on each unit tracked from purchase to sale."
+        },
+        "masters": {
+          "title": "Masters and stock",
+          "body": "The lists everything else is built on — customers, suppliers, parts and the units you measure them in."
+        },
+        "administration": {
+          "title": "Staff and access",
+          "body": "Who works here, what each of them can reach, and a record of what everyone actually did."
+        },
+        "settings": {
+          "title": "Setup and configuration",
+          "body": "Shape the software around how your shop already works, instead of the other way round."
+        }
+      },
+      "items": {
+        "service": {
+          "jobCards": "Job cards with status workflow",
+          "intakeForms": "Intake forms per device type",
+          "timeline": "Full audit timeline per job",
+          "costing": "Job costing: parts and labour",
+          "options": "Device types, brands and models",
+          "whatsapp": "WhatsApp templates per status"
+        },
+        "finance": {
+          "receipts": "Receipts and payments",
+          "ledger": "Party ledger with running balance",
+          "cashBook": "Cash book",
+          "receivables": "Receivables ageing",
+          "payables": "Supplier payables",
+          "expenses": "Expenses by category"
+        },
+        "secondHand": {
+          "purchase": "Purchase entry with IMEI",
+          "refurbish": "Refurbishment cost tracking",
+          "sale": "Sale with printed receipt",
+          "profit": "Profit per device"
+        },
+        "masters": {
+          "parties": "Customers and suppliers",
+          "items": "Item master with stock",
+          "categories": "Item and party categories",
+          "uom": "Units of measure",
+          "paymentModes": "Payment modes"
+        },
+        "administration": {
+          "roles": "Roles with per-menu permissions",
+          "users": "Staff accounts",
+          "sessions": "Active sessions",
+          "audit": "System audit log",
+          "ipWhitelist": "IP whitelist",
+          "loginReport": "Login report"
+        },
+        "settings": {
+          "company": "Company profile and GST",
+          "branches": "Multiple branches",
+          "financialYears": "Financial years",
+          "workflow": "Workflow Designer",
+          "printFormats": "Print format designer",
+          "backup": "Backup and restore"
+        }
+      }
+    },
+    "solutions": {
+      "title": "Built for the shop you actually run",
+      "lead": "A single counter and a three-branch operation want opposite things from the same software. Here is which part matters to you.",
+      "ctaTitle": "Not sure which of these is you?",
+      "ctaLead": "Tell us how your shop works today and we will tell you honestly whether this fits.",
+      "ctaButton": "Talk to us",
+      "audiences": {
+        "singleShop": {
+          "title": "The single repair shop",
+          "who": "One counter, one to five staff",
+          "body": "You are behind the counter yourself. The software has to be faster than the notebook it replaces, or it will not get used past the first week."
+        },
+        "dealer": {
+          "title": "The second-hand dealer",
+          "who": "Buying, refurbishing, reselling",
+          "body": "Your margin lives in the gap between what you paid, what the repair cost, and what it sold for — and that gap is per device, not per month."
+        },
+        "multiBranch": {
+          "title": "The multi-branch business",
+          "who": "Two or more locations",
+          "body": "You cannot stand in two shops at once. What you need is to see what the branch you are not in did today, and to be sure staff can only see their own."
+        }
+      },
+      "points": {
+        "singleShop": {
+          "speed": "Job card in under a minute",
+          "noTraining": "No training needed to start",
+          "phone": "Works on the phone in your pocket",
+          "walkIn": "Search a returning customer by number"
+        },
+        "dealer": {
+          "perUnit": "Profit per device, not per month",
+          "refurbish": "Repair cost added to the unit",
+          "margin": "Know your margin before you sell",
+          "stock": "Unsold stock at a glance"
+        },
+        "multiBranch": {
+          "branchScope": "Staff see only their branch",
+          "consolidated": "Owner sees every branch together",
+          "roles": "A different role per person",
+          "audit": "A record of who changed what"
+        }
+      }
+    },
+    "about": {
+      "title": "The company behind the software",
+      "lead": "Before you put your customers and your accounts into someone else’s software, it is fair to know who they are.",
+      "storyTitle": "Why this exists",
+      "story1": "Most repair shops in India run on a notebook at the counter, a WhatsApp thread per customer, and an Excel sheet somebody updates on Sundays. It works, right up to the point where two of the three disagree.",
+      "story2": "The software that claims to fix this is usually either a billing app that knows nothing about repairs, or a large ERP priced and shaped for a factory. Neither knows what a job card is, or that the person typing at the counter may not be comfortable in English.",
+      "story3": "So this was built around the job card instead of around the invoice, in three languages from the start, and given away — because a shop that cannot afford software is exactly the shop that needs it.",
+      "detailsTitle": "Company details",
+      "legalName": "Registered name",
+      "builtFor": "Built for",
+      "builtForValue": "Mobile and electronics repair shops, and second-hand device dealers",
+      "principlesEyebrow": "How we build",
+      "principlesTitle": "Four things we decided at the start",
+      "principles": {
+        "oneSystem": {
+          "title": "One system, not five",
+          "body": "If a number has to be typed twice, we have not finished the feature."
+        },
+        "everyone": {
+          "title": "Everyone reads it",
+          "body": "Three languages and a real accessibility toolbar, not an afterthought."
+        },
+        "realShops": {
+          "title": "Shaped by real shops",
+          "body": "Built around the job card, because that is what the counter actually works from."
+        },
+        "yourData": {
+          "title": "Your data stays yours",
+          "body": "Exportable at any time, and never sold to anyone."
+        }
+      }
+    },
+    "faq": {
+      "title": "Questions, answered plainly",
+      "lead": "Grouped so you can read the part that worries you and skip the rest.",
+      "ctaTitle": "Still not answered?",
+      "ctaLead": "Ask on WhatsApp and a person will reply, usually the same day.",
+      "groups": {
+        "money": "Cost and billing",
+        "data": "Your data",
+        "usage": "Using it day to day",
+        "staff": "Staff and branches"
+      },
+      "q": {
+        "money": {
+          "reallyFree": {
+            "q": "Is it really free?",
+            "a": "Yes. Every feature, for unlimited staff and jobs, with no card and no expiry date."
+          },
+          "catch": {
+            "q": "What's the catch?",
+            "a": "There is no advertising, and your data is not sold or used as the product. Support is best-effort over WhatsApp and email rather than a contracted response time — that is the honest trade."
+          },
+          "futureCharge": {
+            "q": "Will you start charging later?",
+            "a": "If that ever changes it will be said plainly on this site first, and your existing data will remain exportable either way."
+          },
+          "hiddenLimits": {
+            "q": "Are there hidden limits?",
+            "a": "No caps on job cards, customers, staff or branches. The only real limits are your device and your internet connection."
+          }
+        },
+        "data": {
+          "migration": {
+            "q": "Can I bring my existing data?",
+            "a": "Yes. Send whatever you have — Excel, a billing app export, even photographs of a register — and we will help move it in."
+          },
+          "ownData": {
+            "q": "Who owns what I enter?",
+            "a": "You do. It is your shop’s record of your own customers and accounts."
+          },
+          "export": {
+            "q": "Can I get my data out?",
+            "a": "Yes, at any time. Backup & Restore exports a full copy, and every list screen exports to CSV or Excel."
+          },
+          "backup": {
+            "q": "Is it backed up?",
+            "a": "Your data sits in Google Cloud Firestore, which is replicated by Google. You can also take your own copy whenever you like from Backup & Restore."
+          },
+          "security": {
+            "q": "Can another shop see my data?",
+            "a": "No. Every record is scoped to your company, and the database rules reject a read from any account that does not belong to it — the check is on the server, not just in the app."
+          }
+        },
+        "usage": {
+          "mobile": {
+            "q": "Does it work on a phone?",
+            "a": "Yes. It installs to the home screen like an app and every screen is built for a phone as well as a desktop."
+          },
+          "offline": {
+            "q": "What if the internet drops?",
+            "a": "Screens you have already opened keep working from a local copy, and changes sync once the connection returns."
+          },
+          "training": {
+            "q": "Will my staff need training?",
+            "a": "Creating a job card is designed to be faster than writing it in the notebook. For the rest, ask on WhatsApp and we will walk through it."
+          },
+          "printer": {
+            "q": "Will it print on my printer?",
+            "a": "Bills and labels print through your browser, so any printer already set up on that computer works. Formats are editable in the print designer."
+          },
+          "whatsapp": {
+            "q": "How do WhatsApp updates work?",
+            "a": "The app prepares the message from your template and opens WhatsApp with it ready to send, so it goes from your own number."
+          }
+        },
+        "staff": {
+          "permissions": {
+            "q": "Can staff see different things?",
+            "a": "Yes, down to the individual menu and button. A salesman need never see purchase cost, and a technician need never see the ledger."
+          },
+          "staffCount": {
+            "q": "How many staff can I add?",
+            "a": "As many as you need. There is no per-user charge."
+          },
+          "branches": {
+            "q": "Does it handle more than one shop?",
+            "a": "Yes. Add a branch per location, scope staff to their own, and the owner sees all of them together."
+          },
+          "languages": {
+            "q": "Can two people use different languages?",
+            "a": "Yes. Language is per person, not per shop, so each account keeps its own choice."
+          }
+        }
+      }
+    },
+    "legal": {
+      "eyebrow": "Legal",
+      "lastUpdated": "Last updated {{date}}",
+      "lastUpdatedDate": "September 2026",
+      "contactTitle": "Contact",
+      "contactBody": "For any question about this document, or to ask for a copy or deletion of your data, write to {{company}} at the address below.",
+      "privacy": {
+        "title": "Privacy policy",
+        "lead": "What this software stores, why, and what you can do about it.",
+        "sections": {
+          "collect": {
+            "title": "What we collect",
+            "body": "Your account details (name, email and optional mobile number), your company and branch details, and the business records you enter — customers, job cards, payments and stock. We also record login events and an audit trail of changes made inside your company."
+          },
+          "use": {
+            "title": "How it is used",
+            "body": "Only to run the software for you: to show you your own records, to enforce the permissions you configure, and to let you print and export. It is not used for advertising and is not sold or shared for marketing by anyone."
+          },
+          "storage": {
+            "title": "Where it is stored",
+            "body": "In Google Cloud Firestore and Firebase Authentication, operated by Google. Your browser also keeps a local copy so the app keeps working when the connection drops."
+          },
+          "sharing": {
+            "title": "Who else sees it",
+            "body": "Only the accounts you create inside your own company, and only as far as the permissions you give them allow. Google acts as our infrastructure provider. We do not sell your data."
+          },
+          "retention": {
+            "title": "How long it is kept",
+            "body": "For as long as your account is open. Business records such as job cards and payments are kept as a permanent record unless you ask for them to be removed."
+          },
+          "rights": {
+            "title": "Your rights",
+            "body": "You can export a full copy at any time from Backup & Restore, correct anything through the app, and ask us in writing to delete your account and its data."
+          },
+          "cookies": {
+            "title": "Cookies and local storage",
+            "body": "We use browser storage to keep you signed in and to remember your language, theme and reading preferences. There are no advertising or tracking cookies."
+          },
+          "children": {
+            "title": "Age",
+            "body": "This is business software and is not intended for use by anyone under 18."
+          },
+          "changes": {
+            "title": "Changes to this policy",
+            "body": "If this policy changes, the updated date above will change with it, and any material change will be stated plainly rather than buried in a revision."
+          }
+        }
+      },
+      "terms": {
+        "title": "Terms of use",
+        "lead": "The agreement between your shop and AIM ENTERPRISE for using this software.",
+        "sections": {
+          "acceptance": {
+            "title": "Accepting these terms",
+            "body": "By creating an account you accept these terms on behalf of your business."
+          },
+          "service": {
+            "title": "What is provided",
+            "body": "Access to the software as it exists at the time, free of charge, for running a repair or second-hand-device business."
+          },
+          "account": {
+            "title": "Your account",
+            "body": "You are responsible for your password, for the staff accounts you create, and for the permissions you give them. Tell us promptly if you believe an account has been misused."
+          },
+          "acceptableUse": {
+            "title": "Acceptable use",
+            "body": "Do not use it for anything unlawful, do not attempt to reach another company’s data, and do not try to disrupt the service for others."
+          },
+          "yourData": {
+            "title": "Your data",
+            "body": "The records you enter remain yours. You are responsible for their accuracy and for having the right to store the customer details you enter."
+          },
+          "availability": {
+            "title": "Availability",
+            "body": "We aim to keep the service running but do not promise uninterrupted availability. Since the service is free, no uptime guarantee is offered."
+          },
+          "warranty": {
+            "title": "No warranty",
+            "body": "The software is provided as it is. Keep your own exported copies of anything your business depends on."
+          },
+          "liability": {
+            "title": "Liability",
+            "body": "To the extent the law allows, AIM ENTERPRISE is not liable for business losses arising from use of the software."
+          },
+          "termination": {
+            "title": "Ending the agreement",
+            "body": "You can stop using the service at any time and export your data first. We may suspend an account that breaks these terms."
+          },
+          "governing": {
+            "title": "Governing law",
+            "body": "These terms are governed by the laws of India, with the courts of Gujarat having jurisdiction."
+          },
+          "changes": {
+            "title": "Changes to these terms",
+            "body": "If these terms change, the updated date above will change with them. Continuing to use the service means accepting the revised terms."
+          }
+        }
+      }
+    },
+    "auth": {
+      "panelTitle": "Run your whole repair shop from one screen",
+      "backToSite": "Back to the website",
+      "panelPoints": {
+        "free": "Free forever, with every feature included",
+        "languages": "English, Hindi and Gujarati throughout",
+        "noCard": "No card, no trial period, no expiry",
+        "migration": "We help move your existing data across"
+      }
+    }
+  },
+  "a11y": {
+    "tab": "A11Y",
+    "title": "Accessibility",
+    "fontSize": "Font size",
+    "increase": "Increase font size",
+    "decrease": "Decrease font size",
+    "currentSize": "Text size: {{percent}}%",
+    "display": "Display",
+    "highContrast": "High contrast",
+    "dyslexiaFont": "Dyslexia font",
+    "audio": "Audio",
+    "listenToPage": "Listen to page",
+    "stopReading": "Stop reading",
+    "resetAll": "Reset all",
+    "settingsTitle": "Reading and accessibility",
+    "settingsDescription": "These settings are saved on this device and apply to the whole app, not just this screen.",
+    "highContrastHint": "Stronger text and border contrast, and a thicker focus outline.",
+    "dyslexiaFontHint": "A wider typeface with more space between letters, words and lines.",
+    "appliesImmediately": "Changes apply immediately and are saved on this device."
   }
 }

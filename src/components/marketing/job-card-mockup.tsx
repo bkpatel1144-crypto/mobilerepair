@@ -11,24 +11,18 @@ const TIMELINE_STEPS = [
 ]
 const ACTIVE_STEP_INDEX = 4 // "Ready" — matches the info cards below (device is ready for pickup)
 
+/**
+ * The job-card screen, drawn rather than screenshotted, for use inside a `ProductFrame`.
+ *
+ * Deliberately carries no window chrome or outer frame of its own. It used to own both, and
+ * wrapping it in `ProductFrame` then stacked two title bars and two borders on top of each other
+ * — visible as a doubled URL bar in the hero. The frame is the frame's job; this is only the
+ * content that goes inside one.
+ */
 export function JobCardMockup() {
   const { t } = useTranslation()
   return (
-    <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-xl border border-white/10 bg-card shadow-2xl">
-      {/* Browser chrome */}
-      <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-2.5">
-        <span className="size-2.5 rounded-full bg-red-400" />
-        <span className="size-2.5 rounded-full bg-amber-400" />
-        <span className="size-2.5 rounded-full bg-emerald-400" />
-        <div className="ml-3 flex-1 truncate rounded-md bg-background px-3 py-1 text-xs text-muted-foreground">
-          app.aim.in/service/job-cards/JC-2026-0143
-        </div>
-        <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-amber-700 uppercase dark:bg-amber-500/15 dark:text-amber-400">
-          {t('components.marketing.jobCardMockup.sampleData')}
-        </span>
-      </div>
-
-      {/* Content */}
+    <div className="bg-card">
       <div className="space-y-6 p-5 sm:p-6">
         {/* Horizontal status timeline */}
         <div className="flex items-center">
@@ -135,7 +129,8 @@ export function JobCardMockup() {
                   </span>
                 </div>
                 <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
-                  <ShieldCheck className="size-3" /> 90-day warranty on repair
+                  <ShieldCheck className="size-3" />
+                  {t('components.marketing.jobCardMockup.warrantyOnRepair')}
                 </p>
               </div>
             </div>

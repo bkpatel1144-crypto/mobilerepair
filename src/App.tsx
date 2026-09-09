@@ -30,6 +30,30 @@ const LandingPage = lazy(() =>
 const PricingPage = lazy(() =>
   import('@/pages/marketing/pricing-page').then((m) => ({ default: m.PricingPage }))
 )
+const MarketingLayout = lazy(() =>
+  import('@/components/marketing/marketing-layout').then((m) => ({ default: m.MarketingLayout }))
+)
+const FeaturesPage = lazy(() =>
+  import('@/pages/marketing/features-page').then((m) => ({ default: m.FeaturesPage }))
+)
+const SolutionsPage = lazy(() =>
+  import('@/pages/marketing/solutions-page').then((m) => ({ default: m.SolutionsPage }))
+)
+const AboutPage = lazy(() =>
+  import('@/pages/marketing/about-page').then((m) => ({ default: m.AboutPage }))
+)
+const ContactPage = lazy(() =>
+  import('@/pages/marketing/contact-page').then((m) => ({ default: m.ContactPage }))
+)
+const FaqPage = lazy(() =>
+  import('@/pages/marketing/faq-page').then((m) => ({ default: m.FaqPage }))
+)
+const PrivacyPage = lazy(() =>
+  import('@/pages/marketing/legal-page').then((m) => ({ default: m.PrivacyPage }))
+)
+const TermsPage = lazy(() =>
+  import('@/pages/marketing/legal-page').then((m) => ({ default: m.TermsPage }))
+)
 const LoginPage = lazy(() =>
   import('@/pages/auth/login-page').then((m) => ({ default: m.LoginPage }))
 )
@@ -330,9 +354,22 @@ function App() {
           <BrowserRouter>
             <Suspense fallback={<RouteFallback />}>
               <Routes>
-                {/* Marketing (public) — no Firebase, no AuthProvider, deliberately. */}
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/pricing" element={<PricingPage />} />
+                {/* Marketing (public) — no Firebase, no AuthProvider, deliberately.
+                 * `MarketingLayout` is a layout route rather than something each page imports:
+                 * with nine pages, "remember the nav and footer" is a rule that eventually gets
+                 * broken, and the page that forgets is the one nobody notices. It also hosts the
+                 * accessibility toolbar, so that reaches every public page for free. */}
+                <Route element={<MarketingLayout />}>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/features" element={<FeaturesPage />} />
+                  <Route path="/solutions" element={<SolutionsPage />} />
+                  <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/faq" element={<FaqPage />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
+                  <Route path="/terms" element={<TermsPage />} />
+                </Route>
 
                 {/* Everything below needs to know whether someone is signed in, so it all
                  * lives under the one lazy-loaded AuthProvider boundary. */}

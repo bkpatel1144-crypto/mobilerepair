@@ -4,11 +4,14 @@ import './index.css'
 import App from './App.tsx'
 import { initTheme } from './lib/theme'
 import { initI18n } from './lib/i18n'
+import { initAccessibility } from './lib/accessibility'
 
-// Both applied before the first render so there's never a flash of the wrong theme or of
-// English before the user's own language loads.
+// All applied before the first render so there's never a flash of the wrong theme, of English
+// before the user's own language loads, or — most disorienting of the three — of default-size
+// text that jumps once someone's 150% reading preference is read back.
 initTheme()
 initI18n()
+initAccessibility()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Phone, ShieldCheck, User as UserIcon, Mail, Check, KeyRound } from 'lucide-react'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { AccessibilityControls } from '@/components/a11y/accessibility-controls'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -154,6 +155,16 @@ export function ProfileDrawer({
             >
               {t('components.layout.profileDrawer.changePassword')}
             </TabsTrigger>
+            {/* Reading preferences live here rather than under Settings because Settings menu
+             * items are role-gated — a Technician's access is `menusForSections(['service'])`, so
+             * a Settings page would be hidden from exactly the staff most likely to need larger
+             * text. This drawer is reachable by every signed-in account. */}
+            <TabsTrigger
+              value="accessibility"
+              className="flex-none px-0 pb-2.5 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
+            >
+              {t('a11y.title')}
+            </TabsTrigger>
           </TabsList>
 
           {/* Each tab is its own scroll region with a pinned action button, so Save is reachable
@@ -269,6 +280,10 @@ export function ProfileDrawer({
             </form>
           </TabsContent>
 
+          <TabsContent value="accessibility" className="min-h-0 flex-1 overflow-y-auto p-5">
+            <AccessibilityControls />
+          </TabsContent>
+
           <div className="shrink-0 border-t bg-muted/30 p-4">
             <TabsContent value="info" className="m-0">
               <Button
@@ -297,6 +312,14 @@ export function ProfileDrawer({
                   ? 'Updating…'
                   : t('components.layout.profileDrawer.updatePassword')}
               </Button>
+            </TabsContent>
+            {/* No Save button here — these apply the moment they are toggled. Without this the
+             * footer rendered as an empty grey bar on this tab, which reads as a control that
+             * failed to load rather than as a tab that needs no control. */}
+            <TabsContent value="accessibility" className="m-0">
+              <p className="text-center text-xs text-muted-foreground">
+                {t('a11y.appliesImmediately')}
+              </p>
             </TabsContent>
           </div>
         </Tabs>
