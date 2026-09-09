@@ -16,7 +16,8 @@ import {
 import { FormError } from '@/components/shared/form-error'
 import { ErrorState } from '@/components/shared/error-state'
 import { SearchSelect } from '@/components/shared/search-select'
-import { PatternLockPicker, PatternLockPreview } from '@/components/shared/pattern-lock'
+import { DevicePinPatternField } from '@/components/shared/device-pin-field'
+import { FormSection, FormGrid } from '@/components/shared/form-section'
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
@@ -259,16 +260,17 @@ export function CreateSecondHandPurchasePage() {
         </div>
         <Button type="button" variant="outline" onClick={() => navigate(-1)}>
           <ArrowLeft className="size-4" />
-          Back
+          {t('shared.back')}
         </Button>
       </div>
 
       {formError && <FormError message={formError} />}
 
-      <div className="space-y-4 rounded-lg border p-4">
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">📋 Device Details</h2>
-
-        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <FormSection
+        glyph="📋"
+        title={t('pages.secondHandDevice.createPurchase.sections.deviceDetails')}
+      >
+        <FormGrid>
           <div className="space-y-1.5">
             <Label>
               Device Type <span className="text-red-600">*</span>
@@ -441,30 +443,15 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              Device PIN / Pattern{' '}
+              {t('pages.service.createJobCard.labels.devicePin')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
             </Label>
-            <div className="flex items-center gap-2">
-              {devicePinPattern ? (
-                <>
-                  <PatternLockPreview value={devicePinPattern} />
-                  <button
-                    type="button"
-                    className="text-xs text-red-600 hover:underline"
-                    onClick={() => setDevicePinPattern('')}
-                  >
-                    Clear
-                  </button>
-                </>
-              ) : (
-                <span className="flex-1 text-sm text-muted-foreground">
-                  {t('pages.secondHandDevice.createPurchase.noPatternDrawn')}
-                </span>
-              )}
-              <PatternLockPicker value={devicePinPattern} onChange={setDevicePinPattern} />
-            </div>
+            {/* Was a pattern grid and nothing else: the label promised "PIN / Pattern" but a
+             * phone locked with 1234 could not be recorded at all. The same control as Create
+             * Job Card now, because it is literally the same component. */}
+            <DevicePinPatternField value={devicePinPattern} onChange={setDevicePinPattern} />
           </div>
 
           <div className="space-y-1.5">
@@ -607,7 +594,7 @@ export function CreateSecondHandPurchasePage() {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </FormGrid>
 
         <div className="flex flex-wrap gap-4 text-sm">
           <label className="flex items-center gap-1.5">
@@ -695,13 +682,12 @@ export function CreateSecondHandPurchasePage() {
             </div>
           )}
         </div>
-      </div>
+      </FormSection>
 
-      <div className="space-y-4 rounded-lg border p-4">
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">
-          ✓ Seller &amp; ID Verification
-        </h2>
-
+      <FormSection
+        glyph="✓"
+        title={t('pages.secondHandDevice.createPurchase.sections.sellerVerification')}
+      >
         <div className="space-y-1.5">
           <Label>
             Seller <span className="text-red-600">*</span>
@@ -741,7 +727,7 @@ export function CreateSecondHandPurchasePage() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+        <FormGrid>
           <div className="space-y-1.5">
             <Label>{t('pages.secondHandDevice.createPurchase.idProofType')}</Label>
             <Select value={idProofType} onValueChange={(v) => v && setIdProofType(v)}>
@@ -780,7 +766,7 @@ export function CreateSecondHandPurchasePage() {
               placeholder="9876543210"
             />
           </div>
-        </div>
+        </FormGrid>
 
         <div className="space-y-1.5">
           <Label>
@@ -825,11 +811,12 @@ export function CreateSecondHandPurchasePage() {
             {t('pages.secondHandDevice.createPurchase.sellerDeclaredTheDeviceIsTheirs')}
           </label>
         </div>
-      </div>
+      </FormSection>
 
-      <div className="space-y-4 rounded-lg border p-4">
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">₹ Purchase Details</h2>
-
+      <FormSection
+        glyph="₹"
+        title={t('pages.secondHandDevice.createPurchase.sections.purchaseDetails')}
+      >
         <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="purchasePrice">
@@ -949,14 +936,16 @@ export function CreateSecondHandPurchasePage() {
             rows={2}
           />
         </div>
-      </div>
+      </FormSection>
 
       <div className="flex justify-end gap-2 border-t pt-4">
         <Button type="button" variant="outline" onClick={() => navigate(-1)} disabled={submitting}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button type="button" onClick={handleSubmit} disabled={submitting}>
-          {submitting ? 'Saving…' : t('pages.secondHandDevice.createPurchase.savePurchase')}
+          {submitting
+            ? t('common.saving')
+            : t('pages.secondHandDevice.createPurchase.savePurchase')}
         </Button>
       </div>
 

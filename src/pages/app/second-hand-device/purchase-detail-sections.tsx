@@ -1,6 +1,6 @@
 import { Smartphone, IdCard, ShoppingCart, Wallet } from 'lucide-react'
 import type { DetailSection, TimelineEvent } from '@/components/shared/detail-drawer'
-import { PatternLockPreview } from '@/components/shared/pattern-lock'
+import { DevicePinPatternValue } from '@/components/shared/device-pin-field'
 import { formatTimestamp } from '@/lib/utils'
 import type { SecondHandPurchaseWithId } from '@/hooks/use-second-hand-purchases'
 import type { SecondHandSaleWithId } from '@/hooks/use-second-hand-sales'
@@ -46,7 +46,9 @@ export function purchaseDetailSections(
           ? [
               {
                 label: t('pages.secondHandDevice.purchaseDetailSections.pinPattern'),
-                value: <PatternLockPreview value={p.devicePinPattern} />,
+                // Not `PatternLockPreview` directly: that draws nine dots for anything, so a
+                // typed PIN rendered as an empty grid — nine grey dots and no digits.
+                value: <DevicePinPatternValue value={p.devicePinPattern} />,
               },
             ]
           : []),
