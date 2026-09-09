@@ -251,10 +251,6 @@ export function RoleManagementPage() {
         subtitle={t('pages.administration.roleManagement.manageUserRolesPermissionsAndMenu')}
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => void refetch()}>
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             <Button
               type="button"
               onClick={() => navigate(`${buildPath('administration', 'roles')}/create`)}

@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Download, RefreshCw, Receipt } from 'lucide-react'
-import { useQueryClient } from '@tanstack/react-query'
+import { Download, Receipt } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -13,11 +12,9 @@ import { Button } from '@/components/ui/button'
 import { useSecondHandPurchases } from '@/hooks/use-second-hand-purchases'
 import {
   useSecondHandSales,
-  secondHandSalesQueryKey,
   joinSaleWithPurchase,
   type SecondHandSaleWithId,
 } from '@/hooks/use-second-hand-sales'
-import { useAuth } from '@/hooks/use-auth'
 import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
@@ -29,8 +26,6 @@ export function SaleRegisterPage() {
   const { t } = useTranslation()
   const { data: sales = [], isLoading, error: loadError, refetch } = useSecondHandSales()
   const { data: purchases = [] } = useSecondHandPurchases()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
 
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -119,18 +114,6 @@ export function SaleRegisterPage() {
             >
               <Download className="size-4" />
               Export CSV
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({
-                  queryKey: secondHandSalesQueryKey(profile?.companyId),
-                })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
             </Button>
           </>
         }

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import {
   Store,
   Plus,
-  RefreshCw,
   Crown,
   Star,
   Eye,
@@ -387,10 +386,6 @@ export function CompanySettingsPage() {
         subtitle={t('pages.settings.companySettings.manageCompanyInformationAndSettings')}
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => void refetch()}>
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             <Button type="button" onClick={startCreate}>
               <Plus className="size-4" />
               {t('pages.settings.companySettings.addCompany')}

@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
 import {
   Wallet,
-  RefreshCw,
   Plus,
   MoreVertical,
   Undo2,
@@ -48,12 +46,10 @@ import {
   useReceipts,
   useCreateReceiptOrPayment,
   useVoidReceipt,
-  receiptsQueryKey,
   type ReceiptWithId,
 } from '@/hooks/use-receipts'
 import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { useJobCards } from '@/hooks/use-job-cards'
-import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
@@ -66,8 +62,6 @@ export function ReceiptsPaymentsPage() {
   const { t } = useTranslation()
   const { data: receipts = [], isLoading, error: loadError, refetch } = useReceipts()
   const { canDo, isOwner } = usePermissions()
-  const queryClient = useQueryClient()
-  const { profile } = useAuth()
   const voidReceipt = useVoidReceipt()
 
   const [search, setSearch] = useState('')
@@ -214,16 +208,6 @@ export function ReceiptsPaymentsPage() {
         subtitle={t('pages.finance.receiptsPayments.allPaymentEntriesJobCardsAnd')}
         actions={
           <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             {canDo(crudKey('finance', 'receipts', 'create')) && (
               <Button type="button" onClick={() => setNewEntryOpen(true)}>
                 <Plus className="size-4" />

@@ -284,7 +284,8 @@
     "switchCompany": "Switch Company",
     "logOut": "Log out",
     "loggingOut": "Logging out…",
-    "account": "Account"
+    "account": "Account",
+    "refresh": "Refresh this page"
   },
   "errors": {
     "title": "Something went wrong",
@@ -945,7 +946,8 @@
         "deliveredReturnedBy": "Delivered / Returned By",
         "noUsersYet": "No users yet.",
         "searchJobCustomerMobile": "Search job, customer, mobile...",
-        "createJobCard": "Create Job Card"
+        "createJobCard": "Create Job Card",
+        "roleJobs": "{{role}} — Jobs"
       },
       "recordCostingModal": {
         "itemName": "Item name",

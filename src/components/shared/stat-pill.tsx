@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { ScrollRow } from '@/components/shared/scroll-row'
 
 /**
  * A horizontal count tile — icon, label and count on one line.
@@ -60,10 +61,18 @@ export function StatPill({
 }
 
 /** The row these sit in. Auto-fit so four tiles wrap rather than crush on a narrow screen. */
+/**
+ * Scrolls sideways on a phone, an auto-fit grid from `sm` up.
+ *
+ * The grid put two pills per row on a 390px screen, so five of them took three rows and pushed
+ * the table they summarise down the page. Same treatment as `StatCardGrid` and the job-card
+ * status pills — a row of summary numbers should cost one row's height on a phone, whatever the
+ * count.
+ */
 export function StatPillRow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
+    <ScrollRow className="gap-3 sm:grid sm:[grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))] [&>*]:w-[11rem] sm:[&>*]:w-auto">
       {children}
-    </div>
+    </ScrollRow>
   )
 }

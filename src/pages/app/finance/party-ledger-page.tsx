@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { BookOpen, RefreshCw, Search, Download, ChevronRight } from 'lucide-react'
+import { BookOpen, Search, Download, ChevronRight } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -22,10 +21,6 @@ import {
   usePartyLedgerDetail,
   type PartyLedgerSummary,
 } from '@/hooks/use-party-ledger'
-import { partiesQueryKey } from '@/hooks/use-parties'
-import { receiptsQueryKey } from '@/hooks/use-receipts'
-import { jobCardsQueryKey } from '@/hooks/use-job-cards'
-import { useAuth } from '@/hooks/use-auth'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 
@@ -42,8 +37,6 @@ function balanceLabel(balance: number, t: TFunction) {
 export function PartyLedgerPage() {
   const { t } = useTranslation()
   const { data: summaries = [], isLoading, error: loadError, refetch } = usePartyLedgerSummaries()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
 
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<'all' | 'customer' | 'supplier'>('all')
@@ -120,20 +113,6 @@ export function PartyLedgerPage() {
         icon={BookOpen}
         title={t('pages.finance.partyLedger.partyLedger')}
         subtitle={t('pages.finance.partyLedger.partyWiseAccountsClickToView')}
-        actions={
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              queryClient.invalidateQueries({ queryKey: partiesQueryKey(profile?.companyId) })
-              queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })
-              queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
-            }}
-          >
-            <RefreshCw className="size-4" />
-            Refresh
-          </Button>
-        }
       />
 
       <StatCardGrid>

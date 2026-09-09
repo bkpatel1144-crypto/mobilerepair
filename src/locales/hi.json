@@ -284,7 +284,8 @@
     "switchCompany": "कंपनी बदलें",
     "logOut": "लॉग आउट",
     "loggingOut": "लॉग आउट हो रहा है…",
-    "account": "खाता"
+    "account": "खाता",
+    "refresh": "यह पेज रिफ़्रेश करें"
   },
   "errors": {
     "title": "कुछ गड़बड़ हो गई",
@@ -945,7 +946,8 @@
         "deliveredReturnedBy": "सौंपने / लौटाने वाला",
         "noUsersYet": "अभी कोई उपयोगकर्ता नहीं।",
         "searchJobCustomerMobile": "जॉब, ग्राहक, मोबाइल खोजें...",
-        "createJobCard": "जॉब कार्ड बनाएं"
+        "createJobCard": "जॉब कार्ड बनाएं",
+        "roleJobs": "{{role}} — जॉब"
       },
       "recordCostingModal": {
         "itemName": "आइटम का नाम",

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ShoppingBag, RefreshCw, DollarSign, Truck, Wrench } from 'lucide-react'
+import { ShoppingBag, DollarSign, Truck, Wrench } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -24,7 +24,6 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
   useSecondHandPurchases,
-  secondHandPurchasesQueryKey,
   deviceLabel,
   type SecondHandPurchaseWithId,
 } from '@/hooks/use-second-hand-purchases'
@@ -43,8 +42,6 @@ export function DeviceSalePage() {
   const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { data: sales = [] } = useSecondHandSales()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
 
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -114,20 +111,6 @@ export function DeviceSalePage() {
         icon={ShoppingBag}
         title={t('pages.secondHandDevice.deviceSale.deviceSale')}
         subtitle={t('pages.secondHandDevice.deviceSale.sellDevicesFromStockToA')}
-        actions={
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              queryClient.invalidateQueries({
-                queryKey: secondHandPurchasesQueryKey(profile?.companyId),
-              })
-            }
-          >
-            <RefreshCw className="size-4" />
-            Refresh
-          </Button>
-        }
       />
 
       <StatCardGrid>

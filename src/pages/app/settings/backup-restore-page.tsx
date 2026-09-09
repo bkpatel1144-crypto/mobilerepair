@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react'
 import {
   DatabaseZap,
-  RefreshCw,
   Download,
   Clock,
   AlertTriangle,
@@ -137,12 +136,6 @@ export function BackupRestorePage() {
         icon={DatabaseZap}
         title={t('pages.settings.backupRestore.backupRestore')}
         subtitle={t('pages.settings.backupRestore.downloadBackupsScheduleDailyBackupsAnd')}
-        actions={
-          <Button type="button" variant="outline" onClick={() => stats.refetch()}>
-            <RefreshCw className="size-4" />
-            Refresh
-          </Button>
-        }
       />
 
       <div className="grid gap-4 lg:grid-cols-2">

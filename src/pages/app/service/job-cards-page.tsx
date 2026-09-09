@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
-import { Plus, RefreshCw, ClipboardCheck, Inbox, ScanLine, SlidersHorizontal } from 'lucide-react'
+import { Plus, ClipboardCheck, Inbox, ScanLine, SlidersHorizontal } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -11,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ScanJobCardModal } from '@/components/shared/scan-job-card-modal'
-import { useJobCards, jobCardsQueryKey, type JobCardWithId } from '@/hooks/use-job-cards'
+import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useUsers } from '@/hooks/use-users'
 import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -23,6 +22,7 @@ import { buildPath } from '@/config/nav'
 import { JobCardDetailDrawer } from './job-cards/job-card-detail-drawer'
 import { StatusPill } from './job-cards/status-pill'
 import { useTranslation } from 'react-i18next'
+import { ScrollRow } from '@/components/shared/scroll-row'
 
 type StatusPill = 'total' | (typeof JOB_STATUSES)[number]['key']
 
@@ -33,7 +33,6 @@ function statusLabel(key: string) {
 export function JobCardsPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
   const { data: users = [] } = useUsers()
   const { user, profile } = useAuth()
@@ -175,20 +174,10 @@ export function JobCardsPage() {
   return (
     <div className="space-y-4 p-4 sm:p-6">
       <PageHeader
-        title={`${profile?.roleName ?? ''} — Jobs`}
+        title={t('pages.service.jobCards.roleJobs', { role: profile?.roleName ?? '' })}
         subtitle={t('pages.service.jobCards.clickAStatusCardToFilter')}
         actions={
           <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             {canDo(crudKey('service', 'jobCards', 'create')) && (
               <Button
                 type="button"
@@ -202,7 +191,10 @@ export function JobCardsPage() {
         }
       />
 
-      <div className="flex flex-wrap gap-2">
+      {/* One swipeable line, not six wrapped rows. Eleven status cards at two or three per row
+       * pushed the search box and the table itself most of a screen down the page, so the list
+       * you came to read started below the fold. */}
+      <ScrollRow className="gap-2">
         <StatusPill
           statusKey="total"
           label={t('common.total')}
@@ -220,7 +212,7 @@ export function JobCardsPage() {
             onClick={() => setStatusFilter(s.key)}
           />
         ))}
-      </div>
+      </ScrollRow>
 
       <FilterBar
         searchValue={search}

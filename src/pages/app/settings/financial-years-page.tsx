@@ -7,7 +7,6 @@ import {
   LockOpen,
   Star,
   XCircle,
-  RefreshCw,
   Plus,
   Filter,
   Eye,
@@ -266,10 +265,6 @@ export function FinancialYearsPage() {
         subtitle={t('pages.settings.financialYears.manageFinancialYearPeriodsAndTransitions')}
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => void refetch()}>
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             <Button type="button" onClick={() => setCreating(true)}>
               <Plus className="size-4" />
               Create FY

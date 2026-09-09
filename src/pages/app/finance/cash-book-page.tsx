@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { Banknote, RefreshCw, Search, Download } from 'lucide-react'
+import { Banknote, Search, Download } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -9,15 +8,11 @@ import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { Button } from '@/components/ui/button'
 import { useCashBook, type CashBookRow } from '@/hooks/use-cash-book'
-import { receiptsQueryKey } from '@/hooks/use-receipts'
-import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
 export function CashBookPage() {
   const { t } = useTranslation()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
   const { data, isLoading, error: loadError, refetch } = useCashBook(dateRange)
@@ -68,16 +63,6 @@ export function CashBookPage() {
         subtitle={t('pages.finance.cashBook.runningCashPositionAcrossEveryReceipt')}
         actions={
           <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({ queryKey: receiptsQueryKey(profile?.companyId) })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             <Button type="button" variant="outline">
               <Download className="size-4" />
               Export

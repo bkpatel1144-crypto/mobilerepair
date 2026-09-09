@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import {
   Smartphone,
   Plus,
-  RefreshCw,
   Printer,
   Pencil,
   Wrench,
@@ -12,7 +11,6 @@ import {
   Package,
   Truck,
 } from 'lucide-react'
-import { useQueryClient } from '@tanstack/react-query'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -44,13 +42,11 @@ import {
   useSecondHandPurchases,
   useSetSecondHandPurchaseStatus,
   useUpdateSecondHandPurchase,
-  secondHandPurchasesQueryKey,
   deviceLabel,
   type SecondHandPurchaseWithId,
 } from '@/hooks/use-second-hand-purchases'
 import type { ConditionGrade } from '@/types/firestore'
 import type { SecondHandSaleWithId } from '@/hooks/use-second-hand-sales'
-import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { useCompany } from '@/hooks/use-company'
@@ -76,8 +72,6 @@ export function DevicePurchasePage() {
   const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { canDo } = usePermissions()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const setStatus = useSetSecondHandPurchaseStatus()
 
@@ -147,18 +141,6 @@ export function DevicePurchasePage() {
         subtitle={t('pages.secondHandDevice.devicePurchase.buyUsedMobilesLaptopsOtherDevices')}
         actions={
           <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({
-                  queryKey: secondHandPurchasesQueryKey(profile?.companyId),
-                })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             {canCreate && (
               <Button
                 type="button"

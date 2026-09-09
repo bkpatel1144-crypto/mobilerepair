@@ -9,6 +9,7 @@ import {
   Sun,
   Languages,
   Bell,
+  RefreshCw,
   LogOut,
   User as UserIcon,
   ShieldCheck,
@@ -28,6 +29,7 @@ import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useBreadcrumbExtraValue } from '@/contexts/breadcrumb-context'
 import { getInitials, cn } from '@/lib/utils'
+import { useRefresh } from '@/hooks/use-refresh'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,6 +58,7 @@ interface TopBarProps {
 }
 
 export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
+  const { refresh, isRefreshing } = useRefresh()
   const { t } = useTranslation()
   const { language, setLanguage } = useLanguage()
   const location = useLocation()
@@ -172,6 +175,31 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           aria-label={t('common.search')}
         >
           <Search className="size-5" />
+        </Button>
+
+        {/* Refresh, in the one place it belongs.
+         *
+         * Nineteen pages each built their own Refresh button into their header, all doing the
+         * same `invalidateQueries` with their own key. One button here reloads whatever the
+         * current page is observing (see `useRefresh` for why `type: 'active'` is exactly
+         * "this page only"), so the pages stop carrying it and it stops being nineteen slightly
+         * different implementations.
+         *
+         * Shown at every size, unlike fullscreen next to it — reloading is the action someone
+         * actually wants on a phone with a patchy connection. */}
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={() => void refresh()}
+          disabled={isRefreshing}
+          aria-label={t('shell.refresh')}
+        >
+          {/* `disabled:opacity-100` because the button is disabled *while spinning* to block a
+           * second tap, and the default faded-out look would read as "unavailable" at the exact
+           * moment it is meant to read as "working". */}
+          <RefreshCw
+            className={cn('size-4.5 disabled:opacity-100', isRefreshing && 'animate-spin')}
+          />
         </Button>
 
         <Button

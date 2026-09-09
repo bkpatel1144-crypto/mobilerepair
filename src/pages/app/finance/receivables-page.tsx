@@ -1,16 +1,12 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { AlertTriangle, RefreshCw, Search } from 'lucide-react'
+import { AlertTriangle, Search } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
-import { Button } from '@/components/ui/button'
 import { useReceivables, type ReceivableRow, type AgingBucket } from '@/hooks/use-receivables'
-import { jobCardsQueryKey } from '@/hooks/use-job-cards'
-import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
@@ -23,8 +19,6 @@ const BUCKET_LABELS: Record<AgingBucket, string> = {
 
 export function ReceivablesPage() {
   const { t } = useTranslation()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const { data, isLoading, error: loadError, refetch } = useReceivables()
   const [search, setSearch] = useState('')
 
@@ -85,18 +79,6 @@ export function ReceivablesPage() {
         icon={AlertTriangle}
         title={t('pages.finance.receivables.receivables')}
         subtitle={t('pages.finance.receivables.outstandingAmountsAcrossEveryActiveJob')}
-        actions={
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
-            }
-          >
-            <RefreshCw className="size-4" />
-            Refresh
-          </Button>
-        }
       />
 
       <StatCardGrid>

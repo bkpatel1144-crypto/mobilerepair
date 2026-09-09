@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { HandCoins, RefreshCw, Search, ChevronDown, ChevronUp } from 'lucide-react'
+import { HandCoins, Search, ChevronDown, ChevronUp } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -10,8 +9,6 @@ import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { Button } from '@/components/ui/button'
 import { usePayables } from '@/hooks/use-payables'
-import { jobCardsQueryKey } from '@/hooks/use-job-cards'
-import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
@@ -19,8 +16,6 @@ type Tab = 'all' | 'refundDue' | 'unusedAdvance'
 
 export function PayablesPage() {
   const { t } = useTranslation()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const { data, isLoading, error: loadError, refetch } = usePayables()
   const [search, setSearch] = useState('')
   const [tab, setTab] = useState<Tab>('all')
@@ -40,18 +35,6 @@ export function PayablesPage() {
         icon={HandCoins}
         title={t('pages.finance.payables.payables')}
         subtitle={t('pages.finance.payables.refundsDueAndUnusedAdvancesThe')}
-        actions={
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
-            }
-          >
-            <RefreshCw className="size-4" />
-            Refresh
-          </Button>
-        }
       />
 
       {/* On a failed load `data` is still a well-formed object of zeros, so the stat cards would

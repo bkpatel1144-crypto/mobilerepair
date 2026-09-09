@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { Wrench, RefreshCw, Plus, ExternalLink, Pencil } from 'lucide-react'
+import { Wrench, Plus, ExternalLink, Pencil } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { FilterBar } from '@/components/shared/filter-bar'
@@ -11,10 +10,8 @@ import { FormModal } from '@/components/shared/form-modal'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { useAuth } from '@/hooks/use-auth'
 import {
   useItems,
-  itemsQueryKey,
   useCreateItem,
   useUpdateItem,
   nextItemCode,
@@ -31,8 +28,6 @@ import { useTranslation } from 'react-i18next'
  */
 export function ServiceItemsPage() {
   const { t } = useTranslation()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const { data: items = [], isLoading, error: loadError, refetch } = useItems()
   const createItem = useCreateItem()
   const updateItem = useUpdateItem()
@@ -141,16 +136,6 @@ export function ServiceItemsPage() {
         subtitle={t('pages.service.serviceItems.itemsAndServicesUsedInJob')}
         actions={
           <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({ queryKey: itemsQueryKey(profile?.companyId) })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             <Button type="button" onClick={openNew}>
               <Plus className="size-4" />
               Add Item

@@ -284,7 +284,8 @@
     "switchCompany": "કંપની બદલો",
     "logOut": "લોગ આઉટ",
     "loggingOut": "લોગ આઉટ થઈ રહ્યું છે…",
-    "account": "ખાતું"
+    "account": "ખાતું",
+    "refresh": "આ પેજ રિફ્રેશ કરો"
   },
   "errors": {
     "title": "કંઈક ખોટું થયું",
@@ -958,7 +959,8 @@
         "deliveredReturnedBy": "આપનાર / પરત કરનાર",
         "noUsersYet": "હજી કોઈ વપરાશકર્તા નથી.",
         "searchJobCustomerMobile": "જોબ, ગ્રાહક, મોબાઇલ શોધો...",
-        "createJobCard": "જોબ કાર્ડ બનાવો"
+        "createJobCard": "જોબ કાર્ડ બનાવો",
+        "roleJobs": "{{role}} — જોબ"
       },
       "recordCostingModal": {
         "itemName": "આઇટમનું નામ",

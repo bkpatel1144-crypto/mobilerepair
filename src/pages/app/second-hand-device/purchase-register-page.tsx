@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Download, RefreshCw, ClipboardList } from 'lucide-react'
-import { useQueryClient } from '@tanstack/react-query'
+import { Download, ClipboardList } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -19,12 +18,10 @@ import {
 } from '@/components/ui/select'
 import {
   useSecondHandPurchases,
-  secondHandPurchasesQueryKey,
   deviceLabel,
   type SecondHandPurchaseWithId,
 } from '@/hooks/use-second-hand-purchases'
 import { useAllServiceOptions } from '@/hooks/use-service-options'
-import { useAuth } from '@/hooks/use-auth'
 import { dateRangeBounds } from '@/lib/date-range'
 import { downloadCsv } from '@/lib/csv-export'
 import { formatTimestamp } from '@/lib/utils'
@@ -41,8 +38,6 @@ export function PurchaseRegisterPage() {
   const { t } = useTranslation()
   const { data: purchases = [], isLoading, error: loadError, refetch } = useSecondHandPurchases()
   const { data: options } = useAllServiceOptions()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
 
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
@@ -127,18 +122,6 @@ export function PurchaseRegisterPage() {
             >
               <Download className="size-4" />
               Export CSV
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                queryClient.invalidateQueries({
-                  queryKey: secondHandPurchasesQueryKey(profile?.companyId),
-                })
-              }
-            >
-              <RefreshCw className="size-4" />
-              Refresh
             </Button>
           </>
         }

@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
-import { FileText, RefreshCw, Eye, Pencil } from 'lucide-react'
+import { FileText, Eye, Pencil } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { Button } from '@/components/ui/button'
-import { useJobCards, jobCardsQueryKey, type JobCardWithId } from '@/hooks/use-job-cards'
-import { useAuth } from '@/hooks/use-auth'
+import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { dateRangeBounds } from '@/lib/date-range'
 import { formatTimestamp } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
@@ -56,8 +54,6 @@ function billDate(job: JobCardWithId) {
 export function SalesInvoicesPage() {
   const { t } = useTranslation()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
@@ -193,18 +189,6 @@ export function SalesInvoicesPage() {
         icon={FileText}
         title={t('pages.sales.salesInvoices.salesInvoices')}
         subtitle={t('pages.sales.salesInvoices.allGeneratedBillsViewOrEdit')}
-        actions={
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(profile?.companyId) })
-            }
-          >
-            <RefreshCw className="size-4" />
-            Refresh
-          </Button>
-        }
       />
 
       <FilterBar

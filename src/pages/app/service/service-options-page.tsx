@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { ChevronRight, Plus, RefreshCw, Shuffle, Info } from 'lucide-react'
+import { ChevronRight, Plus, Shuffle, Info } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { RouteFallback } from '@/components/shared/route-fallback'
@@ -311,7 +310,6 @@ export function ServiceOptionsPage() {
   const { t } = useTranslation()
   const { data, isLoading, error: loadError, refetch } = useAllServiceOptions()
   const splitSharedBrands = useSplitSharedBrands()
-  const queryClient = useQueryClient()
   const [openSections, setOpenSections] = useState<Set<ServiceOptionType>>(new Set(['brands']))
   const [addingIn, setAddingIn] = useState<string | null>(null)
   const [confirmingSplit, setConfirmingSplit] = useState(false)
@@ -347,14 +345,6 @@ export function ServiceOptionsPage() {
         subtitle={t('pages.service.serviceOptions.manageDeviceTypesBrandsAndProblem')}
         actions={
           <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => queryClient.invalidateQueries({ queryKey: ['serviceOptions'] })}
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
             <Button
               type="button"
               onClick={() => setConfirmingSplit(true)}

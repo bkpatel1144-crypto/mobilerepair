@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
 import {
   Printer,
-  RefreshCw,
   Sparkles,
   Upload,
   Monitor,
@@ -34,10 +32,8 @@ import {
   useDeletePrintTemplate,
   useDuplicatePrintTemplate,
   useAddMissingDefaults,
-  printTemplatesQueryKey,
   type PrintTemplateWithId,
 } from '@/hooks/use-print-templates'
-import { useAuth } from '@/hooks/use-auth'
 import { PRINT_DOCUMENT_TYPES, printDocumentTypeLabel } from '@/config/print-fields'
 import { buildPath } from '@/config/nav'
 import { cn } from '@/lib/utils'
@@ -53,8 +49,6 @@ import { useTranslation } from 'react-i18next'
 export function PrintFormatsPage() {
   const { t } = useTranslation()
   const { data: templates = [], isLoading, error: loadError, refetch } = usePrintTemplates()
-  const { profile } = useAuth()
-  const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
@@ -105,16 +99,6 @@ export function PrintFormatsPage() {
       />
 
       <div className="flex flex-wrap items-center gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() =>
-            queryClient.invalidateQueries({ queryKey: printTemplatesQueryKey(profile?.companyId) })
-          }
-        >
-          <RefreshCw className="size-4" />
-          Refresh
-        </Button>
         <Button
           type="button"
           variant="outline"
