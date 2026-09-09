@@ -56,7 +56,25 @@ export function FilterBar({
     // A column on a phone, the original wrapping row from `sm` up. The search field wants the
     // full width on a narrow screen; the chips want a single scrolling line rather than three
     // ragged wrapped ones.
-    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center', className)}>
+    <div
+      className={cn(
+        'flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center',
+        // One height for everything in the row, whatever a page passes as `children`.
+        //
+        // The date chips were `size="sm"` (h-7, 28px) next to a 32px search field and 32px action
+        // buttons, and pages contribute their own controls here — a scan icon button, a "Filters"
+        // trigger, a company switcher — each picking its own size. The result was a toolbar of
+        // four slightly different heights.
+        //
+        // `h-8` rather than `min-h-8`, so a control that set itself taller is pulled back into
+        // line as well. It does not fight the touch rule in index.css: that sets
+        // `min-height: 2.75rem`, and a min-height always wins over a smaller height, so every
+        // control still grows to 44px on a phone. Descendant selector, so a control inside a
+        // portalled dropdown is untouched.
+        '[&_[data-slot=button]]:h-8 [&_[data-slot=input]]:h-8 [&_[data-slot=select-trigger]]:h-8',
+        className
+      )}
+    >
       {onSearchChange && (
         <div className="relative w-full sm:min-w-[200px] sm:flex-none sm:basis-72">
           <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -85,7 +103,6 @@ export function FilterBar({
               <Button
                 key={opt.key}
                 type="button"
-                size="sm"
                 variant={dateRange === opt.key ? 'default' : 'outline'}
                 onClick={() => onDateRangeChange(opt.key)}
               >
@@ -95,7 +112,6 @@ export function FilterBar({
           {onDateRangeChange && showCustomRange && (
             <Button
               type="button"
-              size="sm"
               variant={dateRange === 'custom' ? 'default' : 'outline'}
               onClick={() => onDateRangeChange('custom')}
             >

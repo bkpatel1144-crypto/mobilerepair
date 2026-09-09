@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify:build": "node tools/verify-build.mjs"
+    "verify:build": "node tools/verify-build.mjs",
+    "audit:rows": "node tools/ui/row-heights.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
