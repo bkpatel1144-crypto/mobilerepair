@@ -39,7 +39,7 @@ export function SolutionsPage() {
           {AUDIENCES.map((audience) => (
             <article
               key={audience.key}
-              className="flex flex-col rounded-2xl border bg-card p-6 sm:p-8"
+              className="flex flex-col mk-surface mk-lift rounded-2xl bg-mk-paper p-6 sm:p-8"
             >
               <span className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <audience.icon className="size-6" />

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PageHero } from '@/components/marketing/page-hero'
+import { Aurora } from '@/components/marketing/aurora'
 import { Section, SectionHeading } from '@/components/marketing/section'
 import { useTranslation } from 'react-i18next'
 
@@ -75,7 +76,10 @@ export function FeaturesPage() {
       <Section>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
           {GROUPS.map((group) => (
-            <article key={group.key} className="rounded-2xl border bg-card p-6 sm:p-8">
+            <article
+              key={group.key}
+              className="mk-surface mk-lift rounded-2xl bg-mk-paper p-6 sm:p-8"
+            >
               <div className="flex items-center gap-4">
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <group.icon className="size-6" />
@@ -104,11 +108,12 @@ export function FeaturesPage() {
         </div>
       </Section>
 
-      <Section tone="brand" size="sm">
-        <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <Section tone="dark" size="sm" reveal={false} className="overflow-hidden">
+        <Aurora className="opacity-75" />
+        <div className="relative flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <SectionHeading
-              tone="brand"
+              tone="dark"
               title={t('marketing.features.ctaTitle')}
               lead={t('marketing.features.ctaLead')}
             />
@@ -116,7 +121,7 @@ export function FeaturesPage() {
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Button
               size="lg"
-              className="gap-2 rounded-full bg-white px-6 text-primary hover:bg-white/90"
+              className="mk-lift gap-2 rounded-full px-6 shadow-lg shadow-black/30"
               render={<Link to="/signup" />}
             >
               {t('marketing.home.hero.primaryCta')}
@@ -125,7 +130,7 @@ export function FeaturesPage() {
             <Button
               size="lg"
               variant="outline"
-              className="rounded-full border-white/40 bg-transparent px-6 text-white hover:bg-white/10 hover:text-white"
+              className="rounded-full border-white/25 bg-white/5 px-6 text-white backdrop-blur hover:bg-white/10 hover:text-white"
               render={<Link to="/pricing" />}
             >
               {t('marketing.nav.pricing')}

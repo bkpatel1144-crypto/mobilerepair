@@ -70,7 +70,7 @@ export function ContactPage() {
                   key={channel.key}
                   href={channel.href()}
                   {...(channel.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  className="group flex flex-col rounded-2xl border bg-card p-5 transition-colors hover:border-primary/50 hover:bg-primary/5"
+                  className="group flex flex-col mk-surface mk-lift rounded-2xl bg-mk-paper p-5 transition-colors hover:border-primary/50 hover:bg-primary/5"
                 >
                   <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <channel.icon className="size-5" />
@@ -89,7 +89,7 @@ export function ContactPage() {
             </div>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="flex gap-3 rounded-2xl border bg-muted/40 p-5">
+              <div className="flex gap-3 mk-surface rounded-2xl bg-mk-paper-2 p-5">
                 <Clock className="mt-0.5 size-5 shrink-0 text-primary" />
                 <div>
                   <p className="font-semibold">{t('marketing.contact.hoursTitle')}</p>
@@ -98,7 +98,7 @@ export function ContactPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-3 rounded-2xl border bg-muted/40 p-5">
+              <div className="flex gap-3 mk-surface rounded-2xl bg-mk-paper-2 p-5">
                 <MapPin className="mt-0.5 size-5 shrink-0 text-primary" />
                 <div className="min-w-0">
                   <p className="font-semibold">{t('marketing.footer.address')}</p>
@@ -114,7 +114,7 @@ export function ContactPage() {
 
           {/* Demo request. A short list of what to mention, then one button that opens the mail
            * client with a subject already set — no server, and nothing that can silently fail. */}
-          <aside className="rounded-2xl border-2 border-primary/25 bg-card p-6 sm:p-8">
+          <aside className="mk-surface rounded-2xl border-2 border-primary/30 bg-mk-paper p-6 sm:p-8">
             <h2 className="text-title">{t('marketing.contact.demoTitle')}</h2>
             <p className="mt-4 text-[0.9375rem] leading-relaxed text-muted-foreground">
               {t('marketing.contact.demoLead')}

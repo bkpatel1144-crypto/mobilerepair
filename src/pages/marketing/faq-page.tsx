@@ -41,7 +41,7 @@ export function FaqPage() {
           {GROUPS.map((group) => (
             <section key={group.key}>
               <h2 className="text-title">{t(`marketing.faq.groups.${group.key}`)}</h2>
-              <div className="mt-5 divide-y rounded-2xl border bg-card">
+              <div className="mt-5 mk-surface divide-y rounded-2xl bg-mk-paper">
                 {group.questions.map((question) => (
                   <details key={question} className="group px-5 py-4">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">

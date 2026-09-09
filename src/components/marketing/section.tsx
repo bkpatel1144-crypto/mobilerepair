@@ -1,3 +1,4 @@
+import { Reveal } from '@/components/marketing/reveal'
 import { cn } from '@/lib/utils'
 
 /**
@@ -46,11 +47,14 @@ export function Container({
 type Tone = 'default' | 'muted' | 'dark' | 'brand'
 
 const TONE: Record<Tone, string> = {
-  default: 'bg-background',
-  muted: 'bg-muted/40',
-  // Deliberately not a `dark:` variant — this section is dark in both themes, so it needs its
-  // own foreground colors rather than inheriting the theme's.
-  dark: 'bg-slate-950 text-slate-100',
+  // `mk-paper` rather than `background`: a warm off-white on the public site, the theme's own
+  // near-black in dark mode. See the MARKETING SURFACE block in index.css for why pure white was
+  // the thing making these pages read as a template.
+  default: 'bg-mk-paper',
+  muted: 'bg-mk-paper-2',
+  // Dark in *both* themes — a deliberate contrast band, not a dark-mode variant — so it sets its
+  // own foreground rather than inheriting the theme's.
+  dark: 'bg-mk-ink text-slate-100',
   brand: 'bg-primary text-primary-foreground',
 }
 
@@ -66,6 +70,7 @@ export function Section({
   size = 'default',
   divide = false,
   bleed = false,
+  reveal = true,
   className,
   children,
 }: {
@@ -74,18 +79,30 @@ export function Section({
   size?: 'default' | 'sm' | 'none'
   divide?: boolean
   bleed?: boolean
+  /**
+   * Reveal the section's content as it scrolls into view. On by default, so eight interior pages
+   * get the motion without a single edit each.
+   *
+   * Turn it off where a section stages its own children — the home page staggers items
+   * individually, and a `Reveal` wrapping those would fade the whole block in at once and make
+   * the stagger invisible. Also off for anything holding an absolutely positioned backdrop: the
+   * `Aurora` would fade with the content instead of sitting behind it.
+   */
+  reveal?: boolean
   className?: string
   children: React.ReactNode
 }) {
   const padding =
     size === 'none' ? '' : size === 'sm' ? 'py-(--spacing-section-sm)' : 'py-(--spacing-section)'
 
+  const content = bleed ? children : <Container>{children}</Container>
+
   return (
     <section
       id={id}
       className={cn('relative', TONE[tone], padding, divide && 'border-t', className)}
     >
-      {bleed ? children : <Container>{children}</Container>}
+      {reveal ? <Reveal>{content}</Reveal> : content}
     </section>
   )
 }

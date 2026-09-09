@@ -43,7 +43,7 @@ export function AboutPage() {
             </Prose>
           </div>
 
-          <div className="rounded-2xl border bg-muted/40 p-6 sm:p-8">
+          <div className="mk-surface rounded-2xl bg-mk-paper-2 p-6 sm:p-8">
             <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
               {t('marketing.about.detailsTitle')}
             </h2>
@@ -88,7 +88,7 @@ export function AboutPage() {
         />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-7">
           {PRINCIPLES.map((item) => (
-            <article key={item.key} className="rounded-2xl border bg-card p-6">
+            <article key={item.key} className="mk-surface mk-lift rounded-2xl bg-mk-paper p-6">
               <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <item.icon className="size-5.5" />
               </span>

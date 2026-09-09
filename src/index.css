@@ -380,3 +380,177 @@
     display: none;
   }
 }
+
+/* =======================================================================================
+ * MARKETING SURFACE
+ *
+ * A separate visual language for the public site, and deliberately not the app's.
+ *
+ * The app's palette is correct and dense: pure white, neutral greys, one teal accent, flat 1px
+ * borders. That is right for a screen someone stares at for eight hours. Applied to a marketing
+ * page it produced exactly the criticism it earned — competent, generic, the look of a template.
+ * A brand page has the opposite job: it has about three seconds to signal that the software is
+ * worth trusting.
+ *
+ * What is different here, and why each thing earns its place:
+ *
+ *  - **Warm off-white, not pure white.** `#fff` is the single strongest tell of an unconsidered
+ *    page. A few percent of warmth reads as paper rather than as a default.
+ *  - **Ink with a teal cast, not neutral slate.** The dark sections belong to the same family as
+ *    the brand instead of being generic dark-mode grey.
+ *  - **Two accents.** Teal alone flattens; teal against amber gives the page somewhere warm to
+ *    land and makes gradients read as light rather than as decoration.
+ *  - **Light-catching borders.** A top inner highlight is how a real surface behaves under light,
+ *    and it is most of the difference between a card and a rectangle.
+ *  - **Grain.** A few percent of noise over a large dark field stops it banding and is the
+ *    cheapest available signal of craft.
+ * ===================================================================================== */
+
+@theme inline {
+  /* `paper` is "the page surface" and flips with the theme; `ink` bands stay dark in both, as a
+   * deliberate contrast against whatever the page surface is. The public site follows the app's
+   * stored theme, so a fixed light value here would have broken every light band in dark mode. */
+  --color-mk-paper: var(--mk-paper);
+  --color-mk-paper-2: var(--mk-paper-2);
+  --color-mk-ink: var(--mk-ink);
+  --color-mk-ink-2: var(--mk-ink-2);
+  --color-mk-accent: var(--mk-accent);
+  --color-mk-accent-soft: var(--mk-accent-soft);
+  --color-mk-warm: var(--mk-warm);
+}
+
+:root {
+  /* Warm off-white, not `#fff`. Pure white is the single strongest tell of an unconsidered page;
+   * a few percent of warmth reads as paper rather than as a default. */
+  --mk-paper: oklch(0.988 0.004 85);
+  --mk-paper-2: oklch(0.968 0.006 85);
+  /* Ink carries a teal cast rather than neutral slate, so the dark bands belong to the same
+   * family as the brand instead of looking like generic dark mode. */
+  --mk-ink: oklch(0.17 0.021 195);
+  --mk-ink-2: oklch(0.235 0.026 197);
+  --mk-accent: oklch(0.6 0.118 184.704);
+  --mk-accent-soft: oklch(0.72 0.11 186);
+  --mk-warm: oklch(0.78 0.14 72);
+}
+
+.dark {
+  --mk-paper: oklch(0.16 0.014 200);
+  --mk-paper-2: oklch(0.205 0.018 200);
+  --mk-ink: oklch(0.13 0.018 197);
+  --mk-ink-2: oklch(0.19 0.022 199);
+  /* Lifted in dark mode: the light-mode accent is legible on paper but muddy against ink. */
+  --mk-accent: oklch(0.74 0.125 184);
+  --mk-accent-soft: oklch(0.82 0.1 186);
+  --mk-warm: oklch(0.84 0.13 74);
+}
+
+/* A surface that catches light: hairline border, a highlight along the top edge, and a shadow
+ * that sits under it rather than around it. */
+.mk-surface {
+  border: 1px solid color-mix(in oklab, var(--foreground) 9%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 60%, transparent),
+    0 1px 2px -1px color-mix(in oklab, black 12%, transparent),
+    0 12px 28px -18px color-mix(in oklab, black 30%, transparent);
+}
+/* In dark mode a 60%-white top edge is a bright line drawn across the card, not a highlight. */
+.dark .mk-surface {
+  border-color: color-mix(in oklab, white 11%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 7%, transparent),
+    0 16px 40px -24px color-mix(in oklab, black 85%, transparent);
+}
+.mk-surface-dark {
+  border: 1px solid color-mix(in oklab, white 10%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 8%, transparent),
+    0 20px 50px -30px color-mix(in oklab, black 80%, transparent);
+}
+
+/* Grain. An inline SVG so it costs no request and cannot fail to load. */
+.mk-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Scroll reveal. The transition lives in CSS so `Reveal` only toggles one attribute, and the
+ * easing overshoots slightly — linear fades read as a page still loading. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cards lift on hover with the same easing, so pointer feedback matches the entrance. */
+.mk-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .mk-lift:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Slow drift on the hero glow. Long enough not to read as an animation. */
+@keyframes mk-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.08);
+  }
+}
+.mk-drift {
+  animation: mk-drift 18s ease-in-out infinite;
+}
+
+/* Marquee. Two copies of the track sit side by side and the pair translates by exactly half, so
+ * the loop is seamless without measuring anything in JavaScript. */
+@keyframes mk-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.mk-marquee {
+  animation: mk-marquee var(--mk-marquee-duration, 42s) linear infinite;
+}
+@media (hover: hover) {
+  .mk-marquee-host:hover .mk-marquee {
+    animation-play-state: paused;
+  }
+}
+
+/* Everything above is decoration, so all of it stops when asked. Reveals must also be *shown*,
+ * not merely un-animated — leaving them at `opacity: 0` would hide the whole page from anyone
+ * who has reduced motion enabled. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal='in'] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .mk-drift,
+  .mk-marquee {
+    animation: none;
+  }
+  .mk-lift:hover {
+    transform: none;
+  }
+}

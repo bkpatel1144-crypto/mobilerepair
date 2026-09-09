@@ -71,6 +71,16 @@ export function MarketingNav() {
   // through the gap on both sides.
   const capsule = scrolled && !mobileOpen
 
+  // At rest on the home page the bar sits *over* the dark hero, so it has to invert.
+  //
+  // The hero pulls itself up under the header (see landing-page.tsx) rather than starting below
+  // it, because a white strip above a dark hero is the single clearest sign of a page assembled
+  // from a template. That only works if the nav knows what is behind it: dark-on-dark text is
+  // invisible. Route-based rather than a prop threaded through the layout — the home page is the
+  // only one with a dark hero, and once scrolled the capsule brings its own background so the
+  // normal colours apply again.
+  const overDark = pathname === '/' && !capsule && !mobileOpen
+
   return (
     <header
       className={cn('sticky top-0 z-50 transition-all duration-300', capsule && 'pt-3 sm:pt-4')}
@@ -99,7 +109,7 @@ export function MarketingNav() {
           )}
         >
           <Link to="/" className="shrink-0" aria-label={t('marketing.nav.home')}>
-            <Wordmark />
+            <Wordmark tone={overDark ? 'inverse' : 'default'} />
           </Link>
 
           <nav className="ml-4 hidden items-center lg:flex xl:ml-8">
@@ -112,7 +122,13 @@ export function MarketingNav() {
                   aria-current={active ? 'page' : undefined}
                   className={cn(
                     'rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
-                    active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                    overDark
+                      ? active
+                        ? 'text-white'
+                        : 'text-slate-300 hover:text-white'
+                      : active
+                        ? 'text-foreground'
+                        : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
                   {t(link.labelKey)}
@@ -124,7 +140,12 @@ export function MarketingNav() {
           <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
             {/* Each language is named in its own script: someone who has landed in the wrong
              * language cannot read "Gujarati" to get back out of it, but can read ગુજરાતી. */}
-            <div className="hidden items-center rounded-full border p-0.5 md:flex">
+            <div
+              className={cn(
+                'hidden items-center rounded-full border p-0.5 md:flex',
+                overDark && 'border-white/20'
+              )}
+            >
               {LANGUAGES.map((l) => (
                 <button
                   key={l.code}
@@ -134,8 +155,12 @@ export function MarketingNav() {
                   className={cn(
                     'rounded-full px-2.5 py-1 text-xs font-medium transition-colors',
                     language === l.code
-                      ? 'bg-foreground text-background'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? overDark
+                        ? 'bg-white text-slate-900'
+                        : 'bg-foreground text-background'
+                      : overDark
+                        ? 'text-slate-300 hover:text-white'
+                        : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
                   {l.nativeLabel}
@@ -143,7 +168,14 @@ export function MarketingNav() {
               ))}
             </div>
 
-            <Button variant="ghost" className="hidden sm:inline-flex" render={<Link to="/login" />}>
+            <Button
+              variant="ghost"
+              className={cn(
+                'hidden sm:inline-flex',
+                overDark && 'text-slate-200 hover:bg-white/10 hover:text-white'
+              )}
+              render={<Link to="/login" />}
+            >
               {t('marketing.nav.login')}
             </Button>
             <Button className="rounded-full px-4 shadow-sm sm:px-5" render={<Link to="/signup" />}>
@@ -155,7 +187,10 @@ export function MarketingNav() {
               onClick={() => setMobileOpen((o) => !o)}
               // The icon is `size-5`, so without an explicit box this was a 20x20 tap target — and
               // it is the only way to open the nav on a phone.
-              className="-mr-1.5 inline-flex size-11 items-center justify-center rounded-xl hover:bg-muted lg:hidden"
+              className={cn(
+                '-mr-1.5 inline-flex size-11 items-center justify-center rounded-xl lg:hidden',
+                overDark ? 'text-white hover:bg-white/10' : 'hover:bg-muted'
+              )}
               aria-label={t('marketing.nav.toggleMenu')}
               aria-expanded={mobileOpen}
             >

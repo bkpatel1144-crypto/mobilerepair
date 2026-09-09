@@ -13,19 +13,22 @@ import {
   FileSpreadsheet,
   MessageSquareDashed,
   Calculator,
+  Sparkles,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { JobCardMockup } from '@/components/marketing/job-card-mockup'
 import { ProductFrame } from '@/components/marketing/product-frame'
 import { Container, Section, SectionHeading } from '@/components/marketing/section'
+import { Aurora } from '@/components/marketing/aurora'
+import { Reveal } from '@/components/marketing/reveal'
+import { Marquee } from '@/components/marketing/marquee'
 import { COMPANY, mailto } from '@/config/company'
+import { FACTS, SEEDED_BRANDS } from '@/config/marketing-facts'
 import { LANGUAGES } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
-/** What a shop is using today, and which part of `aim` replaces it. Concrete tools rather than
- *  invented statistics — this product has no customer numbers worth quoting yet, and made-up
- *  ones on a real business site are a liability. */
+/** What a shop is using today, and which part of `aim` replaces it. */
 const REPLACES = [
   { icon: NotebookPen, labelKey: 'marketing.home.replaces.notebook' },
   { icon: MessageSquareDashed, labelKey: 'marketing.home.replaces.whatsapp' },
@@ -36,67 +39,19 @@ const REPLACES = [
 /**
  * The six capabilities, with a `span` deciding how much of the grid each takes.
  *
- * Not six identical boxes: the page it replaced gave every feature the same card, so nothing said
- * which of them mattered. Job cards and role-based access are the two things that actually
- * distinguish this from a billing app, so they get the wide cells.
+ * Spans sum to 9 across three columns, so three rows tile exactly. An earlier set summed to 8 and
+ * left a one-column hole beside the last card — the kind of gap that reads as a bug.
  */
 const CAPABILITIES = [
-  {
-    icon: ClipboardList,
-    titleKey: 'marketing.home.capabilities.jobCards.title',
-    bodyKey: 'marketing.home.capabilities.jobCards.body',
-    span: 'lg:col-span-2',
-  },
-  {
-    icon: Users2,
-    titleKey: 'marketing.home.capabilities.workflows.title',
-    bodyKey: 'marketing.home.capabilities.workflows.body',
-    span: '',
-  },
-  {
-    icon: Bell,
-    titleKey: 'marketing.home.capabilities.updates.title',
-    bodyKey: 'marketing.home.capabilities.updates.body',
-    span: '',
-  },
-  {
-    icon: Receipt,
-    titleKey: 'marketing.home.capabilities.money.title',
-    bodyKey: 'marketing.home.capabilities.money.body',
-    span: 'lg:col-span-2',
-  },
-  {
-    icon: Smartphone,
-    titleKey: 'marketing.home.capabilities.secondHand.title',
-    bodyKey: 'marketing.home.capabilities.secondHand.body',
-    span: '',
-  },
-  {
-    icon: ShieldCheck,
-    titleKey: 'marketing.home.capabilities.access.title',
-    bodyKey: 'marketing.home.capabilities.access.body',
-    span: 'lg:col-span-2',
-  },
+  { icon: ClipboardList, key: 'jobCards', span: 'lg:col-span-2' },
+  { icon: Users2, key: 'workflows', span: '' },
+  { icon: Bell, key: 'updates', span: '' },
+  { icon: Receipt, key: 'money', span: 'lg:col-span-2' },
+  { icon: Smartphone, key: 'secondHand', span: '' },
+  { icon: ShieldCheck, key: 'access', span: 'lg:col-span-2' },
 ]
 
-const WORKFLOW_STEPS = [
-  {
-    titleKey: 'marketing.home.workflow.intake.title',
-    bodyKey: 'marketing.home.workflow.intake.body',
-  },
-  {
-    titleKey: 'marketing.home.workflow.assign.title',
-    bodyKey: 'marketing.home.workflow.assign.body',
-  },
-  {
-    titleKey: 'marketing.home.workflow.bill.title',
-    bodyKey: 'marketing.home.workflow.bill.body',
-  },
-  {
-    titleKey: 'marketing.home.workflow.deliver.title',
-    bodyKey: 'marketing.home.workflow.deliver.body',
-  },
-]
+const WORKFLOW_STEPS = ['intake', 'assign', 'bill', 'deliver']
 
 const PLAN_INCLUDES = [
   'marketing.pricing.includes.unlimited',
@@ -110,187 +65,238 @@ const PLAN_INCLUDES = [
 export function LandingPage() {
   const { t } = useTranslation()
 
+  /** The numbers the page leads with — real, and asserted against source by
+   *  `marketing-facts.test.ts`. This is the slot a template fills with invented growth
+   *  statistics; there are none to quote yet, so it states what the software actually ships. */
+  const STATS = [
+    { value: `${FACTS.deviceBrands}`, labelKey: 'marketing.home.stats.brands' },
+    { value: `${FACTS.deviceModels}`, labelKey: 'marketing.home.stats.models' },
+    { value: `${FACTS.appScreens}`, labelKey: 'marketing.home.stats.screens' },
+    { value: `${FACTS.languages}`, labelKey: 'marketing.home.stats.languages' },
+  ]
+
   return (
     <>
-      {/* ---- Hero ----------------------------------------------------------------------------
-       * The product shot lives *inside* the dark band rather than straddling its lower edge. The
-       * previous hero floated the mockup on a negative margin across the boundary, so the hard
-       * horizontal seam between the dark section and the white one cut straight through the
-       * image — visible in any screenshot of the page.
+      {/* ---- Hero ---------------------------------------------------------------------------- */}
+      {/* Pulled up under the sticky header, and padded back down by the same amount.
        *
-       * Inline styles for the gradients, not Tailwind arbitrary values: the v3-style
-       * `bg-[radial-gradient(...,var(--tw-gradient-stops))]` combo silently fails to resolve
-       * under Tailwind v4's engine and leaves the section transparent, which once shipped a
-       * "dark navy hero" that rendered near-white with unreadable text. */}
-      <Section tone="dark" size="none" bleed className="overflow-hidden">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(70rem 40rem at 15% -10%, rgba(13,148,136,0.32), transparent 60%),' +
-              'radial-gradient(50rem 30rem at 95% 10%, rgba(56,189,248,0.16), transparent 60%)',
-          }}
-        />
-        <Container className="relative py-(--spacing-section)">
-          {/* Text and product side by side from `lg` up, so a wide screen is filled by content
-           * instead of by margins around a centred column. Below that they stack, text first. */}
-          {/* `min-w-0` on both children is load-bearing on a phone.
-           *
-           * A grid item's automatic minimum size is its min-content width, and the product frame
-           * contains a six-step timeline with `whitespace-nowrap` labels — about 388px of
-           * min-content. On a 375px screen that floor made the single implicit column 388px wide,
-           * so the column, and the text column with it, ran 33px past the viewport. Because the
-           * section is `overflow-hidden` the excess was clipped rather than scrolled, which meant
-           * `scrollWidth === clientWidth` and every overflow check reported the page clean while
-           * the hero was visibly cutting words in half: "WhatsApp update", "one connecte".
-           *
-           * The `lg` template already used `minmax(0,…)` for the same reason; the implicit
-           * single-column layout below `lg` needed it too. */}
+       * Without this the hero starts *below* the bar, leaving a white strip across the top of the
+       * page above a dark hero — the clearest single sign of a page assembled from a template.
+       * The nav inverts its own colours over this section (see `overDark` in marketing-nav) so
+       * the text stays legible once the dark field is behind it. */}
+      <Section
+        reveal={false}
+        tone="dark"
+        size="none"
+        bleed
+        className="-mt-16 overflow-hidden pt-16 lg:-mt-18 lg:pt-18"
+      >
+        <Aurora />
+        <Container className="relative py-(--spacing-section) lg:py-32 xl:py-40">
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
             <div className="min-w-0">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-200 backdrop-blur">
-                <span className="size-1.5 rounded-full bg-emerald-400" />
-                {t('marketing.home.hero.badge')}
-              </p>
-              {/* Was hardcoded English, so Hindi and Gujarati visitors read English in the
-               * largest text on the site. `<Trans>`-free by design: the brand word is a separate
-               * element, so the sentence is split into two keys the translator can reorder. */}
-              <h1 className="text-display mt-6 text-white text-balance">
-                {t('marketing.home.hero.titleLead')}{' '}
-                <span className="text-primary">{COMPANY.productName}</span>
-              </h1>
-              <p className="text-lead mt-6 max-w-xl text-slate-300">
-                {t('marketing.home.hero.subtitle')}
-              </p>
+              <Reveal>
+                <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-200 backdrop-blur">
+                  <Sparkles className="size-3.5 text-mk-accent-soft" />
+                  {t('marketing.home.hero.badge')}
+                </p>
+              </Reveal>
 
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  size="lg"
-                  className="gap-2 rounded-full px-6"
-                  render={<Link to="/signup" />}
-                >
-                  {t('marketing.home.hero.primaryCta')}
-                  <ArrowRight className="size-4" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full border-white/25 bg-white/5 px-6 text-white hover:bg-white/10 hover:text-white"
-                  render={
-                    <a href={mailto(COMPANY.salesEmail, t('marketing.home.hero.demoSubject'))} />
-                  }
-                >
-                  {t('marketing.home.hero.secondaryCta')}
-                </Button>
-              </div>
+              {/* The brand word carries a gradient. A headline set in one weight and one colour
+               * is the commonest reason a hero reads as flat, and this is the one word on the
+               * page that should catch the eye. */}
+              <Reveal delay={60}>
+                <h1 className="text-display mt-6 text-balance text-white">
+                  {t('marketing.home.hero.titleLead')}{' '}
+                  <span
+                    className="bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(100deg, var(--color-mk-accent-soft), var(--color-mk-warm) 70%)',
+                    }}
+                  >
+                    {COMPANY.productName}
+                  </span>
+                </h1>
+              </Reveal>
 
-              <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
-                {['freeForever', 'noCard', 'migration'].map((key) => (
-                  <li key={key} className="flex items-center gap-2">
-                    <Check className="size-4 shrink-0 text-emerald-400" />
-                    {t(`marketing.home.hero.trust.${key}`)}
-                  </li>
-                ))}
-              </ul>
+              <Reveal delay={120}>
+                <p className="text-lead mt-6 max-w-xl text-slate-300">
+                  {t('marketing.home.hero.subtitle')}
+                </p>
+              </Reveal>
+
+              <Reveal delay={180}>
+                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                  <Button
+                    size="lg"
+                    className="mk-lift gap-2 rounded-full px-6 shadow-lg shadow-black/30"
+                    render={<Link to="/signup" />}
+                  >
+                    {t('marketing.home.hero.primaryCta')}
+                    <ArrowRight className="size-4" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full border-white/25 bg-white/5 px-6 text-white backdrop-blur hover:bg-white/10 hover:text-white"
+                    render={
+                      <a href={mailto(COMPANY.salesEmail, t('marketing.home.hero.demoSubject'))} />
+                    }
+                  >
+                    {t('marketing.home.hero.secondaryCta')}
+                  </Button>
+                </div>
+              </Reveal>
+
+              <Reveal delay={240}>
+                <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
+                  {['freeForever', 'noCard', 'migration'].map((key) => (
+                    <li key={key} className="flex items-center gap-2">
+                      <Check className="size-4 shrink-0 text-mk-accent-soft" />
+                      {t(`marketing.home.hero.trust.${key}`)}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
             </div>
 
-            {/* Nudged slightly wider than its column on large screens so the frame reaches toward
-             * the edge — the shot is the most persuasive thing here and shouldn't sit small in
-             * the middle of a dark field. */}
-            <div className="min-w-0 lg:-mr-6 xl:-mr-12">
+            <Reveal delay={140} className="min-w-0 lg:-mr-6 xl:-mr-12">
               <ProductFrame url="app.aimenterprise.in/service/job-cards/JC-2026-0143">
                 <JobCardMockup />
               </ProductFrame>
-            </div>
+            </Reveal>
           </div>
         </Container>
+
+        {/* Real seeded brands along the bottom of the hero.
+         *
+         * This is the row a template fills with borrowed customer logos. There are no customers
+         * to name yet, so it answers the question a repair shop actually has instead — will it
+         * already know my devices? Every name is asserted against the seed data by
+         * `marketing-facts.test.ts`, so it cannot drift into being untrue. */}
+        <div className="relative border-t border-white/10 py-6">
+          <Container>
+            <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-slate-500">
+              {t('marketing.home.brands.eyebrow', { count: FACTS.deviceModels })}
+            </p>
+          </Container>
+          <Marquee className="mt-5" duration={46}>
+            {SEEDED_BRANDS.map((brand) => (
+              <span
+                key={brand}
+                className="px-6 text-lg font-semibold text-slate-400/80 sm:px-8 sm:text-xl"
+              >
+                {brand}
+              </span>
+            ))}
+          </Marquee>
+        </div>
+      </Section>
+
+      {/* ---- Numbers ------------------------------------------------------------------------- */}
+      <Section reveal={false} size="sm" tone="muted">
+        <div className="grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-border/70">
+          {STATS.map((stat, i) => (
+            <Reveal key={stat.labelKey} delay={i * 70} className="lg:px-8 lg:first:pl-0">
+              <p className="text-headline tabular-nums text-mk-accent">{stat.value}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                {t(stat.labelKey)}
+              </p>
+            </Reveal>
+          ))}
+        </div>
       </Section>
 
       {/* ---- What it replaces ---------------------------------------------------------------- */}
-      <Section size="sm" tone="muted">
+      <Section reveal={false} size="sm">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:items-center lg:gap-14">
-          <h2 className="text-title max-w-md">{t('marketing.home.replaces.title')}</h2>
-          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:gap-6">
-            {REPLACES.map((item) => (
-              <li
-                key={item.labelKey}
-                className="flex flex-col gap-3 rounded-xl border bg-card p-4 sm:p-5"
-              >
-                <item.icon className="size-5 text-muted-foreground" />
-                <span className="text-sm font-medium leading-snug">{t(item.labelKey)}</span>
-              </li>
+          <Reveal>
+            <h2 className="text-title max-w-md">{t('marketing.home.replaces.title')}</h2>
+          </Reveal>
+          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:gap-5">
+            {REPLACES.map((item, i) => (
+              <Reveal as="li" key={item.labelKey} delay={i * 70}>
+                <div className="mk-surface mk-lift flex h-full flex-col gap-3 rounded-2xl bg-mk-paper p-4 sm:p-5">
+                  <item.icon className="size-5 text-muted-foreground" />
+                  <span className="text-sm font-medium leading-snug">{t(item.labelKey)}</span>
+                </div>
+              </Reveal>
             ))}
           </ul>
         </div>
       </Section>
 
-      {/* ---- Capabilities ------------------------------------------------------------------- */}
-      <Section id="features">
-        <SectionHeading
-          eyebrow={t('marketing.home.capabilities.eyebrow')}
-          title={t('marketing.home.capabilities.title')}
-          lead={t('marketing.home.capabilities.lead')}
-        />
+      {/* ---- Capabilities -------------------------------------------------------------------- */}
+      <Section reveal={false} id="features" tone="muted" divide>
+        <Reveal>
+          <SectionHeading
+            eyebrow={t('marketing.home.capabilities.eyebrow')}
+            title={t('marketing.home.capabilities.title')}
+            lead={t('marketing.home.capabilities.lead')}
+          />
+        </Reveal>
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-          {CAPABILITIES.map((item) => (
-            <article
-              key={item.titleKey}
-              className={cn(
-                'flex flex-col rounded-2xl border bg-card p-6 transition-shadow hover:shadow-md sm:p-7',
-                item.span
-              )}
-            >
-              <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <item.icon className="size-5.5" />
-              </span>
-              <h3 className="mt-5 text-lg font-semibold">{t(item.titleKey)}</h3>
-              <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
-                {t(item.bodyKey)}
-              </p>
-            </article>
+          {CAPABILITIES.map((item, i) => (
+            <Reveal as="article" key={item.key} delay={(i % 3) * 70} className={cn(item.span)}>
+              <div className="mk-surface mk-lift flex h-full flex-col rounded-2xl bg-mk-paper p-6 sm:p-7">
+                <span className="flex size-11 items-center justify-center rounded-xl bg-mk-accent/10 text-mk-accent ring-1 ring-mk-accent/15">
+                  <item.icon className="size-5.5" />
+                </span>
+                <h3 className="mt-5 text-lg font-semibold">
+                  {t(`marketing.home.capabilities.${item.key}.title`)}
+                </h3>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                  {t(`marketing.home.capabilities.${item.key}.body`)}
+                </p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </Section>
 
-      {/* ---- Workflow ------------------------------------------------------------------------
-       * A connected rail rather than four separate cards, because the claim is that the steps are
-       * joined up. Four bordered boxes in a row said the opposite. */}
-      <Section tone="muted" divide>
-        <SectionHeading
-          eyebrow={t('marketing.home.workflow.eyebrow')}
-          title={t('marketing.home.workflow.title')}
-          lead={t('marketing.home.workflow.lead')}
-        />
+      {/* ---- Workflow ------------------------------------------------------------------------ */}
+      <Section reveal={false}>
+        <Reveal>
+          <SectionHeading
+            eyebrow={t('marketing.home.workflow.eyebrow')}
+            title={t('marketing.home.workflow.title')}
+            lead={t('marketing.home.workflow.lead')}
+          />
+        </Reveal>
         <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {WORKFLOW_STEPS.map((step, i) => (
-            <li key={step.titleKey} className="relative">
-              {/* The rail runs between the markers, hidden on the last step and on stacked
-               * layouts where there is nothing beside it to connect to. */}
+            <Reveal as="li" key={step} delay={i * 90} className="relative">
+              {/* The rail fades out rather than stopping at a hard edge, so it reads as a
+               * connection rather than a border. */}
               {i < WORKFLOW_STEPS.length - 1 && (
                 <span
                   aria-hidden="true"
-                  className="absolute left-11 right-0 top-5 hidden h-px bg-border lg:block"
+                  className="absolute left-11 right-0 top-5 hidden h-px lg:block"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(to right, color-mix(in oklab, var(--color-mk-accent) 40%, transparent), transparent)',
+                  }}
                 />
               )}
-              <span className="relative flex size-10 items-center justify-center rounded-full border-2 border-primary bg-background text-sm font-bold text-primary">
+              <span className="relative flex size-10 items-center justify-center rounded-full bg-mk-accent text-sm font-bold text-white shadow-lg shadow-mk-accent/25">
                 {i + 1}
               </span>
-              <h3 className="mt-5 font-semibold">{t(step.titleKey)}</h3>
+              <h3 className="mt-5 font-semibold">{t(`marketing.home.workflow.${step}.title`)}</h3>
               <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground lg:pr-6">
-                {t(step.bodyKey)}
+                {t(`marketing.home.workflow.${step}.body`)}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </Section>
 
-      {/* ---- Trilingual ---------------------------------------------------------------------
-       * Its own section because it is the rarest thing here. Most Indian shop software is English
-       * only, and the person actually typing at the counter often is not comfortable in English. */}
-      <Section tone="dark">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
-          <div>
-            <span className="flex size-12 items-center justify-center rounded-xl bg-white/10 text-primary">
+      {/* ---- Trilingual ---------------------------------------------------------------------- */}
+      <Section reveal={false} tone="dark" className="overflow-hidden">
+        <Aurora className="opacity-60" />
+        <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+          <Reveal>
+            <span className="flex size-12 items-center justify-center rounded-xl bg-white/10 text-mk-accent-soft ring-1 ring-white/10">
               <Languages className="size-6" />
             </span>
             <SectionHeading
@@ -299,27 +305,29 @@ export function LandingPage() {
               lead={t('marketing.home.language.lead')}
               className="mt-6"
             />
-          </div>
+            <p className="mt-6 text-sm text-slate-400">
+              {t('marketing.home.language.stringCount', { count: FACTS.translatedStrings })}
+            </p>
+          </Reveal>
           <div className="grid gap-3 sm:grid-cols-3">
-            {LANGUAGES.map((language) => (
-              <div
-                key={language.code}
-                className="rounded-xl border border-white/10 bg-white/5 p-5 text-center backdrop-blur"
-              >
-                <p className="text-2xl font-semibold text-white">{language.nativeLabel}</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-slate-400">
-                  {t(`marketing.home.language.names.${language.code}`)}
-                </p>
-              </div>
+            {LANGUAGES.map((language, i) => (
+              <Reveal key={language.code} delay={i * 90}>
+                <div className="mk-surface-dark mk-lift rounded-2xl bg-white/5 p-5 text-center backdrop-blur">
+                  <p className="text-2xl font-semibold text-white">{language.nativeLabel}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.14em] text-slate-400">
+                    {t(`marketing.home.language.names.${language.code}`)}
+                  </p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </Section>
 
       {/* ---- Pricing summary ----------------------------------------------------------------- */}
-      <Section id="pricing">
+      <Section reveal={false} id="pricing">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-16">
-          <div>
+          <Reveal>
             <SectionHeading
               eyebrow={t('marketing.home.pricing.eyebrow')}
               title={t('marketing.home.pricing.title')}
@@ -334,40 +342,55 @@ export function LandingPage() {
               {t('marketing.home.pricing.cta')}
               <ArrowRight className="size-4" />
             </Button>
-          </div>
-          <div className="rounded-2xl border-2 border-primary/30 bg-card p-6 shadow-sm sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              {t('marketing.pricing.planName')}
-            </p>
-            <p className="mt-3 flex items-baseline gap-2">
-              <span className="text-headline">{t('marketing.pricing.amount')}</span>
-              <span className="text-muted-foreground">{t('marketing.pricing.period')}</span>
-            </p>
-            <ul className="mt-6 space-y-3">
-              {PLAN_INCLUDES.map((key) => (
-                <li key={key} className="flex gap-3 text-sm">
-                  <Check className="mt-0.5 size-4 shrink-0 text-primary" />
-                  <span className="leading-relaxed">{t(key)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          </Reveal>
+          <Reveal delay={90}>
+            {/* Lit from behind rather than given a heavier border. The price is the one element on
+             * this page worth drawing the eye deliberately. */}
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-4 rounded-[2rem] opacity-60 blur-2xl"
+                style={{
+                  background:
+                    'radial-gradient(60% 60% at 50% 0%, color-mix(in oklab, var(--color-mk-accent) 30%, transparent), transparent)',
+                }}
+              />
+              <div className="mk-surface relative rounded-2xl bg-mk-paper p-6 sm:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mk-accent">
+                  {t('marketing.pricing.planName')}
+                </p>
+                <p className="mt-3 flex items-baseline gap-2">
+                  <span className="text-headline">{t('marketing.pricing.amount')}</span>
+                  <span className="text-muted-foreground">{t('marketing.pricing.period')}</span>
+                </p>
+                <ul className="mt-6 space-y-3">
+                  {PLAN_INCLUDES.map((key) => (
+                    <li key={key} className="flex gap-3 text-sm">
+                      <Check className="mt-0.5 size-4 shrink-0 text-mk-accent" />
+                      <span className="leading-relaxed">{t(key)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </Section>
 
       {/* ---- Final CTA ----------------------------------------------------------------------- */}
-      <Section tone="brand" size="sm">
-        <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <Section reveal={false} tone="dark" size="sm" className="overflow-hidden">
+        <Aurora className="opacity-75" />
+        <Reveal className="relative flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-headline text-balance">{t('marketing.home.cta.title')}</h2>
-            <p className="text-lead mt-3 text-primary-foreground/85">
-              {t('marketing.home.cta.lead')}
-            </p>
+            <h2 className="text-headline text-balance text-white">
+              {t('marketing.home.cta.title')}
+            </h2>
+            <p className="text-lead mt-3 text-slate-300">{t('marketing.home.cta.lead')}</p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Button
               size="lg"
-              className="gap-2 rounded-full bg-white px-6 text-primary hover:bg-white/90"
+              className="mk-lift gap-2 rounded-full px-6 shadow-lg shadow-black/30"
               render={<Link to="/signup" />}
             >
               {t('marketing.home.hero.primaryCta')}
@@ -376,13 +399,13 @@ export function LandingPage() {
             <Button
               size="lg"
               variant="outline"
-              className="rounded-full border-white/40 bg-transparent px-6 text-white hover:bg-white/10 hover:text-white"
+              className="rounded-full border-white/25 bg-white/5 px-6 text-white backdrop-blur hover:bg-white/10 hover:text-white"
               render={<Link to="/contact" />}
             >
               {t('marketing.nav.contact')}
             </Button>
           </div>
-        </div>
+        </Reveal>
       </Section>
     </>
   )

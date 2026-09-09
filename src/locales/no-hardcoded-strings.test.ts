@@ -70,6 +70,16 @@ function isDisplayString(s: string): boolean {
   if (/^[a-z]{2}(-[A-Za-z]{2,4})+$/.test(t)) return false
   if (/^__.*__$/.test(t) || /^_[a-z]+$/.test(t)) return false
   if (/^(linear-gradient|radial-gradient|url|rgba?|hsla?)\(/.test(t)) return false
+  // CSS lengths, whole-value: `32px 32px` for a background-size, `0px 0px -12% 0px` for an
+  // IntersectionObserver rootMargin. Every token is a number with a unit, so there is nothing in
+  // it a translator could act on — and without this the design work added three false positives
+  // that would have to be explained away in the allow-list instead.
+  if (
+    /^-?[\d.]+(px|rem|em|%|vh|vw|fr|deg|s|ms)?( +-?[\d.]+(px|rem|em|%|vh|vw|fr|deg|s|ms)?)*$/.test(
+      t
+    )
+  )
+    return false
   if (/^[a-z][a-z0-9-]*:$/.test(t)) return false
   if (/&&|\|\||=>|[=;${}[\]<>]/.test(t)) return false
   if (/\.\w/.test(t)) return false

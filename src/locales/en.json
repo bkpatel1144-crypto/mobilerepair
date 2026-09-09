@@ -2070,7 +2070,8 @@
           "en": "English",
           "hi": "Hindi",
           "gu": "Gujarati"
-        }
+        },
+        "stringCount": "Over {{count}} strings translated into each language — not just the menus."
       },
       "pricing": {
         "eyebrow": "Pricing",
@@ -2081,6 +2082,15 @@
       "cta": {
         "title": "Set up your shop in the next ten minutes",
         "lead": "Create an account, add your branch, and start writing job cards today. Bring your existing data across and we will help you move it."
+      },
+      "stats": {
+        "brands": "Device brands ready on day one",
+        "models": "Handset models already in the list",
+        "screens": "Screens across the whole system",
+        "languages": "Languages, everywhere in the app"
+      },
+      "brands": {
+        "eyebrow": "Every new shop starts with {{count}} handset models already loaded"
       }
     },
     "features": {
