@@ -285,7 +285,9 @@
     "logOut": "लॉग आउट",
     "loggingOut": "लॉग आउट हो रहा है…",
     "account": "खाता",
-    "refresh": "यह पेज रिफ़्रेश करें"
+    "refresh": "यह पेज रिफ़्रेश करें",
+    "themeLight": "लाइट",
+    "themeDark": "डार्क"
   },
   "errors": {
     "title": "कुछ गड़बड़ हो गई",

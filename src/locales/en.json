@@ -285,7 +285,9 @@
     "logOut": "Log out",
     "loggingOut": "Logging out…",
     "account": "Account",
-    "refresh": "Refresh this page"
+    "refresh": "Refresh this page",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   },
   "errors": {
     "title": "Something went wrong",

@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import { Check, ArrowLeft } from 'lucide-react'
+import { Check, ArrowLeft, Sun, Moon } from 'lucide-react'
 import { Wordmark } from '@/components/marketing/wordmark'
 import { AccessibilityWidget } from '@/components/a11y/accessibility-widget'
 import { LANGUAGES } from '@/lib/i18n'
 import { useLanguage } from '@/hooks/use-language'
+import { useTheme } from '@/hooks/use-theme'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 
@@ -37,6 +38,7 @@ export function AuthLayout({
 }) {
   const { t } = useTranslation()
   const { language, setLanguage } = useLanguage()
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <div className="grid min-h-dvh lg:grid-cols-2">
@@ -87,24 +89,38 @@ export function AuthLayout({
           <Link to="/" className="lg:invisible">
             <Wordmark showCompany={false} />
           </Link>
-          <div className="flex items-center rounded-full border p-0.5">
-            {LANGUAGES.map((l) => (
-              <button
-                key={l.code}
-                type="button"
-                onClick={() => void setLanguage(l.code)}
-                aria-current={language === l.code ? 'true' : undefined}
-                data-tap
-                className={cn(
-                  'inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
-                  language === l.code
-                    ? 'bg-foreground text-background'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {l.nativeLabel}
-              </button>
-            ))}
+          <div className="flex items-center gap-2">
+            {/* Alongside the language switcher for the same reason: someone who needs the other
+             * theme hits that wall here, before they have an account whose preference could
+             * have been saved. */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={t('shell.toggleTheme')}
+              data-tap
+              className="inline-flex size-9 items-center justify-center rounded-full border text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            </button>
+            <div className="flex items-center rounded-full border p-0.5">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  onClick={() => void setLanguage(l.code)}
+                  aria-current={language === l.code ? 'true' : undefined}
+                  data-tap
+                  className={cn(
+                    'inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
+                    language === l.code
+                      ? 'bg-foreground text-background'
+                      : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {l.nativeLabel}
+                </button>
+              ))}
+            </div>
           </div>
         </header>
 

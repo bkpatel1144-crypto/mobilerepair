@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Languages, Check } from 'lucide-react'
+import { Menu, X, Languages, Check, Sun, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/marketing/section'
 import { Wordmark } from '@/components/marketing/wordmark'
 import { useTranslation } from 'react-i18next'
 import { useLanguage } from '@/hooks/use-language'
+import { useTheme } from '@/hooks/use-theme'
 import { LANGUAGES } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
@@ -30,6 +31,7 @@ const LINKS = [
 export function MarketingNav() {
   const { t } = useTranslation()
   const { language, setLanguage } = useLanguage()
+  const { theme, toggleTheme } = useTheme()
   const { pathname } = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -168,6 +170,20 @@ export function MarketingNav() {
               ))}
             </div>
 
+            {/* The public site had no theme control at all, so a visitor whose machine was in
+             * dark mode saw the dark palette as their first impression with no way out of it.
+             * The site is designed around the light palette — warm paper, lit interior heroes —
+             * so light is now the default and this is how someone chooses otherwise. */}
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={toggleTheme}
+              aria-label={t('shell.toggleTheme')}
+              className={cn(overDark && 'text-slate-200 hover:bg-white/10 hover:text-white')}
+            >
+              {theme === 'dark' ? <Sun className="size-4.5" /> : <Moon className="size-4.5" />}
+            </Button>
+
             <Button
               variant="ghost"
               className={cn(
@@ -225,6 +241,24 @@ export function MarketingNav() {
               <Button size="lg" variant="outline" render={<Link to="/login" />}>
                 {t('marketing.nav.login')}
               </Button>
+            </div>
+
+            {/* Labelled in the drawer rather than an icon on its own: an unlabelled glyph in a
+             * list of text rows is a guess. */}
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="flex min-h-11 w-full items-center justify-between border-b text-sm font-medium"
+              >
+                <span className="flex items-center gap-2">
+                  {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                  {t('shell.toggleTheme')}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {t(theme === 'dark' ? 'shell.themeDark' : 'shell.themeLight')}
+                </span>
+              </button>
             </div>
 
             <div className="mt-8">

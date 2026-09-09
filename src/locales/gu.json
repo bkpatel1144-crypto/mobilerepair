@@ -285,7 +285,9 @@
     "logOut": "લોગ આઉટ",
     "loggingOut": "લોગ આઉટ થઈ રહ્યું છે…",
     "account": "ખાતું",
-    "refresh": "આ પેજ રિફ્રેશ કરો"
+    "refresh": "આ પેજ રિફ્રેશ કરો",
+    "themeLight": "લાઇટ",
+    "themeDark": "ડાર્ક"
   },
   "errors": {
     "title": "કંઈક ખોટું થયું",
