@@ -1998,6 +1998,19 @@
       },
       "devicePinField": {
         "eG1234OrTapDraw": "e.g. 1234 or tap Draw"
+      },
+      "loadDefaults": {
+        "loadDefaultCatalogue": "Load default catalogue",
+        "thisAddsTheStandardCatalogue": "This adds the standard catalogue to your company. Anything you added or edited yourself is left alone.",
+        "load": "Load",
+        "nItems_one": "{{count}} item",
+        "nItems_other": "{{count}} items",
+        "nCategories_one": "{{count}} category",
+        "nCategories_other": "{{count}} categories",
+        "nCorrected_one": "{{count}} corrected",
+        "nCorrected_other": "{{count}} corrected",
+        "couldNotLoadTheCatalogue": "Could not load the catalogue.",
+        "yourItemMasterIsEmpty": "Your Item Master is empty. Load the standard services and spare-part categories to start from."
       }
     }
   },

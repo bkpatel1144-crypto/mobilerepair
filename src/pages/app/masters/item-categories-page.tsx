@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FolderTree, FolderClosed, Plus, Pencil, Trash2, Ban, CheckCircle2 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
+import { LoadDefaultsButton } from '@/components/shared/load-defaults-button'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -158,10 +159,13 @@ export function ItemCategoriesPage() {
         subtitle={t('pages.masters.itemCategories.organiseItemsIntoCategoriesAndSub')}
         actions={
           canManage && (
-            <Button type="button" onClick={() => setEditing('new')}>
-              <Plus className="size-4" />
-              {t('shared.addCategory')}
-            </Button>
+            <>
+              <LoadDefaultsButton variant="outline" />
+              <Button type="button" onClick={() => setEditing('new')}>
+                <Plus className="size-4" />
+                {t('shared.addCategory')}
+              </Button>
+            </>
           )
         }
       />

@@ -23,6 +23,7 @@ import { useItemCategories } from '@/hooks/use-item-categories'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
 import { TAX_CATEGORIES, TRACKING_TYPES, taxPercentOf } from '@/lib/item-defaults'
+import { LoadDefaultsButton } from '@/components/shared/load-defaults-button'
 import { buildPath } from '@/config/nav'
 import type { ItemType } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
@@ -176,13 +177,17 @@ export function ItemMasterPage() {
         subtitle={t('pages.masters.itemMaster.productsServicesAndSparePartsCatalog')}
         actions={
           canManage && (
-            <Button
-              type="button"
-              onClick={() => navigate(`${buildPath('masters', 'items')}/create`)}
-            >
-              <Plus className="size-4" />
-              {t('shared.addNew')}
-            </Button>
+            <>
+              {/* Only renders when the company is actually behind the catalogue. */}
+              <LoadDefaultsButton variant="outline" />
+              <Button
+                type="button"
+                onClick={() => navigate(`${buildPath('masters', 'items')}/create`)}
+              >
+                <Plus className="size-4" />
+                {t('shared.addNew')}
+              </Button>
+            </>
           )
         }
       />
@@ -337,7 +342,12 @@ export function ItemMasterPage() {
           <EmptyState
             icon={Package}
             title={t('pages.masters.itemMaster.noItemsYet')}
-            description={t('pages.masters.itemMaster.addYourFirstItemAbove')}
+            description={
+              canManage
+                ? t('components.shared.loadDefaults.yourItemMasterIsEmpty')
+                : t('pages.masters.itemMaster.addYourFirstItemAbove')
+            }
+            action={canManage ? <LoadDefaultsButton /> : undefined}
           />
         }
       />

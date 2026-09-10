@@ -1998,6 +1998,19 @@
       },
       "devicePinField": {
         "eG1234OrTapDraw": "જેમ કે 1234 અથવા Draw દબાવો"
+      },
+      "loadDefaults": {
+        "loadDefaultCatalogue": "ડિફોલ્ટ કેટલોગ લોડ કરો",
+        "thisAddsTheStandardCatalogue": "આ તમારી કંપનીમાં પ્રમાણભૂત કેટલોગ ઉમેરે છે. તમે જાતે ઉમેરેલું કે બદલેલું બધું એમ જ રહેશે.",
+        "load": "લોડ કરો",
+        "nItems_one": "{{count}} આઇટમ",
+        "nItems_other": "{{count}} આઇટમ",
+        "nCategories_one": "{{count}} શ્રેણી",
+        "nCategories_other": "{{count}} શ્રેણીઓ",
+        "nCorrected_one": "{{count}} સુધારેલ",
+        "nCorrected_other": "{{count}} સુધારેલ",
+        "couldNotLoadTheCatalogue": "કેટલોગ લોડ થઈ શક્યું નથી.",
+        "yourItemMasterIsEmpty": "તમારું આઇટમ માસ્ટર ખાલી છે. શરૂ કરવા માટે પ્રમાણભૂત સેવાઓ અને સ્પેર-પાર્ટ શ્રેણીઓ લોડ કરો."
       }
     }
   },

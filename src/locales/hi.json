@@ -1998,6 +1998,19 @@
       },
       "devicePinField": {
         "eG1234OrTapDraw": "जैसे 1234 या Draw दबाएँ"
+      },
+      "loadDefaults": {
+        "loadDefaultCatalogue": "डिफ़ॉल्ट कैटलॉग लोड करें",
+        "thisAddsTheStandardCatalogue": "यह आपकी कंपनी में मानक कैटलॉग जोड़ता है। आपने जो खुद जोड़ा या बदला है, वह वैसा ही रहेगा।",
+        "load": "लोड करें",
+        "nItems_one": "{{count}} आइटम",
+        "nItems_other": "{{count}} आइटम",
+        "nCategories_one": "{{count}} श्रेणी",
+        "nCategories_other": "{{count}} श्रेणियाँ",
+        "nCorrected_one": "{{count}} सुधारी गई",
+        "nCorrected_other": "{{count}} सुधारी गईं",
+        "couldNotLoadTheCatalogue": "कैटलॉग लोड नहीं हो सका।",
+        "yourItemMasterIsEmpty": "आपका आइटम मास्टर खाली है। शुरू करने के लिए मानक सेवाएँ और स्पेयर-पार्ट श्रेणियाँ लोड करें।"
       }
     }
   },
