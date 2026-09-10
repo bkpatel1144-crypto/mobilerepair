@@ -300,20 +300,7 @@
     "saveFailed": "Could not save. Please try again."
   },
   "months": {
-    "short": [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
+    "short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     "long": [
       "January",
       "February",
@@ -649,7 +636,7 @@
         "stockTracked": "Stock Tracked",
         "enabledIn": "ENABLED IN",
         "product": "Product",
-        "itemName": "Item Name *",
+        "itemName": "Item Name",
         "gst2": "GST %",
         "enabledIn2": "Enabled In",
         "service": "Service",

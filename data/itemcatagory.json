@@ -341,14 +341,594 @@
             "createdAt": "2026-09-01T04:16:41.872Z",
             "updatedAt": "2026-09-01T04:16:41.872Z",
             "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3242",
+            "categoryCode": "ACC_COVERS",
+            "categoryName": "Covers & Cases",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_COVERS",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Mobile covers, back cases, flip covers",
+            "icon": "shield",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 1,
+            "color": "#2980b9",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.875Z",
+            "updatedAt": "2026-09-01T04:16:41.984Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3244",
+            "categoryCode": "ACC_SCREEN_GUARD",
+            "categoryName": "Screen Guards & Tempered Glass",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_SCREEN_GUARD",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Tempered glass, hydrogel, matte screen guards",
+            "icon": "tablet-screen-button",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 2,
+            "color": "#1abc9c",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.878Z",
+            "updatedAt": "2026-09-01T04:16:41.988Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3246",
+            "categoryCode": "ACC_CHARGERS",
+            "categoryName": "Chargers & Cables",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_CHARGERS",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Charger adapters, USB cables, Type-C, Lightning",
+            "icon": "bolt",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 3,
+            "color": "#f1c40f",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.883Z",
+            "updatedAt": "2026-09-01T04:16:41.993Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3248",
+            "categoryCode": "ACC_EARPHONES",
+            "categoryName": "Earphones & Headphones",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_EARPHONES",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Wired earphones, TWS earbuds, headphones",
+            "icon": "headphones",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 4,
+            "color": "#9b59b6",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.886Z",
+            "updatedAt": "2026-09-01T04:16:41.997Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf324a",
+            "categoryCode": "ACC_POWERBANK",
+            "categoryName": "Power Banks",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_POWERBANK",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Portable power banks",
+            "icon": "battery-half",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 5,
+            "color": "#e74c3c",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.890Z",
+            "updatedAt": "2026-09-01T04:16:42.002Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf324c",
+            "categoryCode": "ACC_MEMORY",
+            "categoryName": "Memory Cards & Pen Drives",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_MEMORY",
+            "categoryType": "FINISHED_GOODS",
+            "description": "MicroSD cards, pen drives, OTG",
+            "icon": "sd-card",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 6,
+            "color": "#34495e",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.893Z",
+            "updatedAt": "2026-09-01T04:16:42.007Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf324e",
+            "categoryCode": "ACC_SMARTWATCH",
+            "categoryName": "Smart Watches & Bands",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_SMARTWATCH",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Smartwatches, fitness bands, straps",
+            "icon": "clock",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 7,
+            "color": "#e67e22",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.902Z",
+            "updatedAt": "2026-09-01T04:16:42.012Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3250",
+            "categoryCode": "ACC_HOLDER",
+            "categoryName": "Holders & Stands",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3240",
+                "categoryCode": "ACCESSORIES",
+                "categoryName": "Accessories",
+                "path": "ACCESSORIES"
+            },
+            "level": 0,
+            "path": "ACC_HOLDER",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Phone holders, ring stands, car mounts, pop sockets",
+            "icon": "circle-half-stroke",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 8,
+            "color": "#95a5a6",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.906Z",
+            "updatedAt": "2026-09-01T04:16:42.017Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3252",
+            "categoryCode": "MOBILE_PHONES",
+            "categoryName": "Mobile Phones",
+            "parentCategory": null,
+            "level": 0,
+            "path": "MOBILE_PHONES",
+            "categoryType": "FINISHED_GOODS",
+            "description": "New आणि refurbished mobile phones",
+            "icon": "mobile-screen-button",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": true,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 3,
+            "color": "#2ecc71",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.911Z",
+            "updatedAt": "2026-09-01T04:16:41.911Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3254",
+            "categoryCode": "PHONE_NEW",
+            "categoryName": "New Phones",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3252",
+                "categoryCode": "MOBILE_PHONES",
+                "categoryName": "Mobile Phones",
+                "path": "MOBILE_PHONES"
+            },
+            "level": 0,
+            "path": "PHONE_NEW",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Brand new sealed mobile phones",
+            "icon": "mobile",
+            "applicableAttributes": [],
+            "settings": {
+                "enableSerialTracking": true,
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 1,
+            "color": "#27ae60",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.918Z",
+            "updatedAt": "2026-09-01T04:16:42.021Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3256",
+            "categoryCode": "PHONE_REFURBISHED",
+            "categoryName": "Refurbished Phones",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3252",
+                "categoryCode": "MOBILE_PHONES",
+                "categoryName": "Mobile Phones",
+                "path": "MOBILE_PHONES"
+            },
+            "level": 0,
+            "path": "PHONE_REFURBISHED",
+            "categoryType": "FINISHED_GOODS",
+            "description": "Refurbished / second-hand phones",
+            "icon": "arrows-rotate",
+            "applicableAttributes": [],
+            "settings": {
+                "enableSerialTracking": true,
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 2,
+            "color": "#f39c12",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.924Z",
+            "updatedAt": "2026-09-01T04:16:42.025Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3258",
+            "categoryCode": "REPAIR_CONSUMABLES",
+            "categoryName": "Repair Consumables",
+            "parentCategory": null,
+            "level": 0,
+            "path": "REPAIR_CONSUMABLES",
+            "categoryType": "CONSUMABLES",
+            "description": "Repair कामात वापरले जाणारे consumables",
+            "icon": "toolbox",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 4,
+            "color": "#7f8c8d",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.928Z",
+            "updatedAt": "2026-09-01T04:16:41.928Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf325a",
+            "categoryCode": "CONS_ADHESIVE",
+            "categoryName": "Adhesives & Glue",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3258",
+                "categoryCode": "REPAIR_CONSUMABLES",
+                "categoryName": "Repair Consumables",
+                "path": "REPAIR_CONSUMABLES"
+            },
+            "level": 0,
+            "path": "CONS_ADHESIVE",
+            "categoryType": "CONSUMABLES",
+            "description": "B-7000 glue, UV glue, OCA adhesive, tape",
+            "icon": "droplet",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 1,
+            "color": "#3498db",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.933Z",
+            "updatedAt": "2026-09-01T04:16:42.029Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf325c",
+            "categoryCode": "CONS_CLEANING",
+            "categoryName": "Cleaning Supplies",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3258",
+                "categoryCode": "REPAIR_CONSUMABLES",
+                "categoryName": "Repair Consumables",
+                "path": "REPAIR_CONSUMABLES"
+            },
+            "level": 0,
+            "path": "CONS_CLEANING",
+            "categoryType": "CONSUMABLES",
+            "description": "IPA, flux cleaner, compressed air, microfiber cloth",
+            "icon": "spray-can-sparkles",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 2,
+            "color": "#1abc9c",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.938Z",
+            "updatedAt": "2026-09-01T04:16:42.033Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf325e",
+            "categoryCode": "CONS_SOLDER",
+            "categoryName": "Soldering Supplies",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3258",
+                "categoryCode": "REPAIR_CONSUMABLES",
+                "categoryName": "Repair Consumables",
+                "path": "REPAIR_CONSUMABLES"
+            },
+            "level": 0,
+            "path": "CONS_SOLDER",
+            "categoryType": "CONSUMABLES",
+            "description": "Solder wire, flux paste, solder wick, PCB cleaner",
+            "icon": "fire-flame-simple",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 3,
+            "color": "#e74c3c",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.943Z",
+            "updatedAt": "2026-09-01T04:16:42.038Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3260",
+            "categoryCode": "CONS_THERMAL",
+            "categoryName": "Thermal Paste & Pads",
+            "parentCategory": {
+                "_id": "6a9651a95655009beacf3258",
+                "categoryCode": "REPAIR_CONSUMABLES",
+                "categoryName": "Repair Consumables",
+                "path": "REPAIR_CONSUMABLES"
+            },
+            "level": 0,
+            "path": "CONS_THERMAL",
+            "categoryType": "CONSUMABLES",
+            "description": "CPU thermal paste, thermal pads",
+            "icon": "temperature-high",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 4,
+            "color": "#e67e22",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.946Z",
+            "updatedAt": "2026-09-01T04:16:42.044Z",
+            "__v": 0
+        },
+        {
+            "_id": "6a9651a95655009beacf3262",
+            "categoryCode": "SERVICES",
+            "categoryName": "Repair Services",
+            "parentCategory": null,
+            "level": 0,
+            "path": "SERVICES",
+            "categoryType": "SERVICES",
+            "description": "Repair व service charges — labour, diagnosis, fitting",
+            "icon": "wrench",
+            "applicableAttributes": [],
+            "settings": {
+                "enableBatchTracking": false,
+                "enableExpiryTracking": false,
+                "enableSerialTracking": false,
+                "defaultShelfLifeDays": null
+            },
+            "displayOrder": 5,
+            "color": "#0ea5e9",
+            "stats": {
+                "itemCount": 0,
+                "subCategoryCount": 0
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "createdAt": "2026-09-01T04:16:41.950Z",
+            "updatedAt": "2026-09-01T04:16:41.950Z",
+            "__v": 0
         }
     ],
     "pagination": {
         "page": 1,
-        "limit": 10,
+        "limit": 100,
         "total": 27,
-        "totalPages": 3,
-        "hasNextPage": true,
+        "totalPages": 1,
+        "hasNextPage": false,
         "hasPrevPage": false
     }
-}
+	}

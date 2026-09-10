@@ -719,12 +719,444 @@
             "__v": 0,
             "createdAt": "2026-09-01T04:16:42.137Z",
             "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3307",
+            "itemCode": "SRV013",
+            "itemName": "Network / Signal Issue Repair",
+            "description": "Network IC and antenna related repair",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf32fc",
+            "itemCode": "SRV002",
+            "itemName": "Screen / Display Replacement",
+            "description": "LCD / AMOLED display replacement labour",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.136Z",
+            "updatedAt": "2026-09-01T04:16:42.136Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3306",
+            "itemCode": "SRV012",
+            "itemName": "Software Update / Flashing",
+            "description": "Software flashing, OS update, unlock",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3300",
+            "itemCode": "SRV006",
+            "itemName": "Speaker / Earpiece Repair",
+            "description": "Loudspeaker and earpiece repair",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3309",
+            "itemCode": "SRV015",
+            "itemName": "Tempered Glass Fitting",
+            "description": "Screen guard / tempered glass application",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
+        },
+        {
+            "_id": "6a9651aa5655009beacf3304",
+            "itemCode": "SRV010",
+            "itemName": "Water Damage Service",
+            "description": "Water damage cleaning and treatment",
+            "itemType": "SERVICE",
+            "itemNature": "SERVICE",
+            "categoryId": {
+                "_id": "6a9651a95655009beacf3262",
+                "categoryCode": "SERVICES",
+                "categoryName": "Repair Services"
+            },
+            "subCategoryId": null,
+            "primaryUOMId": {
+                "_id": "6a9651a95655009beacf3204",
+                "uomCode": "NOS",
+                "uomName": "Numbers",
+                "symbol": "nos"
+            },
+            "purchaseUOMId": null,
+            "salesUOMId": null,
+            "hasVariants": false,
+            "taxCategory": "GST_18",
+            "gstRates": {
+                "cgst": 0,
+                "sgst": 0,
+                "igst": 0,
+                "cess": 0
+            },
+            "defaultSellingPrice": 0,
+            "defaultPurchasePrice": 0,
+            "mrp": 0,
+            "stockTracked": false,
+            "trackingType": "NONE",
+            "shelfLifeDays": null,
+            "reorderSettings": {
+                "minStock": 0,
+                "reorderPoint": 0,
+                "reorderQty": 0,
+                "maxStock": 0
+            },
+            "lobConfig": {
+                "sales": {
+                    "isActive": true,
+                    "allowDiscount": true,
+                    "maxDiscountPercent": 100
+                },
+                "purchase": {
+                    "isActive": false,
+                    "leadTimeDays": 0
+                },
+                "production": {
+                    "isActive": false,
+                    "isBOMItem": false
+                },
+                "pos": {
+                    "isActive": true
+                },
+                "ecommerce": {
+                    "isActive": false
+                }
+            },
+            "isSystem": true,
+            "isActive": true,
+            "deletedAt": null,
+            "alternateUOMs": [],
+            "variantAttributes": [],
+            "images": [],
+            "__v": 0,
+            "createdAt": "2026-09-01T04:16:42.137Z",
+            "updatedAt": "2026-09-01T04:16:42.137Z"
         }
     ],
     "pagination": {
         "page": 1,
-        "limit": 10,
+        "limit": 20,
         "total": 16,
-        "pages": 2
+        "pages": 1
     }
 }

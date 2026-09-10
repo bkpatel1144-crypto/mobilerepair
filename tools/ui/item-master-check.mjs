@@ -30,7 +30,13 @@ let failures = 0
 // 1. Are the seeded items there? ------------------------------------------------------------
 await page.goto(`${base}/app/masters/items`, { waitUntil: 'domcontentloaded' })
 await page.waitForTimeout(6000)
-const rows = await page.evaluate(() => document.querySelectorAll('tbody tr').length)
+// `DataTable` swaps to stacked cards below `md`, so counting `tbody tr` finds nothing on a
+// phone — a row count of 0 there would be the probe's mistake, not an empty Item Master.
+const rows = await page.evaluate(() => {
+  const tableRows = document.querySelectorAll('tbody tr').length
+  if (tableRows) return tableRows
+  return document.querySelectorAll('main .space-y-2 > [class*="rounded-lg"][class*="border"]').length
+})
 const totalTile = await page
   .locator('[class*="tabular-nums"]')
   .first()
@@ -45,7 +51,10 @@ if (rows < 10) {
 }
 
 // 2. Does a row carry the new fields? ---------------------------------------------------------
-await page.locator('tbody tr').first().click()
+const firstRow = page.locator('tbody tr').first()
+await (await firstRow.count()) && (await firstRow.isVisible())
+  ? firstRow.click()
+  : page.locator('main [class*="rounded-lg"][class*="border"]').first().click()
 await page.waitForTimeout(1500)
 const drawer = (await page.locator('[role=dialog]').first().textContent()) ?? ''
 const expected = ['Tax Category', 'CGST', 'Units of Measure', 'Lines of Business', 'Inventory']
