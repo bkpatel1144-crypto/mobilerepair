@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Package, Wrench, Plus, Pencil, Ban, CheckCircle2 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Package, Wrench, Plus, Pencil, Ban, CheckCircle2, Boxes, IndianRupee } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -7,14 +8,9 @@ import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
-import { FormModal } from '@/components/shared/form-modal'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   Select,
   SelectContent,
@@ -22,18 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import {
-  useItems,
-  useCreateItem,
-  useUpdateItem,
-  useSetItemStatus,
-  nextItemCode,
-  type ItemWithId,
-} from '@/hooks/use-items'
+import { useItems, useSetItemStatus, type ItemRow } from '@/hooks/use-items'
 import { useItemCategories } from '@/hooks/use-item-categories'
-import { useUoms } from '@/hooks/use-uom'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
+import { TAX_CATEGORIES, TRACKING_TYPES, taxPercentOf } from '@/lib/item-defaults'
+import { buildPath } from '@/config/nav'
 import type { ItemType } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
 
@@ -43,23 +33,67 @@ const TYPE_LABEL: Record<ItemType, string> = {
   product: 'pages.masters.itemMaster.product',
 }
 
+const ALL = 'all'
+
+/** Every filter the item shape supports. Kept as one object so "Clear" is one assignment and a
+ *  new filter cannot be forgotten in the reset. */
+interface ItemFilters {
+  type: 'all' | ItemType
+  categoryId: string
+  taxCategory: string
+  tracking: string
+  stock: 'all' | 'tracked' | 'untracked'
+  lob: 'all' | 'sales' | 'purchase' | 'production' | 'servicePos' | 'ecommerce'
+  status: 'all' | 'active' | 'disabled'
+}
+
+const NO_FILTERS: ItemFilters = {
+  type: ALL,
+  categoryId: ALL,
+  taxCategory: ALL,
+  tracking: ALL,
+  stock: ALL,
+  lob: ALL,
+  status: ALL,
+}
+
 export function ItemMasterPage() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { data: items = [], isLoading, error: loadError, refetch } = useItems()
   const { data: categories = [] } = useItemCategories()
   const { canDo } = usePermissions()
   const canManage = canDo(crudKey('masters', 'items', 'update'))
 
   const [search, setSearch] = useState('')
-  const [typeFilter, setTypeFilter] = useState<'all' | ItemType>('all')
-  const [editing, setEditing] = useState<ItemWithId | 'new' | null>(null)
-  const [viewing, setViewing] = useState<ItemWithId | null>(null)
+  const [filters, setFilters] = useState<ItemFilters>(NO_FILTERS)
+  const [viewing, setViewing] = useState<ItemRow | null>(null)
+
+  const setFilter = <K extends keyof ItemFilters>(key: K, value: ItemFilters[K]) =>
+    setFilters((prev) => ({ ...prev, [key]: value }))
+
+  const activeFilterCount = Object.entries(filters).filter(([, v]) => v !== ALL).length
 
   const filtered = items
-    .filter((i) => typeFilter === 'all' || i.type === typeFilter)
-    .filter((i) => `${i.name} ${i.itemCode}`.toLowerCase().includes(search.toLowerCase()))
+    .filter((i) => filters.type === ALL || i.type === filters.type)
+    .filter((i) => filters.categoryId === ALL || i.categoryId === filters.categoryId)
+    .filter((i) => filters.taxCategory === ALL || i.taxCategory === filters.taxCategory)
+    .filter((i) => filters.tracking === ALL || i.trackingType === filters.tracking)
+    .filter(
+      (i) =>
+        filters.stock === ALL || (filters.stock === 'tracked' ? i.stockTracked : !i.stockTracked)
+    )
+    .filter((i) => filters.lob === ALL || i.lob[filters.lob].isActive)
+    .filter((i) => filters.status === ALL || i.status === filters.status)
+    .filter((i) =>
+      // Code and category too, not just the name: a shopkeeper looking for "SRV009" or for
+      // everything under "Spare Parts" was getting no results from a name-only match.
+      `${i.name} ${i.itemCode} ${i.categoryName ?? ''} ${i.description ?? ''}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    )
 
-  const columns: DataTableColumn<ItemWithId>[] = [
+  const columns: DataTableColumn<ItemRow>[] = [
     {
       key: 'item',
       header: t('common.item'),
@@ -69,8 +103,8 @@ export function ItemMasterPage() {
           <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
             {i.type === 'service' ? <Wrench className="size-4" /> : <Package className="size-4" />}
           </span>
-          <div>
-            <p className="font-medium">{i.name}</p>
+          <div className="min-w-0">
+            <p className="truncate font-medium">{i.name}</p>
             <p className="text-xs text-muted-foreground">{i.itemCode}</p>
           </div>
         </div>
@@ -80,7 +114,14 @@ export function ItemMasterPage() {
       key: 'category',
       header: t('common.category'),
       hideOnMobile: true,
-      render: (i) => i.categoryName ?? '—',
+      render: (i) => (
+        <div className="min-w-0">
+          <p className="truncate">{i.categoryName ?? '—'}</p>
+          {i.subCategoryName && (
+            <p className="truncate text-xs text-muted-foreground">{i.subCategoryName}</p>
+          )}
+        </div>
+      ),
     },
     {
       key: 'type',
@@ -99,12 +140,25 @@ export function ItemMasterPage() {
       ),
     },
     {
-      key: 'nature',
-      header: t('pages.masters.itemMaster.nature'),
+      key: 'uom',
+      header: t('shared.uom'),
       hideOnMobile: true,
-      render: (i) => i.nature,
+      render: (i) => i.primaryUom.symbol,
     },
-    { key: 'uom', header: t('shared.uom'), hideOnMobile: true, render: (i) => i.uom },
+    {
+      key: 'tax',
+      header: t('common.tax'),
+      hideOnMobile: true,
+      sortValue: (i) => taxPercentOf(i.taxCategory),
+      render: (i) => `${taxPercentOf(i.taxCategory)}%`,
+    },
+    {
+      key: 'sellingPrice',
+      header: t('common.sellingPrice'),
+      hideOnMobile: true,
+      sortValue: (i) => i.sellingPrice ?? -1,
+      render: (i) => (i.sellingPrice != null ? `₹${i.sellingPrice}` : '—'),
+    },
     {
       key: 'status',
       header: t('common.status'),
@@ -122,9 +176,12 @@ export function ItemMasterPage() {
         subtitle={t('pages.masters.itemMaster.productsServicesAndSparePartsCatalog')}
         actions={
           canManage && (
-            <Button type="button" onClick={() => setEditing('new')}>
+            <Button
+              type="button"
+              onClick={() => navigate(`${buildPath('masters', 'items')}/create`)}
+            >
               <Plus className="size-4" />
-              Add Item
+              {t('shared.addNew')}
             </Button>
           )
         }
@@ -143,27 +200,129 @@ export function ItemMasterPage() {
           icon={Wrench}
           value={items.filter((i) => i.type === 'service').length}
         />
+        <StatCard
+          label={t('pages.masters.itemMaster.stockTracked')}
+          icon={Boxes}
+          value={items.filter((i) => i.stockTracked).length}
+          tone="info"
+        />
+        <StatCard
+          label={t('pages.masters.itemMaster.sales')}
+          icon={IndianRupee}
+          value={items.filter((i) => i.lob.sales.isActive).length}
+          tone="purple"
+        />
       </StatCardGrid>
 
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
-        searchPlaceholder="Search items..."
+        searchPlaceholder={t('pages.masters.itemMaster.searchItems')}
       >
-        <Select
-          value={typeFilter}
-          onValueChange={(v) => v && setTypeFilter(v as typeof typeFilter)}
-        >
-          <SelectTrigger className="w-36">
+        <Select value={filters.type} onValueChange={(v) => v && setFilter('type', v as ItemType)}>
+          <SelectTrigger className="w-32">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">{t('common.allTypes')}</SelectItem>
+            <SelectItem value={ALL}>{t('common.allTypes')}</SelectItem>
             <SelectItem value="service">{t('shared.service')}</SelectItem>
             <SelectItem value="part">{t('common.part')}</SelectItem>
             <SelectItem value="product">{t('pages.masters.itemMaster.product')}</SelectItem>
           </SelectContent>
         </Select>
+
+        <Select value={filters.categoryId} onValueChange={(v) => v && setFilter('categoryId', v)}>
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('common.allCategories')}</SelectItem>
+            {categories.map((c) => (
+              <SelectItem key={c.id} value={c.id}>
+                {c.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select value={filters.taxCategory} onValueChange={(v) => v && setFilter('taxCategory', v)}>
+          <SelectTrigger className="w-32">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('pages.masters.itemMaster.allTaxes')}</SelectItem>
+            {TAX_CATEGORIES.map((c) => (
+              <SelectItem key={c.value} value={c.value}>
+                {c.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select value={filters.tracking} onValueChange={(v) => v && setFilter('tracking', v)}>
+          <SelectTrigger className="w-36">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('pages.masters.itemMaster.allTracking')}</SelectItem>
+            {TRACKING_TYPES.map((tt) => (
+              <SelectItem key={tt.value} value={tt.value}>
+                {tt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.stock}
+          onValueChange={(v) => v && setFilter('stock', v as ItemFilters['stock'])}
+        >
+          <SelectTrigger className="w-36">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('pages.masters.itemMaster.allStock')}</SelectItem>
+            <SelectItem value="tracked">{t('pages.masters.itemMaster.stockTracked')}</SelectItem>
+            <SelectItem value="untracked">{t('pages.masters.itemMaster.notTracked')}</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.lob}
+          onValueChange={(v) => v && setFilter('lob', v as ItemFilters['lob'])}
+        >
+          <SelectTrigger className="w-36">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('pages.masters.itemMaster.allLines')}</SelectItem>
+            <SelectItem value="sales">{t('pages.masters.itemMaster.sales')}</SelectItem>
+            <SelectItem value="purchase">{t('pages.masters.itemMaster.purchase')}</SelectItem>
+            <SelectItem value="production">{t('pages.masters.itemMaster.production')}</SelectItem>
+            <SelectItem value="servicePos">{t('pages.masters.itemMaster.servicePos')}</SelectItem>
+            <SelectItem value="ecommerce">{t('pages.masters.createItem.ecommerce')}</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.status}
+          onValueChange={(v) => v && setFilter('status', v as ItemFilters['status'])}
+        >
+          <SelectTrigger className="w-32">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('common.allStatuses')}</SelectItem>
+            <SelectItem value="active">{t('common.active')}</SelectItem>
+            <SelectItem value="disabled">{t('common.inactive')}</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {activeFilterCount > 0 && (
+          <Button type="button" variant="outline" size="sm" onClick={() => setFilters(NO_FILTERS)}>
+            {t('common.clear')} ({activeFilterCount})
+          </Button>
+        )}
       </FilterBar>
 
       <DataTable
@@ -183,15 +342,6 @@ export function ItemMasterPage() {
         }
       />
 
-      {editing && (
-        <ItemModal
-          editing={editing}
-          existing={items}
-          categories={categories}
-          onClose={() => setEditing(null)}
-        />
-      )}
-
       {viewing && (
         <DetailDrawer
           open
@@ -209,13 +359,10 @@ export function ItemMasterPage() {
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    setEditing(viewing)
-                    setViewing(null)
-                  }}
+                  onClick={() => navigate(`${buildPath('masters', 'items')}/${viewing.id}/edit`)}
                 >
                   <Pencil className="size-3.5" />
-                  Edit
+                  {t('common.edit')}
                 </Button>
                 <ItemStatusButton item={viewing} />
               </>
@@ -228,16 +375,43 @@ export function ItemMasterPage() {
                 { label: t('common.type'), value: t(TYPE_LABEL[viewing.type]).toUpperCase() },
                 { label: t('pages.masters.itemMaster.nature'), value: viewing.nature },
                 { label: t('common.category'), value: viewing.categoryName ?? '—' },
-                { label: t('pages.masters.itemMaster.primaryUom'), value: viewing.uom },
+                {
+                  label: t('pages.masters.createItem.subCategory'),
+                  value: viewing.subCategoryName ?? '—',
+                },
+              ],
+            },
+            {
+              title: t('pages.masters.createItem.sections.units'),
+              rows: [
+                {
+                  label: t('pages.masters.itemMaster.primaryUom'),
+                  value: `${viewing.primaryUom.name} (${viewing.primaryUom.symbol})`,
+                },
+                {
+                  label: t('pages.masters.createItem.purchaseUom'),
+                  value: viewing.purchaseUom
+                    ? `${viewing.purchaseUom.name} (${viewing.purchaseUom.symbol})`
+                    : t('pages.masters.createItem.sameAsPrimary'),
+                },
+                {
+                  label: t('pages.masters.createItem.salesUom'),
+                  value: viewing.salesUom
+                    ? `${viewing.salesUom.name} (${viewing.salesUom.symbol})`
+                    : t('pages.masters.createItem.sameAsPrimary'),
+                },
               ],
             },
             {
               title: t('pages.masters.itemMaster.pricing'),
               rows: [
-                { label: t('common.tax'), value: `GST ${viewing.gstPercent}%` },
+                {
+                  label: t('pages.masters.createItem.taxCategory'),
+                  value: `${TAX_CATEGORIES.find((c) => c.value === viewing.taxCategory)?.label ?? viewing.taxCategory}`,
+                },
                 {
                   label: t('pages.masters.itemMaster.gst'),
-                  value: `CGST ${viewing.cgstPercent}% + SGST ${viewing.sgstPercent}%`,
+                  value: `CGST ${viewing.gstRates.cgst}% · SGST ${viewing.gstRates.sgst}% · IGST ${viewing.gstRates.igst}% · Cess ${viewing.gstRates.cess}%`,
                 },
                 {
                   label: t('common.sellingPrice'),
@@ -258,32 +432,102 @@ export function ItemMasterPage() {
               rows: [
                 {
                   label: t('pages.masters.itemMaster.stockTracked'),
-                  value: viewing.stockTracked ? 'Yes' : t('common.no'),
+                  value: viewing.stockTracked ? t('common.yes') : t('common.no'),
                 },
+                ...(viewing.stockTracked
+                  ? [
+                      {
+                        label: t('pages.masters.createItem.trackingType'),
+                        value:
+                          TRACKING_TYPES.find((tt) => tt.value === viewing.trackingType)?.label ??
+                          viewing.trackingType,
+                      },
+                      {
+                        label: t('pages.masters.createItem.shelfLifeDays'),
+                        value: viewing.shelfLifeDays != null ? String(viewing.shelfLifeDays) : '—',
+                      },
+                      {
+                        label: t('pages.masters.createItem.minStock'),
+                        value: String(viewing.reorder.minStock),
+                      },
+                      {
+                        label: t('pages.masters.createItem.reorderPoint'),
+                        value: String(viewing.reorder.reorderPoint),
+                      },
+                      {
+                        label: t('pages.masters.createItem.reorderQty'),
+                        value: String(viewing.reorder.reorderQty),
+                      },
+                      {
+                        label: t('pages.masters.createItem.maxStock'),
+                        value: String(viewing.reorder.maxStock),
+                      },
+                    ]
+                  : []),
               ],
             },
+            ...(viewing.hasVariants
+              ? [
+                  {
+                    title: t('pages.masters.createItem.sections.variants'),
+                    rows: [
+                      {
+                        label: t('pages.masters.createItem.variantAttributes'),
+                        value: viewing.variantAttributes.join(', ') || '—',
+                      },
+                    ],
+                  },
+                ]
+              : []),
             {
-              title: t('pages.masters.itemMaster.enabledIn'),
+              title: t('pages.masters.createItem.sections.lob'),
               children: (
-                <div className="flex flex-wrap gap-1.5">
-                  {[
-                    [t('pages.masters.itemMaster.sales'), viewing.enabledInSales],
-                    [t('pages.masters.itemMaster.purchase'), viewing.enabledInPurchase],
-                    [t('pages.masters.itemMaster.production'), viewing.enabledInProduction],
-                    [t('pages.masters.itemMaster.servicePos'), viewing.enabledInServicePos],
-                  ].map(([label, on]) => (
-                    <span
-                      key={label as string}
-                      className={
-                        'rounded-full px-2 py-0.5 text-xs font-medium ' +
-                        (on
-                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400'
-                          : 'bg-secondary text-muted-foreground')
-                      }
-                    >
-                      {label as string}
-                    </span>
-                  ))}
+                <div className="space-y-2">
+                  <div className="flex flex-wrap gap-1.5">
+                    {(
+                      [
+                        [t('pages.masters.itemMaster.sales'), viewing.lob.sales.isActive],
+                        [t('pages.masters.itemMaster.purchase'), viewing.lob.purchase.isActive],
+                        [t('pages.masters.itemMaster.production'), viewing.lob.production.isActive],
+                        [t('pages.masters.itemMaster.servicePos'), viewing.lob.servicePos.isActive],
+                        [t('pages.masters.createItem.ecommerce'), viewing.lob.ecommerce.isActive],
+                      ] as const
+                    ).map(([label, on]) => (
+                      <span
+                        key={label}
+                        className={
+                          'rounded-full px-2 py-0.5 text-xs font-medium ' +
+                          (on
+                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400'
+                            : 'bg-secondary text-muted-foreground')
+                        }
+                      >
+                        {label}
+                      </span>
+                    ))}
+                  </div>
+                  <dl className="space-y-1 text-xs text-muted-foreground">
+                    {viewing.lob.sales.isActive && (
+                      <div>
+                        {t('pages.masters.createItem.maxDiscount')}:{' '}
+                        {viewing.lob.sales.allowDiscount
+                          ? `${viewing.lob.sales.maxDiscountPercent}%`
+                          : t('common.no')}
+                      </div>
+                    )}
+                    {viewing.lob.purchase.isActive && (
+                      <div>
+                        {t('pages.masters.createItem.leadTimeDays')}:{' '}
+                        {viewing.lob.purchase.leadTimeDays}
+                      </div>
+                    )}
+                    {viewing.lob.production.isActive && (
+                      <div>
+                        {t('pages.masters.createItem.bomItem')}:{' '}
+                        {viewing.lob.production.isBomItem ? t('common.yes') : t('common.no')}
+                      </div>
+                    )}
+                  </dl>
                 </div>
               ),
             },
@@ -304,7 +548,7 @@ export function ItemMasterPage() {
   )
 }
 
-function ItemStatusButton({ item }: { item: ItemWithId }) {
+function ItemStatusButton({ item }: { item: ItemRow }) {
   const { t } = useTranslation()
   const setStatus = useSetItemStatus()
   const [confirming, setConfirming] = useState(false)
@@ -314,7 +558,7 @@ function ItemStatusButton({ item }: { item: ItemWithId }) {
     <>
       <Button type="button" variant="outline" size="sm" onClick={() => setConfirming(true)}>
         {willDeactivate ? <Ban className="size-3.5" /> : <CheckCircle2 className="size-3.5" />}
-        {willDeactivate ? 'Deactivate' : t('common.activate')}
+        {willDeactivate ? t('common.deactivate') : t('common.activate')}
       </Button>
       <ConfirmDialog
         open={confirming}
@@ -322,10 +566,10 @@ function ItemStatusButton({ item }: { item: ItemWithId }) {
         title={`${willDeactivate ? t('common.deactivate') : t('common.activate')} "${item.name}"?`}
         message={
           willDeactivate
-            ? 'Deactivated items no longer appear as a selectable option in job cards, purchases, or sales.'
+            ? t('pages.masters.itemMaster.deactivatedItemsNoLongerAppear')
             : t('pages.masters.itemMaster.thisItemWillBecomeSelectableAgain')
         }
-        confirmLabel={willDeactivate ? 'Deactivate' : t('common.activate')}
+        confirmLabel={willDeactivate ? t('common.deactivate') : t('common.activate')}
         destructive={willDeactivate}
         isPending={setStatus.isPending}
         onConfirm={() =>
@@ -336,226 +580,5 @@ function ItemStatusButton({ item }: { item: ItemWithId }) {
         }
       />
     </>
-  )
-}
-
-function ItemModal({
-  editing,
-  existing,
-  categories,
-  onClose,
-}: {
-  editing: ItemWithId | 'new'
-  existing: ItemWithId[]
-  categories: ReturnType<typeof useItemCategories>['data']
-  onClose: () => void
-}) {
-  const { t } = useTranslation()
-  const isNew = editing === 'new'
-  const { data: uoms = [] } = useUoms()
-  const createItem = useCreateItem()
-  const updateItem = useUpdateItem()
-
-  const [name, setName] = useState(isNew ? '' : editing.name)
-  const [type, setType] = useState<ItemType>(isNew ? 'part' : editing.type)
-  const [categoryId, setCategoryId] = useState(isNew ? 'none' : (editing.categoryId ?? 'none'))
-  const [uom, setUom] = useState(isNew ? 'nos' : editing.uom)
-  const [gstPercent, setGstPercent] = useState(isNew ? 18 : editing.gstPercent)
-  const [sellingPrice, setSellingPrice] = useState<number | ''>(
-    isNew ? '' : (editing.sellingPrice ?? '')
-  )
-  const [purchasePrice, setPurchasePrice] = useState<number | ''>(
-    isNew ? '' : (editing.purchasePrice ?? '')
-  )
-  const [mrp, setMrp] = useState<number | ''>(isNew ? '' : (editing.mrp ?? ''))
-  const [stockTracked, setStockTracked] = useState(isNew ? true : editing.stockTracked)
-  const [enabledInSales, setEnabledInSales] = useState(isNew ? true : editing.enabledInSales)
-  const [enabledInPurchase, setEnabledInPurchase] = useState(
-    isNew ? true : editing.enabledInPurchase
-  )
-  const [enabledInServicePos, setEnabledInServicePos] = useState(
-    isNew ? true : editing.enabledInServicePos
-  )
-  const [description, setDescription] = useState(isNew ? '' : (editing.description ?? ''))
-
-  const isPending = createItem.isPending || updateItem.isPending
-  const category = (categories ?? []).find((c) => c.id === categoryId)
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!name.trim()) return
-    const input = {
-      name: name.trim(),
-      type,
-      itemCode: isNew ? nextItemCode(existing, type) : editing.itemCode,
-      nature: type === 'service' ? ('Service' as const) : ('Goods' as const),
-      categoryId: categoryId === 'none' ? null : categoryId,
-      categoryName: category?.name ?? null,
-      uom,
-      gstPercent,
-      sellingPrice: sellingPrice === '' ? null : Number(sellingPrice),
-      purchasePrice: purchasePrice === '' ? null : Number(purchasePrice),
-      mrp: mrp === '' ? null : Number(mrp),
-      stockTracked,
-      enabledInSales,
-      enabledInPurchase,
-      enabledInServicePos,
-      description: description.trim() || null,
-    }
-    if (isNew) await createItem.mutateAsync(input)
-    else await updateItem.mutateAsync({ ...input, id: editing.id })
-    onClose()
-  }
-
-  return (
-    <FormModal
-      open
-      onOpenChange={(open) => !open && onClose()}
-      title={isNew ? t('pages.masters.itemMaster.addItem') : t('pages.masters.itemMaster.editItem')}
-      onSubmit={handleSubmit}
-      submitLabel={isNew ? t('pages.masters.itemMaster.createItem') : t('common.save')}
-      isSubmitting={isPending}
-      className="sm:max-w-xl"
-    >
-      <div className="grid grid-cols-2 gap-3">
-        <div className="col-span-2 space-y-1.5">
-          <Label>{t('pages.masters.itemMaster.itemName')}</Label>
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Screen Replacement"
-            autoFocus
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label>{t('shared.type')}</Label>
-          <Select value={type} onValueChange={(v) => v && setType(v as ItemType)}>
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="service">{t('shared.service')}</SelectItem>
-              <SelectItem value="part">{t('common.part')}</SelectItem>
-              <SelectItem value="product">{t('pages.masters.itemMaster.product')}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-1.5">
-          <Label>{t('common.category')}</Label>
-          <Select value={categoryId} onValueChange={(v) => v && setCategoryId(v)}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder={t('common.none')} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="none">{t('common.none')}</SelectItem>
-              {(categories ?? []).map((c) => (
-                <SelectItem key={c.id} value={c.id}>
-                  {c.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-1.5">
-          <Label>{t('pages.masters.itemMaster.primaryUom')}</Label>
-          <Select value={uom} onValueChange={(v) => v && setUom(v)}>
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {uoms.map((u) => (
-                <SelectItem key={u.id} value={u.symbol ?? u.code.toLowerCase()}>
-                  {u.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-1.5">
-          <Label>{t('pages.masters.itemMaster.gst2')}</Label>
-          <Input
-            type="number"
-            min={0}
-            max={28}
-            value={gstPercent}
-            onChange={(e) => setGstPercent(Number(e.target.value) || 0)}
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-3">
-        <div className="space-y-1.5">
-          <Label>{t('common.sellingPrice')}</Label>
-          <Input
-            type="number"
-            min={0}
-            value={sellingPrice}
-            onChange={(e) => setSellingPrice(e.target.value === '' ? '' : Number(e.target.value))}
-            placeholder="—"
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label>{t('common.purchasePrice')}</Label>
-          <Input
-            type="number"
-            min={0}
-            value={purchasePrice}
-            onChange={(e) => setPurchasePrice(e.target.value === '' ? '' : Number(e.target.value))}
-            placeholder="—"
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label>{t('pages.masters.itemMaster.mrp')}</Label>
-          <Input
-            type="number"
-            min={0}
-            value={mrp}
-            onChange={(e) => setMrp(e.target.value === '' ? '' : Number(e.target.value))}
-            placeholder="—"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label>{t('pages.masters.itemMaster.enabledIn2')}</Label>
-        <div className="flex flex-wrap gap-4 text-sm">
-          <label className="flex items-center gap-1.5">
-            <Checkbox checked={stockTracked} onCheckedChange={(v) => setStockTracked(v === true)} />
-            {t('pages.masters.itemMaster.stockTracked')}
-          </label>
-          <label className="flex items-center gap-1.5">
-            <Checkbox
-              checked={enabledInSales}
-              onCheckedChange={(v) => setEnabledInSales(v === true)}
-            />
-            Sales
-          </label>
-          <label className="flex items-center gap-1.5">
-            <Checkbox
-              checked={enabledInPurchase}
-              onCheckedChange={(v) => setEnabledInPurchase(v === true)}
-            />
-            Purchase
-          </label>
-          <label className="flex items-center gap-1.5">
-            <Checkbox
-              checked={enabledInServicePos}
-              onCheckedChange={(v) => setEnabledInServicePos(v === true)}
-            />
-            {t('pages.masters.itemMaster.servicePos')}
-          </label>
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <Label>{t('common.description')}</Label>
-        <Textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder={t('common.optional')}
-          rows={2}
-        />
-      </div>
-    </FormModal>
   )
 }

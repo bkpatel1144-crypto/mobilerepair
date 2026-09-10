@@ -2,14 +2,18 @@ import { collection, doc, type WriteBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import {
   itemCategoriesCollection,
+  itemsCollection,
   paymentModesCollection,
   expenseCategoriesCollection,
   partyCategoriesCollection,
   uomCollection,
 } from '@/lib/firestore-paths'
-import { SEED_CATEGORIES } from '@/lib/masters-seed-data'
+import { SEED_CATEGORIES, SEED_ITEMS, type SeedUomRef } from '@/lib/masters-seed-data'
+import { legacyLobFlags } from '@/lib/item-defaults'
 import type {
   ItemCategoryDoc,
+  ItemDoc,
+  ItemUomRef,
   PartyCategoryDoc,
   PaymentModeDoc,
   UomDoc,
@@ -284,6 +288,7 @@ export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, n
   // `masters-seed-data.ts`, generated from the client's own export — see
   // `tools/data/build-masters-seed.cjs` for what is copied verbatim and what is corrected.
   const categoryIdByCode = new Map<string, string>()
+  const categoryNameByCode = new Map(SEED_CATEGORIES.map((c) => [c.code, c.name]))
   for (const seed of SEED_CATEGORIES) {
     const ref = doc(collection(db, itemCategoriesCollection(companyId)))
     categoryIdByCode.set(seed.code, ref.id)
@@ -307,6 +312,74 @@ export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, n
       level: seed.level,
       path: seed.path,
       source: 'system',
+      status: 'active',
+      createdAt: now as never,
+      updatedAt: now as never,
+    }
+    batch.set(ref, data)
+  }
+
+  // Items, last of the masters because each one links to a category and a UOM minted above.
+  //
+  // These were generated into `masters-seed-data.ts` and then imported by nothing at all: every
+  // tenant created since has started with ten categories and an empty Item Master. The Job Cards
+  // service-item picker and the Service Items page were both looking at that empty collection.
+  for (const seed of SEED_ITEMS) {
+    const ref = doc(collection(db, itemsCollection(companyId)))
+    // The export names a UOM by code; the id is this batch's own, so an item points at the UOM
+    // document actually being written rather than at the reference system's Mongo id.
+    const uomRef = (node: SeedUomRef | null): ItemUomRef | null =>
+      node
+        ? {
+            id: uomRefByCode.get(node.code)?.id ?? null,
+            code: node.code,
+            name: node.name,
+            symbol: node.symbol,
+          }
+        : null
+    const primaryUom = uomRef(seed.primaryUom) ?? {
+      id: uomRefByCode.get('NOS')?.id ?? null,
+      code: 'NOS',
+      name: 'Numbers',
+      symbol: 'nos',
+    }
+    const data: ItemDoc = {
+      itemCode: seed.itemCode,
+      name: seed.name,
+      type: seed.type,
+      nature: seed.nature,
+      categoryId: seed.categoryCode ? (categoryIdByCode.get(seed.categoryCode) ?? null) : null,
+      // Carried even when the category itself is on a page of the export this repo does not have,
+      // so the Item Master's Category column reads correctly rather than showing a blank.
+      categoryName: categoryNameByCode.get(seed.categoryCode ?? '') ?? null,
+      subCategoryId: seed.subCategoryCode
+        ? (categoryIdByCode.get(seed.subCategoryCode) ?? null)
+        : null,
+      subCategoryName: categoryNameByCode.get(seed.subCategoryCode ?? '') ?? null,
+      uom: primaryUom.symbol,
+      primaryUom,
+      purchaseUom: uomRef(seed.purchaseUom),
+      salesUom: uomRef(seed.salesUom),
+      alternateUoms: seed.alternateUoms,
+      taxCategory: seed.taxCategory,
+      gstRates: seed.gstRates,
+      gstPercent: seed.gstPercent,
+      cgstPercent: seed.gstRates.cgst,
+      sgstPercent: seed.gstRates.sgst,
+      sellingPrice: seed.sellingPrice,
+      purchasePrice: seed.purchasePrice,
+      mrp: seed.mrp,
+      stockTracked: seed.stockTracked,
+      trackingType: seed.trackingType,
+      shelfLifeDays: seed.shelfLifeDays,
+      reorder: seed.reorder,
+      hasVariants: seed.hasVariants,
+      variantAttributes: seed.variantAttributes,
+      images: seed.images,
+      lob: seed.lob,
+      ...legacyLobFlags(seed.lob),
+      isSystem: seed.isSystem,
+      description: seed.description,
       status: 'active',
       createdAt: now as never,
       updatedAt: now as never,

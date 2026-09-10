@@ -181,6 +181,9 @@ const ItemCategoriesPage = lazy(() =>
 const ItemMasterPage = lazy(() =>
   import('@/pages/app/masters/item-master-page').then((m) => ({ default: m.ItemMasterPage }))
 )
+const CreateItemPage = lazy(() =>
+  import('@/pages/app/masters/items/create-item-page').then((m) => ({ default: m.CreateItemPage }))
+)
 const PaymentModesPage = lazy(() =>
   import('@/pages/app/masters/payment-modes-page').then((m) => ({ default: m.PaymentModesPage }))
 )
@@ -454,6 +457,24 @@ function App() {
                         element={
                           <RequireMenuAccess menuKey="service/job-cards">
                             <CreateJobCardPage />
+                          </RequireMenuAccess>
+                        }
+                      />
+                      {/* Both guarded by the Item Master menu — the create and edit screens are
+                       * that page, not a separate feature to grant. */}
+                      <Route
+                        path="masters/items/create"
+                        element={
+                          <RequireMenuAccess menuKey="masters/items">
+                            <CreateItemPage />
+                          </RequireMenuAccess>
+                        }
+                      />
+                      <Route
+                        path="masters/items/:itemId/edit"
+                        element={
+                          <RequireMenuAccess menuKey="masters/items">
+                            <CreateItemPage />
                           </RequireMenuAccess>
                         }
                       />

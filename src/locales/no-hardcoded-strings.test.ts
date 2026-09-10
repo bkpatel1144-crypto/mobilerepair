@@ -45,6 +45,13 @@ const INTENTIONALLY_ENGLISH = new Set([
   'Charger, box, cable, earphones',
   'Box only',
   'OVERWRITE',
+  // `ItemDoc` values, written to Firestore and matched against on read. Translating one would
+  // change what is stored, and an existing item would stop matching its own tax band or nature —
+  // the same reason `Cash`/`UPI` above are here.
+  'Goods',
+  'Service',
+  'GST_18',
+  'NONE',
 ])
 
 function isDisplayString(s: string): boolean {

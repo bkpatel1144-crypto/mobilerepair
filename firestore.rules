@@ -253,10 +253,16 @@ service cloud.firestore {
       // collection. `delete` stays `false` — same soft-delete-via-status reasoning as parties.
       match /items/{itemId} {
         allow read: if belongsToCompany(companyId);
-        allow create: if belongsToCompany(companyId) &&
-          (hasMenuAccess(companyId, 'service/job-cards') ||
-            hasMenuAccess(companyId, 'service/items') ||
-            hasMenuAccess(companyId, 'masters/items'));
+        // `isBootstrapping()` because signup seeds the Item Master in the same atomic batch that
+        // creates the user document — so at that instant there is no user document to read a menu
+        // permission from, and without this the whole batch is denied and the signup fails.
+        // `bootstrap-rules.test.ts` is what caught this: the seed started writing items and the
+        // test failed before a single real signup could.
+        allow create: if isBootstrapping() ||
+          (belongsToCompany(companyId) &&
+            (hasMenuAccess(companyId, 'service/job-cards') ||
+              hasMenuAccess(companyId, 'service/items') ||
+              hasMenuAccess(companyId, 'masters/items')));
         allow update: if belongsToCompany(companyId) &&
           (hasMenuAccess(companyId, 'service/items') || hasMenuAccess(companyId, 'masters/items'));
         allow delete: if false;

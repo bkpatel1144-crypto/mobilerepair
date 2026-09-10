@@ -270,6 +270,68 @@ export interface PartyDoc {
 export type ItemType = 'service' | 'part' | 'product'
 export type ItemNature = 'Service' | 'Goods'
 
+/** The GST band an item is billed at. `taxCategory` in the client's export, where every row reads
+ *  `GST_18`; the rest are the standard Indian slabs plus the two zero-rate distinctions, which are
+ *  not the same thing on a GSTR-1 (exempt supplies are reported, nil-rated are not). */
+export type TaxCategory =
+  'GST_0' | 'GST_5' | 'GST_12' | 'GST_18' | 'GST_28' | 'EXEMPT' | 'NIL_RATED'
+
+/** How stock of this item is identified. `trackingType` in the export (`NONE` on every row there),
+ *  and the item-level counterpart of `ItemCategorySettings`'s batch/serial toggles. */
+export type TrackingType = 'NONE' | 'BATCH' | 'SERIAL' | 'BATCH_SERIAL'
+
+/** A UOM as an item stores it. Denormalised deliberately — the export embeds
+ *  `{ uomCode, uomName, symbol }` on the item, and a list of 500 items must not become 500 reads
+ *  of the UOM collection to render its Unit column. `id` is the `uom` document it came from, so a
+ *  rename can be followed back to source. */
+export interface ItemUomRef {
+  id: string | null
+  code: string // "NOS"
+  name: string // "Numbers"
+  symbol: string // "nos"
+}
+
+/** Split GST rates. The export carries all four alongside `taxCategory`; they are stored rather
+ *  than derived because an inter-state invoice charges `igst` where an intra-state one charges
+ *  `cgst` + `sgst`, and `cess` is levied on top of either. */
+export interface ItemGstRates {
+  cgst: number
+  sgst: number
+  igst: number
+  cess: number
+}
+
+export interface ItemReorderSettings {
+  minStock: number
+  reorderPoint: number
+  reorderQty: number
+  maxStock: number
+}
+
+/** Which lines of business an item participates in, and the terms for each. Replaces the four
+ *  loose `enabledIn*` booleans, which could not express "sellable, discount capped at 20%" or a
+ *  purchase lead time — both of which the export carries per item. */
+export interface ItemLobConfig {
+  sales: { isActive: boolean; allowDiscount: boolean; maxDiscountPercent: number }
+  purchase: { isActive: boolean; leadTimeDays: number }
+  production: { isActive: boolean; isBomItem: boolean }
+  /** `pos` in the export — the counter-sale screen. */
+  servicePos: { isActive: boolean }
+  ecommerce: { isActive: boolean }
+}
+
+/** A secondary unit this item can be transacted in, with its conversion to the primary.
+ *
+ *  `alternateUOMs` is an empty array on every row of the export, so the element shape is not
+ *  copied from it — it mirrors `UomDoc`'s own `baseUomId`/`conversionFactor` pair, which is the
+ *  conversion this app already models. Worth knowing if a record is ever exchanged with the
+ *  reference system. */
+export interface ItemAlternateUom {
+  uomCode: string
+  /** How many primary units one of this unit is — "1 Box = 12 nos" is `12`. */
+  conversionFactor: number
+}
+
 export interface ItemDoc {
   itemCode: string // "SRV009" / "PRT001" — see `nextItemCode()` in `use-items.ts`
   name: string
@@ -293,6 +355,50 @@ export interface ItemDoc {
   status: EntityStatus
   createdAt: Timestamp
   updatedAt: Timestamp
+
+  // ---- Everything below is from the client's `itemmaster` export -----------------------------
+  //
+  // All optional, and all read through `normalizeItem()` in `use-items.ts` rather than directly.
+  // This collection has been live since Phase 5, so documents written before this exist in every
+  // production tenant and carry none of these keys; a required field would make every one of them
+  // fail to satisfy `ItemDoc`, and — worse, because nothing would report it — a component reading
+  // `item.gstRates.igst` would throw on exactly those records.
+  //
+  // The four `enabledIn*` booleans above are kept in step with `lob` on every write, so a screen
+  // still reading them is not silently wrong. They are the older, narrower spelling of the same
+  // thing.
+
+  /** Sub-category, a second level under `categoryId`. `subCategoryId` is null on every export row. */
+  subCategoryId?: string | null
+  subCategoryName?: string | null
+
+  /** The unit the item is stocked and priced in. `uom` above is this one's `symbol`. */
+  primaryUom?: ItemUomRef
+  /** Defaults to the primary when a purchase order is raised in the same unit. */
+  purchaseUom?: ItemUomRef | null
+  salesUom?: ItemUomRef | null
+  alternateUoms?: ItemAlternateUom[]
+
+  taxCategory?: TaxCategory
+  gstRates?: ItemGstRates
+
+  trackingType?: TrackingType
+  /** Days from receipt to expiry, for a batch-tracked consumable. Null where it does not expire. */
+  shelfLifeDays?: number | null
+  reorder?: ItemReorderSettings
+
+  hasVariants?: boolean
+  /** Attribute names a variant is defined by — "Colour", "Capacity". Empty on every export row,
+   *  so the element type is this app's own choice; see `ItemAlternateUom` for the same caveat. */
+  variantAttributes?: string[]
+  /** Storage download URLs, same convention as `JobCardDoc.imageUrls`. */
+  images?: string[]
+
+  lob?: ItemLobConfig
+
+  /** Seeded with the tenant rather than added by the shopkeeper. `isSystem` in the export; a
+   *  system item is editable but its code is not, so a re-seed can still find it. */
+  isSystem?: boolean
 }
 
 /** `companies/{companyId}/serviceOptions/{optionType}/items/{id}` — the 8 accordion sections

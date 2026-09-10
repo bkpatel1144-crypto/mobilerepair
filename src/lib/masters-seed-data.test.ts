@@ -31,21 +31,39 @@ type CategoryRow = {
   level: number
   settings?: Record<string, unknown>
 }
+type UomNode = { uomCode?: string; uomName?: string; symbol?: string }
 type ItemRow = {
   itemCode: string
   itemName: string
   description: string | null
   itemType: string
+  itemNature?: string
   taxCategory: string
   gstRates?: { cgst?: number; sgst?: number; igst?: number; cess?: number }
   defaultSellingPrice?: number
+  defaultPurchasePrice?: number
   mrp?: number
   stockTracked?: boolean
   trackingType?: string
+  shelfLifeDays?: number | null
+  hasVariants?: boolean
+  variantAttributes?: string[]
+  images?: string[]
+  isSystem?: boolean
+  alternateUOMs?: { uomCode: string; conversionFactor: number }[]
   categoryId?: { categoryCode?: string }
-  primaryUOMId?: { uomCode?: string }
+  subCategoryId?: { categoryCode?: string } | null
+  primaryUOMId?: UomNode | null
+  purchaseUOMId?: UomNode | null
+  salesUOMId?: UomNode | null
   reorderSettings?: Record<string, number>
-  lobConfig?: Record<string, { isActive?: boolean }>
+  lobConfig?: {
+    sales?: { isActive?: boolean; allowDiscount?: boolean; maxDiscountPercent?: number }
+    purchase?: { isActive?: boolean; leadTimeDays?: number }
+    production?: { isActive?: boolean; isBOMItem?: boolean }
+    pos?: { isActive?: boolean }
+    ecommerce?: { isActive?: boolean }
+  }
 }
 
 const categoryRows = (categoryExport as { data: CategoryRow[] }).data
@@ -115,35 +133,108 @@ describe('seeded items match the reference export', () => {
   })
 
   it.each(itemRows.map((r) => [r.itemCode, r] as const))(
-    '%s carries the export values',
+    '%s matches the export field for field',
     (code, row) => {
       const seeded = SEED_ITEMS.find((i) => i.itemCode === code)!
-      expect(seeded.name).toBe(row.itemName)
-      expect(seeded.description).toBe(row.description ?? null)
-      expect(seeded.taxCategory).toBe(row.taxCategory)
-      expect(seeded.cgstPercent).toBe(row.gstRates?.cgst ?? 0)
-      expect(seeded.sgstPercent).toBe(row.gstRates?.sgst ?? 0)
-      expect(seeded.igstPercent).toBe(row.gstRates?.igst ?? 0)
-      expect(seeded.cessPercent).toBe(row.gstRates?.cess ?? 0)
-      expect(seeded.sellingPrice).toBe(row.defaultSellingPrice ?? 0)
-      expect(seeded.mrp).toBe(row.mrp ?? 0)
-      expect(seeded.stockTracked).toBe(row.stockTracked ?? false)
-      expect(seeded.trackingType).toBe(row.trackingType ?? 'NONE')
-      expect(seeded.categoryCode).toBe(row.categoryId?.categoryCode ?? null)
-      expect(seeded.primaryUomCode).toBe(row.primaryUOMId?.uomCode ?? null)
-      expect(seeded.reorder).toEqual({
-        minStock: row.reorderSettings?.minStock ?? 0,
-        reorderPoint: row.reorderSettings?.reorderPoint ?? 0,
-        reorderQty: row.reorderSettings?.reorderQty ?? 0,
-        maxStock: row.reorderSettings?.maxStock ?? 0,
+      // The whole record in one comparison, not a list of fields to remember to extend. The
+      // previous version of this test checked fourteen of them by hand and passed while the seed
+      // carried an invented `hsnCode`/`eanCode` pair the export has never contained, and a `type`
+      // of "Service"/"Goods" — which is `ItemNature`, not `ItemType`, so every seeded item would
+      // have been written with a type the app does not define. Nothing caught either, because
+      // nothing imported `SEED_ITEMS` at all.
+      const uom = (node: { uomCode?: string; uomName?: string; symbol?: string } | null | undefined) =>
+        node ? { code: node.uomCode, name: node.uomName, symbol: node.symbol } : null
+      expect(seeded).toEqual({
+        itemCode: row.itemCode,
+        name: row.itemName,
+        description: row.description ?? null,
+        type:
+          row.itemType === 'SERVICE' ? 'service' : row.itemType === 'RAW_MATERIAL' ? 'part' : 'product',
+        nature: row.itemNature === 'SERVICE' ? 'Service' : 'Goods',
+        categoryCode: row.categoryId?.categoryCode ?? null,
+        subCategoryCode: row.subCategoryId?.categoryCode ?? null,
+        primaryUom: uom(row.primaryUOMId),
+        purchaseUom: uom(row.purchaseUOMId),
+        salesUom: uom(row.salesUOMId),
+        alternateUoms: row.alternateUOMs ?? [],
+        taxCategory: row.taxCategory,
+        // Derived, not copied: the export states the band and the app also needs the number.
+        gstPercent: Number(/^GST_(\d+)$/.exec(row.taxCategory ?? '')?.[1] ?? 0),
+        gstRates: {
+          cgst: row.gstRates?.cgst ?? 0,
+          sgst: row.gstRates?.sgst ?? 0,
+          igst: row.gstRates?.igst ?? 0,
+          cess: row.gstRates?.cess ?? 0,
+        },
+        sellingPrice: row.defaultSellingPrice ?? 0,
+        purchasePrice: row.defaultPurchasePrice ?? 0,
+        mrp: row.mrp ?? 0,
+        stockTracked: row.stockTracked ?? false,
+        trackingType: row.trackingType ?? 'NONE',
+        shelfLifeDays: row.shelfLifeDays ?? null,
+        reorder: {
+          minStock: row.reorderSettings?.minStock ?? 0,
+          reorderPoint: row.reorderSettings?.reorderPoint ?? 0,
+          reorderQty: row.reorderSettings?.reorderQty ?? 0,
+          maxStock: row.reorderSettings?.maxStock ?? 0,
+        },
+        hasVariants: row.hasVariants ?? false,
+        variantAttributes: row.variantAttributes ?? [],
+        images: row.images ?? [],
+        lob: {
+          sales: {
+            isActive: row.lobConfig?.sales?.isActive ?? false,
+            allowDiscount: row.lobConfig?.sales?.allowDiscount ?? false,
+            maxDiscountPercent: row.lobConfig?.sales?.maxDiscountPercent ?? 0,
+          },
+          purchase: {
+            isActive: row.lobConfig?.purchase?.isActive ?? false,
+            leadTimeDays: row.lobConfig?.purchase?.leadTimeDays ?? 0,
+          },
+          production: {
+            isActive: row.lobConfig?.production?.isActive ?? false,
+            isBomItem: row.lobConfig?.production?.isBOMItem ?? false,
+          },
+          servicePos: { isActive: row.lobConfig?.pos?.isActive ?? false },
+          ecommerce: { isActive: row.lobConfig?.ecommerce?.isActive ?? false },
+        },
+        isSystem: row.isSystem ?? false,
       })
-      expect(seeded.lob.sales).toBe(row.lobConfig?.sales?.isActive ?? false)
-      expect(seeded.lob.purchase).toBe(row.lobConfig?.purchase?.isActive ?? false)
-      expect(seeded.lob.production).toBe(row.lobConfig?.production?.isActive ?? false)
-      expect(seeded.lob.servicePos).toBe(row.lobConfig?.pos?.isActive ?? false)
-      expect(seeded.lob.ecommerce).toBe(row.lobConfig?.ecommerce?.isActive ?? false)
     }
   )
+
+  it('carries no field the export does not have', () => {
+    // The direct check for the `hsnCode`/`eanCode` mistake: those were added from an assumption
+    // about what an item master holds, not from this file, and sat in the generated seed for a
+    // release. `toEqual` above already fails on an extra key, but this names the failure.
+    const exportKeys = new Set(
+      itemRows.flatMap((r) => Object.keys(r)).map((k) => k.toLowerCase().replace(/id$/, ''))
+    )
+    const invented = Object.keys(SEED_ITEMS[0]).filter((k) => {
+      const normalised = k.toLowerCase()
+      // The seed renames a few fields on purpose; these map onto a real export key.
+      const renamed: Record<string, string> = {
+        name: 'itemname',
+        type: 'itemtype',
+        nature: 'itemnature',
+        categorycode: 'category',
+        subcategorycode: 'subcategory',
+        primaryuom: 'primaryuom',
+        purchaseuom: 'purchaseuom',
+        salesuom: 'salesuom',
+        alternateuoms: 'alternateuoms',
+        gstpercent: 'taxcategory',
+        gstrates: 'gstrates',
+        sellingprice: 'defaultsellingprice',
+        purchaseprice: 'defaultpurchaseprice',
+        reorder: 'reordersettings',
+        lob: 'lobconfig',
+      }
+      const target = renamed[normalised] ?? normalised
+      return !exportKeys.has(target) && !exportKeys.has(target.replace(/s$/, ''))
+    })
+    expect(invented, 'these seed fields correspond to nothing in the export').toEqual([])
+  })
 
   it("every item's category is one we seed, once the export is complete", () => {
     // The check that caught `REPAIR_SERVICES` vs `SERVICES`: the hand-written seed used its own
@@ -152,9 +243,7 @@ describe('seeded items match the reference export', () => {
     // Right now all ten items point at `SERVICES`, and the category defining it sits on a page of
     // the export that is not in this repo — page 1 of 3 holds nine SPARE_* categories and
     // ACCESSORIES. That is a missing file, not a wrong code, so it warns while coverage is
-    // partial and fails hard the moment the full export is present. Getting that distinction
-    // right matters: a permanently red test is one nobody reads, and a silently skipped one
-    // would let a genuine typo through.
+    // partial and fails hard the moment the full export is present.
     const codes = new Set(SEED_CATEGORIES.map((c) => c.code))
     const unresolved = SEED_ITEMS.filter((i) => i.categoryCode && !codes.has(i.categoryCode))
     const complete = SEED_CATEGORIES.length === REFERENCE_TOTALS.categories
