@@ -3,8 +3,8 @@ import {
   PatternLockPicker,
   PatternLockPreview,
   PatternReplayPopover,
-  isPatternValue,
 } from '@/components/shared/pattern-lock'
+import { isPatternValue } from '@/components/shared/pattern-value'
 import { useTranslation } from 'react-i18next'
 
 /**

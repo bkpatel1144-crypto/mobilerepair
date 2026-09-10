@@ -893,7 +893,11 @@
         "sections": {
           "deviceDetails": "ડિવાઇસ વિગતો",
           "sellerVerification": "વિક્રેતા અને ઓળખ ચકાસણી",
-          "purchaseDetails": "ખરીદી વિગતો"
+          "purchaseDetails": "ખરીદી વિગતો",
+          "deviceInformation": "ડિવાઇસ માહિતી",
+          "specifications": "સ્પેસિફિકેશન",
+          "conditionAccessories": "સ્થિતિ અને એસેસરીઝ",
+          "devicePhotos": "ડિવાઇસ ફોટા"
         }
       },
       "devicePurchase": {

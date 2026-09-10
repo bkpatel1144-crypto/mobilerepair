@@ -893,7 +893,11 @@
         "sections": {
           "deviceDetails": "डिवाइस विवरण",
           "sellerVerification": "विक्रेता और आईडी सत्यापन",
-          "purchaseDetails": "खरीद विवरण"
+          "purchaseDetails": "खरीद विवरण",
+          "deviceInformation": "डिवाइस जानकारी",
+          "specifications": "विशेषताएँ",
+          "conditionAccessories": "हालत और सहायक सामान",
+          "devicePhotos": "डिवाइस फोटो"
         }
       },
       "devicePurchase": {

@@ -249,26 +249,30 @@ export function CreateSecondHandPurchasePage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-4 p-4 pb-24 sm:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-bold">
+      {/* Create Job Card's header, to the class: stacked on a phone, because side by side the
+       * title wraps onto three lines in the space the button does not take. */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-lg font-bold">
             {t('pages.secondHandDevice.createPurchase.buySecondHandDevice')}
           </h1>
           <p className="text-sm text-muted-foreground">
             {t('pages.secondHandDevice.createPurchase.recordASecondHandDevicePurchase')}
           </p>
         </div>
-        <Button type="button" variant="outline" onClick={() => navigate(-1)}>
-          <ArrowLeft className="size-4" />
-          {t('shared.back')}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button type="button" variant="outline" size="sm" onClick={() => navigate(-1)}>
+            <ArrowLeft />
+            {t('shared.back')}
+          </Button>
+        </div>
       </div>
 
       {formError && <FormError message={formError} />}
 
       <FormSection
-        glyph="📋"
-        title={t('pages.secondHandDevice.createPurchase.sections.deviceDetails')}
+        glyph="📱"
+        title={t('pages.secondHandDevice.createPurchase.sections.deviceInformation')}
       >
         <FormGrid>
           <div className="space-y-1.5">
@@ -453,7 +457,14 @@ export function CreateSecondHandPurchasePage() {
              * Job Card now, because it is literally the same component. */}
             <DevicePinPatternField value={devicePinPattern} onChange={setDevicePinPattern} />
           </div>
+        </FormGrid>
+      </FormSection>
 
+      <FormSection
+        glyph="⚙️"
+        title={t('pages.secondHandDevice.createPurchase.sections.specifications')}
+      >
+        <FormGrid>
           <div className="space-y-1.5">
             <Label>
               RAM{' '}
@@ -557,6 +568,14 @@ export function CreateSecondHandPurchasePage() {
               placeholder="—"
             />
           </div>
+        </FormGrid>
+      </FormSection>
+
+      <FormSection
+        glyph="✅"
+        title={t('pages.secondHandDevice.createPurchase.sections.conditionAccessories')}
+      >
+        <FormGrid>
           <div className="space-y-1.5">
             <Label>{t('shared.conditionGrade')}</Label>
             <Select
@@ -594,21 +613,23 @@ export function CreateSecondHandPurchasePage() {
               </SelectContent>
             </Select>
           </div>
-          {/* Half a row, not the whole one: there are fifteen half-width fields above it, so
-           * Account Lock would otherwise sit alone with an empty column beside it. Three small
-           * checkboxes fill that gap exactly. */}
-          <div className="flex flex-wrap items-end gap-4 pb-2 text-sm">
-            <label className="flex items-center gap-1.5">
-              <Checkbox checked={dualSim} onCheckedChange={(v) => setDualSim(v === true)} /> Dual
-              SIM
-            </label>
-            <label className="flex items-center gap-1.5">
-              <Checkbox checked={hasBox} onCheckedChange={(v) => setHasBox(v === true)} /> Box
-            </label>
-            <label className="flex items-center gap-1.5">
-              <Checkbox checked={hasBill} onCheckedChange={(v) => setHasBill(v === true)} /> Bill
-            </label>
-          </div>
+          {/* The whole row now. It used to take half, to sit beside Account Lock and fill the
+           * gap an odd field count left; in its own section Condition Grade and Account Lock
+           * already pair off, so half would leave the empty column instead of filling one. */}
+          <FormGridFull>
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <label className="flex items-center gap-1.5">
+                <Checkbox checked={dualSim} onCheckedChange={(v) => setDualSim(v === true)} /> Dual
+                SIM
+              </label>
+              <label className="flex items-center gap-1.5">
+                <Checkbox checked={hasBox} onCheckedChange={(v) => setHasBox(v === true)} /> Box
+              </label>
+              <label className="flex items-center gap-1.5">
+                <Checkbox checked={hasBill} onCheckedChange={(v) => setHasBill(v === true)} /> Bill
+              </label>
+            </div>
+          </FormGridFull>
 
           <FormGridFull>
             <div className="space-y-1.5">
@@ -652,7 +673,14 @@ export function CreateSecondHandPurchasePage() {
               />
             </div>
           </FormGridFull>
+        </FormGrid>
+      </FormSection>
 
+      <FormSection
+        glyph="🖼️"
+        title={t('pages.secondHandDevice.createPurchase.sections.devicePhotos')}
+      >
+        <FormGrid>
           <FormGridFull>
             <div className="space-y-1.5">
               <Label>

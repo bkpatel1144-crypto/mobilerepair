@@ -893,7 +893,11 @@
         "sections": {
           "deviceDetails": "Device Details",
           "sellerVerification": "Seller & ID Verification",
-          "purchaseDetails": "Purchase Details"
+          "purchaseDetails": "Purchase Details",
+          "deviceInformation": "Device Information",
+          "specifications": "Specifications",
+          "conditionAccessories": "Condition & Accessories",
+          "devicePhotos": "Device Photos"
         }
       },
       "devicePurchase": {
