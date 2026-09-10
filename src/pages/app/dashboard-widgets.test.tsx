@@ -123,17 +123,13 @@ describe('the Dashboard renders every widget it advertises', () => {
     ).toEqual([])
   }, 30_000)
 
-  it('renders an unbuilt widget as a "coming soon" card, not as a real one', async () => {
-    // The distinction that matters: it appears, but it does not pretend to have data.
+  it('says "coming soon" nowhere', async () => {
+    // The end state the client asked for outright. Every widget draws real data, so the
+    // placeholder must not appear on the Dashboard at all — this is the assertion that fails
+    // the moment one is added back without an implementation.
     const { container } = await renderDashboard()
-    for (const key of UNBUILT) {
-      const node = container.querySelector(`[data-widget="${key}"]`)
-      expect(node, key).not.toBeNull()
-      expect(node?.textContent, key).toContain('Widget coming soon')
-    }
-    // And a built one does not carry that text.
-    const built = container.querySelector('[data-widget="kpi.revenue"]')
-    expect(built?.textContent).not.toContain('Widget coming soon')
+    expect(container.textContent).not.toContain('Widget coming soon')
+    expect(UNBUILT, 'the catalogue still marks these unbuilt').toEqual([])
   })
 
   it('emits each widget key exactly once', async () => {

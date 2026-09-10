@@ -487,7 +487,26 @@
         "theTenNewestJobCardsAppear": "દસ સૌથી નવા જોબ કાર્ડ અહીં દેખાશે.",
         "noWidgetsEnabled": "કોઈ વિજેટ ચાલુ નથી",
         "yourRoleHasEveryDashboardWidget": "તમારી ભૂમિકા માટે બધા ડેશબોર્ડ વિજેટ બંધ છે. વ્યવસ્થાપક તેને રોલ મેનેજમેન્ટમાંથી ફરી ચાલુ કરી શકે છે.",
-        "workloadPerTechnician": "ટેકનિશિયન દીઠ કામનો ભાર"
+        "workloadPerTechnician": "ટેકનિશિયન દીઠ કામનો ભાર",
+        "nothingAssignedToYou": "તમને કંઈ સોંપાયેલ નથી",
+        "jobCardsAssignedToYouAppearHere": "તમને સોંપાયેલા જોબ કાર્ડ અહીં દેખાશે.",
+        "noPartiesYet": "હજી કોઈ પાર્ટી નથી",
+        "theFiveNewestPartiesAppear": "પાંચ સૌથી નવા ગ્રાહકો અને સપ્લાયર અહીં દેખાશે.",
+        "monthlyComparison": "માસિક સરખામણી",
+        "noDeviceTradeYet": "હજી કોઈ ડિવાઇસ વેપાર નથી",
+        "thisChartFillsInOnceDevices": "ડિવાઇસ ખરીદ-વેચાણ થતાં આ ચાર્ટ ભરાશે.",
+        "nothingNeedsAttention": "કંઈ ધ્યાન માંગતું નથી",
+        "alertsAppearHereWhenWork": "કામ અટકે કે સ્ટોક ઓછો થાય ત્યારે અહીં અલર્ટ દેખાશે.",
+        "nJobCardsOnHold_one": "{{count}} જોબ કાર્ડ હોલ્ડ પર છે",
+        "nJobCardsOnHold_other": "{{count}} જોબ કાર્ડ હોલ્ડ પર છે",
+        "nJobCardsOlderThanDays_one": "{{count}} જોબ કાર્ડ {{days}} દિવસથી વધુ ખુલ્લું છે",
+        "nJobCardsOlderThanDays_other": "{{count}} જોબ કાર્ડ {{days}} દિવસથી વધુ ખુલ્લા છે",
+        "nDevicesAwaitingReturn_one": "{{count}} ડિવાઇસ પરત કરવાનું બાકી છે",
+        "nDevicesAwaitingReturn_other": "{{count}} ડિવાઇસ પરત કરવાના બાકી છે",
+        "nItemsAtReorderPoint_one": "{{count}} આઇટમ રીઓર્ડર સ્તરે છે",
+        "nItemsAtReorderPoint_other": "{{count}} આઇટમ રીઓર્ડર સ્તરે છે",
+        "billAJobCard": "જોબ કાર્ડ બિલ કરો",
+        "newInvoice": "નવું ઇન્વોઇસ"
       }
     },
     "finance": {

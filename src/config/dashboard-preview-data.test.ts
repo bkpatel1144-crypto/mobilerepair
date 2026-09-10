@@ -8,6 +8,7 @@ import {
   PREVIEW_REVENUE_TREND,
   PREVIEW_STATUS_BREAKDOWN,
   PREVIEW_TOTAL_JOB_CARDS,
+  PREVIEW_SALES_VS_PURCHASE,
 } from './dashboard-preview-data'
 import { DASHBOARD_WIDGETS } from './dashboard-widgets'
 
@@ -54,10 +55,18 @@ describe('dashboard preview data', () => {
     expect(Math.round(PREVIEW_REVENUE_TOTAL / 100) / 10).toBe(43.2)
   })
 
-  it('has a figure for every KPI widget the product has built', () => {
-    // A built KPI with no sample value renders blank in the preview, which reads as a bug.
-    const built = DASHBOARD_WIDGETS.filter((w) => w.group === 'kpi' && w.available).map((w) => w.key)
-    expect(built.filter((key) => !PREVIEW_KPI[key])).toEqual([])
+  it('has a figure for every KPI widget in the catalogue', () => {
+    // A KPI with no sample value renders blank in the preview, which reads as a bug. Every one
+    // of the nineteen is drawn for real now, so every one needs a figure.
+    const kpis = DASHBOARD_WIDGETS.filter((w) => w.group === 'kpi').map((w) => w.key)
+    expect(kpis.filter((key) => !PREVIEW_KPI[key])).toEqual([])
+  })
+
+  it('sales and purchase cover the same months', () => {
+    expect(PREVIEW_SALES_VS_PURCHASE.length).toBeGreaterThan(1)
+    expect(
+      PREVIEW_SALES_VS_PURCHASE.filter((m) => !m.month || m.sales < 0 || m.purchase < 0)
+    ).toEqual([])
   })
 
   it('the pipeline figure excludes closed and cancelled, as its description says', () => {

@@ -14,7 +14,7 @@
  *  - Without groups the library is a flat list of 34 items, where the reference shows five
  *    labelled sections each with its own "16 / 19 added" count.
  *
- * `available: false` marks a widget the reference lists but has not shipped — they carry a small
+ * `available: true` marks a widget the reference lists but has not shipped — they carry a small
  * badge in its library and cannot be enabled. Kept in the catalogue rather than dropped so the
  * group totals match ("1 / 2 added" for Personal only reads correctly if Notifications is
  * present), and so enabling one later is a one-word change.
@@ -63,7 +63,7 @@ export const DASHBOARD_WIDGETS: DashboardWidgetSpec[] = [
     label: 'Notifications',
     description: 'Recent alerts for the user',
     group: 'personal',
-    available: false,
+    available: true,
   },
 
   // ---- Quick Actions -----------------------------------------------------------------------
@@ -100,7 +100,7 @@ export const DASHBOARD_WIDGETS: DashboardWidgetSpec[] = [
     label: 'New Invoice',
     description: 'Quick action button',
     group: 'quick',
-    available: false,
+    available: true,
   },
 
   // ---- KPI Cards ---------------------------------------------------------------------------
@@ -221,21 +221,21 @@ export const DASHBOARD_WIDGETS: DashboardWidgetSpec[] = [
     label: 'Total Parties',
     description: 'Customers + suppliers',
     group: 'kpi',
-    available: false,
+    available: true,
   },
   {
     key: 'kpi.items.total',
     label: 'Total Items',
     description: 'Items in catalog',
     group: 'kpi',
-    available: false,
+    available: true,
   },
   {
     key: 'kpi.users.active',
     label: 'Active Users',
     description: 'Currently active users',
     group: 'kpi',
-    available: false,
+    available: true,
   },
 
   // ---- Charts & Graphs ------------------------------------------------------------------------
@@ -272,7 +272,7 @@ export const DASHBOARD_WIDGETS: DashboardWidgetSpec[] = [
     label: 'Sales vs Purchase',
     description: 'Monthly comparison',
     group: 'chart',
-    available: false,
+    available: true,
   },
 
   // ---- Lists -----------------------------------------------------------------------------------
@@ -288,14 +288,14 @@ export const DASHBOARD_WIDGETS: DashboardWidgetSpec[] = [
     label: 'My Job Cards',
     description: 'Job cards assigned to logged-in user',
     group: 'list',
-    available: false,
+    available: true,
   },
   {
     key: 'list.parties.recent',
     label: 'Recent Parties',
     description: 'Latest parties added',
     group: 'list',
-    available: false,
+    available: true,
   },
 ]
 

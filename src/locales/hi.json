@@ -487,7 +487,26 @@
         "theTenNewestJobCardsAppear": "दस सबसे नए जॉब कार्ड यहाँ दिखेंगे।",
         "noWidgetsEnabled": "कोई विजेट चालू नहीं",
         "yourRoleHasEveryDashboardWidget": "आपकी भूमिका के लिए सभी डैशबोर्ड विजेट बंद हैं। व्यवस्थापक इन्हें रोल मैनेजमेंट से फिर चालू कर सकते हैं।",
-        "workloadPerTechnician": "प्रति तकनीशियन कार्यभार"
+        "workloadPerTechnician": "प्रति तकनीशियन कार्यभार",
+        "nothingAssignedToYou": "आपको कुछ भी असाइन नहीं",
+        "jobCardsAssignedToYouAppearHere": "आपको असाइन किए गए जॉब कार्ड यहाँ दिखेंगे।",
+        "noPartiesYet": "अभी कोई पार्टी नहीं",
+        "theFiveNewestPartiesAppear": "पाँच सबसे नए ग्राहक और आपूर्तिकर्ता यहाँ दिखेंगे।",
+        "monthlyComparison": "मासिक तुलना",
+        "noDeviceTradeYet": "अभी कोई डिवाइस व्यापार नहीं",
+        "thisChartFillsInOnceDevices": "डिवाइस खरीदने-बेचने पर यह चार्ट भरता जाएगा।",
+        "nothingNeedsAttention": "किसी बात पर ध्यान देने की ज़रूरत नहीं",
+        "alertsAppearHereWhenWork": "काम रुकने या स्टॉक कम होने पर अलर्ट यहाँ दिखेंगे।",
+        "nJobCardsOnHold_one": "{{count}} जॉब कार्ड होल्ड पर है",
+        "nJobCardsOnHold_other": "{{count}} जॉब कार्ड होल्ड पर हैं",
+        "nJobCardsOlderThanDays_one": "{{count}} जॉब कार्ड {{days}} दिन से अधिक समय से खुला है",
+        "nJobCardsOlderThanDays_other": "{{count}} जॉब कार्ड {{days}} दिन से अधिक समय से खुले हैं",
+        "nDevicesAwaitingReturn_one": "{{count}} डिवाइस लौटाना बाकी है",
+        "nDevicesAwaitingReturn_other": "{{count}} डिवाइस लौटाने बाकी हैं",
+        "nItemsAtReorderPoint_one": "{{count}} आइटम रीऑर्डर स्तर पर है",
+        "nItemsAtReorderPoint_other": "{{count}} आइटम रीऑर्डर स्तर पर हैं",
+        "billAJobCard": "जॉब कार्ड बिल करें",
+        "newInvoice": "नया चालान"
       }
     },
     "finance": {

@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { DASHBOARD_WIDGETS, WIDGET_GROUPS, allWidgetsEnabled, widgetsInGroup } from './dashboard-widgets'
+import {
+  DASHBOARD_WIDGETS,
+  WIDGET_GROUPS,
+  allWidgetsEnabled,
+  widgetsInGroup,
+} from './dashboard-widgets'
 import dashboardExport from '../../data/dashboard.json'
 
 /**
@@ -41,24 +46,35 @@ describe('widget catalogue matches the reference', () => {
   })
 
   it.each([
-    // The counts on each group header in the Widget Library screenshots: added / total.
-    ['personal', 1, 2],
-    ['quick', 4, 5],
-    ['kpi', 16, 19],
-    ['chart', 4, 5],
-    ['list', 1, 3],
-  ] as const)('%s group shows %i / %i added', (group, added, total) => {
+    // The group totals from the Widget Library screenshots. Every one is fully built now, so
+    // added and total are the same number — the screenshots' own "2 / 2", "5 / 5", "19 / 19",
+    // "5 / 5", "3 / 3".
+    ['personal', 2],
+    ['quick', 5],
+    ['kpi', 19],
+    ['chart', 5],
+    ['list', 3],
+  ] as const)('%s group holds %i widgets, all built', (group, total) => {
     const widgets = widgetsInGroup(group)
     expect(widgets, `${group} total`).toHaveLength(total)
-    expect(widgets.filter((w) => w.available), `${group} added`).toHaveLength(added)
+    expect(
+      widgets.filter((w) => w.available),
+      `${group} built`
+    ).toHaveLength(total)
   })
 
-  it('marks exactly the 26 the export enables as built', () => {
-    // `available` no longer decides whether a widget can be chosen — only whether it draws
-    // itself or draws the placeholder. It still has to match the export.
-    const built = DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => w.key).sort()
-    const expected = exportedWidgets.filter((w) => w.visible).map((w) => w.key).sort()
-    expect(built).toEqual(expected)
+  it('has no widget left unbuilt', () => {
+    // Every one of the thirty-four draws real data now. `available: false` meant a "Widget
+    // coming soon" placeholder, and the eight that carried it — Notifications, New Invoice,
+    // Total Parties, Total Items, Active Users, Sales vs Purchase, My Job Cards and Recent
+    // Parties — were each built against a source this app already holds.
+    expect(DASHBOARD_WIDGETS.filter((w) => !w.available).map((w) => w.key)).toEqual([])
+  })
+
+  it('still covers everything the export enables', () => {
+    const built = DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => w.key)
+    const expected = exportedWidgets.filter((w) => w.visible).map((w) => w.key)
+    expect(expected.filter((key) => !built.includes(key))).toEqual([])
   })
 
   it('has no duplicate keys and no blank copy', () => {

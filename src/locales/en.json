@@ -487,7 +487,26 @@
         "theTenNewestJobCardsAppear": "The ten newest job cards appear here.",
         "noWidgetsEnabled": "No widgets enabled",
         "yourRoleHasEveryDashboardWidget": "Your role has every dashboard widget switched off. An administrator can turn them back on under Role Management.",
-        "workloadPerTechnician": "Workload per technician"
+        "workloadPerTechnician": "Workload per technician",
+        "nothingAssignedToYou": "Nothing assigned to you",
+        "jobCardsAssignedToYouAppearHere": "Job cards assigned to you appear here.",
+        "noPartiesYet": "No parties yet",
+        "theFiveNewestPartiesAppear": "The five newest customers and suppliers appear here.",
+        "monthlyComparison": "Monthly comparison",
+        "noDeviceTradeYet": "No device trade yet",
+        "thisChartFillsInOnceDevices": "This chart fills in once devices are bought and sold.",
+        "nothingNeedsAttention": "Nothing needs attention",
+        "alertsAppearHereWhenWork": "Alerts appear here when work stalls or stock runs low.",
+        "nJobCardsOnHold_one": "{{count}} job card is on hold",
+        "nJobCardsOnHold_other": "{{count}} job cards are on hold",
+        "nJobCardsOlderThanDays_one": "{{count}} job card has been open over {{days}} days",
+        "nJobCardsOlderThanDays_other": "{{count}} job cards have been open over {{days}} days",
+        "nDevicesAwaitingReturn_one": "{{count}} device is waiting to be returned",
+        "nDevicesAwaitingReturn_other": "{{count}} devices are waiting to be returned",
+        "nItemsAtReorderPoint_one": "{{count}} item is at its reorder point",
+        "nItemsAtReorderPoint_other": "{{count}} items are at their reorder point",
+        "billAJobCard": "Bill a job card",
+        "newInvoice": "New Invoice"
       }
     },
     "finance": {

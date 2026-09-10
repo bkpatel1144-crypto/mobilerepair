@@ -45,7 +45,36 @@ export const PREVIEW_KPI: Record<string, { value: string; tone?: string }> = {
   'kpi.jobcards.cancelled': { value: '1' },
   'kpi.jobcards.pending_return': { value: '0' },
   'kpi.turnaround': { value: '1.5d' },
+  // The three the reference lists as "coming soon" and this build now draws for real.
+  'kpi.parties.total': { value: '128' },
+  'kpi.items.total': { value: '16' },
+  'kpi.users.active': { value: '4' },
 }
+
+/** Monthly sales against purchases, for the Sales vs Purchase comparison. */
+export const PREVIEW_SALES_VS_PURCHASE = [
+  { month: 'Apr', sales: 62000, purchase: 41000 },
+  { month: 'May', sales: 58000, purchase: 47000 },
+  { month: 'Jun', sales: 71000, purchase: 44000 },
+  { month: 'Jul', sales: 49000, purchase: 52000 },
+  { month: 'Aug', sales: 83000, purchase: 55000 },
+  { month: 'Sep', sales: 45800, purchase: 31000 },
+]
+
+export const PREVIEW_RECENT_PARTIES = [
+  { id: 'p1', name: 'Sample Customer A', detail: 'Customer · 98XXXXXX01' },
+  { id: 'p2', name: 'Sample Supplier X', detail: 'Supplier · 98XXXXXX02' },
+  { id: 'p3', name: 'Sample Customer B', detail: 'Customer · 98XXXXXX03' },
+  { id: 'p4', name: 'Sample Customer C', detail: 'Customer · 98XXXXXX04' },
+  { id: 'p5', name: 'Sample Supplier Y', detail: 'Supplier · 98XXXXXX05' },
+]
+
+/** The alerts the Notifications widget shows — each one a real condition this app can detect. */
+export const PREVIEW_ALERTS = [
+  { id: 'a1', tone: 'warning' as const, text: '1 job card is on hold' },
+  { id: 'a2', tone: 'danger' as const, text: '2 job cards have been in the pipeline over 7 days' },
+  { id: 'a3', tone: 'info' as const, text: '3 items are at or below their reorder point' },
+]
 
 /** Fourteen days, ending on the day the reference screenshot was taken. */
 export const PREVIEW_DAYS = [

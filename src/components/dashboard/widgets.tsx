@@ -362,6 +362,161 @@ export function TechnicianBars({
   )
 }
 
+export interface AlertRow {
+  id: string
+  tone: 'info' | 'warning' | 'danger'
+  text: string
+  href?: string
+}
+
+const ALERT_TONE: Record<AlertRow['tone'], string> = {
+  info: 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400',
+  warning: 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
+  danger: 'bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400',
+}
+
+/** Notifications: what in the shop's own state needs someone's attention. */
+export function AlertList({
+  title,
+  rows,
+  empty,
+  renderRow,
+}: {
+  title: string
+  rows: AlertRow[]
+  empty?: React.ReactNode
+  renderRow?: (row: AlertRow, content: React.ReactNode) => React.ReactNode
+}) {
+  return (
+    <div className="min-w-0 overflow-hidden rounded-lg border bg-card">
+      <p className="px-3 py-2.5 text-sm font-semibold">{title}</p>
+      {rows.length === 0 ? (
+        <div className="px-3 pb-3">{empty}</div>
+      ) : (
+        rows.map((row) => {
+          const content = (
+            <div className="flex items-center gap-2.5 border-t px-3 py-2 text-sm">
+              <span className={cn('size-2 shrink-0 rounded-full', ALERT_TONE[row.tone])} />
+              <span className="min-w-0 truncate">{row.text}</span>
+            </div>
+          )
+          return <div key={row.id}>{renderRow ? renderRow(row, content) : content}</div>
+        })
+      )}
+    </div>
+  )
+}
+
+export interface NamedRow {
+  id: string
+  name: string
+  detail: string
+  href?: string
+}
+
+/** Recent Parties: a plain name-and-detail list. */
+export function NamedList({
+  title,
+  rows,
+  trailing,
+  empty,
+  renderRow,
+}: {
+  title: string
+  rows: NamedRow[]
+  trailing?: React.ReactNode
+  empty?: React.ReactNode
+  renderRow?: (row: NamedRow, content: React.ReactNode) => React.ReactNode
+}) {
+  return (
+    <div className="min-w-0 overflow-hidden rounded-lg border bg-card">
+      <div className="flex items-center justify-between gap-2 px-3 py-2.5">
+        <p className="text-sm font-semibold">{title}</p>
+        {trailing}
+      </div>
+      {rows.length === 0 ? (
+        <div className="px-3 pb-3">{empty}</div>
+      ) : (
+        rows.map((row) => {
+          const content = (
+            <div className="flex items-center gap-3 border-t px-3 py-2 text-sm">
+              <span className="truncate font-medium">{row.name}</span>
+              <span className="ml-auto shrink-0 truncate text-xs text-muted-foreground">
+                {row.detail}
+              </span>
+            </div>
+          )
+          return <div key={row.id}>{renderRow ? renderRow(row, content) : content}</div>
+        })
+      )}
+    </div>
+  )
+}
+
+/** Sales vs Purchase: two bars per month, side by side. */
+export function ComparisonBars({
+  title,
+  subtitle,
+  rows,
+  legend,
+  formatValue,
+  empty,
+}: {
+  title: string
+  subtitle: string
+  rows: { month: string; sales: number; purchase: number }[]
+  legend: [string, string][]
+  formatValue?: (value: number) => string
+  empty?: React.ReactNode
+}) {
+  return (
+    <PanelShell title={title} subtitle={subtitle}>
+      {rows.length === 0 ? (
+        <div className="px-3 pt-3">{empty}</div>
+      ) : (
+        <>
+          <div className="h-52 pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={rows} margin={{ left: 4, right: 12, top: 4, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-border" />
+                <XAxis dataKey="month" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis
+                  tick={{ fontSize: 10 }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={48}
+                  tickFormatter={formatValue}
+                />
+                <Tooltip formatter={(v: unknown) => formatValue?.(Number(v)) ?? String(v)} />
+                <Bar
+                  dataKey="sales"
+                  fill="#10b981"
+                  radius={[3, 3, 0, 0]}
+                  isAnimationActive={false}
+                />
+                <Bar
+                  dataKey="purchase"
+                  fill="#f97316"
+                  radius={[3, 3, 0, 0]}
+                  isAnimationActive={false}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3 text-[11px]">
+            {legend.map(([label, hex]) => (
+              <span key={label} className="flex items-center gap-1">
+                <span className="size-1.5 rounded-full" style={{ backgroundColor: hex }} />
+                {label}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
+    </PanelShell>
+  )
+}
+
 export interface JobCardRow {
   id: string
   number: string

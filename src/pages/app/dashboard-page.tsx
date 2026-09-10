@@ -57,6 +57,15 @@ import { useDashboardStats } from '@/hooks/use-dashboard-stats'
 import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
 import { useWidgetLabels } from '@/hooks/use-widget-labels'
+import {
+  ActiveUsersWidget,
+  ItemsTotalWidget,
+  MyJobCardsWidget,
+  NotificationsWidget,
+  PartiesTotalWidget,
+  RecentPartiesWidget,
+  SalesVsPurchaseWidget,
+} from './dashboard-extra-widgets'
 import { toneFromStatus } from '@/lib/status-tone'
 import { useTranslation } from 'react-i18next'
 
@@ -163,6 +172,14 @@ export function DashboardPage() {
       label: t('pages.dashboard.dashboard.newItem'),
       icon: PackagePlus,
       to: '/app/masters/items',
+    },
+    // There is no invoices collection: a bill *is* a job card that has been through the
+    // `generateBill` action (see `sales-invoices-page.tsx`). So "New Invoice" goes where a bill
+    // is actually raised, rather than to a create screen that cannot exist.
+    'quick.new_invoice': {
+      label: t('pages.dashboard.dashboard.newInvoice'),
+      icon: FileText,
+      to: '/app/service/job-cards',
     },
   }
 
@@ -384,6 +401,27 @@ export function DashboardPage() {
             }
           />
         )
+
+      case 'personal.notifications':
+        return <NotificationsWidget label={widgetText.label(widget.key, widget.label)} />
+
+      case 'kpi.parties.total':
+        return <PartiesTotalWidget label={widgetText.label(widget.key, widget.label)} />
+
+      case 'kpi.items.total':
+        return <ItemsTotalWidget label={widgetText.label(widget.key, widget.label)} />
+
+      case 'kpi.users.active':
+        return <ActiveUsersWidget label={widgetText.label(widget.key, widget.label)} />
+
+      case 'chart.sales_vs_purchase':
+        return <SalesVsPurchaseWidget label={widgetText.label(widget.key, widget.label)} />
+
+      case 'list.jobcards.mine':
+        return <MyJobCardsWidget label={widgetText.label(widget.key, widget.label)} />
+
+      case 'list.parties.recent':
+        return <RecentPartiesWidget label={widgetText.label(widget.key, widget.label)} />
 
       default: {
         if (widget.group === 'quick') {

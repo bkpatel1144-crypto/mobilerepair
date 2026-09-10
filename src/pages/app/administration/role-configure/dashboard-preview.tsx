@@ -18,12 +18,18 @@ import {
   Lock,
   Undo2,
   ArrowRight,
+  Users,
+  Package,
+  UserCheck,
   type LucideIcon,
 } from 'lucide-react'
 import {
+  AlertList,
   ComingSoonCard,
+  ComparisonBars,
   JobCardListPanel,
   KpiTile,
+  NamedList,
   QuickActionPill,
   StatusDonut,
   TechnicianBars,
@@ -41,6 +47,9 @@ import {
   PREVIEW_STATUS_BREAKDOWN,
   PREVIEW_TOTAL_JOB_CARDS,
   PREVIEW_TECHNICIANS,
+  PREVIEW_ALERTS,
+  PREVIEW_RECENT_PARTIES,
+  PREVIEW_SALES_VS_PURCHASE,
 } from '@/config/dashboard-preview-data'
 import type { DashboardWidgetSpec } from '@/config/dashboard-widgets'
 import { useTranslation } from 'react-i18next'
@@ -98,6 +107,12 @@ const QUICK_ACTION_ICON: Record<string, LucideIcon> = {
   'quick.new_invoice': FileText,
 }
 
+const KPI_EXTRA_ICON: Record<string, LucideIcon> = {
+  'kpi.parties.total': Users,
+  'kpi.items.total': Package,
+  'kpi.users.active': UserCheck,
+}
+
 export function PreviewWidget({ widget }: { widget: DashboardWidgetSpec }) {
   const { t } = useTranslation()
 
@@ -116,13 +131,47 @@ export function PreviewWidget({ widget }: { widget: DashboardWidgetSpec }) {
     return <QuickActionPill label={widget.label} icon={QUICK_ACTION_ICON[widget.key] ?? Plus} />
   }
 
+  if (widget.key === 'personal.notifications') {
+    return <AlertList title={widget.label} rows={PREVIEW_ALERTS} />
+  }
+
   if (widget.group === 'kpi') {
     return (
       <KpiTile
         label={widget.label}
         value={PREVIEW_KPI[widget.key]?.value ?? '—'}
-        icon={KPI_ICON[widget.key] ?? FileText}
+        icon={KPI_ICON[widget.key] ?? KPI_EXTRA_ICON[widget.key] ?? FileText}
         tone={KPI_TONE[widget.key]}
+      />
+    )
+  }
+
+  if (widget.key === 'chart.sales_vs_purchase') {
+    return (
+      <ComparisonBars
+        title={widget.label}
+        subtitle={t('pages.dashboard.dashboard.monthlyComparison')}
+        rows={PREVIEW_SALES_VS_PURCHASE}
+        legend={[
+          [t('pages.masters.itemMaster.sales'), '#10b981'],
+          [t('pages.masters.itemMaster.purchase'), '#f97316'],
+        ]}
+        formatValue={(v) => `₹${(v / 1000).toFixed(0)}K`}
+      />
+    )
+  }
+
+  if (widget.key === 'list.parties.recent') {
+    return (
+      <NamedList
+        title={widget.label}
+        rows={PREVIEW_RECENT_PARTIES}
+        trailing={
+          <span className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 dark:text-teal-400">
+            {t('pages.dashboard.dashboard.viewAll')}
+            <ArrowRight className="size-3.5" />
+          </span>
+        }
       />
     )
   }
