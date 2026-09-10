@@ -181,17 +181,6 @@ const ItemCategoriesPage = lazy(() =>
 const ItemMasterPage = lazy(() =>
   import('@/pages/app/masters/item-master-page').then((m) => ({ default: m.ItemMasterPage }))
 )
-const AttributesPage = lazy(() =>
-  import('@/pages/app/masters/attributes-page').then((m) => ({ default: m.AttributesPage }))
-)
-const GeneralPurchasePage = lazy(() =>
-  import('@/pages/app/purchase/general-purchase-page').then((m) => ({
-    default: m.GeneralPurchasePage,
-  }))
-)
-const StockPage = lazy(() =>
-  import('@/pages/app/inventory/stock-page').then((m) => ({ default: m.StockPage }))
-)
 const CreateItemPage = lazy(() =>
   import('@/pages/app/masters/items/create-item-page').then((m) => ({ default: m.CreateItemPage }))
 )
@@ -323,10 +312,7 @@ const LEAF_PAGE_OVERRIDES: Record<string, React.ComponentType> = {
   'finance/supplier-payables': SupplierPayablesPage,
   'masters/uom': UomPage,
   'masters/item-categories': ItemCategoriesPage,
-  'masters/attributes': AttributesPage,
   'masters/items': ItemMasterPage,
-  'purchase/general': GeneralPurchasePage,
-  'inventory/stock': StockPage,
   'masters/payment-modes': PaymentModesPage,
   'masters/party-categories': PartyCategoriesPage,
   'masters/parties': PartiesPage,

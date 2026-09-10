@@ -34,11 +34,6 @@ export function formatJobCardId(fyLabel: string, seq: number) {
   return `JC-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
 }
 
-/** `PUR-2026-27-00001` — a general (parts and stock) purchase. */
-export function formatPurchaseId(fyLabel: string, seq: number) {
-  return `PUR-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
-}
-
 /** `PTY-2026-27-00001` */
 export function formatPartyId(fyLabel: string, seq: number) {
   return `PTY-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
