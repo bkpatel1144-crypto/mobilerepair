@@ -10,9 +10,7 @@
       "second-hand-device": "सेकंड हैंड डिवाइस",
       "reports": "रिपोर्ट",
       "administration": "प्रशासन",
-      "settings": "सेटिंग्स",
-      "purchase": "खरीद",
-      "inventory": "इन्वेंटरी"
+      "settings": "सेटिंग्स"
     },
     "items": {
       "sales/invoices": "विक्रय बिल",
@@ -58,10 +56,7 @@
       "settings/billing": "बिलिंग और सदस्यता",
       "settings/print-formats": "प्रिंट फ़ॉर्मेट",
       "settings/whatsapp": "WhatsApp",
-      "settings/backup": "बैकअप और रिस्टोर",
-      "purchase/general": "सामान्य खरीद",
-      "inventory/stock": "स्टॉक",
-      "masters/attributes": "विशेषताएँ"
+      "settings/backup": "बैकअप और रिस्टोर"
     }
   },
   "common": {

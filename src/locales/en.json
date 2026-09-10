@@ -10,9 +10,7 @@
       "second-hand-device": "Second Hand Device",
       "reports": "Reports",
       "administration": "Administration",
-      "settings": "Settings",
-      "purchase": "Purchase",
-      "inventory": "Inventory"
+      "settings": "Settings"
     },
     "items": {
       "sales/invoices": "Sales Invoices",
@@ -58,10 +56,7 @@
       "settings/billing": "Billing & Subscription",
       "settings/print-formats": "Print Formats",
       "settings/whatsapp": "WhatsApp",
-      "settings/backup": "Backup & Restore",
-      "purchase/general": "General Purchase",
-      "inventory/stock": "Stock",
-      "masters/attributes": "Attributes"
+      "settings/backup": "Backup & Restore"
     }
   },
   "common": {
