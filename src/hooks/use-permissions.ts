@@ -3,12 +3,9 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { roleDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
-import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
+import { widgetIsOn } from '@/config/dashboard-widgets-legacy'
 import { normalizeActionPermissions } from '@/config/permission-legacy'
 import type { RoleDoc } from '@/types/firestore'
-
-/** Every widget key the catalogue defines. A key outside it is one this app no longer has. */
-const CATALOGUE_KEYS = new Set(DASHBOARD_WIDGETS.map((w) => w.key))
 
 /**
  * Is one dashboard widget shown for a role?
@@ -18,14 +15,13 @@ const CATALOGUE_KEYS = new Set(DASHBOARD_WIDGETS.map((w) => w.key))
  *  - `fullAccess` does *not* bypass it. Widget visibility is a layout preference, not a
  *    privilege, so an Owner who switches Revenue off on the Dashboard & Landing tab has to see it
  *    stay off — that tab is the whole reason the flag exists.
- *  - Absent means visible (`!== false`), not hidden. A role document is written once at signup
- *    with the widgets that existed *then*; keying off `=== true` would make every widget added
- *    later invisible to every existing role until someone re-saved each one by hand.
+ *  - Absent means visible, not hidden — see `widgetIsOn`, which is the one rule this and the
+ *    Role Configure tab both use. They used to disagree, and an old role's dashboard looked
+ *    complete while its config screen looked empty.
  *
- * Hiding is therefore always explicit, which is exactly how `default-roles.ts` writes it. A role
- * that has not loaded yet shows the default set rather than an empty dashboard — the Dashboard
- * holds itself behind a skeleton while `isLoading`, so that fallback only applies to a tenant
- * whose role document is genuinely missing.
+ * A role that has not loaded yet shows the default set rather than an empty dashboard — the
+ * Dashboard holds itself behind a skeleton while `isLoading`, so that fallback only applies to a
+ * tenant whose role document is genuinely missing.
  *
  * Exported as a plain function so it can be tested without a rendered hook.
  */
@@ -36,9 +32,8 @@ export function isWidgetVisible(
   // Only a key the catalogue has never heard of is refused outright. A widget the product has
   // not built yet is still selectable — the Dashboard draws it as "Widget coming soon", which is
   // what the reference does and what makes "34 / 34" true.
-  if (!CATALOGUE_KEYS.has(key)) return false
   if (!role) return true
-  return role.dashboardConfig?.visibleWidgets?.[key] !== false
+  return widgetIsOn(role.dashboardConfig?.visibleWidgets, key)
 }
 
 export function roleQueryKey(companyId: string | undefined, roleId: string | undefined) {

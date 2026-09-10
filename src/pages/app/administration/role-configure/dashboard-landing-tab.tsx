@@ -36,6 +36,7 @@ import {
 } from '@/components/ui/select'
 import { useWidgetLabels } from '@/hooks/use-widget-labels'
 import { cn } from '@/lib/utils'
+import { widgetIsOn } from '@/config/dashboard-widgets-legacy'
 import { GROUP_ICON_TONE } from '@/components/dashboard/group-tones'
 import { PreviewWidget } from './dashboard-preview'
 import type { RoleDraft } from './types'
@@ -110,7 +111,10 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
     ),
   ]
 
-  const isOn = (key: string) => draft.dashboardConfig.visibleWidgets[key] === true
+  // The same rule the Dashboard applies. `=== true` here was the bug: a role saved before the
+  // catalogue was rebuilt holds none of the current keys, so every widget read as off and this
+  // screen opened empty while that role's actual dashboard was full.
+  const isOn = (key: string) => widgetIsOn(draft.dashboardConfig.visibleWidgets, key)
   const activeCount = DASHBOARD_WIDGETS.filter((w) => isOn(w.key)).length
   const ordered = widgetsInOrder(draft.dashboardConfig.widgetOrder)
 

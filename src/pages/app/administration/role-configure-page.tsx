@@ -15,6 +15,7 @@ import { DashboardLandingTab } from './role-configure/dashboard-landing-tab'
 import type { RoleDraft } from './role-configure/types'
 import { ALL_PERMISSION_KEYS } from '@/config/permission-catalogue'
 import { TOTAL_MENU_COUNT, countMenus } from '@/config/menu-count'
+import { normalizeVisibleWidgets, widgetIsOn } from '@/config/dashboard-widgets-legacy'
 import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useTranslation } from 'react-i18next'
@@ -33,7 +34,9 @@ function draftFromRole(role: {
     actionPermissions: { ...role.actionPermissions },
     dashboardConfig: {
       defaultLandingRoute: role.dashboardConfig.defaultLandingRoute,
-      visibleWidgets: { ...role.dashboardConfig.visibleWidgets },
+      // Translated on load, so a role saved before the catalogue was rebuilt does not open with
+      // every widget unticked — and so the next save rewrites it in the current keys.
+      visibleWidgets: normalizeVisibleWidgets(role.dashboardConfig.visibleWidgets),
     },
   }
 }
@@ -94,8 +97,8 @@ export function RoleConfigurePage() {
   // Landing tab's own "34 / 34" counter shows. Counting only the built ones made the footer
   // disagree with the tab directly above it. A key left behind by a rename is still excluded,
   // because the count runs over the catalogue rather than over the stored map.
-  const checkedWidgets = DASHBOARD_WIDGETS.filter(
-    (w) => draft.dashboardConfig.visibleWidgets[w.key]
+  const checkedWidgets = DASHBOARD_WIDGETS.filter((w) =>
+    widgetIsOn(draft.dashboardConfig.visibleWidgets, w.key)
   ).length
 
   function handleCancel() {
