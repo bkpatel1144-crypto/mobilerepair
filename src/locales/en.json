@@ -486,7 +486,8 @@
         "thisChartFillsInOnceJobsAreAssigned": "This chart fills in once jobs are assigned to a technician.",
         "theTenNewestJobCardsAppear": "The ten newest job cards appear here.",
         "noWidgetsEnabled": "No widgets enabled",
-        "yourRoleHasEveryDashboardWidget": "Your role has every dashboard widget switched off. An administrator can turn them back on under Role Management."
+        "yourRoleHasEveryDashboardWidget": "Your role has every dashboard widget switched off. An administrator can turn them back on under Role Management.",
+        "workloadPerTechnician": "Workload per technician"
       }
     },
     "finance": {

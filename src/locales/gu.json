@@ -486,7 +486,8 @@
         "thisChartFillsInOnceJobsAreAssigned": "જોબ ટેકનિશિયનને સોંપાય પછી આ ચાર્ટ ભરાશે.",
         "theTenNewestJobCardsAppear": "દસ સૌથી નવા જોબ કાર્ડ અહીં દેખાશે.",
         "noWidgetsEnabled": "કોઈ વિજેટ ચાલુ નથી",
-        "yourRoleHasEveryDashboardWidget": "તમારી ભૂમિકા માટે બધા ડેશબોર્ડ વિજેટ બંધ છે. વ્યવસ્થાપક તેને રોલ મેનેજમેન્ટમાંથી ફરી ચાલુ કરી શકે છે."
+        "yourRoleHasEveryDashboardWidget": "તમારી ભૂમિકા માટે બધા ડેશબોર્ડ વિજેટ બંધ છે. વ્યવસ્થાપક તેને રોલ મેનેજમેન્ટમાંથી ફરી ચાલુ કરી શકે છે.",
+        "workloadPerTechnician": "ટેકનિશિયન દીઠ કામનો ભાર"
       }
     },
     "finance": {

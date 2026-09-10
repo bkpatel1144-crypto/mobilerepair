@@ -36,6 +36,7 @@ import {
 } from '@/components/ui/select'
 import { useWidgetLabels } from '@/hooks/use-widget-labels'
 import { cn } from '@/lib/utils'
+import { GROUP_ICON_TONE } from '@/components/dashboard/group-tones'
 import { PreviewWidget } from './dashboard-preview'
 import type { RoleDraft } from './types'
 import { useTranslation } from 'react-i18next'
@@ -67,14 +68,6 @@ const GROUP_ICON: Record<WidgetGroupKey, LucideIcon> = {
   kpi: Gauge,
   chart: BarChart3,
   list: ListChecks,
-}
-
-const GROUP_ICON_TONE: Record<WidgetGroupKey, string> = {
-  personal: 'bg-pink-100 text-pink-600 dark:bg-pink-500/15 dark:text-pink-400',
-  quick: 'bg-orange-100 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400',
-  kpi: 'bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400',
-  chart: 'bg-purple-100 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400',
-  list: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400',
 }
 
 /** How wide one widget sits in the preview grid. Mirrors the real Dashboard's own layout: tiles

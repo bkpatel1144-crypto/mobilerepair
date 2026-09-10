@@ -20,57 +20,59 @@ import {
   Lock,
   Undo2,
   LayoutDashboard,
-  Sparkles,
   Users,
+  User,
+  Zap,
+  Gauge,
+  BarChart3,
+  ListChecks,
+  ArrowRight,
   type LucideIcon,
 } from 'lucide-react'
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-} from 'recharts'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { StatCard, type StatTone } from '@/components/shared/stat-card'
-import { StatCardGrid } from '@/components/shared/stat-card-grid'
-import { ScrollRow } from '@/components/shared/scroll-row'
-import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ScanJobCardModal } from '@/components/shared/scan-job-card-modal'
-import { DASHBOARD_WIDGETS, widgetsInOrder } from '@/config/dashboard-widgets'
-import { useWidgetLabels } from '@/hooks/use-widget-labels'
+import {
+  ComingSoonCard,
+  JobCardListPanel,
+  KpiTile,
+  QuickActionPill,
+  StatusDonut,
+  TechnicianBars,
+  TrendArea,
+  WelcomeBanner,
+  WidgetSection,
+  type JobCardRow,
+} from '@/components/dashboard/widgets'
+import {
+  WIDGET_GROUPS,
+  widgetsInOrder,
+  type DashboardWidgetSpec,
+  type WidgetGroupKey,
+} from '@/config/dashboard-widgets'
 import { useDashboardStats } from '@/hooks/use-dashboard-stats'
 import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
+import { useWidgetLabels } from '@/hooks/use-widget-labels'
 import { toneFromStatus } from '@/lib/status-tone'
 import { useTranslation } from 'react-i18next'
 
 /**
- * Every tile, chart and list here is gated on the current role's `visibleWidgets`, keyed by the
- * `DASHBOARD_WIDGETS` catalogue.
+ * The Dashboard, in the same grouped sections the Role Configure preview shows.
  *
- * That gate is the point of this file's last rewrite. `visibleWidgets` was written at signup,
- * editable on Role Configure's "Dashboard & Landing" tab and saved to Firestore — and read by
- * nothing at all. Every user saw every widget, so the Technician role's "hide Revenue and
- * Outstanding" had never once taken effect, and the whole tab was decorative. Nothing failed
- * loudly, because `visibleWidgets` is a `Record<string, boolean>`: no key it holds and no key it
- * omits is a type error.
+ * The two used to be different screens — a flat page of tiles here, a sectioned preview there —
+ * so an administrator would arrange a role's dashboard and then see something else on signing in
+ * as that role. They render from one set of components now
+ * (`components/dashboard/widgets.tsx`): the preview passes sample figures, this passes what the
+ * shop actually did. Building them separately is the mistake this codebase has already paid for
+ * twice, with the device PIN field and with the two long forms.
  *
- * Three widgets the catalogue advertises were also missing outright — Job Cards Trend, Jobs by
- * Technician and Recent Job Cards. `dashboard-widgets-rendered.test.tsx` now renders this page
- * and asserts a `data-widget` node exists for every catalogue entry marked `available`, so a
- * widget cannot be advertised in the Widget Library without being on the screen.
+ * Every widget is gated on the role's `visibleWidgets` and ordered by its `widgetOrder`. One the
+ * role switched on that this build has not finished draws a "Widget coming soon" card rather
+ * than silently vanishing — otherwise the preview would be lying about what the role gets.
  */
 
 // Tailwind's compiler needs literal class strings, not template interpolation — these hex values
@@ -85,26 +87,26 @@ const CHART_TONE_HEX: Record<string, string> = {
   neutral: '#6b7280',
 }
 
-/** A widget the catalogue lists but the product has not built, shown as the reference shows it:
- *  a dashed card that says so, rather than a gap where a chosen widget should be. */
-function ComingSoonWidget({ widgetKey, label }: { widgetKey: string; label: string }) {
-  const { t } = useTranslation()
-  return (
-    <div
-      data-widget={widgetKey}
-      className="flex min-w-0 items-center gap-3 rounded-lg border border-dashed p-3"
-    >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-        <Sparkles className="size-4" />
-      </span>
-      <div className="min-w-0">
-        <p className="truncate text-sm font-medium">{label}</p>
-        <p className="text-xs text-muted-foreground">
-          {t('pages.administration.dashboardLandingTab.widgetComingSoon')}
-        </p>
-      </div>
-    </div>
-  )
+const GROUP_ICON: Record<WidgetGroupKey, LucideIcon> = {
+  personal: User,
+  quick: Zap,
+  kpi: Gauge,
+  chart: BarChart3,
+  list: ListChecks,
+}
+
+const KPI_TONE: Record<string, string> = {
+  'kpi.revenue': 'text-emerald-600 dark:text-emerald-400',
+  'kpi.outstanding': 'text-red-600 dark:text-red-400',
+  'kpi.jobcards.today': 'text-purple-600 dark:text-purple-400',
+  'kpi.jobcards.pipeline': 'text-blue-600 dark:text-blue-400',
+  'kpi.jobcards.ready': 'text-emerald-600 dark:text-emerald-400',
+  'kpi.jobcards.delivered': 'text-purple-600 dark:text-purple-400',
+  'kpi.jobcards.queued': 'text-orange-600 dark:text-orange-400',
+  'kpi.jobcards.in_progress': 'text-blue-600 dark:text-blue-400',
+  'kpi.jobcards.hold': 'text-amber-600 dark:text-amber-400',
+  'kpi.jobcards.cancelled': 'text-red-600 dark:text-red-400',
+  'kpi.turnaround': 'text-teal-600 dark:text-teal-400',
 }
 
 function greeting() {
@@ -114,9 +116,7 @@ function greeting() {
   return 'pages.dashboard.dashboard.goodEvening'
 }
 
-/** The chosen range, in words, shown as the Period Job Cards tile's sublabel. The reference
- *  adapts the tile's own label instead; a sublabel says the same thing without a label that
- *  changes length every time a chip is tapped. */
+/** The chosen range in words, appended to the Period Job Cards tile's label. */
 const RANGE_LABEL_KEY: Record<DateRangeKey | 'all', string> = {
   all: 'common.allTime',
   today: 'common.today',
@@ -127,29 +127,13 @@ const RANGE_LABEL_KEY: Record<DateRangeKey | 'all', string> = {
   custom: 'common.customRange',
 }
 
-/** A panel that holds one chart or list widget, carrying its `data-widget` key. */
-function WidgetPanel({
-  widgetKey,
-  title,
-  action,
-  children,
-  className,
-}: {
-  widgetKey: string
-  title: string
-  action?: React.ReactNode
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <div data-widget={widgetKey} className={`min-w-0 rounded-lg border p-4 ${className ?? ''}`}>
-      <div className="mb-2 flex items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold">{title}</h2>
-        {action}
-      </div>
-      {children}
-    </div>
-  )
+/** How wide each group's widgets sit in the twelve-column section grid. */
+const GROUP_SPAN: Record<WidgetGroupKey, string> = {
+  personal: 'col-span-12',
+  quick: 'col-span-6 md:col-span-3',
+  kpi: 'col-span-6 sm:col-span-4 lg:col-span-2',
+  chart: 'col-span-12 lg:col-span-6',
+  list: 'col-span-12',
 }
 
 export function DashboardPage() {
@@ -161,274 +145,294 @@ export function DashboardPage() {
   const { profile } = useAuth()
   const { canSeeWidget, widgetOrder, isLoading: permissionsLoading } = usePermissions()
 
-  // The role's chosen arrangement. `widgetsInOrder` falls back to the catalogue for anything the
-  // role never placed, so a widget added after the role was saved still has a position.
-  const orderIndex = new Map(widgetsInOrder(widgetOrder).map((w, i) => [w.key, i]))
-  const byRoleOrder = (a: string, b: string) =>
-    (orderIndex.get(a) ?? Number.MAX_SAFE_INTEGER) - (orderIndex.get(b) ?? Number.MAX_SAFE_INTEGER)
+  const visible = widgetsInOrder(widgetOrder).filter((w) => canSeeWidget(w.key))
 
-  const quickActions: {
-    widgetKey: string
-    label: string
-    icon: LucideIcon
-    tone: string
-    to?: string
-    onClick?: () => void
-  }[] = [
-    {
-      widgetKey: 'quick.scan_jobcard',
-      label: t('shared.scanJobCard'),
-      icon: ScanLine,
-      tone: 'bg-muted text-foreground',
-      onClick: () => setScanOpen(true),
-    },
-    {
-      widgetKey: 'quick.new_jobcard',
+  const quickAction: Record<string, { label: string; icon: LucideIcon; to?: string }> = {
+    'quick.scan_jobcard': { label: t('shared.scanJobCard'), icon: ScanLine },
+    'quick.new_jobcard': {
       label: t('pages.dashboard.dashboard.newJobCard'),
       icon: Plus,
-      tone: 'bg-teal-600 text-white',
       to: '/app/service/job-cards/create',
     },
-    {
-      widgetKey: 'quick.new_party',
+    'quick.new_party': {
       label: t('pages.dashboard.dashboard.newParty'),
       icon: UserPlus,
-      tone: 'bg-blue-600 text-white',
       to: '/app/masters/parties',
     },
-    {
-      widgetKey: 'quick.new_item',
+    'quick.new_item': {
       label: t('pages.dashboard.dashboard.newItem'),
       icon: PackagePlus,
-      tone: 'bg-purple-600 text-white',
       to: '/app/masters/items',
     },
-  ]
+  }
 
-  // Declarative rather than sixteen near-identical JSX blocks, so the widget key sits beside the
-  // value it gates and a new KPI is one entry rather than a block to copy and edit.
-  const kpis: {
-    widgetKey: string
-    label: string
-    value: React.ReactNode
-    icon: LucideIcon
-    tone?: StatTone
-    sublabel?: string
-  }[] = [
-    {
-      widgetKey: 'kpi.jobcards.total',
+  const kpi: Record<string, { label: string; value: React.ReactNode; icon: LucideIcon }> = {
+    'kpi.jobcards.total': {
       label: t('pages.dashboard.dashboard.totalJobCards'),
       value: stats.totalJobCards,
       icon: FileText,
     },
-    {
-      widgetKey: 'kpi.jobcards.pipeline',
+    'kpi.jobcards.pipeline': {
       label: t('pages.dashboard.dashboard.totalInPipeline'),
       value: stats.totalInPipeline,
       icon: Activity,
-      tone: 'info',
     },
-    {
-      widgetKey: 'kpi.jobcards.today',
-      label: t('pages.dashboard.dashboard.periodJobCards'),
+    'kpi.jobcards.today': {
+      label: `${t('pages.dashboard.dashboard.periodJobCards')} · ${t(RANGE_LABEL_KEY[range])}`,
       value: stats.periodJobCards,
       icon: Wrench,
-      tone: 'purple',
-      sublabel: t(RANGE_LABEL_KEY[range]),
     },
-    {
-      widgetKey: 'kpi.revenue',
-      label: t('shared.revenue'),
-      value: `₹${stats.revenue}`,
-      icon: IndianRupee,
-      tone: 'success',
-    },
-    {
-      widgetKey: 'kpi.outstanding',
+    'kpi.revenue': { label: t('shared.revenue'), value: `₹${stats.revenue}`, icon: IndianRupee },
+    'kpi.outstanding': {
       label: t('pages.dashboard.dashboard.outstanding'),
       value: `₹${stats.outstanding}`,
       icon: AlertTriangle,
-      tone: 'warning',
     },
-    {
-      widgetKey: 'kpi.jobcards.in_progress',
+    'kpi.jobcards.in_progress': {
       label: t('shared.inProgress'),
       value: stats.inProgress,
       icon: Activity,
-      tone: 'info',
     },
-    {
-      widgetKey: 'kpi.jobcards.pending',
+    'kpi.jobcards.pending': {
       label: t('pages.dashboard.dashboard.pending'),
       value: stats.pending,
       icon: Clock,
-      tone: 'warning',
     },
-    {
-      widgetKey: 'kpi.turnaround',
+    'kpi.turnaround': {
       label: t('pages.dashboard.dashboard.avgTurnaround'),
       value: stats.avgTurnaroundLabel ?? '—',
       icon: Clock,
     },
-    {
-      widgetKey: 'kpi.jobcards.cancelled',
+    'kpi.jobcards.cancelled': {
       label: t('pages.dashboard.dashboard.cancelled'),
       value: stats.cancelled,
       icon: XCircle,
-      tone: 'danger',
     },
-    {
-      widgetKey: 'kpi.jobcards.queued',
+    'kpi.jobcards.queued': {
       label: t('pages.dashboard.dashboard.inQueue'),
       value: stats.inQueue,
       icon: ListOrdered,
-      tone: 'warning',
     },
-    {
-      widgetKey: 'kpi.jobcards.hold',
+    'kpi.jobcards.hold': {
       label: t('pages.dashboard.dashboard.onHold'),
       value: stats.onHold,
       icon: PauseCircle,
-      tone: 'warning',
     },
-    {
-      widgetKey: 'kpi.jobcards.tech_done',
+    'kpi.jobcards.tech_done': {
       label: t('pages.dashboard.dashboard.techDone'),
       value: stats.techDone,
       icon: CheckCircle2,
-      tone: 'success',
     },
-    {
-      widgetKey: 'kpi.jobcards.ready',
+    'kpi.jobcards.ready': {
       label: t('pages.dashboard.dashboard.ready'),
       value: stats.ready,
       icon: PackageCheck,
-      tone: 'success',
     },
-    {
-      widgetKey: 'kpi.jobcards.delivered',
+    'kpi.jobcards.delivered': {
       label: t('pages.dashboard.dashboard.delivered'),
       value: stats.delivered,
       icon: Truck,
-      tone: 'purple',
     },
-    {
-      widgetKey: 'kpi.jobcards.closed',
-      label: t('shared.closed'),
-      value: stats.closed,
-      icon: Lock,
-    },
-    {
-      widgetKey: 'kpi.jobcards.pending_return',
+    'kpi.jobcards.closed': { label: t('shared.closed'), value: stats.closed, icon: Lock },
+    'kpi.jobcards.pending_return': {
       label: t('pages.dashboard.dashboard.pendingReturn'),
       value: stats.pendingReturn,
       icon: Undo2,
-      tone: 'warning',
     },
-  ]
+  }
 
-  const visibleActions = quickActions
-    .filter((a) => canSeeWidget(a.widgetKey))
-    .sort((a, b) => byRoleOrder(a.widgetKey, b.widgetKey))
-  const visibleKpis = kpis
-    .filter((k) => canSeeWidget(k.widgetKey))
-    .sort((a, b) => byRoleOrder(a.widgetKey, b.widgetKey))
-  const charts = [
-    'chart.jobcards.by_status',
-    'chart.revenue.trend',
-    'chart.jobcards.trend',
-    'chart.jobcards.by_tech',
-  ]
-    .filter((key) => canSeeWidget(key))
-    .sort(byRoleOrder)
-  const comingSoon = DASHBOARD_WIDGETS.filter((w) => !w.available && canSeeWidget(w.key)).sort(
-    (a, b) => byRoleOrder(a.key, b.key)
-  )
-  const showWelcome = canSeeWidget('personal.welcome')
-  const showRecent = canSeeWidget('list.jobcards.recent')
-  const nothingVisible =
-    !showWelcome &&
-    !showRecent &&
-    !visibleActions.length &&
-    !visibleKpis.length &&
-    !charts.length &&
-    !comingSoon.length
+  const recentRows: JobCardRow[] = stats.recentJobCards.map((job) => ({
+    id: job.id,
+    number: job.jobNumber,
+    customer: job.customerName,
+    status: job.statusLabel,
+    href: `/app/service/job-cards/${job.id}`,
+  }))
+
+  function renderWidget(widget: DashboardWidgetSpec) {
+    if (!widget.available) {
+      return <ComingSoonCard label={widgetText.label(widget.key, widget.label)} />
+    }
+
+    switch (widget.key) {
+      case 'personal.welcome':
+        return (
+          <WelcomeBanner
+            greetingKey={greeting()}
+            name={
+              isLoading ? (
+                <Skeleton className="inline-block h-5 w-32 align-middle" />
+              ) : (
+                (profile?.fullName ?? 'there')
+              )
+            }
+            subtitle={t('pages.dashboard.dashboard.hereSWhatSHappeningIn')}
+          />
+        )
+
+      case 'chart.jobcards.by_status':
+        return (
+          <StatusDonut
+            title={t('pages.dashboard.dashboard.jobCardsByStatus')}
+            subtitle={t('pages.administration.dashboardLandingTab.nTotal', {
+              count: stats.jobCardsByStatus.reduce((n, s) => n + s.count, 0),
+            })}
+            slices={stats.jobCardsByStatus.map((s) => ({
+              status: s.status,
+              count: s.count,
+              hex: CHART_TONE_HEX[toneFromStatus(s.status)],
+            }))}
+            empty={
+              <EmptyState
+                icon={FileText}
+                title={t('pages.dashboard.dashboard.noJobCardsYet')}
+                description={t('pages.dashboard.dashboard.thisChartFillsInOnceJob')}
+              />
+            }
+          />
+        )
+
+      case 'chart.revenue.trend':
+        return (
+          <TrendArea
+            id="revenue"
+            title={t('pages.dashboard.dashboard.revenueTrend')}
+            subtitle={`${t('common.total')}: ₹${stats.revenueTrend.reduce((n, d) => n + d.revenue, 0)}`}
+            data={stats.revenueTrend.map((d) => ({ date: d.date, value: d.revenue }))}
+            colour="#10b981"
+            formatValue={(v) => `₹${v}`}
+            empty={
+              <EmptyState
+                icon={IndianRupee}
+                title={t('pages.dashboard.dashboard.noRevenueYet')}
+                description={t('pages.dashboard.dashboard.thisChartFillsInOnceBills')}
+              />
+            }
+          />
+        )
+
+      case 'chart.jobcards.trend':
+        return (
+          <TrendArea
+            id="jobcards"
+            title={t('pages.dashboard.dashboard.jobCardsTrend')}
+            subtitle={t('pages.administration.dashboardLandingTab.lastNDays', {
+              count: stats.jobCardTrend.length,
+            })}
+            data={stats.jobCardTrend.map((d) => ({ date: d.date, value: d.count }))}
+            colour="#818cf8"
+            empty={
+              <EmptyState
+                icon={FileText}
+                title={t('pages.dashboard.dashboard.noJobCardsYet')}
+                description={t('pages.dashboard.dashboard.thisChartFillsInAsJobCards')}
+              />
+            }
+          />
+        )
+
+      case 'chart.jobcards.by_tech':
+        return (
+          <TechnicianBars
+            title={t('pages.dashboard.dashboard.jobsByTechnician')}
+            subtitle={t('pages.dashboard.dashboard.workloadPerTechnician')}
+            // One bar per technician, from the job count this app actually tracks. The
+            // completed/in-progress/queued split the reference draws is not recorded per
+            // technician here, and inventing the three numbers would be worse than one true one.
+            rows={stats.jobsByTechnician.map((row) => ({
+              name: row.name,
+              completed: row.count,
+              inProgress: 0,
+              queued: 0,
+            }))}
+            legend={[[t('common.jobCards'), '#22c55e']]}
+            empty={
+              <EmptyState
+                icon={Users}
+                title={t('pages.dashboard.dashboard.noJobsAssignedYet')}
+                description={t('pages.dashboard.dashboard.thisChartFillsInOnceJobsAreAssigned')}
+              />
+            }
+          />
+        )
+
+      case 'list.jobcards.recent':
+        return (
+          <JobCardListPanel
+            title={t('pages.dashboard.dashboard.recentJobCards')}
+            rows={recentRows}
+            trailing={
+              <Link
+                to="/app/service/job-cards"
+                className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 hover:underline dark:text-teal-400"
+              >
+                {t('pages.dashboard.dashboard.viewAll')}
+                <ArrowRight className="size-3.5" />
+              </Link>
+            }
+            renderRow={(row, content) => (
+              <Link to={row.href!} className="block hover:bg-muted/40">
+                {content}
+              </Link>
+            )}
+            empty={
+              <EmptyState
+                icon={FileText}
+                title={t('pages.dashboard.dashboard.noJobCardsYet')}
+                description={t('pages.dashboard.dashboard.theTenNewestJobCardsAppear')}
+              />
+            }
+          />
+        )
+
+      default: {
+        if (widget.group === 'quick') {
+          const action = quickAction[widget.key]
+          if (!action) return <ComingSoonCard label={widget.label} />
+          const pill = <QuickActionPill label={action.label} icon={action.icon} interactive />
+          return action.to ? (
+            <Link to={action.to} className="block">
+              {pill}
+            </Link>
+          ) : (
+            <button type="button" onClick={() => setScanOpen(true)} className="block w-full">
+              {pill}
+            </button>
+          )
+        }
+        if (widget.group === 'kpi') {
+          const tile = kpi[widget.key]
+          if (!tile) return <ComingSoonCard label={widget.label} />
+          return (
+            <KpiTile
+              label={tile.label}
+              value={tile.value}
+              icon={tile.icon}
+              tone={KPI_TONE[widget.key]}
+            />
+          )
+        }
+        return <ComingSoonCard label={widgetText.label(widget.key, widget.label)} />
+      }
+    }
+  }
 
   // Held behind a skeleton rather than rendered optimistically. Job cards and receipts come from
   // the persistent cache and can resolve before the role document does, so rendering first and
   // hiding after would flash a real Revenue figure at a Technician whose role hides it.
   if (permissionsLoading) {
     return (
-      <div className="space-y-6 p-4 sm:p-6">
-        <Skeleton className="h-24 w-full rounded-lg" />
-        <Skeleton className="h-12 w-full rounded-lg" />
-        <Skeleton className="h-28 w-full rounded-lg" />
-        <Skeleton className="h-64 w-full rounded-lg" />
+      <div className="space-y-4 p-4 sm:p-6">
+        <Skeleton className="h-24 w-full rounded-xl" />
+        <Skeleton className="h-12 w-full rounded-xl" />
+        <Skeleton className="h-36 w-full rounded-xl" />
+        <Skeleton className="h-64 w-full rounded-xl" />
       </div>
     )
   }
 
   return (
-    <div className="space-y-6 p-4 sm:p-6">
-      {showWelcome && (
-        <div
-          data-widget="personal.welcome"
-          className="rounded-lg border bg-gradient-to-br from-teal-50 to-background p-5 dark:from-teal-500/10"
-        >
-          <h1 className="text-xl font-bold">
-            {t(greeting())},{' '}
-            {isLoading ? (
-              <Skeleton className="inline-block h-6 w-32 align-middle" />
-            ) : (
-              <span className="text-teal-600 dark:text-teal-400">
-                {profile?.fullName ?? 'there'}
-              </span>
-            )}{' '}
-            👋
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {t('pages.dashboard.dashboard.hereSWhatSHappeningIn')}
-          </p>
-        </div>
-      )}
-
-      {visibleActions.length > 0 && (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {visibleActions.map((action) =>
-            action.to ? (
-              <Link
-                key={action.widgetKey}
-                data-widget={action.widgetKey}
-                to={action.to}
-                className="flex min-w-0 items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                <span
-                  className={`flex size-7 shrink-0 items-center justify-center rounded-full ${action.tone}`}
-                >
-                  <action.icon className="size-4" />
-                </span>
-                <span className="truncate">{action.label}</span>
-              </Link>
-            ) : (
-              <button
-                key={action.widgetKey}
-                data-widget={action.widgetKey}
-                type="button"
-                onClick={action.onClick}
-                className="flex min-w-0 items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-sm font-medium transition-colors hover:bg-muted"
-              >
-                <span
-                  className={`flex size-7 shrink-0 items-center justify-center rounded-full ${action.tone}`}
-                >
-                  <action.icon className="size-4" />
-                </span>
-                <span className="truncate">{action.label}</span>
-              </button>
-            )
-          )}
-        </div>
-      )}
-
+    <div className="space-y-4 p-4 sm:p-6">
       <FilterBar dateRange={range === 'all' ? undefined : range} onDateRangeChange={setRange}>
         <Button
           type="button"
@@ -450,317 +454,38 @@ export function DashboardPage() {
           onRetry={() => void refetch()}
           title={t('pages.dashboard.dashboard.couldnTLoadYourDashboard')}
         />
-      ) : nothingVisible ? (
+      ) : visible.length === 0 ? (
         <EmptyState
           icon={LayoutDashboard}
           title={t('pages.dashboard.dashboard.noWidgetsEnabled')}
           description={t('pages.dashboard.dashboard.yourRoleHasEveryDashboardWidget')}
         />
       ) : (
-        <>
-          {visibleKpis.length > 0 && (
-            <StatCardGrid>
-              {visibleKpis.map((kpi) => (
-                <StatCard
-                  key={kpi.widgetKey}
-                  widgetKey={kpi.widgetKey}
-                  label={kpi.label}
-                  value={kpi.value}
-                  icon={kpi.icon}
-                  tone={kpi.tone}
-                  sublabel={kpi.sublabel}
-                />
-              ))}
-            </StatCardGrid>
-          )}
-
-          {charts.length > 0 && (
-            <div className="grid gap-4 lg:grid-cols-2">
-              {charts.includes('chart.jobcards.by_status') && (
-                <WidgetPanel
-                  widgetKey="chart.jobcards.by_status"
-                  title={t('pages.dashboard.dashboard.jobCardsByStatus')}
-                >
-                  {stats.jobCardsByStatus.length === 0 ? (
-                    <EmptyState
-                      icon={FileText}
-                      title={t('pages.dashboard.dashboard.noJobCardsYet')}
-                      description={t('pages.dashboard.dashboard.thisChartFillsInOnceJob')}
-                    />
-                  ) : (
-                    <div className="relative h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={stats.jobCardsByStatus}
-                            dataKey="count"
-                            nameKey="status"
-                            innerRadius="65%"
-                            outerRadius="90%"
-                            paddingAngle={2}
-                            strokeWidth={0}
-                          >
-                            {stats.jobCardsByStatus.map((entry) => (
-                              <Cell
-                                key={entry.status}
-                                fill={CHART_TONE_HEX[toneFromStatus(entry.status)]}
-                              />
-                            ))}
-                          </Pie>
-                          <Tooltip />
-                        </PieChart>
-                      </ResponsiveContainer>
-                      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-2xl font-bold tabular-nums">
-                          {stats.jobCardsByStatus.reduce((sum, s) => sum + s.count, 0)}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {t('common.total').toLowerCase()}
-                        </span>
-                      </div>
-                      <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs">
-                        {stats.jobCardsByStatus.map((s) => (
-                          <span key={s.status} className="flex items-center gap-1.5">
-                            <span
-                              className="size-2 rounded-full"
-                              style={{ backgroundColor: CHART_TONE_HEX[toneFromStatus(s.status)] }}
-                            />
-                            {s.status} ({s.count})
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </WidgetPanel>
-              )}
-
-              {charts.includes('chart.revenue.trend') && (
-                <WidgetPanel
-                  widgetKey="chart.revenue.trend"
-                  title={t('pages.dashboard.dashboard.revenueTrend')}
-                >
-                  {stats.revenueTrend.length === 0 ? (
-                    <EmptyState
-                      icon={IndianRupee}
-                      title={t('pages.dashboard.dashboard.noRevenueYet')}
-                      description={t('pages.dashboard.dashboard.thisChartFillsInOnceBills')}
-                    />
-                  ) : (
-                    <div className="h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart
-                          data={stats.revenueTrend}
-                          margin={{ left: 8, right: 8, top: 8, bottom: 0 }}
-                        >
-                          <CartesianGrid
-                            strokeDasharray="3 3"
-                            vertical={false}
-                            className="stroke-border"
-                          />
-                          <XAxis
-                            dataKey="date"
-                            tick={{ fontSize: 12 }}
-                            axisLine={false}
-                            tickLine={false}
-                          />
-                          <YAxis
-                            tick={{ fontSize: 12 }}
-                            axisLine={false}
-                            tickLine={false}
-                            tickFormatter={(v: number) => `₹${v}`}
-                            width={56}
-                          />
-                          <Tooltip
-                            formatter={(v: unknown) =>
-                              [`₹${String(v)}`, t('common.revenue')] as [string, string]
-                            }
-                          />
-                          <Line
-                            type="monotone"
-                            dataKey="revenue"
-                            stroke="#059669"
-                            strokeWidth={2}
-                            dot={{ r: 3 }}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  )}
-                </WidgetPanel>
-              )}
-
-              {charts.includes('chart.jobcards.trend') && (
-                <WidgetPanel
-                  widgetKey="chart.jobcards.trend"
-                  title={t('pages.dashboard.dashboard.jobCardsTrend')}
-                >
-                  {stats.jobCardTrend.length === 0 ? (
-                    <EmptyState
-                      icon={FileText}
-                      title={t('pages.dashboard.dashboard.noJobCardsYet')}
-                      description={t('pages.dashboard.dashboard.thisChartFillsInAsJobCards')}
-                    />
-                  ) : (
-                    <div className="h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={stats.jobCardTrend}
-                          margin={{ left: 0, right: 8, top: 8, bottom: 0 }}
-                        >
-                          <CartesianGrid
-                            strokeDasharray="3 3"
-                            vertical={false}
-                            className="stroke-border"
-                          />
-                          <XAxis
-                            dataKey="date"
-                            tick={{ fontSize: 12 }}
-                            axisLine={false}
-                            tickLine={false}
-                          />
-                          <YAxis
-                            tick={{ fontSize: 12 }}
-                            axisLine={false}
-                            tickLine={false}
-                            allowDecimals={false}
-                            width={32}
-                          />
-                          <Tooltip
-                            formatter={(v: unknown) =>
-                              [String(v), t('common.jobCards')] as [string, string]
-                            }
-                          />
-                          <Bar dataKey="count" fill="#2563eb" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  )}
-                </WidgetPanel>
-              )}
-
-              {charts.includes('chart.jobcards.by_tech') && (
-                <WidgetPanel
-                  widgetKey="chart.jobcards.by_tech"
-                  title={t('pages.dashboard.dashboard.jobsByTechnician')}
-                >
-                  {stats.jobsByTechnician.length === 0 ? (
-                    <EmptyState
-                      icon={Users}
-                      title={t('pages.dashboard.dashboard.noJobsAssignedYet')}
-                      description={t(
-                        'pages.dashboard.dashboard.thisChartFillsInOnceJobsAreAssigned'
-                      )}
-                    />
-                  ) : (
-                    <div className="h-64">
-                      {/* Horizontal bars: technician names are long enough to overlap as x-axis
-                       * ticks on a phone, and a name reads more naturally beside its bar. */}
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={stats.jobsByTechnician}
-                          layout="vertical"
-                          margin={{ left: 0, right: 16, top: 8, bottom: 0 }}
-                        >
-                          <CartesianGrid
-                            strokeDasharray="3 3"
-                            horizontal={false}
-                            className="stroke-border"
-                          />
-                          <XAxis
-                            type="number"
-                            tick={{ fontSize: 12 }}
-                            axisLine={false}
-                            tickLine={false}
-                            allowDecimals={false}
-                          />
-                          <YAxis
-                            type="category"
-                            dataKey="name"
-                            tick={{ fontSize: 12 }}
-                            axisLine={false}
-                            tickLine={false}
-                            width={96}
-                          />
-                          <Tooltip
-                            formatter={(v: unknown) =>
-                              [String(v), t('common.jobCards')] as [string, string]
-                            }
-                          />
-                          <Bar dataKey="count" fill="#9333ea" radius={[0, 4, 4, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  )}
-                </WidgetPanel>
-              )}
-            </div>
-          )}
-
-          {/* Widgets the role switched on that this build does not draw yet. The reference shows
-           * them too; leaving them out would make the Role Configure preview a lie about what
-           * the role actually gets. */}
-          {comingSoon.length > 0 && (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {comingSoon.map((widget) => (
-                <ComingSoonWidget
-                  key={widget.key}
-                  widgetKey={widget.key}
-                  label={widgetText.label(widget.key, widget.label)}
-                />
-              ))}
-            </div>
-          )}
-
-          {showRecent && (
-            <WidgetPanel
-              widgetKey="list.jobcards.recent"
-              title={t('pages.dashboard.dashboard.recentJobCards')}
-              action={
-                <Link
-                  to="/app/service/job-cards"
-                  className="text-xs font-medium text-teal-700 hover:underline dark:text-teal-400"
-                >
-                  {t('pages.dashboard.dashboard.viewAll')}
-                </Link>
-              }
+        WIDGET_GROUPS.map((group) => {
+          const inGroup = visible.filter((w) => w.group === group.key)
+          if (!inGroup.length) return null
+          return (
+            <WidgetSection
+              key={group.key}
+              groupKey={group.key}
+              icon={GROUP_ICON[group.key]}
+              title={widgetText.group(group.key, group.label)}
+              count={inGroup.length}
             >
-              {stats.recentJobCards.length === 0 ? (
-                <EmptyState
-                  icon={FileText}
-                  title={t('pages.dashboard.dashboard.noJobCardsYet')}
-                  description={t('pages.dashboard.dashboard.theTenNewestJobCardsAppear')}
-                />
-              ) : (
-                // Swipeable cards on a phone, a wrapping card grid from `sm` — the same treatment
-                // every other list on mobile got, rather than ten table rows squeezed to 375px.
-                <ScrollRow className="[&>*]:w-[15rem] sm:[&>*]:w-auto sm:[&>*]:basis-[16rem] sm:[&>*]:flex-1">
-                  {stats.recentJobCards.map((job) => (
-                    <Link
-                      key={job.id}
-                      to={`/app/service/job-cards/${job.id}`}
-                      className="flex min-w-0 flex-col gap-1.5 rounded-lg border bg-card p-3 transition-colors hover:border-teal-600/60"
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="truncate text-sm font-semibold">{job.jobNumber}</span>
-                        <StatusBadge status={job.statusLabel} />
-                      </div>
-                      <span className="truncate text-sm">{job.customerName}</span>
-                      {job.device && (
-                        <span className="truncate text-xs text-muted-foreground">{job.device}</span>
-                      )}
-                      <div className="mt-auto flex items-center justify-between gap-2 pt-1 text-xs text-muted-foreground">
-                        <span>{job.createdLabel ?? '—'}</span>
-                        <span className="font-semibold text-foreground tabular-nums">
-                          ₹{job.amount}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                </ScrollRow>
-              )}
-            </WidgetPanel>
-          )}
-        </>
+              <div className="grid grid-cols-12 gap-2.5">
+                {inGroup.map((widget) => (
+                  <div
+                    key={widget.key}
+                    data-widget={widget.key}
+                    className={`min-w-0 ${GROUP_SPAN[group.key]}`}
+                  >
+                    {renderWidget(widget)}
+                  </div>
+                ))}
+              </div>
+            </WidgetSection>
+          )
+        })
       )}
 
       <ScanJobCardModal open={scanOpen} onOpenChange={setScanOpen} />

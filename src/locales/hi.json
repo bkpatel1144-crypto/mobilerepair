@@ -486,7 +486,8 @@
         "thisChartFillsInOnceJobsAreAssigned": "जॉब किसी तकनीशियन को असाइन होने पर यह चार्ट भरता जाएगा।",
         "theTenNewestJobCardsAppear": "दस सबसे नए जॉब कार्ड यहाँ दिखेंगे।",
         "noWidgetsEnabled": "कोई विजेट चालू नहीं",
-        "yourRoleHasEveryDashboardWidget": "आपकी भूमिका के लिए सभी डैशबोर्ड विजेट बंद हैं। व्यवस्थापक इन्हें रोल मैनेजमेंट से फिर चालू कर सकते हैं।"
+        "yourRoleHasEveryDashboardWidget": "आपकी भूमिका के लिए सभी डैशबोर्ड विजेट बंद हैं। व्यवस्थापक इन्हें रोल मैनेजमेंट से फिर चालू कर सकते हैं।",
+        "workloadPerTechnician": "प्रति तकनीशियन कार्यभार"
       }
     },
     "finance": {
