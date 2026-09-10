@@ -364,6 +364,30 @@ service cloud.firestore {
       // master's own menu. `source: 'system'` rows (seeded at signup) can be edited but never
       // hard-deleted — the same `protected`-style guard used for Branches/Roles since Phase 2,
       // just keyed by a field name that matches this phase's own `UomDoc`/etc. shape.
+      // ---- companies/{companyId}/itemAttributes/{id} ----------------------------------------
+      // Masters > Attributes. No isBootstrapping(): signup seeds no attributes, so the only
+      // writer is a signed-in user who has the menu.
+      match /itemAttributes/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'masters/attributes');
+        // Deletable, unlike items: an attribute is a label, not a record anything historical
+        // depends on. An item naming a deleted attribute keeps the name it stored.
+        allow delete: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'masters/attributes');
+      }
+
+      // ---- companies/{companyId}/purchases/{id} ----------------------------------------------
+      // Purchase > General Purchase. Delete is denied and cancelling is a status change, the
+      // same convention receipts and job cards use: a purchase is a financial record and
+      // Supplier Payables reports against it.
+      match /purchases/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'purchase/general');
+        allow delete: if false;
+      }
+
       match /uom/{id} {
         allow read: if belongsToCompany(companyId);
         // `isBootstrapping()` because `seedTenantForUser()` seeds this collection's system

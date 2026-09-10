@@ -3,13 +3,10 @@
 // Source: data/{owner,manager,salesman,tecnicion,accountent}permition.json
 //
 // OWNER       44 menus (export: 52 incl. module rows), 185 permissions (export: 185)
-// MANAGER     28 menus (export: 34 incl. module rows), 104 permissions (export: 108)
+// MANAGER     29 menus (export: 34 incl. module rows), 108 permissions (export: 108)
 // SALESMAN     6 menus (export: 10 incl. module rows),  39 permissions (export: 39)
 // TECHNICIAN   1 menus (export: 2 incl. module rows),  13 permissions (export: 13)
 // ACCOUNTANT  15 menus (export: 19 incl. module rows),  46 permissions (export: 46)
-//
-// NOTE MANAGER: menus not in this app — attributes
-// NOTE MANAGER: permissions for features this app lacks — MASTERS_ATTRIBUTES_CREATE, MASTERS_ATTRIBUTES_DELETE, MASTERS_ATTRIBUTES_UPDATE, MASTERS_ATTRIBUTES_VIEW
 
 /** What one seeded role is granted, straight from the client's export for that role. */
 export interface RoleGrant {
@@ -270,6 +267,7 @@ export const DEFAULT_ROLE_GRANTS: Record<string, RoleGrant> = {
       'finance/receipts',
       'finance/receivables',
       'finance/supplier-payables',
+      'masters/attributes',
       'masters/item-categories',
       'masters/items',
       'masters/parties',
@@ -310,6 +308,10 @@ export const DEFAULT_ROLE_GRANTS: Record<string, RoleGrant> = {
       'FINANCE_RECEIVABLES_VIEW',
       'FINANCE_SUPPLIER_PAYABLES_EXPORT',
       'FINANCE_SUPPLIER_PAYABLES_VIEW',
+      'MASTERS_ATTRIBUTES_CREATE',
+      'MASTERS_ATTRIBUTES_DELETE',
+      'MASTERS_ATTRIBUTES_UPDATE',
+      'MASTERS_ATTRIBUTES_VIEW',
       'MASTERS_CATEGORIES_CREATE',
       'MASTERS_CATEGORIES_DELETE',
       'MASTERS_CATEGORIES_RESTORE',

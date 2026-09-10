@@ -1,4 +1,6 @@
 import {
+  PackagePlus,
+  Boxes,
   LayoutDashboard,
   ShoppingCart,
   Wrench,
@@ -53,6 +55,20 @@ export const NAV_SECTIONS: NavSection[] = [
     children: [{ label: 'Sales Invoices', slug: 'invoices' }],
   },
   {
+    key: 'purchase',
+    label: 'Purchase',
+    icon: PackagePlus,
+    phase: 'Phase 12 — Purchase & Inventory',
+    children: [{ label: 'General Purchase', slug: 'general' }],
+  },
+  {
+    key: 'inventory',
+    label: 'Inventory',
+    icon: Boxes,
+    phase: 'Phase 12 — Purchase & Inventory',
+    children: [{ label: 'Stock', slug: 'stock' }],
+  },
+  {
     key: 'service',
     label: 'Service',
     icon: Wrench,
@@ -87,6 +103,7 @@ export const NAV_SECTIONS: NavSection[] = [
     children: [
       { label: 'Units of Measure', slug: 'uom' },
       { label: 'Item Categories', slug: 'item-categories' },
+      { label: 'Attributes', slug: 'attributes' },
       { label: 'Item Master', slug: 'items' },
       { label: 'Payment Modes', slug: 'payment-modes' },
       { label: 'Party Categories', slug: 'party-categories' },

@@ -79,14 +79,14 @@ describe('seeded roles key into the real catalogues', () => {
 
   it.each([
     ['OWNER', 185],
-    ['MANAGER', 104],
+    ['MANAGER', 108],
     ['SALESMAN', 39],
     ['TECHNICIAN', 13],
     ['ACCOUNTANT', 46],
   ] as const)('%s is granted the %i permissions its export lists', (code, count) => {
-    // "Same as the reference" as a test rather than a claim. Manager is 104 of its export's 108:
-    // the other four are `MASTERS_ATTRIBUTES_*`, for a master this app has no screen for, and the
-    // generator prints them each run rather than quietly dropping them.
+    // "Same as the reference" as a test rather than a claim. Every role now matches its export
+    // exactly — Manager's last four were `MASTERS_ATTRIBUTES_*`, which it holds again now that
+    // Masters > Attributes is a real screen.
     const role = DEFAULT_ROLE_SEEDS.find((r) => r.code === code)!
     const granted = Object.entries(role.actionPermissions)
       .filter(([, on]) => on)
@@ -104,7 +104,7 @@ describe('seeded roles key into the real catalogues', () => {
 
   it.each([
     ['OWNER', 44],
-    ['MANAGER', 28],
+    ['MANAGER', 29],
     ['SALESMAN', 6],
     ['TECHNICIAN', 1],
     ['ACCOUNTANT', 15],
