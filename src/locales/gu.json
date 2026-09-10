@@ -1420,7 +1420,10 @@
         "activeCount": "{{count}} સક્રિય",
         "widgetsShownOnThisRoleSDashboard": "આ ભૂમિકાના ડેશબોર્ડ પર દેખાતા વિજેટ.",
         "notBuiltYet": "હજી બન્યું નથી",
-        "thisWidgetIsInTheReference": "સંદર્ભ એપ સાથે મેળ માટે યાદીમાં છે, પણ આ બિલ્ડ તેને હજી બતાવતું નથી — તેથી તે ચાલુ કરી શકાતું નથી."
+        "thisWidgetIsInTheReference": "સંદર્ભ એપ સાથે મેળ માટે યાદીમાં છે, પણ આ બિલ્ડ તેને હજી બતાવતું નથી — તેથી તે ચાલુ કરી શકાતું નથી.",
+        "moveUp": "ઉપર ખસેડો",
+        "moveDown": "નીચે ખસેડો",
+        "dragToReorder": "ક્રમ બદલવા માટે વિજેટ ખેંચો અથવા તીરનો ઉપયોગ કરો."
       },
       "menusPermissionsTab": {
         "inheritFromRole": "ભૂમિકામાંથી લો",

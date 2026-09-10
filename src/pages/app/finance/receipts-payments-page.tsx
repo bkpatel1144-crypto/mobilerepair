@@ -51,7 +51,6 @@ import {
 import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { useJobCards } from '@/hooks/use-job-cards'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
 import { dateRangeBounds } from '@/lib/date-range'
 import { useTranslation } from 'react-i18next'
@@ -97,7 +96,7 @@ export function ReceiptsPaymentsPage() {
         : true
     )
 
-  const canVoid = isOwner || canDo(specialActionKey('finance', 'voidReceipt'))
+  const canVoid = isOwner || canDo('FINANCE_RECEIPTS_VOID')
 
   const columns: DataTableColumn<ReceiptWithId>[] = [
     {
@@ -208,7 +207,7 @@ export function ReceiptsPaymentsPage() {
         subtitle={t('pages.finance.receiptsPayments.allPaymentEntriesJobCardsAnd')}
         actions={
           <>
-            {canDo(crudKey('finance', 'receipts', 'create')) && (
+            {canDo('FINANCE_RECEIPTS_CREATE') && (
               <Button type="button" onClick={() => setNewEntryOpen(true)}>
                 <Plus className="size-4" />
                 New Entry

@@ -63,8 +63,10 @@ export interface FinancialYearDoc {
  * up in the sidebar — there's no separate standalone "module visible" flag to keep in sync. */
 export type MenuPermissions = Record<string, boolean>
 
-/** Per-entity/action grants — see `src/config/permission-schema.ts`'s `crudKey()` (e.g.
- * `"sales.invoices.create"`) and `specialActionKey()` (e.g. `"sales.approveInvoice"`). */
+/** Per-permission grants, keyed exactly as the client's export keys them —
+ *  `SALES_INVOICES_CREATE`, `SERVICE_JOB_CARDS_ASSIGN`. See `permission-catalogue.ts`, which is
+ *  generated from that export, and `permission-legacy.ts` for how a role saved in the older
+ *  `sales.invoices.create` format is still read correctly. */
 export type ActionPermissions = Record<string, boolean>
 
 export interface RoleDashboardConfig {
@@ -73,6 +75,15 @@ export interface RoleDashboardConfig {
   defaultLandingRoute: string
   /** Which Dashboard stat tiles/charts this role sees — keyed by `src/config/dashboard-widgets.ts`. */
   visibleWidgets: Record<string, boolean>
+  /**
+   * The order widgets appear in, as a list of widget keys.
+   *
+   * Optional, and partial by design: a key not in the list falls back to the catalogue's own
+   * order, *after* everything that is listed. That means a widget added to the product later
+   * appears at the end of an existing role's dashboard rather than vanishing from it — the same
+   * reasoning as `visibleWidgets` treating an absent key as visible.
+   */
+  widgetOrder?: string[]
 }
 
 export interface RoleDoc {

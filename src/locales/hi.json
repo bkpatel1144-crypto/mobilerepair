@@ -1420,7 +1420,10 @@
         "activeCount": "{{count}} सक्रिय",
         "widgetsShownOnThisRoleSDashboard": "इस भूमिका के डैशबोर्ड पर दिखने वाले विजेट।",
         "notBuiltYet": "अभी नहीं बना",
-        "thisWidgetIsInTheReference": "संदर्भ ऐप से मेल के लिए सूचीबद्ध है, पर यह बिल्ड इसे अभी नहीं दिखाता — इसलिए इसे चालू नहीं किया जा सकता।"
+        "thisWidgetIsInTheReference": "संदर्भ ऐप से मेल के लिए सूचीबद्ध है, पर यह बिल्ड इसे अभी नहीं दिखाता — इसलिए इसे चालू नहीं किया जा सकता।",
+        "moveUp": "ऊपर ले जाएँ",
+        "moveDown": "नीचे ले जाएँ",
+        "dragToReorder": "क्रम बदलने के लिए विजेट खींचें या तीरों का उपयोग करें।"
       },
       "menusPermissionsTab": {
         "inheritFromRole": "भूमिका से लें",

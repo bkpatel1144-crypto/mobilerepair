@@ -14,7 +14,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { useApplyJobAction, useRecordPayment, useUndoLastAction } from '@/hooks/use-job-actions'
 import { useJobActionGating } from '@/hooks/use-job-action-gating'
 import { useAllServiceOptions } from '@/hooks/use-service-options'
@@ -183,7 +182,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             Cancel Job
           </Button>
         )}
-        {canDo(crudKey('service', 'jobCards', 'create')) && (
+        {canDo('SERVICE_JOB_CARDS_CREATE') && (
           <Button
             type="button"
             variant="outline"
@@ -193,7 +192,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             Repeat Job
           </Button>
         )}
-        {canDo(specialActionKey('service', 'printLabel')) && (
+        {canDo('SERVICE_JOB_CARDS_PRINT_LABEL') && (
           <Button
             type="button"
             variant="outline"
@@ -203,7 +202,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             {t('shared.printLabel')}
           </Button>
         )}
-        {canDo(specialActionKey('service', 'printJobCard')) && (
+        {canDo('SERVICE_JOB_CARDS_PRINT_RECEIPT') && (
           <Button
             type="button"
             variant="outline"
@@ -213,7 +212,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             {t('pages.service.actionButtons.printJobCard')}
           </Button>
         )}
-        {canDo(specialActionKey('service', 'printBill')) && (
+        {canDo('SERVICE_JOB_CARDS_INVOICE') && (
           <Button
             type="button"
             variant="outline"

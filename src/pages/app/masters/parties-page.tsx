@@ -40,7 +40,6 @@ import {
 } from '@/hooks/use-parties'
 import { usePartyCategories } from '@/hooks/use-party-categories'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
@@ -51,7 +50,7 @@ export function PartiesPage() {
   const { data: parties = [], isLoading, error: loadError, refetch } = useParties()
   const { data: categories = [] } = usePartyCategories()
   const { canDo } = usePermissions()
-  const canManage = canDo(crudKey('masters', 'parties', 'update'))
+  const canManage = canDo('MASTERS_PARTIES_UPDATE')
 
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<PartyTypeFilter>('all')

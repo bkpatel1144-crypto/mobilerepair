@@ -14,7 +14,7 @@ import { MenusPermissionsTab } from './role-configure/menus-permissions-tab'
 import { DashboardLandingTab } from './role-configure/dashboard-landing-tab'
 import type { RoleDraft } from './role-configure/types'
 import { NAV_SECTIONS, menuKey } from '@/config/nav'
-import { PERMISSION_SCHEMA, allKeysForModule } from '@/config/permission-schema'
+import { ALL_PERMISSION_KEYS } from '@/config/permission-catalogue'
 import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 const ALL_LEAF_KEYS = NAV_SECTIONS.flatMap((s) =>
   s.children.filter((l) => !l.locked).map((l) => menuKey(s.key, l.slug))
 )
-const ALL_ACTION_KEYS = PERMISSION_SCHEMA.flatMap(allKeysForModule)
+const ALL_ACTION_KEYS = ALL_PERMISSION_KEYS
 
 function draftFromRole(role: {
   fullAccess: boolean

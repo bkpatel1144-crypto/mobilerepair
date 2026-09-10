@@ -1,5 +1,5 @@
 import { NAV_SECTIONS, DASHBOARD_MENU_KEY, menuKey } from '@/config/nav'
-import { CRUD_OPS, PERMISSION_SCHEMA, crudKey, specialActionKey } from '@/config/permission-schema'
+import { PERMISSION_CATALOGUE } from '@/config/permission-catalogue'
 import { allWidgetsEnabled } from '@/config/dashboard-widgets'
 import type {
   ActionPermissions,
@@ -52,30 +52,29 @@ function menusForSections(sectionKeys: string[]): MenuPermissions {
 
 type AccessTier = 'full' | 'createViewUpdate' | 'viewOnly'
 
-/** Grants every `actionPermissions` key a module contributes, at the given tier: `full` = every
- * CRUD op + every special action; `createViewUpdate` = create/view/update only, no delete, no
- * special actions (a role that can work jobs but shouldn't delete records or touch the
- * sensitive special actions); `viewOnly` = the `view` CRUD op only. */
+/** Grants a module's permissions at the given tier: `full` = everything the module has;
+ * `createViewUpdate` = create/view/update only — no delete, and none of the module's own
+ * actions (approve, void, cancel, reset password), which is the tier for a role that works the
+ * records but should not remove them or reach the sensitive actions; `viewOnly` = view and
+ * export, the two a read-only role needs to be useful.
+ *
+ * Keyed off the permission's own `action`, not a hand-listed set of keys — the catalogue is
+ * generated from the client's export, so a tier that enumerated keys would need editing every
+ * time the export gained one. */
 function grantModuleAccess(sectionKey: string, tier: AccessTier): ActionPermissions {
-  const schema = PERMISSION_SCHEMA.find((m) => m.sectionKey === sectionKey)
-  if (!schema) return {}
+  const module = PERMISSION_CATALOGUE.find((m) => m.sectionKey === sectionKey)
+  if (!module) return {}
 
-  const perms: ActionPermissions = {}
-  const crudOpsForTier: readonly (typeof CRUD_OPS)[number][] =
-    tier === 'full'
-      ? CRUD_OPS
-      : tier === 'createViewUpdate'
-        ? ['create', 'view', 'update']
-        : ['view']
-
-  for (const entity of schema.entities) {
-    for (const op of crudOpsForTier) {
-      perms[crudKey(sectionKey, entity.key, op)] = true
-    }
+  const allowed = (action: string) => {
+    if (tier === 'full') return true
+    if (tier === 'createViewUpdate') return ['create', 'view', 'update'].includes(action)
+    return ['view', 'export'].includes(action)
   }
-  if (tier === 'full') {
-    for (const action of schema.specialActions) {
-      perms[specialActionKey(sectionKey, action.key)] = true
+
+  const perms: ActionPermissions = { [module.moduleAccess.key]: true }
+  for (const feature of module.features) {
+    for (const permission of feature.permissions) {
+      if (allowed(permission.action)) perms[permission.key] = true
     }
   }
   return perms
@@ -99,7 +98,7 @@ export const DEFAULT_ROLE_SEEDS: DefaultRoleSeed[] = [
     // reference app's Owner role, which shows every menu/permission checked.
     menuPermissions: menusForSections(NAV_SECTIONS.map((s) => s.key)),
     actionPermissions: grantModules(
-      Object.fromEntries(PERMISSION_SCHEMA.map((m) => [m.sectionKey, 'full']))
+      Object.fromEntries(PERMISSION_CATALOGUE.map((m) => [m.sectionKey, 'full']))
     ),
     dashboardConfig: defaultDashboardConfig(),
   },

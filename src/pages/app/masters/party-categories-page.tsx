@@ -21,14 +21,13 @@ import {
   type PartyCategoryWithId,
 } from '@/hooks/use-party-categories'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import { useTranslation } from 'react-i18next'
 
 export function PartyCategoriesPage() {
   const { t } = useTranslation()
   const { data: categories = [], isLoading, error: loadError, refetch } = usePartyCategories()
   const { canDo } = usePermissions()
-  const canManage = canDo(crudKey('masters', 'partyCategories', 'update'))
+  const canManage = canDo('MASTERS_PARTY_CATEGORIES_UPDATE')
 
   const [editing, setEditing] = useState<PartyCategoryWithId | 'new' | null>(null)
   const [viewing, setViewing] = useState<PartyCategoryWithId | null>(null)

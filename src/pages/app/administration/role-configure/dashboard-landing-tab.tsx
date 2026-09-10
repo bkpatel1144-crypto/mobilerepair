@@ -4,7 +4,9 @@ import {
   WIDGET_GROUPS,
   allWidgetsEnabled,
   widgetsInGroup,
+  widgetsInOrder,
 } from '@/config/dashboard-widgets'
+import { GripVertical, ChevronUp, ChevronDown } from 'lucide-react'
 import { DASHBOARD_MENU_KEY, DASHBOARD_NAV, NAV_SECTIONS, menuKey } from '@/config/nav'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
@@ -18,6 +20,7 @@ import {
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useWidgetLabels } from '@/hooks/use-widget-labels'
 import { cn } from '@/lib/utils'
+import type { WidgetGroupKey } from '@/config/dashboard-widgets'
 import type { RoleDraft } from './types'
 import { useTranslation } from 'react-i18next'
 
@@ -90,6 +93,48 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
   const isOn = (key: string) => draft.dashboardConfig.visibleWidgets[key] === true
   const enabledCount = BUILT_WIDGETS.filter((w) => isOn(w.key)).length
 
+  /**
+   * Moves a widget within its group.
+   *
+   * Reordering is scoped to the group because the Dashboard renders the groups in a fixed order
+   * — the welcome banner, then quick actions, then KPI tiles, then charts, then lists — and
+   * dragging a chart in among the stat tiles would not survive a render. Within a group it is
+   * free.
+   *
+   * The stored order is the whole catalogue's, not just the group's, so one list can express
+   * every group's arrangement and `widgetsInOrder` needs no notion of groups at all.
+   */
+  function moveWidget(groupKey: WidgetGroupKey, key: string, delta: number) {
+    setDraft((prev) => {
+      const current = widgetsInOrder(prev.dashboardConfig.widgetOrder)
+      const group = current.filter((w) => w.group === groupKey).map((w) => w.key)
+      const from = group.indexOf(key)
+      const to = from + delta
+      if (from < 0 || to < 0 || to >= group.length) return prev
+      const reordered = [...group]
+      const [moved] = reordered.splice(from, 1)
+      reordered.splice(to, 0, moved)
+
+      // Rebuild the full list, substituting this group's new sequence in place.
+      let cursor = 0
+      const next = current.map((w) => (w.group === groupKey ? reordered[cursor++] : w.key))
+      return {
+        ...prev,
+        dashboardConfig: { ...prev.dashboardConfig, widgetOrder: next },
+      }
+    })
+  }
+
+  function handleDrop(groupKey: WidgetGroupKey, fromKey: string, toKey: string) {
+    if (fromKey === toKey) return
+    const current = widgetsInOrder(draft.dashboardConfig.widgetOrder)
+    const group = current.filter((w) => w.group === groupKey).map((w) => w.key)
+    const from = group.indexOf(fromKey)
+    const to = group.indexOf(toKey)
+    if (from < 0 || to < 0) return
+    moveWidget(groupKey, fromKey, to - from)
+  }
+
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
@@ -161,7 +206,13 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
         </div>
 
         {WIDGET_GROUPS.map((group) => {
-          const widgets = widgetsInGroup(group.key)
+          // The role's own order within the group, falling back to the catalogue's.
+          const ordered = widgetsInOrder(draft.dashboardConfig.widgetOrder)
+          const widgets = ordered.filter((w) => w.group === group.key)
+          // Asserted rather than assumed: a bad order must not drop a widget off the screen.
+          if (widgets.length !== widgetsInGroup(group.key).length) {
+            throw new Error(`widget order lost entries in ${group.key}`)
+          }
           const added = widgets.filter((w) => w.available && isOn(w.key)).length
           return (
             <section key={group.key} className="space-y-2">
@@ -177,7 +228,7 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
                 </span>
               </div>
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {widgets.map((widget) => (
+                {widgets.map((widget, index) => (
                   <label
                     key={widget.key}
                     title={
@@ -185,11 +236,55 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
                         ? undefined
                         : t('pages.administration.dashboardLandingTab.thisWidgetIsInTheReference')
                     }
+                    draggable={!disabled}
+                    onDragStart={(e) => {
+                      e.dataTransfer.setData('text/plain', widget.key)
+                      e.dataTransfer.effectAllowed = 'move'
+                    }}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault()
+                      handleDrop(group.key, e.dataTransfer.getData('text/plain'), widget.key)
+                    }}
                     className={cn(
                       'flex min-w-0 items-start gap-2 rounded-md border bg-muted/30 p-2.5 text-sm',
                       widget.available ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'
                     )}
                   >
+                    {/* Drag to reorder, and the two buttons for anyone not using a mouse — a
+                     * drag handle alone is unreachable by keyboard and unusable on a phone. */}
+                    <span className="flex flex-col items-center gap-0.5 pt-0.5">
+                      <GripVertical
+                        className="size-3.5 shrink-0 cursor-grab text-muted-foreground"
+                        aria-hidden
+                      />
+                      <span className="flex gap-0.5">
+                        <button
+                          type="button"
+                          className="rounded p-0.5 text-muted-foreground hover:bg-muted disabled:opacity-30"
+                          disabled={disabled || index === 0}
+                          aria-label={t('pages.administration.dashboardLandingTab.moveUp')}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            moveWidget(group.key, widget.key, -1)
+                          }}
+                        >
+                          <ChevronUp className="size-3" />
+                        </button>
+                        <button
+                          type="button"
+                          className="rounded p-0.5 text-muted-foreground hover:bg-muted disabled:opacity-30"
+                          disabled={disabled || index === widgets.length - 1}
+                          aria-label={t('pages.administration.dashboardLandingTab.moveDown')}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            moveWidget(group.key, widget.key, 1)
+                          }}
+                        >
+                          <ChevronDown className="size-3" />
+                        </button>
+                      </span>
+                    </span>
                     <Checkbox
                       className="mt-0.5"
                       checked={widget.available && isOn(widget.key)}

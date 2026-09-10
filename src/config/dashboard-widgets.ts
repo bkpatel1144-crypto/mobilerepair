@@ -314,3 +314,25 @@ export function widgetsInGroup(group: WidgetGroupKey): DashboardWidgetSpec[] {
 export function allWidgetsEnabled(): Record<string, boolean> {
   return Object.fromEntries(DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => [w.key, true]))
 }
+
+/**
+ * The catalogue in a role's chosen order.
+ *
+ * `order` is a list of widget keys, and it is deliberately allowed to be partial or stale: keys
+ * it names come first in the order it names them, and anything it does not mention keeps its
+ * catalogue position behind them. A role saved before a widget existed therefore shows that
+ * widget at the end rather than not at all, and a key left behind by a rename is ignored instead
+ * of leaving a hole.
+ */
+export function widgetsInOrder(order: string[] | undefined): DashboardWidgetSpec[] {
+  if (!order?.length) return DASHBOARD_WIDGETS
+  const byKey = new Map(DASHBOARD_WIDGETS.map((w) => [w.key, w]))
+  const listed = order.flatMap((key) => {
+    const found = byKey.get(key)
+    if (!found) return []
+    byKey.delete(key)
+    return [found]
+  })
+  // `byKey` now holds only what the order did not mention, still in catalogue order.
+  return [...listed, ...byKey.values()]
+}

@@ -48,7 +48,6 @@ import {
 import type { ConditionGrade } from '@/types/firestore'
 import type { SecondHandSaleWithId } from '@/hooks/use-second-hand-sales'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey, specialActionKey } from '@/config/permission-schema'
 import { useCompany } from '@/hooks/use-company'
 import { usePrintTemplatesFor } from '@/hooks/use-print-templates'
 import { renderPrintHtml, openPrintWindow } from '@/lib/print-render'
@@ -97,10 +96,10 @@ export function DevicePurchasePage() {
         : true
     )
 
-  const canCreate = canDo(crudKey('second-hand-device', 'purchases', 'create'))
-  const canEdit = canDo(crudKey('second-hand-device', 'purchases', 'update'))
-  const canRefurb = canEdit || canDo(specialActionKey('second-hand-device', 'sendToRefurb'))
-  const canReturn = canEdit || canDo(specialActionKey('second-hand-device', 'returnToSeller'))
+  const canCreate = canDo('SECOND_HAND_DEVICE_DEVICE_PURCHASE_CREATE')
+  const canEdit = canDo('SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE')
+  const canRefurb = canEdit || canDo('SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE')
+  const canReturn = canEdit || canDo('SECOND_HAND_DEVICE_DEVICE_PURCHASE_CANCEL')
 
   const columns: DataTableColumn<SecondHandPurchaseWithId>[] = [
     {

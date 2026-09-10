@@ -50,7 +50,6 @@ const INTENTIONALLY_ENGLISH = new Set([
   // the same reason `Cash`/`UPI` above are here.
   'Goods',
   'Service',
-  'GST_18',
   'NONE',
   // `ItemCategoryType` values, written to Firestore. Displayed through `CATEGORY_TYPE_LABEL`,
   // which resolves each to a translation key — these three literals are the stored form.
@@ -66,6 +65,11 @@ function isDisplayString(s: string): boolean {
   if (/^[a-z0-9-]+$/.test(t) && !t.includes(' ')) return false
   if (t.startsWith('/') || t.startsWith('#') || t.startsWith('http')) return false
   if (/^[a-z]+[A-Z]/.test(t) && !t.includes(' ')) return false
+  // SCREAMING_SNAKE with at least one underscore is an identifier, never a label: every
+  // permission key (`SERVICE_JOB_CARDS_ASSIGN`) and every stored enum value (`GST_18`,
+  // `BATCH_SERIAL`) looks like this. Requiring the underscore keeps short all-caps words that
+  // genuinely are display text — "UPI", "GST" — subject to the check.
+  if (/^[A-Z0-9]+(_[A-Z0-9]+)+$/.test(t)) return false
   if (/(^|\s)(bg|text|flex|grid|border|rounded|size|p|px|py|m|mx|my|w|h)-/.test(t)) return false
   if (
     /(^|\s)(cursor|ring|outline|shadow|opacity|gap|space|transition|duration|min|max|inset|top|left|right|bottom|z|overflow|whitespace|truncate|font|leading|tracking|justify|items|self|order|col|row|divide|placeholder|caret|accent|fill|stroke)-/.test(

@@ -33,7 +33,6 @@ import {
 } from '@/hooks/use-item-categories'
 import { useItems } from '@/hooks/use-items'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import type { ItemCategoryType } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
 
@@ -68,7 +67,7 @@ export function ItemCategoriesPage() {
   const { data: categories = [], isLoading, error: loadError, refetch } = useItemCategories()
   const { data: items = [] } = useItems()
   const { canDo } = usePermissions()
-  const canManage = canDo(crudKey('masters', 'itemCategories', 'update'))
+  const canManage = canDo('MASTERS_CATEGORIES_UPDATE')
 
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<'all' | ItemCategoryType>('all')

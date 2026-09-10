@@ -1420,7 +1420,10 @@
         "activeCount": "{{count}} active",
         "widgetsShownOnThisRoleSDashboard": "Widgets shown on this role’s dashboard.",
         "notBuiltYet": "Not built yet",
-        "thisWidgetIsInTheReference": "Listed for parity with the reference app, but this build does not render it yet — so it cannot be switched on."
+        "thisWidgetIsInTheReference": "Listed for parity with the reference app, but this build does not render it yet — so it cannot be switched on.",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "dragToReorder": "Drag a widget, or use the arrows, to change the order it appears in."
       },
       "menusPermissionsTab": {
         "inheritFromRole": "Inherit from role",

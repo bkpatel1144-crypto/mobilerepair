@@ -44,7 +44,6 @@ import {
   type PaymentModeWithId,
 } from '@/hooks/use-payment-modes'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import { useTranslation } from 'react-i18next'
 
 const TYPE_OPTIONS = ['Cash', 'UPI', 'Card', 'Bank Transfer', 'Other']
@@ -70,7 +69,7 @@ export function PaymentModesPage() {
   const [deleteTarget, setDeleteTarget] = useState<PaymentModeWithId | null>(null)
   const [toggleTarget, setToggleTarget] = useState<PaymentModeWithId | null>(null)
 
-  const canManage = canDo(crudKey('masters', 'paymentModes', 'update'))
+  const canManage = canDo('MASTERS_PAYMENT_MODES_UPDATE')
   const filtered = modes.filter((m) => m.name.toLowerCase().includes(search.toLowerCase()))
 
   const columns: DataTableColumn<PaymentModeWithId>[] = [

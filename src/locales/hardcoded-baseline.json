@@ -43,7 +43,6 @@
   "../pages/app/administration/role-configure/menus-permissions-tab.tsx: \"Clear\"",
   "../pages/app/administration/role-configure/menus-permissions-tab.tsx: \"Collapse\"",
   "../pages/app/administration/role-configure/menus-permissions-tab.tsx: \"Expand\"",
-  "../pages/app/administration/role-configure/menus-permissions-tab.tsx: \"Permissions\"",
   "../pages/app/administration/role-configure/menus-permissions-tab.tsx: \"Select All\"",
   "../pages/app/administration/role-management-page.tsx: \"Active\"",
   "../pages/app/administration/role-management-page.tsx: \"Active\"",

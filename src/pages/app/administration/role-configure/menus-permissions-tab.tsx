@@ -10,14 +10,10 @@ import {
 } from 'lucide-react'
 import { NAV_SECTIONS, menuKey, type NavSection } from '@/config/nav'
 import {
-  PERMISSION_SCHEMA,
-  CRUD_OPS,
-  crudKey,
-  specialActionKey,
-  allKeysForModule,
-  totalPermissionCount,
-  type CrudOp,
-} from '@/config/permission-schema'
+  PERMISSION_CATALOGUE,
+  ALL_PERMISSION_KEYS,
+  keysForModule,
+} from '@/config/permission-catalogue'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -34,13 +30,18 @@ import type { RoleWithId } from '@/hooks/use-roles'
 import type { RoleDraft } from './types'
 import { useTranslation } from 'react-i18next'
 
-const CRUD_LABELS: Record<CrudOp, string> = {
-  create: 'common.create',
-  delete: 'common.delete',
-  update: 'common.update',
-  view: 'common.view',
-}
 type VisibilityFilter = 'all' | 'selected' | 'unselected'
+
+/** A permission chip's tone. `view` reads as neutral, a destructive action as red, so a role's
+ *  reach is legible at a glance rather than as forty identical boxes. */
+function actionTone(action: string, checked: boolean) {
+  if (!checked) return 'bg-muted/30'
+  if (action === 'delete')
+    return 'border-red-200 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10'
+  if (action === 'view' || action === 'export')
+    return 'border-blue-200 bg-blue-50 dark:border-blue-500/30 dark:bg-blue-500/10'
+  return 'border-teal-200 bg-teal-50 dark:border-teal-500/30 dark:bg-teal-500/10'
+}
 
 interface MenusPermissionsTabProps {
   draft: RoleDraft
@@ -69,7 +70,7 @@ export function MenusPermissionsTab({
       ),
     []
   )
-  const allActionKeysFlat = useMemo(() => PERMISSION_SCHEMA.flatMap(allKeysForModule), [])
+  const allActionKeysFlat = ALL_PERMISSION_KEYS
 
   const totalMenus = allLeafKeys.length
   const checkedMenus = allLeafKeys.filter((k) => draft.menuPermissions[k]).length
@@ -108,20 +109,21 @@ export function MenusPermissionsTab({
     })
   }
 
-  function toggleCrud(sectionKey: string, entityKey: string, op: CrudOp) {
-    const key = crudKey(sectionKey, entityKey, op)
+  function togglePermission(key: string) {
     setDraft((prev) => ({
       ...prev,
       actionPermissions: { ...prev.actionPermissions, [key]: !prev.actionPermissions[key] },
     }))
   }
 
-  function toggleSpecialAction(sectionKey: string, actionKey: string) {
-    const key = specialActionKey(sectionKey, actionKey)
-    setDraft((prev) => ({
-      ...prev,
-      actionPermissions: { ...prev.actionPermissions, [key]: !prev.actionPermissions[key] },
-    }))
+  /** Every permission a feature has, on or off together. */
+  function toggleFeature(keys: string[]) {
+    const allOn = keys.every((k) => draft.actionPermissions[k])
+    setDraft((prev) => {
+      const next = { ...prev.actionPermissions }
+      for (const k of keys) next[k] = !allOn
+      return { ...prev, actionPermissions: next }
+    })
   }
 
   function handleCollapseAll() {
@@ -275,8 +277,8 @@ export function MenusPermissionsTab({
           const checkedCount = leafKeys.filter((k) => draft.menuPermissions[k]).length
           const moduleAllChecked = checkedCount === leaves.length && leaves.length > 0
           const isOpen = expanded.has(section.key)
-          const schema = PERMISSION_SCHEMA.find((m) => m.sectionKey === section.key)
-          const moduleActionKeys = schema ? allKeysForModule(schema) : []
+          const schema = PERMISSION_CATALOGUE.find((m) => m.sectionKey === section.key)
+          const moduleActionKeys = schema ? keysForModule(schema) : []
           const moduleCheckedActions = moduleActionKeys.filter(
             (k) => draft.actionPermissions[k]
           ).length
@@ -288,8 +290,7 @@ export function MenusPermissionsTab({
             return true
           })
 
-          const modulePermissionsFull =
-            !!schema && moduleCheckedActions === totalPermissionCount(schema)
+          const modulePermissionsFull = !!schema && moduleCheckedActions === moduleActionKeys.length
 
           return (
             <div key={section.key} className="overflow-hidden rounded-lg border">
@@ -324,7 +325,7 @@ export function MenusPermissionsTab({
                 {schema && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-teal-100 px-2 py-0.5 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
                     <KeyRound className="size-3.5" /> {moduleCheckedActions}/
-                    {totalPermissionCount(schema)}
+                    {moduleActionKeys.length}
                     {modulePermissionsFull && <Check className="size-3.5" />}
                   </span>
                 )}
@@ -354,11 +355,11 @@ export function MenusPermissionsTab({
                   </div>
 
                   {schema && (
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm font-semibold">
                         <span className="inline-flex items-center gap-1.5">
                           <KeyRound className="size-4" />
-                          Permissions {moduleCheckedActions}/{totalPermissionCount(schema)}
+                          {t('common.permissions')} {moduleCheckedActions}/{moduleActionKeys.length}
                         </span>
                         {draft.fullAccess && (
                           <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
@@ -367,79 +368,88 @@ export function MenusPermissionsTab({
                         )}
                       </div>
 
-                      <div className="overflow-hidden rounded-lg border">
-                        <div className="bg-muted/50 px-2 py-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-                          {section.label}
-                        </div>
-                        <div className="overflow-x-auto">
-                          <table className="w-full min-w-[420px] text-sm">
-                            <thead className="border-t bg-muted/30 text-xs text-muted-foreground uppercase">
-                              <tr>
-                                <th className="p-2 text-left">{t('shared.entity')}</th>
-                                {CRUD_OPS.map((op) => (
-                                  <th key={op} className="p-2 text-center">
-                                    {t(CRUD_LABELS[op])}
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {schema.entities.map((entity) => (
-                                <tr key={entity.key} className="border-t">
-                                  <td className="p-2 font-medium">{entity.label}</td>
-                                  {CRUD_OPS.map((op) => (
-                                    <td key={op} className="p-2">
-                                      <div className="flex justify-center">
-                                        <Checkbox
-                                          checked={
-                                            draft.actionPermissions[
-                                              crudKey(section.key, entity.key, op)
-                                            ] === true
-                                          }
-                                          onCheckedChange={() =>
-                                            toggleCrud(section.key, entity.key, op)
-                                          }
-                                          disabled={disabled || draft.fullAccess}
-                                        />
-                                      </div>
-                                    </td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+                      {/* Module access first, on its own. The reference treats it as a permission
+                       * in its own right — a role can hold every permission inside a module and
+                       * still not be able to open it. */}
+                      <label
+                        className={cn(
+                          'flex items-center gap-2 rounded-lg border px-2.5 py-2 text-sm',
+                          actionTone(
+                            'access',
+                            draft.actionPermissions[schema.moduleAccess.key] === true
+                          )
+                        )}
+                      >
+                        <Checkbox
+                          checked={draft.actionPermissions[schema.moduleAccess.key] === true}
+                          onCheckedChange={() => togglePermission(schema.moduleAccess.key)}
+                          disabled={disabled || draft.fullAccess}
+                        />
+                        <span className="font-medium">{schema.moduleAccess.label}</span>
+                      </label>
 
-                      {schema.specialActions.length > 0 && (
-                        <div className="grid gap-2 sm:grid-cols-3">
-                          {schema.specialActions.map((action) => {
-                            const checked =
-                              draft.actionPermissions[specialActionKey(section.key, action.key)] ===
-                              true
-                            return (
-                              <label
-                                key={action.key}
-                                className={cn(
-                                  'flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs',
-                                  checked
-                                    ? 'border-teal-200 bg-teal-50 dark:border-teal-500/30 dark:bg-teal-500/10'
-                                    : 'bg-muted/30'
-                                )}
-                              >
-                                <Checkbox
-                                  checked={checked}
-                                  onCheckedChange={() =>
-                                    toggleSpecialAction(section.key, action.key)
-                                  }
-                                  disabled={disabled || draft.fullAccess}
-                                />
-                                {action.label}
-                              </label>
-                            )
-                          })}
-                        </div>
-                      )}
+                      {/* One block per feature, carrying exactly the permissions that feature
+                       * has. This replaced an entity x CRUD grid, which could express neither
+                       * `MASTERS_ITEMS_IMPORT` nor `SERVICE_JOB_CARDS_ASSIGN`, and invented
+                       * combinations the reference does not have — deleting a report, say. */}
+                      {schema.features.map((feature) => {
+                        const featureKeys = feature.permissions.map((p) => p.key)
+                        const on = featureKeys.filter(
+                          (k) => draft.actionPermissions[k] === true
+                        ).length
+                        const leaf = section.children.find((l) => l.slug === feature.navSlug)
+                        const label = leaf?.label ?? feature.refSlug
+                        if (searchLower && !label.toLowerCase().includes(searchLower)) {
+                          // Only filter features out when the search does not already match the
+                          // module itself — otherwise searching "Masters" would empty it.
+                          if (!section.label.toLowerCase().includes(searchLower)) return null
+                        }
+                        const visible = feature.permissions.filter((p) => {
+                          const checked = draft.actionPermissions[p.key] === true
+                          if (visibility === 'selected') return checked
+                          if (visibility === 'unselected') return !checked
+                          return true
+                        })
+                        if (!visible.length) return null
+                        return (
+                          <div key={feature.navSlug} className="rounded-lg border">
+                            <div className="flex items-center gap-2 border-b bg-muted/40 px-2.5 py-1.5">
+                              <Checkbox
+                                checked={on === featureKeys.length}
+                                indeterminate={on > 0 && on < featureKeys.length}
+                                onCheckedChange={() => toggleFeature(featureKeys)}
+                                disabled={disabled || draft.fullAccess}
+                              />
+                              <span className="text-sm font-medium">{label}</span>
+                              <span className="ml-auto text-xs text-muted-foreground tabular-nums">
+                                {on}/{featureKeys.length}
+                              </span>
+                            </div>
+                            <div className="grid gap-1.5 p-2 sm:grid-cols-2 lg:grid-cols-3">
+                              {visible.map((permission) => {
+                                const checked = draft.actionPermissions[permission.key] === true
+                                return (
+                                  <label
+                                    key={permission.key}
+                                    title={permission.key}
+                                    className={cn(
+                                      'flex min-w-0 items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs',
+                                      actionTone(permission.action, checked)
+                                    )}
+                                  >
+                                    <Checkbox
+                                      checked={checked}
+                                      onCheckedChange={() => togglePermission(permission.key)}
+                                      disabled={disabled || draft.fullAccess}
+                                    />
+                                    <span className="truncate">{permission.label}</span>
+                                  </label>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
                   )}
                 </div>

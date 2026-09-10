@@ -47,6 +47,7 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ScanJobCardModal } from '@/components/shared/scan-job-card-modal'
+import { widgetsInOrder } from '@/config/dashboard-widgets'
 import { useDashboardStats } from '@/hooks/use-dashboard-stats'
 import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -133,7 +134,13 @@ export function DashboardPage() {
   const [scanOpen, setScanOpen] = useState(false)
   const { data: stats, isLoading, error: loadError, refetch } = useDashboardStats(range)
   const { profile } = useAuth()
-  const { canSeeWidget, isLoading: permissionsLoading } = usePermissions()
+  const { canSeeWidget, widgetOrder, isLoading: permissionsLoading } = usePermissions()
+
+  // The role's chosen arrangement. `widgetsInOrder` falls back to the catalogue for anything the
+  // role never placed, so a widget added after the role was saved still has a position.
+  const orderIndex = new Map(widgetsInOrder(widgetOrder).map((w, i) => [w.key, i]))
+  const byRoleOrder = (a: string, b: string) =>
+    (orderIndex.get(a) ?? Number.MAX_SAFE_INTEGER) - (orderIndex.get(b) ?? Number.MAX_SAFE_INTEGER)
 
   const quickActions: {
     widgetKey: string
@@ -295,14 +302,20 @@ export function DashboardPage() {
     },
   ]
 
-  const visibleActions = quickActions.filter((a) => canSeeWidget(a.widgetKey))
-  const visibleKpis = kpis.filter((k) => canSeeWidget(k.widgetKey))
+  const visibleActions = quickActions
+    .filter((a) => canSeeWidget(a.widgetKey))
+    .sort((a, b) => byRoleOrder(a.widgetKey, b.widgetKey))
+  const visibleKpis = kpis
+    .filter((k) => canSeeWidget(k.widgetKey))
+    .sort((a, b) => byRoleOrder(a.widgetKey, b.widgetKey))
   const charts = [
     'chart.jobcards.by_status',
     'chart.revenue.trend',
     'chart.jobcards.trend',
     'chart.jobcards.by_tech',
-  ].filter((key) => canSeeWidget(key))
+  ]
+    .filter((key) => canSeeWidget(key))
+    .sort(byRoleOrder)
   const showWelcome = canSeeWidget('personal.welcome')
   const showRecent = canSeeWidget('list.jobcards.recent')
   const nothingVisible =

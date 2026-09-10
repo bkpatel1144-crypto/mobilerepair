@@ -4,6 +4,7 @@ import { db } from '@/lib/firebase'
 import { roleDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
+import { normalizeActionPermissions } from '@/config/permission-legacy'
 import type { RoleDoc } from '@/types/firestore'
 
 /** Widgets the product has actually implemented, by key — a widget the reference lists but this
@@ -112,12 +113,18 @@ export function usePermissions() {
     return role.menuPermissions[key] === true
   }
 
-  /** Can the current role perform this action? `key` is a full `actionPermissions` key —
-   * see `src/config/permission-schema.ts`'s `crudKey()`/`specialActionKey()`. */
+  // Translated once per role, not per call: a role saved before the catalogue adopted the
+  // reference's key format stores `sales.invoices.create` where this now asks for
+  // `SALES_INVOICES_CREATE`. See `permission-legacy.ts` for why they are converted on read
+  // rather than migrated — there is no server here to migrate them with.
+  const actionPermissions = normalizeActionPermissions(role?.actionPermissions)
+
+  /** Can the current role perform this action? `key` is a `permission-catalogue.ts` key, e.g.
+   *  `SERVICE_JOB_CARDS_ASSIGN`. */
   function canDo(key: string): boolean {
     if (!role) return false
     if (role.fullAccess) return true
-    return role.actionPermissions[key] === true
+    return actionPermissions[key] === true
   }
 
   /** Is this dashboard widget shown for the current role? See `isWidgetVisible`. */
@@ -132,6 +139,8 @@ export function usePermissions() {
     canView,
     canDo,
     canSeeWidget,
+    /** The order this role arranged its widgets in, if it set one. */
+    widgetOrder: role?.dashboardConfig?.widgetOrder,
   }
 }
 

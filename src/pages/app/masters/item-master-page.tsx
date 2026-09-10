@@ -21,7 +21,6 @@ import {
 import { useItems, useSetItemStatus, type ItemRow } from '@/hooks/use-items'
 import { useItemCategories } from '@/hooks/use-item-categories'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import { TAX_CATEGORIES, TRACKING_TYPES, taxPercentOf } from '@/lib/item-defaults'
 import { LoadDefaultsButton } from '@/components/shared/load-defaults-button'
 import { buildPath } from '@/config/nav'
@@ -64,7 +63,7 @@ export function ItemMasterPage() {
   const { data: items = [], isLoading, error: loadError, refetch } = useItems()
   const { data: categories = [] } = useItemCategories()
   const { canDo } = usePermissions()
-  const canManage = canDo(crudKey('masters', 'items', 'update'))
+  const canManage = canDo('MASTERS_ITEMS_UPDATE')
 
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState<ItemFilters>(NO_FILTERS)

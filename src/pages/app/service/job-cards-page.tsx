@@ -15,7 +15,6 @@ import { useUsers } from '@/hooks/use-users'
 import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
-import { crudKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
 import { dateRangeBounds } from '@/lib/date-range'
 import { buildPath } from '@/config/nav'
@@ -178,7 +177,7 @@ export function JobCardsPage() {
         subtitle={t('pages.service.jobCards.clickAStatusCardToFilter')}
         actions={
           <>
-            {canDo(crudKey('service', 'jobCards', 'create')) && (
+            {canDo('SERVICE_JOB_CARDS_CREATE') && (
               <Button
                 type="button"
                 onClick={() => navigate(`${buildPath('service', 'job-cards')}/create`)}

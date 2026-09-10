@@ -29,7 +29,6 @@ import {
   type IpWhitelistWithId,
 } from '@/hooks/use-ip-whitelist'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import { formatTimestamp } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 
@@ -37,7 +36,7 @@ export function IpWhitelistPage() {
   const { t } = useTranslation()
   const { data: entries = [], isLoading, error: loadError, refetch } = useIpWhitelist()
   const { canDo } = usePermissions()
-  const canManage = canDo(crudKey('administration', 'ipWhitelist', 'update'))
+  const canManage = canDo('ADMINISTRATION_IP_WHITELIST_UPDATE')
 
   const [search, setSearch] = useState('')
   const [editing, setEditing] = useState<IpWhitelistWithId | 'new' | null>(null)

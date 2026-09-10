@@ -35,7 +35,6 @@ import {
   type UomWithId,
 } from '@/hooks/use-uom'
 import { usePermissions } from '@/hooks/use-permissions'
-import { crudKey } from '@/config/permission-schema'
 import { useTranslation } from 'react-i18next'
 
 const TYPE_OPTIONS = ['Quantity', 'Length', 'Weight', 'Volume', 'Time', 'Other']
@@ -55,7 +54,7 @@ export function UomPage() {
   const { t } = useTranslation()
   const { data: uoms = [], isLoading, error: loadError, refetch } = useUoms()
   const { canDo } = usePermissions()
-  const canManage = canDo(crudKey('masters', 'uom', 'update'))
+  const canManage = canDo('MASTERS_UOM_UPDATE')
   const setStatus = useSetUomStatus()
   const deleteUom = useDeleteUom()
 

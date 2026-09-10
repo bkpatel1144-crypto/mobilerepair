@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_ROLE_SEEDS } from './default-roles'
 import { DASHBOARD_WIDGETS, allWidgetsEnabled } from './dashboard-widgets'
 import { NAV_SECTIONS, DASHBOARD_MENU_KEY, menuKey } from './nav'
-import { PERMISSION_SCHEMA, allKeysForModule } from './permission-schema'
+import { ALL_PERMISSION_KEYS } from './permission-catalogue'
+import permissionExport from '../../data/permotion-sample.json'
 
 /**
  * Holds the five seeded roles to the catalogues they key into.
@@ -23,7 +24,7 @@ const menuKeys = new Set([
   DASHBOARD_MENU_KEY,
   ...NAV_SECTIONS.flatMap((s) => s.children.map((leaf) => menuKey(s.key, leaf.slug))),
 ])
-const actionKeys = new Set(PERMISSION_SCHEMA.flatMap(allKeysForModule))
+const actionKeys = new Set(ALL_PERMISSION_KEYS)
 
 describe('seeded roles key into the real catalogues', () => {
   it.each(DEFAULT_ROLE_SEEDS.map((r) => [r.code, r] as const))(
@@ -73,6 +74,26 @@ describe('seeded roles key into the real catalogues', () => {
     for (const role of DEFAULT_ROLE_SEEDS) {
       expect(Object.keys(role.dashboardConfig.visibleWidgets).sort(), role.code).toEqual(built)
     }
+  })
+
+  it("OWNER is granted exactly the export's 185 permissions", () => {
+    // The claim "100% exact match" as a test. The catalogue is generated from the export and the
+    // generator already asserts the key sets are equal; this asserts the *seeded Owner role*
+    // carries all of them, which is a separate thing and the one a user sees as "185/185".
+    const owner = DEFAULT_ROLE_SEEDS.find((r) => r.code === 'OWNER')!
+    const granted = Object.entries(owner.actionPermissions)
+      .filter(([, on]) => on)
+      .map(([key]) => key)
+      .sort()
+    expect(granted).toEqual([...permissionExport.permissions].sort())
+    expect(granted).toHaveLength(185)
+  })
+
+  it('gives a view-only role its exports but never a delete', () => {
+    const accountant = DEFAULT_ROLE_SEEDS.find((r) => r.code === 'ACCOUNTANT')!
+    const keys = Object.keys(accountant.actionPermissions)
+    expect(keys.some((k) => k.endsWith('_EXPORT'))).toBe(true)
+    expect(keys.filter((k) => k.endsWith('_DELETE'))).toEqual([])
   })
 
   it('lands every role on the dashboard', () => {
