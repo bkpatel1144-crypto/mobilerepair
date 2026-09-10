@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { FolderTree, FolderClosed, Plus, Pencil, Trash2, Ban, CheckCircle2 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
+import { StatCardGrid } from '@/components/shared/stat-card-grid'
+import { StatusBadge } from '@/components/shared/status-badge'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -31,7 +33,34 @@ import {
 import { useItems } from '@/hooks/use-items'
 import { usePermissions } from '@/hooks/use-permissions'
 import { crudKey } from '@/config/permission-schema'
+import type { ItemCategoryType } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
+
+/** One tone per category type. Literal class strings — Tailwind extracts these statically, so a
+ *  colour assembled from `c.type` at runtime never reaches the stylesheet. */
+const CATEGORY_TYPE_STYLE: Record<ItemCategoryType, string> = {
+  'Raw Material': 'bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400',
+  'Finished Goods': 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400',
+  Consumables: 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
+  Service: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400',
+}
+
+/** Every type the export uses, in the order the form offers them. The values themselves are
+ *  written to Firestore, so they stay English and are translated only for display — the same
+ *  arrangement `TYPE_LABEL` uses on the Item Master. */
+const CATEGORY_TYPES: ItemCategoryType[] = [
+  'Raw Material',
+  'Finished Goods',
+  'Consumables',
+  'Service',
+]
+
+const CATEGORY_TYPE_LABEL: Record<ItemCategoryType, string> = {
+  'Raw Material': 'pages.masters.itemCategories.rawMaterial',
+  'Finished Goods': 'pages.masters.itemCategories.finishedGoods',
+  Consumables: 'pages.masters.itemCategories.consumables',
+  Service: 'shared.service',
+}
 
 export function ItemCategoriesPage() {
   const { t } = useTranslation()
@@ -41,10 +70,21 @@ export function ItemCategoriesPage() {
   const canManage = canDo(crudKey('masters', 'itemCategories', 'update'))
 
   const [search, setSearch] = useState('')
+  const [typeFilter, setTypeFilter] = useState<'all' | ItemCategoryType>('all')
+  const [levelFilter, setLevelFilter] = useState<'all' | 'root' | 'sub'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'disabled'>('all')
   const [editing, setEditing] = useState<ItemCategoryWithId | 'new' | null>(null)
   const [viewing, setViewing] = useState<ItemCategoryWithId | null>(null)
 
-  const filtered = categories.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
+  const filtered = categories
+    .filter((c) => typeFilter === 'all' || c.type === typeFilter)
+    .filter((c) => levelFilter === 'all' || (levelFilter === 'root' ? !c.parentId : !!c.parentId))
+    .filter((c) => statusFilter === 'all' || c.status === statusFilter)
+    // The code too, not just the name: the export's codes are what an item references, so
+    // searching "SPARE_" to find every spare-part category has to work.
+    .filter((c) =>
+      `${c.name} ${c.code} ${c.description ?? ''}`.toLowerCase().includes(search.toLowerCase())
+    )
 
   function itemCountFor(cat: ItemCategoryWithId) {
     return items.filter((i) => i.categoryId === cat.id).length
@@ -75,16 +115,12 @@ export function ItemCategoriesPage() {
       key: 'type',
       header: t('common.type'),
       hideOnMobile: true,
+      sortValue: (c) => c.type,
       render: (c) => (
         <span
-          className={
-            'rounded-full px-2 py-0.5 text-xs font-medium ' +
-            (c.type === 'Service'
-              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400'
-              : 'bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400')
-          }
+          className={'rounded-full px-2 py-0.5 text-xs font-medium ' + CATEGORY_TYPE_STYLE[c.type]}
         >
-          {c.type}
+          {t(CATEGORY_TYPE_LABEL[c.type])}
         </span>
       ),
     },
@@ -95,6 +131,23 @@ export function ItemCategoriesPage() {
       render: (c) => categoryLevel(c, categories).level,
     },
     { key: 'items', header: t('common.items'), render: (c) => itemCountFor(c) },
+    {
+      key: 'subCategories',
+      header: t('pages.masters.itemCategories.subCategories'),
+      hideOnMobile: true,
+      // Counted from the tree rather than read from the export's `stats.subCategoryCount`, which
+      // is 0 on every record there — a stored count that nothing updates goes stale the first
+      // time someone adds a category.
+      sortValue: (c) => categories.filter((x) => x.parentId === c.id).length,
+      render: (c) => categories.filter((x) => x.parentId === c.id).length,
+    },
+    {
+      key: 'status',
+      header: t('common.status'),
+      render: (c) => (
+        <StatusBadge status={c.status === 'active' ? 'Active' : t('common.inactive')} />
+      ),
+    },
   ]
 
   return (
@@ -113,18 +166,76 @@ export function ItemCategoriesPage() {
         }
       />
 
-      <StatCard
-        label={t('common.total')}
-        value={categories.length}
-        icon={FolderTree}
-        className="sm:max-w-48"
-      />
+      <StatCardGrid>
+        <StatCard label={t('common.total')} value={categories.length} icon={FolderTree} />
+        <StatCard
+          label={t('pages.masters.itemCategories.rootCategories')}
+          value={categories.filter((c) => !c.parentId).length}
+          icon={FolderTree}
+          tone="info"
+        />
+        <StatCard
+          label={t('pages.masters.itemCategories.subCategories')}
+          value={categories.filter((c) => c.parentId).length}
+          icon={FolderTree}
+          tone="purple"
+        />
+        <StatCard
+          label={t('common.active')}
+          value={categories.filter((c) => c.status === 'active').length}
+          icon={CheckCircle2}
+          tone="success"
+        />
+      </StatCardGrid>
 
       <FilterBar
         searchValue={search}
         onSearchChange={setSearch}
         searchPlaceholder={t('pages.masters.itemCategories.searchCategories')}
-      />
+      >
+        <Select
+          value={typeFilter}
+          onValueChange={(v) => v && setTypeFilter(v as typeof typeFilter)}
+        >
+          <SelectTrigger className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">{t('common.allTypes')}</SelectItem>
+            {CATEGORY_TYPES.map((value) => (
+              <SelectItem key={value} value={value}>
+                {t(CATEGORY_TYPE_LABEL[value])}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select
+          value={levelFilter}
+          onValueChange={(v) => v && setLevelFilter(v as typeof levelFilter)}
+        >
+          <SelectTrigger className="w-36">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">{t('pages.masters.itemCategories.allLevels')}</SelectItem>
+            <SelectItem value="root">{t('pages.masters.itemCategories.root')}</SelectItem>
+            <SelectItem value="sub">{t('pages.masters.itemCategories.sub')}</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select
+          value={statusFilter}
+          onValueChange={(v) => v && setStatusFilter(v as typeof statusFilter)}
+        >
+          <SelectTrigger className="w-32">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">{t('common.allStatuses')}</SelectItem>
+            <SelectItem value="active">{t('common.active')}</SelectItem>
+            <SelectItem value="disabled">{t('common.inactive')}</SelectItem>
+          </SelectContent>
+        </Select>
+      </FilterBar>
 
       <DataTable
         columns={columns}
@@ -349,9 +460,7 @@ function ItemCategoryModal({
   const updateCategory = useUpdateItemCategory()
 
   const [name, setName] = useState(isNew ? '' : editing.name)
-  const [type, setType] = useState<'Raw Material' | 'Service'>(
-    isNew ? 'Raw Material' : editing.type
-  )
+  const [type, setType] = useState<ItemCategoryType>(isNew ? 'Raw Material' : editing.type)
   const [parentId, setParentId] = useState(isNew ? 'none' : (editing.parentId ?? 'none'))
   const [description, setDescription] = useState(isNew ? '' : (editing.description ?? ''))
 
@@ -398,10 +507,13 @@ function ItemCategoryModal({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Raw Material">
-                {t('pages.masters.itemCategories.rawMaterial')}
-              </SelectItem>
-              <SelectItem value="Service">{t('shared.service')}</SelectItem>
+              {/* All four the export uses. Two of them were missing, so a shopkeeper adding an
+               * Accessories or Consumables category had to file it under Raw Material. */}
+              {CATEGORY_TYPES.map((value) => (
+                <SelectItem key={value} value={value}>
+                  {t(CATEGORY_TYPE_LABEL[value])}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

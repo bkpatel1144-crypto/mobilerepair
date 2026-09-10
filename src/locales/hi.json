@@ -300,7 +300,20 @@
     "saveFailed": "सहेजा नहीं जा सका। कृपया फिर कोशिश करें।"
   },
   "months": {
-    "short": ["जन", "फ़र", "मार्च", "अप्रै", "मई", "जून", "जुल", "अग", "सित", "अक्तू", "नव", "दिस"],
+    "short": [
+      "जन",
+      "फ़र",
+      "मार्च",
+      "अप्रै",
+      "मई",
+      "जून",
+      "जुल",
+      "अग",
+      "सित",
+      "अक्तू",
+      "नव",
+      "दिस"
+    ],
     "long": [
       "जनवरी",
       "फ़रवरी",
@@ -619,7 +632,13 @@
         "searchCategories": "श्रेणियाँ खोजें...",
         "thisCategoryWillBecomeSelectableAgain": "यह श्रेणी नए आइटम के लिए फिर से चुनी जा सकेगी।",
         "thisPermanentlyDeletesTheCategoryThis": "यह श्रेणी हमेशा के लिए हट जाती है। यह पूर्ववत नहीं हो सकता।",
-        "editItemCategory": "आइटम श्रेणी बदलें"
+        "editItemCategory": "आइटम श्रेणी बदलें",
+        "rootCategories": "मूल",
+        "allLevels": "सभी स्तर",
+        "root": "केवल मूल",
+        "sub": "केवल उप",
+        "finishedGoods": "तैयार माल",
+        "consumables": "उपभोग्य वस्तुएँ"
       },
       "itemMaster": {
         "itemMaster": "आइटम मास्टर",
@@ -739,7 +758,8 @@
         "volume": "आयतन",
         "thisUnitWillBecomeSelectableAgain": "यह इकाई नए आइटम के लिए फिर से चुनी जा सकेगी।",
         "editUnitOfMeasure": "माप की इकाई बदलें",
-        "setThisOnlyIfThisUom": "यह तभी भरें जब यह UOM किसी दूसरी में बदलती हो। जैसे 1 इंच = 0.0254 मीटर"
+        "setThisOnlyIfThisUom": "यह तभी भरें जब यह UOM किसी दूसरी में बदलती हो। जैसे 1 इंच = 0.0254 मीटर",
+        "decimals": "दशमलव"
       },
       "createItem": {
         "createItem": "आइटम बनाएँ",

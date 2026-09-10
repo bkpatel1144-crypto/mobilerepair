@@ -309,6 +309,7 @@ export function addDefaultMastersToBatch(batch: WriteBatch, companyId: string, n
       displayOrder: seed.displayOrder,
       applicableAttributes: seed.applicableAttributes,
       settings: seed.settings,
+      isSystem: seed.isSystem,
       level: seed.level,
       path: seed.path,
       source: 'system',

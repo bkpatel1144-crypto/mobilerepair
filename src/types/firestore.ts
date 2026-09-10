@@ -747,10 +747,20 @@ export interface ItemCategorySettings {
   defaultShelfLifeDays: number | null
 }
 
+/**
+ * The four kinds of category the client's export uses: `RAW_MATERIAL`, `FINISHED_GOODS`,
+ * `CONSUMABLES` and `SERVICES`.
+ *
+ * This was `'Raw Material' | 'Service'` while only the first page of the export was in the repo —
+ * ten records, all `RAW_MATERIAL` bar one. The full export has all four, so every Accessories,
+ * Mobile Phones and Consumables category was being written as Raw Material.
+ */
+export type ItemCategoryType = 'Raw Material' | 'Finished Goods' | 'Consumables' | 'Service'
+
 export interface ItemCategoryDoc {
   name: string
   code: string // "SPARE_PARTS"
-  type: 'Raw Material' | 'Service'
+  type: ItemCategoryType
   parentId: string | null // null = root
   description: string | null
   source: 'system' | 'custom'
@@ -773,6 +783,11 @@ export interface ItemCategoryDoc {
    * everything beneath a category. With the ancestry included, a prefix match does it.
    */
   path: string
+
+  /** Seeded with the tenant rather than added by the shopkeeper — `isSystem` in the export.
+   *  Optional because categories written before this field existed carry no value; `source`
+   *  already said the same thing for those, and the two agree for everything seeded since. */
+  isSystem?: boolean
 
   /** Presentation, carried through from the reference so the UI can match it. */
   icon: string | null

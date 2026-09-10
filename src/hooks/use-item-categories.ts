@@ -14,7 +14,12 @@ import { itemCategoriesCollection, itemCategoryDoc } from '@/lib/firestore-paths
 import { useAuth } from '@/hooks/use-auth'
 import { slugifyCode } from '@/lib/utils'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
-import type { EntityStatus, ItemCategoryDoc, ItemCategorySettings } from '@/types/firestore'
+import type {
+  EntityStatus,
+  ItemCategoryDoc,
+  ItemCategorySettings,
+  ItemCategoryType,
+} from '@/types/firestore'
 
 export interface ItemCategoryWithId extends ItemCategoryDoc {
   id: string
@@ -53,7 +58,7 @@ export function categoryLevel(
 export interface ItemCategoryInput {
   name: string
   code?: string
-  type: 'Raw Material' | 'Service'
+  type: ItemCategoryType
   parentId: string | null
   description: string | null
   /** Presentation and tracking defaults, all optional — the create form does not collect them

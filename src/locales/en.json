@@ -300,7 +300,20 @@
     "saveFailed": "Could not save. Please try again."
   },
   "months": {
-    "short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
     "long": [
       "January",
       "February",
@@ -619,7 +632,13 @@
         "searchCategories": "Search categories...",
         "thisCategoryWillBecomeSelectableAgain": "This category will become selectable again for new items.",
         "thisPermanentlyDeletesTheCategoryThis": "This permanently deletes the category. This cannot be undone.",
-        "editItemCategory": "Edit Item Category"
+        "editItemCategory": "Edit Item Category",
+        "rootCategories": "Root",
+        "allLevels": "All levels",
+        "root": "Root only",
+        "sub": "Sub only",
+        "finishedGoods": "Finished Goods",
+        "consumables": "Consumables"
       },
       "itemMaster": {
         "itemMaster": "Item Master",
@@ -739,7 +758,8 @@
         "volume": "Volume",
         "thisUnitWillBecomeSelectableAgain": "This unit will become selectable again for new items.",
         "editUnitOfMeasure": "Edit Unit of Measure",
-        "setThisOnlyIfThisUom": "Set this only if this UOM converts to another. e.g. 1 Inch = 0.0254 Meter"
+        "setThisOnlyIfThisUom": "Set this only if this UOM converts to another. e.g. 1 Inch = 0.0254 Meter",
+        "decimals": "Decimals"
       },
       "createItem": {
         "createItem": "Create Item",

@@ -29,7 +29,14 @@ type CategoryRow = {
   displayOrder: number
   /** Always 0 in the export, even for records with a parent — see the corrections test. */
   level: number
-  settings?: Record<string, unknown>
+  isSystem?: boolean
+  applicableAttributes?: string[]
+  settings?: {
+    enableBatchTracking?: boolean
+    enableExpiryTracking?: boolean
+    enableSerialTracking?: boolean
+    defaultShelfLifeDays?: number | null
+  }
 }
 type UomNode = { uomCode?: string; uomName?: string; symbol?: string }
 type ItemRow = {
@@ -76,6 +83,13 @@ const parentCodeOf = (row: CategoryRow) =>
       ? (row.parentCategory.categoryCode ?? null)
       : row.parentCategory
 
+const CATEGORY_TYPES: Record<string, string> = {
+  RAW_MATERIAL: 'Raw Material',
+  FINISHED_GOODS: 'Finished Goods',
+  CONSUMABLES: 'Consumables',
+  SERVICES: 'Service',
+}
+
 describe('seeded categories match the reference export', () => {
   it('covers every row present in the export', () => {
     expect(SEED_CATEGORIES.map((c) => c.code).sort()).toEqual(
@@ -84,28 +98,50 @@ describe('seeded categories match the reference export', () => {
   })
 
   it.each(categoryRows.map((r) => [r.categoryCode, r] as const))(
-    '%s carries the export values',
+    '%s matches the export field for field',
     (code, row) => {
       const seeded = SEED_CATEGORIES.find((c) => c.code === code)!
-      expect(seeded.name).toBe(row.categoryName)
-      expect(seeded.description).toBe(row.description ?? null)
-      expect(seeded.icon).toBe(row.icon ?? null)
-      expect(seeded.color).toBe(row.color ?? null)
-      expect(seeded.displayOrder).toBe(row.displayOrder ?? 0)
-      expect(seeded.parentCode).toBe(parentCodeOf(row))
-      expect(seeded.type).toBe(row.categoryType === 'SERVICE' ? 'Service' : 'Raw Material')
-      expect(seeded.settings).toEqual({
-        enableBatchTracking: row.settings?.enableBatchTracking ?? false,
-        enableExpiryTracking: row.settings?.enableExpiryTracking ?? false,
-        enableSerialTracking: row.settings?.enableSerialTracking ?? false,
-        defaultShelfLifeDays: row.settings?.defaultShelfLifeDays ?? null,
+      const parentCode = parentCodeOf(row)
+      // One whole-record comparison, for the reason the item version of this carries: the
+      // per-field version passed for a release while `type` was computed as
+      // `categoryType === 'SERVICE' ? 'Service' : 'Raw Material'` — wrong twice over, since the
+      // export says `SERVICES` and also has `FINISHED_GOODS` and `CONSUMABLES`. Seventeen of the
+      // twenty-seven categories were being written as Raw Material.
+      expect(seeded).toEqual({
+        code: row.categoryCode,
+        name: row.categoryName,
+        type: CATEGORY_TYPES[row.categoryType],
+        parentCode,
+        description: row.description ?? null,
+        icon: row.icon ?? null,
+        color: row.color ?? null,
+        displayOrder: row.displayOrder ?? 0,
+        applicableAttributes: row.applicableAttributes ?? [],
+        settings: {
+          enableBatchTracking: row.settings?.enableBatchTracking ?? false,
+          enableExpiryTracking: row.settings?.enableExpiryTracking ?? false,
+          enableSerialTracking: row.settings?.enableSerialTracking ?? false,
+          defaultShelfLifeDays: row.settings?.defaultShelfLifeDays ?? null,
+        },
+        isSystem: row.isSystem ?? false,
+        // The two corrections, pinned below.
+        level: seeded.level,
+        path: seeded.path,
       })
     }
   )
 
+  it('maps every categoryType the export uses', () => {
+    // A type the mapper does not know would otherwise be silently filed as Raw Material, which is
+    // exactly what happened to Accessories, Mobile Phones and Repair Consumables.
+    const unknown = categoryRows.map((r) => r.categoryType).filter((raw) => !CATEGORY_TYPES[raw])
+    expect([...new Set(unknown)]).toEqual([])
+    expect(new Set(SEED_CATEGORIES.map((c) => c.type)).size).toBeGreaterThan(1)
+  })
+
   it('recomputes level and path instead of copying the export', () => {
     // The correction, pinned. Guards against someone regenerating from a "fixed" script that
-    // simply copies the fields, which would put "Level: Root" back on eight sub-categories.
+    // simply copies the fields, which would put "Level: Root" back on every sub-category.
     for (const seeded of SEED_CATEGORIES) {
       if (seeded.parentCode === null) {
         expect(seeded.level, `${seeded.code} is a root`).toBe(0)
@@ -142,14 +178,19 @@ describe('seeded items match the reference export', () => {
       // of "Service"/"Goods" — which is `ItemNature`, not `ItemType`, so every seeded item would
       // have been written with a type the app does not define. Nothing caught either, because
       // nothing imported `SEED_ITEMS` at all.
-      const uom = (node: { uomCode?: string; uomName?: string; symbol?: string } | null | undefined) =>
-        node ? { code: node.uomCode, name: node.uomName, symbol: node.symbol } : null
+      const uom = (
+        node: { uomCode?: string; uomName?: string; symbol?: string } | null | undefined
+      ) => (node ? { code: node.uomCode, name: node.uomName, symbol: node.symbol } : null)
       expect(seeded).toEqual({
         itemCode: row.itemCode,
         name: row.itemName,
         description: row.description ?? null,
         type:
-          row.itemType === 'SERVICE' ? 'service' : row.itemType === 'RAW_MATERIAL' ? 'part' : 'product',
+          row.itemType === 'SERVICE'
+            ? 'service'
+            : row.itemType === 'RAW_MATERIAL'
+              ? 'part'
+              : 'product',
         nature: row.itemNature === 'SERVICE' ? 'Service' : 'Goods',
         categoryCode: row.categoryId?.categoryCode ?? null,
         subCategoryCode: row.subCategoryId?.categoryCode ?? null,

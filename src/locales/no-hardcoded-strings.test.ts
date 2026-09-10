@@ -52,6 +52,11 @@ const INTENTIONALLY_ENGLISH = new Set([
   'Service',
   'GST_18',
   'NONE',
+  // `ItemCategoryType` values, written to Firestore. Displayed through `CATEGORY_TYPE_LABEL`,
+  // which resolves each to a translation key — these three literals are the stored form.
+  'Raw Material',
+  'Finished Goods',
+  'Consumables',
 ])
 
 function isDisplayString(s: string): boolean {

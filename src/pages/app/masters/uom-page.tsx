@@ -85,6 +85,16 @@ export function UomPage() {
     },
     { key: 'type', header: t('common.type'), hideOnMobile: true, render: (u) => u.type },
     {
+      key: 'decimals',
+      header: t('pages.masters.uom.decimals'),
+      hideOnMobile: true,
+      // `decimalPlaces` has been on `UomDoc` and editable in the form since this page was built;
+      // the table simply never showed it, so there was no way to see at a glance which units
+      // allow a fractional quantity.
+      sortValue: (u) => u.decimalPlaces,
+      render: (u) => <span className="tabular-nums">{u.decimalPlaces}</span>,
+    },
+    {
       key: 'conversion',
       header: t('pages.masters.uom.conversion'),
       hideOnMobile: true,

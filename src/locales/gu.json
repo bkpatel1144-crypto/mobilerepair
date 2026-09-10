@@ -632,7 +632,13 @@
         "searchCategories": "શ્રેણીઓ શોધો...",
         "thisCategoryWillBecomeSelectableAgain": "આ શ્રેણી નવાં આઇટમ માટે ફરી પસંદ કરી શકાશે.",
         "thisPermanentlyDeletesTheCategoryThis": "આ શ્રેણી કાયમ માટે કાઢી નાખે છે. આ પાછું લઈ શકાતું નથી.",
-        "editItemCategory": "આઇટમ શ્રેણી બદલો"
+        "editItemCategory": "આઇટમ શ્રેણી બદલો",
+        "rootCategories": "મૂળ",
+        "allLevels": "બધા સ્તર",
+        "root": "ફક્ત મૂળ",
+        "sub": "ફક્ત ઉપ",
+        "finishedGoods": "તૈયાર માલ",
+        "consumables": "વપરાશી ચીજો"
       },
       "itemMaster": {
         "itemMaster": "આઇટમ માસ્ટર",
@@ -752,7 +758,8 @@
         "volume": "ઘનફળ",
         "thisUnitWillBecomeSelectableAgain": "આ એકમ નવાં આઇટમ માટે ફરી પસંદ કરી શકાશે.",
         "editUnitOfMeasure": "માપનો એકમ બદલો",
-        "setThisOnlyIfThisUom": "આ ત્યારે જ ભરો જ્યારે આ UOM બીજામાં બદલાય. જેમ કે 1 ઇંચ = 0.0254 મીટર"
+        "setThisOnlyIfThisUom": "આ ત્યારે જ ભરો જ્યારે આ UOM બીજામાં બદલાય. જેમ કે 1 ઇંચ = 0.0254 મીટર",
+        "decimals": "દશાંશ"
       },
       "createItem": {
         "createItem": "આઇટમ બનાવો",
