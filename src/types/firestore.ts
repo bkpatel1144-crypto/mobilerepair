@@ -768,67 +768,6 @@ export interface ItemCategorySettings {
  */
 export type ItemCategoryType = 'Raw Material' | 'Finished Goods' | 'Consumables' | 'Service'
 
-/**
- * `companies/{companyId}/itemAttributes/{id}` — Masters > Attributes.
- *
- * The vocabulary an item's variants are defined by: an attribute ("Colour") and the values it
- * can take ("Black", "White"). `ItemDoc.variantAttributes` holds attribute names, so this is
- * where that list comes from rather than being free text on every item.
- */
-/** One line of a general purchase — an item, how many, and at what rate. */
-export interface PurchaseLine {
-  itemId: string
-  itemName: string
-  itemCode: string
-  uom: string
-  qty: number
-  rate: number
-  /** `qty * rate`, stored rather than derived so a historical purchase keeps its own arithmetic
-   *  if either number is later corrected on the item master. */
-  amount: number
-}
-
-/**
- * `companies/{companyId}/purchases/{id}` — Purchase > General Purchase (Parts & Stock).
- *
- * Buying parts and consumables from a supplier, which is the counterpart to the second-hand
- * device purchase this app already had: that one buys a single device to resell, this one buys
- * stock to consume. Separate collections because they carry almost nothing in common — a device
- * has an IMEI, a condition grade and a lock status; a parts purchase has lines.
- */
-export interface PurchaseDoc {
-  purchaseNumber: string // "PUR-2026-27-00001"
-  supplierId: string
-  supplierName: string
-  purchaseDate: string // yyyy-mm-dd
-  invoiceNumber: string | null
-  lines: PurchaseLine[]
-  subtotal: number
-  /** What has actually been paid. The rest is what Supplier Payables reports. */
-  amountPaid: number
-  paymentMode: string | null
-  notes: string | null
-  createdById: string
-  createdByName: string
-  status: EntityStatus
-  createdAt: Timestamp
-  updatedAt: Timestamp
-}
-
-export interface ItemAttributeDoc {
-  name: string
-  code: string
-  /** The values this attribute can take. An attribute with none is still valid — it is being
-   *  set up — and the Item form simply offers nothing for it yet. */
-  values: string[]
-  description: string | null
-  displayOrder: number
-  source: 'system' | 'custom'
-  status: EntityStatus
-  createdAt: Timestamp
-  updatedAt: Timestamp
-}
-
 export interface ItemCategoryDoc {
   name: string
   code: string // "SPARE_PARTS"

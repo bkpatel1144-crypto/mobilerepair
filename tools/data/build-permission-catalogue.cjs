@@ -28,89 +28,14 @@ const { FEATURE_MAP } = require('./reference-menu-map.cjs')
 /** `device-purchase-register` -> `DEVICE_PURCHASE_REGISTER`. */
 const upper = (slug) => slug.toUpperCase().replace(/-/g, '_')
 
-/**
- * Modules and permissions the client's *menu* export declares but `permotion-sample.json` does
- * not carry — that permission export predates them.
- *
- * Their menu file names one permission per row (`PURCHASE_GENERAL_PURCHASE_VIEW`,
- * `INVENTORY_STOCK_VIEW`, `MASTERS_ATTRIBUTES_VIEW`) and a `*_MODULE_ACCESS` per module. The
- * write permissions below are not in any file: they follow the same naming rule the other 185
- * use, and are here because a master you can only view is not a master. `MASTERS_ATTRIBUTES_*`
- * is the exception — all four appear in `managerpermition.json`, so those are theirs.
- */
-const EXTRA_MODULES = [
-  {
-    sectionKey: 'purchase',
-    label: 'Purchase',
-    moduleAccess: {
-      key: 'PURCHASE_MODULE_ACCESS',
-      label: 'Access Purchase Module',
-      action: 'access',
-      kind: 'module',
-    },
-    features: [
-      {
-        navSlug: 'general',
-        refSlug: 'general-purchase',
-        permissions: [
-          { key: 'PURCHASE_GENERAL_PURCHASE_VIEW', label: 'View General Purchase', action: 'view', kind: 'crud' },
-          { key: 'PURCHASE_GENERAL_PURCHASE_CREATE', label: 'Create General Purchase', action: 'create', kind: 'crud' },
-          { key: 'PURCHASE_GENERAL_PURCHASE_UPDATE', label: 'Update General Purchase', action: 'update', kind: 'crud' },
-          { key: 'PURCHASE_GENERAL_PURCHASE_DELETE', label: 'Delete General Purchase', action: 'delete', kind: 'crud' },
-        ],
-      },
-    ],
-  },
-  {
-    sectionKey: 'inventory',
-    label: 'Inventory',
-    moduleAccess: {
-      key: 'INVENTORY_MODULE_ACCESS',
-      label: 'Access Inventory Module',
-      action: 'access',
-      kind: 'module',
-    },
-    features: [
-      {
-        navSlug: 'stock',
-        refSlug: 'stock',
-        permissions: [
-          { key: 'INVENTORY_STOCK_VIEW', label: 'View Stock', action: 'view', kind: 'crud' },
-          { key: 'INVENTORY_STOCK_EXPORT', label: 'Export Stock', action: 'export', kind: 'custom' },
-        ],
-      },
-    ],
-  },
-]
-
-/** Attributes belongs to Masters, which the permission export does carry — so it is merged into
- *  that module rather than added as one. All four keys are the client's own, from
- *  `managerpermition.json`. */
-const EXTRA_FEATURES = {
-  masters: [
-    {
-      navSlug: 'attributes',
-      refSlug: 'attributes',
-      permissions: [
-        { key: 'MASTERS_ATTRIBUTES_VIEW', label: 'View Attributes', action: 'view', kind: 'crud' },
-        { key: 'MASTERS_ATTRIBUTES_CREATE', label: 'Create Attributes', action: 'create', kind: 'crud' },
-        { key: 'MASTERS_ATTRIBUTES_UPDATE', label: 'Update Attributes', action: 'update', kind: 'crud' },
-        { key: 'MASTERS_ATTRIBUTES_DELETE', label: 'Delete Attributes', action: 'delete', kind: 'crud' },
-      ],
-    },
-  ],
-}
-
 const granted = new Set(ref.permissions)
 const modules = []
 let total = 0
 
 for (const node of ref.menuHierarchy) {
   if (node.type !== 'module') continue
-  const featureMap = { ...FEATURE_MAP[node.key] }
-  if (!Object.keys(featureMap).length) continue
-  // Features declared only by the menu export are added after the hierarchy walk.
-  for (const extra of EXTRA_FEATURES[node.key] ?? []) delete featureMap[extra.navSlug]
+  const featureMap = FEATURE_MAP[node.key]
+  if (!featureMap) continue
 
   const all = node.permissions ?? []
   const moduleAccess = all.find((p) => p.type === 'module')
@@ -167,57 +92,21 @@ for (const node of ref.menuHierarchy) {
   })
 }
 
-// Features the menu export adds to a module the permission export already has.
-for (const [sectionKey, features] of Object.entries(EXTRA_FEATURES)) {
-  const module = modules.find((m) => m.sectionKey === sectionKey)
-  if (!module) throw new Error(`no module ${sectionKey} to attach extra features to`)
-  const order = Object.keys(FEATURE_MAP[sectionKey])
-  module.features.push(...features)
-  module.features.sort((a, b) => order.indexOf(a.navSlug) - order.indexOf(b.navSlug))
-  total += features.reduce((n, f) => n + f.permissions.length, 0)
-}
-
-// Whole modules the permission export predates.
-for (const extra of EXTRA_MODULES) {
-  modules.push(extra)
-  total += 1 + extra.features.reduce((n, f) => n + f.permissions.length, 0)
-}
-
 // The export's own OWNER grant. If this ever disagrees, either a feature was added to the nav
 // without a mapping or the export changed — both worth stopping for.
 const keys = modules.flatMap((m) => [
   m.moduleAccess.key,
   ...m.features.flatMap((f) => f.permissions.map((p) => p.key)),
 ])
-const declaredElsewhere = new Set([
-  ...EXTRA_MODULES.flatMap((m) => [
-    m.moduleAccess.key,
-    ...m.features.flatMap((f) => f.permissions.map((p) => p.key)),
-  ]),
-  ...Object.values(EXTRA_FEATURES)
-    .flat()
-    .flatMap((f) => f.permissions.map((p) => p.key)),
-])
 const missing = [...granted].filter((k) => !keys.includes(k))
-const extra = keys.filter((k) => !granted.has(k) && !declaredElsewhere.has(k))
+const extra = keys.filter((k) => !granted.has(k))
 if (missing.length || extra.length) {
   throw new Error(
-    'catalogue does not match the export: missing ' +
-      (missing.join(', ') || 'none') +
-      '; unexpected ' +
-      (extra.join(', ') || 'none')
+    `catalogue does not match the export's granted set.\n  missing: ${missing.join(', ')}\n  extra: ${extra.join(', ')}`
   )
 }
-if (total !== ref.permissions.length + declaredElsewhere.size) {
-  throw new Error(
-    'counted ' +
-      total +
-      ', expected ' +
-      ref.permissions.length +
-      ' from the permission export plus ' +
-      declaredElsewhere.size +
-      ' declared only by the menu export'
-  )
+if (total !== ref.permissions.length) {
+  throw new Error(`counted ${total}, export grants ${ref.permissions.length}`)
 }
 
 const header = `// GENERATED by tools/data/build-permission-catalogue.cjs — do not edit by hand.
@@ -261,13 +150,7 @@ export const PERMISSION_CATALOGUE: PermissionModuleSpec[] = ${JSON.stringify(
   modules.map((m) => ({
     sectionKey: m.sectionKey,
     label: m.label,
-    // `kind` either comes from the hierarchy's `type` or is already set on an EXTRA_* entry.
-    moduleAccess: {
-      key: m.moduleAccess.key,
-      label: m.moduleAccess.label,
-      action: m.moduleAccess.action,
-      kind: m.moduleAccess.kind ?? m.moduleAccess.type,
-    },
+    moduleAccess: { ...m.moduleAccess, kind: m.moduleAccess.type, type: undefined },
     features: m.features.map((f) => ({
       navSlug: f.navSlug,
       refSlug: f.refSlug,
@@ -275,27 +158,13 @@ export const PERMISSION_CATALOGUE: PermissionModuleSpec[] = ${JSON.stringify(
         key: p.key,
         label: p.label,
         action: p.action,
-        kind: p.kind ?? p.type,
+        kind: p.type,
       })),
     })),
   })),
   (k, v) => (v === undefined ? undefined : v),
   2
 ).replace(/"([A-Za-z]\\w*)":/g, '$1:')}
-
-/**
- * Every menu slug this app has, in the reference's own vocabulary — its 8 module slugs plus the
- * 44 feature slugs, 52 in all.
- *
- * Emitted here rather than kept only in \`reference-menu-map.cjs\` so a test can compare it with
- * \`data/menus.json\` without importing an untyped CommonJS module.
- */
-export const REFERENCE_MENU_SLUGS: string[] = ${JSON.stringify(
-  [
-    ...modules.map((m) => m.sectionKey),
-    ...modules.flatMap((m) => m.features.map((f) => f.refSlug)),
-  ].sort()
-)}
 
 /** Every permission key in the catalogue. */
 export const ALL_PERMISSION_KEYS: string[] = PERMISSION_CATALOGUE.flatMap((m) => [

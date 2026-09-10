@@ -10,9 +10,9 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { DOTS, parsePattern } from './pattern-value'
 import { useTranslation } from 'react-i18next'
 
+const DOTS = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const
 const DOT_POS: Record<number, [number, number]> = {
   1: [40, 40], 2: [100, 40], 3: [160, 40],
   4: [40, 100], 5: [100, 100], 6: [160, 100],
@@ -21,6 +21,25 @@ const DOT_POS: Record<number, [number, number]> = {
 const HIT_RADIUS = 22
 
 /** Encodes/decodes a pattern as `"1-2-3-6-9"` — dot indices in the order they were drawn. */
+function parsePattern(value: string): number[] {
+  return value
+    .split('-')
+    .map((n) => Number(n))
+    .filter((n) => DOTS.includes(n as (typeof DOTS)[number]))
+}
+
+/**
+ * Is this stored value a drawn pattern rather than a typed PIN?
+ *
+ * Derived from the string instead of carried alongside it as a boolean. Both are written to the
+ * same `devicePinPattern` field, and a separate flag is only correct until something reads the
+ * record back — the Buy Mobile form kept no flag at all, and the Create Job Card form kept one in
+ * its draft that no reader of a *saved* job card had access to. A pattern is dash-joined dot
+ * indices, so the value says what it is: `"1-2-5-8"` is a pattern, `"1258"` is a PIN.
+ */
+export function isPatternValue(value: string | null | undefined): boolean {
+  return !!value && value.includes('-') && parsePattern(value).length >= 2
+}
 
 /**
  * The real "Draw Pattern" dialog behind the amber "⊞ Draw" button — a proper drag gesture (press
