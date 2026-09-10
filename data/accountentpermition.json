@@ -1,0 +1,1586 @@
+{
+    "role": "ACCOUNTANT",
+    "assignedMenus": [
+        "service",
+        "job-cards",
+        "finance",
+        "receipts",
+        "ledger",
+        "cashbook",
+        "receivables",
+        "payables",
+        "supplier-payables",
+        "expenses",
+        "second-hand-device",
+        "device-stock",
+        "device-purchase-register",
+        "device-sale-register",
+        "reports",
+        "pnl-report",
+        "supplier-report",
+        "period-summary",
+        "profit-loss"
+    ],
+    "menuHierarchy": [
+        {
+            "type": "module",
+            "key": "service",
+            "label": "Service",
+            "icon": "Wrench",
+            "description": "Service operations and job card management",
+            "permissions": [
+                {
+                    "key": "SERVICE_MODULE_ACCESS",
+                    "label": "Access Service Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_VIEW",
+                    "label": "View Job Cards",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CREATE",
+                    "label": "Create Job Cards",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_UPDATE",
+                    "label": "Update Job Cards",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_DELETE",
+                    "label": "Delete Job Cards",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_RESTORE",
+                    "label": "Restore Job Cards",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_ASSIGN",
+                    "label": "Assign Technician",
+                    "type": "custom",
+                    "action": "assign"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CLOSE",
+                    "label": "Close Job Card",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CANCEL",
+                    "label": "Cancel Job Card",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_INVOICE",
+                    "label": "Convert To Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_REPEAT",
+                    "label": "Repeat Job Card",
+                    "type": "custom",
+                    "action": "repeat"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print_receipt"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                    "label": "Print Label",
+                    "type": "custom",
+                    "action": "print_label"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_VIEW",
+                    "label": "View Service Options",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_MANAGE",
+                    "label": "Manage Options (Create / Edit / Delete)",
+                    "type": "custom",
+                    "action": "manage"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_VIEW",
+                    "label": "View Job Costing",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_CREATE",
+                    "label": "Create Job Costing",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_UPDATE",
+                    "label": "Update Job Costing",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_DELETE",
+                    "label": "Delete Job Costing",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_VIEW",
+                    "label": "View Service Items",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_CREATE",
+                    "label": "Create Service Items",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_UPDATE",
+                    "label": "Update Service Items",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_DELETE",
+                    "label": "Delete Service Items",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "job-cards",
+            "label": "Job Cards",
+            "icon": "ClipboardList",
+            "description": "Manage service job cards",
+            "module": {
+                "key": "service",
+                "label": "Service"
+            },
+            "permissions": [
+                {
+                    "key": "SERVICE_JOB_CARDS_VIEW",
+                    "label": "View Job Cards",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CREATE",
+                    "label": "Create Job Cards",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_UPDATE",
+                    "label": "Update Job Cards",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_DELETE",
+                    "label": "Delete Job Cards",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_RESTORE",
+                    "label": "Restore Job Cards",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_ASSIGN",
+                    "label": "Assign Technician",
+                    "type": "custom",
+                    "action": "assign"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CLOSE",
+                    "label": "Close Job Card",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CANCEL",
+                    "label": "Cancel Job Card",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_INVOICE",
+                    "label": "Convert To Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_REPEAT",
+                    "label": "Repeat Job Card",
+                    "type": "custom",
+                    "action": "repeat"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print_receipt"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                    "label": "Print Label",
+                    "type": "custom",
+                    "action": "print_label"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "finance",
+            "label": "Finance",
+            "icon": "DollarSign",
+            "description": "Accounting, payments, and financial management",
+            "permissions": [
+                {
+                    "key": "FINANCE_MODULE_ACCESS",
+                    "label": "Access Finance Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_VIEW",
+                    "label": "View Receipts & Payments",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_CREATE",
+                    "label": "Create Receipts & Payments",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_VOID",
+                    "label": "Void Receipt",
+                    "type": "custom",
+                    "action": "void"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_VIEW",
+                    "label": "View Chart of Accounts",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_CREATE",
+                    "label": "Create Chart of Accounts",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_UPDATE",
+                    "label": "Update Chart of Accounts",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_CHART_OF_ACCOUNTS_DELETE",
+                    "label": "Delete Chart of Accounts",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_VIEW",
+                    "label": "View Journal Entries",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_CREATE",
+                    "label": "Create Journal Entries",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_UPDATE",
+                    "label": "Update Journal Entries",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_DELETE",
+                    "label": "Delete Journal Entries",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_APPROVE",
+                    "label": "Approve Entry",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_CANCEL",
+                    "label": "Cancel Entry",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "FINANCE_JOURNAL_ENTRIES_PRINT",
+                    "label": "Print Entry",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_VIEW",
+                    "label": "View Payment Entries",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_CREATE",
+                    "label": "Create Payment Entries",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_UPDATE",
+                    "label": "Update Payment Entries",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_DELETE",
+                    "label": "Delete Payment Entries",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_APPROVE",
+                    "label": "Approve Payment",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_CANCEL",
+                    "label": "Cancel Payment",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "FINANCE_PAYMENT_ENTRIES_PRINT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_VIEW",
+                    "label": "View Bank Accounts",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_CREATE",
+                    "label": "Create Bank Accounts",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_UPDATE",
+                    "label": "Update Bank Accounts",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_BANK_ACCOUNTS_DELETE",
+                    "label": "Delete Bank Accounts",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_VIEW",
+                    "label": "View Bank Reconciliation",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_CREATE",
+                    "label": "Create Bank Reconciliation",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_UPDATE",
+                    "label": "Update Bank Reconciliation",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_DELETE",
+                    "label": "Delete Bank Reconciliation",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_BANK_RECONCILIATION_APPROVE",
+                    "label": "Approve Reconciliation",
+                    "type": "custom",
+                    "action": "approve"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_VIEW",
+                    "label": "View Budgets",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_CREATE",
+                    "label": "Create Budgets",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_UPDATE",
+                    "label": "Update Budgets",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_BUDGETS_DELETE",
+                    "label": "Delete Budgets",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_VIEW",
+                    "label": "View Cost Centers",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_CREATE",
+                    "label": "Create Cost Centers",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_UPDATE",
+                    "label": "Update Cost Centers",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "FINANCE_COST_CENTERS_DELETE",
+                    "label": "Delete Cost Centers",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "FINANCE_FINANCIAL_REPORTS_VIEW",
+                    "label": "View Financial Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_FINANCIAL_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_FINANCIAL_REPORTS_PRINT",
+                    "label": "Print Reports",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "FINANCE_LEDGER_VIEW",
+                    "label": "View Party Ledger",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_LEDGER_EXPORT",
+                    "label": "Export Ledger",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_CASHBOOK_VIEW",
+                    "label": "View Cash Book",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_CASHBOOK_EXPORT",
+                    "label": "Export Cash Book",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_RECEIVABLES_VIEW",
+                    "label": "View Receivables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIVABLES_EXPORT",
+                    "label": "Export Receivables",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_PAYABLES_VIEW",
+                    "label": "View Customer Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_PAYABLES_EXPORT",
+                    "label": "Export Payables",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_VIEW",
+                    "label": "View Supplier Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+                    "label": "Export Supplier Payables",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_VIEW",
+                    "label": "View Expenses",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CREATE",
+                    "label": "Create Expenses",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CANCEL",
+                    "label": "Cancel Expense",
+                    "type": "custom",
+                    "action": "cancel"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "receipts",
+            "label": "Receipts & Payments",
+            "icon": "Receipt",
+            "description": "Record and track all customer payments and receipts",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_RECEIPTS_VIEW",
+                    "label": "View Receipts & Payments",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_CREATE",
+                    "label": "Create Receipts & Payments",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_RECEIPTS_VOID",
+                    "label": "Void Receipt",
+                    "type": "custom",
+                    "action": "void"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "ledger",
+            "label": "Party Ledger",
+            "icon": "BookOpen",
+            "description": "Party-wise account ledger with full history",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_LEDGER_VIEW",
+                    "label": "View Party Ledger",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_LEDGER_EXPORT",
+                    "label": "Export Ledger",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "cashbook",
+            "label": "Cash Book",
+            "icon": "BookText",
+            "description": "All transactions — receipts and payments register",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_CASHBOOK_VIEW",
+                    "label": "View Cash Book",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_CASHBOOK_EXPORT",
+                    "label": "Export Cash Book",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "receivables",
+            "label": "Receivables",
+            "icon": "TrendingUp",
+            "description": "Outstanding receivables from customers",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_RECEIVABLES_VIEW",
+                    "label": "View Receivables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_RECEIVABLES_EXPORT",
+                    "label": "Export Receivables",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "payables",
+            "label": "Customer Payables",
+            "icon": "TrendingDown",
+            "description": "Refunds due and un-billed advances owed back to customers",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_PAYABLES_VIEW",
+                    "label": "View Customer Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_PAYABLES_EXPORT",
+                    "label": "Export Payables",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "supplier-payables",
+            "label": "Supplier Payables",
+            "icon": "Building",
+            "description": "Outstanding bills owed to suppliers, with aging and supplier ledger",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_VIEW",
+                    "label": "View Supplier Payables",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+                    "label": "Export Supplier Payables",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "expenses",
+            "label": "Expenses",
+            "icon": "Receipt",
+            "description": "The shop's own spending — rent, electricity, salaries and the rest",
+            "module": {
+                "key": "finance",
+                "label": "Finance"
+            },
+            "permissions": [
+                {
+                    "key": "FINANCE_EXPENSES_VIEW",
+                    "label": "View Expenses",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CREATE",
+                    "label": "Create Expenses",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "FINANCE_EXPENSES_CANCEL",
+                    "label": "Cancel Expense",
+                    "type": "custom",
+                    "action": "cancel"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "second-hand-device",
+            "label": "Second Hand Device",
+            "icon": "Smartphone",
+            "description": "Buy, refurbish and resell second hand mobiles, laptops and other devices",
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_MODULE_ACCESS",
+                    "label": "Access Second Hand Device Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_VIEW",
+                    "label": "View Device Purchase",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CREATE",
+                    "label": "Create Device Purchase",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_UPDATE",
+                    "label": "Update Device Purchase",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_CANCEL",
+                    "label": "Return Device to Seller",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_PRINT",
+                    "label": "Print Purchase Receipt",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_EXPORT",
+                    "label": "Export Device Purchases",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_VIEW",
+                    "label": "View Device Sale",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CREATE",
+                    "label": "Create Device Sale",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_CANCEL",
+                    "label": "Cancel Sale",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_PRINT",
+                    "label": "Print Sale Invoice",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_EXPORT",
+                    "label": "Export Available Devices",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+                    "label": "View Device Stock",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+                    "label": "Export Device Stock",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+                    "label": "View Purchase Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+                    "label": "Export Purchase Register",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+                    "label": "View Sale Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+                    "label": "Export Sale Register",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-stock",
+            "label": "Device Stock",
+            "icon": "BarChart3",
+            "description": "Devices currently in stock — aging, invested amount",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+                    "label": "View Device Stock",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+                    "label": "Export Device Stock",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-purchase-register",
+            "label": "Purchase Register",
+            "icon": "PackagePlus",
+            "description": "All device purchases — filterable register with CSV export",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+                    "label": "View Purchase Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+                    "label": "Export Purchase Register",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "device-sale-register",
+            "label": "Sale Register",
+            "icon": "ShoppingBag",
+            "description": "All device sales — profit/margin, filterable register with CSV export",
+            "module": {
+                "key": "second-hand-device",
+                "label": "Second Hand Device"
+            },
+            "permissions": [
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+                    "label": "View Sale Register",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+                    "label": "Export Sale Register",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "module",
+            "key": "reports",
+            "label": "Reports",
+            "icon": "BarChart",
+            "description": "Business reports and analytics",
+            "permissions": [
+                {
+                    "key": "REPORTS_MODULE_ACCESS",
+                    "label": "Access Reports Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "REPORTS_SERVICE_REPORTS_VIEW",
+                    "label": "View Service Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PROFIT_LOSS_VIEW",
+                    "label": "View Profit & Loss",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PROFIT_LOSS_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_PNL_REPORT_VIEW",
+                    "label": "View Job-wise Profit",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PNL_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_VIEW",
+                    "label": "View Supplier Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_TECHNICIAN_REPORT_VIEW",
+                    "label": "View Technician Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_TECHNICIAN_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_VIEW",
+                    "label": "View Period Summary",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_FIELD_VISIT_REPORT_VIEW",
+                    "label": "View Field Visit Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_FIELD_VISIT_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_SALES_REPORTS_VIEW",
+                    "label": "View Sales Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_SALES_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_SALES_REPORTS_SCHEDULE",
+                    "label": "Schedule Reports",
+                    "type": "custom",
+                    "action": "schedule"
+                },
+                {
+                    "key": "REPORTS_PURCHASE_REPORTS_VIEW",
+                    "label": "View Purchase Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PURCHASE_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_INVENTORY_REPORTS_VIEW",
+                    "label": "View Inventory Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_INVENTORY_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_FINANCE_REPORTS_VIEW",
+                    "label": "View Finance Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_FINANCE_REPORTS_EXPORT",
+                    "label": "Export Reports",
+                    "type": "custom",
+                    "action": "export"
+                },
+                {
+                    "key": "REPORTS_FINANCE_REPORTS_PRINT",
+                    "label": "Print Reports",
+                    "type": "custom",
+                    "action": "print"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_VIEW",
+                    "label": "View Custom Reports",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_CREATE",
+                    "label": "Create Custom Reports",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_UPDATE",
+                    "label": "Update Custom Reports",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "REPORTS_CUSTOM_REPORTS_DELETE",
+                    "label": "Delete Custom Reports",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "pnl-report",
+            "label": "Job-wise Profit",
+            "icon": "TrendingUp",
+            "description": "Job-wise profit and loss analysis",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_PNL_REPORT_VIEW",
+                    "label": "View Job-wise Profit",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PNL_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "supplier-report",
+            "label": "Supplier Report",
+            "icon": "Package",
+            "description": "Supplier-wise parts cost analysis",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_VIEW",
+                    "label": "View Supplier Report",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_SUPPLIER_REPORT_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "period-summary",
+            "label": "Period Summary",
+            "icon": "CalendarDays",
+            "description": "Daily and monthly revenue and profit summary",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_VIEW",
+                    "label": "View Period Summary",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PERIOD_SUMMARY_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "profit-loss",
+            "label": "Profit & Loss",
+            "icon": "Scale",
+            "description": "Head-wise profit and loss statement for a period",
+            "module": {
+                "key": "reports",
+                "label": "Reports"
+            },
+            "permissions": [
+                {
+                    "key": "REPORTS_PROFIT_LOSS_VIEW",
+                    "label": "View Profit & Loss",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "REPORTS_PROFIT_LOSS_EXPORT",
+                    "label": "Export Report",
+                    "type": "custom",
+                    "action": "export"
+                }
+            ]
+        }
+    ],
+    "permissionsByMenu": {
+        "SERVICE": {
+            "module": "SERVICE",
+            "moduleAccess": "SERVICE_MODULE_ACCESS",
+            "features": {
+                "JOB_CARDS": {
+                    "feature": "JOB_CARDS",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_CARDS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_RESTORE",
+                            "action": "RESTORE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_ASSIGN",
+                            "action": "ASSIGN"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CLOSE",
+                            "action": "CLOSE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CANCEL",
+                            "action": "CANCEL"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_INVOICE",
+                            "action": "INVOICE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_REPEAT",
+                            "action": "REPEAT"
+                        }
+                    ]
+                },
+                "JOB_CARDS_PRINT": {
+                    "feature": "JOB_CARDS_PRINT",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                            "action": "RECEIPT"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                            "action": "LABEL"
+                        }
+                    ]
+                }
+            }
+        },
+        "FINANCE": {
+            "module": "FINANCE",
+            "moduleAccess": "FINANCE_MODULE_ACCESS",
+            "features": {
+                "RECEIPTS": {
+                    "feature": "RECEIPTS",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_RECEIPTS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_RECEIPTS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "FINANCE_RECEIPTS_VOID",
+                            "action": "VOID"
+                        }
+                    ]
+                },
+                "LEDGER": {
+                    "feature": "LEDGER",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_LEDGER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_LEDGER_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "CASHBOOK": {
+                    "feature": "CASHBOOK",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_CASHBOOK_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_CASHBOOK_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "RECEIVABLES": {
+                    "feature": "RECEIVABLES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_RECEIVABLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_RECEIVABLES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "PAYABLES": {
+                    "feature": "PAYABLES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_PAYABLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_PAYABLES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "SUPPLIER_PAYABLES": {
+                    "feature": "SUPPLIER_PAYABLES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_SUPPLIER_PAYABLES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "EXPENSES": {
+                    "feature": "EXPENSES",
+                    "permissions": [
+                        {
+                            "key": "FINANCE_EXPENSES_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "FINANCE_EXPENSES_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "FINANCE_EXPENSES_CANCEL",
+                            "action": "CANCEL"
+                        }
+                    ]
+                }
+            }
+        },
+        "SECOND_HAND_DEVICE": {
+            "module": "SECOND_HAND_DEVICE",
+            "moduleAccess": "SECOND_HAND_DEVICE_MODULE_ACCESS",
+            "features": {}
+        },
+        "SECOND": {
+            "module": "SECOND",
+            "moduleAccess": null,
+            "features": {
+                "HAND_DEVICE_DEVICE_STOCK": {
+                    "feature": "HAND_DEVICE_DEVICE_STOCK",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "HAND_DEVICE_DEVICE_PURCHASE_REGISTER": {
+                    "feature": "HAND_DEVICE_DEVICE_PURCHASE_REGISTER",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "HAND_DEVICE_DEVICE_SALE_REGISTER": {
+                    "feature": "HAND_DEVICE_DEVICE_SALE_REGISTER",
+                    "permissions": [
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                }
+            }
+        },
+        "REPORTS": {
+            "module": "REPORTS",
+            "moduleAccess": "REPORTS_MODULE_ACCESS",
+            "features": {
+                "PNL_REPORT": {
+                    "feature": "PNL_REPORT",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_PNL_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_PNL_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "SUPPLIER_REPORT": {
+                    "feature": "SUPPLIER_REPORT",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_SUPPLIER_REPORT_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_SUPPLIER_REPORT_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "PERIOD_SUMMARY": {
+                    "feature": "PERIOD_SUMMARY",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_PERIOD_SUMMARY_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_PERIOD_SUMMARY_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                },
+                "PROFIT_LOSS": {
+                    "feature": "PROFIT_LOSS",
+                    "permissions": [
+                        {
+                            "key": "REPORTS_PROFIT_LOSS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "REPORTS_PROFIT_LOSS_EXPORT",
+                            "action": "EXPORT"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "permissions": [
+        "FINANCE_CASHBOOK_EXPORT",
+        "FINANCE_CASHBOOK_VIEW",
+        "FINANCE_EXPENSES_CANCEL",
+        "FINANCE_EXPENSES_CREATE",
+        "FINANCE_EXPENSES_VIEW",
+        "FINANCE_LEDGER_EXPORT",
+        "FINANCE_LEDGER_VIEW",
+        "FINANCE_MODULE_ACCESS",
+        "FINANCE_PAYABLES_EXPORT",
+        "FINANCE_PAYABLES_VIEW",
+        "FINANCE_RECEIPTS_CREATE",
+        "FINANCE_RECEIPTS_VIEW",
+        "FINANCE_RECEIPTS_VOID",
+        "FINANCE_RECEIVABLES_EXPORT",
+        "FINANCE_RECEIVABLES_VIEW",
+        "FINANCE_SUPPLIER_PAYABLES_EXPORT",
+        "FINANCE_SUPPLIER_PAYABLES_VIEW",
+        "REPORTS_MODULE_ACCESS",
+        "REPORTS_PERIOD_SUMMARY_EXPORT",
+        "REPORTS_PERIOD_SUMMARY_VIEW",
+        "REPORTS_PNL_REPORT_EXPORT",
+        "REPORTS_PNL_REPORT_VIEW",
+        "REPORTS_PROFIT_LOSS_EXPORT",
+        "REPORTS_PROFIT_LOSS_VIEW",
+        "REPORTS_SUPPLIER_REPORT_EXPORT",
+        "REPORTS_SUPPLIER_REPORT_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_PURCHASE_REGISTER_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_SALE_REGISTER_VIEW",
+        "SECOND_HAND_DEVICE_DEVICE_STOCK_EXPORT",
+        "SECOND_HAND_DEVICE_DEVICE_STOCK_VIEW",
+        "SECOND_HAND_DEVICE_MODULE_ACCESS",
+        "SERVICE_JOB_CARDS_ASSIGN",
+        "SERVICE_JOB_CARDS_CANCEL",
+        "SERVICE_JOB_CARDS_CLOSE",
+        "SERVICE_JOB_CARDS_CREATE",
+        "SERVICE_JOB_CARDS_DELETE",
+        "SERVICE_JOB_CARDS_INVOICE",
+        "SERVICE_JOB_CARDS_PRINT_LABEL",
+        "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+        "SERVICE_JOB_CARDS_REPEAT",
+        "SERVICE_JOB_CARDS_RESTORE",
+        "SERVICE_JOB_CARDS_UPDATE",
+        "SERVICE_JOB_CARDS_VIEW",
+        "SERVICE_MODULE_ACCESS"
+    ],
+    "summary": {
+        "totalMenus": 19,
+        "totalPermissions": 46,
+        "moduleCount": 4,
+        "featureCount": 15
+    }
+}

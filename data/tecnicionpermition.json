@@ -1,0 +1,328 @@
+{
+    "role": "TECHNICIAN",
+    "assignedMenus": [
+        "service",
+        "job-cards"
+    ],
+    "menuHierarchy": [
+        {
+            "type": "module",
+            "key": "service",
+            "label": "Service",
+            "icon": "Wrench",
+            "description": "Service operations and job card management",
+            "permissions": [
+                {
+                    "key": "SERVICE_MODULE_ACCESS",
+                    "label": "Access Service Module",
+                    "type": "module",
+                    "action": "access"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_VIEW",
+                    "label": "View Job Cards",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CREATE",
+                    "label": "Create Job Cards",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_UPDATE",
+                    "label": "Update Job Cards",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_DELETE",
+                    "label": "Delete Job Cards",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_RESTORE",
+                    "label": "Restore Job Cards",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_ASSIGN",
+                    "label": "Assign Technician",
+                    "type": "custom",
+                    "action": "assign"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CLOSE",
+                    "label": "Close Job Card",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CANCEL",
+                    "label": "Cancel Job Card",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_INVOICE",
+                    "label": "Convert To Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_REPEAT",
+                    "label": "Repeat Job Card",
+                    "type": "custom",
+                    "action": "repeat"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print_receipt"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                    "label": "Print Label",
+                    "type": "custom",
+                    "action": "print_label"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_VIEW",
+                    "label": "View Service Options",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_OPTIONS_MANAGE",
+                    "label": "Manage Options (Create / Edit / Delete)",
+                    "type": "custom",
+                    "action": "manage"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_VIEW",
+                    "label": "View Job Costing",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_CREATE",
+                    "label": "Create Job Costing",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_UPDATE",
+                    "label": "Update Job Costing",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_COSTING_DELETE",
+                    "label": "Delete Job Costing",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_VIEW",
+                    "label": "View Service Items",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_CREATE",
+                    "label": "Create Service Items",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_UPDATE",
+                    "label": "Update Service Items",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_SERVICE_ITEMS_DELETE",
+                    "label": "Delete Service Items",
+                    "type": "crud",
+                    "action": "delete"
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "key": "job-cards",
+            "label": "Job Cards",
+            "icon": "ClipboardList",
+            "description": "Manage service job cards",
+            "module": {
+                "key": "service",
+                "label": "Service"
+            },
+            "permissions": [
+                {
+                    "key": "SERVICE_JOB_CARDS_VIEW",
+                    "label": "View Job Cards",
+                    "type": "crud",
+                    "action": "view"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CREATE",
+                    "label": "Create Job Cards",
+                    "type": "crud",
+                    "action": "create"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_UPDATE",
+                    "label": "Update Job Cards",
+                    "type": "crud",
+                    "action": "update"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_DELETE",
+                    "label": "Delete Job Cards",
+                    "type": "crud",
+                    "action": "delete"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_RESTORE",
+                    "label": "Restore Job Cards",
+                    "type": "crud",
+                    "action": "restore"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_ASSIGN",
+                    "label": "Assign Technician",
+                    "type": "custom",
+                    "action": "assign"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CLOSE",
+                    "label": "Close Job Card",
+                    "type": "custom",
+                    "action": "close"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_CANCEL",
+                    "label": "Cancel Job Card",
+                    "type": "custom",
+                    "action": "cancel"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_INVOICE",
+                    "label": "Convert To Invoice",
+                    "type": "custom",
+                    "action": "invoice"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_REPEAT",
+                    "label": "Repeat Job Card",
+                    "type": "custom",
+                    "action": "repeat"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                    "label": "Print Receipt",
+                    "type": "custom",
+                    "action": "print_receipt"
+                },
+                {
+                    "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                    "label": "Print Label",
+                    "type": "custom",
+                    "action": "print_label"
+                }
+            ]
+        }
+    ],
+    "permissionsByMenu": {
+        "SERVICE": {
+            "module": "SERVICE",
+            "moduleAccess": "SERVICE_MODULE_ACCESS",
+            "features": {
+                "JOB_CARDS": {
+                    "feature": "JOB_CARDS",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_CARDS_VIEW",
+                            "action": "VIEW"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CREATE",
+                            "action": "CREATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_UPDATE",
+                            "action": "UPDATE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_DELETE",
+                            "action": "DELETE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_RESTORE",
+                            "action": "RESTORE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_ASSIGN",
+                            "action": "ASSIGN"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CLOSE",
+                            "action": "CLOSE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_CANCEL",
+                            "action": "CANCEL"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_INVOICE",
+                            "action": "INVOICE"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_REPEAT",
+                            "action": "REPEAT"
+                        }
+                    ]
+                },
+                "JOB_CARDS_PRINT": {
+                    "feature": "JOB_CARDS_PRINT",
+                    "permissions": [
+                        {
+                            "key": "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+                            "action": "RECEIPT"
+                        },
+                        {
+                            "key": "SERVICE_JOB_CARDS_PRINT_LABEL",
+                            "action": "LABEL"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "permissions": [
+        "SERVICE_JOB_CARDS_ASSIGN",
+        "SERVICE_JOB_CARDS_CANCEL",
+        "SERVICE_JOB_CARDS_CLOSE",
+        "SERVICE_JOB_CARDS_CREATE",
+        "SERVICE_JOB_CARDS_DELETE",
+        "SERVICE_JOB_CARDS_INVOICE",
+        "SERVICE_JOB_CARDS_PRINT_LABEL",
+        "SERVICE_JOB_CARDS_PRINT_RECEIPT",
+        "SERVICE_JOB_CARDS_REPEAT",
+        "SERVICE_JOB_CARDS_RESTORE",
+        "SERVICE_JOB_CARDS_UPDATE",
+        "SERVICE_JOB_CARDS_VIEW",
+        "SERVICE_MODULE_ACCESS"
+    ],
+    "summary": {
+        "totalMenus": 2,
+        "totalPermissions": 13,
+        "moduleCount": 1,
+        "featureCount": 1
+    }
+}

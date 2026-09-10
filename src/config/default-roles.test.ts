@@ -3,6 +3,7 @@ import { DEFAULT_ROLE_SEEDS } from './default-roles'
 import { DASHBOARD_WIDGETS, allWidgetsEnabled } from './dashboard-widgets'
 import { NAV_SECTIONS, DASHBOARD_MENU_KEY, menuKey } from './nav'
 import { ALL_PERMISSION_KEYS } from './permission-catalogue'
+import { DEFAULT_ROLE_GRANTS } from './default-role-grants'
 import permissionExport from '../../data/permotion-sample.json'
 
 /**
@@ -76,24 +77,42 @@ describe('seeded roles key into the real catalogues', () => {
     }
   })
 
-  it("OWNER is granted exactly the export's 185 permissions", () => {
-    // The claim "100% exact match" as a test. The catalogue is generated from the export and the
-    // generator already asserts the key sets are equal; this asserts the *seeded Owner role*
-    // carries all of them, which is a separate thing and the one a user sees as "185/185".
-    const owner = DEFAULT_ROLE_SEEDS.find((r) => r.code === 'OWNER')!
-    const granted = Object.entries(owner.actionPermissions)
+  it.each([
+    ['OWNER', 185],
+    ['MANAGER', 104],
+    ['SALESMAN', 39],
+    ['TECHNICIAN', 13],
+    ['ACCOUNTANT', 46],
+  ] as const)('%s is granted the %i permissions its export lists', (code, count) => {
+    // "Same as the reference" as a test rather than a claim. Manager is 104 of its export's 108:
+    // the other four are `MASTERS_ATTRIBUTES_*`, for a master this app has no screen for, and the
+    // generator prints them each run rather than quietly dropping them.
+    const role = DEFAULT_ROLE_SEEDS.find((r) => r.code === code)!
+    const granted = Object.entries(role.actionPermissions)
       .filter(([, on]) => on)
       .map(([key]) => key)
-      .sort()
-    expect(granted).toEqual([...permissionExport.permissions].sort())
-    expect(granted).toHaveLength(185)
+    expect(granted).toHaveLength(count)
+    expect(granted.sort()).toEqual([...DEFAULT_ROLE_GRANTS[code].permissions].sort())
   })
 
-  it('gives a view-only role its exports but never a delete', () => {
-    const accountant = DEFAULT_ROLE_SEEDS.find((r) => r.code === 'ACCOUNTANT')!
-    const keys = Object.keys(accountant.actionPermissions)
-    expect(keys.some((k) => k.endsWith('_EXPORT'))).toBe(true)
-    expect(keys.filter((k) => k.endsWith('_DELETE'))).toEqual([])
+  it("OWNER's grant is the export's own list, key for key", () => {
+    const owner = DEFAULT_ROLE_SEEDS.find((r) => r.code === 'OWNER')!
+    expect(Object.keys(owner.actionPermissions).sort()).toEqual(
+      [...permissionExport.permissions].sort()
+    )
+  })
+
+  it.each([
+    ['OWNER', 44],
+    ['MANAGER', 28],
+    ['SALESMAN', 6],
+    ['TECHNICIAN', 1],
+    ['ACCOUNTANT', 15],
+  ] as const)('%s sees the %i menus its export assigns, plus the dashboard', (code, count) => {
+    const role = DEFAULT_ROLE_SEEDS.find((r) => r.code === code)!
+    const menus = Object.keys(role.menuPermissions).filter((k) => k !== DASHBOARD_MENU_KEY)
+    expect(menus).toHaveLength(count)
+    expect(role.menuPermissions[DASHBOARD_MENU_KEY]).toBe(true)
   })
 
   it('lands every role on the dashboard', () => {
