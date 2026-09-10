@@ -51,6 +51,13 @@ export const itemCategoriesCollection = (companyId: string) =>
   `companies/${companyId}/itemCategories`
 export const itemCategoryDoc = (companyId: string, id: string) =>
   `${itemCategoriesCollection(companyId)}/${id}`
+export const purchasesCollection = (companyId: string) => `companies/${companyId}/purchases`
+export const purchaseDoc = (companyId: string, id: string) =>
+  `${purchasesCollection(companyId)}/${id}`
+export const itemAttributesCollection = (companyId: string) =>
+  `companies/${companyId}/itemAttributes`
+export const itemAttributeDoc = (companyId: string, id: string) =>
+  `${itemAttributesCollection(companyId)}/${id}`
 export const uomCollection = (companyId: string) => `companies/${companyId}/uom`
 export const uomDoc = (companyId: string, id: string) => `${uomCollection(companyId)}/${id}`
 export const paymentModesCollection = (companyId: string) => `companies/${companyId}/paymentModes`

@@ -10,7 +10,9 @@
       "second-hand-device": "સેકન્ડ હેન્ડ ડિવાઇસ",
       "reports": "રિપોર્ટ",
       "administration": "વ્યવસ્થાપન",
-      "settings": "સેટિંગ્સ"
+      "settings": "સેટિંગ્સ",
+      "purchase": "ખરીદી",
+      "inventory": "ઇન્વેન્ટરી"
     },
     "items": {
       "sales/invoices": "વેચાણ બિલ",
@@ -22,7 +24,7 @@
       "finance/ledger": "પાર્ટી ખાતાવહી",
       "finance/cashbook": "રોકડ ખાતાવહી",
       "finance/receivables": "લેણી રકમ",
-      "finance/payables": "દેવી રકમ",
+      "finance/payables": "ગ્રાહક દેવું",
       "finance/supplier-payables": "સપ્લાયર દેવું",
       "finance/expenses": "ખર્ચ",
       "masters/uom": "માપનો એકમ",
@@ -56,7 +58,10 @@
       "settings/billing": "બિલિંગ અને સબ્સ્ક્રિપ્શન",
       "settings/print-formats": "પ્રિન્ટ ફોર્મેટ",
       "settings/whatsapp": "WhatsApp",
-      "settings/backup": "બેકઅપ અને રિસ્ટોર"
+      "settings/backup": "બેકઅપ અને રિસ્ટોર",
+      "purchase/general": "સામાન્ય ખરીદી",
+      "inventory/stock": "સ્ટોક",
+      "masters/attributes": "લક્ષણો"
     }
   },
   "common": {
@@ -829,6 +834,24 @@
         "cessPercent": "સેસ %",
         "natureGoods": "માલ",
         "natureService": "સેવા"
+      },
+      "attributes": {
+        "attributes": "લક્ષણો",
+        "theVocabularyItemVariantsAre": "આઇટમ વેરિઅન્ટ જે શબ્દોથી વ્યાખ્યાયિત થાય છે — રંગ, ક્ષમતા વગેરે.",
+        "values": "મૂલ્યો",
+        "inUse": "ઉપયોગમાં",
+        "searchAttributes": "લક્ષણો શોધો…",
+        "noAttributesYet": "હજી કોઈ લક્ષણ નથી",
+        "addColourOrCapacityToStart": "આઇટમ વેરિઅન્ટ વર્ણવવા રંગ કે ક્ષમતા ઉમેરો.",
+        "addAttribute": "લક્ષણ ઉમેરો",
+        "aNameIsRequired": "નામ જરૂરી છે.",
+        "eGColour": "જેમ કે રંગ",
+        "eGBlackWhiteBlue": "જેમ કે કાળો, સફેદ, વાદળી",
+        "noValuesYet": "હજી કોઈ મૂલ્ય નથી.",
+        "aDeactivatedAttributeIsNotOffered": "નિષ્ક્રિય લક્ષણ આઇટમ વર્ણવતી વખતે દેખાશે નહીં.",
+        "thisPermanentlyDeletesTheAttribute": "આ લક્ષણ કાયમ માટે કાઢી નાખશે. તે પાછું લાવી શકાશે નહીં.",
+        "nItemsStillNameThisAttribute_one": "{{count}} આઇટમ હજી આ લક્ષણનું નામ ધરાવે છે અને એ જ નામ રાખશે. આ પાછું લાવી શકાશે નહીં.",
+        "nItemsStillNameThisAttribute_other": "{{count}} આઇટમ હજી આ લક્ષણનું નામ ધરાવે છે અને એ જ નામ રાખશે. આ પાછું લાવી શકાશે નહીં."
       }
     },
     "secondHandDevice": {
@@ -1923,6 +1946,35 @@
       "fieldPreviewInput": {
         "searchUser": "વપરાશકર્તા શોધો...",
         "select": "પસંદ કરો..."
+      }
+    },
+    "inventory": {
+      "stock": {
+        "stock": "સ્ટોક",
+        "stockTrackedItemsAndTheirLevels": "સ્ટોક-ટ્રેક કરેલી આઇટમ અને તેમના નિર્ધારિત સ્તર.",
+        "openItemMaster": "આઇટમ માસ્ટર ખોલો",
+        "tracked": "ટ્રેક કરેલ",
+        "atReorderPoint": "રીઓર્ડર સ્તરે",
+        "nothingIsStockTracked": "કંઈ સ્ટોક-ટ્રેક નથી",
+        "turnOnStockTrackedOnAnItem": "આઇટમ પર સ્ટોક ટ્રેક ચાલુ કરો જેથી તે અહીં દેખાય."
+      }
+    },
+    "purchase": {
+      "generalPurchase": {
+        "generalPurchase": "સામાન્ય ખરીદી",
+        "partsAndStockBoughtFromSuppliers": "સપ્લાયર પાસેથી ખરીદેલા પાર્ટ્સ અને સ્ટોક.",
+        "recordPurchase": "ખરીદી નોંધો",
+        "purchaseNo": "ખરીદી ક્ર.",
+        "lines": "લાઇન",
+        "totalSpend": "કુલ ખર્ચ",
+        "searchPurchases": "ખરીદી શોધો…",
+        "noPurchasesYet": "હજી કોઈ ખરીદી નથી",
+        "recordWhatYouBuyFromSuppliers": "સપ્લાયર પાસેથી કરેલી ખરીદી નોંધો જેથી તે સપ્લાયર પેયેબલ્સમાં દેખાય.",
+        "supplierInvoiceNo": "સપ્લાયર બિલ ક્ર.",
+        "addAnItem": "આઇટમ ઉમેરો…",
+        "chooseASupplier": "એક સપ્લાયર પસંદ કરો.",
+        "addAtLeastOneLine": "ઓછામાં ઓછી એક આઇટમ ઉમેરો.",
+        "aCancelledPurchaseStopsCounting": "રદ કરેલી ખરીદી ખર્ચ અને સપ્લાયર બાકીમાં ગણાશે નહીં. રેકોર્ડ રહેશે."
       }
     }
   },

@@ -11,6 +11,10 @@
  */
 const FEATURE_MAP = {
   sales: { invoices: 'invoices' },
+  // Declared by the client's menu export but absent from `permotion-sample.json`, which predates
+  // them — see `EXTRA_MODULES` in the catalogue generator for where their permissions come from.
+  purchase: { general: 'general-purchase' },
+  inventory: { stock: 'stock' },
   service: {
     'job-cards': 'job-cards',
     options: 'service-options',
@@ -29,6 +33,7 @@ const FEATURE_MAP = {
   masters: {
     uom: 'uom',
     'item-categories': 'categories',
+    attributes: 'attributes',
     items: 'items',
     'payment-modes': 'payment-modes',
     'party-categories': 'party-categories',

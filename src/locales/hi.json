@@ -10,7 +10,9 @@
       "second-hand-device": "सेकंड हैंड डिवाइस",
       "reports": "रिपोर्ट",
       "administration": "प्रशासन",
-      "settings": "सेटिंग्स"
+      "settings": "सेटिंग्स",
+      "purchase": "खरीद",
+      "inventory": "इन्वेंटरी"
     },
     "items": {
       "sales/invoices": "विक्रय बिल",
@@ -22,7 +24,7 @@
       "finance/ledger": "पार्टी खाता",
       "finance/cashbook": "रोकड़ बही",
       "finance/receivables": "प्राप्य राशि",
-      "finance/payables": "देय राशि",
+      "finance/payables": "ग्राहक देय",
       "finance/supplier-payables": "सप्लायर देय",
       "finance/expenses": "खर्च",
       "masters/uom": "माप की इकाई",
@@ -56,7 +58,10 @@
       "settings/billing": "बिलिंग और सदस्यता",
       "settings/print-formats": "प्रिंट फ़ॉर्मेट",
       "settings/whatsapp": "WhatsApp",
-      "settings/backup": "बैकअप और रिस्टोर"
+      "settings/backup": "बैकअप और रिस्टोर",
+      "purchase/general": "सामान्य खरीद",
+      "inventory/stock": "स्टॉक",
+      "masters/attributes": "विशेषताएँ"
     }
   },
   "common": {
@@ -829,6 +834,24 @@
         "cessPercent": "उपकर %",
         "natureGoods": "वस्तु",
         "natureService": "सेवा"
+      },
+      "attributes": {
+        "attributes": "विशेषताएँ",
+        "theVocabularyItemVariantsAre": "आइटम वेरिएंट जिन शब्दों से परिभाषित होते हैं — रंग, क्षमता आदि।",
+        "values": "मान",
+        "inUse": "उपयोग में",
+        "searchAttributes": "विशेषताएँ खोजें…",
+        "noAttributesYet": "अभी कोई विशेषता नहीं",
+        "addColourOrCapacityToStart": "आइटम वेरिएंट बताने के लिए रंग या क्षमता जोड़ें।",
+        "addAttribute": "विशेषता जोड़ें",
+        "aNameIsRequired": "नाम आवश्यक है।",
+        "eGColour": "जैसे रंग",
+        "eGBlackWhiteBlue": "जैसे काला, सफेद, नीला",
+        "noValuesYet": "अभी कोई मान नहीं।",
+        "aDeactivatedAttributeIsNotOffered": "निष्क्रिय विशेषता आइटम बताते समय नहीं दिखेगी।",
+        "thisPermanentlyDeletesTheAttribute": "यह विशेषता को स्थायी रूप से हटा देगा। इसे वापस नहीं लाया जा सकता।",
+        "nItemsStillNameThisAttribute_one": "{{count}} आइटम अब भी इस विशेषता का नाम रखता है और वही नाम बनाए रखेगा। इसे वापस नहीं लाया जा सकता।",
+        "nItemsStillNameThisAttribute_other": "{{count}} आइटम अब भी इस विशेषता का नाम रखते हैं और वही नाम बनाए रखेंगे। इसे वापस नहीं लाया जा सकता।"
       }
     },
     "secondHandDevice": {
@@ -1923,6 +1946,35 @@
       "fieldPreviewInput": {
         "searchUser": "उपयोगकर्ता खोजें...",
         "select": "चुनें..."
+      }
+    },
+    "inventory": {
+      "stock": {
+        "stock": "स्टॉक",
+        "stockTrackedItemsAndTheirLevels": "स्टॉक-ट्रैक किए गए आइटम और उनके निर्धारित स्तर।",
+        "openItemMaster": "आइटम मास्टर खोलें",
+        "tracked": "ट्रैक किए गए",
+        "atReorderPoint": "रीऑर्डर स्तर पर",
+        "nothingIsStockTracked": "कुछ भी स्टॉक-ट्रैक नहीं है",
+        "turnOnStockTrackedOnAnItem": "किसी आइटम पर स्टॉक ट्रैक चालू करें ताकि वह यहाँ दिखे।"
+      }
+    },
+    "purchase": {
+      "generalPurchase": {
+        "generalPurchase": "सामान्य खरीद",
+        "partsAndStockBoughtFromSuppliers": "आपूर्तिकर्ताओं से खरीदे गए पुर्जे और स्टॉक।",
+        "recordPurchase": "खरीद दर्ज करें",
+        "purchaseNo": "खरीद क्र.",
+        "lines": "पंक्तियाँ",
+        "totalSpend": "कुल खर्च",
+        "searchPurchases": "खरीद खोजें…",
+        "noPurchasesYet": "अभी कोई खरीद नहीं",
+        "recordWhatYouBuyFromSuppliers": "आपूर्तिकर्ताओं से की गई खरीद दर्ज करें ताकि वह सप्लायर पेएबल्स में दिखे।",
+        "supplierInvoiceNo": "सप्लायर बिल क्र.",
+        "addAnItem": "आइटम जोड़ें…",
+        "chooseASupplier": "एक आपूर्तिकर्ता चुनें।",
+        "addAtLeastOneLine": "कम से कम एक आइटम जोड़ें।",
+        "aCancelledPurchaseStopsCounting": "रद्द की गई खरीद खर्च और सप्लायर बकाया में नहीं गिनी जाएगी। रिकॉर्ड बना रहेगा।"
       }
     }
   },

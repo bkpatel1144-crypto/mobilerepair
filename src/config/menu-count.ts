@@ -14,16 +14,16 @@ import type { MenuPermissions } from '@/types/firestore'
  * its leaves does. That makes the two systems' numerators comparable, which is the point of the
  * badge.
  *
- * The denominators still differ — 52 here against the reference's 57 — because their instance
- * has five menus for features this product has no screens for. Reporting 52 is honest; padding it
- * to 57 with menus that lead nowhere would not be.
+ * The denominators agree at 57 as well, since Purchase, Inventory and Masters > Attributes were
+ * built: ten modules and forty-seven leaves, every one of them a screen that renders.
+ * `nav-matches-export.test.ts` holds both halves to `data/menu-structure.json`.
  */
 
 export const ALL_LEAF_KEYS = NAV_SECTIONS.flatMap((section) =>
   section.children.filter((leaf) => !leaf.locked).map((leaf) => menuKey(section.key, leaf.slug))
 )
 
-/** Leaves plus modules — 8 + 44 today. */
+/** Leaves plus modules — 47 + 10 = 57. */
 export const TOTAL_MENU_COUNT = ALL_LEAF_KEYS.length + NAV_SECTIONS.length
 
 /** Leaves a role holds, plus every module implied by them. */

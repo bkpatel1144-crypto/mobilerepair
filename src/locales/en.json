@@ -10,7 +10,9 @@
       "second-hand-device": "Second Hand Device",
       "reports": "Reports",
       "administration": "Administration",
-      "settings": "Settings"
+      "settings": "Settings",
+      "purchase": "Purchase",
+      "inventory": "Inventory"
     },
     "items": {
       "sales/invoices": "Sales Invoices",
@@ -22,7 +24,7 @@
       "finance/ledger": "Party Ledger",
       "finance/cashbook": "Cash Book",
       "finance/receivables": "Receivables",
-      "finance/payables": "Payables",
+      "finance/payables": "Customer Payables",
       "finance/supplier-payables": "Supplier Payables",
       "finance/expenses": "Expenses",
       "masters/uom": "Units of Measure",
@@ -56,7 +58,10 @@
       "settings/billing": "Billing & Subscription",
       "settings/print-formats": "Print Formats",
       "settings/whatsapp": "WhatsApp",
-      "settings/backup": "Backup & Restore"
+      "settings/backup": "Backup & Restore",
+      "purchase/general": "General Purchase",
+      "inventory/stock": "Stock",
+      "masters/attributes": "Attributes"
     }
   },
   "common": {
@@ -829,6 +834,24 @@
         "cessPercent": "Cess %",
         "natureGoods": "Goods",
         "natureService": "Service"
+      },
+      "attributes": {
+        "attributes": "Attributes",
+        "theVocabularyItemVariantsAre": "The vocabulary item variants are defined by — colour, capacity, and so on.",
+        "values": "Values",
+        "inUse": "In use",
+        "searchAttributes": "Search attributes…",
+        "noAttributesYet": "No attributes yet",
+        "addColourOrCapacityToStart": "Add Colour or Capacity to start describing item variants.",
+        "addAttribute": "Add attribute",
+        "aNameIsRequired": "A name is required.",
+        "eGColour": "e.g. Colour",
+        "eGBlackWhiteBlue": "e.g. Black, White, Blue",
+        "noValuesYet": "No values yet.",
+        "aDeactivatedAttributeIsNotOffered": "A deactivated attribute is no longer offered when describing an item.",
+        "thisPermanentlyDeletesTheAttribute": "This permanently deletes the attribute. It cannot be undone.",
+        "nItemsStillNameThisAttribute_one": "{{count}} item still names this attribute and keeps the name it stored. This cannot be undone.",
+        "nItemsStillNameThisAttribute_other": "{{count}} items still name this attribute and keep the names they stored. This cannot be undone."
       }
     },
     "secondHandDevice": {
@@ -1923,6 +1946,35 @@
       "fieldPreviewInput": {
         "searchUser": "Search user...",
         "select": "Select..."
+      }
+    },
+    "inventory": {
+      "stock": {
+        "stock": "Stock",
+        "stockTrackedItemsAndTheirLevels": "Stock-tracked items and the levels they should be held at.",
+        "openItemMaster": "Open Item Master",
+        "tracked": "Tracked",
+        "atReorderPoint": "At reorder point",
+        "nothingIsStockTracked": "Nothing is stock-tracked",
+        "turnOnStockTrackedOnAnItem": "Turn on Stock tracked on an item to see it here."
+      }
+    },
+    "purchase": {
+      "generalPurchase": {
+        "generalPurchase": "General Purchase",
+        "partsAndStockBoughtFromSuppliers": "Parts and stock bought from suppliers.",
+        "recordPurchase": "Record purchase",
+        "purchaseNo": "Purchase No.",
+        "lines": "Lines",
+        "totalSpend": "Total spend",
+        "searchPurchases": "Search purchases…",
+        "noPurchasesYet": "No purchases yet",
+        "recordWhatYouBuyFromSuppliers": "Record what you buy from suppliers to see it against Supplier Payables.",
+        "supplierInvoiceNo": "Supplier invoice no.",
+        "addAnItem": "Add an item…",
+        "chooseASupplier": "Choose a supplier.",
+        "addAtLeastOneLine": "Add at least one item.",
+        "aCancelledPurchaseStopsCounting": "A cancelled purchase stops counting towards spend and supplier dues. The record is kept."
       }
     }
   },
