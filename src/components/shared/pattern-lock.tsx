@@ -29,19 +29,6 @@ function parsePattern(value: string): number[] {
 }
 
 /**
- * Is this stored value a drawn pattern rather than a typed PIN?
- *
- * Derived from the string instead of carried alongside it as a boolean. Both are written to the
- * same `devicePinPattern` field, and a separate flag is only correct until something reads the
- * record back — the Buy Mobile form kept no flag at all, and the Create Job Card form kept one in
- * its draft that no reader of a *saved* job card had access to. A pattern is dash-joined dot
- * indices, so the value says what it is: `"1-2-5-8"` is a pattern, `"1258"` is a PIN.
- */
-export function isPatternValue(value: string | null | undefined): boolean {
-  return !!value && value.includes('-') && parsePattern(value).length >= 2
-}
-
-/**
  * The real "Draw Pattern" dialog behind the amber "⊞ Draw" button — a proper drag gesture (press
  * a dot, drag through the others, release), rendered with actual connecting lines between the
  * dots in sequence, matching the reference's own dialog: title + "Connect at least 2 dots"

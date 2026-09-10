@@ -16,8 +16,7 @@ import {
 import { FormError } from '@/components/shared/form-error'
 import { ErrorState } from '@/components/shared/error-state'
 import { SearchSelect } from '@/components/shared/search-select'
-import { DevicePinPatternField } from '@/components/shared/device-pin-field'
-import { FormSection, FormGrid, FormGridFull } from '@/components/shared/form-section'
+import { PatternLockPicker, PatternLockPreview } from '@/components/shared/pattern-lock'
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
@@ -260,17 +259,16 @@ export function CreateSecondHandPurchasePage() {
         </div>
         <Button type="button" variant="outline" onClick={() => navigate(-1)}>
           <ArrowLeft className="size-4" />
-          {t('shared.back')}
+          Back
         </Button>
       </div>
 
       {formError && <FormError message={formError} />}
 
-      <FormSection
-        glyph="📋"
-        title={t('pages.secondHandDevice.createPurchase.sections.deviceDetails')}
-      >
-        <FormGrid>
+      <div className="space-y-4 rounded-lg border p-4">
+        <h2 className="flex items-center gap-1.5 text-sm font-semibold">📋 Device Details</h2>
+
+        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
             <Label>
               Device Type <span className="text-red-600">*</span>
@@ -443,15 +441,30 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              {t('pages.service.createJobCard.labels.devicePin')}{' '}
+              Device PIN / Pattern{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
             </Label>
-            {/* Was a pattern grid and nothing else: the label promised "PIN / Pattern" but a
-             * phone locked with 1234 could not be recorded at all. The same control as Create
-             * Job Card now, because it is literally the same component. */}
-            <DevicePinPatternField value={devicePinPattern} onChange={setDevicePinPattern} />
+            <div className="flex items-center gap-2">
+              {devicePinPattern ? (
+                <>
+                  <PatternLockPreview value={devicePinPattern} />
+                  <button
+                    type="button"
+                    className="text-xs text-red-600 hover:underline"
+                    onClick={() => setDevicePinPattern('')}
+                  >
+                    Clear
+                  </button>
+                </>
+              ) : (
+                <span className="flex-1 text-sm text-muted-foreground">
+                  {t('pages.secondHandDevice.createPurchase.noPatternDrawn')}
+                </span>
+              )}
+              <PatternLockPicker value={devicePinPattern} onChange={setDevicePinPattern} />
+            </div>
           </div>
 
           <div className="space-y-1.5">
@@ -594,159 +607,141 @@ export function CreateSecondHandPurchasePage() {
               </SelectContent>
             </Select>
           </div>
-          {/* Half a row, not the whole one: there are fifteen half-width fields above it, so
-           * Account Lock would otherwise sit alone with an empty column beside it. Three small
-           * checkboxes fill that gap exactly. */}
-          <div className="flex flex-wrap items-end gap-4 pb-2 text-sm">
-            <label className="flex items-center gap-1.5">
-              <Checkbox checked={dualSim} onCheckedChange={(v) => setDualSim(v === true)} /> Dual
-              SIM
-            </label>
-            <label className="flex items-center gap-1.5">
-              <Checkbox checked={hasBox} onCheckedChange={(v) => setHasBox(v === true)} /> Box
-            </label>
-            <label className="flex items-center gap-1.5">
-              <Checkbox checked={hasBill} onCheckedChange={(v) => setHasBill(v === true)} /> Bill
-            </label>
-          </div>
+        </div>
 
-          <FormGridFull>
-            <div className="space-y-1.5">
-              <Label>
-                Accessories Included{' '}
-                <span className="text-xs font-normal text-muted-foreground">
-                  {t('shared.optional2')}
+        <div className="flex flex-wrap gap-4 text-sm">
+          <label className="flex items-center gap-1.5">
+            <Checkbox checked={dualSim} onCheckedChange={(v) => setDualSim(v === true)} /> Dual SIM
+          </label>
+          <label className="flex items-center gap-1.5">
+            <Checkbox checked={hasBox} onCheckedChange={(v) => setHasBox(v === true)} /> Box
+          </label>
+          <label className="flex items-center gap-1.5">
+            <Checkbox checked={hasBill} onCheckedChange={(v) => setHasBill(v === true)} /> Bill
+          </label>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label>
+            Accessories Included{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
+          </Label>
+          <Select value={accessoriesIncluded} onValueChange={(v) => v && setAccessoriesIncluded(v)}>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {ACCESSORIES_OPTIONS.map((a) => (
+                <SelectItem key={a} value={a}>
+                  {ACCESSORIES_OPTION_KEYS[a] ? t(ACCESSORIES_OPTION_KEYS[a]) : a}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-1.5">
+          <Label>
+            Condition Notes{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
+          </Label>
+          <Textarea
+            value={conditionNotes}
+            onChange={(e) => setConditionNotes(e.target.value)}
+            placeholder="e.g. Minor scratches on back panel"
+            rows={2}
+          />
+        </div>
+        <div className="space-y-1.5">
+          <Label>
+            Device Photos{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
+          </Label>
+          <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
+            <ImagePlus className="size-5" />
+            <span className="text-sm">{t('pages.secondHandDevice.createPurchase.addPhotos')}</span>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={(e) =>
+                setPendingImages((prev) => [...prev, ...Array.from(e.target.files ?? [])])
+              }
+            />
+          </label>
+          {pendingImages.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {pendingImages.map((f, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center gap-1 rounded-full bg-secondary py-0.5 pr-1 pl-2 text-xs"
+                >
+                  {f.name}
+                  <button
+                    type="button"
+                    onClick={() => setPendingImages((prev) => prev.filter((_, idx) => idx !== i))}
+                    className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
+                  >
+                    <X className="size-3" />
+                  </button>
                 </span>
-              </Label>
-              <Select
-                value={accessoriesIncluded}
-                onValueChange={(v) => v && setAccessoriesIncluded(v)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {ACCESSORIES_OPTIONS.map((a) => (
-                    <SelectItem key={a} value={a}>
-                      {ACCESSORIES_OPTION_KEYS[a] ? t(ACCESSORIES_OPTION_KEYS[a]) : a}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              ))}
             </div>
-          </FormGridFull>
+          )}
+        </div>
+      </div>
 
-          <FormGridFull>
-            <div className="space-y-1.5">
-              <Label>
-                Condition Notes{' '}
-                <span className="text-xs font-normal text-muted-foreground">
-                  {t('shared.optional2')}
-                </span>
-              </Label>
-              <Textarea
-                value={conditionNotes}
-                onChange={(e) => setConditionNotes(e.target.value)}
-                placeholder="e.g. Minor scratches on back panel"
-                rows={2}
+      <div className="space-y-4 rounded-lg border p-4">
+        <h2 className="flex items-center gap-1.5 text-sm font-semibold">
+          ✓ Seller &amp; ID Verification
+        </h2>
+
+        <div className="space-y-1.5">
+          <Label>
+            Seller <span className="text-red-600">*</span>
+          </Label>
+          <SearchSelect
+            options={sellers.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
+            value={sellerId}
+            onChange={(id) => {
+              setSellerId(id)
+              if (id) setQuickAddSeller(null)
+            }}
+            placeholder={t('pages.secondHandDevice.createPurchase.searchSellerByNameOrMobile')}
+            open={sellerOpen}
+            onOpenChange={setSellerOpen}
+            onCreateNew={(query) => setQuickAddSeller({ name: query, mobile: '' })}
+          />
+          {quickAddSeller && !sellerId && (
+            <div className="flex gap-2 rounded-md border border-dashed p-2">
+              <Input
+                value={quickAddSeller.name}
+                onChange={(e) => setQuickAddSeller({ ...quickAddSeller, name: e.target.value })}
+                placeholder={t('pages.secondHandDevice.createPurchase.sellerName')}
+                className="h-8 text-sm"
+              />
+              <Input
+                value={quickAddSeller.mobile}
+                onChange={(e) =>
+                  setQuickAddSeller({
+                    ...quickAddSeller,
+                    mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
+                  })
+                }
+                placeholder={t('common.tenDigitMobile')}
+                className="h-8 text-sm"
               />
             </div>
-          </FormGridFull>
+          )}
+        </div>
 
-          <FormGridFull>
-            <div className="space-y-1.5">
-              <Label>
-                Device Photos{' '}
-                <span className="text-xs font-normal text-muted-foreground">
-                  {t('shared.optional2')}
-                </span>
-              </Label>
-              <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
-                <ImagePlus className="size-5" />
-                <span className="text-sm">
-                  {t('pages.secondHandDevice.createPurchase.addPhotos')}
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                  onChange={(e) =>
-                    setPendingImages((prev) => [...prev, ...Array.from(e.target.files ?? [])])
-                  }
-                />
-              </label>
-              {pendingImages.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {pendingImages.map((f, i) => (
-                    <span
-                      key={i}
-                      className="inline-flex items-center gap-1 rounded-full bg-secondary py-0.5 pr-1 pl-2 text-xs"
-                    >
-                      {f.name}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setPendingImages((prev) => prev.filter((_, idx) => idx !== i))
-                        }
-                        className="rounded-full p-0.5 hover:bg-black/10 dark:hover:bg-white/10"
-                      >
-                        <X className="size-3" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </FormGridFull>
-        </FormGrid>
-      </FormSection>
-
-      <FormSection
-        glyph="✓"
-        title={t('pages.secondHandDevice.createPurchase.sections.sellerVerification')}
-      >
-        <FormGrid>
-          <FormGridFull>
-            <div className="space-y-1.5">
-              <Label>
-                Seller <span className="text-red-600">*</span>
-              </Label>
-              <SearchSelect
-                options={sellers.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
-                value={sellerId}
-                onChange={(id) => {
-                  setSellerId(id)
-                  if (id) setQuickAddSeller(null)
-                }}
-                placeholder={t('pages.secondHandDevice.createPurchase.searchSellerByNameOrMobile')}
-                open={sellerOpen}
-                onOpenChange={setSellerOpen}
-                onCreateNew={(query) => setQuickAddSeller({ name: query, mobile: '' })}
-              />
-              {quickAddSeller && !sellerId && (
-                <div className="flex gap-2 rounded-md border border-dashed p-2">
-                  <Input
-                    value={quickAddSeller.name}
-                    onChange={(e) => setQuickAddSeller({ ...quickAddSeller, name: e.target.value })}
-                    placeholder={t('pages.secondHandDevice.createPurchase.sellerName')}
-                    className="h-8 text-sm"
-                  />
-                  <Input
-                    value={quickAddSeller.mobile}
-                    onChange={(e) =>
-                      setQuickAddSeller({
-                        ...quickAddSeller,
-                        mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
-                      })
-                    }
-                    placeholder={t('common.tenDigitMobile')}
-                    className="h-8 text-sm"
-                  />
-                </div>
-              )}
-            </div>
-          </FormGridFull>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
             <Label>{t('pages.secondHandDevice.createPurchase.idProofType')}</Label>
             <Select value={idProofType} onValueChange={(v) => v && setIdProofType(v)}>
@@ -785,61 +780,57 @@ export function CreateSecondHandPurchasePage() {
               placeholder="9876543210"
             />
           </div>
-          <FormGridFull>
-            <div className="space-y-1.5">
-              <Label>
-                ID Proof Photo{' '}
-                <span className="text-xs font-normal text-muted-foreground">
-                  {t('shared.optional2')}
-                </span>
-              </Label>
-              <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
-                <ImagePlus className="size-5" />
-                <span className="text-sm">
-                  {pendingIdProofPhoto
-                    ? pendingIdProofPhoto.name
-                    : t('pages.secondHandDevice.createPurchase.captureUploadIdProofPhoto')}
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  className="hidden"
-                  onChange={(e) => setPendingIdProofPhoto(e.target.files?.[0] ?? null)}
-                />
-              </label>
-              <p className="text-xs text-muted-foreground">
-                {t('pages.secondHandDevice.createPurchase.onMobileThisOpensTheCamera')}
-              </p>
-            </div>
-          </FormGridFull>
+        </div>
 
-          <FormGridFull>
-            <div className="space-y-2 text-sm">
-              <label className="flex items-center gap-1.5">
-                <Checkbox
-                  checked={imeiCheckedClean}
-                  onCheckedChange={(v) => setImeiCheckedClean(v === true)}
-                />
-                {t('pages.secondHandDevice.createPurchase.imeiCheckedAgainstCeirBlockedDevice')}
-              </label>
-              <label className="flex items-center gap-1.5">
-                <Checkbox
-                  checked={sellerDeclaredNotStolen}
-                  onCheckedChange={(v) => setSellerDeclaredNotStolen(v === true)}
-                />
-                {t('pages.secondHandDevice.createPurchase.sellerDeclaredTheDeviceIsTheirs')}
-              </label>
-            </div>
-          </FormGridFull>
-        </FormGrid>
-      </FormSection>
+        <div className="space-y-1.5">
+          <Label>
+            ID Proof Photo{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
+          </Label>
+          <label className="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-muted-foreground hover:bg-muted/40">
+            <ImagePlus className="size-5" />
+            <span className="text-sm">
+              {pendingIdProofPhoto
+                ? pendingIdProofPhoto.name
+                : t('pages.secondHandDevice.createPurchase.captureUploadIdProofPhoto')}
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              onChange={(e) => setPendingIdProofPhoto(e.target.files?.[0] ?? null)}
+            />
+          </label>
+          <p className="text-xs text-muted-foreground">
+            {t('pages.secondHandDevice.createPurchase.onMobileThisOpensTheCamera')}
+          </p>
+        </div>
 
-      <FormSection
-        glyph="₹"
-        title={t('pages.secondHandDevice.createPurchase.sections.purchaseDetails')}
-      >
-        <FormGrid>
+        <div className="space-y-2 text-sm">
+          <label className="flex items-center gap-1.5">
+            <Checkbox
+              checked={imeiCheckedClean}
+              onCheckedChange={(v) => setImeiCheckedClean(v === true)}
+            />
+            {t('pages.secondHandDevice.createPurchase.imeiCheckedAgainstCeirBlockedDevice')}
+          </label>
+          <label className="flex items-center gap-1.5">
+            <Checkbox
+              checked={sellerDeclaredNotStolen}
+              onCheckedChange={(v) => setSellerDeclaredNotStolen(v === true)}
+            />
+            {t('pages.secondHandDevice.createPurchase.sellerDeclaredTheDeviceIsTheirs')}
+          </label>
+        </div>
+      </div>
+
+      <div className="space-y-4 rounded-lg border p-4">
+        <h2 className="flex items-center gap-1.5 text-sm font-semibold">₹ Purchase Details</h2>
+
+        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="purchasePrice">
               Purchase Price <span className="text-red-600">*</span>
@@ -942,33 +933,30 @@ export function CreateSecondHandPurchasePage() {
               {t('pages.secondHandDevice.createPurchase.whatYouPlanToSellThis')}
             </p>
           </div>
-          <FormGridFull>
-            <div className="space-y-1.5">
-              <Label>
-                Notes{' '}
-                <span className="text-xs font-normal text-muted-foreground">
-                  {t('shared.optional2')}
-                </span>
-              </Label>
-              <Textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder={t('shared.optionalNotes')}
-                rows={2}
-              />
-            </div>
-          </FormGridFull>
-        </FormGrid>
-      </FormSection>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label>
+            Notes{' '}
+            <span className="text-xs font-normal text-muted-foreground">
+              {t('shared.optional2')}
+            </span>
+          </Label>
+          <Textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder={t('shared.optionalNotes')}
+            rows={2}
+          />
+        </div>
+      </div>
 
       <div className="flex justify-end gap-2 border-t pt-4">
         <Button type="button" variant="outline" onClick={() => navigate(-1)} disabled={submitting}>
-          {t('common.cancel')}
+          Cancel
         </Button>
         <Button type="button" onClick={handleSubmit} disabled={submitting}>
-          {submitting
-            ? t('common.saving')
-            : t('pages.secondHandDevice.createPurchase.savePurchase')}
+          {submitting ? 'Saving…' : t('pages.secondHandDevice.createPurchase.savePurchase')}
         </Button>
       </div>
 

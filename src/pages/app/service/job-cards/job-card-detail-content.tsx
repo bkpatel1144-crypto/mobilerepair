@@ -17,7 +17,6 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
-import { DevicePinPatternValue } from '@/components/shared/device-pin-field'
 import { FormModal } from '@/components/shared/form-modal'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -189,11 +188,7 @@ export function JobCardDetailContent({
                   <dt className="text-xs text-muted-foreground uppercase">
                     {t('shared.pinPattern')}
                   </dt>
-                  <dd>
-                    {/* Was the raw stored string, so a drawn pattern read as "1-2-5-8" — the
-                     * encoding rather than the information. */}
-                    <DevicePinPatternValue value={job.devicePinPattern} />
-                  </dd>
+                  <dd>{job.devicePinPattern}</dd>
                 </div>
               )}
             </dl>
