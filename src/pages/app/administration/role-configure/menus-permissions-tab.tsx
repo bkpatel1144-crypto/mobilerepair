@@ -9,6 +9,7 @@ import {
   Check,
 } from 'lucide-react'
 import { NAV_SECTIONS, menuKey, type NavSection } from '@/config/nav'
+import { TOTAL_MENU_COUNT, countMenus } from '@/config/menu-count'
 import {
   PERMISSION_CATALOGUE,
   ALL_PERMISSION_KEYS,
@@ -72,8 +73,8 @@ export function MenusPermissionsTab({
   )
   const allActionKeysFlat = ALL_PERMISSION_KEYS
 
-  const totalMenus = allLeafKeys.length
-  const checkedMenus = allLeafKeys.filter((k) => draft.menuPermissions[k]).length
+  const totalMenus = TOTAL_MENU_COUNT
+  const checkedMenus = countMenus(draft.menuPermissions)
   const totalPermissions = allActionKeysFlat.length
   const checkedPermissions = allActionKeysFlat.filter((k) => draft.actionPermissions[k]).length
 

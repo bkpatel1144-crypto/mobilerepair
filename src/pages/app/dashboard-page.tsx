@@ -20,6 +20,7 @@ import {
   Lock,
   Undo2,
   LayoutDashboard,
+  Sparkles,
   Users,
   type LucideIcon,
 } from 'lucide-react'
@@ -47,7 +48,8 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { ErrorState } from '@/components/shared/error-state'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { ScanJobCardModal } from '@/components/shared/scan-job-card-modal'
-import { widgetsInOrder } from '@/config/dashboard-widgets'
+import { DASHBOARD_WIDGETS, widgetsInOrder } from '@/config/dashboard-widgets'
+import { useWidgetLabels } from '@/hooks/use-widget-labels'
 import { useDashboardStats } from '@/hooks/use-dashboard-stats'
 import { useAuth } from '@/hooks/use-auth'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -81,6 +83,28 @@ const CHART_TONE_HEX: Record<string, string> = {
   info: '#2563eb',
   purple: '#9333ea',
   neutral: '#6b7280',
+}
+
+/** A widget the catalogue lists but the product has not built, shown as the reference shows it:
+ *  a dashed card that says so, rather than a gap where a chosen widget should be. */
+function ComingSoonWidget({ widgetKey, label }: { widgetKey: string; label: string }) {
+  const { t } = useTranslation()
+  return (
+    <div
+      data-widget={widgetKey}
+      className="flex min-w-0 items-center gap-3 rounded-lg border border-dashed p-3"
+    >
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+        <Sparkles className="size-4" />
+      </span>
+      <div className="min-w-0">
+        <p className="truncate text-sm font-medium">{label}</p>
+        <p className="text-xs text-muted-foreground">
+          {t('pages.administration.dashboardLandingTab.widgetComingSoon')}
+        </p>
+      </div>
+    </div>
+  )
 }
 
 function greeting() {
@@ -130,6 +154,7 @@ function WidgetPanel({
 
 export function DashboardPage() {
   const { t } = useTranslation()
+  const widgetText = useWidgetLabels()
   const [range, setRange] = useState<DateRangeKey | 'all'>('all')
   const [scanOpen, setScanOpen] = useState(false)
   const { data: stats, isLoading, error: loadError, refetch } = useDashboardStats(range)
@@ -316,10 +341,18 @@ export function DashboardPage() {
   ]
     .filter((key) => canSeeWidget(key))
     .sort(byRoleOrder)
+  const comingSoon = DASHBOARD_WIDGETS.filter((w) => !w.available && canSeeWidget(w.key)).sort(
+    (a, b) => byRoleOrder(a.key, b.key)
+  )
   const showWelcome = canSeeWidget('personal.welcome')
   const showRecent = canSeeWidget('list.jobcards.recent')
   const nothingVisible =
-    !showWelcome && !showRecent && !visibleActions.length && !visibleKpis.length && !charts.length
+    !showWelcome &&
+    !showRecent &&
+    !visibleActions.length &&
+    !visibleKpis.length &&
+    !charts.length &&
+    !comingSoon.length
 
   // Held behind a skeleton rather than rendered optimistically. Job cards and receipts come from
   // the persistent cache and can resolve before the role document does, so rendering first and
@@ -660,6 +693,21 @@ export function DashboardPage() {
                   )}
                 </WidgetPanel>
               )}
+            </div>
+          )}
+
+          {/* Widgets the role switched on that this build does not draw yet. The reference shows
+           * them too; leaving them out would make the Role Configure preview a lie about what
+           * the role actually gets. */}
+          {comingSoon.length > 0 && (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {comingSoon.map((widget) => (
+                <ComingSoonWidget
+                  key={widget.key}
+                  widgetKey={widget.key}
+                  label={widgetText.label(widget.key, widget.label)}
+                />
+              ))}
             </div>
           )}
 

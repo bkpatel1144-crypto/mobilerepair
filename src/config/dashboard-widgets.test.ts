@@ -23,14 +23,16 @@ describe('widget catalogue matches the reference', () => {
     expect(missing, 'these keys are in the export but not in the catalogue').toEqual([])
   })
 
-  it('enables exactly the 26 the export enables for OWNER', () => {
-    const expected = exportedWidgets
-      .filter((w) => w.visible)
-      .map((w) => w.key)
-      .sort()
-    expect(Object.keys(allWidgetsEnabled()).sort()).toEqual(expected)
-    // Stated outright, because the screenshots show "26 active" and "26 widgets" in three places.
-    expect(expected).toHaveLength(26)
+  it('enables all 34, with the 26 built ones among them', () => {
+    // "Show all" means all thirty-four. The reference's own header reads "34 / 34" and its
+    // library footer "34 active"; the eight it has not built render as "Widget coming soon"
+    // rather than being unselectable. The export's 26 are the ones with a real implementation,
+    // and they must all still be in the set.
+    const enabled = Object.keys(allWidgetsEnabled())
+    expect(enabled).toHaveLength(34)
+    const built = exportedWidgets.filter((w) => w.visible).map((w) => w.key)
+    expect(built).toHaveLength(26)
+    expect(built.filter((key) => !enabled.includes(key))).toEqual([])
   })
 
   it('offers 34 widgets across the five groups the library shows', () => {
@@ -51,12 +53,12 @@ describe('widget catalogue matches the reference', () => {
     expect(widgets.filter((w) => w.available), `${group} added`).toHaveLength(added)
   })
 
-  it('never enables a widget the product has not built', () => {
-    // An enabled-but-unbuilt widget puts a toggle in Role Configure that changes nothing on the
-    // Dashboard, which is worse than not offering it at all.
-    const enabled = new Set(Object.keys(allWidgetsEnabled()))
-    const unbuilt = DASHBOARD_WIDGETS.filter((w) => !w.available && enabled.has(w.key))
-    expect(unbuilt.map((w) => w.key)).toEqual([])
+  it('marks exactly the 26 the export enables as built', () => {
+    // `available` no longer decides whether a widget can be chosen — only whether it draws
+    // itself or draws the placeholder. It still has to match the export.
+    const built = DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => w.key).sort()
+    const expected = exportedWidgets.filter((w) => w.visible).map((w) => w.key).sort()
+    expect(built).toEqual(expected)
   })
 
   it('has no duplicate keys and no blank copy', () => {

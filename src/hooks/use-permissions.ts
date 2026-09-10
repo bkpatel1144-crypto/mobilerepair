@@ -7,9 +7,8 @@ import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
 import { normalizeActionPermissions } from '@/config/permission-legacy'
 import type { RoleDoc } from '@/types/firestore'
 
-/** Widgets the product has actually implemented, by key — a widget the reference lists but this
- *  app does not render can never be shown, whatever a role document says. */
-const AVAILABLE_WIDGETS = new Set(DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => w.key))
+/** Every widget key the catalogue defines. A key outside it is one this app no longer has. */
+const CATALOGUE_KEYS = new Set(DASHBOARD_WIDGETS.map((w) => w.key))
 
 /**
  * Is one dashboard widget shown for a role?
@@ -34,7 +33,10 @@ export function isWidgetVisible(
   role: Pick<RoleDoc, 'dashboardConfig'> | null,
   key: string
 ): boolean {
-  if (!AVAILABLE_WIDGETS.has(key)) return false
+  // Only a key the catalogue has never heard of is refused outright. A widget the product has
+  // not built yet is still selectable — the Dashboard draws it as "Widget coming soon", which is
+  // what the reference does and what makes "34 / 34" true.
+  if (!CATALOGUE_KEYS.has(key)) return false
   if (!role) return true
   return role.dashboardConfig?.visibleWidgets?.[key] !== false
 }

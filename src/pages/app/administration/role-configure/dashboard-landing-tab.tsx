@@ -61,8 +61,6 @@ interface DashboardLandingTabProps {
   disabled?: boolean
 }
 
-const BUILT_WIDGETS = DASHBOARD_WIDGETS.filter((w) => w.available)
-
 const GROUP_ICON: Record<WidgetGroupKey, LucideIcon> = {
   personal: User,
   quick: Zap,
@@ -120,12 +118,12 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
   ]
 
   const isOn = (key: string) => draft.dashboardConfig.visibleWidgets[key] === true
-  const activeCount = BUILT_WIDGETS.filter((w) => isOn(w.key)).length
+  const activeCount = DASHBOARD_WIDGETS.filter((w) => isOn(w.key)).length
   const ordered = widgetsInOrder(draft.dashboardConfig.widgetOrder)
 
   function toggleWidget(key: string) {
-    const widget = DASHBOARD_WIDGETS.find((w) => w.key === key)
-    if (!widget?.available) return
+    // Every widget is selectable, including the ones not built yet — they render as a
+    // "Widget coming soon" card. See `allWidgetsEnabled` for why that changed.
     setDraft((prev) => ({
       ...prev,
       dashboardConfig: {
@@ -143,11 +141,9 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
       ...prev,
       dashboardConfig: {
         ...prev.dashboardConfig,
-        // Never the unbuilt ones: switching on a widget the Dashboard cannot render puts a
-        // control in this screen that changes nothing.
         visibleWidgets: value
           ? allWidgetsEnabled()
-          : Object.fromEntries(BUILT_WIDGETS.map((w) => [w.key, false])),
+          : Object.fromEntries(DASHBOARD_WIDGETS.map((w) => [w.key, false])),
       },
     }))
   }
@@ -191,7 +187,7 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
         <button
           type="button"
           onClick={() => setAllWidgets(true)}
-          disabled={disabled || activeCount === BUILT_WIDGETS.length}
+          disabled={disabled || activeCount === DASHBOARD_WIDGETS.length}
           className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground disabled:opacity-40"
         >
           <Eye className="size-3.5" />
@@ -386,7 +382,7 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-4">
               {WIDGET_GROUPS.map((group) => {
                 const widgets = ordered.filter((w) => w.group === group.key)
-                const added = widgets.filter((w) => w.available && isOn(w.key)).length
+                const added = widgets.filter((w) => isOn(w.key)).length
                 const Icon = GROUP_ICON[group.key]
                 return (
                   <section key={group.key} className="space-y-2">
@@ -413,27 +409,25 @@ export function DashboardLandingTab({ draft, setDraft, disabled }: DashboardLand
                     </div>
 
                     {widgets.map((widget) => {
-                      const on = widget.available && isOn(widget.key)
+                      const on = isOn(widget.key)
                       return (
                         <button
                           key={widget.key}
                           type="button"
                           data-library-widget={widget.key}
                           onClick={() => toggleWidget(widget.key)}
-                          disabled={disabled || !widget.available}
+                          disabled={disabled}
                           title={
                             widget.available
                               ? undefined
-                              : t(
-                                  'pages.administration.dashboardLandingTab.thisWidgetIsInTheReference'
-                                )
+                              : t('pages.administration.dashboardLandingTab.widgetComingSoon')
                           }
                           className={cn(
                             'flex w-full items-start gap-2.5 rounded-lg border p-2.5 text-left',
                             on
                               ? 'border-teal-200 bg-teal-50/60 dark:border-teal-500/30 dark:bg-teal-500/10'
                               : 'bg-muted/20',
-                            widget.available ? 'hover:border-teal-300' : 'cursor-not-allowed'
+                            'hover:border-teal-300'
                           )}
                         >
                           <span

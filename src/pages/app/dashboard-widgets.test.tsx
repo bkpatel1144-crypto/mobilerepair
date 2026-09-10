@@ -57,9 +57,8 @@ let visible: (key: string) => boolean = () => true
 let permissionsLoading = false
 
 vi.mock('@/hooks/use-permissions', async () => {
-  const actual = await vi.importActual<typeof import('@/hooks/use-permissions')>(
-    '@/hooks/use-permissions'
-  )
+  const actual =
+    await vi.importActual<typeof import('@/hooks/use-permissions')>('@/hooks/use-permissions')
   return {
     ...actual,
     usePermissions: () => ({
@@ -73,7 +72,7 @@ vi.mock('@/hooks/use-permissions', async () => {
   }
 })
 
-const BUILT = DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => w.key)
+const ALL_KEYS = DASHBOARD_WIDGETS.map((w) => w.key)
 const UNBUILT = DASHBOARD_WIDGETS.filter((w) => !w.available).map((w) => w.key)
 
 async function renderDashboard() {
@@ -105,30 +104,36 @@ afterEach(() => {
 describe('the Dashboard renders every widget it advertises', () => {
   // Generous timeout: the first render in the file pays for compiling recharts, which both trend
   // charts and the pie pull in. The assertions themselves are instant.
-  it('has a data-widget node for each catalogue entry marked available', async () => {
+  it('has a data-widget node for every widget in the catalogue', async () => {
     const { container } = await renderDashboard()
     const rendered = new Set(
-      [...container.querySelectorAll('[data-widget]')].map((el) =>
-        el.getAttribute('data-widget')!
-      )
+      [...container.querySelectorAll('[data-widget]')].map((el) => el.getAttribute('data-widget')!)
     )
+    // All thirty-four, not just the built ones: a widget the product has not finished still
+    // renders, as a "Widget coming soon" card. Anything a role can switch on has to appear, or
+    // the Role Configure preview is lying about what the role gets.
+    //
     // Asserted, not assumed: a selector that matched nothing would otherwise report "nothing
     // missing" while examining zero nodes.
-    expect(rendered.size, 'widgets found on the page').toBe(BUILT.length)
-    const missing = BUILT.filter((key) => !rendered.has(key))
+    expect(rendered.size, 'widgets found on the page').toBe(ALL_KEYS.length)
+    const missing = ALL_KEYS.filter((key) => !rendered.has(key))
     expect(
       missing,
       'the Widget Library offers these but the Dashboard renders nothing for them'
     ).toEqual([])
   }, 30_000)
 
-  it('renders nothing for a widget the catalogue marks unavailable', async () => {
-    // The other direction: `available: false` has to mean absent, not merely un-toggleable.
+  it('renders an unbuilt widget as a "coming soon" card, not as a real one', async () => {
+    // The distinction that matters: it appears, but it does not pretend to have data.
     const { container } = await renderDashboard()
-    const rendered = [...container.querySelectorAll('[data-widget]')].map((el) =>
-      el.getAttribute('data-widget')
-    )
-    expect(rendered.filter((key) => UNBUILT.includes(key!))).toEqual([])
+    for (const key of UNBUILT) {
+      const node = container.querySelector(`[data-widget="${key}"]`)
+      expect(node, key).not.toBeNull()
+      expect(node?.textContent, key).toContain('Widget coming soon')
+    }
+    // And a built one does not carry that text.
+    const built = container.querySelector('[data-widget="kpi.revenue"]')
+    expect(built?.textContent).not.toContain('Widget coming soon')
   })
 
   it('emits each widget key exactly once', async () => {
@@ -208,11 +213,16 @@ describe('isWidgetVisible', () => {
     expect(isWidgetVisible(roleWith({}), 'kpi.revenue')).toBe(true)
   })
 
-  it('never shows a widget the product has not built', () => {
-    expect(isWidgetVisible(roleWith({ 'kpi.parties.total': true }), 'kpi.parties.total')).toBe(
-      false
-    )
-    expect(isWidgetVisible(null, 'chart.sales_vs_purchase')).toBe(false)
+  it('shows an unbuilt widget the role switched on', () => {
+    // It renders as a placeholder rather than being refused — see `allWidgetsEnabled`.
+    expect(isWidgetVisible(roleWith({ 'kpi.parties.total': true }), 'kpi.parties.total')).toBe(true)
+    expect(isWidgetVisible(null, 'chart.sales_vs_purchase')).toBe(true)
+  })
+
+  it('still hides an unbuilt widget the role switched off', () => {
+    expect(
+      isWidgetVisible(roleWith({ 'chart.sales_vs_purchase': false }), 'chart.sales_vs_purchase')
+    ).toBe(false)
   })
 
   it('never shows a key that is not in the catalogue at all', () => {

@@ -13,15 +13,12 @@ import { useAuth } from '@/hooks/use-auth'
 import { MenusPermissionsTab } from './role-configure/menus-permissions-tab'
 import { DashboardLandingTab } from './role-configure/dashboard-landing-tab'
 import type { RoleDraft } from './role-configure/types'
-import { NAV_SECTIONS, menuKey } from '@/config/nav'
 import { ALL_PERMISSION_KEYS } from '@/config/permission-catalogue'
+import { TOTAL_MENU_COUNT, countMenus } from '@/config/menu-count'
 import { DASHBOARD_WIDGETS } from '@/config/dashboard-widgets'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useTranslation } from 'react-i18next'
 
-const ALL_LEAF_KEYS = NAV_SECTIONS.flatMap((s) =>
-  s.children.filter((l) => !l.locked).map((l) => menuKey(s.key, l.slug))
-)
 const ALL_ACTION_KEYS = ALL_PERMISSION_KEYS
 
 function draftFromRole(role: {
@@ -89,13 +86,16 @@ export function RoleConfigurePage() {
   const canEdit = !role.protected || isOwner
   const isDirty = !draftsEqual(draft, draftFromRole(role))
 
-  const checkedMenus = ALL_LEAF_KEYS.filter((k) => draft.menuPermissions[k]).length
+  // Leaves plus the modules they imply, matching how the reference export counts a role's
+  // menus — see `menu-count.ts`.
+  const checkedMenus = countMenus(draft.menuPermissions)
   const checkedPermissions = ALL_ACTION_KEYS.filter((k) => draft.actionPermissions[k]).length
-  // Only the widgets the Dashboard can actually render. Counting every catalogue key would let a
-  // stale `true` for an unbuilt widget — or one left behind by a rename — inflate the badge past
-  // what the Widget Library below it shows as added.
+  // Every catalogue widget the role has on, built or not — the same number the Dashboard &
+  // Landing tab's own "34 / 34" counter shows. Counting only the built ones made the footer
+  // disagree with the tab directly above it. A key left behind by a rename is still excluded,
+  // because the count runs over the catalogue rather than over the stored map.
   const checkedWidgets = DASHBOARD_WIDGETS.filter(
-    (w) => w.available && draft.dashboardConfig.visibleWidgets[w.key]
+    (w) => draft.dashboardConfig.visibleWidgets[w.key]
   ).length
 
   function handleCancel() {
@@ -189,7 +189,7 @@ export function RoleConfigurePage() {
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1">
               <LayoutGrid className="size-3.5" />
-              {checkedMenus}/{ALL_LEAF_KEYS.length} menus
+              {checkedMenus}/{TOTAL_MENU_COUNT} menus
             </span>
             <span className="text-border">|</span>
             <span className="inline-flex items-center gap-1">

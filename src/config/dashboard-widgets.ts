@@ -305,14 +305,18 @@ export function widgetsInGroup(group: WidgetGroupKey): DashboardWidgetSpec[] {
 }
 
 /**
- * Every widget the product has actually built, switched on.
+ * Every widget switched on — all thirty-four.
  *
- * Only `available` ones: enabling a widget with no implementation would put a toggle in Role
- * Configure that changes nothing on the Dashboard, which is worse than not offering it. This is
- * exactly the 26 the reference export enables for OWNER, asserted in `dashboard-widgets.test.ts`.
+ * This used to return only the `available` ones, on the reasoning that a toggle for a widget with
+ * no implementation changes nothing and is worse than not offering it. The reference disagrees,
+ * and it is right: its own header reads "34 / 34" and its library footer "34 active", and its
+ * dashboard renders the unbuilt ones as a "Widget coming soon" card. That is more useful than
+ * hiding them — the shopkeeper sees what is coming and can already place it — and it makes "Show
+ * all" mean what it says. `available` now only decides whether a widget draws itself or draws the
+ * placeholder; it no longer decides whether it can be chosen.
  */
 export function allWidgetsEnabled(): Record<string, boolean> {
-  return Object.fromEntries(DASHBOARD_WIDGETS.filter((w) => w.available).map((w) => [w.key, true]))
+  return Object.fromEntries(DASHBOARD_WIDGETS.map((w) => [w.key, true]))
 }
 
 /**
