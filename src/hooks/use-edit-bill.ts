@@ -72,6 +72,9 @@ export function useEditBill(job: JobCardWithId) {
       discount: number
       billWarranty: { value: number; unit: 'days' | 'months' | 'years' } | null
       refundMode: 'cash' | 'upi' | 'card'
+      /** Names the parts billed beyond what the shop holds, when an owner chose to go ahead
+       *  anyway. Recorded on the timeline — an override nobody can see later is not a control. */
+      stockOverride?: string | null
     }) => {
       const previousTotal = job.finalAmount ?? 0
       const { partsTotal, total, refundDue } = billTotals({
@@ -102,10 +105,11 @@ export function useEditBill(job: JobCardWithId) {
       })
 
       const refundNote = refundDue > 0 ? ` (₹${refundDue.toFixed(2)} refunded)` : ''
+      const overrideNote = input.stockOverride ? ` — stock override: ${input.stockOverride}` : ''
       batch.set(eventRef, {
         type: 'billEdited',
-        title: 'Bill Edited',
-        description: `Bill edited: ₹${previousTotal} → ₹${total}${refundNote}`,
+        title: input.stockOverride ? 'Bill Edited (stock override)' : 'Bill Edited',
+        description: `Bill edited: ₹${previousTotal} → ₹${total}${refundNote}${overrideNote}`,
         userId: uid,
         userName,
         createdAt: now as never,

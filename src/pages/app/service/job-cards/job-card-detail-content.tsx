@@ -20,11 +20,15 @@ import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { FormModal } from '@/components/shared/form-modal'
 import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Textarea } from '@/components/ui/textarea'
 import { SearchSelect } from '@/components/shared/search-select'
 import { useJobTimeline, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
 import { attributeRows, attributesFor } from '@/lib/attribute-values'
+import { usePermissions } from '@/hooks/use-permissions'
+import { useStock } from '@/hooks/use-stock'
+import { fitCheck, stockByItemId, stockHelperText } from '@/lib/stock-check'
 import { useApplyJobAction } from '@/hooks/use-job-actions'
 import { useJobActionGating } from '@/hooks/use-job-action-gating'
 import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
@@ -110,10 +114,31 @@ export function JobCardDetailContent({
   const [partItemId, setPartItemId] = useState<string | null>(null)
   const [partRate, setPartRate] = useState(0)
   const [partQty, setPartQty] = useState(1)
+  /** Ticked to fit a part the shop does not have enough of. Reset whenever the part changes, so
+   *  an override granted for one part is never carried silently to the next. */
+  const [stockOverride, setStockOverride] = useState(false)
   const [noteOpen, setNoteOpen] = useState(false)
   const [noteText, setNoteText] = useState('')
 
   const partOptions = items.filter((i) => i.type === 'part' || i.type === 'service')
+
+  // On-hand is derived from purchases minus what jobs have consumed — see `useStock`. An item
+  // with no row here is untracked (every service, and any part the shop chose not to count), and
+  // is deliberately never blocked.
+  // Only an owner can fit what the shop does not have. A block with no way past it does not stop
+  // the part being fitted — it stops it being *recorded*, which is strictly worse than a
+  // negative number, because then nobody knows either.
+  const { isOwner } = usePermissions()
+  const canOverrideStock = isOwner
+
+  const stock = useStock()
+  const stockPositions = stockByItemId(stock.rows)
+  const partFit = fitCheck(partItemId ? stockPositions.get(partItemId) : undefined, partQty)
+  const stockLabels = {
+    inStock: (n: number) => t('pages.service.jobCardDetailContent.nInStock', { count: n }),
+    outOfStock: t('pages.service.jobCardDetailContent.outOfStock'),
+    low: (n: number) => t('pages.service.jobCardDetailContent.onlyNLeft', { count: n }),
+  }
   const balance = (job.finalAmount ?? job.estimatedCost) - job.paidAmount
 
   async function handleAddImage(file: File) {
@@ -403,14 +428,21 @@ export function JobCardDetailContent({
               (addPartOpen ? (
                 <div className="space-y-2 rounded-md border border-dashed p-2">
                   <SearchSelect
-                    options={partOptions.map((i) => ({
-                      id: i.id,
-                      label: i.name,
-                      helper: i.sellingPrice ? `₹${i.sellingPrice}` : undefined,
-                    }))}
+                    options={partOptions.map((i) => {
+                      const stockText = stockHelperText(stockPositions.get(i.id), stockLabels)
+                      const price = i.sellingPrice ? `₹${i.sellingPrice}` : undefined
+                      return {
+                        id: i.id,
+                        label: i.name,
+                        // Price and stock together: the number is needed while choosing, not on
+                        // a separate screen after the part is already on the job.
+                        helper: [price, stockText].filter(Boolean).join(' · ') || undefined,
+                      }
+                    })}
                     value={partItemId}
                     onChange={(id) => {
                       setPartItemId(id)
+                      setStockOverride(false)
                       const item = partOptions.find((i) => i.id === id)
                       if (item?.sellingPrice) setPartRate(item.sellingPrice)
                     }}
@@ -422,6 +454,27 @@ export function JobCardDetailContent({
                       )
                     }
                   />
+                  {partFit.blocked && (
+                    <div className="space-y-2 rounded-md bg-amber-50 px-2.5 py-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-300">
+                      <p>
+                        {t('pages.service.jobCardDetailContent.notEnoughStock', {
+                          onHand: partFit.onHand,
+                          qty: partQty,
+                          short: partFit.shortfall,
+                        })}
+                      </p>
+                      {canOverrideStock && (
+                        <label className="flex items-start gap-2">
+                          <Checkbox
+                            checked={stockOverride}
+                            onCheckedChange={(v) => setStockOverride(v === true)}
+                            className="mt-0.5"
+                          />
+                          <span>{t('pages.service.jobCardDetailContent.fitItAnyway')}</span>
+                        </label>
+                      )}
+                    </div>
+                  )}
                   <div className="flex gap-2">
                     <input
                       type="number"
@@ -442,7 +495,7 @@ export function JobCardDetailContent({
                     <Button
                       type="button"
                       size="sm"
-                      disabled={!partItemId}
+                      disabled={!partItemId || (partFit.blocked && !stockOverride)}
                       onClick={() => {
                         const item = partOptions.find((i) => i.id === partItemId)
                         if (!item) return
@@ -452,11 +505,20 @@ export function JobCardDetailContent({
                           itemName: item.name,
                           rate: partRate,
                           qty: partQty,
+                          ...(partFit.blocked
+                            ? {
+                                stockOverride: {
+                                  onHand: partFit.onHand,
+                                  shortfall: partFit.shortfall,
+                                },
+                              }
+                            : {}),
                         })
                         setAddPartOpen(false)
                         setPartItemId(null)
                         setPartRate(0)
                         setPartQty(1)
+                        setStockOverride(false)
                       }}
                     >
                       {t('common.add')}

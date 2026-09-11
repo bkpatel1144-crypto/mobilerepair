@@ -44,7 +44,16 @@ export type JobActionInput =
   | { action: 'deliverAndClose' }
   | { action: 'returnAndClose' }
   | { action: 'addImage'; url: string }
-  | { action: 'addPart'; itemId: string; itemName: string; rate: number; qty: number }
+  | {
+      action: 'addPart'
+      itemId: string
+      itemName: string
+      rate: number
+      qty: number
+      /** Fitted despite there not being enough on hand. Carries the shortfall so the timeline
+       *  says what was overridden, not merely that something was. */
+      stockOverride?: { onHand: number; shortfall: number }
+    }
   | { action: 'fieldVisit'; durationMinutes?: number; note?: string }
   | { action: 'handover'; toUserId: string; toUserName: string }
   | { action: 'note'; text: string }
@@ -240,6 +249,11 @@ function buildActionPatch(
         rate: input.rate,
         qty: input.qty,
       }
+      // An override is the whole reason the block can be got past, so it has to leave a mark. A
+      // shop that fits a part it never entered is not doing anything wrong — but the difference
+      // between "we had it" and "we went below zero on purpose" is exactly what the owner will
+      // want to see later.
+      const override = input.stockOverride
       return {
         patch: {
           partsUsed: [...job.partsUsed, part],
@@ -247,8 +261,10 @@ function buildActionPatch(
         },
         event: {
           type: 'partAdded',
-          title: 'Part Added',
-          description: `Part added: ${input.itemName} x${input.qty}`,
+          title: override ? 'Part Added (stock override)' : 'Part Added',
+          description: override
+            ? `Part added: ${input.itemName} x${input.qty} — fitted with ${override.onHand} on hand, ${override.shortfall} short`
+            : `Part added: ${input.itemName} x${input.qty}`,
           userId: uid,
           userName,
         },
@@ -357,7 +373,11 @@ export function useApplyJobAction(job: JobCardWithId) {
         targetLabel: job.customerName,
         // Matches BUILD_PLAN.md's own critical-action list ("Job Card Bill") — every other
         // status/data action on a job is routine, this one changes what the customer owes.
-        critical: input.action === 'generateBill',
+        // A stock override joins it: it is the one action here that deliberately puts the
+        // shop's own inventory out of step with what it holds.
+        critical:
+          input.action === 'generateBill' ||
+          (input.action === 'addPart' && !!input.stockOverride),
         details: { action: input.action },
       })
       await batch.commit()

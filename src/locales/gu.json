@@ -514,7 +514,9 @@
         "nItemsAtReorderPoint_one": "{{count}} આઇટમ રીઓર્ડર સ્તરે છે",
         "nItemsAtReorderPoint_other": "{{count}} આઇટમ રીઓર્ડર સ્તરે છે",
         "billAJobCard": "જોબ કાર્ડ બિલ કરો",
-        "newInvoice": "નવું ઇન્વોઇસ"
+        "newInvoice": "નવું ઇન્વોઇસ",
+        "nItemsBelowReorderPoint": "{{count}} વસ્તુઓ પુનઃઓર્ડર સ્તરે અથવા તેનાથી નીચે",
+        "nItemsOutOfStock": "{{count}} વસ્તુઓ સ્ટોકમાં નથી"
       }
     },
     "finance": {
@@ -1121,7 +1123,12 @@
         "toggleNotes": "નોંધ બતાવો/છુપાવો",
         "note": "નોંધ",
         "receipts": "રસીદો",
-        "adv": "એડ."
+        "adv": "એડ.",
+        "nInStock": "{{count}} સ્ટોકમાં",
+        "outOfStock": "સ્ટોકમાં નથી",
+        "onlyNLeft": "ફક્ત {{count}} બાકી",
+        "notEnoughStock": "ફક્ત {{onHand}} ઉપલબ્ધ છે, પણ તમે {{qty}} લગાવી રહ્યા છો — {{short}} ઓછા.",
+        "fitItAnyway": "તેમ છતાં લગાવો — ટાઇમલાઇન પર સ્ટોક ઓવરરાઇડ તરીકે નોંધાશે"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",
@@ -1340,7 +1347,10 @@
         "aBillNeedsAtLeastOneLine": "બિલમાં ઓછામાં ઓછો એક પાર્ટ કે સેવા શુલ્ક હોવો જોઈએ.",
         "couldNotSaveTheBill": "બિલ સાચવી શકાયું નહીં. કૃપા કરી ફરી પ્રયાસ કરો.",
         "taxableValue": "કરપાત્ર મૂલ્ય",
-        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%"
+        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%",
+        "lineExceedsStock": "{{name}}: ફક્ત {{onHand}} ઉપલબ્ધ, {{short}} ઓછા.",
+        "billItAnyway": "તેમ છતાં બિલ કરો — ટાઇમલાઇન પર સ્ટોક ઓવરરાઇડ તરીકે નોંધાશે",
+        "notEnoughStockFor": "{{items}} માટે પૂરતો સ્ટોક નથી."
       },
       "billDetails": {
         "billDetails": "બિલ વિગતો",

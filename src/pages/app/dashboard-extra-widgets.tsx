@@ -11,6 +11,7 @@ import {
 import { EmptyState } from '@/components/shared/empty-state'
 import { useParties } from '@/hooks/use-parties'
 import { useItems } from '@/hooks/use-items'
+import { useStock, stockSummary } from '@/hooks/use-stock'
 import { useUsers } from '@/hooks/use-users'
 import { useJobCards } from '@/hooks/use-job-cards'
 import { useSecondHandSales } from '@/hooks/use-second-hand-sales'
@@ -195,7 +196,7 @@ export function SalesVsPurchaseWidget({ label }: { label: string }) {
 export function NotificationsWidget({ label }: { label: string }) {
   const { t } = useTranslation()
   const { data: jobs = [] } = useJobCards()
-  const { data: items = [] } = useItems()
+  const stock = useStock()
 
   // Not the bare `Date.now()` — the React Compiler treats it as impure in a render body. Same
   // established workaround as `use-job-cards.ts`.
@@ -207,10 +208,10 @@ export function NotificationsWidget({ label }: { label: string }) {
     return !!created && now - created > STALE_DAYS * 24 * 60 * 60 * 1000
   }).length
   const pendingReturn = jobs.filter((j) => j.status === 'pendingReturn').length
-  const lowStock = items.filter(
-    (i) =>
-      i.stockTracked && i.reorder.reorderPoint > 0 && i.reorder.minStock <= i.reorder.reorderPoint
-  ).length
+  // Real on-hand, not a comparison of two settings. This previously read
+  // `minStock <= reorderPoint` — two configured numbers with no reference to stock at all, so it
+  // reported the same count forever regardless of what the shop actually held.
+  const stockCounts = stockSummary(stock.rows)
 
   const rows: AlertRow[] = []
   if (onHold)
@@ -237,12 +238,19 @@ export function NotificationsWidget({ label }: { label: string }) {
       text: t('pages.dashboard.dashboard.nDevicesAwaitingReturn', { count: pendingReturn }),
       href: '/app/service/job-cards',
     })
-  if (lowStock)
+  if (stockCounts.out)
+    rows.push({
+      id: 'stockOut',
+      tone: 'danger',
+      text: t('pages.dashboard.dashboard.nItemsOutOfStock', { count: stockCounts.out }),
+      href: '/app/inventory/stock',
+    })
+  if (stockCounts.low)
     rows.push({
       id: 'stock',
       tone: 'info',
-      text: t('pages.dashboard.dashboard.nItemsAtReorderPoint', { count: lowStock }),
-      href: '/app/masters/items',
+      text: t('pages.dashboard.dashboard.nItemsBelowReorderPoint', { count: stockCounts.low }),
+      href: '/app/inventory/stock',
     })
 
   return (

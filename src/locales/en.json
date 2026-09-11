@@ -514,7 +514,9 @@
         "nItemsAtReorderPoint_one": "{{count}} item is at its reorder point",
         "nItemsAtReorderPoint_other": "{{count}} items are at their reorder point",
         "billAJobCard": "Bill a job card",
-        "newInvoice": "New Invoice"
+        "newInvoice": "New Invoice",
+        "nItemsBelowReorderPoint": "{{count}} items at or below their reorder point",
+        "nItemsOutOfStock": "{{count}} items out of stock"
       }
     },
     "finance": {
@@ -1121,7 +1123,12 @@
         "toggleNotes": "Toggle notes",
         "note": "Note",
         "receipts": "Receipts",
-        "adv": "Adv"
+        "adv": "Adv",
+        "nInStock": "{{count}} in stock",
+        "outOfStock": "Out of stock",
+        "onlyNLeft": "Only {{count}} left",
+        "notEnoughStock": "Only {{onHand}} on hand, but you are fitting {{qty}} — {{short}} short.",
+        "fitItAnyway": "Fit it anyway — recorded on the timeline as a stock override"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "Couldn't load this job card",
@@ -1340,7 +1347,10 @@
         "aBillNeedsAtLeastOneLine": "A bill needs at least one part or a service charge.",
         "couldNotSaveTheBill": "Could not save the bill. Please try again.",
         "taxableValue": "Taxable value",
-        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%"
+        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%",
+        "lineExceedsStock": "{{name}}: only {{onHand}} available, {{short}} short.",
+        "billItAnyway": "Bill it anyway — recorded on the timeline as a stock override",
+        "notEnoughStockFor": "Not enough stock for {{items}}."
       },
       "billDetails": {
         "billDetails": "Bill Details",

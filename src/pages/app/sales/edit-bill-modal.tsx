@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { Package, Plus, Trash2, ShieldCheck, Check } from 'lucide-react'
 import { FormModal } from '@/components/shared/form-modal'
+import { Checkbox } from '@/components/ui/checkbox'
+import { useStock } from '@/hooks/use-stock'
+import { usePermissions } from '@/hooks/use-permissions'
+import { draftShortfalls, stockByItemId, stockHelperText } from '@/lib/stock-check'
 import { SearchSelect } from '@/components/shared/search-select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -94,6 +98,7 @@ function EditBillForm({
   )
   const [adding, setAdding] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [stockOverride, setStockOverride] = useState(false)
 
   const editBill = useEditBill(job)
   const { data: company } = useCompany()
@@ -114,9 +119,30 @@ function EditBillForm({
     .filter((p) => p.partyTypes.includes('supplier') || p.partyTypes.length === 0)
     .map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))
 
+  // Edit Bill is the other door into `partsUsed` — parts stop being addable on the job card once
+  // a bill exists, so a stock rule enforced only there would be bypassed by coming here instead.
+  const stock = useStock()
+  const stockPositions = stockByItemId(stock.rows)
+  const stockLabels = {
+    inStock: (n: number) => t('pages.service.jobCardDetailContent.nInStock', { count: n }),
+    outOfStock: t('pages.service.jobCardDetailContent.outOfStock'),
+    low: (n: number) => t('pages.service.jobCardDetailContent.onlyNLeft', { count: n }),
+  }
+  // What this job already holds is added back before judging the draft — `useStock` has already
+  // subtracted it, so comparing directly would refuse an edit that changes nothing.
+  const shortfalls = draftShortfalls(stockPositions, parts, job.partsUsed)
+  const { isOwner } = usePermissions()
+
   const partOptions = (items ?? [])
     .filter((i) => i.type === 'part' || i.type === 'service')
-    .map((i) => ({ id: i.id, label: i.name, helper: i.itemCode }))
+    .map((i) => ({
+      id: i.id,
+      label: i.name,
+      helper:
+        [i.itemCode, stockHelperText(stockPositions.get(i.id), stockLabels)]
+          .filter(Boolean)
+          .join(' · ') || undefined,
+    }))
 
   function patchPart(id: string, patch: Partial<PartUsed>) {
     setParts((prev) => prev.map((p) => (p.id === id ? { ...p, ...patch } : p)))
@@ -172,6 +198,14 @@ function EditBillForm({
       setError(t('pages.sales.editBill.aBillNeedsAtLeastOneLine'))
       return
     }
+    if (shortfalls.length > 0 && !stockOverride) {
+      setError(
+        t('pages.sales.editBill.notEnoughStockFor', {
+          items: shortfalls.map((s) => `${s.itemName} (${s.shortfall})`).join(', '),
+        })
+      )
+      return
+    }
     const wValue = num(warrantyValue)
     editBill.mutate(
       {
@@ -180,6 +214,10 @@ function EditBillForm({
         discount: num(discount),
         billWarranty: wValue > 0 ? { value: wValue, unit: warrantyUnit } : null,
         refundMode: 'cash',
+        stockOverride:
+          shortfalls.length > 0
+            ? shortfalls.map((s) => `${s.itemName} (${s.shortfall} short)`).join(', ')
+            : null,
       },
       {
         onSuccess: () => onOpenChange(false),
@@ -315,6 +353,30 @@ function EditBillForm({
             </div>
           </div>
         ))}
+
+        {shortfalls.length > 0 && (
+          <div className="space-y-2 rounded-md bg-amber-50 px-2.5 py-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-300">
+            {shortfalls.map((s) => (
+              <p key={s.itemId}>
+                {t('pages.sales.editBill.lineExceedsStock', {
+                  name: s.itemName,
+                  onHand: s.onHand,
+                  short: s.shortfall,
+                })}
+              </p>
+            ))}
+            {isOwner && (
+              <label className="flex items-start gap-2">
+                <Checkbox
+                  checked={stockOverride}
+                  onCheckedChange={(v) => setStockOverride(v === true)}
+                  className="mt-0.5"
+                />
+                <span>{t('pages.sales.editBill.billItAnyway')}</span>
+              </label>
+            )}
+          </div>
+        )}
 
         {adding ? (
           <div className="rounded-lg border border-dashed p-2">
