@@ -834,6 +834,26 @@
         "cessPercent": "સેસ %",
         "natureGoods": "માલ",
         "natureService": "સેવા"
+      },
+      "attributes": {
+        "attributes": "લક્ષણો",
+        "theVocabularyItemVariants": "આઇટમ વેરિઅન્ટ જે શબ્દોથી વર્ણવાય છે — રંગ, ક્ષમતા વગેરે.",
+        "values": "મૂલ્યો",
+        "inUse": "ઉપયોગમાં",
+        "noValuesYet": "હજી કોઈ મૂલ્ય નથી",
+        "addAttribute": "લક્ષણ ઉમેરો",
+        "editAttribute": "લક્ષણ સંપાદિત કરો",
+        "noAttributesYet": "હજી કોઈ લક્ષણ નથી",
+        "addColourOrCapacity": "આઇટમ વેરિઅન્ટ વર્ણવવા રંગ કે ક્ષમતા ઉમેરો.",
+        "aNameIsRequired": "નામ જરૂરી છે.",
+        "eGColour": "જેમ કે રંગ",
+        "eGBlackWhiteBlue": "જેમ કે કાળો, સફેદ, વાદળી",
+        "separateValuesWithCommas": "મૂલ્યોને અલ્પવિરામથી અલગ કરો.",
+        "nItems_one": "{{count}} આઇટમ",
+        "nItems_other": "{{count}} આઇટમ",
+        "thisPermanentlyDeletes": "આ લક્ષણ કાયમ માટે કાઢી નાખશે. તે પાછું લાવી શકાશે નહીં.",
+        "nItemsStillName_one": "{{count}} આઇટમ હજી આ લક્ષણનું નામ ધરાવે છે અને એ જ નામ રાખશે. આ પાછું લાવી શકાશે નહીં.",
+        "nItemsStillName_other": "{{count}} આઇટમ હજી આ લક્ષણનું નામ ધરાવે છે અને એ જ નામ રાખશે. આ પાછું લાવી શકાશે નહીં."
       }
     },
     "secondHandDevice": {

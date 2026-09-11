@@ -834,6 +834,26 @@
         "cessPercent": "Cess %",
         "natureGoods": "Goods",
         "natureService": "Service"
+      },
+      "attributes": {
+        "attributes": "Attributes",
+        "theVocabularyItemVariants": "The words item variants are described by — colour, capacity, and so on.",
+        "values": "Values",
+        "inUse": "In use",
+        "noValuesYet": "No values yet",
+        "addAttribute": "Add attribute",
+        "editAttribute": "Edit attribute",
+        "noAttributesYet": "No attributes yet",
+        "addColourOrCapacity": "Add Colour or Capacity to start describing item variants.",
+        "aNameIsRequired": "A name is required.",
+        "eGColour": "e.g. Colour",
+        "eGBlackWhiteBlue": "e.g. Black, White, Blue",
+        "separateValuesWithCommas": "Separate values with commas.",
+        "nItems_one": "{{count}} item",
+        "nItems_other": "{{count}} items",
+        "thisPermanentlyDeletes": "This permanently deletes the attribute. It cannot be undone.",
+        "nItemsStillName_one": "{{count}} item still names this attribute and keeps the name it stored. This cannot be undone.",
+        "nItemsStillName_other": "{{count}} items still name this attribute and keep the names they stored. This cannot be undone."
       }
     },
     "secondHandDevice": {

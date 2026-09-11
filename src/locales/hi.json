@@ -834,6 +834,26 @@
         "cessPercent": "उपकर %",
         "natureGoods": "वस्तु",
         "natureService": "सेवा"
+      },
+      "attributes": {
+        "attributes": "विशेषताएँ",
+        "theVocabularyItemVariants": "आइटम वेरिएंट जिन शब्दों से बताए जाते हैं — रंग, क्षमता आदि।",
+        "values": "मान",
+        "inUse": "उपयोग में",
+        "noValuesYet": "अभी कोई मान नहीं",
+        "addAttribute": "विशेषता जोड़ें",
+        "editAttribute": "विशेषता संपादित करें",
+        "noAttributesYet": "अभी कोई विशेषता नहीं",
+        "addColourOrCapacity": "आइटम वेरिएंट बताने के लिए रंग या क्षमता जोड़ें।",
+        "aNameIsRequired": "नाम आवश्यक है।",
+        "eGColour": "जैसे रंग",
+        "eGBlackWhiteBlue": "जैसे काला, सफेद, नीला",
+        "separateValuesWithCommas": "मानों को अल्पविराम से अलग करें।",
+        "nItems_one": "{{count}} आइटम",
+        "nItems_other": "{{count}} आइटम",
+        "thisPermanentlyDeletes": "यह विशेषता को स्थायी रूप से हटा देगा। इसे वापस नहीं लाया जा सकता।",
+        "nItemsStillName_one": "{{count}} आइटम अब भी इस विशेषता का नाम रखता है और वही नाम बनाए रखेगा। इसे वापस नहीं लाया जा सकता।",
+        "nItemsStillName_other": "{{count}} आइटम अब भी इस विशेषता का नाम रखते हैं और वही नाम बनाए रखेंगे। इसे वापस नहीं लाया जा सकता।"
       }
     },
     "secondHandDevice": {

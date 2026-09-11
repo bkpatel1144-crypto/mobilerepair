@@ -394,6 +394,16 @@ service cloud.firestore {
         allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/payment-modes') &&
           resource.data.source != 'system';
       }
+      // Masters > Attributes — the vocabulary item variants are described by. Gated on the
+      // Item Master menu rather than one of its own: an attribute exists only to describe an
+      // item, and a role that cannot manage items has no reason to define one.
+      match /itemAttributes/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'masters/items');
+        allow delete: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'masters/items');
+      }
+
       match /partyCategories/{id} {
         allow read: if belongsToCompany(companyId);
         // `isBootstrapping()` because `seedTenantForUser()` seeds this collection's system

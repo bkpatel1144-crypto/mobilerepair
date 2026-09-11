@@ -44,6 +44,15 @@ export const partyCategoriesCollection = (companyId: string) =>
 export const partyCategoryDoc = (companyId: string, id: string) =>
   `${partyCategoriesCollection(companyId)}/${id}`
 
+/** The vocabulary item variants are described by — Colour, Capacity, and so on. Its own
+ *  collection rather than a field on the company, because each one carries its own values and
+ *  needs to be added, renamed and retired like any other master. */
+export const itemAttributesCollection = (companyId: string) =>
+  `companies/${companyId}/itemAttributes`
+
+export const itemAttributeDoc = (companyId: string, id: string) =>
+  `${itemAttributesCollection(companyId)}/${id}`
+
 export const itemsCollection = (companyId: string) => `companies/${companyId}/items`
 export const itemDoc = (companyId: string, itemId: string) =>
   `${itemsCollection(companyId)}/${itemId}`
