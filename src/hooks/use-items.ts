@@ -97,6 +97,7 @@ export interface CreateItemInput {
   reorder?: ItemReorderSettings
   hasVariants?: boolean
   variantAttributes?: string[]
+  attributes?: Record<string, string | number | boolean | null>
   images?: string[]
   lob?: ItemLobConfig
   isSystem?: boolean
@@ -149,6 +150,7 @@ function itemFieldsFrom(input: CreateItemInput) {
     reorder: input.reorder ?? emptyReorder(),
     hasVariants: input.hasVariants ?? false,
     variantAttributes: input.variantAttributes ?? [],
+    attributes: input.attributes ?? {},
     images: input.images ?? [],
     lob,
     ...legacyLobFlags(lob),

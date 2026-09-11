@@ -294,6 +294,9 @@ export interface PartyDoc {
   pincode: string | null
   creditLimit: number
   creditDays: number
+  /** Values for the custom fields defined in Masters > Attributes with `appliesTo: 'party'`,
+   *  keyed by attribute code. Absent on every party written before Phase 12. */
+  attributes?: Record<string, string | number | boolean | null>
   status: EntityStatus
   createdAt: Timestamp
   updatedAt: Timestamp
@@ -423,6 +426,10 @@ export interface ItemDoc {
   /** Attribute names a variant is defined by — "Colour", "Capacity". Empty on every export row,
    *  so the element type is this app's own choice; see `ItemAlternateUom` for the same caveat. */
   variantAttributes?: string[]
+  /** Values for the custom fields defined in Masters > Attributes, keyed by attribute **code**
+   *  — not by name (a label the shopkeeper renames) and not by document id (meaningless to
+   *  anyone reading this document). Absent on every item written before Phase 12. */
+  attributes?: Record<string, string | number | boolean | null>
   /** Storage download URLs, same convention as `JobCardDoc.imageUrls`. */
   images?: string[]
 
@@ -544,6 +551,10 @@ export interface JobCardDoc {
   partsUsed: PartUsed[]
   imageUrls: string[]
   notes: JobNote[]
+
+  /** Values for the custom fields defined in Masters > Attributes with `appliesTo: 'jobCard'`,
+   *  keyed by attribute code. Absent on every job card written before Phase 12. */
+  attributes?: Record<string, string | number | boolean | null>
 
   cancelReason: string | null
   holdReason: string | null

@@ -34,6 +34,16 @@ import {
   taxPercentOf,
   DEFAULT_UOM,
 } from '@/lib/item-defaults'
+import { AttributeFields } from '@/components/shared/attribute-fields'
+import { MultiSelectPopover } from '@/components/shared/multi-select-popover'
+import { useItemAttributes } from '@/hooks/use-item-attributes'
+import {
+  attributesFor,
+  attributeValuesToDraft,
+  cleanAttributeValues,
+  missingMandatoryAttributes,
+  type AttributeValues,
+} from '@/lib/attribute-values'
 import { buildPath } from '@/config/nav'
 import type {
   ItemGstRates,
@@ -81,6 +91,7 @@ interface ItemDraft {
   reorder: ItemReorderSettings
   hasVariants: boolean
   variantAttributes: string
+  attributes: AttributeValues
   lob: ItemLobConfig
 }
 
@@ -108,6 +119,7 @@ function emptyDraft(): ItemDraft {
     reorder: emptyReorder(),
     hasVariants: false,
     variantAttributes: '',
+    attributes: {},
     lob: defaultLob(false),
   }
 }
@@ -135,6 +147,7 @@ function draftFrom(item: ItemRow): ItemDraft {
     reorder: item.reorder,
     hasVariants: item.hasVariants,
     variantAttributes: item.variantAttributes.join(', '),
+    attributes: item.attributes,
     lob: item.lob,
   }
 }
@@ -161,6 +174,7 @@ export function CreateItemPage() {
   const { data: items = [] } = useItems()
   const { data: categories = [] } = useItemCategories()
   const { data: uoms = [] } = useUoms()
+  const { data: allAttributes = [] } = useItemAttributes()
   const createItem = useCreateItem()
   const updateItem = useUpdateItem()
 
@@ -181,6 +195,8 @@ export function CreateItemPage() {
   const [submitting, setSubmitting] = useState(false)
   const [confirmingClear, setConfirmingClear] = useState(false)
   const [loadedId, setLoadedId] = useState<string | null>(null)
+  /** Codes of mandatory attributes the last submit found blank. */
+  const [missingAttributes, setMissingAttributes] = useState<string[]>([])
 
   // Fill the form once the item being edited arrives, adjusting state during render rather than
   // in an effect. This is the case React documents for it — state derived from a prop that has
@@ -213,6 +229,27 @@ export function CreateItemPage() {
   const set = <K extends keyof ItemDraft>(key: K, value: ItemDraft[K]) =>
     setDraft((prev) => ({ ...prev, [key]: value }))
 
+  const itemAttributes = attributesFor(allAttributes, 'item')
+  // Every defined attribute gets a key, so no control flips from uncontrolled to controlled when
+  // an older item (saved before the attribute existed) is opened for editing.
+  const attributeDraft = attributeValuesToDraft(itemAttributes, draft.attributes)
+
+  const selectedVariantAttributes = draft.variantAttributes
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean)
+  // A name the master no longer defines is still offered, and marked, so editing an older item
+  // cannot quietly drop it.
+  const variantAttributeOptions = [
+    ...itemAttributes.map((a) => ({ id: a.name, label: a.name })),
+    ...selectedVariantAttributes
+      .filter((name) => !itemAttributes.some((a) => a.name === name))
+      .map((name) => ({
+        id: name,
+        label: `${name} (${t('pages.masters.createItem.keptFromBefore')})`,
+      })),
+  ]
+
   const isService = draft.type === 'service'
   const rootCategories = categories.filter((c) => !c.parentId)
   const subCategories = categories.filter(
@@ -232,6 +269,14 @@ export function CreateItemPage() {
     setFormError(null)
     if (!draft.name.trim()) {
       setFormError(t('pages.masters.createItem.anItemNameIsRequired'))
+      return
+    }
+    // Masters > Attributes marks an attribute Mandatory; until Phase 12 that flag was stored and
+    // read by nothing. This is where it means something.
+    const missing = missingMandatoryAttributes(itemAttributes, draft.attributes)
+    setMissingAttributes(missing)
+    if (missing.length > 0) {
+      setFormError(t('pages.masters.createItem.fillTheRequiredAttributes'))
       return
     }
     setSubmitting(true)
@@ -266,6 +311,7 @@ export function CreateItemPage() {
           .split(',')
           .map((v) => v.trim())
           .filter(Boolean),
+        attributes: cleanAttributeValues(itemAttributes, draft.attributes),
         lob: draft.lob,
         description: draft.description.trim() || null,
       }
@@ -662,18 +708,42 @@ export function CreateItemPage() {
           {draft.hasVariants && (
             <div className="space-y-1.5">
               <Label>{t('pages.masters.createItem.variantAttributes')}</Label>
-              <Input
-                value={draft.variantAttributes}
-                onChange={(e) => set('variantAttributes', e.target.value)}
-                placeholder={t('pages.masters.createItem.eGColourCapacity')}
+              {/* Chosen from Masters > Attributes rather than typed. Typing them is what made
+               * "Colour", "colour" and "Color" three different attributes, which is the whole
+               * reason that master exists. Still stored as names, so no existing item needs
+               * migrating. */}
+              <MultiSelectPopover
+                options={variantAttributeOptions}
+                selectedIds={selectedVariantAttributes}
+                onChange={(ids) => set('variantAttributes', ids.join(', '))}
+                placeholder={t('pages.masters.createItem.chooseVariantAttributes')}
               />
-              <p className="text-xs text-muted-foreground">
-                {t('pages.masters.createItem.separateWithCommas')}
-              </p>
+              {itemAttributes.length === 0 && (
+                <p className="text-xs text-muted-foreground">
+                  {t('pages.masters.createItem.defineAttributesFirst')}
+                </p>
+              )}
             </div>
           )}
         </div>
       </FormSection>
+
+      {itemAttributes.length > 0 && (
+        <FormSection
+          glyph="🏷️"
+          title={t('pages.masters.createItem.sections.attributes')}
+          description={t('pages.masters.createItem.attributesDescription')}
+        >
+          <AttributeFields
+            attributes={itemAttributes}
+            values={attributeDraft}
+            onChange={(code, value) =>
+              setDraft((prev) => ({ ...prev, attributes: { ...prev.attributes, [code]: value } }))
+            }
+            missing={missingAttributes}
+          />
+        </FormSection>
+      )}
 
       <FormSection glyph="🧩" title={t('pages.masters.createItem.sections.lob')}>
         <div className="space-y-4">

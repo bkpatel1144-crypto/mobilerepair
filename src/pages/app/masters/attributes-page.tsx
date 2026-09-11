@@ -44,9 +44,10 @@ const DATA_TYPES: AttributeDataType[] = ['text', 'number', 'date', 'boolean', 's
  * The first version of this screen was a name plus a comma-separated list of values — only the
  * last of those five things. It was built without a reference and was simply the wrong shape.
  *
- * `ItemDoc.variantAttributes` still stores attribute *names* as free text, so Create Item asks
- * the shopkeeper to type them from memory and "Colour", "colour" and "Color" become three
- * different attributes. This is the list they should be chosen from, and the "In use" count is
+ * Phase 12 wired this master to the forms it claims to apply to: Create Item picks its variant
+ * attributes from this list instead of asking the shopkeeper to type them (which is how
+ * "Colour", "colour" and "Color" became three attributes), and every attribute here renders as a
+ * real field under Additional Details, where Mandatory refuses the save. The "In use" count is
  * what makes deleting one an informed decision rather than a surprise.
  */
 export function AttributesPage() {
@@ -76,11 +77,17 @@ export function AttributesPage() {
   const update = useUpdateItemAttribute()
   const remove = useDeleteItemAttribute()
 
-  /** How many items still name this attribute, counted from what items actually stored rather
-   *  than from a tally that could drift. */
+  /** How many items still use this attribute, counted from what items actually stored rather
+   *  than from a tally that could drift.
+   *
+   *  Two ways to be in use, and both count: as a *value* (keyed by code, what Create Item's
+   *  Additional Details writes) or as a *variant* attribute (stored by name). The name match is
+   *  case-insensitive because items written before Phase 12 had those names typed by hand. */
   const usageOf = (attr: ItemAttributeWithId) =>
-    items.filter((i) =>
-      (i.variantAttributes ?? []).some((v) => v.trim().toLowerCase() === attr.name.toLowerCase())
+    items.filter(
+      (i) =>
+        (attr.code && i.attributes?.[attr.code] !== undefined) ||
+        (i.variantAttributes ?? []).some((v) => v.trim().toLowerCase() === attr.name.toLowerCase())
     ).length
 
   const q = search.trim().toLowerCase()

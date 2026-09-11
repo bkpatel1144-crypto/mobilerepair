@@ -94,6 +94,7 @@ export interface ResolvedItem extends ItemDoc {
   reorder: ItemReorderSettings
   hasVariants: boolean
   variantAttributes: string[]
+  attributes: Record<string, string | number | boolean | null>
   images: string[]
   lob: ItemLobConfig
   isSystem: boolean
@@ -130,6 +131,7 @@ export function resolveItem<T extends ItemDoc>(raw: T): T & ResolvedItem {
     reorder: raw.reorder ?? emptyReorder(),
     hasVariants: raw.hasVariants ?? false,
     variantAttributes: raw.variantAttributes ?? [],
+    attributes: raw.attributes ?? {},
     images: raw.images ?? [],
     lob: raw.lob ?? {
       sales: {

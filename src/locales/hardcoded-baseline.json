@@ -166,7 +166,6 @@
   "../pages/app/service/job-cards/job-card-detail-content.tsx: \"Add Image\"",
   "../pages/app/service/job-cards/job-card-detail-content.tsx: \"Add Note\"",
   "../pages/app/service/job-cards/job-card-detail-content.tsx: \"Add Part\"",
-  "../pages/app/service/job-cards/job-card-detail-content.tsx: \"Add\"",
   "../pages/app/service/job-cards/job-card-detail-content.tsx: \"Cancel\"",
   "../pages/app/service/job-cards/job-card-detail-page.tsx: \"Back\"",
   "../pages/app/service/job-cards/timeline-panel.tsx: \"Timeline\"",

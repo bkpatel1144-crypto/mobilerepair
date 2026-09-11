@@ -64,6 +64,7 @@ export interface CreatePartyInput {
   pincode?: string | null
   creditLimit?: number
   creditDays?: number
+  attributes?: Record<string, string | number | boolean | null>
 }
 
 export function useCreateParty() {
@@ -100,6 +101,7 @@ export function useCreateParty() {
         pincode: input.pincode?.trim() || null,
         creditLimit: input.creditLimit ?? 0,
         creditDays: input.creditDays ?? 0,
+        attributes: input.attributes ?? {},
         status: 'active',
         createdAt: now as never,
         updatedAt: now as never,
@@ -153,6 +155,7 @@ export function useUpdateParty() {
         pincode: input.pincode?.trim() || null,
         creditLimit: input.creditLimit ?? 0,
         creditDays: input.creditDays ?? 0,
+        attributes: input.attributes ?? {},
         updatedAt: serverTimestamp(),
       })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {

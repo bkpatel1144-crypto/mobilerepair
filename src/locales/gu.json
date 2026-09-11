@@ -450,7 +450,9 @@
     "to": "થી",
     "back": "પાછા",
     "clear": "સાફ કરો",
-    "clearSelection": "પસંદગી દૂર કરો"
+    "clearSelection": "પસંદગી દૂર કરો",
+    "select": "પસંદ કરો…",
+    "thisFieldIsRequired": "આ ફીલ્ડ જરૂરી છે."
   },
   "pages": {
     "dashboard": {
@@ -827,14 +829,20 @@
           "pricing": "ભાવ અને કર",
           "inventory": "ઇન્વેન્ટરી",
           "variants": "વેરિઅન્ટ",
-          "lob": "વ્યવસાય લાઇન"
+          "lob": "વ્યવસાય લાઇન",
+          "attributes": "વધારાની વિગતો"
         },
         "cgstPercent": "CGST %",
         "sgstPercent": "SGST %",
         "igstPercent": "IGST %",
         "cessPercent": "સેસ %",
         "natureGoods": "માલ",
-        "natureService": "સેવા"
+        "natureService": "સેવા",
+        "attributesDescription": "તમારી કંપનીએ માસ્ટર્સ › એટ્રિબ્યુટ્સમાં બનાવેલા કસ્ટમ ફીલ્ડ.",
+        "fillTheRequiredAttributes": "વધારાની વિગતો હેઠળના જરૂરી ફીલ્ડ ભરો.",
+        "chooseVariantAttributes": "કયા એટ્રિબ્યુટ વેરિઅન્ટ નક્કી કરે છે તે પસંદ કરો",
+        "defineAttributesFirst": "હજી કોઈ આઇટમ એટ્રિબ્યુટ બન્યા નથી — તેમને માસ્ટર્સ › એટ્રિબ્યુટ્સમાં ઉમેરો.",
+        "keptFromBefore": "પહેલાંથી રાખેલું"
       },
       "attributes": {
         "attributes": "લક્ષણો",

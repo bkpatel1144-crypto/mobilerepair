@@ -9,6 +9,8 @@ import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
+import { useItemAttributes } from '@/hooks/use-item-attributes'
+import { attributeRows, attributesFor } from '@/lib/attribute-values'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import {
@@ -68,6 +70,12 @@ export function ItemMasterPage() {
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState<ItemFilters>(NO_FILTERS)
   const [viewing, setViewing] = useState<ItemRow | null>(null)
+  const { data: allAttributes = [] } = useItemAttributes()
+  const itemAttributeRows = attributeRows(
+    attributesFor(allAttributes, 'item'),
+    viewing?.attributes,
+    { yes: t('common.yes'), no: t('common.no') }
+  )
 
   const setFilter = <K extends keyof ItemFilters>(key: K, value: ItemFilters[K]) =>
     setFilters((prev) => ({ ...prev, [key]: value }))
@@ -475,6 +483,16 @@ export function ItemMasterPage() {
                   : []),
               ],
             },
+            // Only when this item actually carries custom values — an empty card on every item
+            // would be worse than no card.
+            ...(itemAttributeRows.length > 0
+              ? [
+                  {
+                    title: t('pages.masters.createItem.sections.attributes'),
+                    rows: itemAttributeRows,
+                  },
+                ]
+              : []),
             ...(viewing.hasVariants
               ? [
                   {

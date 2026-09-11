@@ -122,6 +122,7 @@ export interface CreateJobCardInput {
   assignedToId?: string | null
   assignedToName?: string | null
   imageUrls?: string[]
+  attributes?: Record<string, string | number | boolean | null>
 }
 
 /** Creates the job card, an "Assigned" timeline event when a technician was picked at intake,
@@ -198,6 +199,7 @@ export function useCreateJobCard() {
         partsUsed: [],
         imageUrls: input.imageUrls ?? [],
         notes: [],
+        attributes: input.attributes ?? {},
         cancelReason: null,
         holdReason: null,
         lastActionUndo: null,

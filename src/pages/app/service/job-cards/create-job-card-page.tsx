@@ -16,6 +16,15 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { FormError } from '@/components/shared/form-error'
+import { AttributeFields } from '@/components/shared/attribute-fields'
+import { useItemAttributes } from '@/hooks/use-item-attributes'
+import {
+  attributesFor,
+  attributeValuesToDraft,
+  cleanAttributeValues,
+  missingMandatoryAttributes,
+  type AttributeValues,
+} from '@/lib/attribute-values'
 import { SearchSelect } from '@/components/shared/search-select'
 import { MultiSelectPopover } from '@/components/shared/multi-select-popover'
 import { RouteFallback } from '@/components/shared/route-fallback'
@@ -146,6 +155,9 @@ export function CreateJobCardPage() {
   const [itemsReturnedOpen, setItemsReturnedOpen] = useState(false)
 
   const [formError, setFormError] = useState<string | null>(null)
+  const { data: allAttributes = [] } = useItemAttributes()
+  const [attributeValues, setAttributeValues] = useState<AttributeValues>({})
+  const [missingAttributes, setMissingAttributes] = useState<string[]>([])
   const [submitting, setSubmitting] = useState(false)
   const [savedAt, setSavedAt] = useState<Date | null>(null)
   const [confirmingClear, setConfirmingClear] = useState(false)
@@ -295,6 +307,10 @@ export function CreateJobCardPage() {
   // selected/checked the same way Brand does.
   const selectedModelOption = modelsForBrand.find((m) => m.label === model)
 
+  // Custom fields from Masters > Attributes with `appliesTo: 'jobCard'`.
+  const jobCardAttributes = attributesFor(allAttributes, 'jobCard')
+  const attributeDraft = attributeValuesToDraft(jobCardAttributes, attributeValues)
+
   async function handleSubmit() {
     setFormError(null)
 
@@ -313,6 +329,12 @@ export function CreateJobCardPage() {
     }
     if (isVisible('deviceType') && !deviceTypeId) {
       setFormError(t('shared.selectADeviceType'))
+      return
+    }
+    const missing = missingMandatoryAttributes(jobCardAttributes, attributeDraft)
+    setMissingAttributes(missing)
+    if (missing.length > 0) {
+      setFormError(t('pages.masters.createItem.fillTheRequiredAttributes'))
       return
     }
     if (problemIds.length === 0) {
@@ -386,6 +408,7 @@ export function CreateJobCardPage() {
         assignedToId: assignedToId ?? null,
         assignedToName: assignedUser?.fullName ?? null,
         imageUrls,
+        attributes: cleanAttributeValues(jobCardAttributes, attributeDraft),
       })
 
       localStorage.removeItem(DRAFT_KEY)
@@ -1205,6 +1228,22 @@ export function CreateJobCardPage() {
             )}
           </div>
         </div>
+
+        {jobCardAttributes.length > 0 && (
+          <div className="mt-5 space-y-3 border-t pt-4">
+            <h2 className="text-sm font-semibold">
+              {t('pages.masters.createItem.sections.attributes')}
+            </h2>
+            <AttributeFields
+              attributes={jobCardAttributes}
+              values={attributeDraft}
+              onChange={(code, value) =>
+                setAttributeValues((prev) => ({ ...prev, [code]: value }))
+              }
+              missing={missingAttributes}
+            />
+          </div>
+        )}
 
         <div className="mt-5 flex justify-end gap-2 border-t pt-4">
           <Button

@@ -450,7 +450,9 @@
     "to": "to",
     "back": "Back",
     "clear": "Clear",
-    "clearSelection": "Clear selection"
+    "clearSelection": "Clear selection",
+    "select": "Select…",
+    "thisFieldIsRequired": "This field is required."
   },
   "pages": {
     "dashboard": {
@@ -827,14 +829,20 @@
           "pricing": "Pricing & Tax",
           "inventory": "Inventory",
           "variants": "Variants",
-          "lob": "Lines of Business"
+          "lob": "Lines of Business",
+          "attributes": "Additional Details"
         },
         "cgstPercent": "CGST %",
         "sgstPercent": "SGST %",
         "igstPercent": "IGST %",
         "cessPercent": "Cess %",
         "natureGoods": "Goods",
-        "natureService": "Service"
+        "natureService": "Service",
+        "attributesDescription": "Custom fields your company defined in Masters › Attributes.",
+        "fillTheRequiredAttributes": "Fill in the required fields under Additional Details.",
+        "chooseVariantAttributes": "Choose which attributes define a variant",
+        "defineAttributesFirst": "No item attributes defined yet — add them in Masters › Attributes.",
+        "keptFromBefore": "Kept from before"
       },
       "attributes": {
         "attributes": "Attributes",

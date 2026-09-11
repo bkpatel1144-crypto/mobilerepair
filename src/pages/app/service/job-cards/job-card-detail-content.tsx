@@ -14,6 +14,7 @@ import {
   ChevronDown,
   ChevronUp,
   Expand,
+  Tags,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -22,6 +23,8 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { SearchSelect } from '@/components/shared/search-select'
 import { useJobTimeline, type JobCardWithId } from '@/hooks/use-job-cards'
+import { useItemAttributes } from '@/hooks/use-item-attributes'
+import { attributeRows, attributesFor } from '@/lib/attribute-values'
 import { useApplyJobAction } from '@/hooks/use-job-actions'
 import { useJobActionGating } from '@/hooks/use-job-action-gating'
 import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
@@ -73,6 +76,12 @@ export function JobCardDetailContent({
 }) {
   const { t } = useTranslation()
   const { profile } = useAuth()
+  const { data: allAttributes = [] } = useItemAttributes()
+  const jobAttributeRows = attributeRows(
+    attributesFor(allAttributes, 'jobCard'),
+    job.attributes,
+    { yes: t('common.yes'), no: t('common.no') }
+  )
   const {
     data: timeline = [],
     error: timelineError,
@@ -209,6 +218,19 @@ export function JobCardDetailContent({
               )}
             </dl>
           </Panel>
+
+          {jobAttributeRows.length > 0 && (
+            <Panel icon={Tags} title={t('pages.masters.createItem.sections.attributes')}>
+              <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
+                {jobAttributeRows.map((row) => (
+                  <div key={row.label}>
+                    <dt className="text-xs text-muted-foreground uppercase">{row.label}</dt>
+                    <dd>{row.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Panel>
+          )}
 
           <Panel
             icon={AlertTriangle}
@@ -437,7 +459,7 @@ export function JobCardDetailContent({
                         setPartQty(1)
                       }}
                     >
-                      Add
+                      {t('common.add')}
                     </Button>
                     <Button
                       type="button"

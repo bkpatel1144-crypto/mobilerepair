@@ -16,6 +16,16 @@ import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { FormModal } from '@/components/shared/form-modal'
+import { AttributeFields } from '@/components/shared/attribute-fields'
+import { useItemAttributes } from '@/hooks/use-item-attributes'
+import {
+  attributeRows,
+  attributesFor,
+  attributeValuesToDraft,
+  cleanAttributeValues,
+  missingMandatoryAttributes,
+  type AttributeValues,
+} from '@/lib/attribute-values'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
@@ -57,6 +67,12 @@ export function PartiesPage() {
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [editing, setEditing] = useState<PartyWithId | 'new' | null>(null)
   const [viewing, setViewing] = useState<PartyWithId | null>(null)
+  const { data: allAttributes = [] } = useItemAttributes()
+  const partyAttributeRows = attributeRows(
+    attributesFor(allAttributes, 'party'),
+    viewing?.attributes,
+    { yes: t('common.yes'), no: t('common.no') }
+  )
 
   const activeParties = parties.filter((p) => p.status !== 'deleted')
 
@@ -257,6 +273,16 @@ export function PartiesPage() {
                 { label: t('pages.masters.parties.creditDays'), value: String(viewing.creditDays) },
               ],
             },
+            // Only when this party actually carries custom values — an empty card on every
+            // party would be worse than no card.
+            ...(partyAttributeRows.length > 0
+              ? [
+                  {
+                    title: t('pages.masters.createItem.sections.attributes'),
+                    rows: partyAttributeRows,
+                  },
+                ]
+              : []),
           ]}
           timeline={[
             { title: t('common.createdAt'), timestamp: formatTimestamp(viewing.createdAt) },
@@ -341,12 +367,24 @@ function PartyModal({
   const [district, setDistrict] = useState(isNew ? '' : (editing.district ?? ''))
   const [pincode, setPincode] = useState(isNew ? '' : (editing.pincode ?? ''))
 
+  // Custom fields from Masters > Attributes with `appliesTo: 'party'`.
+  const { data: allAttributes = [] } = useItemAttributes()
+  const partyAttributes = attributesFor(allAttributes, 'party')
+  const [attributes, setAttributes] = useState<AttributeValues>(
+    isNew ? {} : (editing.attributes ?? {})
+  )
+  const [missingAttributes, setMissingAttributes] = useState<string[]>([])
+  const attributeDraft = attributeValuesToDraft(partyAttributes, attributes)
+
   const isPending = createParty.isPending || updateParty.isPending
   const category = (categories ?? []).find((c) => c.id === categoryId)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim() || !mobile.trim()) return
+    const missing = missingMandatoryAttributes(partyAttributes, attributeDraft)
+    setMissingAttributes(missing)
+    if (missing.length > 0) return
     const partyTypes: ('customer' | 'supplier')[] = [
       ...(isCustomer ? (['customer'] as const) : []),
       ...(isSupplier ? (['supplier'] as const) : []),
@@ -368,6 +406,7 @@ function PartyModal({
       pincode: pincode.trim() || null,
       creditLimit: isNew ? 0 : editing.creditLimit,
       creditDays: category?.defaultCreditDays ?? (isNew ? 0 : editing.creditDays),
+      attributes: cleanAttributeValues(partyAttributes, attributeDraft),
     }
     if (isNew) await createParty.mutateAsync(input)
     else await updateParty.mutateAsync({ ...input, id: editing.id })
@@ -434,6 +473,20 @@ function PartyModal({
           </div>
         </div>
       </div>
+
+      {partyAttributes.length > 0 && (
+        <div className="space-y-3 rounded-md border p-3">
+          <p className="text-sm font-medium">
+            {t('pages.masters.createItem.sections.attributes')}
+          </p>
+          <AttributeFields
+            attributes={partyAttributes}
+            values={attributeDraft}
+            onChange={(code, value) => setAttributes((prev) => ({ ...prev, [code]: value }))}
+            missing={missingAttributes}
+          />
+        </div>
+      )}
 
       <button
         type="button"
