@@ -1089,7 +1089,9 @@
         "noPartsUsedYet": "હજી કોઈ પાર્ટ વપરાયો નથી.",
         "noImagesUploaded": "કોઈ ફોટો અપલોડ થયો નથી",
         "toggleNotes": "નોંધ બતાવો/છુપાવો",
-        "note": "નોંધ"
+        "note": "નોંધ",
+        "receipts": "રસીદો",
+        "adv": "એડ."
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",

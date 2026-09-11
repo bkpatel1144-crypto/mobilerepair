@@ -1089,7 +1089,9 @@
         "noPartsUsedYet": "अभी कोई पुर्ज़ा इस्तेमाल नहीं हुआ।",
         "noImagesUploaded": "कोई तस्वीर अपलोड नहीं",
         "toggleNotes": "टिप्पणियाँ दिखाएं/छिपाएं",
-        "note": "टिप्पणी"
+        "note": "टिप्पणी",
+        "receipts": "रसीदें",
+        "adv": "अग्रिम"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "यह जॉब कार्ड लोड नहीं हो सका",

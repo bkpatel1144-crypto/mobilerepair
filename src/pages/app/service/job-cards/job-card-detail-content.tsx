@@ -25,6 +25,8 @@ import { useJobTimeline, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useApplyJobAction } from '@/hooks/use-job-actions'
 import { useJobActionGating } from '@/hooks/use-job-action-gating'
 import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
+import { useReceipts } from '@/hooks/use-receipts'
+import { cn } from '@/lib/utils'
 import { uploadJobCardImage } from '@/lib/job-card-images'
 import { useAuth } from '@/hooks/use-auth'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
@@ -79,6 +81,9 @@ export function JobCardDetailContent({
   const { canPerform, canViewMoney } = useJobActionGating(job)
   const applyAction = useApplyJobAction(job)
   const { data: items = [] } = useItems()
+  const { data: receipts = [] } = useReceipts()
+  // Newest last, so the row reads in the order the money actually moved.
+  const jobReceipts = receipts.filter((r) => r.jobCardId === job.id)
   const createItem = useCreateItem()
 
   const [notesOpen, setNotesOpen] = useState(true)
@@ -301,24 +306,71 @@ export function JobCardDetailContent({
                   <span>₹{job.finalAmount}</span>
                 </div>
               )}
+              {/* What was actually taken, and how. The panel showed totals but never the
+               * receipts behind them, so "Paid ₹250" could not be traced to anything — and a
+               * refund on a bill edit was invisible here entirely. */}
+              {jobReceipts.length > 0 && (
+                <div className="space-y-1.5 border-t pt-2">
+                  <p className="text-xs text-muted-foreground uppercase">
+                    {t('pages.service.jobCardDetailContent.receipts')}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {jobReceipts.map((r) => (
+                      <span
+                        key={r.id}
+                        className={cn(
+                          'inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-xs',
+                          r.voided && 'line-through opacity-60',
+                          r.direction === 'out'
+                            ? 'border-red-200 text-red-700 dark:border-red-500/30 dark:text-red-400'
+                            : 'border-emerald-200 text-emerald-700 dark:border-emerald-500/30 dark:text-emerald-400'
+                        )}
+                      >
+                        <span className="font-medium">{r.receiptNumber}</span>
+                        <span>
+                          {r.direction === 'out' ? '−' : ''}₹{r.amount}
+                        </span>
+                        <span className="rounded-full bg-muted px-1.5 capitalize">{r.mode}</span>
+                        {r.purpose === 'advance' && (
+                          <span className="rounded-full bg-amber-100 px-1.5 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
+                            {t('pages.service.jobCardDetailContent.adv')}
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </Panel>
           )}
 
           <Panel icon={Cog} title={`Parts Used (${job.partsUsed.length})`}>
             <div className="space-y-1.5">
-              {job.partsUsed.map((p) => (
-                <div
-                  key={p.id}
-                  className="flex items-center justify-between rounded-md border px-2.5 py-1.5 text-sm"
-                >
-                  <span>{p.itemName}</span>
-                  {canViewMoney && (
-                    <span className="text-muted-foreground">
-                      ₹{p.rate} · {p.qty}
-                    </span>
-                  )}
-                </div>
-              ))}
+              {job.partsUsed.map((p) => {
+                // Parts added before Edit Bill existed have no `itemCode`, so it is looked up
+                // from Item Master by id for those. Newer ones carry the code they were sold
+                // under, which is the one that belongs on a bill.
+                const code = p.itemCode ?? items.find((i) => i.id === p.itemId)?.itemCode
+                return (
+                  <div
+                    key={p.id}
+                    className="flex items-start justify-between gap-2 rounded-md border px-2.5 py-1.5 text-sm"
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate font-medium">{p.itemName}</p>
+                      {code && <p className="text-xs text-muted-foreground">{code}</p>}
+                    </div>
+                    {canViewMoney && (
+                      <div className="shrink-0 text-right">
+                        <p className="font-semibold">₹{p.rate * p.qty}</p>
+                        <p className="text-xs text-muted-foreground">
+                          ₹{p.rate} × {p.qty}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
               {job.partsUsed.length === 0 && (
                 <p className="text-sm text-muted-foreground">
                   {t('pages.service.jobCardDetailContent.noPartsUsedYet')}

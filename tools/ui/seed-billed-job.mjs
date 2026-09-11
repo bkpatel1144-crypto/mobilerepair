@@ -127,5 +127,27 @@ await setDoc(jobRef, {
   updatedAt: now,
 })
 
-console.log(`seeded JC-2026-27-09001 (${jobRef.id}) — ready, ₹245 billed, ₹250 paid, 3 parts`)
+// The advance really produces a receipt — `useCreateJobCard` writes one in the same batch — and
+// the job card's Payment panel shows those chips, so a seed without one hides that row.
+const receiptRef = doc(collection(db, `companies/${companyId}/receipts`))
+await setDoc(receiptRef, {
+  receiptNumber: 'RCP-0109-00001',
+  direction: 'in',
+  partyId: 'seed-customer',
+  partyName: 'Probe Customer',
+  jobCardId: jobRef.id,
+  jobCardNumber: 'JC-2026-27-09001',
+  against: 'jobCard',
+  purpose: 'advance',
+  amount: 250,
+  mode: 'cash',
+  notes: null,
+  voided: false,
+  createdById: uid,
+  createdByName: fullName,
+  createdAt: now,
+  updatedAt: now,
+})
+
+console.log(`seeded JC-2026-27-09001 (${jobRef.id}) — ready, ₹245 billed, ₹250 paid, 3 parts, 1 receipt`)
 process.exit(0)

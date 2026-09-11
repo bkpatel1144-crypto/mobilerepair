@@ -1089,7 +1089,9 @@
         "noPartsUsedYet": "No parts used yet.",
         "noImagesUploaded": "No images uploaded",
         "toggleNotes": "Toggle notes",
-        "note": "Note"
+        "note": "Note",
+        "receipts": "Receipts",
+        "adv": "Adv"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "Couldn't load this job card",
