@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
+import { useCompany } from '@/hooks/use-company'
+import { gstConfigFor, splitGst } from '@/lib/gst'
 import { useTranslation } from 'react-i18next'
 
 const money = (n: number) => `₹${n.toLocaleString('en-IN')}`
@@ -26,9 +28,12 @@ export function BillDetailsModal({
   onClose: () => void
 }) {
   const { t } = useTranslation()
+  const { data: company } = useCompany()
+  const gst = gstConfigFor(company)
   if (!job) return null
 
   const total = job.finalAmount ?? 0
+  const tax = splitGst(total, gst)
   const outstanding = Math.max(0, total - job.paidAmount)
   const statusLabel = JOB_STATUSES.find((s) => s.key === job.status)?.label ?? job.status
 
@@ -67,6 +72,20 @@ export function BillDetailsModal({
             <dt className="text-muted-foreground">{t('pages.sales.billDetails.partsServices')}</dt>
             <dd>{money(job.partsCost)}</dd>
           </div>
+          {gst.enabled && (
+            <>
+              <div className="flex items-center justify-between text-muted-foreground">
+                <dt>{t('pages.sales.editBill.taxableValue')}</dt>
+                <dd>{money(tax.taxable)}</dd>
+              </div>
+              <div className="flex items-center justify-between text-muted-foreground">
+                <dt>{t('pages.sales.editBill.cgstSgst', { rate: gst.rate / 2 })}</dt>
+                <dd>
+                  {money(tax.cgst)} + {money(tax.sgst)}
+                </dd>
+              </div>
+            </>
+          )}
           <div className="flex items-center justify-between border-t pt-2">
             <dt className="font-semibold">{t('common.total')}</dt>
             <dd className="font-bold">{money(total)}</dd>

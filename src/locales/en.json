@@ -1308,7 +1308,9 @@
         "refundDue": "Refund Due",
         "thisWillRecordARefund": "Saving records a ₹{{amount}} refund to the customer, because the bill is now below what they have already paid.",
         "aBillNeedsAtLeastOneLine": "A bill needs at least one part or a service charge.",
-        "couldNotSaveTheBill": "Could not save the bill. Please try again."
+        "couldNotSaveTheBill": "Could not save the bill. Please try again.",
+        "taxableValue": "Taxable value",
+        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%"
       },
       "billDetails": {
         "billDetails": "Bill Details",
@@ -1991,6 +1993,12 @@
       "fieldPreviewInput": {
         "searchUser": "Search user...",
         "select": "Select..."
+      },
+      "company": {
+        "pricesIncludeGst": "Prices include GST",
+        "pricesIncludeGstHelp": "On: \"₹500 to fix it\" means ₹500 from the customer, tax taken out of it. Off: tax is added on top.",
+        "gstRate": "GST rate %",
+        "onlyWhenRegular": "Only used when GST registration is Regular. A Composition dealer cannot charge GST, and an Unregistered shop bills without it."
       }
     },
     "purchase": {

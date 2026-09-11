@@ -1308,7 +1308,9 @@
         "refundDue": "वापसी देय",
         "thisWillRecordARefund": "सहेजने पर ग्राहक को ₹{{amount}} की वापसी दर्ज होगी, क्योंकि बिल अब उनके भुगतान से कम है।",
         "aBillNeedsAtLeastOneLine": "बिल में कम से कम एक पुर्जा या सेवा शुल्क होना चाहिए।",
-        "couldNotSaveTheBill": "बिल सहेजा नहीं जा सका। कृपया फिर कोशिश करें।"
+        "couldNotSaveTheBill": "बिल सहेजा नहीं जा सका। कृपया फिर कोशिश करें।",
+        "taxableValue": "कर योग्य मूल्य",
+        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%"
       },
       "billDetails": {
         "billDetails": "बिल विवरण",
@@ -1991,6 +1993,12 @@
       "fieldPreviewInput": {
         "searchUser": "उपयोगकर्ता खोजें...",
         "select": "चुनें..."
+      },
+      "company": {
+        "pricesIncludeGst": "कीमतों में GST शामिल है",
+        "pricesIncludeGstHelp": "चालू: \"₹500 में ठीक\" यानी ग्राहक से ₹500, उसी में से कर। बंद: कर ऊपर से जुड़ेगा।",
+        "gstRate": "GST दर %",
+        "onlyWhenRegular": "केवल \"Regular\" पंजीकरण पर लागू। Composition डीलर GST नहीं ले सकता, और अपंजीकृत दुकान बिना GST बिल बनाती है।"
       }
     },
     "purchase": {

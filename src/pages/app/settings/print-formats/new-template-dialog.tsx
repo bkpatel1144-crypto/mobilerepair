@@ -40,7 +40,11 @@ export function NewTemplateDialog({
   const presets = PRINT_PRESETS.filter((p) => p.documentType === documentType)
   const preset = presets[presetIndex] ?? presets[0]
 
-  async function handleSubmit() {
+  // `FormModal` renders a real `<form onSubmit={…}>`: without `preventDefault` the browser
+  // submits it natively, the page navigates, and the mutation dies mid-flight while the dialog
+  // appears to close successfully.
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
     setError(null)
     const finalName =
       name.trim() || `${preset?.name ?? t('pages.settings.newTemplateDialog.template')} (Copy)`

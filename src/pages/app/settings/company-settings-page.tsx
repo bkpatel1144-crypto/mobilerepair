@@ -66,6 +66,8 @@ function formValuesFrom(c: CompanyWithId): CompanyFormValues {
     legalName: c.legalName,
     gstRegistration: c.gstRegistration,
     gstin: c.gstin ?? '',
+    gstRate: c.gstRate ?? 18,
+    pricesIncludeGst: c.pricesIncludeGst !== false,
     pan: c.pan ?? '',
     email: c.email,
     phone: c.phone,
@@ -162,7 +164,12 @@ export function CompanySettingsPage() {
     setViewing(null)
   }
 
-  async function submitCreate() {
+  // `FormModal` renders a real `<form onSubmit={…}>`, so without `preventDefault` the browser
+  // submits it natively: the page navigates, React unmounts mid-flight, and the mutation is
+  // killed before it reaches Firestore. The dialog appeared to close because the page was
+  // reloading — Company Settings silently saved nothing at all.
+  async function submitCreate(e: React.FormEvent) {
+    e.preventDefault()
     const problem = validateCompany(form)
     if (problem) {
       setError(problem)
@@ -187,7 +194,8 @@ export function CompanySettingsPage() {
     }
   }
 
-  async function submitEdit() {
+  async function submitEdit(e: React.FormEvent) {
+    e.preventDefault()
     if (!editing) return
     const problem = validateCompany(form)
     if (problem) {

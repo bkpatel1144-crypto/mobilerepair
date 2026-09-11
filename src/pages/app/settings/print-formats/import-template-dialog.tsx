@@ -50,7 +50,11 @@ export function ImportTemplateDialog({
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  async function handleSubmit() {
+  // `FormModal` renders a real `<form onSubmit={…}>`: without `preventDefault` the browser
+  // submits it natively, the page navigates, and the mutation dies mid-flight while the dialog
+  // appears to close successfully.
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
     setError(null)
     if (!file) {
       setError(t('pages.settings.importTemplateDialog.chooseATemplateJsonFileFirst'))

@@ -1308,7 +1308,9 @@
         "refundDue": "રિફંડ બાકી",
         "thisWillRecordARefund": "સાચવવાથી ગ્રાહકને ₹{{amount}} રિફંડ નોંધાશે, કારણ કે બિલ હવે તેમણે ચૂકવેલી રકમથી ઓછું છે.",
         "aBillNeedsAtLeastOneLine": "બિલમાં ઓછામાં ઓછો એક પાર્ટ કે સેવા શુલ્ક હોવો જોઈએ.",
-        "couldNotSaveTheBill": "બિલ સાચવી શકાયું નહીં. કૃપા કરી ફરી પ્રયાસ કરો."
+        "couldNotSaveTheBill": "બિલ સાચવી શકાયું નહીં. કૃપા કરી ફરી પ્રયાસ કરો.",
+        "taxableValue": "કરપાત્ર મૂલ્ય",
+        "cgstSgst": "CGST {{rate}}% + SGST {{rate}}%"
       },
       "billDetails": {
         "billDetails": "બિલ વિગતો",
@@ -1991,6 +1993,12 @@
       "fieldPreviewInput": {
         "searchUser": "વપરાશકર્તા શોધો...",
         "select": "પસંદ કરો..."
+      },
+      "company": {
+        "pricesIncludeGst": "કિંમતોમાં GST સામેલ છે",
+        "pricesIncludeGstHelp": "ચાલુ: \"₹500માં રિપેર\" એટલે ગ્રાહક પાસેથી ₹500, તેમાંથી જ કર. બંધ: કર ઉપરથી ઉમેરાશે.",
+        "gstRate": "GST દર %",
+        "onlyWhenRegular": "ફક્ત \"Regular\" નોંધણી પર લાગુ. Composition ડીલર GST લઈ શકતો નથી, અને નોંધણી વગરની દુકાન GST વગર બિલ બનાવે છે."
       }
     },
     "purchase": {

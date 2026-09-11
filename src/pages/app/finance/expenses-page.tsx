@@ -82,7 +82,11 @@ function NewExpenseModal({
     setError(null)
   }
 
-  async function handleSubmit() {
+  // `FormModal` renders a real `<form onSubmit={…}>`: without `preventDefault` the browser
+  // submits it natively, the page navigates, and the mutation is killed mid-flight. Company
+  // Settings silently saved nothing at all for exactly this reason.
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
     setError(null)
     const value = Number(amount)
     if (!category) {

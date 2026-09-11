@@ -18,6 +18,17 @@ export interface CompanyDoc {
   legalName: string
   gstRegistration: 'Regular' | 'Composition' | 'Unregistered'
   gstin: string | null
+  /**
+   * Are the prices people type already inclusive of GST?
+   *
+   * Optional and true by default: a walk-in repair shop quotes "₹500 to fix it" and means ₹500
+   * out of the customer's pocket. Exclusive pricing is a B2B habit and has to be chosen. Only
+   * consulted when `gstRegistration` is `Regular`.
+   */
+  pricesIncludeGst?: boolean
+  /** The single rate this shop bills at. 18% covers phone repair; kept settable rather than
+   *  hard-coded because rates move and a shop should not need a deploy to follow them. */
+  gstRate?: number
   pan: string | null
   email: string
   phone: string

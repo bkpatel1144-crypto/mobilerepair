@@ -12,6 +12,9 @@ export interface CompanyFormValues {
   gstRegistration: CompanyDoc['gstRegistration']
   gstin: string
   pan: string
+  /** Only consulted when `gstRegistration` is `Regular` — see `lib/gst.ts`. */
+  gstRate?: number
+  pricesIncludeGst?: boolean
   email: string
   phone: string
   currency: string
@@ -25,6 +28,9 @@ export const BLANK_COMPANY: CompanyFormValues = {
   gstRegistration: 'Unregistered',
   gstin: '',
   pan: '',
+  gstRate: 18,
+  // Inclusive by default: a walk-in shop quotes "₹500 to fix it" and means ₹500 in hand.
+  pricesIncludeGst: true,
   email: '',
   phone: '',
   currency: 'INR',

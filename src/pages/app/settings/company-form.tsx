@@ -1,5 +1,6 @@
 import { Check, Info } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import {
   Select,
@@ -117,6 +118,37 @@ export function CompanyForm({
             maxLength={15}
           />
         </Field>
+        {/* Only a "Regular" shop charges GST. A Composition dealer pays it out of their own
+         * turnover and is barred from collecting it, and an unregistered shop bills without it —
+         * so these two only appear where they would actually be used. */}
+        {value.gstRegistration === 'Regular' && (
+          <>
+            <Field label={t('pages.settings.company.gstRate')}>
+              <Input
+                inputMode="numeric"
+                value={String(value.gstRate ?? 18)}
+                onChange={(e) => set({ gstRate: Number(e.target.value) || 0 })}
+                placeholder="18"
+              />
+            </Field>
+            {/* The help text sits under the control, not inside the label: the two lines of
+             * explanation are taller than the field row and overlapped the label above them. */}
+            <Field label={t('pages.settings.company.pricesIncludeGst')}>
+              <div className="space-y-1">
+                <label className="flex min-h-9 items-center gap-2 text-sm">
+                  <Checkbox
+                    checked={value.pricesIncludeGst !== false}
+                    onCheckedChange={(v) => set({ pricesIncludeGst: v === true })}
+                  />
+                  <span>{t('pages.settings.company.pricesIncludeGst')}</span>
+                </label>
+                <p className="text-xs leading-snug text-muted-foreground">
+                  {t('pages.settings.company.pricesIncludeGstHelp')}
+                </p>
+              </div>
+            </Field>
+          </>
+        )}
         <Field label={t('common.pan')} required={registered}>
           <Input
             value={value.pan}

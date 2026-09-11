@@ -15,6 +15,8 @@ import {
 import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
 import { useParties, useCreateParty } from '@/hooks/use-parties'
 import { useEditBill, billTotals } from '@/hooks/use-edit-bill'
+import { useCompany } from '@/hooks/use-company'
+import { gstConfigFor, splitGst } from '@/lib/gst'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
 import type { PartUsed } from '@/types/firestore'
 import { useTranslation } from 'react-i18next'
@@ -94,6 +96,10 @@ function EditBillForm({
   const [error, setError] = useState<string | null>(null)
 
   const editBill = useEditBill(job)
+  const { data: company } = useCompany()
+  // Nothing here fires unless the shop has said it is GST registered — `Unregistered` is the
+  // signup default and plenty of small shops never change it.
+  const gst = gstConfigFor(company)
 
   const num = (v: string) => (v.trim() === '' ? 0 : Number(v))
   const totals = billTotals({
@@ -102,6 +108,7 @@ function EditBillForm({
     discount: num(discount),
     paidAmount: job.paidAmount,
   })
+  const tax = splitGst(totals.total, gst)
 
   const supplierOptions = (parties ?? [])
     .filter((p) => p.partyTypes.includes('supplier') || p.partyTypes.length === 0)
@@ -384,6 +391,22 @@ function EditBillForm({
             <dt className="text-muted-foreground">{t('pages.sales.editBill.partsServices')}</dt>
             <dd>₹{totals.partsTotal}</dd>
           </div>
+          {gst.enabled && (
+            <>
+              <div className="flex items-center justify-between text-muted-foreground">
+                <dt>{t('pages.sales.editBill.taxableValue')}</dt>
+                <dd>₹{tax.taxable}</dd>
+              </div>
+              <div className="flex items-center justify-between text-muted-foreground">
+                <dt>
+                  {t('pages.sales.editBill.cgstSgst', { rate: gst.rate / 2 })}
+                </dt>
+                <dd>
+                  ₹{tax.cgst} + ₹{tax.sgst}
+                </dd>
+              </div>
+            </>
+          )}
           <div className="flex items-center justify-between border-t pt-1.5">
             <dt className="font-semibold">{t('common.total')}</dt>
             <dd className="text-lg font-bold text-indigo-600 dark:text-indigo-400">

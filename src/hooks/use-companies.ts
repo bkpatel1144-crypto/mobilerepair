@@ -65,6 +65,8 @@ export interface CreateCompanyInput {
   gstRegistration: CompanyDoc['gstRegistration']
   gstin: string | null
   pan: string | null
+  gstRate?: number
+  pricesIncludeGst?: boolean
   email: string
   phone: string
   currency: string
@@ -103,6 +105,11 @@ export function useCreateCompany() {
         // switching to Unregistered would print it on bills.
         gstin: input.gstRegistration === 'Unregistered' ? null : input.gstin,
         pan: input.pan,
+        // Only meaningful for a Regular registration — the two other kinds never charge GST, so
+        // storing a rate against them would be a number nothing reads.
+        ...(input.gstRegistration === 'Regular'
+          ? { gstRate: input.gstRate ?? 18, pricesIncludeGst: input.pricesIncludeGst !== false }
+          : {}),
         email: input.email.trim(),
         phone: input.phone.trim(),
         currency: input.currency,

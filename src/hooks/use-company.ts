@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { doc, getDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { deleteField, doc, getDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { companyDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
@@ -45,6 +45,8 @@ export interface UpdateCompanyInput {
   gstRegistration: CompanyDoc['gstRegistration']
   gstin: string | null
   pan: string | null
+  gstRate?: number
+  pricesIncludeGst?: boolean
   email: string
   phone: string
   currency: string
@@ -68,7 +70,18 @@ export function useUpdateCompany() {
   return useMutation({
     mutationFn: async ({ companyId, ...input }: UpdateCompanyInput & { companyId: string }) => {
       const batch = writeBatch(db)
-      batch.update(doc(db, companyDoc(companyId)), { ...input, updatedAt: serverTimestamp() })
+      // A shop that switches away from Regular stops charging GST, so its rate and inclusive
+      // flag are cleared rather than left behind to be picked up if it ever switches back with
+      // different intentions.
+      const gstFields =
+        input.gstRegistration === 'Regular'
+          ? { gstRate: input.gstRate ?? 18, pricesIncludeGst: input.pricesIncludeGst !== false }
+          : { gstRate: deleteField(), pricesIncludeGst: deleteField() }
+      batch.update(doc(db, companyDoc(companyId)), {
+        ...input,
+        ...gstFields,
+        updatedAt: serverTimestamp(),
+      })
       await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
         action: 'Update',
         module: 'settings',
