@@ -397,6 +397,16 @@ service cloud.firestore {
       // Masters > Attributes — the vocabulary item variants are described by. Gated on the
       // Item Master menu rather than one of its own: an attribute exists only to describe an
       // item, and a role that cannot manage items has no reason to define one.
+      // Purchase > General Purchase. No delete: a purchase is a money record, and a cancelled
+      // one keeps its lines on screen under a red banner rather than disappearing — the client's
+      // own view shows exactly that.
+      match /purchases/{id} {
+        allow read: if belongsToCompany(companyId);
+        allow create, update: if belongsToCompany(companyId) &&
+          hasMenuAccess(companyId, 'purchase/general');
+        allow delete: if false;
+      }
+
       match /itemAttributes/{id} {
         allow read: if belongsToCompany(companyId);
         allow create, update: if belongsToCompany(companyId) &&

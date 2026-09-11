@@ -1975,6 +1975,46 @@
         "searchUser": "Search user...",
         "select": "Select..."
       }
+    },
+    "purchase": {
+      "generalPurchase": {
+        "generalPurchase": "General Purchase",
+        "buyPartsAccessories": "Buy parts, accessories & stock items from suppliers — feeds inventory stock",
+        "newPurchase": "New Purchase",
+        "newPurchaseEntry": "New Purchase Entry",
+        "savePurchase": "Save Purchase",
+        "totalEntries": "Total Entries",
+        "thisListValue": "This List Value (₹)",
+        "owedToSuppliers": "Owed to Suppliers",
+        "searchPurchaseInvoice": "Search purchase # / invoice #…",
+        "purchaseNo": "Purchase #",
+        "invoiceNo": "Invoice #",
+        "invoiceNumber": "Invoice Number",
+        "suppliersInvoice": "Supplier's invoice #",
+        "purchaseTerms": "Purchase terms",
+        "onCredit": "On credit",
+        "creditPayLater": "Credit (pay later)",
+        "paymentMode": "Payment Mode",
+        "items": "Items",
+        "itemsLower": "items",
+        "nItems_one": "{{count}} item(s)",
+        "nItems_other": "{{count}} item(s)",
+        "addRow": "Add Row",
+        "selectSupplier": "Select supplier",
+        "selectItem": "Select item",
+        "optionalNotes": "Optional notes",
+        "printReceipt": "Print Receipt",
+        "editHistory": "Edit history",
+        "fromJob": "From Job",
+        "partsFor": "Parts for {{job}}",
+        "cancelEntry": "Cancel entry",
+        "cancelledByUser": "Cancelled by user",
+        "aCancelledEntryStops": "A cancelled entry stops counting towards list value and supplier dues. Its items and total stay on the record.",
+        "chooseASupplier": "Choose a supplier.",
+        "addAtLeastOneItem": "Add at least one item.",
+        "noPurchasesYet": "No purchases yet",
+        "recordWhatYouBuy": "Record what you buy from suppliers to see it against Supplier Payables."
+      }
     }
   },
   "components": {

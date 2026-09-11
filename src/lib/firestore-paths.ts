@@ -47,6 +47,13 @@ export const partyCategoryDoc = (companyId: string, id: string) =>
 /** The vocabulary item variants are described by — Colour, Capacity, and so on. Its own
  *  collection rather than a field on the company, because each one carries its own values and
  *  needs to be added, renamed and retired like any other master. */
+/** Purchase > General Purchase — parts and stock bought from suppliers. Entries raised from a
+ *  job card carry `sourceJobCardId` and a `JPU-` number; ones typed in by hand get `PUR-`. */
+export const purchasesCollection = (companyId: string) => `companies/${companyId}/purchases`
+
+export const purchaseDoc = (companyId: string, id: string) =>
+  `${purchasesCollection(companyId)}/${id}`
+
 export const itemAttributesCollection = (companyId: string) =>
   `companies/${companyId}/itemAttributes`
 

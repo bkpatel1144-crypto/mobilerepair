@@ -1975,6 +1975,46 @@
         "searchUser": "उपयोगकर्ता खोजें...",
         "select": "चुनें..."
       }
+    },
+    "purchase": {
+      "generalPurchase": {
+        "generalPurchase": "सामान्य खरीद",
+        "buyPartsAccessories": "सप्लायर से पुर्जे, सहायक सामान और स्टॉक खरीदें — इन्वेंटरी स्टॉक में जुड़ता है",
+        "newPurchase": "नई खरीद",
+        "newPurchaseEntry": "नई खरीद प्रविष्टि",
+        "savePurchase": "खरीद सहेजें",
+        "totalEntries": "कुल प्रविष्टियाँ",
+        "thisListValue": "इस सूची का मूल्य (₹)",
+        "owedToSuppliers": "सप्लायर को देय",
+        "searchPurchaseInvoice": "खरीद # / बिल # खोजें…",
+        "purchaseNo": "खरीद #",
+        "invoiceNo": "बिल #",
+        "invoiceNumber": "बिल नंबर",
+        "suppliersInvoice": "सप्लायर का बिल #",
+        "purchaseTerms": "खरीद की शर्तें",
+        "onCredit": "उधार पर",
+        "creditPayLater": "उधार (बाद में भुगतान)",
+        "paymentMode": "भुगतान का तरीका",
+        "items": "आइटम",
+        "itemsLower": "आइटम",
+        "nItems_one": "{{count}} आइटम",
+        "nItems_other": "{{count}} आइटम",
+        "addRow": "पंक्ति जोड़ें",
+        "selectSupplier": "सप्लायर चुनें",
+        "selectItem": "आइटम चुनें",
+        "optionalNotes": "वैकल्पिक टिप्पणी",
+        "printReceipt": "रसीद छापें",
+        "editHistory": "संपादन इतिहास",
+        "fromJob": "जॉब से",
+        "partsFor": "{{job}} के लिए पुर्जे",
+        "cancelEntry": "प्रविष्टि रद्द करें",
+        "cancelledByUser": "उपयोगकर्ता द्वारा रद्द",
+        "aCancelledEntryStops": "रद्द प्रविष्टि सूची मूल्य और सप्लायर बकाया में नहीं गिनी जाएगी। इसके आइटम और कुल रिकॉर्ड में रहेंगे।",
+        "chooseASupplier": "सप्लायर चुनें।",
+        "addAtLeastOneItem": "कम से कम एक आइटम जोड़ें।",
+        "noPurchasesYet": "अभी कोई खरीद नहीं",
+        "recordWhatYouBuy": "सप्लायर से की गई खरीद दर्ज करें ताकि वह सप्लायर पेएबल्स में दिखे।"
+      }
     }
   },
   "components": {

@@ -1,0 +1,73 @@
+/** Purchase > General Purchase — wording taken from the client's own screens. */
+module.exports = {
+  pages: {
+    purchase: {
+      generalPurchase: {
+        generalPurchase: { en: 'General Purchase', hi: 'सामान्य खरीद', gu: 'સામાન્ય ખરીદી' },
+        buyPartsAccessories: {
+          en: 'Buy parts, accessories & stock items from suppliers — feeds inventory stock',
+          hi: 'सप्लायर से पुर्जे, सहायक सामान और स्टॉक खरीदें — इन्वेंटरी स्टॉक में जुड़ता है',
+          gu: 'સપ્લાયર પાસેથી પાર્ટ્સ, એસેસરીઝ અને સ્ટોક ખરીદો — ઇન્વેન્ટરી સ્ટોકમાં ઉમેરાય છે',
+        },
+        newPurchase: { en: 'New Purchase', hi: 'नई खरीद', gu: 'નવી ખરીદી' },
+        newPurchaseEntry: {
+          en: 'New Purchase Entry',
+          hi: 'नई खरीद प्रविष्टि',
+          gu: 'નવી ખરીદી એન્ટ્રી',
+        },
+        savePurchase: { en: 'Save Purchase', hi: 'खरीद सहेजें', gu: 'ખરીદી સાચવો' },
+        totalEntries: { en: 'Total Entries', hi: 'कुल प्रविष्टियाँ', gu: 'કુલ એન્ટ્રી' },
+        thisListValue: { en: 'This List Value (₹)', hi: 'इस सूची का मूल्य (₹)', gu: 'આ યાદીનું મૂલ્ય (₹)' },
+        owedToSuppliers: { en: 'Owed to Suppliers', hi: 'सप्लायर को देय', gu: 'સપ્લાયરને ચૂકવવાનું' },
+        searchPurchaseInvoice: {
+          en: 'Search purchase # / invoice #…',
+          hi: 'खरीद # / बिल # खोजें…',
+          gu: 'ખરીદી # / બિલ # શોધો…',
+        },
+        purchaseNo: { en: 'Purchase #', hi: 'खरीद #', gu: 'ખરીદી #' },
+        invoiceNo: { en: 'Invoice #', hi: 'बिल #', gu: 'બિલ #' },
+        invoiceNumber: { en: 'Invoice Number', hi: 'बिल नंबर', gu: 'બિલ નંબર' },
+        suppliersInvoice: { en: "Supplier's invoice #", hi: 'सप्लायर का बिल #', gu: 'સપ્લાયરનું બિલ #' },
+        purchaseTerms: { en: 'Purchase terms', hi: 'खरीद की शर्तें', gu: 'ખરીદીની શરતો' },
+        onCredit: { en: 'On credit', hi: 'उधार पर', gu: 'ઉધાર પર' },
+        creditPayLater: { en: 'Credit (pay later)', hi: 'उधार (बाद में भुगतान)', gu: 'ઉધાર (પછી ચૂકવો)' },
+        paymentMode: { en: 'Payment Mode', hi: 'भुगतान का तरीका', gu: 'ચુકવણીની રીત' },
+        items: { en: 'Items', hi: 'आइटम', gu: 'આઇટમ' },
+        itemsLower: { en: 'items', hi: 'आइटम', gu: 'આઇટમ' },
+        nItems_one: { en: '{{count}} item(s)', hi: '{{count}} आइटम', gu: '{{count}} આઇટમ' },
+        nItems_other: { en: '{{count}} item(s)', hi: '{{count}} आइटम', gu: '{{count}} આઇટમ' },
+        addRow: { en: 'Add Row', hi: 'पंक्ति जोड़ें', gu: 'લાઇન ઉમેરો' },
+        selectSupplier: { en: 'Select supplier', hi: 'सप्लायर चुनें', gu: 'સપ્લાયર પસંદ કરો' },
+        selectItem: { en: 'Select item', hi: 'आइटम चुनें', gu: 'આઇટમ પસંદ કરો' },
+        optionalNotes: { en: 'Optional notes', hi: 'वैकल्पिक टिप्पणी', gu: 'વૈકલ્પિક નોંધ' },
+        printReceipt: { en: 'Print Receipt', hi: 'रसीद छापें', gu: 'રસીદ છાપો' },
+        editHistory: { en: 'Edit history', hi: 'संपादन इतिहास', gu: 'સંપાદન ઇતિહાસ' },
+        fromJob: { en: 'From Job', hi: 'जॉब से', gu: 'જોબમાંથી' },
+        partsFor: { en: 'Parts for {{job}}', hi: '{{job}} के लिए पुर्जे', gu: '{{job}} માટે પાર્ટ્સ' },
+        cancelEntry: { en: 'Cancel entry', hi: 'प्रविष्टि रद्द करें', gu: 'એન્ટ્રી રદ કરો' },
+        cancelledByUser: {
+          en: 'Cancelled by user',
+          hi: 'उपयोगकर्ता द्वारा रद्द',
+          gu: 'વપરાશકર્તા દ્વારા રદ',
+        },
+        aCancelledEntryStops: {
+          en: 'A cancelled entry stops counting towards list value and supplier dues. Its items and total stay on the record.',
+          hi: 'रद्द प्रविष्टि सूची मूल्य और सप्लायर बकाया में नहीं गिनी जाएगी। इसके आइटम और कुल रिकॉर्ड में रहेंगे।',
+          gu: 'રદ કરેલી એન્ટ્રી યાદી મૂલ્ય અને સપ્લાયર બાકીમાં ગણાશે નહીં. તેની આઇટમ અને કુલ રેકોર્ડમાં રહેશે.',
+        },
+        chooseASupplier: { en: 'Choose a supplier.', hi: 'सप्लायर चुनें।', gu: 'સપ્લાયર પસંદ કરો.' },
+        addAtLeastOneItem: {
+          en: 'Add at least one item.',
+          hi: 'कम से कम एक आइटम जोड़ें।',
+          gu: 'ઓછામાં ઓછી એક આઇટમ ઉમેરો.',
+        },
+        noPurchasesYet: { en: 'No purchases yet', hi: 'अभी कोई खरीद नहीं', gu: 'હજી કોઈ ખરીદી નથી' },
+        recordWhatYouBuy: {
+          en: 'Record what you buy from suppliers to see it against Supplier Payables.',
+          hi: 'सप्लायर से की गई खरीद दर्ज करें ताकि वह सप्लायर पेएबल्स में दिखे।',
+          gu: 'સપ્લાયર પાસેથી કરેલી ખરીદી નોંધો જેથી તે સપ્લાયર પેયેબલ્સમાં દેખાય.',
+        },
+      },
+    },
+  },
+}

@@ -69,6 +69,21 @@ export function formatPaymentOutId(paymentDate: Date, seq: number) {
   return `PAY-${dd}${mm}-${pad(seq, 5)}`
 }
 
+/** `JPU-2026-27-00001` — a purchase raised *for a job*, "JPU" for Job PUrchase.
+ *
+ * Its own prefix rather than a shared purchase run, because the list shows the two side by side
+ * and distinguishes them with a "From Job" badge: the number is the first thing a shopkeeper
+ * reads, and it should already say where the entry came from. Financial-year-scoped like the
+ * job card it belongs to, so the two line up in a year's books. */
+export function formatJobPurchaseId(fyLabel: string, seq: number) {
+  return `JPU-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
+}
+
+/** `PUR-2026-27-00001` — a purchase entered by hand rather than raised from a job. */
+export function formatPurchaseId(fyLabel: string, seq: number) {
+  return `PUR-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
+}
+
 /** `EXP-2026-27-00001` — financial-year-scoped like Job Cards, not day-scoped like receipts.
  * An expense is a book entry people look up by year, not a counter slip. */
 export function formatExpenseId(fyLabel: string, seq: number) {

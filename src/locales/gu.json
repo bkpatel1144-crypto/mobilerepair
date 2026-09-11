@@ -1975,6 +1975,46 @@
         "searchUser": "વપરાશકર્તા શોધો...",
         "select": "પસંદ કરો..."
       }
+    },
+    "purchase": {
+      "generalPurchase": {
+        "generalPurchase": "સામાન્ય ખરીદી",
+        "buyPartsAccessories": "સપ્લાયર પાસેથી પાર્ટ્સ, એસેસરીઝ અને સ્ટોક ખરીદો — ઇન્વેન્ટરી સ્ટોકમાં ઉમેરાય છે",
+        "newPurchase": "નવી ખરીદી",
+        "newPurchaseEntry": "નવી ખરીદી એન્ટ્રી",
+        "savePurchase": "ખરીદી સાચવો",
+        "totalEntries": "કુલ એન્ટ્રી",
+        "thisListValue": "આ યાદીનું મૂલ્ય (₹)",
+        "owedToSuppliers": "સપ્લાયરને ચૂકવવાનું",
+        "searchPurchaseInvoice": "ખરીદી # / બિલ # શોધો…",
+        "purchaseNo": "ખરીદી #",
+        "invoiceNo": "બિલ #",
+        "invoiceNumber": "બિલ નંબર",
+        "suppliersInvoice": "સપ્લાયરનું બિલ #",
+        "purchaseTerms": "ખરીદીની શરતો",
+        "onCredit": "ઉધાર પર",
+        "creditPayLater": "ઉધાર (પછી ચૂકવો)",
+        "paymentMode": "ચુકવણીની રીત",
+        "items": "આઇટમ",
+        "itemsLower": "આઇટમ",
+        "nItems_one": "{{count}} આઇટમ",
+        "nItems_other": "{{count}} આઇટમ",
+        "addRow": "લાઇન ઉમેરો",
+        "selectSupplier": "સપ્લાયર પસંદ કરો",
+        "selectItem": "આઇટમ પસંદ કરો",
+        "optionalNotes": "વૈકલ્પિક નોંધ",
+        "printReceipt": "રસીદ છાપો",
+        "editHistory": "સંપાદન ઇતિહાસ",
+        "fromJob": "જોબમાંથી",
+        "partsFor": "{{job}} માટે પાર્ટ્સ",
+        "cancelEntry": "એન્ટ્રી રદ કરો",
+        "cancelledByUser": "વપરાશકર્તા દ્વારા રદ",
+        "aCancelledEntryStops": "રદ કરેલી એન્ટ્રી યાદી મૂલ્ય અને સપ્લાયર બાકીમાં ગણાશે નહીં. તેની આઇટમ અને કુલ રેકોર્ડમાં રહેશે.",
+        "chooseASupplier": "સપ્લાયર પસંદ કરો.",
+        "addAtLeastOneItem": "ઓછામાં ઓછી એક આઇટમ ઉમેરો.",
+        "noPurchasesYet": "હજી કોઈ ખરીદી નથી",
+        "recordWhatYouBuy": "સપ્લાયર પાસેથી કરેલી ખરીદી નોંધો જેથી તે સપ્લાયર પેયેબલ્સમાં દેખાય."
+      }
     }
   },
   "components": {
