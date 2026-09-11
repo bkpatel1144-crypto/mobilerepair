@@ -15,7 +15,7 @@ A phase is not done because the code compiles.
 | ---------------------------------- | ------------------------------------------------- | ------- | ---------- |
 | 12 — Make Masters real             | ✅ Done — Attributes now drives Item/Party/Job Card | Small   | —          |
 | 13 — Parts & stock integrity       | ✅ Done — fitting a part is checked against stock  | Medium  | —          |
-| 14 — After the sale                | Warranty is write-only; no rework path            | Medium  | —          |
+| 14 — After the sale                | ✅ Done — warranty lookup + linked rework          | Medium  | —          |
 | 15 — Works on bad internet         | 11 hooks fail with no connection, silently        | Large   | —          |
 | 16 — Finish the clone              | ~40 screens never compared to theirs              | Ongoing | Screenshots from you |
 
@@ -78,7 +78,7 @@ and the override is on the timeline), and confirm Stock and the job card agree a
 
 ---
 
-## Phase 14 — After the sale: warranty & rework
+## Phase 14 — After the sale: warranty & rework ✅ Done
 
 **The problem.** Two gaps that are really one gap — the returning customer.
 
