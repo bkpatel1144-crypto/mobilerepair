@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileText, Eye, Pencil } from 'lucide-react'
+import { FileText, Eye, Pencil, RefreshCw } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -56,6 +56,8 @@ export function SalesInvoicesPage() {
 
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
+  const [customFrom, setCustomFrom] = useState('')
+  const [customTo, setCustomTo] = useState('')
   const [tab, setTab] = useState<Tab>('all')
   const [viewing, setViewing] = useState<JobCardWithId | null>(null)
   const [editing, setEditing] = useState<JobCardWithId | null>(null)
@@ -72,9 +74,22 @@ export function SalesInvoicesPage() {
   }
 
   const bounds = dateRangeBounds(dateRange)
+  // A custom range is applied from the two date inputs rather than from `dateRangeBounds`,
+  // which only knows the named ranges. Either end on its own is a valid filter — "everything
+  // since the 1st" is a question a shopkeeper actually asks.
+  const customFromDate = customFrom ? new Date(`${customFrom}T00:00:00`) : null
+  const customToDate = customTo ? new Date(`${customTo}T23:59:59`) : null
   const filtered = invoices
     .filter((j) => tab === 'all' || j.status === tab)
     .filter((j) => {
+      if (dateRange === 'custom') {
+        if (!customFromDate && !customToDate) return true
+        const d = billDate(j)?.toDate?.()
+        if (!d) return false
+        if (customFromDate && d < customFromDate) return false
+        if (customToDate && d > customToDate) return false
+        return true
+      }
       if (!bounds) return true
       const d = billDate(j)?.toDate?.()
       return !!d && d >= bounds.from && d <= bounds.to
@@ -188,6 +203,12 @@ export function SalesInvoicesPage() {
         icon={FileText}
         title={t('pages.sales.salesInvoices.salesInvoices')}
         subtitle={t('pages.sales.salesInvoices.allGeneratedBillsViewOrEdit')}
+        actions={
+          <Button type="button" variant="outline" onClick={() => void refetch()}>
+            <RefreshCw className="size-4" />
+            {t('common.refresh')}
+          </Button>
+        }
       />
 
       <FilterBar
@@ -196,21 +217,30 @@ export function SalesInvoicesPage() {
         searchPlaceholder={t('shared.searchJobCardCustomerMobile')}
         dateRange={dateRange === 'all' ? undefined : dateRange}
         onDateRangeChange={setDateRange}
+        showCustomRange
+        customFrom={customFrom}
+        customTo={customTo}
+        onCustomFromChange={setCustomFrom}
+        onCustomToChange={setCustomTo}
       >
+        {/* `option`, not `tab`: the callback parameter used to shadow the `tab` state, so
+         * `tab === tab` was always true and every chip rendered as the selected one. */}
         <div className="flex flex-wrap gap-1 rounded-lg border p-0.5">
-          {(Object.keys(TAB_LABELS) as Tab[]).map((tab) => (
+          {(Object.keys(TAB_LABELS) as Tab[]).map((option) => (
             <button
-              key={tab}
+              key={option}
               type="button"
               data-slot="button"
-              onClick={() => setTab(tab)}
-              aria-pressed={tab === tab}
+              onClick={() => setTab(option)}
+              aria-pressed={tab === option}
               className={
                 'min-h-9 rounded-md px-3 py-1 text-sm ' +
-                (tab === tab ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
+                (tab === option
+                  ? 'bg-teal-600 text-white'
+                  : 'text-muted-foreground hover:bg-muted')
               }
             >
-              {t(TAB_LABELS[tab])} {counts[tab]}
+              {t(TAB_LABELS[option])} {counts[option]}
             </button>
           ))}
         </div>

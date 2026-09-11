@@ -11,6 +11,7 @@
  */
 const FEATURE_MAP = {
   sales: { invoices: 'invoices' },
+  purchase: { general: 'general-purchase' },
   service: {
     'job-cards': 'job-cards',
     options: 'service-options',

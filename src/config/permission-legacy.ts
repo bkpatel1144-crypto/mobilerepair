@@ -22,7 +22,11 @@ import { PERMISSION_CATALOGUE } from '@/config/permission-catalogue'
 
 /** `sales` -> `SALES`, and the one module whose access key does not follow from its name. */
 const MODULE_ACCESS_BY_SECTION = new Map(
-  PERMISSION_CATALOGUE.map((m) => [m.sectionKey, m.moduleAccess.key])
+  // Purchase is absent rather than mapped to a placeholder: the reference gives it no
+  // module-access permission, and inventing one would be a key no reference role could hold.
+  PERMISSION_CATALOGUE.flatMap((m) =>
+    m.moduleAccess ? [[m.sectionKey, m.moduleAccess.key] as const] : []
+  )
 )
 
 /** Old `{section}.{entity}.{op}` -> new key, built from the catalogue so it cannot drift. */

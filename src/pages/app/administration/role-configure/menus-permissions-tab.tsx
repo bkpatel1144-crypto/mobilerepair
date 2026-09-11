@@ -280,6 +280,7 @@ export function MenusPermissionsTab({
           const isOpen = expanded.has(section.key)
           const schema = PERMISSION_CATALOGUE.find((m) => m.sectionKey === section.key)
           const moduleActionKeys = schema ? keysForModule(schema) : []
+          const moduleAccess = schema?.moduleAccess
           const moduleCheckedActions = moduleActionKeys.filter(
             (k) => draft.actionPermissions[k]
           ).length
@@ -372,22 +373,28 @@ export function MenusPermissionsTab({
                       {/* Module access first, on its own. The reference treats it as a permission
                        * in its own right — a role can hold every permission inside a module and
                        * still not be able to open it. */}
-                      <label
-                        className={cn(
-                          'flex items-center gap-2 rounded-lg border px-2.5 py-2 text-sm',
-                          actionTone(
-                            'access',
-                            draft.actionPermissions[schema.moduleAccess.key] === true
-                          )
-                        )}
-                      >
-                        <Checkbox
-                          checked={draft.actionPermissions[schema.moduleAccess.key] === true}
-                          onCheckedChange={() => togglePermission(schema.moduleAccess.key)}
-                          disabled={disabled || draft.fullAccess}
-                        />
-                        <span className="font-medium">{schema.moduleAccess.label}</span>
-                      </label>
+                      {/* Not every module has one. The reference's Purchase lists five
+                       * permissions and no "Access Purchase Module", where Sales counts
+                       * "Access Sales Module" inside its eleven — so this row is drawn only
+                       * where there is one to draw. */}
+                      {moduleAccess && (
+                        <label
+                          className={cn(
+                            'flex items-center gap-2 rounded-lg border px-2.5 py-2 text-sm',
+                            actionTone(
+                              'access',
+                              draft.actionPermissions[moduleAccess.key] === true
+                            )
+                          )}
+                        >
+                          <Checkbox
+                            checked={draft.actionPermissions[moduleAccess.key] === true}
+                            onCheckedChange={() => togglePermission(moduleAccess.key)}
+                            disabled={disabled || draft.fullAccess}
+                          />
+                          <span className="font-medium">{moduleAccess.label}</span>
+                        </label>
+                      )}
 
                       {/* One block per feature, carrying exactly the permissions that feature
                        * has. This replaced an entity x CRUD grid, which could express neither

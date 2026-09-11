@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { NAV_SECTIONS, menuKey } from './nav'
 import { TOTAL_MENU_COUNT } from './menu-count'
+import { ALL_PERMISSION_KEYS, PERMISSION_CATALOGUE } from './permission-catalogue'
 import menuStructure from '../../data/menu-structure.json'
 
 /**
@@ -49,6 +50,25 @@ describe('the sidebar matches the client menu structure', () => {
     expect(ourLeaves).toContain('masters/attributes')
     expect(NAV_SECTIONS.map((s) => s.key)).toContain('purchase')
     expect(NAV_SECTIONS.map((s) => s.key)).toContain('inventory')
+  })
+
+  it('carries the 190 permissions the reference Role Configure reads', () => {
+    // The generator asserts this too, but only when someone runs it — this holds the file that
+    // actually ships. 185 was "correct" once, against exports a version behind their own app.
+    expect(ALL_PERMISSION_KEYS).toHaveLength(190)
+    expect(new Set(ALL_PERMISSION_KEYS).size).toBe(190)
+
+    const purchase = PERMISSION_CATALOGUE.find((m) => m.sectionKey === 'purchase')
+    expect(purchase?.features.flatMap((f) => f.permissions.map((p) => p.label))).toEqual([
+      'View General Purchase (Parts & Stock)',
+      'Create General Purchase (Parts & Stock)',
+      'Cancel Purchase Entry',
+      'Print Purchase Receipt',
+      'Pay Supplier',
+    ])
+    // No "Access Purchase Module": the reference lists none, and one more key here is the
+    // difference between 190 and 191.
+    expect(purchase?.moduleAccess).toBeUndefined()
   })
 
   it('gives every menu in the structure a module to sit under', () => {
