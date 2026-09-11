@@ -1203,6 +1203,41 @@
         "splitAllSharedBrands": "Split all shared brands?",
         "split": "Split",
         "splitSharedBrands": "Split shared brands"
+      },
+      "warranty": {
+        "warrantyLookup": "Warranty Lookup",
+        "searchByAnything": "Search by phone number, IMEI, job card number or customer name.",
+        "searchPlaceholder": "Phone number, IMEI, job card number…",
+        "backToJobCards": "Job Cards",
+        "typeSomethingToSearch": "Type a phone number or IMEI to check what is still covered.",
+        "nothingMatched": "Nothing matched \"{{query}}\".",
+        "couldNotLoadJobCards": "Could not load job cards.",
+        "wholeBill": "Whole bill",
+        "noWarrantyRecorded": "No warranty was recorded on this job.",
+        "openJob": "Open",
+        "until": "until {{date}}",
+        "nDaysLeft": "{{count}} days left",
+        "state": {
+          "live": "Under warranty",
+          "expired": "Expired",
+          "unknown": "Not started",
+          "none": "No warranty"
+        }
+      },
+      "rework": {
+        "reopenForRework": "Reopen for Rework",
+        "deviceCameBack": "The device came back. This raises a new job card linked to this one — the original keeps its bill, its dates and its warranty.",
+        "whyDidItComeBack": "Why did it come back?",
+        "reasonPlaceholder": "e.g. Screen flickering again after 10 days",
+        "underWarrantyNoCharge": "Under warranty — no charge",
+        "warrantyStillLive": "This job is still under warranty. Untick if the fault is not covered — physical damage, for instance.",
+        "warrantyExpired": "The warranty on this job has run out, so this rework is chargeable by default.",
+        "aReasonIsRequired": "Say why the device came back.",
+        "couldNotRaiseRework": "Could not raise the rework.",
+        "reworkOf": "Rework of {{job}}",
+        "cameBackAs": "Came back as {{job}}",
+        "warrantyJob": "Warranty job",
+        "previousRepairs": "Previous repairs on this device"
       }
     },
     "reports": {

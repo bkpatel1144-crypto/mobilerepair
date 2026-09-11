@@ -29,6 +29,8 @@ import { useNavigate } from 'react-router-dom'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
 import { useTranslation } from 'react-i18next'
 import { actionAppliesTo } from '@/config/job-action-statuses'
+import { canRework } from '@/hooks/use-rework'
+import { ReworkModal } from './rework-modal'
 
 type DialogKind =
   'hold' | 'cancel' | 'jobDone' | 'generateBill' | 'payment' | 'handover' | 'fieldVisit' | null
@@ -92,6 +94,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
   const [amountInput, setAmountInput] = useState(0)
   const [modeInput, setModeInput] = useState<'cash' | 'upi' | 'card'>('cash')
   const [handoverToId, setHandoverToId] = useState<string | undefined>()
+  const [reworkOpen, setReworkOpen] = useState(false)
   const [collectPayment, setCollectPayment] = useState(false)
   const [durationInput, setDurationInput] = useState<number | ''>('')
 
@@ -289,6 +292,14 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             disabled={applyAction.isPending}
           >
             Return &amp; Close
+          </Button>
+        )}
+        {/* Only once the device has gone back to the customer — a job still on the bench does
+         * not need a second card, it needs finishing. */}
+        {canRework(job.status) && canPerform('addPart') && (
+          <Button type="button" variant="outline" onClick={() => setReworkOpen(true)}>
+            <RotateCcw className="size-4" />
+            {t('pages.service.rework.reopenForRework')}
           </Button>
         )}
         {shows('fieldVisit') && (
@@ -609,6 +620,8 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           </div>
         </div>
       </FormModal>
+
+      {reworkOpen && <ReworkModal job={job} onClose={() => setReworkOpen(false)} />}
     </>
   )
 }

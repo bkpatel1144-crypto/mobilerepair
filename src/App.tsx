@@ -259,6 +259,11 @@ const BranchManagementPage = lazy(() =>
     default: m.BranchManagementPage,
   }))
 )
+const WarrantyLookupPage = lazy(() =>
+  import('@/pages/app/service/warranty-lookup-page').then((m) => ({
+    default: m.WarrantyLookupPage,
+  }))
+)
 const CompanyPreferencesPage = lazy(() =>
   import('@/pages/app/settings/company-preferences-page').then((m) => ({
     default: m.CompanyPreferencesPage,
@@ -494,6 +499,17 @@ function App() {
                         element={
                           <RequireMenuAccess menuKey="masters/items">
                             <CreateItemPage />
+                          </RequireMenuAccess>
+                        }
+                      />
+                      {/* Warranty Lookup belongs to Job Cards rather than beside it — the
+                       * sidebar is a deliberate 57 items and this adds none. Declared
+                       * before `:jobId` so "warranty" is not read as a job id. */}
+                      <Route
+                        path="service/job-cards/warranty"
+                        element={
+                          <RequireMenuAccess menuKey="service/job-cards">
+                            <WarrantyLookupPage />
                           </RequireMenuAccess>
                         }
                       />

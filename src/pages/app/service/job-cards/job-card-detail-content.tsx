@@ -15,6 +15,7 @@ import {
   ChevronUp,
   Expand,
   Tags,
+  History,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -27,6 +28,10 @@ import { useJobTimeline, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
 import { attributeRows, attributesFor } from '@/lib/attribute-values'
 import { usePermissions } from '@/hooks/use-permissions'
+import { useJobCards } from '@/hooks/use-job-cards'
+import { warrantyLinesOf, jobWarrantyState } from '@/lib/warranty'
+import { Link } from 'react-router-dom'
+import { buildPath } from '@/config/nav'
 import { useStock } from '@/hooks/use-stock'
 import { fitCheck, stockByItemId, stockHelperText } from '@/lib/stock-check'
 import { useApplyJobAction } from '@/hooks/use-job-actions'
@@ -81,6 +86,23 @@ export function JobCardDetailContent({
   const { t } = useTranslation()
   const { profile } = useAuth()
   const { data: allAttributes = [] } = useItemAttributes()
+
+  // Reworks are found by looking, not by a list kept on this document: a stored array would need
+  // every rework write to remember to update the original, and one that forgot would be wrong
+  // for good. Previous repairs match on the device itself (IMEI, else serial), which is the only
+  // identifier that survives a customer changing their phone number.
+  const { data: allJobs = [] } = useJobCards()
+  const reworkedAs = allJobs.filter((j) => j.reworkOfJobCardId === job.id)
+  const deviceKey = job.imei || job.serialNo
+  const previousRepairs = deviceKey
+    ? allJobs.filter(
+        (j) =>
+          j.id !== job.id &&
+          j.reworkOfJobCardId !== job.id &&
+          j.id !== job.reworkOfJobCardId &&
+          (j.imei || j.serialNo) === deviceKey
+      )
+    : []
   const jobAttributeRows = attributeRows(
     attributesFor(allAttributes, 'jobCard'),
     job.attributes,
@@ -139,6 +161,11 @@ export function JobCardDetailContent({
     outOfStock: t('pages.service.jobCardDetailContent.outOfStock'),
     low: (n: number) => t('pages.service.jobCardDetailContent.onlyNLeft', { count: n }),
   }
+  // Not a bare `Date.now()` in a render body — the React Compiler treats it as impure.
+  const warrantyState = jobWarrantyState(
+    warrantyLinesOf(job, new Date(new Date().getTime()), t('pages.service.warranty.wholeBill'))
+  )
+
   const balance = (job.finalAmount ?? job.estimatedCost) - job.paidAmount
 
   async function handleAddImage(file: File) {
@@ -154,6 +181,22 @@ export function JobCardDetailContent({
             <Wrench className="size-5 text-teal-600" />
             <span className="text-lg font-bold">#{job.jobNumber}</span>
             <StatusBadge status={statusLabel(job.status)} dot />
+            {/* The one warranty question anyone asks, answered without opening another screen.
+             * `billWarranty` and the per-part warranties were written and read by nothing. */}
+            {warrantyState !== 'none' && (
+              <span
+                className={
+                  'rounded-full px-2 py-0.5 text-xs font-semibold ' +
+                  (warrantyState === 'live'
+                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-400'
+                    : warrantyState === 'expired'
+                      ? 'bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400'
+                      : 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-400')
+                }
+              >
+                {t(`pages.service.warranty.state.${warrantyState}`)}
+              </span>
+            )}
             <span className="text-sm text-muted-foreground">{formatDateOnly(job)}</span>
             {onExpand && (
               <Button
@@ -181,6 +224,42 @@ export function JobCardDetailContent({
       </div>
 
       <ActionButtons job={job} />
+
+      {/* The link reads in both directions. Opening either card without knowing about the other
+       * is the failure the whole rework feature exists to prevent. */}
+      {(job.reworkOfJobCardNumber || reworkedAs.length > 0 || previousRepairs.length > 0) && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm dark:border-amber-500/30 dark:bg-amber-500/10">
+          <History className="size-4 shrink-0 text-amber-700 dark:text-amber-400" />
+          {job.reworkOfJobCardId && (
+            <Link
+              to={`${buildPath('service', 'job-cards')}/${job.reworkOfJobCardId}`}
+              className="font-medium text-amber-900 underline dark:text-amber-300"
+            >
+              {t('pages.service.rework.reworkOf', { job: job.reworkOfJobCardNumber })}
+            </Link>
+          )}
+          {job.isWarrantyJob && (
+            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-400">
+              {t('pages.service.rework.warrantyJob')}
+            </span>
+          )}
+          {reworkedAs.map((r) => (
+            <Link
+              key={r.id}
+              to={`${buildPath('service', 'job-cards')}/${r.id}`}
+              className="font-medium text-amber-900 underline dark:text-amber-300"
+            >
+              {t('pages.service.rework.cameBackAs', { job: r.jobNumber })}
+            </Link>
+          ))}
+          {previousRepairs.length > 0 && (
+            <span className="text-xs text-amber-900/80 dark:text-amber-300/80">
+              {t('pages.service.rework.previousRepairs')}:{' '}
+              {previousRepairs.map((p) => p.jobNumber).join(', ')}
+            </span>
+          )}
+        </div>
+      )}
 
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="space-y-4">

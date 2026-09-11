@@ -1203,6 +1203,41 @@
         "splitAllSharedBrands": "सभी साझा ब्रांड अलग करें?",
         "split": "अलग करें",
         "splitSharedBrands": "साझा ब्रांड अलग करें"
+      },
+      "warranty": {
+        "warrantyLookup": "वारंटी जाँच",
+        "searchByAnything": "फ़ोन नंबर, IMEI, जॉब कार्ड नंबर या ग्राहक के नाम से खोजें।",
+        "searchPlaceholder": "फ़ोन नंबर, IMEI, जॉब कार्ड नंबर…",
+        "backToJobCards": "जॉब कार्ड",
+        "typeSomethingToSearch": "क्या अभी भी कवर है यह देखने के लिए फ़ोन नंबर या IMEI लिखें।",
+        "nothingMatched": "\"{{query}}\" से कुछ नहीं मिला।",
+        "couldNotLoadJobCards": "जॉब कार्ड लोड नहीं हो सके।",
+        "wholeBill": "पूरा बिल",
+        "noWarrantyRecorded": "इस जॉब पर कोई वारंटी दर्ज नहीं है।",
+        "openJob": "खोलें",
+        "until": "{{date}} तक",
+        "nDaysLeft": "{{count}} दिन बाकी",
+        "state": {
+          "live": "वारंटी में",
+          "expired": "समाप्त",
+          "unknown": "शुरू नहीं हुई",
+          "none": "कोई वारंटी नहीं"
+        }
+      },
+      "rework": {
+        "reopenForRework": "रीवर्क के लिए खोलें",
+        "deviceCameBack": "डिवाइस वापस आया है। इससे इस कार्ड से जुड़ा नया जॉब कार्ड बनेगा — मूल कार्ड का बिल, तारीख़ें और वारंटी वैसी ही रहेंगी।",
+        "whyDidItComeBack": "यह वापस क्यों आया?",
+        "reasonPlaceholder": "जैसे 10 दिन बाद स्क्रीन फिर से झपक रही है",
+        "underWarrantyNoCharge": "वारंटी में — कोई शुल्क नहीं",
+        "warrantyStillLive": "यह जॉब अभी वारंटी में है। यदि ख़राबी कवर नहीं है — जैसे भौतिक क्षति — तो अनटिक करें।",
+        "warrantyExpired": "इस जॉब की वारंटी समाप्त हो चुकी है, इसलिए यह रीवर्क डिफ़ॉल्ट रूप से शुल्क योग्य है।",
+        "aReasonIsRequired": "बताएं कि डिवाइस क्यों वापस आया।",
+        "couldNotRaiseRework": "रीवर्क नहीं बनाया जा सका।",
+        "reworkOf": "{{job}} का रीवर्क",
+        "cameBackAs": "{{job}} के रूप में वापस आया",
+        "warrantyJob": "वारंटी जॉब",
+        "previousRepairs": "इस डिवाइस की पिछली मरम्मत"
       }
     },
     "reports": {

@@ -556,6 +556,15 @@ export interface JobCardDoc {
    *  keyed by attribute code. Absent on every job card written before Phase 12. */
   attributes?: Record<string, string | number | boolean | null>
 
+  /** The job this one was raised from when a device came back. The original is never reopened in
+   *  place — its bill, its financial year and its warranty start all belong to that visit — so
+   *  the two are linked instead. Absent on every job that is not a rework. */
+  reworkOfJobCardId?: string | null
+  reworkOfJobCardNumber?: string | null
+  /** Raised against a live warranty, so the shop chose not to charge. Recorded rather than
+   *  inferred later, or the P&L shows a free repair as a loss with no reason attached. */
+  isWarrantyJob?: boolean
+
   cancelReason: string | null
   holdReason: string | null
 

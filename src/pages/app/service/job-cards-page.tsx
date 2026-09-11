@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, ClipboardCheck, Inbox, ScanLine, SlidersHorizontal } from 'lucide-react'
+import { Plus, ClipboardCheck, Inbox, ScanLine, ShieldCheck, SlidersHorizontal } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -177,6 +177,16 @@ export function JobCardsPage() {
         subtitle={t('pages.service.jobCards.clickAStatusCardToFilter')}
         actions={
           <>
+            {/* Warranty Lookup lives here rather than in the sidebar — the menu structure is a
+             * deliberate 57 items, and this is a way of searching job cards, not a module. */}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate(`${buildPath('service', 'job-cards')}/warranty`)}
+            >
+              <ShieldCheck className="size-4" />
+              {t('pages.service.warranty.warrantyLookup')}
+            </Button>
             {canDo('SERVICE_JOB_CARDS_CREATE') && (
               <Button
                 type="button"

@@ -1203,6 +1203,41 @@
         "splitAllSharedBrands": "બધી શેર કરેલી બ્રાન્ડ અલગ કરવી?",
         "split": "અલગ કરો",
         "splitSharedBrands": "શેર કરેલી બ્રાન્ડ અલગ કરો"
+      },
+      "warranty": {
+        "warrantyLookup": "વોરંટી તપાસ",
+        "searchByAnything": "ફોન નંબર, IMEI, જોબ કાર્ડ નંબર અથવા ગ્રાહકના નામથી શોધો.",
+        "searchPlaceholder": "ફોન નંબર, IMEI, જોબ કાર્ડ નંબર…",
+        "backToJobCards": "જોબ કાર્ડ",
+        "typeSomethingToSearch": "શું હજી કવર છે તે જોવા માટે ફોન નંબર અથવા IMEI લખો.",
+        "nothingMatched": "\"{{query}}\" સાથે કંઈ મળ્યું નહીં.",
+        "couldNotLoadJobCards": "જોબ કાર્ડ લોડ થઈ શક્યા નથી.",
+        "wholeBill": "આખું બિલ",
+        "noWarrantyRecorded": "આ જોબ પર કોઈ વોરંટી નોંધાયેલી નથી.",
+        "openJob": "ખોલો",
+        "until": "{{date}} સુધી",
+        "nDaysLeft": "{{count}} દિવસ બાકી",
+        "state": {
+          "live": "વોરંટીમાં",
+          "expired": "સમાપ્ત",
+          "unknown": "શરૂ થઈ નથી",
+          "none": "વોરંટી નથી"
+        }
+      },
+      "rework": {
+        "reopenForRework": "રીવર્ક માટે ખોલો",
+        "deviceCameBack": "ડિવાઇસ પાછું આવ્યું છે. આનાથી આ કાર્ડ સાથે જોડાયેલું નવું જોબ કાર્ડ બનશે — મૂળ કાર્ડનું બિલ, તારીખો અને વોરંટી એમ જ રહેશે.",
+        "whyDidItComeBack": "તે કેમ પાછું આવ્યું?",
+        "reasonPlaceholder": "દા.ત. 10 દિવસ પછી સ્ક્રીન ફરી ઝબકે છે",
+        "underWarrantyNoCharge": "વોરંટીમાં — કોઈ ચાર્જ નહીં",
+        "warrantyStillLive": "આ જોબ હજી વોરંટીમાં છે. જો ખામી કવર ન થતી હોય — જેમ કે ભૌતિક નુકસાન — તો અનટિક કરો.",
+        "warrantyExpired": "આ જોબની વોરંટી પૂરી થઈ ગઈ છે, તેથી આ રીવર્ક ડિફોલ્ટ રૂપે ચાર્જપાત્ર છે.",
+        "aReasonIsRequired": "જણાવો કે ડિવાઇસ કેમ પાછું આવ્યું.",
+        "couldNotRaiseRework": "રીવર્ક બનાવી શકાયું નથી.",
+        "reworkOf": "{{job}} નું રીવર્ક",
+        "cameBackAs": "{{job}} તરીકે પાછું આવ્યું",
+        "warrantyJob": "વોરંટી જોબ",
+        "previousRepairs": "આ ડિવાઇસનું અગાઉનું રિપેર"
       }
     },
     "reports": {
