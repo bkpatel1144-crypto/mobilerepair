@@ -259,6 +259,11 @@ const BranchManagementPage = lazy(() =>
     default: m.BranchManagementPage,
   }))
 )
+const CompanyPreferencesPage = lazy(() =>
+  import('@/pages/app/settings/company-preferences-page').then((m) => ({
+    default: m.CompanyPreferencesPage,
+  }))
+)
 const CompanySettingsPage = lazy(() =>
   import('@/pages/app/settings/company-settings-page').then((m) => ({
     default: m.CompanySettingsPage,
@@ -497,6 +502,16 @@ function App() {
                         element={
                           <RequireMenuAccess menuKey="service/job-cards">
                             <JobCardDetailPage />
+                          </RequireMenuAccess>
+                        }
+                      />
+                      {/* Per-company preferences, reached from Company Management rather than
+                       * from the menu — the same menu grant that opens Company Settings. */}
+                      <Route
+                        path="settings/company/preferences"
+                        element={
+                          <RequireMenuAccess menuKey="settings/company">
+                            <CompanyPreferencesPage />
                           </RequireMenuAccess>
                         }
                       />

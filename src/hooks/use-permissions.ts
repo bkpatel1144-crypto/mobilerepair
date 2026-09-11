@@ -5,6 +5,8 @@ import { roleDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { widgetIsOn } from '@/config/dashboard-widgets-legacy'
 import { normalizeActionPermissions } from '@/config/permission-legacy'
+import { moduleEnabled, moduleOfMenuKey } from '@/config/modules'
+import { useCompany } from '@/hooks/use-company'
 import type { RoleDoc } from '@/types/firestore'
 
 /**
@@ -94,6 +96,13 @@ export function usePermissions() {
 
   const role = query.data ?? null
 
+  // Settings > Company > Preferences can switch whole modules off for a company. That has to be
+  // enforced here rather than in the sidebar, so the command palette and every route guard
+  // (`RequireMenuAccess`) honour it too — a hidden menu whose URL still works is not switched
+  // off. `fullAccess` does not bypass it: the Owner is the one who chose to switch it off.
+  const companyQuery = useCompany()
+  const enabledModules = companyQuery.data?.enabledModules
+
   // A *disabled* query's own `isLoading` is `false` in TanStack Query v5 — it only reflects an
   // active fetch, not "hasn't started yet because its inputs aren't ready." Since this query
   // stays disabled until `profile` resolves, checking `query.isLoading` alone reports "done"
@@ -101,11 +110,13 @@ export function usePermissions() {
   // before the role ever had a chance to load. Verified live: without this, a hard reload could
   // briefly (and, in one race, not-so-briefly — see auth-provider.tsx) show "Access Denied" for
   // a real Owner account.
-  const isLoading = authLoading || profileLoading || query.isLoading
+  const isLoading = authLoading || profileLoading || query.isLoading || companyQuery.isLoading
 
   /** Is this menu leaf (or "dashboard") visible to the current role? */
   function canView(key: string): boolean {
     if (!role) return false
+    const module = moduleOfMenuKey(key)
+    if (module && !moduleEnabled(enabledModules, module)) return false
     if (role.fullAccess) return true
     return role.menuPermissions[key] === true
   }

@@ -2021,6 +2021,25 @@
         "pricesIncludeGstHelp": "चालू: \"₹500 में ठीक\" यानी ग्राहक से ₹500, उसी में से कर। बंद: कर ऊपर से जुड़ेगा।",
         "gstRate": "GST दर %",
         "onlyWhenRegular": "केवल \"Regular\" पंजीकरण पर लागू। Composition डीलर GST नहीं ले सकता, और अपंजीकृत दुकान बिना GST बिल बनाती है।"
+      },
+      "preferences": {
+        "companyPreferences": "कंपनी प्राथमिकताएँ",
+        "settingsFor": "इनके लिए सेटिंग्स",
+        "eachCompanyKeepsItsOwn": "— हर कंपनी की अपनी अलग होती हैं।",
+        "enabledModules": "सक्षम मॉड्यूल",
+        "turnErpModulesOnOff": "इस कंपनी के लिए ERP मॉड्यूल चालू या बंद करें। बंद किया गया मॉड्यूल इसमें काम करने वाले हर उपयोगकर्ता के मेनू से हट जाता है।",
+        "alwaysOn": "हमेशा चालू — बंद नहीं किया जा सकता",
+        "unsavedChanges": "असहेजे बदलाव",
+        "branding": "ब्रांडिंग",
+        "companyLogoShownOn": "छपे हुए बिल, जॉब कार्ड और रसीदों पर दिखने वाला कंपनी लोगो।",
+        "companyLogo": "कंपनी लोगो",
+        "noLogo": "कोई लोगो नहीं",
+        "uploadLogo": "लोगो अपलोड करें",
+        "uploadsApplyImmediately": "PNG या JPG, {{mb}} MB तक। अपलोड तुरंत लागू होता है — सहेजने की ज़रूरत नहीं।",
+        "logoFailed": "लोगो अपलोड नहीं हो सका।",
+        "whatsappProvider": "व्हाट्सएप प्रदाता",
+        "providerConfigIsManagedIn": "प्रदाता और उसके क्रेडेंशियल इस खाते की सभी कंपनियों में साझा होते हैं और यहाँ कॉन्फ़िगर किए जाते हैं:",
+        "settingsWhatsapp": "सेटिंग्स › व्हाट्सएप"
       }
     },
     "purchase": {

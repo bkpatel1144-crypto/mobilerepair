@@ -2021,6 +2021,25 @@
         "pricesIncludeGstHelp": "On: \"₹500 to fix it\" means ₹500 from the customer, tax taken out of it. Off: tax is added on top.",
         "gstRate": "GST rate %",
         "onlyWhenRegular": "Only used when GST registration is Regular. A Composition dealer cannot charge GST, and an Unregistered shop bills without it."
+      },
+      "preferences": {
+        "companyPreferences": "Company Preferences",
+        "settingsFor": "Settings for",
+        "eachCompanyKeepsItsOwn": "— each company keeps its own.",
+        "enabledModules": "Enabled Modules",
+        "turnErpModulesOnOff": "Turn ERP modules on or off for this company. A module switched off disappears from the menu for every user working in it.",
+        "alwaysOn": "Always on — cannot be switched off",
+        "unsavedChanges": "Unsaved changes",
+        "branding": "Branding",
+        "companyLogoShownOn": "The company logo shown on printed bills, job cards and receipts.",
+        "companyLogo": "Company logo",
+        "noLogo": "No logo",
+        "uploadLogo": "Upload Logo",
+        "uploadsApplyImmediately": "PNG or JPG, up to {{mb}} MB. Uploads apply immediately — no Save needed.",
+        "logoFailed": "The logo could not be uploaded.",
+        "whatsappProvider": "WhatsApp Provider",
+        "providerConfigIsManagedIn": "The provider and its credentials are shared by every company on this account and are configured in",
+        "settingsWhatsapp": "Settings › WhatsApp"
       }
     },
     "purchase": {

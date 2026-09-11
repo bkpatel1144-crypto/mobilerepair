@@ -2021,6 +2021,25 @@
         "pricesIncludeGstHelp": "ચાલુ: \"₹500માં રિપેર\" એટલે ગ્રાહક પાસેથી ₹500, તેમાંથી જ કર. બંધ: કર ઉપરથી ઉમેરાશે.",
         "gstRate": "GST દર %",
         "onlyWhenRegular": "ફક્ત \"Regular\" નોંધણી પર લાગુ. Composition ડીલર GST લઈ શકતો નથી, અને નોંધણી વગરની દુકાન GST વગર બિલ બનાવે છે."
+      },
+      "preferences": {
+        "companyPreferences": "કંપની પસંદગીઓ",
+        "settingsFor": "આના માટે સેટિંગ્સ",
+        "eachCompanyKeepsItsOwn": "— દરેક કંપનીની પોતાની અલગ હોય છે.",
+        "enabledModules": "સક્રિય મોડ્યુલ",
+        "turnErpModulesOnOff": "આ કંપની માટે ERP મોડ્યુલ ચાલુ કે બંધ કરો. બંધ કરેલું મોડ્યુલ તેમાં કામ કરતા દરેક વપરાશકર્તાના મેનુમાંથી અદૃશ્ય થઈ જાય છે.",
+        "alwaysOn": "હંમેશા ચાલુ — બંધ કરી શકાતું નથી",
+        "unsavedChanges": "સાચવ્યા વગરના ફેરફારો",
+        "branding": "બ્રાન્ડિંગ",
+        "companyLogoShownOn": "છાપેલા બિલ, જોબ કાર્ડ અને રસીદ પર દેખાતો કંપની લોગો.",
+        "companyLogo": "કંપની લોગો",
+        "noLogo": "લોગો નથી",
+        "uploadLogo": "લોગો અપલોડ કરો",
+        "uploadsApplyImmediately": "PNG અથવા JPG, {{mb}} MB સુધી. અપલોડ તરત જ લાગુ થાય છે — સાચવવાની જરૂર નથી.",
+        "logoFailed": "લોગો અપલોડ થઈ શક્યો નથી.",
+        "whatsappProvider": "વોટ્સએપ પ્રોવાઇડર",
+        "providerConfigIsManagedIn": "પ્રોવાઇડર અને તેની ઓળખાણ આ ખાતાની દરેક કંપની વચ્ચે વહેંચાય છે અને અહીં ગોઠવાય છે:",
+        "settingsWhatsapp": "સેટિંગ્સ › વોટ્સએપ"
       }
     },
     "purchase": {

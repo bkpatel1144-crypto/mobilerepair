@@ -34,6 +34,16 @@ export interface CompanyDoc {
   phone: string
   currency: string // e.g. "INR"
   timezone: string // e.g. "Asia/Kolkata"
+  /**
+   * Which ERP modules this company uses, by `NAV_SECTIONS` key.
+   *
+   * Optional and absent means "all of them": a company created before this existed must not
+   * suddenly lose its menus. Administration and Settings are never in here — a company that
+   * could switch off Settings could never switch anything back on.
+   */
+  enabledModules?: string[]
+  /** Company logo, shown on the sidebar and on printed receipts and invoices. */
+  logoUrl?: string | null
   protected: boolean // the default company created at signup — cannot be disabled/deleted
   status: EntityStatus
   /**

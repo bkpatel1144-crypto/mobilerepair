@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Store,
   Plus,
@@ -430,7 +430,7 @@ export function CompanySettingsPage() {
           type="button"
           variant="link"
           className="text-teal-600 dark:text-teal-400"
-          render={<a href={buildPath('settings', 'branches')} />}
+          render={<Link to={buildPath('settings', 'company/preferences')} />}
         >
           <SettingsIcon className="size-4" />
           {t('pages.settings.companySettings.companyPreferencesActiveCompany')}
