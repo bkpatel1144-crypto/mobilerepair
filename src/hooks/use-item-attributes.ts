@@ -18,10 +18,26 @@ import type { EntityStatus } from '@/types/firestore'
  * Deliberately not a field on the company document: each attribute carries its own values and
  * has to be added, renamed and retired like any other master.
  */
+/** What an attribute can be attached to. The reference's picker reads "Item / Product"; these
+ *  are the app's other forms that could carry a custom field. */
+export type AttributeEntity = 'item' | 'party' | 'jobCard'
+
+/** How the value is captured on whatever form the attribute appears on. `select` is the one that
+ *  uses `values`; the rest ignore it. */
+export type AttributeDataType = 'text' | 'number' | 'date' | 'boolean' | 'select'
+
 export interface ItemAttributeDoc {
   name: string
-  /** The choices this attribute offers — "Black, White, Blue". Free-form and unordered; the
-   *  shop decides what matters. */
+  /** Derived from the name unless typed over — the reference shows it as AUTO-GENERATED. Held
+   *  so an attribute can be referred to by something stable while its label is still being
+   *  argued about. */
+  code: string
+  appliesTo: AttributeEntity
+  dataType: AttributeDataType
+  /** Refuse to save the form this attribute appears on until it has a value. */
+  mandatory: boolean
+  /** The choices a `select` attribute offers — "Black, White, Blue". Ignored for every other
+   *  data type, and kept rather than cleared so switching type and back does not lose them. */
   values: string[]
   status: EntityStatus
   createdById: string
@@ -54,6 +70,10 @@ export function useItemAttributes() {
 
 export interface ItemAttributeInput {
   name: string
+  code: string
+  appliesTo: AttributeEntity
+  dataType: AttributeDataType
+  mandatory: boolean
   values: string[]
   status?: EntityStatus
 }
@@ -70,6 +90,10 @@ export function useCreateItemAttribute() {
       const now = serverTimestamp()
       batch.set(ref, {
         name: input.name.trim(),
+        code: input.code.trim().toUpperCase(),
+        appliesTo: input.appliesTo,
+        dataType: input.dataType,
+        mandatory: input.mandatory,
         values: input.values,
         status: input.status ?? 'active',
         createdById: user!.uid,
@@ -102,6 +126,10 @@ export function useUpdateItemAttribute() {
       const batch = writeBatch(db)
       batch.update(doc(db, itemAttributeDoc(companyId, id)), {
         name: input.name.trim(),
+        code: input.code.trim().toUpperCase(),
+        appliesTo: input.appliesTo,
+        dataType: input.dataType,
+        mandatory: input.mandatory,
         values: input.values,
         ...(input.status ? { status: input.status } : {}),
         updatedAt: serverTimestamp(),
