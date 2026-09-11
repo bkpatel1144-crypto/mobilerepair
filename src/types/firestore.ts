@@ -427,12 +427,34 @@ export interface ServiceOptionDoc {
   updatedAt: Timestamp
 }
 
+/** How long a part is guaranteed for, as the reference app records it: a number, the unit that
+ *  number is in, and the date it runs to. The date is kept rather than derived because a shop
+ *  often writes the supplier's own expiry on the slip, which is not always `today + value`. */
+export interface PartWarranty {
+  value: number
+  unit: 'days' | 'months' | 'years'
+  /** `YYYY-MM-DD`, or null when only a duration was given. */
+  until: string | null
+}
+
 export interface PartUsed {
   id: string
   itemId: string
   itemName: string
   rate: number
   qty: number
+  /**
+   * The four below are optional because parts recorded before Edit Bill existed do not have
+   * them, and a required field would make every one of those documents invalid.
+   *
+   * `itemCode` is copied from the item at the moment the part is added rather than looked up on
+   * read: the code shown on a bill should be the code the item had when it was sold, even if the
+   * item is renumbered afterwards.
+   */
+  itemCode?: string
+  supplierId?: string | null
+  supplierName?: string | null
+  warranty?: PartWarranty | null
 }
 
 export interface JobNote {
@@ -475,6 +497,12 @@ export interface JobCardDoc {
   estimatedCost: number
   advanceReceived: number
   partsCost: number
+  /** A flat charge for the work itself, on top of the parts. Optional: bills generated before
+   *  Edit Bill existed have neither this nor a discount, and 0 is the right reading for both. */
+  serviceCharge?: number
+  discount?: number
+  /** Warranty on the job as a whole, distinct from any one part's. */
+  billWarranty?: { value: number; unit: 'days' | 'months' | 'years' } | null
   finalAmount: number | null
   paidAmount: number
 
@@ -535,6 +563,7 @@ export interface JobTimelineEventDoc {
     | 'note'
     | 'repairDone'
     | 'billGenerated'
+    | 'billEdited'
     | 'paymentReceived'
     | 'delivered'
     | 'cancelled'

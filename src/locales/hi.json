@@ -1247,6 +1247,32 @@
         "billDate": "बिल की तारीख",
         "closed": "बंद",
         "clearDates": "तारीखें हटाएं"
+      },
+      "editBill": {
+        "editBill": "बिल संपादित करें",
+        "saveChanges": "बदलाव सहेजें",
+        "parts_one": "पुर्जे ({{count}})",
+        "parts_other": "पुर्जे ({{count}})",
+        "supplier": "सप्लायर:",
+        "searchSupplier": "सप्लायर खोजें…",
+        "warranty": "वारंटी",
+        "value": "मान",
+        "units": {
+          "days": "दिन",
+          "months": "महीने",
+          "years": "साल"
+        },
+        "addPartsServices": "पुर्जे / सेवाएँ जोड़ें",
+        "searchOrTypePartName": "पुर्जे का नाम खोजें या लिखें…",
+        "serviceCharge": "सेवा शुल्क ₹",
+        "discount": "छूट ₹",
+        "partsServices": "पुर्जे / सेवाएँ",
+        "alreadyPaid": "पहले भुगतान",
+        "balanceDue": "शेष देय",
+        "refundDue": "वापसी देय",
+        "thisWillRecordARefund": "सहेजने पर ग्राहक को ₹{{amount}} की वापसी दर्ज होगी, क्योंकि बिल अब उनके भुगतान से कम है।",
+        "aBillNeedsAtLeastOneLine": "बिल में कम से कम एक पुर्जा या सेवा शुल्क होना चाहिए।",
+        "couldNotSaveTheBill": "बिल सहेजा नहीं जा सका। कृपया फिर कोशिश करें।"
       }
     },
     "completeSetup": {

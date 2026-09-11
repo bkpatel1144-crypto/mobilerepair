@@ -28,24 +28,7 @@ import { buildPath } from '@/config/nav'
 import { useNavigate } from 'react-router-dom'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
 import { useTranslation } from 'react-i18next'
-
-/** Which statuses each action even makes sense in — the status×action *permission* matrix
- * (Phase 4) says whether a role is *allowed* to do something; this says whether doing it would
- * be meaningful at all given the job's current status. A button only shows when both are true. */
-const ACTION_APPLICABLE_STATUSES: Record<string, string[]> = {
-  takeJob: ['pending', 'inQueue'],
-  jobDone: ['inProgress'],
-  hold: ['pending', 'inQueue', 'inProgress'],
-  resume: ['onHold'],
-  generateBill: ['techDone', 'ready'],
-  payment: ['techDone', 'ready', 'delivered', 'closed'],
-  deliver: ['ready'],
-  close: ['delivered'],
-  cancel: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone', 'ready'],
-  returnAndClose: ['cancelled'],
-  fieldVisit: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone', 'ready'],
-  handover: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone', 'ready'],
-}
+import { actionAppliesTo } from '@/config/job-action-statuses'
 
 type DialogKind =
   'hold' | 'cancel' | 'jobDone' | 'generateBill' | 'payment' | 'handover' | 'fieldVisit' | null
@@ -111,7 +94,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
   const [durationInput, setDurationInput] = useState<number | ''>('')
 
   function shows(action: string) {
-    return ACTION_APPLICABLE_STATUSES[action]?.includes(job.status) && canPerform(action)
+    return actionAppliesTo(action, job.status) && canPerform(action)
   }
 
   function closeDialog() {

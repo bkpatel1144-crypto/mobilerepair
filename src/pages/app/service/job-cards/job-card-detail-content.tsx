@@ -31,6 +31,7 @@ import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import { ActionButtons } from './action-buttons'
 import { TimelinePanel } from './timeline-panel'
 import { useTranslation } from 'react-i18next'
+import { actionAppliesTo } from '@/config/job-action-statuses'
 
 function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
@@ -82,6 +83,16 @@ export function JobCardDetailContent({
 
   const [notesOpen, setNotesOpen] = useState(true)
   const [addPartOpen, setAddPartOpen] = useState(false)
+
+  /**
+   * Parts can be added right up until the bill is generated, and not after.
+   *
+   * `canPerform` answers a different question — whether this role is allowed to add a part at
+   * all — and returns true for an owner at every status, so on its own it offered "Add Part" on
+   * a job that was billed, delivered and closed. Adding one there raised `partsCost` and left
+   * `finalAmount` untouched, which is the shop paying for a part it never charged for.
+   */
+  const canAddParts = actionAppliesTo('addPart', job.status) && canPerform('addPart')
   const [partItemId, setPartItemId] = useState<string | null>(null)
   const [partRate, setPartRate] = useState(0)
   const [partQty, setPartQty] = useState(1)
@@ -314,7 +325,7 @@ export function JobCardDetailContent({
                 </p>
               )}
             </div>
-            {canPerform('addPart') &&
+            {canAddParts &&
               (addPartOpen ? (
                 <div className="space-y-2 rounded-md border border-dashed p-2">
                   <SearchSelect

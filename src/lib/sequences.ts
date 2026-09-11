@@ -57,6 +57,18 @@ export function formatReceiptId(receiptDate: Date, seq: number) {
   return `RCP-${dd}${mm}-${pad(seq, 5)}`
 }
 
+/** `PAY-2609-00001` — money going *out*, numbered the same ddMM way an incoming receipt is.
+ *
+ * A different prefix rather than a shared `RCP-` run, because the two are read side by side: the
+ * job card's Receipts row shows `RCP-2609-00001 ₹250` next to `PAY-2609-00001 −₹5`, and a
+ * refund that looked like a receipt would read as money taken twice. They share the `receipts`
+ * sequence, so a number is never issued for both. */
+export function formatPaymentOutId(paymentDate: Date, seq: number) {
+  const dd = pad(paymentDate.getDate(), 2)
+  const mm = pad(paymentDate.getMonth() + 1, 2)
+  return `PAY-${dd}${mm}-${pad(seq, 5)}`
+}
+
 /** `EXP-2026-27-00001` — financial-year-scoped like Job Cards, not day-scoped like receipts.
  * An expense is a book entry people look up by year, not a counter slip. */
 export function formatExpenseId(fyLabel: string, seq: number) {

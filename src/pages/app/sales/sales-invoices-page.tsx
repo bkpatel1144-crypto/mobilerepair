@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { FileText, Eye, Pencil } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
@@ -10,9 +9,9 @@ import { Button } from '@/components/ui/button'
 import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { dateRangeBounds } from '@/lib/date-range'
 import { formatTimestamp } from '@/lib/utils'
-import { buildPath } from '@/config/nav'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import { JobCardDetailDrawer } from '../service/job-cards/job-card-detail-drawer'
+import { EditBillModal } from './edit-bill-modal'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -54,12 +53,12 @@ function billDate(job: JobCardWithId) {
 export function SalesInvoicesPage() {
   const { t } = useTranslation()
   const { data: jobs = [], isLoading, error: loadError, refetch } = useJobCards()
-  const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
   const [tab, setTab] = useState<Tab>('all')
   const [viewing, setViewing] = useState<JobCardWithId | null>(null)
+  const [editing, setEditing] = useState<JobCardWithId | null>(null)
 
   const invoices = jobs.filter(
     (j) => j.finalAmount !== null && INVOICE_STATUSES.includes(j.status as InvoiceStatus)
@@ -173,7 +172,7 @@ export function SalesInvoicesPage() {
             aria-label={`Edit bill ${j.jobNumber}`}
             onClick={(e) => {
               e.stopPropagation()
-              navigate(`${buildPath('service', 'job-cards')}/${j.id}`)
+              setEditing(j)
             }}
           >
             <Pencil className="size-4" />
@@ -238,6 +237,8 @@ export function SalesInvoicesPage() {
           />
         }
       />
+
+      <EditBillModal job={editing} onOpenChange={(open) => !open && setEditing(null)} />
 
       <JobCardDetailDrawer
         job={viewing}

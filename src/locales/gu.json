@@ -1247,6 +1247,32 @@
         "billDate": "બિલની તારીખ",
         "closed": "બંધ",
         "clearDates": "તારીખો કાઢો"
+      },
+      "editBill": {
+        "editBill": "બિલ સંપાદિત કરો",
+        "saveChanges": "ફેરફારો સાચવો",
+        "parts_one": "પાર્ટ્સ ({{count}})",
+        "parts_other": "પાર્ટ્સ ({{count}})",
+        "supplier": "સપ્લાયર:",
+        "searchSupplier": "સપ્લાયર શોધો…",
+        "warranty": "વોરંટી",
+        "value": "મૂલ્ય",
+        "units": {
+          "days": "દિવસ",
+          "months": "મહિના",
+          "years": "વર્ષ"
+        },
+        "addPartsServices": "પાર્ટ્સ / સેવાઓ ઉમેરો",
+        "searchOrTypePartName": "પાર્ટનું નામ શોધો અથવા લખો…",
+        "serviceCharge": "સેવા શુલ્ક ₹",
+        "discount": "ડિસ્કાઉન્ટ ₹",
+        "partsServices": "પાર્ટ્સ / સેવાઓ",
+        "alreadyPaid": "પહેલાં ચૂકવેલ",
+        "balanceDue": "બાકી રકમ",
+        "refundDue": "રિફંડ બાકી",
+        "thisWillRecordARefund": "સાચવવાથી ગ્રાહકને ₹{{amount}} રિફંડ નોંધાશે, કારણ કે બિલ હવે તેમણે ચૂકવેલી રકમથી ઓછું છે.",
+        "aBillNeedsAtLeastOneLine": "બિલમાં ઓછામાં ઓછો એક પાર્ટ કે સેવા શુલ્ક હોવો જોઈએ.",
+        "couldNotSaveTheBill": "બિલ સાચવી શકાયું નહીં. કૃપા કરી ફરી પ્રયાસ કરો."
       }
     },
     "completeSetup": {

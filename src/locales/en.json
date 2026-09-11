@@ -1247,6 +1247,32 @@
         "billDate": "Bill Date",
         "closed": "Closed",
         "clearDates": "Clear dates"
+      },
+      "editBill": {
+        "editBill": "Edit Bill",
+        "saveChanges": "Save Changes",
+        "parts_one": "Parts ({{count}})",
+        "parts_other": "Parts ({{count}})",
+        "supplier": "Supplier:",
+        "searchSupplier": "Search supplier…",
+        "warranty": "Warranty",
+        "value": "Value",
+        "units": {
+          "days": "Days",
+          "months": "Months",
+          "years": "Years"
+        },
+        "addPartsServices": "Add Parts / Services",
+        "searchOrTypePartName": "Search or type part name…",
+        "serviceCharge": "Service Charge ₹",
+        "discount": "Discount ₹",
+        "partsServices": "Parts / Services",
+        "alreadyPaid": "Already Paid",
+        "balanceDue": "Balance Due",
+        "refundDue": "Refund Due",
+        "thisWillRecordARefund": "Saving records a ₹{{amount}} refund to the customer, because the bill is now below what they have already paid.",
+        "aBillNeedsAtLeastOneLine": "A bill needs at least one part or a service charge.",
+        "couldNotSaveTheBill": "Could not save the bill. Please try again."
       }
     },
     "completeSetup": {
