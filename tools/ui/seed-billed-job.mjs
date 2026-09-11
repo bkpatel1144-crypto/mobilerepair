@@ -112,7 +112,14 @@ await setDoc(jobRef, {
   notes: [],
   cancelReason: null,
   holdReason: null,
-  lastActionUndo: null,
+  // A job that has just been billed genuinely has something to undo — Generate Bill sets this —
+  // and the undo banner only renders when it is present, so seeding null hid the banner from
+  // every probe that looked for it.
+  lastActionUndo: {
+    beforePatch: { status: 'techDone', finalAmount: null },
+    timelineEventId: 'seeded-bill-event',
+    actionLabel: 'Generate Bill',
+  },
   billGeneratedAt: now,
   createdById: uid,
   createdByName: fullName,

@@ -1008,7 +1008,15 @@
         "logVisit": "Log Visit",
         "printJobCard": "Print Job Card",
         "fieldVisit": "Field Visit",
-        "collectPaymentNow": "Collect payment now"
+        "collectPaymentNow": "Collect payment now",
+        "deliverAndClose": "Deliver & Close",
+        "deliverAndCloseThisJob": "Deliver the device and close this job?",
+        "closeThisJob": "Close this job?",
+        "handOver": "Hand Over",
+        "undoLastAction": "Undo Last Action",
+        "noTimeLimit": "No time limit",
+        "ownerOverrideNoTimeLimit": "Owner override — no time limit",
+        "thisIsATerminalStatusUndo": "This is a terminal status — once closed, \"Undo Last Action\" is no longer available for it."
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "Couldn't load the Create Job Card form",
@@ -1299,6 +1307,12 @@
         "thisWillRecordARefund": "Saving records a ₹{{amount}} refund to the customer, because the bill is now below what they have already paid.",
         "aBillNeedsAtLeastOneLine": "A bill needs at least one part or a service charge.",
         "couldNotSaveTheBill": "Could not save the bill. Please try again."
+      },
+      "billDetails": {
+        "billDetails": "Bill Details",
+        "partsServices": "Parts / Services",
+        "fullySettled": "Fully Settled",
+        "outstanding": "Outstanding"
       }
     },
     "completeSetup": {

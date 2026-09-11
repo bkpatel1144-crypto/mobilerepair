@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Ban, RotateCcw, Undo2 } from 'lucide-react'
+import { PackageCheck, Ban, RotateCcw, Undo2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { FormModal } from '@/components/shared/form-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -36,7 +36,7 @@ type DialogKind =
 export function ActionButtons({ job }: { job: JobCardWithId }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { canDo } = usePermissions()
+  const { canDo, isOwner } = usePermissions()
   const { canPerform, workflowConfig, allowUndo } = useJobActionGating(job)
   const applyAction = useApplyJobAction(job)
   const recordPayment = useRecordPayment(job)
@@ -82,7 +82,9 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
 
   const [dialog, setDialog] = useState<DialogKind>(null)
   const [confirmingUndo, setConfirmingUndo] = useState(false)
-  const [confirmingTerminal, setConfirmingTerminal] = useState<'close' | 'returnAndClose' | null>(
+  const [confirmingTerminal, setConfirmingTerminal] = useState<
+    'close' | 'returnAndClose' | 'deliverAndClose' | null
+  >(
     null
   )
   const [reasonInput, setReasonInput] = useState('')
@@ -258,13 +260,17 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             Payment
           </Button>
         )}
-        {shows('deliver') && (
+        {/* One button, as the reference has it. Handing the device over and closing the job are
+         * the same moment at a counter, and two buttons left every delivered job waiting in an
+         * in-between state for someone to remember the second click. */}
+        {shows('deliverAndClose') && (
           <Button
             type="button"
-            onClick={() => applyAction.mutate({ action: 'deliver' })}
+            onClick={() => setConfirmingTerminal('deliverAndClose')}
             disabled={applyAction.isPending}
           >
-            Deliver
+            <PackageCheck className="size-4" />
+            {t('pages.service.actionButtons.deliverAndClose')}
           </Button>
         )}
         {shows('close') && (
@@ -273,7 +279,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={() => setConfirmingTerminal('close')}
             disabled={applyAction.isPending}
           >
-            Close
+            {t('common.close')}
           </Button>
         )}
         {shows('returnAndClose') && (
@@ -292,7 +298,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         )}
         {shows('handover') && (
           <Button type="button" variant="outline" onClick={() => setDialog('handover')}>
-            Handover
+            {t('pages.service.actionButtons.handOver')}
           </Button>
         )}
       </div>
@@ -301,7 +307,17 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
           <span className="flex items-center gap-2">
             <Undo2 className="size-4" />
-            Undo Last Action ({job.lastActionUndo.actionLabel}) · no time limit
+            <span className="block font-medium">
+            {t('pages.service.actionButtons.undoLastAction')}
+          </span>
+          {/* The owner bypass was only ever implicit in `useJobActionGating`. The reference says
+           * it out loud, and a shopkeeper reading "no time limit" deserves to know why. */}
+          <span className="block text-xs">
+            {isOwner
+              ? t('pages.service.actionButtons.ownerOverrideNoTimeLimit')
+              : t('pages.service.actionButtons.noTimeLimit')}{' '}
+            · {job.lastActionUndo.actionLabel}
+          </span>
           </span>
           <Button
             type="button"
@@ -333,17 +349,23 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         open={confirmingTerminal !== null}
         onOpenChange={(o) => !o && setConfirmingTerminal(null)}
         title={
-          confirmingTerminal === 'close'
-            ? 'Close this job?'
-            : t('pages.service.actionButtons.returnDeviceCloseThisJob')
+          confirmingTerminal === 'deliverAndClose'
+            ? t('pages.service.actionButtons.deliverAndCloseThisJob')
+            : confirmingTerminal === 'close'
+              ? t('pages.service.actionButtons.closeThisJob')
+              : t('pages.service.actionButtons.returnDeviceCloseThisJob')
         }
         message={
           allowUndo
-            ? 'This is a terminal status — once closed, "Undo Last Action" is no longer available for it.'
+            ? t('pages.service.actionButtons.thisIsATerminalStatusUndo')
             : t('pages.service.actionButtons.thisIsATerminalStatusAnd')
         }
         confirmLabel={
-          confirmingTerminal === 'close' ? 'Close' : t('pages.service.actionButtons.returnClose')
+          confirmingTerminal === 'deliverAndClose'
+            ? t('pages.service.actionButtons.deliverAndClose')
+            : confirmingTerminal === 'close'
+              ? t('common.close')
+              : t('pages.service.actionButtons.returnClose')
         }
         destructive={false}
         isPending={applyAction.isPending}

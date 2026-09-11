@@ -1008,7 +1008,15 @@
         "logVisit": "विज़िट दर्ज करें",
         "printJobCard": "जॉब कार्ड प्रिंट करें",
         "fieldVisit": "फील्ड विज़िट",
-        "collectPaymentNow": "अभी भुगतान लें"
+        "collectPaymentNow": "अभी भुगतान लें",
+        "deliverAndClose": "डिलीवर और बंद करें",
+        "deliverAndCloseThisJob": "डिवाइस डिलीवर करके यह जॉब बंद करें?",
+        "closeThisJob": "यह जॉब बंद करें?",
+        "handOver": "सौंपें",
+        "undoLastAction": "पिछली क्रिया पूर्ववत करें",
+        "noTimeLimit": "कोई समय सीमा नहीं",
+        "ownerOverrideNoTimeLimit": "मालिक का विशेषाधिकार — कोई समय सीमा नहीं",
+        "thisIsATerminalStatusUndo": "यह अंतिम स्थिति है — बंद होने के बाद \"पिछली क्रिया पूर्ववत करें\" उपलब्ध नहीं रहेगा।"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "जॉब कार्ड बनाने का फ़ॉर्म लोड नहीं हो सका",
@@ -1299,6 +1307,12 @@
         "thisWillRecordARefund": "सहेजने पर ग्राहक को ₹{{amount}} की वापसी दर्ज होगी, क्योंकि बिल अब उनके भुगतान से कम है।",
         "aBillNeedsAtLeastOneLine": "बिल में कम से कम एक पुर्जा या सेवा शुल्क होना चाहिए।",
         "couldNotSaveTheBill": "बिल सहेजा नहीं जा सका। कृपया फिर कोशिश करें।"
+      },
+      "billDetails": {
+        "billDetails": "बिल विवरण",
+        "partsServices": "पुर्जे / सेवाएँ",
+        "fullySettled": "पूरा चुकता",
+        "outstanding": "बकाया"
       }
     },
     "completeSetup": {

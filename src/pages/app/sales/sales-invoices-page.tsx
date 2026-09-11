@@ -10,8 +10,8 @@ import { useJobCards, type JobCardWithId } from '@/hooks/use-job-cards'
 import { dateRangeBounds } from '@/lib/date-range'
 import { formatTimestamp } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
-import { JobCardDetailDrawer } from '../service/job-cards/job-card-detail-drawer'
 import { EditBillModal } from './edit-bill-modal'
+import { BillDetailsModal } from './bill-details-modal'
 import { useTranslation } from 'react-i18next'
 
 /**
@@ -269,12 +269,8 @@ export function SalesInvoicesPage() {
       />
 
       <EditBillModal job={editing} onOpenChange={(open) => !open && setEditing(null)} />
+      <BillDetailsModal job={viewing} onClose={() => setViewing(null)} />
 
-      <JobCardDetailDrawer
-        job={viewing}
-        open={!!viewing}
-        onOpenChange={(open) => !open && setViewing(null)}
-      />
     </div>
   )
 }

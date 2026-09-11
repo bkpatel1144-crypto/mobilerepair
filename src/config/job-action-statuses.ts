@@ -31,6 +31,8 @@ export const ACTION_APPLICABLE_STATUSES: Record<string, string[]> = {
    */
   addPart: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone'],
   payment: ['techDone', 'ready', 'delivered', 'closed'],
+  // One button where there were two — see `deliverAndClose` in use-job-actions.ts.
+  deliverAndClose: ['ready'],
   deliver: ['ready'],
   close: ['delivered'],
   cancel: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone', 'ready'],

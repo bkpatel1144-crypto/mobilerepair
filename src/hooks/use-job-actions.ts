@@ -41,6 +41,7 @@ export type JobActionInput =
   | { action: 'deliver' }
   | { action: 'close' }
   | { action: 'cancel'; reason: string }
+  | { action: 'deliverAndClose' }
   | { action: 'returnAndClose' }
   | { action: 'addImage'; url: string }
   | { action: 'addPart'; itemId: string; itemName: string; rate: number; qty: number }
@@ -144,6 +145,33 @@ function buildActionPatch(
           description: 'Device delivered to customer',
           fromStatus: job.status,
           toStatus: 'delivered',
+          userId: uid,
+          userName,
+        },
+      }
+    case 'deliverAndClose':
+      // One step, because the reference offers one button. Handing the device over and closing
+      // the job are the same moment at a repair counter, and leaving them as two left every
+      // delivered job sitting in an in-between state waiting for someone to remember the second
+      // click. The two patches are merged rather than applied in sequence, so a job can never
+      // end up delivered-but-not-closed because the second write failed.
+      return {
+        patch: {
+          status: 'closed',
+          deliveredById: uid,
+          deliveredByName: userName,
+          deliveredAt: serverTimestamp() as never,
+          closedAt: serverTimestamp() as never,
+        },
+        event: {
+          type: 'delivered',
+          title: 'Delivered & Closed',
+          description:
+            job.finalAmount !== null && job.paidAmount >= job.finalAmount
+              ? 'Device delivered & job closed (Fully paid)'
+              : 'Device delivered & job closed',
+          fromStatus: job.status,
+          toStatus: 'closed',
           userId: uid,
           userName,
         },
