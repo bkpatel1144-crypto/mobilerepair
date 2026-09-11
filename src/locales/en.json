@@ -2015,6 +2015,31 @@
         "noPurchasesYet": "No purchases yet",
         "recordWhatYouBuy": "Record what you buy from suppliers to see it against Supplier Payables."
       }
+    },
+    "inventory": {
+      "stock": {
+        "stock": "Stock",
+        "whatIsOnTheShelf": "What is on the shelf — purchases in, job parts out.",
+        "tracked": "Tracked items",
+        "lowStock": "Low stock",
+        "outOfStock": "Out of stock",
+        "stockValue": "Stock value",
+        "purchased": "Purchased",
+        "usedOnJobs": "Used on jobs",
+        "onHand": "On hand",
+        "reorderPoint": "Reorder point",
+        "value": "Value",
+        "searchItems": "Search items…",
+        "openItemMaster": "Open Item Master",
+        "nothingIsStockTracked": "Nothing is stock-tracked yet",
+        "turnOnStockTracked": "Turn on \"Stock tracked\" on an item and it will appear here.",
+        "onHandIsDerived": "On hand is counted from active purchases minus parts fitted to jobs, so it always matches those records.",
+        "state": {
+          "ok": "In stock",
+          "low": "Low",
+          "out": "Out"
+        }
+      }
     }
   },
   "components": {

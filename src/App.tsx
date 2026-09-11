@@ -283,6 +283,9 @@ const PrintTemplateDesignerPage = lazy(() =>
 const WhatsAppPage = lazy(() =>
   import('@/pages/app/settings/whatsapp-page').then((m) => ({ default: m.WhatsAppPage }))
 )
+const StockPage = lazy(() =>
+  import('@/pages/app/inventory/stock-page').then((m) => ({ default: m.StockPage }))
+)
 const GeneralPurchasePage = lazy(() =>
   import('@/pages/app/purchase/general-purchase-page').then((m) => ({
     default: m.GeneralPurchasePage,
@@ -321,6 +324,7 @@ const LEAF_PAGE_OVERRIDES: Record<string, React.ComponentType> = {
   'masters/uom': UomPage,
   'masters/item-categories': ItemCategoriesPage,
   'purchase/general': GeneralPurchasePage,
+  'inventory/stock': StockPage,
   'masters/attributes': AttributesPage,
   'masters/items': ItemMasterPage,
   'masters/payment-modes': PaymentModesPage,
