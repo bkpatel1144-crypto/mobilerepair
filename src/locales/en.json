@@ -449,7 +449,8 @@
     "custom": "Custom",
     "to": "to",
     "back": "Back",
-    "clear": "Clear"
+    "clear": "Clear",
+    "clearSelection": "Clear selection"
   },
   "pages": {
     "dashboard": {

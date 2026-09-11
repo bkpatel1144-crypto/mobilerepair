@@ -449,7 +449,8 @@
     "custom": "કસ્ટમ",
     "to": "થી",
     "back": "પાછા",
-    "clear": "સાફ કરો"
+    "clear": "સાફ કરો",
+    "clearSelection": "પસંદગી દૂર કરો"
   },
   "pages": {
     "dashboard": {

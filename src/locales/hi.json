@@ -449,7 +449,8 @@
     "custom": "कस्टम",
     "to": "से",
     "back": "वापस",
-    "clear": "साफ़ करें"
+    "clear": "साफ़ करें",
+    "clearSelection": "चयन हटाएँ"
   },
   "pages": {
     "dashboard": {

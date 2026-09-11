@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { Search, X, Plus, Check, Package, ChevronDown } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -34,9 +34,19 @@ interface SearchSelectProps {
   onOpenChange?: (open: boolean) => void
 }
 
-/** Search-with-add combobox — matches `preview (9)`/`(10)`'s "🔍 Search customer by name or
+/**
+ * Search-with-add combobox — matches `preview (9)`/`(10)`'s "🔍 Search customer by name or
  * mobile..." + per-option icon + pinned "+ Add New" pattern for Customer/Device Type/Brand. One
- * implementation, reused for every such field rather than a bespoke one per picker. */
+ * implementation, reused for every such field rather than a bespoke one per picker.
+ *
+ * The keyboard works, which it did not. The "Add New" box had an Enter handler and the *search*
+ * box had none, so the obvious thing — type a customer's name, press Enter — did nothing at all,
+ * and there was no way to reach an option without a mouse. Arrow keys move through the list now,
+ * Enter takes the highlighted one, and Escape closes.
+ *
+ * The list is a real `listbox` of `option`s rather than a stack of anonymous buttons, so a
+ * screen reader announces how many matches there are and which is current.
+ */
 export function SearchSelect({
   options,
   value,
@@ -54,7 +64,9 @@ export function SearchSelect({
 
   const [query, setQuery] = useState('')
   const [newLabel, setNewLabel] = useState('')
+  const [active, setActive] = useState(0)
   const selected = options.find((o) => o.id === value)
+  const listId = useId()
 
   const filtered = query.trim()
     ? options.filter(
@@ -64,10 +76,37 @@ export function SearchSelect({
       )
     : options
 
+  // Clamped during render rather than reset from an effect: filtering can shorten the list under
+  // the highlight, and the React Compiler forbids setState in a render-reaction effect.
+  const activeIndex = filtered.length === 0 ? -1 : Math.min(active, filtered.length - 1)
+
   function select(id: string) {
     onChange(id)
     setQuery('')
+    setActive(0)
     setOpen(false)
+  }
+
+  function handleSearchKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActive((i) => Math.min(i + 1, filtered.length - 1))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActive((i) => Math.max(i - 1, 0))
+    } else if (e.key === 'Enter') {
+      // Never let this reach the surrounding form. Most of these pickers live inside a
+      // `FormModal`, where a stray Enter submitted the whole thing mid-search.
+      e.preventDefault()
+      if (activeIndex >= 0) select(filtered[activeIndex].id)
+      else if (onCreateNew && query.trim()) {
+        onCreateNew(query.trim())
+        setQuery('')
+        setOpen(false)
+      }
+    } else if (e.key === 'Escape') {
+      setOpen(false)
+    }
   }
 
   function handleCreate() {
@@ -81,14 +120,19 @@ export function SearchSelect({
   const SelectedIcon = selected?.icon
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <div className="relative w-full">
+      <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         render={
           <button
             type="button"
             disabled={disabled}
+            role="combobox"
+            aria-expanded={open}
+            aria-haspopup="listbox"
             className={cn(
               'flex h-8 w-full items-center gap-2 rounded-md border bg-background px-2.5 text-sm disabled:opacity-50',
+              selected && !disabled && 'pr-8',
               !selected && 'text-muted-foreground'
             )}
           >
@@ -104,19 +148,6 @@ export function SearchSelect({
             <span className="flex-1 truncate text-left">
               {selected ? selected.label : placeholder}
             </span>
-            {selected && !disabled && (
-              <span
-                role="button"
-                tabIndex={0}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onChange(null)
-                }}
-                className="rounded-full p-0.5 hover:bg-muted"
-              >
-                <X className="size-3.5" />
-              </span>
-            )}
             <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
           </button>
         }
@@ -124,21 +155,36 @@ export function SearchSelect({
       <PopoverContent className="w-(--anchor-width) min-w-72 p-1" align="start">
         <Input
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value)
+            setActive(0)
+          }}
+          onKeyDown={handleSearchKeyDown}
           placeholder={t('components.shared.searchSelect.typeToSearch')}
           autoFocus
+          role="combobox"
+          aria-expanded
+          aria-controls={listId}
+          aria-activedescendant={activeIndex >= 0 ? `${listId}-${activeIndex}` : undefined}
           className="mb-1 h-8 text-sm"
         />
-        <div className="max-h-56 overflow-y-auto">
-          {filtered.map((opt) => {
+        <div id={listId} role="listbox" className="max-h-56 overflow-y-auto">
+          {filtered.map((opt, i) => {
             const isSelected = opt.id === value
             const Icon = opt.icon ?? Package
             return (
               <button
                 key={opt.id}
+                id={`${listId}-${i}`}
                 type="button"
+                role="option"
+                aria-selected={isSelected}
+                onMouseEnter={() => setActive(i)}
                 onClick={() => select(opt.id)}
-                className="flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted"
+                className={cn(
+                  'flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted',
+                  i === activeIndex && 'bg-muted'
+                )}
               >
                 {opt.avatarLabel ? (
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[10px] font-semibold text-white">
@@ -195,6 +241,20 @@ export function SearchSelect({
           </div>
         )}
       </PopoverContent>
-    </Popover>
+      </Popover>
+      {/* A sibling of the trigger, not a child of it: a `button` inside a `button` is invalid
+       * markup, and the `span role="button" tabIndex={0}` this replaces could be tabbed to but
+       * carried no key handler, so Enter on it did nothing. */}
+      {selected && !disabled && (
+        <button
+          type="button"
+          aria-label={t('shared.clearSelection')}
+          onClick={() => onChange(null)}
+          className="absolute top-1/2 right-7 -translate-y-1/2 rounded-full p-0.5 text-muted-foreground hover:bg-muted"
+        >
+          <X className="size-3.5" />
+        </button>
+      )}
+    </div>
   )
 }
