@@ -13,7 +13,7 @@ A phase is not done because the code compiles.
 
 | Phase                              | What it fixes                                     | Size    | Blocked on |
 | ---------------------------------- | ------------------------------------------------- | ------- | ---------- |
-| 12 — Make Masters real             | Attributes screen exists but nothing reads it     | Small   | —          |
+| 12 — Make Masters real             | ✅ Done — Attributes now drives Item/Party/Job Card | Small   | —          |
 | 13 — Parts & stock integrity       | Fitting a part never checks stock                 | Medium  | —          |
 | 14 — After the sale                | Warranty is write-only; no rework path            | Medium  | —          |
 | 15 — Works on bad internet         | 11 hooks fail with no connection, silently        | Large   | —          |
@@ -25,7 +25,7 @@ arrive.
 
 ---
 
-## Phase 12 — Make Masters real
+## Phase 12 — Make Masters real ✅ Done
 
 **The problem.** Masters > Attributes stores name, code, applies-to, data type, mandatory and
 values, and **nothing in the app reads any of it.** Create Item still asks the shopkeeper to
