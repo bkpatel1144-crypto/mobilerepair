@@ -14,7 +14,7 @@ A phase is not done because the code compiles.
 | Phase                              | What it fixes                                     | Size    | Blocked on |
 | ---------------------------------- | ------------------------------------------------- | ------- | ---------- |
 | 12 — Make Masters real             | ✅ Done — Attributes now drives Item/Party/Job Card | Small   | —          |
-| 13 — Parts & stock integrity       | Fitting a part never checks stock                 | Medium  | —          |
+| 13 — Parts & stock integrity       | ✅ Done — fitting a part is checked against stock  | Medium  | —          |
 | 14 — After the sale                | Warranty is write-only; no rework path            | Medium  | —          |
 | 15 — Works on bad internet         | 11 hooks fail with no connection, silently        | Large   | —          |
 | 16 — Finish the clone              | ~40 screens never compared to theirs              | Ongoing | Screenshots from you |
@@ -55,7 +55,7 @@ are test tenants from my own verification runs and are cluttering the console.
 
 ---
 
-## Phase 13 — Parts & stock integrity
+## Phase 13 — Parts & stock integrity ✅ Done
 
 **The problem.** Nothing in `use-job-actions.ts` looks at on-hand stock. A technician can fit 5
 screens when 1 was ever purchased; the Stock page simply shows a negative number afterwards and
