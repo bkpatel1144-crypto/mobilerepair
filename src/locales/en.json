@@ -452,7 +452,13 @@
     "clear": "Clear",
     "clearSelection": "Clear selection",
     "select": "Select…",
-    "thisFieldIsRequired": "This field is required."
+    "thisFieldIsRequired": "This field is required.",
+    "offlineCannotCreate": "You're offline. This needs a connection because it has to reserve a number — reconnect and try again. Nothing has been saved.",
+    "offline": "Offline",
+    "offlineTitle": "You're offline",
+    "offlineExplained": "You can still open and read everything already loaded. Creating anything with a number — job cards, receipts, purchases — needs a connection and will say so.",
+    "backOnline": "Back online",
+    "needsAConnection": "Needs a connection"
   },
   "pages": {
     "dashboard": {
@@ -2242,7 +2248,10 @@
       "errorBoundary": {
         "somethingWentWrong": "Something went wrong",
         "reload": "Reload",
-        "anUnexpectedErrorOccurredReloadingThe": "An unexpected error occurred. Reloading the page usually fixes this — if it keeps happening, please let us know."
+        "anUnexpectedErrorOccurredReloadingThe": "An unexpected error occurred. Reloading the page usually fixes this — if it keeps happening, please let us know.",
+        "screenNotDownloaded": "This screen hasn't been downloaded yet",
+        "screenNotDownloadedExplained": "You're offline, and this part of the app loads the first time it is opened. Go back to a screen you have already used, or try again once you are connected.",
+        "tryAgain": "Try again"
       },
       "filterBar": {
         "today": "Today",

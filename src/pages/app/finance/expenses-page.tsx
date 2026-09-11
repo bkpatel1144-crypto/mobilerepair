@@ -119,6 +119,7 @@ function NewExpenseModal({
 
   return (
     <FormModal
+      needsConnection={true}
       error={error}
       open={open}
       onOpenChange={(o) => {

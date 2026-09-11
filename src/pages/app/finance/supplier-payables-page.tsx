@@ -150,6 +150,7 @@ function NewBillModal({
 
   return (
     <FormModal
+      needsConnection={true}
       error={error}
       open={open}
       onOpenChange={(o) => {
@@ -312,6 +313,7 @@ function PaymentModal({
 
   return (
     <FormModal
+      needsConnection={true}
       error={error}
       open={!!payable}
       onOpenChange={(o) => !o && onClose()}

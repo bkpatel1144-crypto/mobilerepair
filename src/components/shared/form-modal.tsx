@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import { FormError } from '@/components/shared/form-error'
+import { OfflineNotice } from '@/components/shared/offline-banner'
+import { useOnlineStatus } from '@/hooks/use-online-status'
 
 interface FormModalProps {
   open: boolean
@@ -31,6 +33,12 @@ interface FormModalProps {
    * could see, and the modal just appeared to do nothing.
    */
   error?: string | null
+  /**
+   * This form's save reserves a sequence number (`getNextSequence`), so it cannot work without a
+   * connection. Set it and the modal explains itself and disables Save while offline instead of
+   * letting someone fill in thirty fields and then fail.
+   */
+  needsConnection?: boolean
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
   submitLabel?: string
   cancelLabel?: string
@@ -57,9 +65,14 @@ export function FormModal({
   cancelLabel,
   isSubmitting,
   submitDisabled,
+  needsConnection,
   className,
 }: FormModalProps) {
   const { t } = useTranslation()
+  // A form that mints a number cannot save offline. Saying so before it is filled in is the
+  // whole point — after Save is pressed, the person has already typed the whole thing.
+  const online = useOnlineStatus()
+  const blockedOffline = needsConnection === true && !online
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -91,13 +104,14 @@ export function FormModal({
 
         <form onSubmit={onSubmit} className="contents">
           {error && <FormError message={error} />}
+          {blockedOffline && <OfflineNotice />}
           <div className="space-y-4">{children}</div>
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               {cancelLabel ?? t('common.cancel')}
             </Button>
-            <Button type="submit" disabled={isSubmitting || submitDisabled}>
+            <Button type="submit" disabled={isSubmitting || submitDisabled || blockedOffline}>
               {isSubmitting ? t('common.saving') : submitLabel}
             </Button>
           </DialogFooter>

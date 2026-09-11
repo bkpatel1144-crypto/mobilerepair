@@ -477,6 +477,7 @@ function NewPurchaseModal({
 
   return (
     <FormModal
+      needsConnection={true}
       open
       onOpenChange={(o) => !o && onClose()}
       title={t('pages.purchase.generalPurchase.newPurchaseEntry')}

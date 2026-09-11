@@ -1,7 +1,31 @@
 import { doc, runTransaction } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { counterDoc } from '@/lib/firestore-paths'
+import { i18next } from '@/lib/i18n'
 import type { CounterDoc } from '@/types/firestore'
+
+/**
+ * Thrown instead of hanging when there is no connection.
+ *
+ * Every human-readable id in this app comes from `getNextSequence`, and a `runTransaction`
+ * cannot complete offline — it retries until it gives up, which at a counter looks like a save
+ * that froze and then did nothing. Eleven hooks call this, and each one reports `err.message`
+ * to the user, so failing fast here gives all eleven a real explanation for the price of one.
+ *
+ * The message is translated at throw time through the i18next instance directly: this is a
+ * module, not a component, and the alternative was threading `t` through eleven call sites.
+ */
+export class OfflineError extends Error {
+  readonly code = 'offline'
+  constructor() {
+    super(i18next.t('shared.offlineCannotCreate'))
+    this.name = 'OfflineError'
+  }
+}
+
+export function isOffline(): boolean {
+  return typeof navigator !== 'undefined' && navigator.onLine === false
+}
 
 /**
  * Atomically increments and returns the next sequence number for `docType` within a company —
@@ -14,6 +38,10 @@ import type { CounterDoc } from '@/types/firestore'
  * Written now, alongside the rest of the Phase 2 data-model infrastructure, per BUILD_PLAN.md.
  */
 export async function getNextSequence(companyId: string, docType: string): Promise<number> {
+  // Checked before the transaction rather than left to fail: `navigator.onLine` is pessimistic
+  // (it can say "online" on a network with no route out), so this only ever short-circuits a
+  // call that was going to fail anyway, and never decides that a write succeeded.
+  if (isOffline()) throw new OfflineError()
   const ref = doc(db, counterDoc(companyId, docType))
   return runTransaction(db, async (tx) => {
     const snap = await tx.get(ref)

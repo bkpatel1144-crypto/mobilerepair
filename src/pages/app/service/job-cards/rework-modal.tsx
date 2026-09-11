@@ -71,6 +71,7 @@ export function ReworkModal({
       onSubmit={handleSubmit}
       submitLabel={t('pages.service.rework.reopenForRework')}
       isSubmitting={rework.isPending}
+      needsConnection
     >
       <p className="text-sm text-muted-foreground">{t('pages.service.rework.deviceCameBack')}</p>
 

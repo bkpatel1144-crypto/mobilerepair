@@ -7,6 +7,7 @@ import { CommandPalette } from '@/components/layout/command-palette'
 import { BreadcrumbExtraProvider } from '@/contexts/breadcrumb-provider'
 import { useIsMobile } from '@/hooks/use-media-query'
 import { useSessionHeartbeat } from '@/hooks/use-sessions'
+import { OfflineBanner } from '@/components/shared/offline-banner'
 
 export function AppShell() {
   const isMobile = useIsMobile()
@@ -41,6 +42,9 @@ export function AppShell() {
          * instead of scrolling within its own container. */}
         <div className="flex min-w-0 flex-1 flex-col">
           <TopBar onMenuClick={handleMenuClick} onSearchClick={() => setCommandOpen(true)} />
+          {/* Above the scroll container, so it stays put rather than scrolling away from someone
+           * who is about to press Save on a form that cannot work. */}
+          <OfflineBanner />
           <main className="flex-1 overflow-y-auto">
             <Outlet />
           </main>

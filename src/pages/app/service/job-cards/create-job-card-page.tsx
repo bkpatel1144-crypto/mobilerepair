@@ -17,6 +17,8 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { FormError } from '@/components/shared/form-error'
 import { AttributeFields } from '@/components/shared/attribute-fields'
+import { OfflineNotice } from '@/components/shared/offline-banner'
+import { useOnlineStatus } from '@/hooks/use-online-status'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
 import {
   attributesFor,
@@ -158,6 +160,9 @@ export function CreateJobCardPage() {
   const { data: allAttributes = [] } = useItemAttributes()
   const [attributeValues, setAttributeValues] = useState<AttributeValues>({})
   const [missingAttributes, setMissingAttributes] = useState<string[]>([])
+  // A job card cannot be created offline: its number comes from a Firestore transaction. Said
+  // here, at the top of the form, rather than after someone has filled in twenty fields.
+  const online = useOnlineStatus()
   const [submitting, setSubmitting] = useState(false)
   const [savedAt, setSavedAt] = useState<Date | null>(null)
   const [confirmingClear, setConfirmingClear] = useState(false)
@@ -1237,26 +1242,27 @@ export function CreateJobCardPage() {
             <AttributeFields
               attributes={jobCardAttributes}
               values={attributeDraft}
-              onChange={(code, value) =>
-                setAttributeValues((prev) => ({ ...prev, [code]: value }))
-              }
+              onChange={(code, value) => setAttributeValues((prev) => ({ ...prev, [code]: value }))}
               missing={missingAttributes}
             />
           </div>
         )}
 
-        <div className="mt-5 flex justify-end gap-2 border-t pt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate(-1)}
-            disabled={submitting}
-          >
-            Cancel
-          </Button>
-          <Button type="button" onClick={handleSubmit} disabled={submitting || !user}>
-            {submitting ? 'Creating…' : t('pages.service.createJobCard.createJobCard')}
-          </Button>
+        <div className="mt-5 space-y-3 border-t pt-4">
+          <OfflineNotice />
+          <div className="flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate(-1)}
+              disabled={submitting}
+            >
+              Cancel
+            </Button>
+            <Button type="button" onClick={handleSubmit} disabled={submitting || !user || !online}>
+              {submitting ? 'Creating…' : t('pages.service.createJobCard.createJobCard')}
+            </Button>
+          </div>
         </div>
       </div>
 
