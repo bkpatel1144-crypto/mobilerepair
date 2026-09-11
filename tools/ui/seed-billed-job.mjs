@@ -24,7 +24,7 @@ import {
   setDoc,
 } from 'firebase/firestore'
 
-const [email, password] = process.argv.slice(2)
+const [email, password, statusArg] = process.argv.slice(2)
 if (!email || !password) {
   console.error('usage: node --env-file=.env.local tools/ui/seed-billed-job.mjs <email> <password>')
   process.exit(1)
@@ -69,8 +69,8 @@ const parts = [
 await setDoc(jobRef, {
   jobNumber: 'JC-2026-27-09001',
   // `ready` means a bill exists — which is exactly the state in which parts must stop being
-  // addable and Edit Bill must take over.
-  status: 'ready',
+  // addable and Edit Bill must take over. Pass "closed" to seed a job that Job Costing lists.
+  status: statusArg || 'ready',
   branchId: 'main',
   customerId: 'seed-customer',
   customerName: 'Probe Customer',

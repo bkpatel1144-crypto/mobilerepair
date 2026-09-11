@@ -100,9 +100,12 @@ export function WelcomeBanner({
   const { t } = useTranslation()
   return (
     <div className="rounded-lg border bg-gradient-to-br from-teal-50 to-background p-4 dark:from-teal-500/10">
-      <p className="text-lg font-bold">
+      {/* An `h1`, not a `p`. This is the dashboard's only title, and the page had no heading at
+       * all — which a screen reader announces as a document with nothing to orient by, and
+       * which the production audit flagged as the one defect on an otherwise clean screen. */}
+      <h1 className="text-lg font-bold">
         {t(greetingKey)}, <span className="text-teal-600 dark:text-teal-400">{name}</span> 👋
-      </p>
+      </h1>
       <p className="text-xs text-muted-foreground">{subtitle}</p>
     </div>
   )
