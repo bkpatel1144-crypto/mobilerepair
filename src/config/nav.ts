@@ -5,6 +5,8 @@ import {
   Landmark,
   Database,
   Smartphone,
+  PackagePlus,
+  Boxes,
   BarChart3,
   ShieldCheck,
   Settings as SettingsIcon,
@@ -52,6 +54,23 @@ export const NAV_SECTIONS: NavSection[] = [
     phase: 'Phase 5 — Service module',
     children: [{ label: 'Sales Invoices', slug: 'invoices' }],
   },
+  // Purchase and Inventory sit between Sales and Service because that is where the client's own
+  // menu structure puts them (`data/menu-structure.json`). Neither has a screen of its own yet,
+  // so both leaves fall through to `<PlaceholderPage>` — see `LEAF_PAGE_OVERRIDES` in App.tsx.
+  {
+    key: 'purchase',
+    label: 'Purchase',
+    icon: PackagePlus,
+    phase: 'Phase 7 — Masters & Second Hand Device',
+    children: [{ label: 'General Purchase', slug: 'general' }],
+  },
+  {
+    key: 'inventory',
+    label: 'Inventory',
+    icon: Boxes,
+    phase: 'Phase 7 — Masters & Second Hand Device',
+    children: [{ label: 'Stock', slug: 'stock' }],
+  },
   {
     key: 'service',
     label: 'Service',
@@ -87,6 +106,7 @@ export const NAV_SECTIONS: NavSection[] = [
     children: [
       { label: 'Units of Measure', slug: 'uom' },
       { label: 'Item Categories', slug: 'item-categories' },
+      { label: 'Attributes', slug: 'attributes' },
       { label: 'Item Master', slug: 'items' },
       { label: 'Payment Modes', slug: 'payment-modes' },
       { label: 'Party Categories', slug: 'party-categories' },
