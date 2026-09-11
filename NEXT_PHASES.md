@@ -16,7 +16,8 @@ A phase is not done because the code compiles.
 | 12 — Make Masters real             | ✅ Done — Attributes now drives Item/Party/Job Card | Small   | —          |
 | 13 — Parts & stock integrity       | ✅ Done — fitting a part is checked against stock  | Medium  | —          |
 | 14 — After the sale                | ✅ Done — warranty lookup + linked rework          | Medium  | —          |
-| 15 — Works on bad internet         | 11 hooks fail with no connection, silently        | Large   | —          |
+| 15a — Stop failing silently        | ✅ Done — offline banner, honest refusals          | Small   | —          |
+| 15b — Create offline for real      | Needs numbers without a live transaction          | Large   | A decision — see OFFLINE_NUMBERING.md |
 | 16 — Finish the clone              | ~40 screens never compared to theirs              | Ongoing | Screenshots from you |
 
 Phases 12–15 are independent of each other — the order below is by how much each one is
@@ -108,7 +109,7 @@ rework, and confirm both cards link and neither total is disturbed.
 
 ---
 
-## Phase 15 — Works on bad internet
+## Phase 15 — Works on bad internet (15a done, 15b awaiting a decision)
 
 **The problem.** 11 hooks call `getNextSequence`, which is a Firestore **transaction**, and a
 transaction cannot complete with no connection. Job cards, receipts, purchases, expenses,
@@ -122,12 +123,13 @@ offline today. It is only creating anything with a number that does not.
 
 **What ships, in two stages** — the first is small and honest, the second is the real fix:
 
-**15a — stop failing silently.** An online/offline indicator in the shell, every
+**15a — stop failing silently.** ✅ Done — An online/offline indicator in the shell, every
 sequence-dependent action clearly disabled while offline with the reason given, and queued
 writes surfaced instead of appearing to have saved. This does not make the app work offline; it
 stops it lying about it, and it is a day's work rather than a week's.
 
-**15b — create offline for real.** Sequence numbers reserved in a way that does not need a live
+**15b — create offline for real.** ⏸ Designed, not built — the design note is
+`OFFLINE_NUMBERING.md` and it ends with one question for the shop owner. Sequence numbers reserved in a way that does not need a live
 transaction, so job cards and receipts can be created on a dead connection and reconcile when
 it returns. This is a genuine design change with a real risk — two devices offline at once must
 not mint the same `JC-2026-27-00001` — so it gets its own design note before any code, and it
