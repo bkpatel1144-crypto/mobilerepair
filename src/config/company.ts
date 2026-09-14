@@ -16,12 +16,17 @@ export const COMPANY = {
   /** Product name. Lowercase is deliberate — it is the wordmark. */
   productName: 'aim',
 
-  // TODO(contact): replace all four before launch.
+  /** Who a caller should ask for. */
+  contactPerson: 'Kintesh Vasoya',
+
+  // TODO(contact): both addresses are still unconfirmed — they match the product's own domain
+  // but nobody has said they exist.
   supportEmail: 'support@aimenterprise.in',
   salesEmail: 'sales@aimenterprise.in',
-  /** E.164, for `tel:` and `wa.me` links. */
-  phone: '+91 00000 00000',
-  whatsapp: '910000000000',
+  /** Spaced for display; `tel:` links strip the spaces themselves. */
+  phone: '+91 99981 81685',
+  /** Bare digits with the country code and no `+` — what `wa.me` expects. */
+  whatsapp: '919998181685',
 
   // TODO(contact): registered address.
   address: {

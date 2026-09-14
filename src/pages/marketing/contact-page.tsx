@@ -32,6 +32,9 @@ const CHANNELS = [
     href: () => `tel:${COMPANY.phone.replace(/\s/g, '')}`,
     external: false,
     value: () => COMPANY.phone,
+    // Only on the phone line: someone dialling a shop wants a name to ask for, and the two
+    // email channels reach an inbox rather than a person.
+    person: true,
   },
   {
     icon: Mail,
@@ -84,6 +87,11 @@ export function ContactPage() {
                   <span className="mt-3 truncate text-sm font-medium text-primary">
                     {channel.value()}
                   </span>
+                  {'person' in channel && (
+                    <span className="mt-1 text-xs text-muted-foreground">
+                      {t('marketing.contact.askFor', { name: COMPANY.contactPerson })}
+                    </span>
+                  )}
                 </a>
               ))}
             </div>
