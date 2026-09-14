@@ -96,7 +96,7 @@ export function SalesInvoicesPage() {
     })
     .filter((j) =>
       search.trim()
-        ? `${j.jobNumber} ${j.customerName} ${j.customerMobile}`
+        ? `${j.invoiceNumber ?? ''} ${j.jobNumber} ${j.customerName} ${j.customerMobile}`
             .toLowerCase()
             .includes(search.toLowerCase())
         : true
@@ -113,10 +113,20 @@ export function SalesInvoicesPage() {
       render: (j) => formatTimestamp(billDate(j), false),
     },
     {
+      key: 'invoiceNumber',
+      header: t('pages.sales.invoices.invoiceNo'),
+      sortValue: (j) => j.invoiceNumber ?? j.jobNumber,
+      // A job billed before the invoice series existed has no number of its own. Falling back to
+      // the job number keeps the column honest rather than showing a blank where a customer's
+      // copy has something printed on it.
+      render: (j) => <span className="font-semibold">{j.invoiceNumber ?? j.jobNumber}</span>,
+    },
+    {
       key: 'jobNumber',
       header: t('common.jobCard'),
+      hideOnMobile: true,
       sortValue: (j) => j.jobNumber,
-      render: (j) => <span className="font-semibold">{j.jobNumber}</span>,
+      render: (j) => <span className="text-muted-foreground">{j.jobNumber}</span>,
     },
     {
       key: 'customer',

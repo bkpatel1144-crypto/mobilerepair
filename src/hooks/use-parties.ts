@@ -9,10 +9,12 @@ import {
   writeBatch,
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { commitBatch } from '@/lib/offline-commit'
 import { partiesCollection, partyDoc } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { getCurrentFinancialYear } from '@/lib/financial-year'
-import { getNextSequence, formatPartyId } from '@/lib/sequences'
+import { formatPartyId } from '@/lib/sequences'
+import { getNextBlockSequence } from '@/lib/sequence-blocks'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { EntityStatus, PartyDoc } from '@/types/firestore'
 
@@ -75,7 +77,10 @@ export function useCreateParty() {
   return useMutation({
     mutationFn: async (input: CreatePartyInput) => {
       const fy = getCurrentFinancialYear()
-      const seq = await getNextSequence(companyId, 'parties')
+      // From this device's reserved block, like job cards: a party is an internal master, not a
+      // tax series, so a gap costs nothing — and a customer who walks in while the line is down
+      // has to be recordable, or intake cannot work offline either.
+      const seq = await getNextBlockSequence(companyId, 'parties')
       const ref = doc(collection(db, partiesCollection(companyId)))
       const now = serverTimestamp()
       const partyTypes: ('customer' | 'supplier')[] = input.partyTypes?.length
@@ -115,10 +120,13 @@ export function useCreateParty() {
         entityId: ref.id,
         entityLabel: data.name,
       })
-      await batch.commit()
+      await commitBatch(batch)
       return { id: ref.id, ...data }
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partiesQueryKey(companyId) }),
+    // See `use-job-cards.ts` — a returned `invalidateQueries` promise never settles offline.
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: partiesQueryKey(companyId) })
+    },
   })
 }
 
@@ -167,7 +175,10 @@ export function useUpdateParty() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partiesQueryKey(companyId) }),
+    // See `use-job-cards.ts` — a returned `invalidateQueries` promise never settles offline.
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: partiesQueryKey(companyId) })
+    },
   })
 }
 
@@ -200,6 +211,9 @@ export function useSetPartyStatus() {
       })
       await batch.commit()
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: partiesQueryKey(companyId) }),
+    // See `use-job-cards.ts` — a returned `invalidateQueries` promise never settles offline.
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: partiesQueryKey(companyId) })
+    },
   })
 }

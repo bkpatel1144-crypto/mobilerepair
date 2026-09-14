@@ -587,6 +587,16 @@ export interface JobCardDoc {
    * also for jobs billed before this field existed — the Sales Invoices list falls back to
    * `updatedAt` for those rather than inventing a date. */
   billGeneratedAt: Timestamp | null
+  /**
+   * `INV-2026-27-00001` — the tax invoice number, minted at Generate Bill from a counter that is
+   * incremented one at a time so the series stays consecutive.
+   *
+   * Separate from `jobNumber` on purpose. A job card is an internal work order whose number is
+   * issued from a block reserved in advance, so intake works with no connection — and a block
+   * that is only partly used leaves gaps. A GST tax invoice series cannot have gaps. Absent on
+   * every job billed before this field existed; those keep showing their job number.
+   */
+  invoiceNumber?: string | null
   closedAt: Timestamp | null
   cancelledAt: Timestamp | null
 }

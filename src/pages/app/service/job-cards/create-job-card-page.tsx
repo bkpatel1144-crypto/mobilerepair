@@ -10,6 +10,7 @@ import {
   UserX,
   Clock,
   Trash2,
+  WifiOff,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -17,8 +18,8 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { FormError } from '@/components/shared/form-error'
 import { AttributeFields } from '@/components/shared/attribute-fields'
-import { OfflineNotice } from '@/components/shared/offline-banner'
 import { useOnlineStatus } from '@/hooks/use-online-status'
+import { blockRemaining, readBlock } from '@/lib/sequence-blocks'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
 import {
   attributesFor,
@@ -160,9 +161,6 @@ export function CreateJobCardPage() {
   const { data: allAttributes = [] } = useItemAttributes()
   const [attributeValues, setAttributeValues] = useState<AttributeValues>({})
   const [missingAttributes, setMissingAttributes] = useState<string[]>([])
-  // A job card cannot be created offline: its number comes from a Firestore transaction. Said
-  // here, at the top of the form, rather than after someone has filled in twenty fields.
-  const online = useOnlineStatus()
   const [submitting, setSubmitting] = useState(false)
   const [savedAt, setSavedAt] = useState<Date | null>(null)
   const [confirmingClear, setConfirmingClear] = useState(false)
@@ -190,6 +188,14 @@ export function CreateJobCardPage() {
   >(draft.serviceItemsSelected ?? [])
   const [estimatedCost, setEstimatedCost] = useState(draft.estimatedCost ?? 0)
   const [advanceReceived, setAdvanceReceived] = useState(draft.advanceReceived ?? 0)
+  // Intake works offline as long as this device still holds reserved job card numbers — see
+  // `sequence-blocks.ts`. What does not work is an advance: that mints a receipt, and the receipt
+  // series is incremented one at a time so it stays consecutive.
+  const online = useOnlineStatus()
+  const numbersLeft = blockRemaining(readBlock(profile?.companyId ?? '', 'jobCards'))
+  const canCreateOffline = numbersLeft > 0
+  const advanceBlocked = !online && advanceReceived > 0
+
   const [itemsReceived, setItemsReceived] = useState<string[]>(draft.itemsReceived ?? [])
   const [itemsReturned, setItemsReturned] = useState<string[]>(draft.itemsReturned ?? [])
   const [assignedToId, setAssignedToId] = useState<string | null>(draft.assignedToId ?? null)
@@ -1249,7 +1255,21 @@ export function CreateJobCardPage() {
         )}
 
         <div className="mt-5 space-y-3 border-t pt-4">
-          <OfflineNotice />
+          {!online && (
+            <p
+              role="status"
+              className="flex items-start gap-2 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:bg-amber-500/10 dark:text-amber-300"
+            >
+              <WifiOff className="mt-0.5 size-4 shrink-0" />
+              <span>
+                {!canCreateOffline
+                  ? t('pages.service.createJobCard.offlineNoNumbersLeft')
+                  : advanceBlocked
+                    ? t('pages.service.createJobCard.offlineAdvanceNotPossible')
+                    : t('pages.service.createJobCard.offlineNumbersLeft', { count: numbersLeft })}
+              </span>
+            </p>
+          )}
           <div className="flex justify-end gap-2">
             <Button
               type="button"
@@ -1259,7 +1279,11 @@ export function CreateJobCardPage() {
             >
               Cancel
             </Button>
-            <Button type="button" onClick={handleSubmit} disabled={submitting || !user || !online}>
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitting || !user || (!online && (!canCreateOffline || advanceBlocked))}
+            >
               {submitting ? 'Creating…' : t('pages.service.createJobCard.createJobCard')}
             </Button>
           </div>

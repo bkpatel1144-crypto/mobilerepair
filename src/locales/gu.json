@@ -1111,7 +1111,10 @@
           "accessories": "એક્સેસરીઝ",
           "internalDetails": "આંતરિક વિગતો",
           "images": "છબીઓ"
-        }
+        },
+        "offlineAdvanceNotPossible": "તમે ઑફલાઇન છો, તેથી એડવાન્સ લઈ શકાતું નથી — રસીદ માટે કનેક્શન જરૂરી છે. એડવાન્સ વગર જોબ કાર્ડ બનાવો અને જોડાયા પછી એડવાન્સ નોંધો.",
+        "offlineNumbersLeft": "ઑફલાઇન — આ ડિવાઇસ હજી {{count}} જોબ કાર્ડ બનાવી શકે છે. બિલિંગ અને રસીદ માટે કનેક્શન જરૂરી છે.",
+        "offlineNoNumbersLeft": "તમે ઑફલાઇન છો અને આ ડિવાઇસ પાસે કોઈ અનામત જોબ કાર્ડ નંબર બાકી નથી. બનાવવા માટે ફરી જોડાઓ."
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "લેતી વખતની વસ્તુઓ",
@@ -1398,6 +1401,9 @@
         "partsServices": "પાર્ટ્સ / સેવાઓ",
         "fullySettled": "સંપૂર્ણ ચૂકવેલ",
         "outstanding": "બાકી"
+      },
+      "invoices": {
+        "invoiceNo": "ઇન્વોઇસ નં."
       }
     },
     "completeSetup": {

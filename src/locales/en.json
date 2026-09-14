@@ -1111,7 +1111,10 @@
           "accessories": "Accessories",
           "internalDetails": "Internal Details",
           "images": "Images"
-        }
+        },
+        "offlineAdvanceNotPossible": "You're offline, so an advance cannot be taken — a receipt needs a connection. Create the job card without one and record the advance when you reconnect.",
+        "offlineNumbersLeft": "Offline — this device can still create {{count}} job cards. Billing and receipts need a connection.",
+        "offlineNoNumbersLeft": "You're offline and this device has no job card numbers left in reserve. Reconnect to create one."
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "Items at Intake",
@@ -1398,6 +1401,9 @@
         "partsServices": "Parts / Services",
         "fullySettled": "Fully Settled",
         "outstanding": "Outstanding"
+      },
+      "invoices": {
+        "invoiceNo": "Invoice No."
       }
     },
     "completeSetup": {

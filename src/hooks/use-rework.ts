@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { commitBatch } from '@/lib/offline-commit'
 import { jobCardsCollection, jobTimelineCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
-import { formatJobCardId, getNextSequence } from '@/lib/sequences'
+import { formatJobCardId } from '@/lib/sequences'
+import { getNextBlockSequence } from '@/lib/sequence-blocks'
 import { getCurrentFinancialYear } from '@/lib/financial-year'
 import {
   jobCardQueryKey,
@@ -56,7 +58,7 @@ export function useReopenAsRework(job: JobCardWithId) {
   return useMutation({
     mutationFn: async (input: ReworkInput) => {
       const fy = getCurrentFinancialYear()
-      const seq = await getNextSequence(companyId, 'jobCards')
+      const seq = await getNextBlockSequence(companyId, 'jobCards')
       const jobNumber = formatJobCardId(fy.name, seq)
       const newRef = doc(collection(db, jobCardsCollection(companyId)))
       const now = serverTimestamp()
@@ -162,7 +164,7 @@ export function useReopenAsRework(job: JobCardWithId) {
         details: { reworkOf: job.jobNumber, underWarranty: input.underWarranty },
       })
 
-      await batch.commit()
+      await commitBatch(batch)
       return { id: newRef.id, jobNumber }
     },
     onSuccess: () => {

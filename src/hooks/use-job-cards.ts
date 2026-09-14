@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { collection, doc, getDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { commitBatch } from '@/lib/offline-commit'
 import { useLiveQuery } from '@/hooks/use-live-query'
 import {
   jobCardsCollection,
@@ -11,6 +12,7 @@ import {
 import { useAuth } from '@/hooks/use-auth'
 import { getCurrentFinancialYear } from '@/lib/financial-year'
 import { getNextSequence, formatJobCardId, formatReceiptId } from '@/lib/sequences'
+import { getNextBlockSequence } from '@/lib/sequence-blocks'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import type { JobCardDoc, JobTimelineEventDoc, ReceiptDoc } from '@/types/firestore'
 
@@ -148,8 +150,12 @@ export function useCreateJobCard() {
       // measured at (~10-20s sequential on this network, vs. the single slower one of the two
       // once parallel) — a genuinely felt difference for someone creating a job card at a
       // front desk, not a micro-optimization.
+      // The job number comes from this device's reserved block, so intake works with no
+      // connection — see `sequence-blocks.ts`. The receipt for an advance does not: a receipt
+      // voucher belongs to a money series, and taking cash offline is a separate decision from
+      // writing a work order offline.
       const [jobSeq, receiptSeq] = await Promise.all([
-        getNextSequence(companyId, 'jobCards'),
+        getNextBlockSequence(companyId, 'jobCards'),
         input.advanceReceived > 0 ? getNextSequence(companyId, 'receipts') : Promise.resolve(null),
       ])
       const jobNumber = formatJobCardId(fy.name, jobSeq)
@@ -284,9 +290,15 @@ export function useCreateJobCard() {
           advance: input.advanceReceived,
         },
       })
-      await batch.commit()
+      await commitBatch(batch)
       return { id: jobRef.id, jobNumber }
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(companyId) }),
+    // `void`, not a returned promise. TanStack Query awaits whatever `onSuccess` returns before
+    // `mutateAsync` settles, and `invalidateQueries` resolves only once the refetched queries do
+    // — which offline is never. That left "Creating…" spinning on a job card that had in fact
+    // already been written to the local queue. The cache updates from the write itself anyway.
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: jobCardsQueryKey(companyId) })
+    },
   })
 }

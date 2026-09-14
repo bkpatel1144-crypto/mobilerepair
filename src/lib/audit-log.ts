@@ -10,6 +10,7 @@ import type { User as FirebaseUser } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { auditLogCollection, branchDoc } from '@/lib/firestore-paths'
 import { readCachedProfile } from '@/lib/profile-cache'
+import { isOffline } from '@/lib/connection'
 import type { AuditLogDoc, AuditResult, BranchDoc, UserDoc } from '@/types/firestore'
 
 /**
@@ -33,6 +34,9 @@ import type { AuditLogDoc, AuditResult, BranchDoc, UserDoc } from '@/types/fires
 // module-level so every audit-log write in one page session doesn't re-fetch it. ----
 let ipCache: Promise<string | null> | null = null
 export function getClientIp(): Promise<string | null> {
+  // Offline this is a guaranteed failure, and it is only ever advisory. Skipping it keeps an
+  // audit-log write from waiting on a request that cannot succeed.
+  if (isOffline()) return Promise.resolve(null)
   if (!ipCache) {
     ipCache = fetch('https://api.ipify.org?format=json')
       .then((r) => r.json())
@@ -57,6 +61,11 @@ const branchNameCache = new Map<string, string>()
 async function getBranchName(companyId: string, branchId: string): Promise<string> {
   const cached = branchNameCache.get(branchId)
   if (cached) return cached
+  // A `getDoc` with no connection does not fail fast — the SDK keeps trying the server until its
+  // own backoff gives up, and `addAuditLogToBatch` awaits this before the caller can commit. That
+  // is what left "Creating…" spinning forever on a job card taken in offline. The branch name is
+  // a label on an audit row; the fallback is the one every company has anyway.
+  if (isOffline()) return 'Main Branch'
   try {
     const snap = await getDoc(doc(db, branchDoc(companyId, branchId)))
     const name = snap.exists() ? (snap.data() as BranchDoc).name : 'Main Branch'

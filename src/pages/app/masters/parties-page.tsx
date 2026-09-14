@@ -421,7 +421,6 @@ function PartyModal({
       onSubmit={handleSubmit}
       submitLabel={isNew ? 'Create Party' : t('common.save')}
       isSubmitting={isPending}
-      needsConnection={isNew}
       className="sm:max-w-xl"
     >
       <div className="grid grid-cols-2 gap-3">

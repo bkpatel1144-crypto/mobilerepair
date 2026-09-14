@@ -2,6 +2,7 @@ import { doc, runTransaction } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { counterDoc } from '@/lib/firestore-paths'
 import { i18next } from '@/lib/i18n'
+import { isOffline } from '@/lib/connection'
 import type { CounterDoc } from '@/types/firestore'
 
 /**
@@ -23,9 +24,7 @@ export class OfflineError extends Error {
   }
 }
 
-export function isOffline(): boolean {
-  return typeof navigator !== 'undefined' && navigator.onLine === false
-}
+export { isOffline } from '@/lib/connection'
 
 /**
  * Atomically increments and returns the next sequence number for `docType` within a company —
@@ -60,6 +59,18 @@ function pad(n: number, width: number) {
  * ("FY 2026-27") with the "FY " prefix stripped. */
 export function formatJobCardId(fyLabel: string, seq: number) {
   return `JC-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
+}
+
+/**
+ * `INV-2026-27-00001` — the tax invoice series, minted at Generate Bill.
+ *
+ * Deliberately separate from the job number. A job card is an internal work order and its
+ * numbering is allowed gaps so it can be issued offline from a reserved block; a tax invoice
+ * series has to stay consecutive for a GST-registered shop. Conflating the two meant one of
+ * those two properties had to give. See `OFFLINE_NUMBERING.md`.
+ */
+export function formatInvoiceId(fyLabel: string, seq: number) {
+  return `INV-${fyLabel.replace(/^FY\s*/, '')}-${pad(seq, 5)}`
 }
 
 /** `PTY-2026-27-00001` */

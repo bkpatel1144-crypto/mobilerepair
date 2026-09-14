@@ -8,7 +8,8 @@ import {
   fieldVisitsCollection,
 } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
-import { formatReceiptId, getNextSequence } from '@/lib/sequences'
+import { formatInvoiceId, formatReceiptId, getNextSequence } from '@/lib/sequences'
+import { getCurrentFinancialYear } from '@/lib/financial-year'
 import {
   jobCardQueryKey,
   jobCardsQueryKey,
@@ -129,6 +130,10 @@ function buildActionPatch(
           status: 'ready',
           finalAmount: input.finalAmount,
           billGeneratedAt: serverTimestamp() as never,
+          // Filled in by the mutation, which is where the number can be minted — see
+          // `useApplyJobAction`. Present here so `lastActionUndo` snapshots it and an undone
+          // bill does not leave an invoice number stranded on an unbilled job.
+          invoiceNumber: null,
         },
         event: {
           type: 'billGenerated',
@@ -324,6 +329,20 @@ export function useApplyJobAction(job: JobCardWithId) {
     mutationFn: async (input: JobActionInput) => {
       const { patch, event } = buildActionPatch(job, input, uid, userName)
       const now = serverTimestamp()
+
+      // The tax invoice series is incremented one at a time, through the plain transaction, so
+      // it stays consecutive. That makes billing an online-only action — which is the right
+      // trade: a bill is generated with the customer at the counter, while a job card is taken
+      // in wherever the device happens to be. A job billed before this field existed keeps
+      // showing its job number, so nothing is renumbered retroactively.
+      if (input.action === 'generateBill' && !job.invoiceNumber) {
+        const seq = await getNextSequence(companyId, 'invoices')
+        patch.invoiceNumber = formatInvoiceId(getCurrentFinancialYear().name, seq)
+      } else if (input.action === 'generateBill') {
+        // Re-billing a job that already has one keeps it: an invoice number, once given to a
+        // customer, is not reissued.
+        patch.invoiceNumber = job.invoiceNumber
+      }
 
       // Snapshot only the keys this action is about to change, so a single "Undo" can restore
       // them exactly — see `JobCardDoc.lastActionUndo`'s own doc comment.

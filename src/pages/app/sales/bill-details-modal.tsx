@@ -38,6 +38,14 @@ export function BillDetailsModal({
   const statusLabel = JOB_STATUSES.find((s) => s.key === job.status)?.label ?? job.status
 
   const rows: [string, React.ReactNode][] = [
+    ...(job.invoiceNumber
+      ? [
+          [
+            t('pages.sales.invoices.invoiceNo'),
+            <span className="font-semibold">{job.invoiceNumber}</span>,
+          ] as [string, React.ReactNode],
+        ]
+      : []),
     [t('common.jobCard'), <span className="font-semibold">{job.jobNumber}</span>],
     [t('common.customer'), <span className="font-semibold">{job.customerName}</span>],
     [t('common.mobile'), job.customerMobile],

@@ -370,6 +370,25 @@ const queryClient = new QueryClient({
       staleTime: 30_000,
       retry: 1,
     },
+    mutations: {
+      /**
+       * Run mutations even with no connection.
+       *
+       * TanStack Query's default `networkMode: 'online'` *pauses* a mutation when it sees the
+       * browser go offline: `mutateAsync` is called, the mutation function never runs, and the
+       * promise sits pending until the network returns. Every save in this app therefore hung
+       * forever offline — the spinner that Phase 15a set out to remove, one layer deeper than
+       * where it was being looked for.
+       *
+       * Pausing is the right default for an app whose writes go straight to an HTTP API. It is
+       * the wrong one here: Firestore has its own durable offline queue, so a write issued with
+       * no connection is persisted locally, visible immediately, and synced on reconnect. And a
+       * write that genuinely cannot work offline — anything minting a gapless number — now
+       * throws `OfflineError` the moment it runs, which is a real message instead of a
+       * permanent spinner.
+       */
+      networkMode: 'always',
+    },
   },
 })
 
