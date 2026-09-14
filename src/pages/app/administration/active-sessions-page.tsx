@@ -69,7 +69,7 @@ export function ActiveSessionsPage() {
           <p className="font-medium">
             {s.userName}
             {isCurrentSession(s) && (
-              <span className="ml-1.5 rounded-full bg-teal-100 px-1.5 py-0.5 text-[10px] font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
+              <span className="ml-1.5 rounded-full bg-teal-100 px-1.5 py-0.5 text-[11px] font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
                 {t('pages.administration.activeSessions.thisDevice')}
               </span>
             )}

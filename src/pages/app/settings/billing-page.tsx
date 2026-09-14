@@ -91,7 +91,7 @@ export function BillingPage() {
                     <h2 className="text-lg font-semibold">
                       {t('pages.settings.billing.youReOnTheFreePlan')}
                     </h2>
-                    <span className="rounded-full bg-teal-600 px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide text-white uppercase">
+                    <span className="rounded-full bg-teal-600 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-white uppercase">
                       {t('common.active')}
                     </span>
                   </div>

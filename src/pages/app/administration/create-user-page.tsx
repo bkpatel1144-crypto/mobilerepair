@@ -227,7 +227,7 @@ export function CreateUserPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
-                className="absolute top-1/2 right-2.5 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute top-1/2 right-2.5 -translate-y-1/2 p-2 text-muted-foreground pointer-fine:p-0 hover:text-foreground"
                 aria-label={
                   showPassword ? 'Hide password' : t('pages.administration.createUser.showPassword')
                 }

@@ -119,7 +119,7 @@ function BrandsSection({
               <button
                 type="button"
                 onClick={() => toggleGroup(dt.id)}
-                className="flex flex-1 items-center gap-2 text-left text-sm font-medium"
+                className="flex flex-1 items-center gap-2 py-1.5 text-left text-sm font-medium pointer-fine:py-0"
               >
                 <ChevronRight
                   className={cn(
@@ -245,7 +245,7 @@ function ModelsSection({
               <button
                 type="button"
                 onClick={() => toggleGroup(brand.id)}
-                className="flex flex-1 items-center gap-2 text-left text-sm font-medium"
+                className="flex flex-1 items-center gap-2 py-1.5 text-left text-sm font-medium pointer-fine:py-0"
               >
                 <ChevronRight
                   className={cn(
@@ -357,17 +357,23 @@ export function ServiceOptionsPage() {
         }
       />
 
+      {/* The icon and the sentence are the only two flex items. When the sentence sat directly in
+       * the flex container, its text and its bold action each became an anonymous flex item of
+       * their own — three columns side by side, which read as one line on a laptop and as three
+       * narrow columns of broken prose on a phone. */}
       {sharedBrandCount > 0 && (
-        <p className="flex items-start gap-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
+        <div className="flex items-start gap-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
           <Info className="mt-0.5 size-4 shrink-0" />
-          {/* `Trans`, not `t()`: the action's name stays bold, and in Hindi and Gujarati the
-           * words around it move to a different position. */}
-          <Trans
-            i18nKey="pages.service.serviceOptions.sharedBrandsNotice"
-            values={{ action: t('pages.service.serviceOptions.splitSharedBrands') }}
-            components={{ action: <strong /> }}
-          />
-        </p>
+          <p className="min-w-0">
+            {/* `Trans`, not `t()`: the action's name stays bold, and in Hindi and Gujarati the
+             * words around it move to a different position. */}
+            <Trans
+              i18nKey="pages.service.serviceOptions.sharedBrandsNotice"
+              values={{ action: t('pages.service.serviceOptions.splitSharedBrands') }}
+              components={{ action: <strong /> }}
+            />
+          </p>
+        </div>
       )}
 
       <div className="rounded-lg border">

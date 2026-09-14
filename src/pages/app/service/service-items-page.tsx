@@ -120,7 +120,7 @@ export function ServiceItemsPage() {
             e.stopPropagation()
             openEdit(i)
           }}
-          className="flex items-center gap-1 text-sm text-teal-700 hover:underline dark:text-teal-400"
+          className="flex items-center gap-1 py-1.5 text-sm text-teal-700 pointer-fine:py-0 hover:underline dark:text-teal-400"
         >
           <Pencil className="size-3.5" />
           {t('common.edit')}

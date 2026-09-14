@@ -250,7 +250,7 @@ export function SearchSelect({
           type="button"
           aria-label={t('shared.clearSelection')}
           onClick={() => onChange(null)}
-          className="absolute top-1/2 right-7 -translate-y-1/2 rounded-full p-0.5 text-muted-foreground hover:bg-muted"
+          className="absolute top-1/2 right-7 -translate-y-1/2 rounded-full p-[9px] text-muted-foreground pointer-fine:p-0.5 hover:bg-muted"
         >
           <X className="size-3.5" />
         </button>

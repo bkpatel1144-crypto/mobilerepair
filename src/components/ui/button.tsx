@@ -22,14 +22,24 @@ const buttonVariants = cva(
       size: {
         default:
           'h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        xs: "h-8 pointer-fine:h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-8 pointer-fine:h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
         lg: 'h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
         icon: 'size-8',
+        /**
+         * The two small icon sizes are 32px on a touch screen and their designed size under a
+         * mouse.
+         *
+         * 24px and 28px are comfortable to click and awkward to tap — a measured audit of every
+         * screen at 390px found 28 of these below the 32px floor, on the kebab menus and row
+         * actions that are the whole point of a list screen. Growing them unconditionally would
+         * have changed the density of every toolbar in the app on the desktop where it already
+         * works, so the *default* is the touch size and `pointer-fine` shrinks it back.
+         */
         'icon-xs':
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+          "size-8 pointer-fine:size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
         'icon-sm':
-          'size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg',
+          'size-8 pointer-fine:size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg',
         'icon-lg': 'size-9',
       },
     },

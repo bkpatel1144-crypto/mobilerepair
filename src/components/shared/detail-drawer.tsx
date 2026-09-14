@@ -154,7 +154,7 @@ export function DetailDrawer({
                       (row.wide || isLastAndOdd) && 'sm:col-span-2'
                     )}
                   >
-                    <dt className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
+                    <dt className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
                       {row.label}
                     </dt>
                     <dd

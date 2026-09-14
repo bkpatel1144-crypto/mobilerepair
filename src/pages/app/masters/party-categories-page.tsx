@@ -41,12 +41,12 @@ export function PartyCategoriesPage() {
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="font-medium">{c.name}</span>
           {c.isDefaultForSupplier && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-1.5 py-0.5 text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-400">
+            <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-1.5 py-0.5 text-[11px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-400">
               <Star className="size-2.5 fill-current" /> Default Supplier
             </span>
           )}
           {c.isDefaultForCustomer && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-1.5 py-0.5 text-[11px] font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
               <Star className="size-2.5 fill-current" /> Default Customer
             </span>
           )}

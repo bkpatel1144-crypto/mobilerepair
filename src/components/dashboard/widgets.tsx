@@ -149,7 +149,7 @@ export function KpiTile({
   return (
     <div className="min-w-0 rounded-lg border bg-card p-3">
       <div className="flex items-start justify-between gap-2">
-        <p className="truncate text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
+        <p className="truncate text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
           {label}
         </p>
         <Icon className="size-3.5 shrink-0 text-muted-foreground" />
@@ -556,7 +556,7 @@ export function JobCardListPanel({
             <div className="flex items-center gap-3 border-t px-3 py-2 text-sm">
               <span className="font-medium tabular-nums">{row.number}</span>
               <span className="truncate text-muted-foreground">{row.customer}</span>
-              <span className="ml-auto shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide text-muted-foreground">
+              <span className="ml-auto shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold tracking-wide text-muted-foreground">
                 {row.status}
               </span>
             </div>

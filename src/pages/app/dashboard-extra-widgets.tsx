@@ -114,7 +114,7 @@ export function RecentPartiesWidget({ label }: { label: string }) {
       trailing={
         <Link
           to="/app/masters/parties"
-          className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 hover:underline dark:text-teal-400"
+          className="inline-flex items-center gap-1 py-2 text-xs font-medium text-teal-700 pointer-fine:py-0 hover:underline dark:text-teal-400"
         >
           {t('pages.dashboard.dashboard.viewAll')}
           <ArrowRight className="size-3.5" />
