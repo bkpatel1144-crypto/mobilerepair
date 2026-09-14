@@ -265,7 +265,7 @@ function SelectedRolePanel({
             />
           </span>
           <Button type="button" variant="outline" size="sm" onClick={onBack}>
-            Back
+            {t('common.back')}
           </Button>
         </div>
       </div>
@@ -312,7 +312,7 @@ function SelectedRolePanel({
             onClick={handleCancel}
             disabled={!isDirty || saveConfig.isPending}
           >
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button type="button" onClick={handleSave} disabled={!isDirty || saveConfig.isPending}>
             {saveConfig.isPending ? 'Saving…' : t('pages.settings.rolePermissionsTab.saveConfig')}

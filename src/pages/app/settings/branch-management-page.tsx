@@ -194,7 +194,7 @@ export function BranchManagementPage() {
                 }}
               >
                 <Pencil className="size-3.5" />
-                Edit
+                {t('common.edit')}
               </Button>
               <Button
                 type="button"
@@ -213,7 +213,7 @@ export function BranchManagementPage() {
                   className="text-red-600 hover:text-red-600"
                   onClick={() => setConfirmAction('delete')}
                 >
-                  Delete
+                  {t('common.delete')}
                 </Button>
               )}
             </>

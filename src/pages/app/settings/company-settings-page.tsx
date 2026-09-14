@@ -280,12 +280,12 @@ export function CompanySettingsPage() {
               <span className="truncate">{c.name}</span>
               {c.protected && (
                 <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-300 px-1.5 py-0.5 text-[0.65rem] font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">
-                  Default
+                  {t('common.default')}
                 </span>
               )}
               {c.id === profile?.companyId && (
                 <span className="shrink-0 rounded-full bg-teal-100 px-1.5 py-0.5 text-[0.65rem] font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
-                  Active
+                  {t('common.active')}
                 </span>
               )}
             </p>
@@ -637,7 +637,7 @@ export function CompanySettingsPage() {
                   {viewing.protected && (
                     <span className="inline-flex items-center gap-1 rounded-full border border-amber-300 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">
                       <Star className="size-3 fill-current" />
-                      Default
+                      {t('common.default')}
                     </span>
                   )}
                 </p>
@@ -654,7 +654,7 @@ export function CompanySettingsPage() {
             <div className="flex flex-wrap gap-2">
               <Button type="button" variant="outline" size="sm" onClick={() => startEdit(viewing)}>
                 <Pencil className="size-3.5" />
-                Edit
+                {t('common.edit')}
               </Button>
               {viewing.id !== profile?.companyId && (
                 <Button type="button" size="sm" onClick={() => switchCompany.mutate(viewing.id)}>

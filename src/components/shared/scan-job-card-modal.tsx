@@ -103,7 +103,7 @@ export function ScanJobCardModal({ open, onOpenChange }: ScanJobCardModalProps) 
           onClick={() => onOpenChange(false)}
         >
           <X className="size-4" />
-          Close
+          {t('common.close')}
         </Button>
       </DialogContent>
     </Dialog>

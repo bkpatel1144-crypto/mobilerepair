@@ -65,7 +65,7 @@ export function CashBookPage() {
           <>
             <Button type="button" variant="outline">
               <Download className="size-4" />
-              Export
+              {t('common.export')}
             </Button>
           </>
         }

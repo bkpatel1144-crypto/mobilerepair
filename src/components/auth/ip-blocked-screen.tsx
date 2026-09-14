@@ -31,7 +31,7 @@ export function IpBlockedScreen({ ip }: { ip: string | null }) {
         </p>
       </div>
       <Button type="button" variant="outline" onClick={() => logOut()}>
-        Sign Out
+        {t('common.signOut')}
       </Button>
     </div>
   )

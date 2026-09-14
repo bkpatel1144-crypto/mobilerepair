@@ -125,7 +125,7 @@ export function CreateRolePage() {
               variant="outline"
               onClick={() => navigate(buildPath('administration', 'roles'))}
             >
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button type="submit" disabled={createRole.isPending}>
               {createRole.isPending ? 'Creating…' : t('pages.administration.createRole.createRole')}

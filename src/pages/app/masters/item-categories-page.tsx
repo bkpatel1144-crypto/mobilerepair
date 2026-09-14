@@ -297,7 +297,7 @@ export function ItemCategoriesPage() {
                   }}
                 >
                   <Pencil className="size-3.5" />
-                  Edit
+                  {t('common.edit')}
                 </Button>
                 <ItemCategoryStatusButton category={viewing} />
                 {viewing.source === 'custom' && (
@@ -422,7 +422,7 @@ function ItemCategoryDeleteButton({
         onClick={() => setConfirming(true)}
       >
         <Trash2 className="size-3.5" />
-        Delete
+        {t('common.delete')}
       </Button>
       <ConfirmDialog
         open={confirming}

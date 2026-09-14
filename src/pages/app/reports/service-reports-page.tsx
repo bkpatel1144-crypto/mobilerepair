@@ -311,7 +311,7 @@ export function ServiceReportsPage() {
           <>
             <Button type="button" variant="outline" onClick={() => setShowAdvanced((v) => !v)}>
               <SlidersHorizontal className="size-4" />
-              Filters
+              {t('shared.filters')}
             </Button>
             <Button
               type="button"

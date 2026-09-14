@@ -364,7 +364,7 @@ function SellDeviceModal({
 
         <div className="flex justify-end gap-2 border-t pt-3">
           <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button type="button" onClick={handleConfirm} disabled={createSale.isPending}>
             {createSale.isPending ? 'Saving…' : t('pages.secondHandDevice.deviceSale.confirmSale')}

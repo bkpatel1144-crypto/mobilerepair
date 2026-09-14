@@ -277,7 +277,8 @@
     "undo": "Undo",
     "colour": "Colour",
     "network": "Network",
-    "seller": "Seller"
+    "seller": "Seller",
+    "signOut": "Sign Out"
   },
   "shell": {
     "appName": "aim",
@@ -469,7 +470,21 @@
     "exportCsv": "Export CSV",
     "all": "All",
     "clearFilters": "Clear filters",
-    "allTime": "All time"
+    "allTime": "All time",
+    "showingRange": "Showing {{from}}–{{to}} of {{total}}",
+    "pageOf": "Page {{page}} of {{total}}",
+    "prev": "Prev",
+    "next": "Next",
+    "fullName": "Full Name",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "myProfile": "My Profile",
+    "logout": "Logout",
+    "draw": "Draw",
+    "dotsConnected": "Pattern: {{count}} dots connected",
+    "stepOf": "Step {{step}} of {{total}}",
+    "voided": "Voided"
   },
   "pages": {
     "dashboard": {
@@ -758,7 +773,8 @@
         "both": "Both",
         "searchByNameMobileOrParty": "Search by name, mobile, or party code...",
         "editParty": "Edit Party",
-        "allOptionalAddWhatYouNeed": "All optional — add what you need"
+        "allOptionalAddWhatYouNeed": "All optional — add what you need",
+        "addParty": "Add Party"
       },
       "partyCategories": {
         "partyCategories": "Party Categories",
@@ -1176,7 +1192,9 @@
         "outOfStock": "Out of stock",
         "onlyNLeft": "Only {{count}} left",
         "notEnoughStock": "Only {{onHand}} on hand, but you are fitting {{qty}} — {{short}} short.",
-        "fitItAnyway": "Fit it anyway — recorded on the timeline as a stock override"
+        "fitItAnyway": "Fit it anyway — recorded on the timeline as a stock override",
+        "addPart": "Add Part",
+        "addImage": "Add Image"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "Couldn't load this job card",
@@ -1194,7 +1212,9 @@
         "noUsersYet": "No users yet.",
         "searchJobCustomerMobile": "Search job, customer, mobile...",
         "createJobCard": "Create Job Card",
-        "roleJobs": "{{role}} — Jobs"
+        "roleJobs": "{{role}} — Jobs",
+        "myCompletedJobs": "My Completed Jobs ({{count}})",
+        "myReceivedJobs": "My Received Jobs ({{count}})"
       },
       "recordCostingModal": {
         "itemName": "Item name",
@@ -1250,7 +1270,10 @@
         "manageDeviceTypesBrandsAndProblem": "Manage device types, brands, and problem tags used in job cards",
         "splitAllSharedBrands": "Split all shared brands?",
         "split": "Split",
-        "splitSharedBrands": "Split shared brands"
+        "splitSharedBrands": "Split shared brands",
+        "addBrand": "Add brand",
+        "addModel": "Add model",
+        "sharedBrandsNotice": "Some brands are still shared across multiple device types. Click <action>{{action}}</action> above to give each device type its own independent brand row. Existing job cards stay untouched."
       },
       "warranty": {
         "warrantyLookup": "Warranty Lookup",

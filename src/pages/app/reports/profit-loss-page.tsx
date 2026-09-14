@@ -111,7 +111,7 @@ export function ProfitLossPage() {
             }
           >
             <Download className="size-4" />
-            Export CSV
+            {t('shared.exportCsv')}
           </Button>
         }
       />

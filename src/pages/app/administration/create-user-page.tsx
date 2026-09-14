@@ -144,7 +144,7 @@ export function CreateUserPage() {
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
             <ArrowLeft />
-            Back
+            {t('common.back')}
           </Button>
           <div>
             <h1 className="text-lg font-bold">{t('pages.administration.createUser.addNewUser')}</h1>
@@ -292,7 +292,7 @@ export function CreateUserPage() {
 
         <div className="flex justify-end gap-2">
           <Button type="button" variant="outline" onClick={() => navigate(-1)}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Creating…' : t('pages.administration.createUser.createUser')}

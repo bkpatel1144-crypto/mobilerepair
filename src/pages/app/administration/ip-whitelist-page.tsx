@@ -97,7 +97,7 @@ export function IpWhitelistPage() {
                 }}
               >
                 <Pencil className="size-4" />
-                Edit
+                {t('common.edit')}
               </DropdownMenuItem>
               <ToggleActiveItem entry={e} />
               <DropdownMenuItem
@@ -108,7 +108,7 @@ export function IpWhitelistPage() {
                 }}
               >
                 <Trash2 className="size-4" />
-                Delete
+                {t('common.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -317,7 +317,7 @@ function IpWhitelistModal({
       </div>
       <label className="flex items-center gap-2 text-sm">
         <Checkbox checked={active} onCheckedChange={(v) => setActive(v === true)} />
-        Active
+        {t('common.active')}
       </label>
     </FormModal>
   )

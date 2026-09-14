@@ -187,7 +187,7 @@ export function ProfileDrawer({
               <div className="space-y-1.5">
                 <Label htmlFor="profile-name" className="flex items-center gap-1.5">
                   <UserIcon className="size-3.5 text-muted-foreground" />
-                  Full Name <span className="text-red-600">*</span>
+                  {t('shared.fullName')} <span className="text-red-600">*</span>
                 </Label>
                 <Input
                   id="profile-name"
@@ -200,7 +200,7 @@ export function ProfileDrawer({
               <div className="space-y-1.5">
                 <Label htmlFor="profile-email" className="flex items-center gap-1.5">
                   <Mail className="size-3.5 text-muted-foreground" />
-                  Email{' '}
+                  {t('common.email')}{' '}
                   <span className="text-xs font-normal text-muted-foreground">
                     {t('shared.optional')}
                   </span>
@@ -232,7 +232,7 @@ export function ProfileDrawer({
             <form id="profile-password-form" onSubmit={handleChangePassword} className="space-y-4">
               <div className="space-y-1.5">
                 <Label htmlFor="current-password">
-                  Current Password <span className="text-red-600">*</span>
+                  {t('shared.currentPassword')} <span className="text-red-600">*</span>
                 </Label>
                 <Input
                   id="current-password"
@@ -244,7 +244,7 @@ export function ProfileDrawer({
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="new-password">
-                  New Password <span className="text-red-600">*</span>
+                  {t('shared.newPassword')} <span className="text-red-600">*</span>
                 </Label>
                 <Input
                   id="new-password"
@@ -259,7 +259,7 @@ export function ProfileDrawer({
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="confirm-password">
-                  Confirm New Password <span className="text-red-600">*</span>
+                  {t('shared.confirmNewPassword')} <span className="text-red-600">*</span>
                 </Label>
                 <Input
                   id="confirm-password"

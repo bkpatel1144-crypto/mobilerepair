@@ -277,7 +277,8 @@
     "undo": "પાછું લો",
     "colour": "રંગ",
     "network": "નેટવર્ક",
-    "seller": "વેચનાર"
+    "seller": "વેચનાર",
+    "signOut": "સાઇન આઉટ"
   },
   "shell": {
     "appName": "aim",
@@ -469,7 +470,21 @@
     "exportCsv": "CSV નિકાસ કરો",
     "all": "બધા",
     "clearFilters": "ફિલ્ટર દૂર કરો",
-    "allTime": "બધો સમય"
+    "allTime": "બધો સમય",
+    "showingRange": "{{total}} માંથી {{from}}–{{to}} બતાવી રહ્યા છીએ",
+    "pageOf": "પૃષ્ઠ {{page}} / {{total}}",
+    "prev": "પાછળ",
+    "next": "આગળ",
+    "fullName": "પૂરું નામ",
+    "currentPassword": "વર્તમાન પાસવર્ડ",
+    "newPassword": "નવો પાસવર્ડ",
+    "confirmNewPassword": "નવો પાસવર્ડ ફરી લખો",
+    "myProfile": "મારી પ્રોફાઇલ",
+    "logout": "લૉગ આઉટ",
+    "draw": "દોરો",
+    "dotsConnected": "પેટર્ન: {{count}} બિંદુ જોડાયા",
+    "stepOf": "પગલું {{step}} / {{total}}",
+    "voided": "રદ"
   },
   "pages": {
     "dashboard": {
@@ -758,7 +773,8 @@
         "both": "બંને",
         "searchByNameMobileOrParty": "નામ, મોબાઇલ કે પાર્ટી કોડથી શોધો...",
         "editParty": "પાર્ટી બદલો",
-        "allOptionalAddWhatYouNeed": "બધું વૈકલ્પિક — જે જોઈએ તે ભરો"
+        "allOptionalAddWhatYouNeed": "બધું વૈકલ્પિક — જે જોઈએ તે ભરો",
+        "addParty": "પાર્ટી ઉમેરો"
       },
       "partyCategories": {
         "partyCategories": "પાર્ટી શ્રેણી",
@@ -1176,7 +1192,9 @@
         "outOfStock": "સ્ટોકમાં નથી",
         "onlyNLeft": "ફક્ત {{count}} બાકી",
         "notEnoughStock": "ફક્ત {{onHand}} ઉપલબ્ધ છે, પણ તમે {{qty}} લગાવી રહ્યા છો — {{short}} ઓછા.",
-        "fitItAnyway": "તેમ છતાં લગાવો — ટાઇમલાઇન પર સ્ટોક ઓવરરાઇડ તરીકે નોંધાશે"
+        "fitItAnyway": "તેમ છતાં લગાવો — ટાઇમલાઇન પર સ્ટોક ઓવરરાઇડ તરીકે નોંધાશે",
+        "addPart": "પાર્ટ ઉમેરો",
+        "addImage": "છબી ઉમેરો"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",
@@ -1194,7 +1212,9 @@
         "noUsersYet": "હજી કોઈ વપરાશકર્તા નથી.",
         "searchJobCustomerMobile": "જોબ, ગ્રાહક, મોબાઇલ શોધો...",
         "createJobCard": "જોબ કાર્ડ બનાવો",
-        "roleJobs": "{{role}} — જોબ"
+        "roleJobs": "{{role}} — જોબ",
+        "myCompletedJobs": "મારા પૂર્ણ જોબ ({{count}})",
+        "myReceivedJobs": "મારા મળેલા જોબ ({{count}})"
       },
       "recordCostingModal": {
         "itemName": "આઇટમનું નામ",
@@ -1250,7 +1270,10 @@
         "manageDeviceTypesBrandsAndProblem": "જોબ કાર્ડમાં વપરાતા ડિવાઇસ પ્રકાર, બ્રાન્ડ અને સમસ્યા ટૅગ સંભાળો",
         "splitAllSharedBrands": "બધી શેર કરેલી બ્રાન્ડ અલગ કરવી?",
         "split": "અલગ કરો",
-        "splitSharedBrands": "શેર કરેલી બ્રાન્ડ અલગ કરો"
+        "splitSharedBrands": "શેર કરેલી બ્રાન્ડ અલગ કરો",
+        "addBrand": "બ્રાન્ડ ઉમેરો",
+        "addModel": "મોડેલ ઉમેરો",
+        "sharedBrandsNotice": "કેટલાક બ્રાન્ડ હજી અનેક ડિવાઇસ પ્રકારોમાં વહેંચાયેલા છે. દરેક ડિવાઇસ પ્રકારને પોતાની અલગ બ્રાન્ડ પંક્તિ આપવા ઉપર <action>{{action}}</action> પર ક્લિક કરો. હાલના જોબ કાર્ડ યથાવત રહેશે."
       },
       "warranty": {
         "warrantyLookup": "વોરંટી તપાસ",

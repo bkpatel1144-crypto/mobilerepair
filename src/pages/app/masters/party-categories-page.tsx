@@ -167,7 +167,7 @@ export function PartyCategoriesPage() {
                   }}
                 >
                   <Pencil className="size-3.5" />
-                  Edit
+                  {t('common.edit')}
                 </Button>
                 {viewing.source === 'custom' && (
                   <DeletePartyCategoryButton
@@ -219,7 +219,7 @@ function DeletePartyCategoryButton({
         onClick={() => setConfirming(true)}
       >
         <Trash2 className="size-3.5" />
-        Delete
+        {t('common.delete')}
       </Button>
       <ConfirmDialog
         open={confirming}

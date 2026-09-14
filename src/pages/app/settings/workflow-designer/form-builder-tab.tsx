@@ -257,7 +257,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
           </Button>
           <Button type="button" variant="outline" size="sm" onClick={handleExport}>
             <Download className="size-3.5" />
-            Export
+            {t('common.export')}
           </Button>
           <Button type="button" variant="outline" size="sm" onClick={handleSaveAsTemplate}>
             <Bookmark className="size-3.5" />

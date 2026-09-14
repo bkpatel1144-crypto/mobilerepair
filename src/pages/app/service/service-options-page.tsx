@@ -19,7 +19,7 @@ import { SERVICE_OPTION_SECTIONS, type ServiceOptionType } from '@/config/servic
 import { OptionRow } from './service-options/option-row'
 import { AddOptionForm } from './service-options/add-option-form'
 import { cn } from '@/lib/utils'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 /** Everything a plain flat section (Cancel Reasons, Customer Items, Device Types, Hold Reasons,
  * Outstanding Reasons, Problems) needs — Brands/Models below reuse the same row/add-form pieces
@@ -168,7 +168,7 @@ function BrandsSection({
                       className="flex items-center gap-1.5 py-2 text-sm text-teal-700 hover:underline dark:text-teal-400"
                     >
                       <Plus className="size-3.5" />
-                      Add brand
+                      {t('pages.service.serviceOptions.addBrand')}
                     </button>
                   )}
                 </div>
@@ -195,7 +195,7 @@ function BrandsSection({
             className="flex items-center gap-1.5 py-2 text-sm text-teal-700 hover:underline dark:text-teal-400"
           >
             <Plus className="size-3.5" />
-            Add brand
+            {t('pages.service.serviceOptions.addBrand')}
           </button>
         )}
       </div>
@@ -298,7 +298,7 @@ function ModelsSection({
             className="flex items-center gap-1.5 py-2 text-sm text-teal-700 hover:underline dark:text-teal-400"
           >
             <Plus className="size-3.5" />
-            Add model
+            {t('pages.service.serviceOptions.addModel')}
           </button>
         )}
       </div>
@@ -360,9 +360,13 @@ export function ServiceOptionsPage() {
       {sharedBrandCount > 0 && (
         <p className="flex items-start gap-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
           <Info className="mt-0.5 size-4 shrink-0" />
-          Some brands are still shared across multiple device types. Click{' '}
-          <strong>{t('pages.service.serviceOptions.splitSharedBrands')}</strong> above to give each
-          device type its own independent brand row. Existing job cards stay untouched.
+          {/* `Trans`, not `t()`: the action's name stays bold, and in Hindi and Gujarati the
+           * words around it move to a different position. */}
+          <Trans
+            i18nKey="pages.service.serviceOptions.sharedBrandsNotice"
+            values={{ action: t('pages.service.serviceOptions.splitSharedBrands') }}
+            components={{ action: <strong /> }}
+          />
         </p>
       )}
 

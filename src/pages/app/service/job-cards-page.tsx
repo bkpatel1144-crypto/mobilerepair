@@ -249,7 +249,8 @@ export function JobCardsPage() {
                 variant={assignedToFilter.length > 0 ? 'default' : 'outline'}
               >
                 <SlidersHorizontal className="size-3.5" />
-                Filters{assignedToFilter.length > 0 ? ` (${assignedToFilter.length})` : ''}
+                {t('shared.filters')}
+                {assignedToFilter.length > 0 ? ` (${assignedToFilter.length})` : ''}
               </Button>
             }
           />
@@ -290,7 +291,7 @@ export function JobCardsPage() {
                 className="mt-2 w-full"
                 onClick={() => setAssignedToFilter([])}
               >
-                Clear
+                {t('common.clear')}
               </Button>
             )}
           </PopoverContent>
@@ -303,7 +304,7 @@ export function JobCardsPage() {
           onClick={() => setMyCompletedOnly((v) => !v)}
         >
           <ClipboardCheck className="size-3.5" />
-          My Completed Jobs ({myCompletedCount})
+          {t('pages.service.jobCards.myCompletedJobs', { count: myCompletedCount })}
         </Button>
         <Button
           type="button"
@@ -312,7 +313,7 @@ export function JobCardsPage() {
           onClick={() => setMyReceivedOnly((v) => !v)}
         >
           <Inbox className="size-3.5" />
-          My Received Jobs ({myReceivedCount})
+          {t('pages.service.jobCards.myReceivedJobs', { count: myReceivedCount })}
         </Button>
       </FilterBar>
 

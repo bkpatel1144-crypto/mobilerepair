@@ -133,7 +133,7 @@ export function PartiesPage() {
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
               <Plus className="size-4" />
-              Add Party
+              {t('pages.masters.parties.addParty')}
             </Button>
           )
         }
@@ -241,7 +241,7 @@ export function PartiesPage() {
                   }}
                 >
                   <Pencil className="size-3.5" />
-                  Edit
+                  {t('common.edit')}
                 </Button>
                 <PartyDeleteButton party={viewing} onDone={() => setViewing(null)} />
               </>
@@ -308,7 +308,7 @@ function PartyDeleteButton({ party, onDone }: { party: PartyWithId; onDone: () =
         onClick={() => setConfirming(true)}
       >
         <Trash2 className="size-3.5" />
-        Delete
+        {t('common.delete')}
       </Button>
       <ConfirmDialog
         open={confirming}
@@ -464,11 +464,11 @@ function PartyModal({
           <div className="flex h-8 items-center gap-4 text-sm">
             <label className="flex items-center gap-1.5">
               <Checkbox checked={isCustomer} onCheckedChange={(v) => setIsCustomer(v === true)} />
-              Customer
+              {t('common.customer')}
             </label>
             <label className="flex items-center gap-1.5">
               <Checkbox checked={isSupplier} onCheckedChange={(v) => setIsSupplier(v === true)} />
-              Supplier
+              {t('common.supplier')}
             </label>
           </div>
         </div>

@@ -49,7 +49,7 @@ export function JobCardDetailPage() {
     <div className="space-y-3 p-4 sm:p-6">
       <Button type="button" variant="ghost" size="sm" onClick={() => navigate(-1)}>
         <ArrowLeft />
-        Back
+        {t('common.back')}
       </Button>
       <JobCardDetailContent job={job} />
     </div>

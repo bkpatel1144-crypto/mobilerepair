@@ -235,7 +235,7 @@ export function DevicePurchasePage() {
                   onClick={() => setEditing(viewing)}
                 >
                   <Pencil className="size-3.5" />
-                  Edit
+                  {t('common.edit')}
                 </Button>
               )}
               {canRefurb && viewing.status === 'inStock' && (
@@ -482,7 +482,7 @@ export function PrintButtonGroup({
         render={
           <Button type="button" variant="outline" size="sm">
             <Printer className="size-3.5" />
-            Print
+            {t('common.print')}
             <ChevronDown className="size-3.5" />
           </Button>
         }

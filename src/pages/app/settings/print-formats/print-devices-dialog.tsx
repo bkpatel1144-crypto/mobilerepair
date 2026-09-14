@@ -108,7 +108,7 @@ function DeviceRow({
           disabled={removing}
           onClick={() => setConfirming(false)}
         >
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button
           type="button"

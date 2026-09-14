@@ -102,7 +102,7 @@ export function PatternLockPicker({
         className="shrink-0 border-amber-300 text-amber-700 hover:bg-amber-50 dark:border-amber-500/40 dark:text-amber-400"
       >
         <Grid3x3 className="size-3.5" />
-        Draw
+        {t('shared.draw')}
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -171,7 +171,7 @@ export function PatternLockPicker({
               draft.length >= 2 ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'
             )}
           >
-            Pattern: {draft.length} dots connected
+            {t('shared.dotsConnected', { count: draft.length })}
           </p>
 
           <div className="flex gap-2">
@@ -182,10 +182,10 @@ export function PatternLockPicker({
               disabled={draft.length === 0}
             >
               <RotateCcw className="size-3.5" />
-              Clear
+              {t('common.clear')}
             </Button>
             <Button type="button" variant="outline" className="flex-1" onClick={handleCancel}>
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button
               type="button"
@@ -234,6 +234,7 @@ export function PatternReplayPopover({
 }
 
 function PatternReplayBody({ dots, onClose }: { dots: number[]; onClose: () => void }) {
+  const { t } = useTranslation()
   const total = dots.length
   const [step, setStep] = useState(1)
 
@@ -249,7 +250,7 @@ function PatternReplayBody({ dots, onClose }: { dots: number[]; onClose: () => v
   return (
     <>
       <p className="mb-3 text-center text-xs font-semibold tracking-wide text-amber-600 uppercase dark:text-amber-400">
-        Step {step} of {total}
+        {t('shared.stepOf', { step, total })}
       </p>
       <svg viewBox="0 0 200 200" className="mx-auto w-full max-w-40">
         {revealed.slice(1).map((dot, i) => {
@@ -306,7 +307,7 @@ function PatternReplayBody({ dots, onClose }: { dots: number[]; onClose: () => v
         })}
       </svg>
       <Button type="button" variant="outline" size="sm" className="mt-3 w-full" onClick={onClose}>
-        Close
+        {t('common.close')}
       </Button>
     </>
   )

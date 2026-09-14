@@ -608,7 +608,7 @@ export function JobCardDetailContent({
                       variant="outline"
                       onClick={() => setAddPartOpen(false)}
                     >
-                      Cancel
+                      {t('common.cancel')}
                     </Button>
                   </div>
                 </div>
@@ -619,7 +619,7 @@ export function JobCardDetailContent({
                   className="flex items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400"
                 >
                   <Plus className="size-3.5" />
-                  Add Part
+                  {t('pages.service.jobCardDetailContent.addPart')}
                 </button>
               ))}
           </Panel>
@@ -644,7 +644,7 @@ export function JobCardDetailContent({
             {canPerform('addImage') && (
               <label className="flex cursor-pointer items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400">
                 <Plus className="size-3.5" />
-                Add Image
+                {t('pages.service.jobCardDetailContent.addImage')}
                 <input
                   type="file"
                   accept="image/*"
@@ -685,7 +685,7 @@ export function JobCardDetailContent({
                   className="flex items-center gap-1.5 text-sm text-teal-700 hover:underline dark:text-teal-400"
                 >
                   <Plus className="size-3.5" />
-                  Add Note
+                  {t('pages.service.jobCardDetailContent.addNote')}
                 </button>
               </div>
             )}

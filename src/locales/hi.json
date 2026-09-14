@@ -277,7 +277,8 @@
     "undo": "पूर्ववत करें",
     "colour": "रंग",
     "network": "नेटवर्क",
-    "seller": "विक्रेता"
+    "seller": "विक्रेता",
+    "signOut": "साइन आउट"
   },
   "shell": {
     "appName": "aim",
@@ -469,7 +470,21 @@
     "exportCsv": "CSV निर्यात करें",
     "all": "सभी",
     "clearFilters": "फ़िल्टर हटाएँ",
-    "allTime": "सभी समय"
+    "allTime": "सभी समय",
+    "showingRange": "{{total}} में से {{from}}–{{to}} दिखा रहे हैं",
+    "pageOf": "पृष्ठ {{page}} / {{total}}",
+    "prev": "पिछला",
+    "next": "अगला",
+    "fullName": "पूरा नाम",
+    "currentPassword": "वर्तमान पासवर्ड",
+    "newPassword": "नया पासवर्ड",
+    "confirmNewPassword": "नया पासवर्ड दोहराएँ",
+    "myProfile": "मेरी प्रोफ़ाइल",
+    "logout": "लॉग आउट",
+    "draw": "बनाएँ",
+    "dotsConnected": "पैटर्न: {{count}} बिंदु जुड़े",
+    "stepOf": "चरण {{step}} / {{total}}",
+    "voided": "रद्द"
   },
   "pages": {
     "dashboard": {
@@ -758,7 +773,8 @@
         "both": "दोनों",
         "searchByNameMobileOrParty": "नाम, मोबाइल या पार्टी कोड से खोजें...",
         "editParty": "पार्टी बदलें",
-        "allOptionalAddWhatYouNeed": "सब वैकल्पिक — जो चाहिए वही भरें"
+        "allOptionalAddWhatYouNeed": "सब वैकल्पिक — जो चाहिए वही भरें",
+        "addParty": "पार्टी जोड़ें"
       },
       "partyCategories": {
         "partyCategories": "पार्टी श्रेणी",
@@ -1176,7 +1192,9 @@
         "outOfStock": "स्टॉक में नहीं",
         "onlyNLeft": "सिर्फ़ {{count}} बचे",
         "notEnoughStock": "सिर्फ़ {{onHand}} उपलब्ध हैं, पर आप {{qty}} लगा रहे हैं — {{short}} कम।",
-        "fitItAnyway": "फिर भी लगाएँ — टाइमलाइन पर स्टॉक ओवरराइड के रूप में दर्ज होगा"
+        "fitItAnyway": "फिर भी लगाएँ — टाइमलाइन पर स्टॉक ओवरराइड के रूप में दर्ज होगा",
+        "addPart": "पार्ट जोड़ें",
+        "addImage": "छवि जोड़ें"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "यह जॉब कार्ड लोड नहीं हो सका",
@@ -1194,7 +1212,9 @@
         "noUsersYet": "अभी कोई उपयोगकर्ता नहीं।",
         "searchJobCustomerMobile": "जॉब, ग्राहक, मोबाइल खोजें...",
         "createJobCard": "जॉब कार्ड बनाएं",
-        "roleJobs": "{{role}} — जॉब"
+        "roleJobs": "{{role}} — जॉब",
+        "myCompletedJobs": "मेरे पूर्ण जॉब ({{count}})",
+        "myReceivedJobs": "मेरे प्राप्त जॉब ({{count}})"
       },
       "recordCostingModal": {
         "itemName": "आइटम का नाम",
@@ -1250,7 +1270,10 @@
         "manageDeviceTypesBrandsAndProblem": "जॉब कार्ड में उपयोग होने वाले डिवाइस प्रकार, ब्रांड और समस्या टैग प्रबंधित करें",
         "splitAllSharedBrands": "सभी साझा ब्रांड अलग करें?",
         "split": "अलग करें",
-        "splitSharedBrands": "साझा ब्रांड अलग करें"
+        "splitSharedBrands": "साझा ब्रांड अलग करें",
+        "addBrand": "ब्रांड जोड़ें",
+        "addModel": "मॉडल जोड़ें",
+        "sharedBrandsNotice": "कुछ ब्रांड अब भी कई डिवाइस प्रकारों में साझा हैं। हर डिवाइस प्रकार को अपनी अलग ब्रांड पंक्ति देने के लिए ऊपर <action>{{action}}</action> पर क्लिक करें। मौजूदा जॉब कार्ड अछूते रहेंगे।"
       },
       "warranty": {
         "warrantyLookup": "वारंटी जाँच",

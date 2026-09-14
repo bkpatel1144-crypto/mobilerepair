@@ -262,8 +262,11 @@ export function DataTable<T>({
       {/* Pagination footer */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
         <span>
-          Showing {sorted.length === 0 ? 0 : start + 1}–
-          {Math.min(start + rowsPerPage, sorted.length)} of {sorted.length}
+          {t('shared.showingRange', {
+            from: sorted.length === 0 ? 0 : start + 1,
+            to: Math.min(start + rowsPerPage, sorted.length),
+            total: sorted.length,
+          })}
         </span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
@@ -307,7 +310,7 @@ export function DataTable<T>({
               <ChevronLeft className="size-4" />
             </Button>
             <span className="px-1 tabular-nums">
-              Page {clampedPage} of {totalPages}
+              {t('shared.pageOf', { page: clampedPage, total: totalPages })}
             </span>
             <Button
               type="button"

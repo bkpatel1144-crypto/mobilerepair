@@ -117,7 +117,7 @@ export function ReceiptsPaymentsPage() {
           </span>
           {r.voided && (
             <span className="rounded-full bg-red-100 px-1.5 py-0.5 text-[10px] font-medium text-red-700 dark:bg-red-500/15 dark:text-red-400">
-              Voided
+              {t('shared.voided')}
             </span>
           )}
         </div>
@@ -210,7 +210,7 @@ export function ReceiptsPaymentsPage() {
             {canDo('FINANCE_RECEIPTS_CREATE') && (
               <Button type="button" onClick={() => setNewEntryOpen(true)}>
                 <Plus className="size-4" />
-                New Entry
+                {t('pages.finance.receiptsPayments.newEntry')}
               </Button>
             )}
           </>
@@ -455,7 +455,7 @@ function NewEntryDialog({
               disabled={!partyId}
               onClick={() => setAgainst('jobCard')}
             >
-              Job Card
+              {t('common.jobCard')}
             </Button>
             <Button
               type="button"
@@ -532,7 +532,7 @@ function NewEntryDialog({
 
         <div className="flex justify-end gap-2 border-t pt-3">
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button type="button" onClick={handleSubmit} disabled={createEntry.isPending}>
             {createEntry.isPending

@@ -150,7 +150,7 @@ export function UomPage() {
                 }}
               >
                 <Pencil className="size-4" />
-                Edit
+                {t('common.edit')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={(e) => {
@@ -174,7 +174,7 @@ export function UomPage() {
                   }}
                 >
                   <Trash2 className="size-4" />
-                  Delete
+                  {t('common.delete')}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

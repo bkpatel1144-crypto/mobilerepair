@@ -1,4 +1,5 @@
 import { QrCode, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import {
   Dialog,
   DialogContent,
@@ -28,6 +29,7 @@ export function ScanTextModal({
   description,
   onScanned,
 }: ScanTextModalProps) {
+  const { t } = useTranslation()
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md" showCloseButton={false}>
@@ -60,7 +62,7 @@ export function ScanTextModal({
           onClick={() => onOpenChange(false)}
         >
           <X className="size-4" />
-          Close
+          {t('common.close')}
         </Button>
       </DialogContent>
     </Dialog>

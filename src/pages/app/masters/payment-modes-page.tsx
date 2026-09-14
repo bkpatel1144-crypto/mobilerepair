@@ -131,7 +131,7 @@ export function PaymentModesPage() {
                 }}
               >
                 <Pencil className="size-4" />
-                Edit
+                {t('common.edit')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={(e) => {
@@ -155,7 +155,7 @@ export function PaymentModesPage() {
                   }}
                 >
                   <Trash2 className="size-4" />
-                  Delete
+                  {t('common.delete')}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

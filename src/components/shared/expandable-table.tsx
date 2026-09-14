@@ -193,8 +193,11 @@ export function ExpandableTable<T>({
       {/* Pagination footer — same shape as DataTable's own, for visual consistency. */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
         <span>
-          Showing {data.length === 0 ? 0 : start + 1}–{Math.min(start + rowsPerPage, data.length)}{' '}
-          of {data.length}
+          {t('shared.showingRange', {
+            from: data.length === 0 ? 0 : start + 1,
+            to: Math.min(start + rowsPerPage, data.length),
+            total: data.length,
+          })}
         </span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
@@ -226,10 +229,10 @@ export function ExpandableTable<T>({
               disabled={clampedPage <= 1}
               onClick={() => setPage((p) => p - 1)}
             >
-              Prev
+              {t('shared.prev')}
             </Button>
             <span className="px-1 tabular-nums">
-              Page {clampedPage} of {totalPages}
+              {t('shared.pageOf', { page: clampedPage, total: totalPages })}
             </span>
             <Button
               type="button"
@@ -238,7 +241,7 @@ export function ExpandableTable<T>({
               disabled={clampedPage >= totalPages}
               onClick={() => setPage((p) => p + 1)}
             >
-              Next
+              {t('shared.next')}
             </Button>
           </div>
         </div>

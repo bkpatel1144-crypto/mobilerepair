@@ -324,7 +324,7 @@ export function RecordCostingModal({
               onClick={onClose}
               className="w-full text-center text-sm text-muted-foreground hover:underline"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
           </div>
         </div>

@@ -244,7 +244,7 @@ export function PrintFormatsPage() {
                                 )}
                                 <DropdownMenuItem onClick={() => duplicate.mutate(tpl)}>
                                   <Copy />
-                                  Duplicate
+                                  {t('common.duplicate')}
                                 </DropdownMenuItem>
                                 {/* Any format can be deleted, seeded ones included — Add Missing
                                  * Defaults puts a seed back. The one case that is refused is the

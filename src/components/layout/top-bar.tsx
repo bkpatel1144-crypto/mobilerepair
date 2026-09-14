@@ -368,7 +368,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
 
               <DropdownMenuItem onClick={() => setProfileOpen(true)}>
                 <UserIcon />
-                My Profile
+                {t('shared.myProfile')}
               </DropdownMenuItem>
               {canView('settings/billing') && (
                 <DropdownMenuItem render={<Link to={buildPath('settings', 'billing')} />}>
@@ -381,7 +381,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
 
               <DropdownMenuItem variant="destructive" onClick={handleLogOut}>
                 <LogOut />
-                Logout
+                {t('shared.logout')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

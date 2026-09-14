@@ -1277,7 +1277,7 @@ export function CreateJobCardPage() {
               onClick={() => navigate(-1)}
               disabled={submitting}
             >
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button
               type="button"

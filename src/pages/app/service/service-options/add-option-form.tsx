@@ -107,7 +107,7 @@ export function AddOptionForm({
           Add
         </Button>
         <Button type="button" size="sm" variant="outline" onClick={onCancel}>
-          Cancel
+          {t('common.cancel')}
         </Button>
       </div>
     </div>

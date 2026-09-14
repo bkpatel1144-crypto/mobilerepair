@@ -123,7 +123,7 @@ export function ServiceItemsPage() {
           className="flex items-center gap-1 text-sm text-teal-700 hover:underline dark:text-teal-400"
         >
           <Pencil className="size-3.5" />
-          Edit
+          {t('common.edit')}
         </button>
       ),
     },

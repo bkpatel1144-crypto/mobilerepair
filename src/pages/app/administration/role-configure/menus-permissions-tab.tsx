@@ -198,7 +198,7 @@ export function MenusPermissionsTab({
             onClick={() => setConfirmingClear(true)}
             disabled={disabled || draft.fullAccess}
           >
-            Clear
+            {t('common.clear')}
           </Button>
           <Button
             type="button"

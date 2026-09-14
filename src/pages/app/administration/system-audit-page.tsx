@@ -141,7 +141,7 @@ export function SystemAuditPage() {
             }
           >
             <Download className="size-4" />
-            Export CSV
+            {t('shared.exportCsv')}
           </Button>
         }
       />

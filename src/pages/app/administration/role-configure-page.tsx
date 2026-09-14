@@ -122,7 +122,7 @@ export function RoleConfigurePage() {
         <div className="flex flex-wrap items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
             <ArrowLeft />
-            Back
+            {t('common.back')}
           </Button>
           {role.type === 'owner' ? (
             <Crown className="size-5 text-amber-500" />
@@ -217,7 +217,7 @@ export function RoleConfigurePage() {
               onClick={handleCancel}
               disabled={!isDirty || updateRole.isPending}
             >
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button type="button" onClick={handleSave} disabled={!isDirty || updateRole.isPending}>
               {updateRole.isPending ? 'Saving…' : t('common.save')}

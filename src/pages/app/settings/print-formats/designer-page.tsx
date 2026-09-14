@@ -260,11 +260,11 @@ export function PrintTemplateDesignerPage() {
         <div className="ml-auto flex flex-wrap items-center gap-2">
           <Button type="button" variant="outline" onClick={() => setPreviewOpen(true)}>
             <Eye className="size-4" />
-            Preview
+            {t('common.preview')}
           </Button>
           <Button type="button" variant="outline" onClick={() => openPrintWindow(html())}>
             <Printer className="size-4" />
-            Print
+            {t('common.print')}
           </Button>
           <Button type="button" onClick={handleSave} disabled={!state.isDirty || update.isPending}>
             <Save className="size-4" />
@@ -301,7 +301,7 @@ export function PrintTemplateDesignerPage() {
               )}
               <DropdownMenuItem onClick={() => duplicate.mutate(template)}>
                 <Copy />
-                Duplicate
+                {t('common.duplicate')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setPageSetupOpen(true)}>
                 <Ruler />
@@ -337,7 +337,7 @@ export function PrintTemplateDesignerPage() {
           </DropdownMenu>
           <Button type="button" variant="outline" onClick={goBack}>
             <ArrowLeft className="size-4" />
-            Back
+            {t('common.back')}
           </Button>
         </div>
       </div>
@@ -785,7 +785,7 @@ export function PrintTemplateDesignerPage() {
           className="flex max-h-[calc(100dvh-2rem)] flex-col gap-3 overflow-hidden"
         >
           <DialogTitle className="flex items-baseline gap-2">
-            Preview
+            {t('common.preview')}
             <span className="text-sm font-normal text-muted-foreground">— sample data</span>
           </DialogTitle>
           <div className="min-h-0 flex-1 overflow-auto rounded-lg border bg-muted/40 p-4">
@@ -798,11 +798,11 @@ export function PrintTemplateDesignerPage() {
           </div>
           <div className="flex shrink-0 justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => setPreviewOpen(false)}>
-              Close
+              {t('common.close')}
             </Button>
             <Button type="button" onClick={() => openPrintWindow(html())}>
               <Printer className="size-4" />
-              Print
+              {t('common.print')}
             </Button>
           </div>
         </DialogContent>

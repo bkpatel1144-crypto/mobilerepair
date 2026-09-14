@@ -32,7 +32,7 @@ export function AccountDisabledScreen() {
         </p>
       </div>
       <Button type="button" variant="outline" onClick={() => logOut()}>
-        Sign Out
+        {t('common.signOut')}
       </Button>
     </div>
   )

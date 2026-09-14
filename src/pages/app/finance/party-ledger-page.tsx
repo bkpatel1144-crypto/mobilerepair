@@ -233,7 +233,7 @@ function PartyLedgerDetailSheet({
             <div className="flex items-center justify-end px-4">
               <Button type="button" variant="outline" size="sm">
                 <Download className="size-3.5" />
-                Export
+                {t('common.export')}
               </Button>
             </div>
 
