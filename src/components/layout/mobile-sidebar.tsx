@@ -4,6 +4,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { SidebarNav } from '@/components/layout/sidebar-nav'
 import { Input } from '@/components/ui/input'
 import { useTranslation } from 'react-i18next'
+import { COMPANY } from '@/config/company'
 import { useCompany } from '@/hooks/use-company'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -52,7 +53,13 @@ export function MobileSidebar({ open, onOpenChange }: MobileSidebarProps) {
         <SidebarNav onNavigate={() => onOpenChange(false)} filter={filter} />
 
         <div className="shrink-0 border-t p-3 text-center text-xs text-muted-foreground">
-          © 2025 ERP Pro
+          {/* The product's own name and the current year, not a hardcoded "2025 ERP Pro" —
+           * a scaffold leftover that sat under the menu on every screen in the app. Same source
+           * as the marketing footer, so the two cannot drift apart. */}
+          {t('marketing.footer.copyright', {
+            year: new Date().getFullYear(),
+            company: COMPANY.legalName,
+          })}
         </div>
       </SheetContent>
     </Sheet>

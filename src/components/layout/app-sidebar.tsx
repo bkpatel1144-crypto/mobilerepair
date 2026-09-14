@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { COMPANY } from '@/config/company'
 import { useCompany } from '@/hooks/use-company'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -113,7 +114,13 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
 
       {!collapsed && (
         <div className="shrink-0 border-t p-3 text-center text-xs text-muted-foreground">
-          © 2025 ERP Pro
+          {/* The product's own name and the current year, not a hardcoded "2025 ERP Pro" —
+           * a scaffold leftover that sat under the menu on every screen in the app. Same source
+           * as the marketing footer, so the two cannot drift apart. */}
+          {t('marketing.footer.copyright', {
+            year: new Date().getFullYear(),
+            company: COMPANY.legalName,
+          })}
         </div>
       )}
     </aside>
