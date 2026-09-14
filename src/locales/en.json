@@ -458,7 +458,12 @@
     "offlineTitle": "You're offline",
     "offlineExplained": "You can still open and read everything already loaded. Creating anything with a number — job cards, receipts, purchases — needs a connection and will say so.",
     "backOnline": "Back online",
-    "needsAConnection": "Needs a connection"
+    "needsAConnection": "Needs a connection",
+    "filters": "Filters",
+    "moreActions": "More actions",
+    "exportCsv": "Export CSV",
+    "all": "All",
+    "clearFilters": "Clear filters"
   },
   "pages": {
     "dashboard": {
@@ -1817,7 +1822,14 @@
         "companyPreferencesActiveCompany": "Company Preferences (active company)",
         "currentlyActive": "Currently active",
         "defaultCompanyCannotBeDisabledOr": "Default company — cannot be disabled or deleted.",
-        "addACompanyToManageA": "Add a company to manage a second shop from this account."
+        "addACompanyToManageA": "Add a company to manage a second shop from this account.",
+        "gstRegistration": "GST registration",
+        "defaultCompanyOnly": "Default company only",
+        "registration": {
+          "regular": "Regular",
+          "composition": "Composition",
+          "unregistered": "Unregistered"
+        }
       },
       "financialYears": {
         "financialYears": "Financial Years",

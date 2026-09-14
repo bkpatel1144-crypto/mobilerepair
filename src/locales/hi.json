@@ -458,7 +458,12 @@
     "offlineTitle": "आप ऑफ़लाइन हैं",
     "offlineExplained": "पहले से लोड की गई हर चीज़ आप अब भी खोल और पढ़ सकते हैं। नंबर वाली कोई भी नई एंट्री — जॉब कार्ड, रसीदें, ख़रीद — के लिए कनेक्शन चाहिए और वह बता देगा।",
     "backOnline": "फिर से ऑनलाइन",
-    "needsAConnection": "कनेक्शन ज़रूरी है"
+    "needsAConnection": "कनेक्शन ज़रूरी है",
+    "filters": "फ़िल्टर",
+    "moreActions": "और कार्रवाई",
+    "exportCsv": "CSV निर्यात करें",
+    "all": "सभी",
+    "clearFilters": "फ़िल्टर हटाएँ"
   },
   "pages": {
     "dashboard": {
@@ -1817,7 +1822,14 @@
         "companyPreferencesActiveCompany": "कंपनी की पसंद (चालू कंपनी)",
         "currentlyActive": "अभी चालू",
         "defaultCompanyCannotBeDisabledOr": "डिफ़ॉल्ट कंपनी — बंद या हटाई नहीं जा सकती।",
-        "addACompanyToManageA": "इस खाते से दूसरी दुकान संभालने के लिए कंपनी जोड़ें।"
+        "addACompanyToManageA": "इस खाते से दूसरी दुकान संभालने के लिए कंपनी जोड़ें।",
+        "gstRegistration": "GST पंजीकरण",
+        "defaultCompanyOnly": "केवल डिफ़ॉल्ट कंपनी",
+        "registration": {
+          "regular": "नियमित",
+          "composition": "कंपोज़िशन",
+          "unregistered": "अपंजीकृत"
+        }
       },
       "financialYears": {
         "financialYears": "वित्तीय वर्ष",

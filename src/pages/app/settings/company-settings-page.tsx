@@ -18,6 +18,9 @@ import {
   Clock,
   ArrowLeftRight,
   Check,
+  Filter,
+  Download,
+  RefreshCw,
 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -28,6 +31,16 @@ import { StatusBadge } from '@/components/shared/status-badge'
 import { FormModal } from '@/components/shared/form-modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { downloadCsv } from '@/lib/csv-export'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,6 +57,7 @@ import { buildPath } from '@/config/nav'
 import { formatDateTimeLong, getInitials } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { CompanyForm } from './company-form'
+import type { CompanyDoc } from '@/types/firestore'
 import { BLANK_COMPANY, validateCompany, type CompanyFormValues } from '@/lib/company-validation'
 import type { CompanyWithId } from '@/hooks/use-company'
 import { useTranslation } from 'react-i18next'
@@ -132,6 +146,9 @@ export function CompanySettingsPage() {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('active')
   const [viewing, setViewing] = useState<CompanyWithId | null>(null)
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const [gstFilter, setGstFilter] = useState<'all' | CompanyDoc['gstRegistration']>('all')
+  const [defaultOnly, setDefaultOnly] = useState(false)
   const [creating, setCreating] = useState(false)
   const [editing, setEditing] = useState<CompanyWithId | null>(null)
   const [form, setForm] = useState<CompanyFormValues>(BLANK_COMPANY)
@@ -150,6 +167,28 @@ export function CompanySettingsPage() {
         ? `${c.name} ${c.code} ${c.email}`.toLowerCase().includes(search.toLowerCase())
         : true
     )
+    .filter((c) => gstFilter === 'all' || c.gstRegistration === gstFilter)
+    .filter((c) => !defaultOnly || c.protected)
+
+  const activeFilterCount = (gstFilter === 'all' ? 0 : 1) + (defaultOnly ? 1 : 0)
+
+  /** What the list is showing, not the whole collection — exporting rows the screen has filtered
+   *  away is the commonest way an export quietly disagrees with what was on screen. */
+  function exportCompanies() {
+    downloadCsv(
+      `companies-${new Date().toISOString().slice(0, 10)}.csv`,
+      filtered.map((c) => ({
+        Name: c.name,
+        Code: c.code,
+        GSTIN: c.gstin ?? '',
+        Registration: c.gstRegistration,
+        Email: c.email ?? '',
+        Phone: c.phone ?? '',
+        Status: c.status,
+        Default: c.protected ? t('common.yes') : t('common.no'),
+      }))
+    )
+  }
 
   function startCreate() {
     setForm(BLANK_COMPANY)
@@ -444,7 +483,95 @@ export function CompanySettingsPage() {
           placeholder={t('pages.settings.companySettings.searchByNameCodeOrEmail')}
           className="h-10 max-w-md flex-1 rounded-full"
         />
+        <Button
+          type="button"
+          variant="outline"
+          aria-pressed={filtersOpen}
+          onClick={() => setFiltersOpen((v) => !v)}
+        >
+          <Filter className="size-4" />
+          {t('shared.filters')}
+          {activeFilterCount > 0 && (
+            <span className="ml-1 rounded-full bg-teal-600 px-1.5 text-xs font-semibold text-white">
+              {activeFilterCount}
+            </span>
+          )}
+        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                aria-label={t('shared.moreActions')}
+              />
+            }
+          >
+            <MoreVertical className="size-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={exportCompanies}>
+              <Download className="size-4" />
+              {t('shared.exportCsv')}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => void refetch()}>
+              <RefreshCw className="size-4" />
+              {t('common.refresh')}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
+
+      {filtersOpen && (
+        <div className="flex flex-wrap items-end gap-3 rounded-lg border bg-muted/30 p-3">
+          <div className="space-y-1.5">
+            <Label>{t('pages.settings.companySettings.gstRegistration')}</Label>
+            <Select
+              value={gstFilter}
+              onValueChange={(v) => v && setGstFilter(v as typeof gstFilter)}
+            >
+              <SelectTrigger className="w-52">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t('shared.all')}</SelectItem>
+                {/* Written out rather than mapped, like `company-form.tsx`: the stored value
+                 * stays in `value=` and only the label is translated. */}
+                <SelectItem value="Regular">
+                  {t('pages.settings.companySettings.registration.regular')}
+                </SelectItem>
+                <SelectItem value="Composition">
+                  {t('pages.settings.companySettings.registration.composition')}
+                </SelectItem>
+                <SelectItem value="Unregistered">
+                  {t('pages.settings.companySettings.registration.unregistered')}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <label className="flex items-center gap-2 pb-2 text-sm">
+            <Checkbox
+              checked={defaultOnly}
+              onCheckedChange={(v) => setDefaultOnly(v === true)}
+            />
+            {t('pages.settings.companySettings.defaultCompanyOnly')}
+          </label>
+          {activeFilterCount > 0 && (
+            <Button
+              type="button"
+              variant="ghost"
+              className="pb-2"
+              onClick={() => {
+                setGstFilter('all')
+                setDefaultOnly(false)
+              }}
+            >
+              {t('shared.clearFilters')}
+            </Button>
+          )}
+        </div>
+      )}
 
       <p className="flex items-center gap-2 text-sm">
         <span className="text-muted-foreground">{t('shared.viewing')}</span>
