@@ -19,10 +19,10 @@ export const COMPANY = {
   /** Who a caller should ask for. */
   contactPerson: 'Kintesh Vasoya',
 
-  // TODO(contact): both addresses are still unconfirmed — they match the product's own domain
-  // but nobody has said they exist.
-  supportEmail: 'support@aimenterprise.in',
-  salesEmail: 'sales@aimenterprise.in',
+  // One address for both, which is what a single-shop business actually has. Kept as two fields
+  // so support and sales can be split later without touching every page that links to them.
+  supportEmail: 'kintesh@aimenterprise.in',
+  salesEmail: 'kintesh@aimenterprise.in',
   /** Spaced for display; `tel:` links strip the spaces themselves. */
   phone: '+91 99981 81685',
   /** Bare digits with the country code and no `+` — what `wa.me` expects. */
