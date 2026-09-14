@@ -15,9 +15,9 @@ import { useTranslation } from 'react-i18next'
  * say less and have it be accurate than to paste a generic template making claims the software
  * does not honour.
  *
- * They are still not a substitute for review by someone qualified, and the specifics a lawyer
- * will ask for — the registered entity's details, jurisdiction, GST particulars — are the
- * `TODO(contact)` placeholders in `src/config/company.ts`. Flagged in WEB_PLAN.md.
+ * They are still not a substitute for review by someone qualified. The registered entity's name,
+ * address and contact details now come from `src/config/company.ts` and are real; jurisdiction
+ * and GST particulars are the parts a lawyer would still want to settle. Flagged in WEB_PLAN.md.
  */
 
 const PRIVACY_SECTIONS = [

@@ -6,9 +6,9 @@
  * button and shipped. A single constant makes that class of mistake a one-line fix instead of a
  * grep, and gives the footer, the contact page and every mailto link the same source.
  *
- * Values marked TODO(contact) are placeholders and must be replaced before launch. They are
- * deliberately obvious rather than plausible: a wrong-but-believable phone number is worse than a
- * visibly empty one, because nothing will ever prompt anyone to fix it.
+ * Every value here is the real one. They began as deliberately obvious placeholders — a
+ * wrong-but-believable phone number is worse than a visibly empty one, because nothing ever
+ * prompts anyone to fix it — and were replaced once the business confirmed them.
  */
 export const COMPANY = {
   /** Legal entity, as it should appear in the footer and legal pages. */
@@ -28,13 +28,14 @@ export const COMPANY = {
   /** Bare digits with the country code and no `+` — what `wa.me` expects. */
   whatsapp: '919998181685',
 
-  // TODO(contact): registered address.
+  /** Split across two lines because both the About and Contact pages render them as
+   *  `line1, line2` above a `city, state postalCode` line. */
   address: {
-    line1: 'Address line 1',
-    line2: 'Address line 2',
-    city: 'City',
+    line1: '40, Shankar Nagar, Adarsh Society',
+    line2: 'Ram Nagar, Hirabaugh',
+    city: 'Surat',
     state: 'Gujarat',
-    postalCode: '000000',
+    postalCode: '395006',
     country: 'India',
   },
 
