@@ -336,7 +336,7 @@ function PaymentModeModal({
       <label className="flex items-center gap-2 text-sm">
         <Checkbox checked={isDefault} onCheckedChange={(v) => setIsDefault(v === true)} />
         <span>
-          Set as default{' '}
+          {t('shared.setAsDefault')}{' '}
           <span className="text-muted-foreground">— Auto-select this mode during billing</span>
         </span>
       </label>

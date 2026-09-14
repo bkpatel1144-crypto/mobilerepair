@@ -279,7 +279,7 @@ export function ItemCategoriesPage() {
               </span>
               {viewing.source === 'system' && (
                 <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-medium">
-                  System
+                  {t('common.system')}
                 </span>
               )}
             </>

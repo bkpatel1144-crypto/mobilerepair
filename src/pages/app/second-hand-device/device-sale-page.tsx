@@ -99,7 +99,7 @@ export function DeviceSalePage() {
             setSelling(p)
           }}
         >
-          Sell
+          {t('common.sell')}
         </Button>
       ),
     },

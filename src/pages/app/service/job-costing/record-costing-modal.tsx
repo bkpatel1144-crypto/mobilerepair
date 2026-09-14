@@ -274,7 +274,9 @@ export function RecordCostingModal({
               <p className="font-medium">Job Card: {job.jobNumber}</p>
               <p className="text-muted-foreground">Technician: {job.assignedToName ?? '—'}</p>
               <p className="text-muted-foreground">
-                Device: {[job.brandName, job.model].filter(Boolean).join(' ')}
+                {t('pages.service.jobCosting.deviceLabel', {
+                  device: [job.brandName, job.model].filter(Boolean).join(' '),
+                })}
               </p>
             </div>
             <div className="space-y-1.5 rounded-lg border p-3 text-sm">

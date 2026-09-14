@@ -278,7 +278,13 @@
     "colour": "Colour",
     "network": "Network",
     "seller": "Seller",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "daily": "Daily",
+    "monthly": "Monthly",
+    "account": "Account",
+    "bold": "Bold",
+    "italic": "Italic",
+    "sell": "Sell"
   },
   "shell": {
     "appName": "aim",
@@ -484,7 +490,13 @@
     "draw": "Draw",
     "dotsConnected": "Pattern: {{count}} dots connected",
     "stepOf": "Step {{step}} of {{total}}",
-    "voided": "Voided"
+    "voided": "Voided",
+    "done": "Done",
+    "selectAll": "Select All",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "autoSaved": "Auto-saved",
+    "allTimeCapitalised": "All Time"
   },
   "pages": {
     "dashboard": {
@@ -561,7 +573,8 @@
         "debitOut": "Debit (OUT)",
         "totalCreditIn": "Total Credit (IN)",
         "totalDebitOut": "Total Debit (OUT)",
-        "manualEntry": "Manual entry"
+        "manualEntry": "Manual entry",
+        "closingBalanceEntries": "Closing Balance ({{count}} entry total):"
       },
       "expenses": {
         "newExpense": "New Expense",
@@ -829,7 +842,8 @@
         "thisUnitWillBecomeSelectableAgain": "This unit will become selectable again for new items.",
         "editUnitOfMeasure": "Edit Unit of Measure",
         "setThisOnlyIfThisUom": "Set this only if this UOM converts to another. e.g. 1 Inch = 0.0254 Meter",
-        "decimals": "Decimals"
+        "decimals": "Decimals",
+        "addUom": "Add UOM"
       },
       "createItem": {
         "createItem": "Create Item",
@@ -999,7 +1013,8 @@
         "buyUsedMobilesLaptopsOtherDevices": "Buy used mobiles, laptops & other devices from sellers",
         "newPurchase": "New Purchase",
         "sendToRefurb": "Send to Refurb",
-        "spentSoFarGettingThisDevice": "Spent so far getting this device sale-ready — subtracted from profit at sale time."
+        "spentSoFarGettingThisDevice": "Spent so far getting this device sale-ready — subtracted from profit at sale time.",
+        "printDocument": "Print {{document}}"
       },
       "deviceSale": {
         "deviceSale": "Device Sale",
@@ -1241,7 +1256,8 @@
         "recorded": "Recorded",
         "pendingCosting": "Pending Costing",
         "costed": "Costed",
-        "recordCost": "Record Cost"
+        "recordCost": "Record Cost",
+        "deviceLabel": "Device: {{device}}"
       },
       "serviceItems": {
         "serviceItems": "Service Items",
@@ -1253,7 +1269,8 @@
         "searchServiceItems": "Search service items...",
         "editServiceItem": "Edit Service Item",
         "serviceItemsAreManagedInItem": "Service items are managed in Item Master. Items with Services type appear here automatically. To add or edit items, use Item Master.",
-        "itemMaster": "Item Master"
+        "itemMaster": "Item Master",
+        "addItem": "Add Item"
       },
       "addOptionForm": {
         "selectBrand": "Select brand...",
@@ -1349,7 +1366,8 @@
         "searchDate": "Search date...",
         "shopExpensesInThisPeriod": "Shop expenses in this period",
         "rentElectricityWagesTheShopS": "Rent, electricity, wages — the shop's own costs. They belong to the period, not to any one repair.",
-        "noShopExpensesRecordedInThis": "No shop expenses recorded in this period."
+        "noShopExpensesRecordedInThis": "No shop expenses recorded in this period.",
+        "pageTotal": "Page Total"
       },
       "profitLoss": {
         "cashBasisMoneyActuallyReceivedAnd": "Cash basis — money actually received and paid, so it always agrees with Cash Book",
@@ -1415,6 +1433,10 @@
         "avgJob2": "Avg/Job",
         "performance": "Performance",
         "searchTechnician": "Search technician..."
+      },
+      "fieldVisits": {
+        "byTechnician": "By Technician ({{count}})",
+        "byJobCard": "By Job Card ({{count}})"
       }
     },
     "sales": {
@@ -1483,7 +1505,8 @@
         "checkYourEmail": "Check your email",
         "sendResetLink": "Send reset link",
         "backToLogIn": "Back to log in",
-        "ifAnAccountExistsForThat": "If an account exists for that address, a reset link is on its way."
+        "ifAnAccountExistsForThat": "If an account exists for that address, a reset link is on its way.",
+        "rememberedIt": "Remembered it?"
       }
     },
     "login": {
@@ -1492,14 +1515,17 @@
         "welcomeBackEnterYourDetailsTo": "Welcome back — enter your details to continue.",
         "email": "Email",
         "signUpFree": "Sign up free",
-        "forgotPassword": "Forgot password?"
+        "forgotPassword": "Forgot password?",
+        "noAccountYet": "Don't have an account?"
       }
     },
     "signup": {
       "signup": {
         "createYourAccount": "Create your account",
         "freeForeverNoCardRequired": "Free forever — no card required.",
-        "createAccount": "Create account"
+        "createAccount": "Create account",
+        "alreadyHaveAccount": "Already have an account?",
+        "logIn": "Log in"
       }
     },
     "landing": {
@@ -1597,7 +1623,8 @@
         "couldNotCreateThisRole": "Could not create this role.",
         "createRole": "Create Role",
         "afterCreatingThisRoleYouLl": "After creating this role, you'll need to:",
-        "byDefaultNewRolesHaveNo": "By default, new roles have no permissions and no menu access."
+        "byDefaultNewRolesHaveNo": "By default, new roles have no permissions and no menu access.",
+        "nextSteps": "Next Steps"
       },
       "createUser": {
         "enterFullName": "Enter full name",
@@ -1633,7 +1660,8 @@
         "thisPermanentlyRemovesThisIpRestriction": "This permanently removes this IP restriction. This cannot be undone.",
         "thisIpCidrWillStartAuthorizing": "This IP/CIDR will start authorizing non-Owner sign-ins again.",
         "editWhitelistEntry": "Edit Whitelist Entry",
-        "addIpToWhitelist": "Add IP to Whitelist"
+        "addIpToWhitelist": "Add IP to Whitelist",
+        "detectMyIp": "Detect My Current IP ({{ip}})"
       },
       "loginReport": {
         "loginReport": "Login Report",
@@ -1827,7 +1855,8 @@
         "currency": "Currency",
         "customerSince": "Customer since",
         "everyFeatureInThisAppIs": "Every feature in this app is free, forever. No plan tiers, no upgrade prompts, nothing to pay for.",
-        "editCompanyDetails": "Edit company details"
+        "editCompanyDetails": "Edit company details",
+        "allModulesEnabled": "All {{count}} modules are enabled on this account."
       },
       "branchManagement": {
         "branchManagement": "Branch Management",
@@ -2049,14 +2078,26 @@
         "deleteOnlyFormat": "Delete — only format",
         "importTemplate": "Import Template",
         "printDevices": "Print Devices",
-        "newTemplate": "New Template"
+        "newTemplate": "New Template",
+        "designer": {
+          "fields": "Fields",
+          "layers": "Layers",
+          "pageSetup": "Page Setup",
+          "hideWhen": "Hide when",
+          "versionHistory": "Version History",
+          "replacedBy": "Replaced by",
+          "hideWhenEmpty": "Hide when {{field}} is empty",
+          "replacedByOn": "Replaced by {{name}} · {{when}}"
+        },
+        "defaultNamed": "Default: {{name}}"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
         "messageTemplatesSentToCustomersAs": "Message templates sent to customers as their job progresses",
         "couldnTLoadYourWhatsappTemplates": "Couldn't load your WhatsApp templates",
         "countryCode": "Country Code",
-        "prefixedToACustomerS10": "Prefixed to a customer's 10-digit mobile before opening WhatsApp."
+        "prefixedToACustomerS10": "Prefixed to a customer's 10-digit mobile before opening WhatsApp.",
+        "availablePlaceholders": "Available placeholders: {{list}}"
       },
       "behaviorSubtab": {
         "collectPaymentWithGenerateBill": "Collect payment with Generate Bill",
@@ -2146,7 +2187,9 @@
         "rolePermissions": "Role Permissions",
         "jobCardForm": "Job Card Form",
         "leadForm": "Lead Form",
-        "controlExactlyWhatEachRoleCan": "Control exactly what each role can see and do at every job status."
+        "controlExactlyWhatEachRoleCan": "Control exactly what each role can see and do at every job status.",
+        "jobAccess": "Job Access",
+        "allChangesSavedEditing": "All changes saved · Editing \"{{role}}\""
       },
       "fieldControlRow": {
         "hiddenClickToShow": "Hidden — click to show",
@@ -2288,7 +2331,9 @@
       "ipBlockedScreen": {
         "accessBlockedFromThisNetwork": "Access blocked from this network",
         "yourCurrentIpCouldNotBe": " Your current IP could not be detected.",
-        "askAnOwnerToAddYour": "Ask an Owner to add your IP under Administration → IP Whitelist, or connect from an already-whitelisted network."
+        "askAnOwnerToAddYour": "Ask an Owner to add your IP under Administration → IP Whitelist, or connect from an already-whitelisted network.",
+        "roleRequiresWhitelistedIp": "Your account's role requires signing in from a whitelisted IP address.",
+        "currentIpNotOnList": " Your current IP ({{ip}}) isn't on the list."
       },
       "requireMenuAccess": {
         "youDonTHaveAccessTo": "You don't have access to this page",

@@ -253,7 +253,7 @@ export function FormBuilderTab({ formType }: { formType: FormType }) {
             onClick={() => fileInputRef.current?.click()}
           >
             <FileUp className="size-3.5" />
-            Import
+            {t('common.import')}
           </Button>
           <Button type="button" variant="outline" size="sm" onClick={handleExport}>
             <Download className="size-3.5" />

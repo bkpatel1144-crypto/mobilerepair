@@ -95,7 +95,7 @@ export function FieldControlRow({
         {structurallyLocked ? (
           <span className="flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
             <Lock className="size-2.5" />
-            Locked
+            {t('common.locked')}
           </span>
         ) : (
           config &&

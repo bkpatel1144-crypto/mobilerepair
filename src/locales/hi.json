@@ -278,7 +278,13 @@
     "colour": "रंग",
     "network": "नेटवर्क",
     "seller": "विक्रेता",
-    "signOut": "साइन आउट"
+    "signOut": "साइन आउट",
+    "daily": "दैनिक",
+    "monthly": "मासिक",
+    "account": "खाता",
+    "bold": "बोल्ड",
+    "italic": "इटैलिक",
+    "sell": "बेचें"
   },
   "shell": {
     "appName": "aim",
@@ -484,7 +490,13 @@
     "draw": "बनाएँ",
     "dotsConnected": "पैटर्न: {{count}} बिंदु जुड़े",
     "stepOf": "चरण {{step}} / {{total}}",
-    "voided": "रद्द"
+    "voided": "रद्द",
+    "done": "हो गया",
+    "selectAll": "सभी चुनें",
+    "expand": "विस्तार करें",
+    "collapse": "समेटें",
+    "autoSaved": "स्वतः सहेजा गया",
+    "allTimeCapitalised": "सभी समय"
   },
   "pages": {
     "dashboard": {
@@ -561,7 +573,8 @@
         "debitOut": "नामे (गया)",
         "totalCreditIn": "कुल जमा (आया)",
         "totalDebitOut": "कुल नामे (गया)",
-        "manualEntry": "हाथ से दर्ज"
+        "manualEntry": "हाथ से दर्ज",
+        "closingBalanceEntries": "समापन शेष ({{count}} प्रविष्टियाँ):"
       },
       "expenses": {
         "newExpense": "नया खर्च",
@@ -829,7 +842,8 @@
         "thisUnitWillBecomeSelectableAgain": "यह इकाई नए आइटम के लिए फिर से चुनी जा सकेगी।",
         "editUnitOfMeasure": "माप की इकाई बदलें",
         "setThisOnlyIfThisUom": "यह तभी भरें जब यह UOM किसी दूसरी में बदलती हो। जैसे 1 इंच = 0.0254 मीटर",
-        "decimals": "दशमलव"
+        "decimals": "दशमलव",
+        "addUom": "UOM जोड़ें"
       },
       "createItem": {
         "createItem": "आइटम बनाएँ",
@@ -999,7 +1013,8 @@
         "buyUsedMobilesLaptopsOtherDevices": "विक्रेताओं से पुराने मोबाइल, लैपटॉप और दूसरी डिवाइस खरीदें",
         "newPurchase": "नई खरीद",
         "sendToRefurb": "मरम्मत में भेजें",
-        "spentSoFarGettingThisDevice": "इस डिवाइस को बिकने लायक बनाने में अब तक लगा खर्च — विक्रय के समय लाभ से घटाया जाता है।"
+        "spentSoFarGettingThisDevice": "इस डिवाइस को बिकने लायक बनाने में अब तक लगा खर्च — विक्रय के समय लाभ से घटाया जाता है।",
+        "printDocument": "{{document}} प्रिंट करें"
       },
       "deviceSale": {
         "deviceSale": "डिवाइस विक्रय",
@@ -1241,7 +1256,8 @@
         "recorded": "दर्ज",
         "pendingCosting": "लागत बाकी",
         "costed": "लागत दर्ज",
-        "recordCost": "लागत दर्ज करें"
+        "recordCost": "लागत दर्ज करें",
+        "deviceLabel": "डिवाइस: {{device}}"
       },
       "serviceItems": {
         "serviceItems": "सर्विस आइटम",
@@ -1253,7 +1269,8 @@
         "searchServiceItems": "सर्विस आइटम खोजें...",
         "editServiceItem": "सर्विस आइटम बदलें",
         "serviceItemsAreManagedInItem": "सर्विस आइटम आइटम मास्टर में प्रबंधित होते हैं। सर्विस प्रकार वाले आइटम यहाँ अपने आप दिखते हैं। आइटम जोड़ने या बदलने के लिए आइटम मास्टर का उपयोग करें।",
-        "itemMaster": "आइटम मास्टर"
+        "itemMaster": "आइटम मास्टर",
+        "addItem": "आइटम जोड़ें"
       },
       "addOptionForm": {
         "selectBrand": "ब्रांड चुनें...",
@@ -1349,7 +1366,8 @@
         "searchDate": "तारीख खोजें...",
         "shopExpensesInThisPeriod": "इस अवधि में दुकान के खर्च",
         "rentElectricityWagesTheShopS": "किराया, बिजली, वेतन — दुकान के अपने खर्च। ये पूरी अवधि के हैं, किसी एक मरम्मत के नहीं।",
-        "noShopExpensesRecordedInThis": "इस अवधि में दुकान का कोई खर्च दर्ज नहीं।"
+        "noShopExpensesRecordedInThis": "इस अवधि में दुकान का कोई खर्च दर्ज नहीं।",
+        "pageTotal": "पृष्ठ योग"
       },
       "profitLoss": {
         "cashBasisMoneyActuallyReceivedAnd": "नकद आधार — असल में मिली और दी गई रकम, इसलिए यह हमेशा रोकड़ बही से मेल खाता है",
@@ -1415,6 +1433,10 @@
         "avgJob2": "औसत/जॉब",
         "performance": "प्रदर्शन",
         "searchTechnician": "तकनीशियन खोजें..."
+      },
+      "fieldVisits": {
+        "byTechnician": "तकनीशियन अनुसार ({{count}})",
+        "byJobCard": "जॉब कार्ड अनुसार ({{count}})"
       }
     },
     "sales": {
@@ -1483,7 +1505,8 @@
         "checkYourEmail": "अपना ईमेल देखें",
         "sendResetLink": "बदलने की लिंक भेजें",
         "backToLogIn": "लॉग इन पर वापस",
-        "ifAnAccountExistsForThat": "अगर उस पते का कोई खाता है, तो बदलने की लिंक भेज दी गई है।"
+        "ifAnAccountExistsForThat": "अगर उस पते का कोई खाता है, तो बदलने की लिंक भेज दी गई है।",
+        "rememberedIt": "याद आ गया?"
       }
     },
     "login": {
@@ -1492,14 +1515,17 @@
         "welcomeBackEnterYourDetailsTo": "वापसी पर स्वागत है — आगे बढ़ने के लिए अपनी जानकारी डालें।",
         "email": "ईमेल",
         "signUpFree": "मुफ़्त साइन अप करें",
-        "forgotPassword": "पासवर्ड भूल गए?"
+        "forgotPassword": "पासवर्ड भूल गए?",
+        "noAccountYet": "खाता नहीं है?"
       }
     },
     "signup": {
       "signup": {
         "createYourAccount": "अपना खाता बनाएं",
         "freeForeverNoCardRequired": "हमेशा मुफ़्त — कार्ड की ज़रूरत नहीं।",
-        "createAccount": "खाता बनाएं"
+        "createAccount": "खाता बनाएं",
+        "alreadyHaveAccount": "पहले से खाता है?",
+        "logIn": "लॉग इन करें"
       }
     },
     "landing": {
@@ -1597,7 +1623,8 @@
         "couldNotCreateThisRole": "यह भूमिका बनाई नहीं जा सकी।",
         "createRole": "भूमिका बनाएं",
         "afterCreatingThisRoleYouLl": "यह भूमिका बनाने के बाद आपको यह करना होगा:",
-        "byDefaultNewRolesHaveNo": "डिफ़ॉल्ट रूप से नई भूमिकाओं को कोई अनुमति और कोई मेन्यू पहुँच नहीं होती।"
+        "byDefaultNewRolesHaveNo": "डिफ़ॉल्ट रूप से नई भूमिकाओं को कोई अनुमति और कोई मेन्यू पहुँच नहीं होती।",
+        "nextSteps": "अगले चरण"
       },
       "createUser": {
         "enterFullName": "पूरा नाम लिखें",
@@ -1633,7 +1660,8 @@
         "thisPermanentlyRemovesThisIpRestriction": "यह इस IP पाबंदी को हमेशा के लिए हटा देता है। यह पूर्ववत नहीं हो सकता।",
         "thisIpCidrWillStartAuthorizing": "यह IP/CIDR मालिक के अलावा बाकी लोगों के लॉग इन को फिर से अनुमति देने लगेगा।",
         "editWhitelistEntry": "व्हाइटलिस्ट प्रविष्टि बदलें",
-        "addIpToWhitelist": "व्हाइटलिस्ट में IP जोड़ें"
+        "addIpToWhitelist": "व्हाइटलिस्ट में IP जोड़ें",
+        "detectMyIp": "मेरा वर्तमान IP पहचानें ({{ip}})"
       },
       "loginReport": {
         "loginReport": "लॉगिन रिपोर्ट",
@@ -1827,7 +1855,8 @@
         "currency": "मुद्रा",
         "customerSince": "कब से ग्राहक",
         "everyFeatureInThisAppIs": "इस ऐप की हर सुविधा हमेशा के लिए मुफ़्त है। कोई प्लान स्तर नहीं, कोई अपग्रेड सुझाव नहीं, कुछ भी चुकाना नहीं।",
-        "editCompanyDetails": "कंपनी का विवरण बदलें"
+        "editCompanyDetails": "कंपनी का विवरण बदलें",
+        "allModulesEnabled": "इस खाते पर सभी {{count}} मॉड्यूल सक्षम हैं।"
       },
       "branchManagement": {
         "branchManagement": "शाखा प्रबंधन",
@@ -2049,14 +2078,26 @@
         "deleteOnlyFormat": "हटाएं — एकमात्र फ़ॉर्मेट",
         "importTemplate": "टेम्पलेट इम्पोर्ट करें",
         "printDevices": "प्रिंट डिवाइस",
-        "newTemplate": "नया टेम्पलेट"
+        "newTemplate": "नया टेम्पलेट",
+        "designer": {
+          "fields": "फ़ील्ड",
+          "layers": "परतें",
+          "pageSetup": "पृष्ठ सेटअप",
+          "hideWhen": "छिपाएँ जब",
+          "versionHistory": "संस्करण इतिहास",
+          "replacedBy": "द्वारा प्रतिस्थापित",
+          "hideWhenEmpty": "{{field}} खाली हो तो छिपाएँ",
+          "replacedByOn": "{{name}} द्वारा प्रतिस्थापित · {{when}}"
+        },
+        "defaultNamed": "डिफ़ॉल्ट: {{name}}"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
         "messageTemplatesSentToCustomersAs": "जॉब आगे बढ़ने पर ग्राहकों को भेजे जाने वाले संदेश टेम्पलेट",
         "couldnTLoadYourWhatsappTemplates": "आपके WhatsApp टेम्पलेट लोड नहीं हो सके",
         "countryCode": "देश का कोड",
-        "prefixedToACustomerS10": "WhatsApp खोलने से पहले ग्राहक के 10 अंकों के मोबाइल से पहले लगाया जाता है।"
+        "prefixedToACustomerS10": "WhatsApp खोलने से पहले ग्राहक के 10 अंकों के मोबाइल से पहले लगाया जाता है।",
+        "availablePlaceholders": "उपलब्ध प्लेसहोल्डर: {{list}}"
       },
       "behaviorSubtab": {
         "collectPaymentWithGenerateBill": "बिल बनाते समय भुगतान लें",
@@ -2146,7 +2187,9 @@
         "rolePermissions": "भूमिका अनुमतियाँ",
         "jobCardForm": "जॉब कार्ड फ़ॉर्म",
         "leadForm": "लीड फ़ॉर्म",
-        "controlExactlyWhatEachRoleCan": "तय करें कि हर जॉब स्थिति पर हर भूमिका ठीक क्या देख और कर सकती है।"
+        "controlExactlyWhatEachRoleCan": "तय करें कि हर जॉब स्थिति पर हर भूमिका ठीक क्या देख और कर सकती है।",
+        "jobAccess": "जॉब पहुँच",
+        "allChangesSavedEditing": "सभी बदलाव सहेजे गए · \"{{role}}\" संपादित कर रहे हैं"
       },
       "fieldControlRow": {
         "hiddenClickToShow": "छिपा — दिखाने के लिए क्लिक करें",
@@ -2288,7 +2331,9 @@
       "ipBlockedScreen": {
         "accessBlockedFromThisNetwork": "इस नेटवर्क से पहुँच रोकी गई है",
         "yourCurrentIpCouldNotBe": " आपका मौजूदा IP पता नहीं चल सका।",
-        "askAnOwnerToAddYour": "किसी मालिक से प्रशासन → IP व्हाइटलिस्ट में अपना IP जोड़ने को कहें, या किसी पहले से मंज़ूर नेटवर्क से जुड़ें।"
+        "askAnOwnerToAddYour": "किसी मालिक से प्रशासन → IP व्हाइटलिस्ट में अपना IP जोड़ने को कहें, या किसी पहले से मंज़ूर नेटवर्क से जुड़ें।",
+        "roleRequiresWhitelistedIp": "आपके खाते की भूमिका के लिए व्हाइटलिस्टेड IP पते से साइन इन करना आवश्यक है।",
+        "currentIpNotOnList": " आपका वर्तमान IP ({{ip}}) सूची में नहीं है।"
       },
       "requireMenuAccess": {
         "youDonTHaveAccessTo": "आपको इस पेज की अनुमति नहीं है",

@@ -90,7 +90,7 @@ export function CreateRolePage() {
           <div className="space-y-5">
             <div className="space-y-1.5">
               <Label htmlFor="role-name">
-                Role Name <span className="text-red-600">*</span>
+                {t('pages.administration.roleManagement.roleName')} <span className="text-red-600">*</span>
               </Label>
               <Input
                 id="role-name"
@@ -103,7 +103,7 @@ export function CreateRolePage() {
 
             <div className="space-y-1.5">
               <Label htmlFor="role-code">
-                Role Code <span className="text-red-600">*</span>
+                {t('pages.administration.roleManagement.roleCode')} <span className="text-red-600">*</span>
               </Label>
               <Input
                 id="role-code"
@@ -136,7 +136,7 @@ export function CreateRolePage() {
         <div className="rounded-xl border bg-card p-6">
           <h2 className="flex items-center gap-2 text-lg font-semibold">
             <AlertCircle className="size-5 text-muted-foreground" />
-            Next Steps
+            {t('pages.administration.createRole.nextSteps')}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             {t('pages.administration.createRole.afterCreatingTheRole')}

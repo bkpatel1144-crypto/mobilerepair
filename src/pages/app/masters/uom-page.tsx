@@ -193,7 +193,7 @@ export function UomPage() {
           canManage && (
             <Button type="button" onClick={() => setEditing('new')}>
               <Plus className="size-4" />
-              Add UOM
+              {t('pages.masters.uom.addUom')}
             </Button>
           )
         }

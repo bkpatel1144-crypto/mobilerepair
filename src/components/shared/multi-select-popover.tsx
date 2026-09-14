@@ -132,7 +132,7 @@ export function MultiSelectPopover({
               className="ml-auto flex h-8 shrink-0 items-center rounded-md bg-teal-600 px-3 text-sm font-medium text-white hover:bg-teal-700"
             >
               <Check className="mr-1 size-3.5" />
-              Done
+              {t('shared.done')}
             </button>
           </div>
         </PopoverContent>

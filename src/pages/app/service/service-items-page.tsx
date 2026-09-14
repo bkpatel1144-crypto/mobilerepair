@@ -138,7 +138,7 @@ export function ServiceItemsPage() {
           <>
             <Button type="button" onClick={openNew}>
               <Plus className="size-4" />
-              Add Item
+              {t('pages.service.serviceItems.addItem')}
             </Button>
           </>
         }

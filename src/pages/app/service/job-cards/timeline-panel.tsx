@@ -60,7 +60,7 @@ export function TimelinePanel({
     <div className="space-y-1">
       <div className="flex items-center gap-1.5 text-sm font-semibold">
         <Clock className="size-4 text-muted-foreground" />
-        Timeline
+        {t('common.timeline')}
       </div>
       {error ? (
         // Every job card has at least a "Created" event written at intake, so an empty timeline

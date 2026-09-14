@@ -225,7 +225,7 @@ export function PeriodSummaryPage() {
             variant={granularity === 'daily' ? 'default' : 'ghost'}
             onClick={() => setGranularity('daily')}
           >
-            Daily
+            {t('common.daily')}
           </Button>
           <Button
             type="button"
@@ -233,7 +233,7 @@ export function PeriodSummaryPage() {
             variant={granularity === 'monthly' ? 'default' : 'ghost'}
             onClick={() => setGranularity('monthly')}
           >
-            Monthly
+            {t('common.monthly')}
           </Button>
         </div>
       </FilterBar>
@@ -358,7 +358,7 @@ export function PeriodSummaryPage() {
                   <tfoot>
                     <tr className="border-t bg-muted/20 font-medium">
                       <td className="p-2" colSpan={5}>
-                        Page Total
+                        {t('pages.reports.periodSummary.pageTotal')}
                       </td>
                       <td className="p-2 text-right">{formatCurrency(g.revenue)}</td>
                       <td className="p-2 text-right">{formatCurrency(g.jobCost)}</td>

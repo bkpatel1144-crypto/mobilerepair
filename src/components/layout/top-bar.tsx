@@ -52,6 +52,16 @@ import { usePermissions } from '@/hooks/use-permissions'
 import { ProfileDrawer } from '@/components/layout/profile-drawer'
 import { EmptyState } from '@/components/shared/empty-state'
 
+/**
+ * The command-palette shortcut, as printed on the key itself.
+ *
+ * Not translated, and not a gap in the translation pass: "Ctrl" is what is engraved on the
+ * keyboard in every language this app supports. Named here rather than left as a bare text node
+ * so that intent is stated once, instead of sitting in the untranslated-strings backlog forever
+ * looking like something nobody got round to.
+ */
+const SEARCH_SHORTCUT = 'Ctrl K'
+
 interface TopBarProps {
   onMenuClick: () => void
   onSearchClick: () => void
@@ -164,7 +174,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           <Search className="size-4" />
           <span>{t('shared.search')}</span>
           <kbd className="ml-2 rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium">
-            Ctrl K
+            {SEARCH_SHORTCUT}
           </kbd>
         </button>
         <Button

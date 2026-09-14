@@ -193,18 +193,20 @@ describe('no hardcoded display strings', () => {
 
     // A ratchet, not a clean assertion, and deliberately so.
     //
-    // Relaxing the pattern above exposed 286 strings this test had never been able to see —
-    // roughly forty files' worth of field labels, dialog copy and column headers that are still
-    // English in Hindi and Gujarati. Asserting `[]` would leave the suite red for as long as that
-    // backlog exists, and a permanently failing test is one nobody reads. Reverting the pattern
-    // would hide the problem again.
+    // **The baseline is now empty, and this is effectively a clean `[]` assertion.**
     //
-    // So the baseline is checked in, and the only rule enforced is that it cannot grow. A newly
-    // hardcoded string fails immediately, which is the property that actually matters; the
-    // backlog is visible in `hardcoded-baseline.json` and shrinks as it is worked through.
+    // Relaxing the pattern above once exposed 286 strings this test had never been able to see —
+    // forty files' worth of field labels, dialog copy and column headers rendering in English no
+    // matter which language a user had picked. Asserting `[]` then would have left the suite red
+    // for as long as that backlog existed, and a permanently failing test is one nobody reads.
+    // So the baseline was checked in with the single rule that it could not *grow*, and it was
+    // worked down from 286 to 0.
     //
-    // Stale entries fail too, so fixing a string forces the baseline down rather than letting it
-    // drift out of date. Regenerate with `node tools/i18n/baseline.cjs`.
+    // The mechanism stays, because it is what makes the descent safe: a new hardcoded string
+    // fails immediately, and a *stale* entry fails too, so fixing one forces the baseline down
+    // rather than letting it drift. Regenerate with `node tools/i18n/baseline.cjs`.
+    //
+    // If it ever grows again, that is a real regression and not a reason to re-add entries.
     const baseline = new Set(BASELINE as string[])
     const added = found.filter((f) => !baseline.has(f))
     const fixed = [...baseline].filter((b) => !found.includes(b))

@@ -112,7 +112,7 @@ export function CashBookPage() {
 
       {filtered.length > 0 && (
         <p className="text-right text-sm font-medium text-muted-foreground">
-          Closing Balance ({filtered.length} entry total):{' '}
+          {t('pages.finance.cashBook.closingBalanceEntries', { count: filtered.length })}{' '}
           <span className="text-foreground">₹{data.closing}</span>
         </p>
       )}

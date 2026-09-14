@@ -170,7 +170,9 @@ export function PrintFormatsPage() {
                   </span>
                   {defaultTemplate && (
                     <span className="truncate text-sm text-muted-foreground">
-                      Default: {defaultTemplate.name}
+                      {t('pages.settings.printFormats.defaultNamed', {
+                        name: defaultTemplate.name,
+                      })}
                     </span>
                   )}
                   <ChevronDown
@@ -208,7 +210,7 @@ export function PrintFormatsPage() {
                                 {tpl.isDefault && (
                                   <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-300 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-500/40 dark:text-amber-400">
                                     <Star className="size-3 fill-current" />
-                                    Default
+                                    {t('common.default')}
                                   </span>
                                 )}
                               </span>

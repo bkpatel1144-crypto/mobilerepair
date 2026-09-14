@@ -302,7 +302,7 @@ function SelectedRolePanel({
         ) : (
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Check className="size-3.5 text-teal-600" />
-            All changes saved · Editing "{role.name}"
+            {t('pages.settings.workflowDesigner.allChangesSavedEditing', { role: role.name })}
           </span>
         )}
         <div className="ml-auto flex gap-2">

@@ -40,7 +40,7 @@ export function LoginPage() {
       subtitle={t('pages.login.login.welcomeBackEnterYourDetailsTo')}
       footer={
         <>
-          Don't have an account?{' '}
+          {t('pages.login.login.noAccountYet')}{' '}
           <Link
             to="/signup"
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"

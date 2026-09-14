@@ -180,7 +180,7 @@ export function MenusPermissionsTab({
             onClick={handleCollapseAll}
             disabled={disabled}
           >
-            Collapse
+            {t('shared.collapse')}
           </Button>
           <Button
             type="button"
@@ -189,7 +189,7 @@ export function MenusPermissionsTab({
             onClick={handleExpandAll}
             disabled={disabled}
           >
-            Expand
+            {t('shared.expand')}
           </Button>
           <Button
             type="button"
@@ -207,7 +207,7 @@ export function MenusPermissionsTab({
             onClick={handleSelectAll}
             disabled={disabled || draft.fullAccess}
           >
-            Select All
+            {t('shared.selectAll')}
           </Button>
           {otherRoles.length > 0 && (
             <Select onValueChange={setPendingInheritRoleId} disabled={disabled || draft.fullAccess}>

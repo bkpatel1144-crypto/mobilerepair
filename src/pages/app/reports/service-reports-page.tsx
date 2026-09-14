@@ -61,7 +61,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
       <div className="space-y-3">
         <div>
           <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-            Details
+            {t('common.details')}
           </p>
           <div className="mt-1.5 space-y-1 text-sm">
             <p>IMEI: {job.imei ?? '—'}</p>
@@ -75,7 +75,7 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
         </div>
         <div className="space-y-1 rounded-lg border p-3 text-sm">
           <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-            Payment
+            {t('common.payment')}
           </p>
           <div className="flex justify-between">
             <span className="text-muted-foreground">{t('common.finalAmount')}</span>

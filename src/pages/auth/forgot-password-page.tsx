@@ -46,7 +46,7 @@ export function ForgotPasswordPage() {
       subtitle={t('pages.forgotPassword.forgotPassword.enterYourEmailAndWeLl')}
       footer={
         <>
-          Remembered it?{' '}
+          {t('pages.forgotPassword.forgotPassword.rememberedIt')}{' '}
           <Link
             to="/login"
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"

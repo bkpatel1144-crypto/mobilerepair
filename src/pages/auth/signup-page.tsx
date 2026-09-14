@@ -45,12 +45,12 @@ export function SignupPage() {
       subtitle={t('pages.signup.signup.freeForeverNoCardRequired')}
       footer={
         <>
-          Already have an account?{' '}
+          {t('pages.signup.signup.alreadyHaveAccount')}{' '}
           <Link
             to="/login"
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"
           >
-            Log in
+            {t('pages.signup.signup.logIn')}
           </Link>
         </>
       }

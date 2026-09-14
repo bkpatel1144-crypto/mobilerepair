@@ -345,7 +345,7 @@ export function FieldVisitReportPage() {
               onClick={() => setView('technician')}
             >
               <Users className="size-3.5" />
-              By Technician ({technicianGroups.length})
+              {t('pages.reports.fieldVisits.byTechnician', { count: technicianGroups.length })}
             </Button>
             <Button
               type="button"
@@ -354,7 +354,7 @@ export function FieldVisitReportPage() {
               onClick={() => setView('jobCard')}
             >
               <Briefcase className="size-3.5" />
-              By Job Card ({jobGroups.length})
+              {t('pages.reports.fieldVisits.byJobCard', { count: jobGroups.length })}
             </Button>
           </div>
         </FilterBar>

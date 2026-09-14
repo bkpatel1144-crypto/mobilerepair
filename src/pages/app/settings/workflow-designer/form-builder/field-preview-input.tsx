@@ -85,7 +85,7 @@ export function FieldPreviewInput({
             className="shrink-0 border-amber-300 text-amber-700 dark:border-amber-500/40 dark:text-amber-400"
           >
             <Grid3x3 className="size-3.5" />
-            Draw
+            {t('shared.draw')}
           </Button>
         </div>
       )

@@ -21,9 +21,9 @@ export function IpBlockedScreen({ ip }: { ip: string | null }) {
           {t('components.auth.ipBlockedScreen.accessBlockedFromThisNetwork')}
         </h1>
         <p className="max-w-sm text-sm text-muted-foreground">
-          Your account's role requires signing in from a whitelisted IP address.
+          {t('components.auth.ipBlockedScreen.roleRequiresWhitelistedIp')}
           {ip
-            ? ` Your current IP (${ip}) isn't on the list.`
+            ? t('components.auth.ipBlockedScreen.currentIpNotOnList', { ip })
             : t('components.auth.ipBlockedScreen.yourCurrentIpCouldNotBe')}
         </p>
         <p className="max-w-sm text-xs text-muted-foreground">

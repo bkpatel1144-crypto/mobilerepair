@@ -40,7 +40,7 @@ export function ErrorState({ error, onRetry, title, className }: ErrorStateProps
       {onRetry && (
         <Button type="button" variant="outline" size="sm" className="mt-3" onClick={onRetry}>
           <RefreshCw className="size-3.5" />
-          Try again
+          {t('components.shared.errorBoundary.tryAgain')}
         </Button>
       )}
     </div>

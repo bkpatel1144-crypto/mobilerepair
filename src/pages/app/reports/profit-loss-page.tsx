@@ -123,7 +123,7 @@ export function ProfitLossPage() {
           variant={range === 'all' ? 'default' : 'outline'}
           onClick={() => setRange('all')}
         >
-          All Time
+          {t('shared.allTimeCapitalised')}
         </Button>
       </FilterBar>
 

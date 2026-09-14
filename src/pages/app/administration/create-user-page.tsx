@@ -160,7 +160,7 @@ export function CreateUserPage() {
           />
           {savedAt && (
             <span className="text-xs text-muted-foreground">
-              Auto-saved{' '}
+              {t('shared.autoSaved')}{' '}
               {savedAt.toLocaleTimeString('en-IN', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -270,7 +270,7 @@ export function CreateUserPage() {
                 onClick={() => void refetchRoles()}
                 className="underline underline-offset-2"
               >
-                Retry
+                {t('common.retry')}
               </button>
             </p>
           )}

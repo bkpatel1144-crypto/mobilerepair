@@ -112,7 +112,7 @@ export function WhatsAppPage() {
           </div>
 
           <p className="text-xs text-muted-foreground">
-            Available placeholders: {PLACEHOLDER_HINT}
+            {t('pages.settings.whatsapp.availablePlaceholders', { list: PLACEHOLDER_HINT })}
           </p>
         </>
       )}

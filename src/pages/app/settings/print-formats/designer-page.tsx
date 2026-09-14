@@ -305,11 +305,11 @@ export function PrintTemplateDesignerPage() {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setPageSetupOpen(true)}>
                 <Ruler />
-                Page Setup
+                {t('pages.settings.printFormats.designer.pageSetup')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setHistoryOpen(true)}>
                 <History />
-                Version History
+                {t('pages.settings.printFormats.designer.versionHistory')}
                 {versions.data && versions.data.length > 0 && (
                   <span className="ml-auto text-xs text-muted-foreground">v{template.version}</span>
                 )}
@@ -496,13 +496,13 @@ export function PrintTemplateDesignerPage() {
                 value="fields"
                 className="flex-none px-0 pb-2 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
               >
-                Fields
+                {t('pages.settings.printFormats.designer.fields')}
               </TabsTrigger>
               <TabsTrigger
                 value="layers"
                 className="flex-none px-0 pb-2 text-sm data-active:text-teal-700 data-active:after:bg-teal-600 dark:data-active:text-teal-400"
               >
-                Layers
+                {t('pages.settings.printFormats.designer.layers')}
               </TabsTrigger>
             </TabsList>
 
@@ -695,7 +695,7 @@ export function PrintTemplateDesignerPage() {
                   variant={one.style.bold ? 'secondary' : 'outline'}
                   onClick={() => patchStyle({ bold: !one.style.bold })}
                 >
-                  Bold
+                  {t('common.bold')}
                 </Button>
                 <Button
                   type="button"
@@ -703,7 +703,7 @@ export function PrintTemplateDesignerPage() {
                   variant={one.style.italic ? 'secondary' : 'outline'}
                   onClick={() => patchStyle({ italic: !one.style.italic })}
                 >
-                  Italic
+                  {t('common.italic')}
                 </Button>
               </div>
 
@@ -752,7 +752,9 @@ export function PrintTemplateDesignerPage() {
                     </SelectItem>
                     {fields.map((f) => (
                       <SelectItem key={f.key} value={f.key}>
-                        Hide when {f.label} is empty
+                        {t('pages.settings.printFormats.designer.hideWhenEmpty', {
+                          field: f.label,
+                        })}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -877,7 +879,7 @@ export function PrintTemplateDesignerPage() {
                     onClick={() => restoreVersion(v)}
                   >
                     <Undo2 className="size-4" />
-                    Restore
+                    {t('common.restore')}
                   </Button>
                 </div>
                 <p className="mt-1.5 text-sm text-muted-foreground">
@@ -886,7 +888,10 @@ export function PrintTemplateDesignerPage() {
                   {v.paper.unit}
                 </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  Replaced by {v.supersededByName} · {formatDateTimeLong(v.supersededAt)}
+                  {t('pages.settings.printFormats.designer.replacedByOn', {
+                    name: v.supersededByName,
+                    when: formatDateTimeLong(v.supersededAt),
+                  })}
                 </p>
               </li>
             ))}

@@ -59,7 +59,7 @@ export function PermissionsSubtab({ draft, setDraft, disabled }: PermissionsSubt
     <div className="space-y-6">
       <div className="space-y-2">
         <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-          Job Access
+          {t('pages.settings.workflowDesigner.jobAccess')}
         </p>
         <div className="flex flex-wrap gap-1.5">
           {JOB_ACCESS_SCOPES.map((scope) => (
@@ -157,7 +157,7 @@ export function PermissionsSubtab({ draft, setDraft, disabled }: PermissionsSubt
             <thead>
               <tr className="border-b bg-muted/40">
                 <th className="sticky left-0 z-10 min-w-32 bg-muted/40 p-2.5 text-left font-medium">
-                  Status
+                  {t('common.status')}
                 </th>
                 {JOB_ACTIONS.map((action) => (
                   <th

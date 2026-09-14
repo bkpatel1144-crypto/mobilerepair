@@ -141,7 +141,9 @@ export function BillingPage() {
                 {t('pages.settings.billing.includedModules')}
               </h3>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                All {includedModules.length} modules are enabled on this account.
+                {t('pages.settings.billing.allModulesEnabled', {
+                  count: includedModules.length,
+                })}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {includedModules.map((label) => (
@@ -177,7 +179,7 @@ export function BillingPage() {
             <div className="rounded-xl border bg-card p-6">
               <h3 className="flex items-center gap-2 text-sm font-semibold">
                 <Building2 className="size-4 text-muted-foreground" />
-                Account
+                {t('common.account')}
               </h3>
               <dl className="mt-4 space-y-3 text-sm">
                 {(

@@ -492,7 +492,9 @@ export function PrintButtonGroup({
           onClick={handlePrintReceiptOrInvoice}
           disabled={purchase ? !purchaseReceiptTemplate : !saleInvoiceTemplate}
         >
-          Print {purchase ? 'Receipt' : t('common.invoice')}
+          {t('pages.secondHandDevice.devicePurchase.printDocument', {
+            document: purchase ? t('common.receipt') : t('common.invoice'),
+          })}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handlePrintLabel} disabled={!labelTemplate}>
           {t('shared.printLabel')}

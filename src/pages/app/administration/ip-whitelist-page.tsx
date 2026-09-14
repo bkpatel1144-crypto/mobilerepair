@@ -302,7 +302,7 @@ function IpWhitelistModal({
             onClick={() => setIpOrCidr(myIp)}
             className="text-xs text-teal-700 hover:underline dark:text-teal-400"
           >
-            Detect My Current IP ({myIp})
+            {t('pages.administration.ipWhitelist.detectMyIp', { ip: myIp })}
           </button>
         )}
       </div>

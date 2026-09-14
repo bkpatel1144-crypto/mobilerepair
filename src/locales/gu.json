@@ -278,7 +278,13 @@
     "colour": "રંગ",
     "network": "નેટવર્ક",
     "seller": "વેચનાર",
-    "signOut": "સાઇન આઉટ"
+    "signOut": "સાઇન આઉટ",
+    "daily": "દૈનિક",
+    "monthly": "માસિક",
+    "account": "ખાતું",
+    "bold": "બોલ્ડ",
+    "italic": "ઇટાલિક",
+    "sell": "વેચો"
   },
   "shell": {
     "appName": "aim",
@@ -484,7 +490,13 @@
     "draw": "દોરો",
     "dotsConnected": "પેટર્ન: {{count}} બિંદુ જોડાયા",
     "stepOf": "પગલું {{step}} / {{total}}",
-    "voided": "રદ"
+    "voided": "રદ",
+    "done": "થઈ ગયું",
+    "selectAll": "બધા પસંદ કરો",
+    "expand": "વિસ્તૃત કરો",
+    "collapse": "સંકોચો",
+    "autoSaved": "આપમેળે સાચવ્યું",
+    "allTimeCapitalised": "બધો સમય"
   },
   "pages": {
     "dashboard": {
@@ -561,7 +573,8 @@
         "debitOut": "ઉધાર (ગયું)",
         "totalCreditIn": "કુલ જમા (આવ્યું)",
         "totalDebitOut": "કુલ ઉધાર (ગયું)",
-        "manualEntry": "હાથે નોંધેલ"
+        "manualEntry": "હાથે નોંધેલ",
+        "closingBalanceEntries": "અંતિમ બાકી ({{count}} નોંધ):"
       },
       "expenses": {
         "newExpense": "નવો ખર્ચ",
@@ -829,7 +842,8 @@
         "thisUnitWillBecomeSelectableAgain": "આ એકમ નવાં આઇટમ માટે ફરી પસંદ કરી શકાશે.",
         "editUnitOfMeasure": "માપનો એકમ બદલો",
         "setThisOnlyIfThisUom": "આ ત્યારે જ ભરો જ્યારે આ UOM બીજામાં બદલાય. જેમ કે 1 ઇંચ = 0.0254 મીટર",
-        "decimals": "દશાંશ"
+        "decimals": "દશાંશ",
+        "addUom": "UOM ઉમેરો"
       },
       "createItem": {
         "createItem": "આઇટમ બનાવો",
@@ -999,7 +1013,8 @@
         "buyUsedMobilesLaptopsOtherDevices": "વેચનારો પાસેથી જૂના મોબાઇલ, લેપટોપ અને બીજી ડિવાઇસ ખરીદો",
         "newPurchase": "નવી ખરીદી",
         "sendToRefurb": "રિફર્બમાં મોકલો",
-        "spentSoFarGettingThisDevice": "આ ડિવાઇસને વેચવા લાયક બનાવવામાં અત્યાર સુધી લાગેલો ખર્ચ — વેચાણ સમયે નફામાંથી બાદ થાય છે."
+        "spentSoFarGettingThisDevice": "આ ડિવાઇસને વેચવા લાયક બનાવવામાં અત્યાર સુધી લાગેલો ખર્ચ — વેચાણ સમયે નફામાંથી બાદ થાય છે.",
+        "printDocument": "{{document}} પ્રિન્ટ કરો"
       },
       "deviceSale": {
         "deviceSale": "ડિવાઇસ વેચાણ",
@@ -1241,7 +1256,8 @@
         "recorded": "નોંધાયેલ",
         "pendingCosting": "ખર્ચ બાકી",
         "costed": "ખર્ચ નોંધાયો",
-        "recordCost": "ખર્ચ નોંધો"
+        "recordCost": "ખર્ચ નોંધો",
+        "deviceLabel": "ડિવાઇસ: {{device}}"
       },
       "serviceItems": {
         "serviceItems": "સર્વિસ આઇટમ",
@@ -1253,7 +1269,8 @@
         "searchServiceItems": "સર્વિસ આઇટમ શોધો...",
         "editServiceItem": "સર્વિસ આઇટમ બદલો",
         "serviceItemsAreManagedInItem": "સર્વિસ આઇટમ આઇટમ માસ્ટરમાં સંભાળાય છે. સર્વિસ પ્રકારના આઇટમ અહીં આપોઆપ દેખાય છે. આઇટમ ઉમેરવા કે બદલવા આઇટમ માસ્ટર વાપરો.",
-        "itemMaster": "આઇટમ માસ્ટર"
+        "itemMaster": "આઇટમ માસ્ટર",
+        "addItem": "આઇટમ ઉમેરો"
       },
       "addOptionForm": {
         "selectBrand": "બ્રાન્ડ પસંદ કરો...",
@@ -1349,7 +1366,8 @@
         "searchDate": "તારીખ શોધો...",
         "shopExpensesInThisPeriod": "આ સમયગાળામાં દુકાનના ખર્ચ",
         "rentElectricityWagesTheShopS": "ભાડું, વીજળી, પગાર — દુકાનના પોતાના ખર્ચ. તે આખા સમયગાળાના છે, કોઈ એક મરામતના નહીં.",
-        "noShopExpensesRecordedInThis": "આ સમયગાળામાં દુકાનનો કોઈ ખર્ચ નોંધાયો નથી."
+        "noShopExpensesRecordedInThis": "આ સમયગાળામાં દુકાનનો કોઈ ખર્ચ નોંધાયો નથી.",
+        "pageTotal": "પૃષ્ઠ કુલ"
       },
       "profitLoss": {
         "cashBasisMoneyActuallyReceivedAnd": "રોકડ ધોરણ — ખરેખર મળેલી અને ચૂકવેલી રકમ, તેથી તે હંમેશાં રોકડ ખાતાવહી સાથે મેળ ખાય છે",
@@ -1415,6 +1433,10 @@
         "avgJob2": "સરેરાશ/જોબ",
         "performance": "કામગીરી",
         "searchTechnician": "ટેકનિશિયન શોધો..."
+      },
+      "fieldVisits": {
+        "byTechnician": "ટેકનિશિયન પ્રમાણે ({{count}})",
+        "byJobCard": "જોબ કાર્ડ પ્રમાણે ({{count}})"
       }
     },
     "sales": {
@@ -1483,7 +1505,8 @@
         "checkYourEmail": "તમારું ઈમેલ જુઓ",
         "sendResetLink": "બદલવાની લિંક મોકલો",
         "backToLogIn": "લોગ ઇન પર પાછા",
-        "ifAnAccountExistsForThat": "જો તે સરનામાનું કોઈ ખાતું હોય, તો બદલવાની લિંક મોકલી દેવાઈ છે."
+        "ifAnAccountExistsForThat": "જો તે સરનામાનું કોઈ ખાતું હોય, તો બદલવાની લિંક મોકલી દેવાઈ છે.",
+        "rememberedIt": "યાદ આવી ગયું?"
       }
     },
     "login": {
@@ -1492,14 +1515,17 @@
         "welcomeBackEnterYourDetailsTo": "પાછા આવવા બદલ આભાર — આગળ વધવા તમારી માહિતી નાખો.",
         "email": "ઈમેલ",
         "signUpFree": "મફત સાઇન અપ કરો",
-        "forgotPassword": "પાસવર્ડ ભૂલી ગયા?"
+        "forgotPassword": "પાસવર્ડ ભૂલી ગયા?",
+        "noAccountYet": "ખાતું નથી?"
       }
     },
     "signup": {
       "signup": {
         "createYourAccount": "તમારું ખાતું બનાવો",
         "freeForeverNoCardRequired": "હંમેશાં મફત — કાર્ડની જરૂર નથી.",
-        "createAccount": "ખાતું બનાવો"
+        "createAccount": "ખાતું બનાવો",
+        "alreadyHaveAccount": "પહેલેથી ખાતું છે?",
+        "logIn": "લૉગ ઇન કરો"
       }
     },
     "landing": {
@@ -1597,7 +1623,8 @@
         "couldNotCreateThisRole": "આ ભૂમિકા બનાવી શકાઈ નથી.",
         "createRole": "ભૂમિકા બનાવો",
         "afterCreatingThisRoleYouLl": "આ ભૂમિકા બનાવ્યા પછી તમારે આ કરવું પડશે:",
-        "byDefaultNewRolesHaveNo": "ડિફોલ્ટ રીતે નવી ભૂમિકાઓને કોઈ પરવાનગી અને કોઈ મેન્યુ પહોંચ હોતી નથી."
+        "byDefaultNewRolesHaveNo": "ડિફોલ્ટ રીતે નવી ભૂમિકાઓને કોઈ પરવાનગી અને કોઈ મેન્યુ પહોંચ હોતી નથી.",
+        "nextSteps": "આગળનાં પગલાં"
       },
       "createUser": {
         "enterFullName": "પૂરું નામ લખો",
@@ -1633,7 +1660,8 @@
         "thisPermanentlyRemovesThisIpRestriction": "આ આ IP પ્રતિબંધ કાયમ માટે કાઢી નાખે છે. આ પાછું લઈ શકાતું નથી.",
         "thisIpCidrWillStartAuthorizing": "આ IP/CIDR માલિક સિવાયના લોકોના લોગ ઇનને ફરી મંજૂરી આપવા લાગશે.",
         "editWhitelistEntry": "વ્હાઇટલિસ્ટ નોંધ બદલો",
-        "addIpToWhitelist": "વ્હાઇટલિસ્ટમાં IP ઉમેરો"
+        "addIpToWhitelist": "વ્હાઇટલિસ્ટમાં IP ઉમેરો",
+        "detectMyIp": "મારું વર્તમાન IP ઓળખો ({{ip}})"
       },
       "loginReport": {
         "loginReport": "લોગિન રિપોર્ટ",
@@ -1827,7 +1855,8 @@
         "currency": "ચલણ",
         "customerSince": "ક્યારથી ગ્રાહક",
         "everyFeatureInThisAppIs": "આ એપની દરેક સુવિધા હંમેશાં મફત છે. કોઈ પ્લાન સ્તર નથી, કોઈ અપગ્રેડ સૂચન નથી, કંઈ ચૂકવવાનું નથી.",
-        "editCompanyDetails": "કંપનીની વિગતો બદલો"
+        "editCompanyDetails": "કંપનીની વિગતો બદલો",
+        "allModulesEnabled": "આ ખાતા પર બધા {{count}} મોડ્યુલ સક્રિય છે."
       },
       "branchManagement": {
         "branchManagement": "શાખા વ્યવસ્થાપન",
@@ -2049,14 +2078,26 @@
         "deleteOnlyFormat": "કાઢી નાખો — એકમાત્ર ફોર્મેટ",
         "importTemplate": "ટેમ્પલેટ ઇમ્પોર્ટ કરો",
         "printDevices": "પ્રિન્ટ ડિવાઇસ",
-        "newTemplate": "નવું ટેમ્પલેટ"
+        "newTemplate": "નવું ટેમ્પલેટ",
+        "designer": {
+          "fields": "ફીલ્ડ",
+          "layers": "સ્તરો",
+          "pageSetup": "પૃષ્ઠ સેટઅપ",
+          "hideWhen": "છુપાવો જ્યારે",
+          "versionHistory": "આવૃત્તિ ઇતિહાસ",
+          "replacedBy": "દ્વારા બદલાયું",
+          "hideWhenEmpty": "{{field}} ખાલી હોય તો છુપાવો",
+          "replacedByOn": "{{name}} દ્વારા બદલાયું · {{when}}"
+        },
+        "defaultNamed": "ડિફોલ્ટ: {{name}}"
       },
       "whatsapp": {
         "whatsapp": "WhatsApp",
         "messageTemplatesSentToCustomersAs": "જોબ આગળ વધતાં ગ્રાહકોને મોકલાતા સંદેશ ટેમ્પલેટ",
         "couldnTLoadYourWhatsappTemplates": "તમારાં WhatsApp ટેમ્પલેટ લોડ થઈ શક્યાં નથી",
         "countryCode": "દેશનો કોડ",
-        "prefixedToACustomerS10": "WhatsApp ખોલતાં પહેલાં ગ્રાહકના 10 અંકના મોબાઇલ પહેલાં લગાવાય છે."
+        "prefixedToACustomerS10": "WhatsApp ખોલતાં પહેલાં ગ્રાહકના 10 અંકના મોબાઇલ પહેલાં લગાવાય છે.",
+        "availablePlaceholders": "ઉપલબ્ધ પ્લેસહોલ્ડર: {{list}}"
       },
       "behaviorSubtab": {
         "collectPaymentWithGenerateBill": "બિલ બનાવતી વખતે ચુકવણી લો",
@@ -2146,7 +2187,9 @@
         "rolePermissions": "ભૂમિકા પરવાનગીઓ",
         "jobCardForm": "જોબ કાર્ડ ફોર્મ",
         "leadForm": "લીડ ફોર્મ",
-        "controlExactlyWhatEachRoleCan": "નક્કી કરો કે દરેક જોબ સ્થિતિ પર દરેક ભૂમિકા બરાબર શું જોઈ અને કરી શકે."
+        "controlExactlyWhatEachRoleCan": "નક્કી કરો કે દરેક જોબ સ્થિતિ પર દરેક ભૂમિકા બરાબર શું જોઈ અને કરી શકે.",
+        "jobAccess": "જોબ ઍક્સેસ",
+        "allChangesSavedEditing": "બધા ફેરફારો સાચવ્યા · \"{{role}}\" સંપાદિત કરી રહ્યા છો"
       },
       "fieldControlRow": {
         "hiddenClickToShow": "છુપાયેલ — બતાવવા ક્લિક કરો",
@@ -2288,7 +2331,9 @@
       "ipBlockedScreen": {
         "accessBlockedFromThisNetwork": "આ નેટવર્કથી પ્રવેશ અટકાવેલો છે",
         "yourCurrentIpCouldNotBe": " તમારું હાલનું IP જાણી શકાયું નથી.",
-        "askAnOwnerToAddYour": "કોઈ માલિકને વ્યવસ્થાપન → IP વ્હાઇટલિસ્ટમાં તમારું IP ઉમેરવા કહો, અથવા પહેલેથી મંજૂર નેટવર્કથી જોડાઓ."
+        "askAnOwnerToAddYour": "કોઈ માલિકને વ્યવસ્થાપન → IP વ્હાઇટલિસ્ટમાં તમારું IP ઉમેરવા કહો, અથવા પહેલેથી મંજૂર નેટવર્કથી જોડાઓ.",
+        "roleRequiresWhitelistedIp": "તમારા ખાતાની ભૂમિકા માટે વ્હાઇટલિસ્ટ કરેલા IP સરનામાંથી સાઇન ઇન કરવું જરૂરી છે.",
+        "currentIpNotOnList": " તમારું વર્તમાન IP ({{ip}}) યાદીમાં નથી."
       },
       "requireMenuAccess": {
         "youDonTHaveAccessTo": "તમને આ પાનાની પરવાનગી નથી",
