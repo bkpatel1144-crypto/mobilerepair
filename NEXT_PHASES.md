@@ -17,7 +17,7 @@ A phase is not done because the code compiles.
 | 13 — Parts & stock integrity       | ✅ Done — fitting a part is checked against stock  | Medium  | —          |
 | 14 — After the sale                | ✅ Done — warranty lookup + linked rework          | Medium  | —          |
 | 15a — Stop failing silently        | ✅ Done — offline banner, honest refusals          | Small   | —          |
-| 15b — Create offline for real      | Needs numbers without a live transaction          | Large   | A decision — see OFFLINE_NUMBERING.md |
+| 15b — Create offline for real      | ✅ Done — reserved blocks + a gapless invoice series | Large   | —          |
 | 16 — Finish the clone              | ~40 screens never compared to theirs              | Ongoing | Screenshots from you |
 
 Phases 12–15 are independent of each other — the order below is by how much each one is
@@ -109,7 +109,7 @@ rework, and confirm both cards link and neither total is disturbed.
 
 ---
 
-## Phase 15 — Works on bad internet (15a done, 15b awaiting a decision)
+## Phase 15 — Works on bad internet ✅ Done
 
 **The problem.** 11 hooks call `getNextSequence`, which is a Firestore **transaction**, and a
 transaction cannot complete with no connection. Job cards, receipts, purchases, expenses,
@@ -128,8 +128,9 @@ sequence-dependent action clearly disabled while offline with the reason given, 
 writes surfaced instead of appearing to have saved. This does not make the app work offline; it
 stops it lying about it, and it is a day's work rather than a week's.
 
-**15b — create offline for real.** ⏸ Designed, not built — the design note is
-`OFFLINE_NUMBERING.md` and it ends with one question for the shop owner. Sequence numbers reserved in a way that does not need a live
+**15b — create offline for real.** ✅ Done — reserved number blocks for job cards and parties,
+plus a separate gapless `INV-` series minted at Generate Bill. `OFFLINE_NUMBERING.md` records why,
+and the three layered causes of the hang are in the commit message. Sequence numbers reserved in a way that does not need a live
 transaction, so job cards and receipts can be created on a dead connection and reconcile when
 it returns. This is a genuine design change with a real risk — two devices offline at once must
 not mint the same `JC-2026-27-00001` — so it gets its own design note before any code, and it
