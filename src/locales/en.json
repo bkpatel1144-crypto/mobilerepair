@@ -982,7 +982,10 @@
         "sections": {
           "deviceDetails": "Device Details",
           "sellerVerification": "Seller & ID Verification",
-          "purchaseDetails": "Purchase Details"
+          "purchaseDetails": "Purchase Details",
+          "device": "Device Details",
+          "seller": "Seller & ID Verification",
+          "purchase": "Purchase Details"
         },
         "deviceTypeLabel": "Device Type",
         "devicePinPattern": "Device PIN / Pattern",

@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { FormError } from '@/components/shared/form-error'
+import { FormSection, FormGrid } from '@/components/shared/form-section'
 import { ErrorState } from '@/components/shared/error-state'
 import { SearchSelect } from '@/components/shared/search-select'
 import { PatternLockPicker, PatternLockPreview } from '@/components/shared/pattern-lock'
@@ -265,13 +266,12 @@ export function CreateSecondHandPurchasePage() {
 
       {formError && <FormError message={formError} />}
 
-      <div className="space-y-4 rounded-lg border p-4">
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">📋 Device Details</h2>
-
-        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <FormSection glyph="📋" title={t('pages.secondHandDevice.createPurchase.sections.device')}>
+        <FormGrid>
           <div className="space-y-1.5">
             <Label>
-              {t('pages.secondHandDevice.createPurchase.deviceTypeLabel')} <span className="text-red-600">*</span>
+              {t('pages.secondHandDevice.createPurchase.deviceTypeLabel')}{' '}
+              <span className="text-red-600">*</span>
             </Label>
             <div className="flex gap-2">
               <div className="flex-1">
@@ -607,7 +607,7 @@ export function CreateSecondHandPurchasePage() {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </FormGrid>
 
         <div className="flex flex-wrap gap-4 text-sm">
           <label className="flex items-center gap-1.5">
@@ -695,13 +695,9 @@ export function CreateSecondHandPurchasePage() {
             </div>
           )}
         </div>
-      </div>
+      </FormSection>
 
-      <div className="space-y-4 rounded-lg border p-4">
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">
-          ✓ Seller &amp; ID Verification
-        </h2>
-
+      <FormSection glyph="✓" title={t('pages.secondHandDevice.createPurchase.sections.seller')}>
         <div className="space-y-1.5">
           <Label>
             {t('common.seller')} <span className="text-red-600">*</span>
@@ -741,7 +737,7 @@ export function CreateSecondHandPurchasePage() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+        <FormGrid>
           <div className="space-y-1.5">
             <Label>{t('pages.secondHandDevice.createPurchase.idProofType')}</Label>
             <Select value={idProofType} onValueChange={(v) => v && setIdProofType(v)}>
@@ -780,7 +776,7 @@ export function CreateSecondHandPurchasePage() {
               placeholder="9876543210"
             />
           </div>
-        </div>
+        </FormGrid>
 
         <div className="space-y-1.5">
           <Label>
@@ -825,12 +821,10 @@ export function CreateSecondHandPurchasePage() {
             {t('pages.secondHandDevice.createPurchase.sellerDeclaredTheDeviceIsTheirs')}
           </label>
         </div>
-      </div>
+      </FormSection>
 
-      <div className="space-y-4 rounded-lg border p-4">
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">₹ Purchase Details</h2>
-
-        <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <FormSection glyph="₹" title={t('pages.secondHandDevice.createPurchase.sections.purchase')}>
+        <FormGrid>
           <div className="space-y-1.5">
             <Label htmlFor="purchasePrice">
               {t('pages.secondHandDevice.createPurchase.purchasePriceLabel')}{' '}
@@ -934,7 +928,7 @@ export function CreateSecondHandPurchasePage() {
               {t('pages.secondHandDevice.createPurchase.whatYouPlanToSellThis')}
             </p>
           </div>
-        </div>
+        </FormGrid>
 
         <div className="space-y-1.5">
           <Label>
@@ -950,7 +944,7 @@ export function CreateSecondHandPurchasePage() {
             rows={2}
           />
         </div>
-      </div>
+      </FormSection>
 
       <div className="flex justify-end gap-2 border-t pt-4">
         <Button type="button" variant="outline" onClick={() => navigate(-1)} disabled={submitting}>

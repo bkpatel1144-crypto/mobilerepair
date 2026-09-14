@@ -982,7 +982,10 @@
         "sections": {
           "deviceDetails": "ડિવાઇસ વિગતો",
           "sellerVerification": "વિક્રેતા અને ઓળખ ચકાસણી",
-          "purchaseDetails": "ખરીદી વિગતો"
+          "purchaseDetails": "ખરીદી વિગતો",
+          "device": "ડિવાઇસ વિગતો",
+          "seller": "વેચનાર અને ઓળખ ચકાસણી",
+          "purchase": "ખરીદ વિગતો"
         },
         "deviceTypeLabel": "ડિવાઇસ પ્રકાર",
         "devicePinPattern": "ડિવાઇસ પિન / પેટર્ન",
