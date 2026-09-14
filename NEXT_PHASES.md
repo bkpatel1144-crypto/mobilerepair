@@ -148,8 +148,9 @@ with the right number once the network returns.
 seen them. Comparing from source reading has twice reported screens as matching while they
 looked nothing alike, so this needs screenshots, not guesses.
 
-**Known and ready to do now:** Company Management is missing its **Filters** button and its
-**More Actions** button. (The "Viewing: …" chip is already there.)
+**Done:** Company Management's **Filters** and **More Actions** buttons, verified live
+(`tools/ui/company-toolbar-probe.mjs`). Nothing else on this phase can proceed without
+screenshots.
 
 **Waiting on screenshots**, by section:
 
