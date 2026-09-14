@@ -28,3 +28,7 @@ dist-ssr
 
 # Screenshots from tools/firebase/e2e-signup.mjs
 e2e-*.png
+
+# Screen captures from tools/ui/screen-inventory.mjs — regenerated on demand, and 5MB of
+# PNGs is not something to carry in git. SCREEN_INVENTORY.md, which is the useful half, is.
+screens/
