@@ -139,7 +139,7 @@ export function FinancialYearsPage() {
           </span>
           {f.isCurrent && (
             <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
-              Current
+              {t('common.current')}
             </span>
           )}
         </span>
@@ -163,17 +163,17 @@ export function FinancialYearsPage() {
         f.isLocked ? (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
             <Lock className="size-3.5" />
-            Locked
+            {t('common.locked')}
           </span>
         ) : f.isActive ? (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
             <CheckCircle2 className="size-3.5" />
-            Active
+            {t('common.active')}
           </span>
         ) : (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
             <XCircle className="size-3.5" />
-            Inactive
+            {t('common.inactive')}
           </span>
         ),
     },
@@ -237,7 +237,7 @@ export function FinancialYearsPage() {
                 }}
               >
                 <Pencil />
-                Edit
+                {t('common.edit')}
               </DropdownMenuItem>
               {!f.isCurrent && !f.isLocked && (
                 <DropdownMenuItem
@@ -267,7 +267,7 @@ export function FinancialYearsPage() {
           <>
             <Button type="button" onClick={() => setCreating(true)}>
               <Plus className="size-4" />
-              Create FY
+              {t('pages.settings.financialYears.createFy')}
             </Button>
           </>
         }
@@ -328,7 +328,7 @@ export function FinancialYearsPage() {
           onClick={() => setShowLockedOnly((v) => !v)}
         >
           <Filter className="size-4" />
-          Filters
+          {t('shared.filters')}
         </Button>
       </div>
 
@@ -380,7 +380,7 @@ export function FinancialYearsPage() {
                   onClick={() => setConfirming('activate')}
                   disabled={activateFy.isPending || viewing.isLocked}
                 >
-                  Activate
+                  {t('pages.settings.financialYears.activate')}
                 </Button>
               )}
               <Button
@@ -532,8 +532,9 @@ export function FinancialYearsPage() {
         </div>
         {formError && <FormError message={formError} />}
         <p className="rounded-lg bg-blue-50 p-2.5 text-xs text-blue-800 dark:bg-blue-500/10 dark:text-blue-400">
-          Note: Use "{t('pages.settings.financialYears.createNextFy')}" for sequential years. This
-          form is for manual creation only.
+          {t('pages.settings.financialYears.manualCreationNote', {
+            action: t('pages.settings.financialYears.createNextFy'),
+          })}
         </p>
       </FormModal>
 

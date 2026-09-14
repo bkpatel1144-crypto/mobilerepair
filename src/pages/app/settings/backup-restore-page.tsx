@@ -30,7 +30,7 @@ import {
   useRestoreOverwriteLive,
 } from '@/hooks/use-backups'
 import { formatTimestamp } from '@/lib/utils'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
@@ -196,7 +196,7 @@ export function BackupRestorePage() {
           </div>
           {createBackup.isError && (
             <p className="text-sm text-red-600">
-              Backup failed:{' '}
+              {t('pages.settings.backupRestore.backupFailed')}{' '}
               {createBackup.error instanceof Error
                 ? createBackup.error.message
                 : t('shared.somethingWentWrong')}{' '}
@@ -205,7 +205,7 @@ export function BackupRestorePage() {
           )}
           {downloadBackup.isError && (
             <p className="text-sm text-red-600">
-              Download failed:{' '}
+              {t('pages.settings.backupRestore.downloadFailed')}{' '}
               {downloadBackup.error instanceof Error
                 ? downloadBackup.error.message
                 : t('shared.somethingWentWrong')}{' '}
@@ -252,7 +252,7 @@ export function BackupRestorePage() {
                 disabled={!schedulerDirty || updateSettings.isPending}
                 className="col-span-2 sm:col-span-1"
               >
-                Save
+                {t('common.save')}
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
@@ -267,7 +267,7 @@ export function BackupRestorePage() {
       <div className="space-y-3 rounded-xl border bg-card p-4">
         <p className="flex items-center gap-1.5 text-sm font-semibold">
           <Clock className="size-4 text-muted-foreground" />
-          Backup History
+          {t('pages.settings.backupRestore.backupHistory')}
           {!backupsLoading && !backupsError && (
             <span className="rounded-full bg-muted px-1.5 py-0.5 text-xs">{backups.length}</span>
           )}
@@ -361,7 +361,7 @@ export function BackupRestorePage() {
         <div className="space-y-3 rounded-xl border bg-card p-4">
           <p className="flex items-center gap-1.5 text-sm font-semibold">
             <ArchiveIcon className="size-4 text-muted-foreground" />
-            Archives
+            {t('pages.settings.backupRestore.archives')}
             {!archivesLoading && !archivesError && (
               <span className="rounded-full bg-muted px-1.5 py-0.5 text-xs">{archives.length}</span>
             )}
@@ -422,7 +422,14 @@ export function BackupRestorePage() {
       >
         <div className="space-y-1.5">
           <Label>
-            Type <span className="font-mono font-semibold">{CONFIRM_PHRASE}</span> to confirm
+            {/* `Trans`, not `t()`: the phrase has to stay in monospace so a destructive confirm
+             * is unmistakable, and the words around it move to a different position in Hindi
+             * and Gujarati. A plain interpolation could do one or the other, not both. */}
+            <Trans
+              i18nKey="pages.settings.backupRestore.typeToConfirm"
+              values={{ phrase: CONFIRM_PHRASE }}
+              components={{ phrase: <span className="font-mono font-semibold" /> }}
+            />
           </Label>
           <Input value={confirmText} onChange={(e) => setConfirmText(e.target.value)} autoFocus />
         </div>

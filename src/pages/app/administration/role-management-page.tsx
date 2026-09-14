@@ -128,11 +128,11 @@ export function RoleManagementPage() {
       render: (r) =>
         r.type === 'owner' ? (
           <span className="rounded-full bg-amber-500 px-2.5 py-0.5 text-xs font-medium text-white">
-            Owner
+            {t('pages.administration.roleManagement.owner')}
           </span>
         ) : (
           <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-            Custom
+            {t('pages.administration.roleManagement.custom')}
           </span>
         ),
     },
@@ -143,7 +143,7 @@ export function RoleManagementPage() {
         r.status === 'active' ? (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
             <CircleCheck className="size-3.5" />
-            Active
+            {t('common.active')}
           </span>
         ) : (
           <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground capitalize">
@@ -206,7 +206,7 @@ export function RoleManagementPage() {
                 }}
               >
                 <Pencil />
-                Edit
+                {t('common.edit')}
               </DropdownMenuItem>
               {/* The Owner role is protected in firestore.rules as well as here — it is the only
                * role that can edit itself, so disabling it would lock the shop out of its own
@@ -232,7 +232,7 @@ export function RoleManagementPage() {
                     onClick={() => setConfirmAction({ role: r, kind: 'delete' })}
                   >
                     <Trash2 />
-                    Delete
+                    {t('common.delete')}
                   </DropdownMenuItem>
                 </>
               )}
@@ -256,7 +256,7 @@ export function RoleManagementPage() {
               onClick={() => navigate(`${buildPath('administration', 'roles')}/create`)}
             >
               <Plus className="size-4" />
-              Add Role
+              {t('pages.administration.roleManagement.addRole')}
             </Button>
           </>
         }
@@ -308,7 +308,7 @@ export function RoleManagementPage() {
           onClick={() => setShowOwnerOnly((v) => !v)}
         >
           <Filter className="size-4" />
-          Filters
+          {t('shared.filters')}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger render={<Button type="button" variant="outline" className="h-10" />}>
@@ -394,7 +394,7 @@ export function RoleManagementPage() {
                   {selectedRole.status === 'active' ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-400">
                       <CircleCheck className="size-3.5" />
-                      Active
+                      {t('common.active')}
                     </span>
                   ) : (
                     <span className="inline-flex rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground capitalize">
@@ -417,7 +417,7 @@ export function RoleManagementPage() {
                 }
               >
                 <Settings2 />
-                Configure
+                {t('pages.administration.roleManagement.configure')}
               </Button>
               <Button
                 variant="outline"
@@ -428,7 +428,7 @@ export function RoleManagementPage() {
                 }}
               >
                 <Pencil />
-                Edit
+                {t('common.edit')}
               </Button>
               {/* Same guard as the row kebab: the Owner role can't be disabled or deleted, since
                * it is the only role that can restore permissions once they are gone. */}
@@ -452,7 +452,7 @@ export function RoleManagementPage() {
                     onClick={() => setConfirmAction({ role: selectedRole, kind: 'delete' })}
                   >
                     <Trash2 />
-                    Delete
+                    {t('common.delete')}
                   </Button>
                 </>
               )}
@@ -542,7 +542,7 @@ export function RoleManagementPage() {
       >
         <div className="space-y-1.5">
           <Label htmlFor="edit-role-name">
-            Role Name <span className="text-red-600">*</span>
+            {t('pages.administration.roleManagement.roleName')} <span className="text-red-600">*</span>
           </Label>
           <Input
             id="edit-role-name"
@@ -553,7 +553,7 @@ export function RoleManagementPage() {
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="edit-role-code">
-            Role Code <span className="text-red-600">*</span>
+            {t('pages.administration.roleManagement.roleCode')} <span className="text-red-600">*</span>
           </Label>
           <Input
             id="edit-role-code"

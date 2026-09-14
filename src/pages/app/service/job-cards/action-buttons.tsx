@@ -167,7 +167,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={() => setDialog('cancel')}
           >
             <Ban className="size-4" />
-            Cancel Job
+            {t('pages.service.actionButtons.cancelJob')}
           </Button>
         )}
         {canDo('SERVICE_JOB_CARDS_CREATE') && (
@@ -177,7 +177,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={() => navigate(buildPath('service', 'job-cards') + '/create')}
           >
             <RotateCcw className="size-4" />
-            Repeat Job
+            {t('pages.service.actionButtons.repeatJob')}
           </Button>
         )}
         {canDo('SERVICE_JOB_CARDS_PRINT_LABEL') && (
@@ -207,7 +207,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={handlePrintBill}
             disabled={!jobCardBillTemplate}
           >
-            Print Bill
+            {t('pages.service.actionButtons.printBill')}
           </Button>
         )}
         <Button
@@ -215,7 +215,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           className="bg-teal-600 hover:bg-teal-700"
           render={<a href={whatsAppLink} target="_blank" rel="noreferrer" />}
         >
-          WhatsApp
+          {t('pages.service.actionButtons.whatsapp')}
         </Button>
 
         {shows('takeJob') && (
@@ -224,17 +224,17 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={() => applyAction.mutate({ action: 'takeJob' })}
             disabled={applyAction.isPending}
           >
-            Take Job
+            {t('pages.service.actionButtons.takeJob')}
           </Button>
         )}
         {shows('jobDone') && (
           <Button type="button" onClick={() => setDialog('jobDone')}>
-            Job Done
+            {t('pages.service.actionButtons.jobDone')}
           </Button>
         )}
         {shows('hold') && (
           <Button type="button" variant="outline" onClick={() => setDialog('hold')}>
-            Hold
+            {t('pages.service.actionButtons.hold')}
           </Button>
         )}
         {shows('resume') && (
@@ -243,7 +243,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={() => applyAction.mutate({ action: 'resume' })}
             disabled={applyAction.isPending}
           >
-            Resume
+            {t('pages.service.actionButtons.resume')}
           </Button>
         )}
         {shows('generateBill') && (
@@ -260,7 +260,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         )}
         {shows('payment') && (
           <Button type="button" variant="outline" onClick={() => setDialog('payment')}>
-            Payment
+            {t('common.payment')}
           </Button>
         )}
         {/* One button, as the reference has it. Handing the device over and closing the job are
@@ -291,7 +291,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             onClick={() => setConfirmingTerminal('returnAndClose')}
             disabled={applyAction.isPending}
           >
-            Return &amp; Close
+            {t('pages.service.actionButtons.returnClose')}
           </Button>
         )}
         {/* Only once the device has gone back to the customer — a job still on the bench does
@@ -339,7 +339,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             disabled={undoLastAction.isPending}
           >
             <Undo2 className="size-3.5" />
-            Undo
+            {t('common.undo')}
           </Button>
         </div>
       )}
@@ -449,7 +449,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       >
         <div className="space-y-1.5">
           <Label>
-            Description
+            {t('common.description')}
             {workflowConfig?.behavior.requireDescriptionOnJobDone && (
               <span className="text-red-600"> *</span>
             )}
@@ -589,7 +589,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         <div className="space-y-3">
           <div className="space-y-1.5">
             <Label>
-              Time Spent (minutes){' '}
+              {t('pages.service.actionButtons.timeSpentMinutes')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -606,7 +606,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Note{' '}
+              {t('common.note')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>

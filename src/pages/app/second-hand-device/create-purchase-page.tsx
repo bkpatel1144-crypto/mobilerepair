@@ -259,7 +259,7 @@ export function CreateSecondHandPurchasePage() {
         </div>
         <Button type="button" variant="outline" onClick={() => navigate(-1)}>
           <ArrowLeft className="size-4" />
-          Back
+          {t('common.back')}
         </Button>
       </div>
 
@@ -271,7 +271,7 @@ export function CreateSecondHandPurchasePage() {
         <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
             <Label>
-              Device Type <span className="text-red-600">*</span>
+              {t('pages.secondHandDevice.createPurchase.deviceTypeLabel')} <span className="text-red-600">*</span>
             </Label>
             <div className="flex gap-2">
               <div className="flex-1">
@@ -306,7 +306,7 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              Brand <span className="text-red-600">*</span>
+              {t('common.brand')} <span className="text-red-600">*</span>
             </Label>
             <div className="flex gap-2">
               <div className="flex-1">
@@ -351,7 +351,7 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              Model <span className="text-red-600">*</span>
+              {t('common.model')} <span className="text-red-600">*</span>
             </Label>
             <div className="flex gap-2">
               <div className="flex-1">
@@ -441,7 +441,7 @@ export function CreateSecondHandPurchasePage() {
 
           <div className="space-y-1.5">
             <Label>
-              Device PIN / Pattern{' '}
+              {t('pages.secondHandDevice.createPurchase.devicePinPattern')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -455,7 +455,7 @@ export function CreateSecondHandPurchasePage() {
                     className="text-xs text-red-600 hover:underline"
                     onClick={() => setDevicePinPattern('')}
                   >
-                    Clear
+                    {t('common.clear')}
                   </button>
                 </>
               ) : (
@@ -478,7 +478,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Storage / ROM{' '}
+              {t('pages.secondHandDevice.createPurchase.storageRom')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -491,7 +491,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Colour{' '}
+              {t('common.colour')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -504,7 +504,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Battery Health %{' '}
+              {t('pages.secondHandDevice.createPurchase.batteryHealthPercent')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -522,7 +522,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Network{' '}
+              {t('common.network')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -542,7 +542,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Original Invoice Date{' '}
+              {t('pages.secondHandDevice.createPurchase.originalInvoiceDate')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -555,7 +555,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Warranty Left (months){' '}
+              {t('pages.secondHandDevice.createPurchase.warrantyLeftMonths')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -623,7 +623,7 @@ export function CreateSecondHandPurchasePage() {
 
         <div className="space-y-1.5">
           <Label>
-            Accessories Included{' '}
+            {t('pages.secondHandDevice.createPurchase.accessoriesIncluded')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional2')}
             </span>
@@ -643,7 +643,7 @@ export function CreateSecondHandPurchasePage() {
         </div>
         <div className="space-y-1.5">
           <Label>
-            Condition Notes{' '}
+            {t('pages.secondHandDevice.createPurchase.conditionNotes')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional2')}
             </span>
@@ -657,7 +657,7 @@ export function CreateSecondHandPurchasePage() {
         </div>
         <div className="space-y-1.5">
           <Label>
-            Device Photos{' '}
+            {t('pages.secondHandDevice.createPurchase.devicePhotos')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional2')}
             </span>
@@ -704,7 +704,7 @@ export function CreateSecondHandPurchasePage() {
 
         <div className="space-y-1.5">
           <Label>
-            Seller <span className="text-red-600">*</span>
+            {t('common.seller')} <span className="text-red-600">*</span>
           </Label>
           <SearchSelect
             options={sellers.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
@@ -769,7 +769,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              ID Proof Number{' '}
+              {t('pages.secondHandDevice.createPurchase.idProofNumber')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -784,7 +784,7 @@ export function CreateSecondHandPurchasePage() {
 
         <div className="space-y-1.5">
           <Label>
-            ID Proof Photo{' '}
+            {t('pages.secondHandDevice.createPurchase.idProofPhoto')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional2')}
             </span>
@@ -833,7 +833,8 @@ export function CreateSecondHandPurchasePage() {
         <div className="grid grid-cols-2 gap-x-4 gap-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="purchasePrice">
-              Purchase Price <span className="text-red-600">*</span>
+              {t('pages.secondHandDevice.createPurchase.purchasePriceLabel')}{' '}
+              <span className="text-red-600">*</span>
             </Label>
             <Input
               id="purchasePrice"
@@ -871,7 +872,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Amount Paid{' '}
+              {t('pages.secondHandDevice.createPurchase.amountPaidLabel')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -890,7 +891,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Purchased By{' '}
+              {t('pages.secondHandDevice.createPurchase.purchasedBy')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -916,7 +917,7 @@ export function CreateSecondHandPurchasePage() {
           </div>
           <div className="space-y-1.5">
             <Label>
-              Expected Sale Price{' '}
+              {t('pages.secondHandDevice.createPurchase.expectedSalePrice')}{' '}
               <span className="text-xs font-normal text-muted-foreground">
                 {t('shared.optional2')}
               </span>
@@ -937,7 +938,7 @@ export function CreateSecondHandPurchasePage() {
 
         <div className="space-y-1.5">
           <Label>
-            Notes{' '}
+            {t('common.notes')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional2')}
             </span>
@@ -953,7 +954,7 @@ export function CreateSecondHandPurchasePage() {
 
       <div className="flex justify-end gap-2 border-t pt-4">
         <Button type="button" variant="outline" onClick={() => navigate(-1)} disabled={submitting}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button type="button" onClick={handleSubmit} disabled={submitting}>
           {submitting ? 'Saving…' : t('pages.secondHandDevice.createPurchase.savePurchase')}

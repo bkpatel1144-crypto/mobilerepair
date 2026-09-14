@@ -135,13 +135,13 @@ function NewExpenseModal({
       <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))]">
         <div className="space-y-1.5">
           <Label htmlFor="exp-date">
-            Date <span className="text-red-600">*</span>
+            {t('common.date')} <span className="text-red-600">*</span>
           </Label>
           <Input id="exp-date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="exp-amount">
-            Amount <span className="text-red-600">*</span>
+            {t('common.amount')} <span className="text-red-600">*</span>
           </Label>
           <Input
             id="exp-amount"
@@ -157,7 +157,7 @@ function NewExpenseModal({
 
       <div className="space-y-1.5">
         <Label>
-          Category <span className="text-red-600">*</span>
+          {t('common.category')} <span className="text-red-600">*</span>
         </Label>
         <SearchSelect
           options={categories.map((c) => ({ id: c.id, label: c.name }))}
@@ -175,7 +175,7 @@ function NewExpenseModal({
 
       <div className="space-y-1.5">
         <Label>
-          Paid by <span className="text-red-600">*</span>
+          {t('pages.finance.expenses.paidBy')} <span className="text-red-600">*</span>
         </Label>
         <Select value={mode} onValueChange={(v) => v && setMode(v as ExpenseDoc['mode'])}>
           <SelectTrigger className="w-full">
@@ -201,7 +201,7 @@ function NewExpenseModal({
 
       <div className="space-y-1.5">
         <Label>
-          Paid to{' '}
+          {t('pages.finance.expenses.paidTo')}{' '}
           <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <SearchSelect
@@ -217,7 +217,7 @@ function NewExpenseModal({
 
       <div className="space-y-1.5">
         <Label htmlFor="exp-notes">
-          Notes{' '}
+          {t('common.notes')}{' '}
           <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <Textarea
@@ -375,7 +375,7 @@ export function ExpensesPage() {
               }
             >
               <Download className="size-4" />
-              Export CSV
+              {t('shared.exportCsv')}
             </Button>
             <Button type="button" onClick={() => setNewOpen(true)}>
               <Plus className="size-4" />
@@ -419,7 +419,7 @@ export function ExpensesPage() {
         </Select>
         {dateRange !== 'all' && (
           <Button type="button" variant="ghost" size="sm" onClick={() => setDateRange('all')}>
-            All time
+            {t('shared.allTime')}
           </Button>
         )}
       </FilterBar>

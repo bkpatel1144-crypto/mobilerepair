@@ -165,7 +165,7 @@ function NewBillModal({
     >
       <div className="space-y-1.5">
         <Label>
-          Supplier <span className="text-red-600">*</span>
+          {t('common.supplier')} <span className="text-red-600">*</span>
         </Label>
         <SearchSelect
           options={suppliers.map((p) => ({
@@ -188,7 +188,7 @@ function NewBillModal({
       <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))]">
         <div className="space-y-1.5">
           <Label htmlFor="sb-ref">
-            Their invoice #{' '}
+            {t('pages.finance.supplierPayables.theirInvoice')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional')}
             </span>
@@ -202,7 +202,7 @@ function NewBillModal({
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="sb-amount">
-            Amount <span className="text-red-600">*</span>
+            {t('common.amount')} <span className="text-red-600">*</span>
           </Label>
           <Input
             id="sb-amount"
@@ -219,7 +219,7 @@ function NewBillModal({
       <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))]">
         <div className="space-y-1.5">
           <Label htmlFor="sb-date">
-            Bill date <span className="text-red-600">*</span>
+            {t('pages.finance.supplierPayables.billDate')} <span className="text-red-600">*</span>
           </Label>
           <Input
             id="sb-date"
@@ -230,7 +230,7 @@ function NewBillModal({
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="sb-due">
-            Due date{' '}
+            {t('pages.finance.supplierPayables.dueDate')}{' '}
             <span className="text-xs font-normal text-muted-foreground">
               {t('shared.optional')}
             </span>
@@ -249,7 +249,7 @@ function NewBillModal({
 
       <div className="space-y-1.5">
         <Label htmlFor="sb-notes">
-          Notes{' '}
+          {t('common.notes')}{' '}
           <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <Textarea id="sb-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />
@@ -333,7 +333,7 @@ function PaymentModal({
       <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))]">
         <div className="space-y-1.5">
           <Label htmlFor="pay-amount">
-            Amount <span className="text-red-600">*</span>
+            {t('common.amount')} <span className="text-red-600">*</span>
           </Label>
           <Input
             id="pay-amount"
@@ -346,7 +346,7 @@ function PaymentModal({
         </div>
         <div className="space-y-1.5">
           <Label>
-            Paid by <span className="text-red-600">*</span>
+            {t('pages.finance.supplierPayables.paidBy')} <span className="text-red-600">*</span>
           </Label>
           <Select value={mode} onValueChange={(v) => v && setMode(v as ReceiptDoc['mode'])}>
             <SelectTrigger className="w-full">
@@ -363,7 +363,7 @@ function PaymentModal({
 
       <div className="space-y-1.5">
         <Label htmlFor="pay-notes">
-          Notes{' '}
+          {t('common.notes')}{' '}
           <span className="text-xs font-normal text-muted-foreground">{t('shared.optional')}</span>
         </Label>
         <Textarea
@@ -497,11 +497,11 @@ export function SupplierPayablesPage() {
               }
             >
               <Download className="size-4" />
-              Export CSV
+              {t('shared.exportCsv')}
             </Button>
             <Button type="button" onClick={() => setNewOpen(true)}>
               <Plus className="size-4" />
-              New Bill
+              {t('pages.finance.supplierPayables.newBill')}
             </Button>
           </>
         }
@@ -594,7 +594,7 @@ export function SupplierPayablesPage() {
                 action={
                   <Button type="button" onClick={() => setNewOpen(true)}>
                     <Plus className="size-4" />
-                    New Bill
+                    {t('pages.finance.supplierPayables.newBill')}
                   </Button>
                 }
               />
@@ -633,7 +633,9 @@ export function SupplierPayablesPage() {
                         <span className="truncate">{item.reference}</span>
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Due {item.dueDate.toLocaleDateString('en-IN', { dateStyle: 'medium' })}
+                        {t('pages.finance.supplierPayables.dueOn', {
+                          date: item.dueDate.toLocaleDateString('en-IN', { dateStyle: 'medium' }),
+                        })}
                       </p>
                     </div>
                     {agingBadge(item, t)}
@@ -676,7 +678,7 @@ export function SupplierPayablesPage() {
                         onClick={() => setVoidTarget(bill)}
                       >
                         <Ban className="size-3.5" />
-                        Void Bill
+                        {t('pages.finance.supplierPayables.voidBill')}
                       </Button>
                     )}
                   </div>

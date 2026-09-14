@@ -272,7 +272,12 @@
     "allBranches": "सभी शाखाएं",
     "allRoles": "सभी भूमिकाएं",
     "tenDigitMobile": "10 अंकों का मोबाइल",
-    "others": "अन्य"
+    "others": "अन्य",
+    "note": "नोट",
+    "undo": "पूर्ववत करें",
+    "colour": "रंग",
+    "network": "नेटवर्क",
+    "seller": "विक्रेता"
   },
   "shell": {
     "appName": "aim",
@@ -463,7 +468,8 @@
     "moreActions": "और कार्रवाई",
     "exportCsv": "CSV निर्यात करें",
     "all": "सभी",
-    "clearFilters": "फ़िल्टर हटाएँ"
+    "clearFilters": "फ़िल्टर हटाएँ",
+    "allTime": "सभी समय"
   },
   "pages": {
     "dashboard": {
@@ -560,7 +566,8 @@
         "recordExpense": "खर्च दर्ज करें",
         "posted": "दर्ज हुआ",
         "searchExpenseCategoryPartyNotes": "खर्च #, श्रेणी, पार्टी, टिप्पणी खोजें...",
-        "setThisToHaveTheExpense": "यह भरने पर खर्च उस पार्टी के खाते में दिखेगा। चाय या भाड़े जैसी चीज़ों के लिए खाली छोड़ें।"
+        "setThisToHaveTheExpense": "यह भरने पर खर्च उस पार्टी के खाते में दिखेगा। चाय या भाड़े जैसी चीज़ों के लिए खाली छोड़ें।",
+        "paidBy": "भुगतान माध्यम"
       },
       "partyLedger": {
         "partyLedger": "पार्टी खाता",
@@ -654,7 +661,13 @@
         "leftEmptyTheBillAgesFrom": "खाली छोड़ने पर बिल की उम्र उसकी बिल तारीख से गिनी जाती है।",
         "recordedAsAPaymentOutSo": "रकम बाहर जाने के रूप में दर्ज, इसलिए यह रोकड़ बही और इस सप्लायर के खाते में दिखता है।",
         "clearAgeFilter": "उम्र फ़िल्टर हटाएं",
-        "recordPayment": "भुगतान दर्ज करें"
+        "recordPayment": "भुगतान दर्ज करें",
+        "newBill": "नया बिल",
+        "billDate": "बिल तिथि",
+        "dueDate": "नियत तिथि",
+        "paidBy": "भुगतान माध्यम",
+        "theirInvoice": "उनका इनवॉइस #",
+        "dueOn": "देय {{date}}"
       }
     },
     "masters": {
@@ -940,7 +953,22 @@
           "deviceDetails": "डिवाइस विवरण",
           "sellerVerification": "विक्रेता और आईडी सत्यापन",
           "purchaseDetails": "खरीद विवरण"
-        }
+        },
+        "deviceTypeLabel": "डिवाइस प्रकार",
+        "devicePinPattern": "डिवाइस पिन / पैटर्न",
+        "storageRom": "स्टोरेज / ROM",
+        "batteryHealthPercent": "बैटरी स्वास्थ्य %",
+        "originalInvoiceDate": "मूल इनवॉइस तिथि",
+        "warrantyLeftMonths": "बची वारंटी (महीने)",
+        "accessoriesIncluded": "शामिल सहायक उपकरण",
+        "conditionNotes": "स्थिति नोट्स",
+        "devicePhotos": "डिवाइस फ़ोटो",
+        "idProofNumber": "पहचान प्रमाण संख्या",
+        "idProofPhoto": "पहचान प्रमाण फ़ोटो",
+        "purchasePriceLabel": "ख़रीद मूल्य",
+        "amountPaidLabel": "भुगतान की गई राशि",
+        "purchasedBy": "ख़रीदने वाला",
+        "expectedSalePrice": "अपेक्षित बिक्री मूल्य"
       },
       "devicePurchase": {
         "devicePurchase": "डिवाइस खरीद",
@@ -1059,7 +1087,13 @@
         "undoLastAction": "पिछली क्रिया पूर्ववत करें",
         "noTimeLimit": "कोई समय सीमा नहीं",
         "ownerOverrideNoTimeLimit": "मालिक का विशेषाधिकार — कोई समय सीमा नहीं",
-        "thisIsATerminalStatusUndo": "यह अंतिम स्थिति है — बंद होने के बाद \"पिछली क्रिया पूर्ववत करें\" उपलब्ध नहीं रहेगा।"
+        "thisIsATerminalStatusUndo": "यह अंतिम स्थिति है — बंद होने के बाद \"पिछली क्रिया पूर्ववत करें\" उपलब्ध नहीं रहेगा।",
+        "repeatJob": "दोबारा जॉब",
+        "printBill": "बिल प्रिंट करें",
+        "whatsapp": "व्हाट्सएप",
+        "takeJob": "जॉब लें",
+        "resume": "फिर शुरू करें",
+        "timeSpentMinutes": "लगा समय (मिनट)"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "जॉब कार्ड बनाने का फ़ॉर्म लोड नहीं हो सका",
@@ -1670,7 +1704,11 @@
         "showActiveRoles": "सक्रिय भूमिकाएं दिखाएं",
         "reloadFromServer": "सर्वर से दोबारा लोड करें",
         "thisRoleHasFullAccessBy": "इस भूमिका को परिभाषा से ही पूरी पहुँच है और इसे सिर्फ़ कोई दूसरा मालिक संभाल सकता है, इसलिए इसे बंद या हटाया नहीं जा सकता।",
-        "disableRole": "भूमिका बंद करें"
+        "disableRole": "भूमिका बंद करें",
+        "owner": "मालिक",
+        "custom": "कस्टम",
+        "addRole": "भूमिका जोड़ें",
+        "configure": "कॉन्फ़िगर करें"
       },
       "systemAudit": {
         "systemAudit": "सिस्टम ऑडिट",
@@ -1742,7 +1780,12 @@
         "dailyAutomaticBackup": "रोज़ का अपने आप बैकअप",
         "restoreFromFile": "फ़ाइल से वापस लाएं",
         "uploadAPreviouslyDownloadedBackupFile": "पहले डाउनलोड की गई बैकअप फ़ाइल (.json) अपलोड करें। आप इसे अलग सिर्फ़-पढ़ने वाले संग्रह के रूप में वापस ला सकते हैं (सुरक्षित) या अपने चालू डेटा की जगह रख सकते हैं (खतरनाक)।",
-        "overwriteLiveDataDangerous": "चालू डेटा बदलें (खतरनाक)"
+        "overwriteLiveDataDangerous": "चालू डेटा बदलें (खतरनाक)",
+        "backupHistory": "बैकअप इतिहास",
+        "archives": "संग्रह",
+        "backupFailed": "बैकअप विफल:",
+        "downloadFailed": "डाउनलोड विफल:",
+        "typeToConfirm": "पुष्टि के लिए <phrase>{{phrase}}</phrase> लिखें"
       },
       "billing": {
         "yourPlanAndBillingDetails": "आपका प्लान और बिलिंग विवरण",
@@ -1859,7 +1902,10 @@
         "lockingThisPeriodIsAdvisoryIn": "इस बिल्ड में इस अवधि को लॉक करना सिर्फ़ सलाह है — नया लेन-देन दर्ज करने से पहले कोई भी सुविधा इसे नहीं जाँचती।",
         "makeCurrent": "वर्तमान बनाएं",
         "thisIsTheCurrentlyActiveFinancial": "यह अभी सक्रिय वित्तीय वर्ष है। सभी नए लेन-देन इसी अवधि में दर्ज होंगे। एक समय पर सिर्फ़ एक वित्तीय वर्ष सक्रिय रह सकता है।",
-        "thisYearIsClosedExistingRecords": "यह वर्ष बंद है। पुराने रिकॉर्ड पढ़े जा सकते हैं; इसे कार्रवाई मेन्यू से फिर खोला जाता है।"
+        "thisYearIsClosedExistingRecords": "यह वर्ष बंद है। पुराने रिकॉर्ड पढ़े जा सकते हैं; इसे कार्रवाई मेन्यू से फिर खोला जाता है।",
+        "createFy": "वित्तीय वर्ष बनाएँ",
+        "activate": "सक्रिय करें",
+        "manualCreationNote": "ध्यान दें: क्रमिक वर्षों के लिए \"{{action}}\" का उपयोग करें। यह फ़ॉर्म केवल मैन्युअल निर्माण के लिए है।"
       },
       "designer": {
         "couldnTLoadThisTemplate": "यह टेम्पलेट लोड नहीं हो सका",
@@ -2379,7 +2425,8 @@
         }
       },
       "selfServeTitle": "या बातचीत की ज़रूरत ही न पड़े",
-      "selfServeLead": "यहाँ किसी चीज़ के लिए सेल्स कॉल ज़रूरी नहीं। अकाउंट बनाइए और सॉफ़्टवेयर ख़ुद आपकी दुकान सेट कर देगा।"
+      "selfServeLead": "यहाँ किसी चीज़ के लिए सेल्स कॉल ज़रूरी नहीं। अकाउंट बनाइए और सॉफ़्टवेयर ख़ुद आपकी दुकान सेट कर देगा।",
+      "askFor": "{{name}} से बात करें"
     },
     "pricing": {
       "planName": "हर दुकान",

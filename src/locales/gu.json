@@ -272,7 +272,12 @@
     "allBranches": "બધી શાખાઓ",
     "allRoles": "બધી ભૂમિકાઓ",
     "tenDigitMobile": "10 અંકનો મોબાઇલ",
-    "others": "અન્ય"
+    "others": "અન્ય",
+    "note": "નોંધ",
+    "undo": "પાછું લો",
+    "colour": "રંગ",
+    "network": "નેટવર્ક",
+    "seller": "વેચનાર"
   },
   "shell": {
     "appName": "aim",
@@ -463,7 +468,8 @@
     "moreActions": "વધુ ક્રિયાઓ",
     "exportCsv": "CSV નિકાસ કરો",
     "all": "બધા",
-    "clearFilters": "ફિલ્ટર દૂર કરો"
+    "clearFilters": "ફિલ્ટર દૂર કરો",
+    "allTime": "બધો સમય"
   },
   "pages": {
     "dashboard": {
@@ -560,7 +566,8 @@
         "recordExpense": "ખર્ચ નોંધો",
         "posted": "નોંધાયું",
         "searchExpenseCategoryPartyNotes": "ખર્ચ #, શ્રેણી, પાર્ટી, નોંધ શોધો...",
-        "setThisToHaveTheExpense": "આ ભરવાથી ખર્ચ તે પાર્ટીના ખાતામાં દેખાશે. ચા કે ભાડા જેવી વસ્તુઓ માટે ખાલી છોડો."
+        "setThisToHaveTheExpense": "આ ભરવાથી ખર્ચ તે પાર્ટીના ખાતામાં દેખાશે. ચા કે ભાડા જેવી વસ્તુઓ માટે ખાલી છોડો.",
+        "paidBy": "ચુકવણી માધ્યમ"
       },
       "partyLedger": {
         "partyLedger": "પાર્ટી ખાતાવહી",
@@ -654,7 +661,13 @@
         "leftEmptyTheBillAgesFrom": "ખાલી છોડવાથી બિલની ઉંમર તેની બિલ તારીખથી ગણાય છે.",
         "recordedAsAPaymentOutSo": "રકમ બહાર જવા તરીકે નોંધાય, તેથી તે રોકડ ખાતાવહી અને આ સપ્લાયરના ખાતામાં દેખાય છે.",
         "clearAgeFilter": "ઉંમર ફિલ્ટર કાઢો",
-        "recordPayment": "ચુકવણી નોંધો"
+        "recordPayment": "ચુકવણી નોંધો",
+        "newBill": "નવું બિલ",
+        "billDate": "બિલ તારીખ",
+        "dueDate": "નિયત તારીખ",
+        "paidBy": "ચુકવણી માધ્યમ",
+        "theirInvoice": "તેમનું ઇન્વોઇસ #",
+        "dueOn": "બાકી {{date}}"
       }
     },
     "masters": {
@@ -940,7 +953,22 @@
           "deviceDetails": "ડિવાઇસ વિગતો",
           "sellerVerification": "વિક્રેતા અને ઓળખ ચકાસણી",
           "purchaseDetails": "ખરીદી વિગતો"
-        }
+        },
+        "deviceTypeLabel": "ડિવાઇસ પ્રકાર",
+        "devicePinPattern": "ડિવાઇસ પિન / પેટર્ન",
+        "storageRom": "સ્ટોરેજ / ROM",
+        "batteryHealthPercent": "બેટરી હેલ્થ %",
+        "originalInvoiceDate": "મૂળ ઇન્વોઇસ તારીખ",
+        "warrantyLeftMonths": "બાકી વોરંટી (મહિના)",
+        "accessoriesIncluded": "સામેલ એક્સેસરીઝ",
+        "conditionNotes": "સ્થિતિ નોંધ",
+        "devicePhotos": "ડિવાઇસ ફોટા",
+        "idProofNumber": "ઓળખ પુરાવા નંબર",
+        "idProofPhoto": "ઓળખ પુરાવા ફોટો",
+        "purchasePriceLabel": "ખરીદ કિંમત",
+        "amountPaidLabel": "ચૂકવેલી રકમ",
+        "purchasedBy": "ખરીદનાર",
+        "expectedSalePrice": "અપેક્ષિત વેચાણ કિંમત"
       },
       "devicePurchase": {
         "devicePurchase": "ડિવાઇસ ખરીદી",
@@ -1059,7 +1087,13 @@
         "undoLastAction": "છેલ્લી ક્રિયા પાછી લો",
         "noTimeLimit": "કોઈ સમય મર્યાદા નથી",
         "ownerOverrideNoTimeLimit": "માલિકનો વિશેષાધિકાર — કોઈ સમય મર્યાદા નથી",
-        "thisIsATerminalStatusUndo": "આ અંતિમ સ્થિતિ છે — બંધ થયા પછી \"છેલ્લી ક્રિયા પાછી લો\" ઉપલબ્ધ રહેશે નહીં."
+        "thisIsATerminalStatusUndo": "આ અંતિમ સ્થિતિ છે — બંધ થયા પછી \"છેલ્લી ક્રિયા પાછી લો\" ઉપલબ્ધ રહેશે નહીં.",
+        "repeatJob": "ફરી જોબ",
+        "printBill": "બિલ પ્રિન્ટ કરો",
+        "whatsapp": "વોટ્સએપ",
+        "takeJob": "જોબ લો",
+        "resume": "ફરી શરૂ કરો",
+        "timeSpentMinutes": "લાગેલો સમય (મિનિટ)"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "જોબ કાર્ડ બનાવવાનું ફોર્મ લોડ થઈ શક્યું નથી",
@@ -1670,7 +1704,11 @@
         "showActiveRoles": "સક્રિય ભૂમિકાઓ બતાવો",
         "reloadFromServer": "સર્વરથી ફરી લોડ કરો",
         "thisRoleHasFullAccessBy": "આ ભૂમિકાને વ્યાખ્યાથી જ પૂરી પહોંચ છે અને તેને ફક્ત બીજો માલિક સંભાળી શકે, તેથી તેને બંધ કે કાઢી શકાતી નથી.",
-        "disableRole": "ભૂમિકા બંધ કરો"
+        "disableRole": "ભૂમિકા બંધ કરો",
+        "owner": "માલિક",
+        "custom": "કસ્ટમ",
+        "addRole": "ભૂમિકા ઉમેરો",
+        "configure": "કૉન્ફિગર કરો"
       },
       "systemAudit": {
         "systemAudit": "સિસ્ટમ ઓડિટ",
@@ -1742,7 +1780,12 @@
         "dailyAutomaticBackup": "રોજનું આપોઆપ બેકઅપ",
         "restoreFromFile": "ફાઇલમાંથી પાછું લાવો",
         "uploadAPreviouslyDownloadedBackupFile": "પહેલાં ડાઉનલોડ કરેલી બેકઅપ ફાઇલ (.json) અપલોડ કરો. તમે તેને અલગ ફક્ત-વાંચી શકાય તેવા આર્કાઇવ તરીકે પાછું લાવી શકો (સુરક્ષિત) અથવા તમારા ચાલુ ડેટાની જગ્યાએ મૂકી શકો (ખતરનાક).",
-        "overwriteLiveDataDangerous": "ચાલુ ડેટા બદલો (ખતરનાક)"
+        "overwriteLiveDataDangerous": "ચાલુ ડેટા બદલો (ખતરનાક)",
+        "backupHistory": "બેકઅપ ઇતિહાસ",
+        "archives": "આર્કાઇવ",
+        "backupFailed": "બેકઅપ નિષ્ફળ:",
+        "downloadFailed": "ડાઉનલોડ નિષ્ફળ:",
+        "typeToConfirm": "પુષ્ટિ માટે <phrase>{{phrase}}</phrase> લખો"
       },
       "billing": {
         "yourPlanAndBillingDetails": "તમારો પ્લાન અને બિલિંગ વિગતો",
@@ -1859,7 +1902,10 @@
         "lockingThisPeriodIsAdvisoryIn": "આ બિલ્ડમાં આ સમયગાળો લોક કરવો ફક્ત સલાહ છે — નવો વ્યવહાર નોંધતાં પહેલાં કોઈ સુવિધા તેને તપાસતી નથી.",
         "makeCurrent": "ચાલુ બનાવો",
         "thisIsTheCurrentlyActiveFinancial": "આ હાલ સક્રિય નાણાકીય વર્ષ છે. બધા નવા વ્યવહાર આ જ સમયગાળામાં નોંધાશે. એક સમયે ફક્ત એક નાણાકીય વર્ષ સક્રિય રહી શકે.",
-        "thisYearIsClosedExistingRecords": "આ વર્ષ બંધ છે. જૂના રેકોર્ડ વાંચી શકાય છે; તેને ક્રિયા મેન્યુમાંથી ફરી ખોલાય છે."
+        "thisYearIsClosedExistingRecords": "આ વર્ષ બંધ છે. જૂના રેકોર્ડ વાંચી શકાય છે; તેને ક્રિયા મેન્યુમાંથી ફરી ખોલાય છે.",
+        "createFy": "નાણાકીય વર્ષ બનાવો",
+        "activate": "સક્રિય કરો",
+        "manualCreationNote": "નોંધ: ક્રમિક વર્ષો માટે \"{{action}}\" વાપરો. આ ફોર્મ ફક્ત મેન્યુઅલ બનાવટ માટે છે."
       },
       "designer": {
         "couldnTLoadThisTemplate": "આ ટેમ્પલેટ લોડ થઈ શક્યું નથી",
@@ -2379,7 +2425,8 @@
         }
       },
       "selfServeTitle": "અથવા વાતચીતની જરૂર જ ન પડે",
-      "selfServeLead": "અહીં કોઈ વસ્તુ માટે સેલ્સ કોલ જરૂરી નથી. એકાઉન્ટ બનાવો અને સોફ્ટવેર પોતે તમારી દુકાન સેટ કરી દેશે."
+      "selfServeLead": "અહીં કોઈ વસ્તુ માટે સેલ્સ કોલ જરૂરી નથી. એકાઉન્ટ બનાવો અને સોફ્ટવેર પોતે તમારી દુકાન સેટ કરી દેશે.",
+      "askFor": "{{name}} ને પૂછો"
     },
     "pricing": {
       "planName": "દરેક દુકાન",

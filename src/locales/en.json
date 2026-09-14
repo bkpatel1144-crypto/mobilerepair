@@ -272,7 +272,12 @@
     "allBranches": "All Branches",
     "allRoles": "All Roles",
     "tenDigitMobile": "10-digit mobile",
-    "others": "Others"
+    "others": "Others",
+    "note": "Note",
+    "undo": "Undo",
+    "colour": "Colour",
+    "network": "Network",
+    "seller": "Seller"
   },
   "shell": {
     "appName": "aim",
@@ -463,7 +468,8 @@
     "moreActions": "More actions",
     "exportCsv": "Export CSV",
     "all": "All",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Clear filters",
+    "allTime": "All time"
   },
   "pages": {
     "dashboard": {
@@ -560,7 +566,8 @@
         "recordExpense": "Record Expense",
         "posted": "Posted",
         "searchExpenseCategoryPartyNotes": "Search expense #, category, party, notes...",
-        "setThisToHaveTheExpense": "Set this to have the expense show on that party's ledger. Leave empty for things like tea or transport."
+        "setThisToHaveTheExpense": "Set this to have the expense show on that party's ledger. Leave empty for things like tea or transport.",
+        "paidBy": "Paid by"
       },
       "partyLedger": {
         "partyLedger": "Party Ledger",
@@ -654,7 +661,13 @@
         "leftEmptyTheBillAgesFrom": "Left empty, the bill ages from its bill date.",
         "recordedAsAPaymentOutSo": "Recorded as a payment out, so it appears in Cash Book and on this supplier's ledger.",
         "clearAgeFilter": "Clear age filter",
-        "recordPayment": "Record Payment"
+        "recordPayment": "Record Payment",
+        "newBill": "New Bill",
+        "billDate": "Bill date",
+        "dueDate": "Due date",
+        "paidBy": "Paid by",
+        "theirInvoice": "Their invoice #",
+        "dueOn": "Due {{date}}"
       }
     },
     "masters": {
@@ -940,7 +953,22 @@
           "deviceDetails": "Device Details",
           "sellerVerification": "Seller & ID Verification",
           "purchaseDetails": "Purchase Details"
-        }
+        },
+        "deviceTypeLabel": "Device Type",
+        "devicePinPattern": "Device PIN / Pattern",
+        "storageRom": "Storage / ROM",
+        "batteryHealthPercent": "Battery Health %",
+        "originalInvoiceDate": "Original Invoice Date",
+        "warrantyLeftMonths": "Warranty Left (months)",
+        "accessoriesIncluded": "Accessories Included",
+        "conditionNotes": "Condition Notes",
+        "devicePhotos": "Device Photos",
+        "idProofNumber": "ID Proof Number",
+        "idProofPhoto": "ID Proof Photo",
+        "purchasePriceLabel": "Purchase Price",
+        "amountPaidLabel": "Amount Paid",
+        "purchasedBy": "Purchased By",
+        "expectedSalePrice": "Expected Sale Price"
       },
       "devicePurchase": {
         "devicePurchase": "Device Purchase",
@@ -1059,7 +1087,13 @@
         "undoLastAction": "Undo Last Action",
         "noTimeLimit": "No time limit",
         "ownerOverrideNoTimeLimit": "Owner override — no time limit",
-        "thisIsATerminalStatusUndo": "This is a terminal status — once closed, \"Undo Last Action\" is no longer available for it."
+        "thisIsATerminalStatusUndo": "This is a terminal status — once closed, \"Undo Last Action\" is no longer available for it.",
+        "repeatJob": "Repeat Job",
+        "printBill": "Print Bill",
+        "whatsapp": "WhatsApp",
+        "takeJob": "Take Job",
+        "resume": "Resume",
+        "timeSpentMinutes": "Time Spent (minutes)"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "Couldn't load the Create Job Card form",
@@ -1670,7 +1704,11 @@
         "showActiveRoles": "Show active roles",
         "reloadFromServer": "Reload from server",
         "thisRoleHasFullAccessBy": "This role has full access by definition and can only be managed by another Owner, so it can't be disabled or deleted.",
-        "disableRole": "Disable Role"
+        "disableRole": "Disable Role",
+        "owner": "Owner",
+        "custom": "Custom",
+        "addRole": "Add Role",
+        "configure": "Configure"
       },
       "systemAudit": {
         "systemAudit": "System Audit",
@@ -1742,7 +1780,12 @@
         "dailyAutomaticBackup": "Daily automatic backup",
         "restoreFromFile": "Restore from File",
         "uploadAPreviouslyDownloadedBackupFile": "Upload a previously downloaded backup file (.json). You can restore it as a separate read-only archive (safe) or replace your live data (dangerous).",
-        "overwriteLiveDataDangerous": "Overwrite Live Data (Dangerous)"
+        "overwriteLiveDataDangerous": "Overwrite Live Data (Dangerous)",
+        "backupHistory": "Backup History",
+        "archives": "Archives",
+        "backupFailed": "Backup failed:",
+        "downloadFailed": "Download failed:",
+        "typeToConfirm": "Type <phrase>{{phrase}}</phrase> to confirm"
       },
       "billing": {
         "yourPlanAndBillingDetails": "Your plan and billing details",
@@ -1859,7 +1902,10 @@
         "lockingThisPeriodIsAdvisoryIn": "Locking this period is advisory in this build — no other feature currently checks it before posting a new transaction.",
         "makeCurrent": "Make Current",
         "thisIsTheCurrentlyActiveFinancial": "This is the currently active financial year. All new transactions will be recorded under this period. Only one financial year can be active at a time.",
-        "thisYearIsClosedExistingRecords": "This year is closed. Existing records stay readable; it is reopened from the Actions menu."
+        "thisYearIsClosedExistingRecords": "This year is closed. Existing records stay readable; it is reopened from the Actions menu.",
+        "createFy": "Create FY",
+        "activate": "Activate",
+        "manualCreationNote": "Note: Use \"{{action}}\" for sequential years. This form is for manual creation only."
       },
       "designer": {
         "couldnTLoadThisTemplate": "Couldn't load this template",
@@ -2379,7 +2425,8 @@
         }
       },
       "selfServeTitle": "Or skip the conversation entirely",
-      "selfServeLead": "Nothing here needs a sales call. Create an account and the software sets your shop up on its own."
+      "selfServeLead": "Nothing here needs a sales call. Create an account and the software sets your shop up on its own.",
+      "askFor": "Ask for {{name}}"
     },
     "pricing": {
       "planName": "Every shop",
