@@ -88,6 +88,7 @@ export function MyJobCardsWidget({ label }: { label: string }) {
       )}
       empty={
         <EmptyState
+          compact
           icon={FileText}
           title={t('pages.dashboard.dashboard.nothingAssignedToYou')}
           description={t('pages.dashboard.dashboard.jobCardsAssignedToYouAppearHere')}
@@ -122,6 +123,7 @@ export function RecentPartiesWidget({ label }: { label: string }) {
       }
       empty={
         <EmptyState
+          compact
           icon={Users}
           title={t('pages.dashboard.dashboard.noPartiesYet')}
           description={t('pages.dashboard.dashboard.theFiveNewestPartiesAppear')}
@@ -176,6 +178,7 @@ export function SalesVsPurchaseWidget({ label }: { label: string }) {
       formatValue={(v) => `₹${v}`}
       empty={
         <EmptyState
+          compact
           icon={Package}
           title={t('pages.dashboard.dashboard.noDeviceTradeYet')}
           description={t('pages.dashboard.dashboard.thisChartFillsInOnceDevices')}
@@ -264,6 +267,7 @@ export function NotificationsWidget({ label }: { label: string }) {
       )}
       empty={
         <EmptyState
+          compact
           icon={Bell}
           title={t('pages.dashboard.dashboard.nothingNeedsAttention')}
           description={t('pages.dashboard.dashboard.alertsAppearHereWhenWork')}

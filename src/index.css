@@ -554,3 +554,30 @@
     transform: none;
   }
 }
+
+/* A table wider than its card scrolls sideways, and nothing said so: the Job Cards list has
+ * thirteen columns, and "Delivered" was sliced in half at the card's right edge looking exactly
+ * like a layout bug. This is the pure-CSS scroll shadow — two white gradients pinned to the
+ * content (`local`) that cover two grey ones pinned to the box (`scroll`), so a shadow appears
+ * on whichever side still has content out of view and fades as you reach the end.
+ *
+ * No JavaScript, no resize observer, and nothing to keep in sync with the column count. */
+.scroll-shadow-x {
+  background-image:
+    linear-gradient(to right, var(--card) 30%, transparent),
+    linear-gradient(to left, var(--card) 30%, transparent),
+    linear-gradient(to right, rgb(0 0 0 / 0.11), transparent),
+    linear-gradient(to left, rgb(0 0 0 / 0.11), transparent);
+  background-position:
+    0 0,
+    100% 0,
+    0 0,
+    100% 0;
+  background-size:
+    32px 100%,
+    32px 100%,
+    12px 100%,
+    12px 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+}

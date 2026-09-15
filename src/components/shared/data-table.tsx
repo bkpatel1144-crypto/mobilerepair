@@ -142,7 +142,7 @@ export function DataTable<T>({
 
   if (isLoading) {
     return (
-      <div className={cn('overflow-hidden rounded-lg border', className)}>
+      <div className={cn('overflow-hidden rounded-xl border', className)}>
         {caption}
         <div className="space-y-2 p-4">
           {Array.from({ length: 5 }).map((_, i) => (
@@ -157,7 +157,7 @@ export function DataTable<T>({
   // empty branch or the failure is silently reported as "nothing here yet".
   if (error) {
     return (
-      <div className={cn('overflow-hidden rounded-lg border', className)}>
+      <div className={cn('overflow-hidden rounded-xl border', className)}>
         {caption}
         <ErrorState error={error} onRetry={onRetry} />
       </div>
@@ -166,22 +166,101 @@ export function DataTable<T>({
 
   if (data.length === 0) {
     return (
-      <div className={cn('overflow-hidden rounded-lg border', className)}>
+      <div className={cn('overflow-hidden rounded-xl border', className)}>
         {caption}
         {emptyState}
       </div>
     )
   }
 
+  // The pagination bar belongs to the table, so it sits inside the same card on desktop
+  // rather than floating unframed underneath it. On a phone the rows are separate cards and
+  // there is no card for it to join, so it gets its own.
+  const footer = (
+    <div className="flex flex-wrap items-center justify-between gap-3 border-t bg-muted/20 px-3 py-2 text-sm text-muted-foreground">
+      <span>
+        {t('shared.showingRange', {
+          from: sorted.length === 0 ? 0 : start + 1,
+          to: Math.min(start + rowsPerPage, sorted.length),
+          total: sorted.length,
+        })}
+      </span>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5">
+          <span>{t('shared.rowsPerPage')}</span>
+          <Select
+            value={String(rowsPerPage)}
+            onValueChange={(v) => {
+              setRowsPerPage(Number(v))
+              setPage(1)
+            }}
+          >
+            <SelectTrigger size="sm" className="w-[70px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {pageSizeOptions.map((n) => (
+                <SelectItem key={n} value={String(n)}>
+                  {n}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-1">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            disabled={clampedPage <= 1}
+            onClick={() => setPage(1)}
+          >
+            <ChevronsLeft className="size-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            disabled={clampedPage <= 1}
+            onClick={() => setPage((p) => p - 1)}
+          >
+            <ChevronLeft className="size-4" />
+          </Button>
+          <span className="px-1 tabular-nums">
+            {t('shared.pageOf', { page: clampedPage, total: totalPages })}
+          </span>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            disabled={clampedPage >= totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            <ChevronRight className="size-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            disabled={clampedPage >= totalPages}
+            onClick={() => setPage(totalPages)}
+          >
+            <ChevronsRight className="size-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <div className={cn('space-y-3', className)}>
       {/* Desktop / tablet: real table */}
-      <div className="hidden overflow-hidden rounded-lg border md:block">
+      <div className="hidden overflow-hidden rounded-xl border md:block">
         {caption}
-        <div className="overflow-x-auto">
+        <div>
           <Table>
-            <TableHeader>
-              <TableRow>
+            <TableHeader className="bg-muted/70">
+              <TableRow className="border-b-2 hover:bg-transparent">
                 {columns.map((col) => (
                   <TableHead key={col.key} className={col.className}>
                     {col.sortValue ? (
@@ -225,11 +304,12 @@ export function DataTable<T>({
             </TableBody>
           </Table>
         </div>
+        {footer}
       </div>
 
       {/* Mobile: stacked cards — first column is the card title, the rest are label/value rows. */}
       {title && (
-        <div className="overflow-hidden rounded-lg border md:hidden">{renderCaption(false)}</div>
+        <div className="overflow-hidden rounded-xl border md:hidden">{renderCaption(false)}</div>
       )}
       <div className="space-y-2 md:hidden">
         {pageRows.map((row) => {
@@ -240,7 +320,7 @@ export function DataTable<T>({
               key={rowKey(row)}
               onClick={() => onRowClick?.(row)}
               className={cn(
-                'rounded-lg border bg-card p-3',
+                'rounded-xl border bg-card p-3',
                 onRowClick && 'cursor-pointer active:bg-muted/50',
                 rowClassName?.(row)
               )}
@@ -259,80 +339,7 @@ export function DataTable<T>({
         })}
       </div>
 
-      {/* Pagination footer */}
-      <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
-        <span>
-          {t('shared.showingRange', {
-            from: sorted.length === 0 ? 0 : start + 1,
-            to: Math.min(start + rowsPerPage, sorted.length),
-            total: sorted.length,
-          })}
-        </span>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <span>{t('shared.rowsPerPage')}</span>
-            <Select
-              value={String(rowsPerPage)}
-              onValueChange={(v) => {
-                setRowsPerPage(Number(v))
-                setPage(1)
-              }}
-            >
-              <SelectTrigger size="sm" className="w-[70px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {pageSizeOptions.map((n) => (
-                  <SelectItem key={n} value={String(n)}>
-                    {n}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex items-center gap-1">
-            <Button
-              type="button"
-              variant="outline"
-              size="icon-sm"
-              disabled={clampedPage <= 1}
-              onClick={() => setPage(1)}
-            >
-              <ChevronsLeft className="size-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon-sm"
-              disabled={clampedPage <= 1}
-              onClick={() => setPage((p) => p - 1)}
-            >
-              <ChevronLeft className="size-4" />
-            </Button>
-            <span className="px-1 tabular-nums">
-              {t('shared.pageOf', { page: clampedPage, total: totalPages })}
-            </span>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon-sm"
-              disabled={clampedPage >= totalPages}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              <ChevronRight className="size-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon-sm"
-              disabled={clampedPage >= totalPages}
-              onClick={() => setPage(totalPages)}
-            >
-              <ChevronsRight className="size-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <div className="overflow-hidden rounded-xl border md:hidden">{footer}</div>
     </div>
   )
 }

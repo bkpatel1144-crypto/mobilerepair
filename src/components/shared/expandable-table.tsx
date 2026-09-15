@@ -111,7 +111,7 @@ export function ExpandableTable<T>({
   return (
     <div className={cn('space-y-3', className)}>
       {/* Desktop / tablet: real table, chevron-expandable rows */}
-      <div className="hidden overflow-x-auto rounded-lg border md:block">
+      <div className="scroll-shadow-x hidden overflow-x-auto rounded-xl border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -165,7 +165,7 @@ export function ExpandableTable<T>({
           const [titleCol, ...restCols] = columns
           const visibleRest = restCols.filter((c) => !c.hideOnMobile)
           return (
-            <div key={key} className="rounded-lg border bg-card">
+            <div key={key} className="rounded-xl border bg-card">
               <div onClick={() => toggle(key)} className="cursor-pointer p-3 active:bg-muted/50">
                 <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0 font-medium">{titleCol.render(row)}</div>

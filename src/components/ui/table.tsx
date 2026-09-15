@@ -6,10 +6,15 @@ import { cn } from '@/lib/utils'
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
-    <div data-slot="table-container" className="relative w-full overflow-x-auto">
+    // `w-max min-w-full`, not `w-full`. Cells are `whitespace-nowrap`, so a table forced to the
+    // container's width does not overflow it — it just paints its last column past the edge and
+    // gets clipped, which is how the thirteen-column Job Cards list came to show a "Delivered"
+    // heading sliced in half with no scrollbar and no way to reach it. Sizing to content makes
+    // the overflow real, so the container scrolls and `scroll-shadow-x` has something to fade.
+    <div data-slot="table-container" className="scroll-shadow-x relative w-full overflow-x-auto">
       <table
         data-slot="table"
-        className={cn('w-full caption-bottom text-sm', className)}
+        className={cn('w-max min-w-full caption-bottom text-sm', className)}
         {...props}
       />
     </div>
@@ -58,7 +63,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
     <th
       data-slot="table-head"
       className={cn(
-        'h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0',
+        'h-10 px-2 text-left align-middle text-xs font-semibold tracking-wide whitespace-nowrap text-muted-foreground uppercase [&:has([role=checkbox])]:pr-0',
         className
       )}
       {...props}

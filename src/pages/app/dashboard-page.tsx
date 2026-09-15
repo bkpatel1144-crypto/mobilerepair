@@ -301,6 +301,7 @@ export function DashboardPage() {
             }))}
             empty={
               <EmptyState
+                compact
                 icon={FileText}
                 title={t('pages.dashboard.dashboard.noJobCardsYet')}
                 description={t('pages.dashboard.dashboard.thisChartFillsInOnceJob')}
@@ -320,6 +321,7 @@ export function DashboardPage() {
             formatValue={(v) => `₹${v}`}
             empty={
               <EmptyState
+                compact
                 icon={IndianRupee}
                 title={t('pages.dashboard.dashboard.noRevenueYet')}
                 description={t('pages.dashboard.dashboard.thisChartFillsInOnceBills')}
@@ -340,6 +342,7 @@ export function DashboardPage() {
             colour="#818cf8"
             empty={
               <EmptyState
+                compact
                 icon={FileText}
                 title={t('pages.dashboard.dashboard.noJobCardsYet')}
                 description={t('pages.dashboard.dashboard.thisChartFillsInAsJobCards')}
@@ -365,6 +368,7 @@ export function DashboardPage() {
             legend={[[t('common.jobCards'), '#22c55e']]}
             empty={
               <EmptyState
+                compact
                 icon={Users}
                 title={t('pages.dashboard.dashboard.noJobsAssignedYet')}
                 description={t('pages.dashboard.dashboard.thisChartFillsInOnceJobsAreAssigned')}
@@ -394,6 +398,7 @@ export function DashboardPage() {
             )}
             empty={
               <EmptyState
+                compact
                 icon={FileText}
                 title={t('pages.dashboard.dashboard.noJobCardsYet')}
                 description={t('pages.dashboard.dashboard.theTenNewestJobCardsAppear')}
@@ -508,7 +513,6 @@ export function DashboardPage() {
               groupKey={group.key}
               icon={GROUP_ICON[group.key]}
               title={widgetText.group(group.key, group.label)}
-              count={inGroup.length}
             >
               <div className="grid grid-cols-12 gap-2.5">
                 {inGroup.map((widget) => (

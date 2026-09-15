@@ -7,7 +7,7 @@ columns as they actually appear.
 Use it to compare against the reference app one section at a time — the question is which of
 these screens is missing a column, a filter or an action that theirs has.
 
-Captured 48 screens. Screenshots are in `screens/`.
+Captured 48 screens. Screenshots are in `screens/desktop/`.
 
 
 ## dashboard
@@ -15,8 +15,8 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### dashboard
 
 - **Path:** `/app/dashboard`
-- **Screenshot:** `screens/dashboard.png`
-- **Heading:** Good morning, Intake Probe 👋
+- **Screenshot:** `screens/desktop/dashboard.png`
+- **Heading:** Good afternoon, Detail Probe
 - **Subtitle:** Here's what's happening in your service center.
 - **Buttons:** Today · Yesterday · This Week · This Month · This Year · All Time · Scan Job Card
 - **Rows shown:** 0
@@ -27,14 +27,14 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### sales--invoices
 
 - **Path:** `/app/sales/invoices`
-- **Screenshot:** `screens/sales--invoices.png`
+- **Screenshot:** `screens/desktop/sales--invoices.png`
 - **Heading:** Sales Invoices
 - **Subtitle:** All generated bills — view or edit bills that are ready for delivery, delivered, or closed.
-- **Cards:** All 1 · Ready 1 · Delivered 0 · Closed 0
-- **Buttons:** Refresh · Today · Yesterday · This Week · This Month · This Year · Custom · All 1 · Ready 1 · Delivered 0 · Closed 0 · Bill Date · Invoice No. · Job Card · Customer · Total · Paid · Outstanding · Status · View bill JC-SEED-69093 · Edit bill JC-SEED-69093 · 10
-- **Columns (10):** Bill Date | Invoice No. | Job Card | Customer | Device | Total | Paid | Outstanding | Status | Actions
+- **Cards:** All 0 · Ready 0 · Delivered 0 · Closed 0
+- **Buttons:** Refresh · Today · Yesterday · This Week · This Month · This Year · Custom · All 0 · Ready 0 · Delivered 0 · Closed 0
+- **Columns (10, declared — the table was empty so none were on screen):** Bill Date | Invoice No. | Job Card | Customer | Device | Total | Paid | Outstanding | Status | Actions
 - **Source:** `src/pages/app/sales/sales-invoices-page.tsx`
-- **Rows shown:** 1
+- **Rows shown:** 0
 
 
 ## purchase
@@ -42,7 +42,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### purchase--general
 
 - **Path:** `/app/purchase/general`
-- **Screenshot:** `screens/purchase--general.png`
+- **Screenshot:** `screens/desktop/purchase--general.png`
 - **Heading:** General Purchase
 - **Subtitle:** Buy parts, accessories & stock items from suppliers — feeds inventory stock
 - **Buttons:** Refresh · New Purchase
@@ -56,7 +56,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### inventory--stock
 
 - **Path:** `/app/inventory/stock`
-- **Screenshot:** `screens/inventory--stock.png`
+- **Screenshot:** `screens/desktop/inventory--stock.png`
 - **Heading:** Stock
 - **Subtitle:** What is on the shelf — purchases in, job parts out.
 - **Buttons:** Refresh
@@ -70,28 +70,28 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### service--job-cards
 
 - **Path:** `/app/service/job-cards`
-- **Screenshot:** `screens/service--job-cards.png`
+- **Screenshot:** `screens/desktop/service--job-cards.png`
 - **Heading:** Owner — Jobs
 - **Subtitle:** Click a status card to filter
-- **Buttons:** Warranty Lookup · Create Job Card · Total 3 · Pending 2 · In Queue 0 · In Progress 0 · On Hold 0 · Tech Done 0 · Ready 1 · Delivered 0 · Closed 0 · Cancelled 0 · Pending Return 0 · Today · Yesterday · This Week · This Month · This Year · Scan Job Card · Filters · My Completed Jobs (1) · My Received Jobs (3) · Job Card · 10
-- **Columns (13):** Created | Job Card | Customer | Device | Received By | Assigned To | Est. Cost | Final Amt | Paid | Due | Status | Delivered / Returned By | Cancelled By
+- **Buttons:** Warranty Lookup · Create Job Card · Total 1 · Pending 0 · In Queue 0 · In Progress 0 · On Hold 0 · Tech Done 1 · Ready 0 · Delivered 0 · Closed 0 · Cancelled 0 · Pending Return 0 · Today · Yesterday · This Week · This Month · This Year · Scan Job Card · Filters · My Completed Jobs (1) · My Received Jobs (1) · Job Card · 10 · 10▼
+- **Columns (13):** CREATED | Job Card | CUSTOMER | DEVICE | RECEIVED BY | ASSIGNED TO | EST. COST | FINAL AMT | PAID | DUE | STATUS | DELIVERED / RETURNED BY | CANCELLED BY
 - **Source:** `src/pages/app/service/job-cards-page.tsx`
-- **Rows shown:** 3
+- **Rows shown:** 1
 
 ### service--options
 
 - **Path:** `/app/service/options`
-- **Screenshot:** `screens/service--options.png`
+- **Screenshot:** `screens/desktop/service--options.png`
 - **Heading:** Service Options
 - **Subtitle:** Manage device types, brands, and problem tags used in job cards
-- **Buttons:** Split shared brands · Brands 🔗 7 device types 21 · Mobile · Keypad Phone · Tablet · Smart Watch · Earbuds / TWS · Laptop · Add brand · Cancel Reasons 5 · Customer Items 5 · Device Types 7 · Hold Reasons 5 · Models 🔗 21 brands 92 · Outstanding Reasons 4 · Problems 1
+- **Buttons:** Split shared brands · Brands 7 device types 21 · Mobile · Keypad Phone · Tablet · Smart Watch · Earbuds / TWS · Laptop · Add brand · Cancel Reasons 5 · Customer Items 5 · Device Types 7 · Hold Reasons 5 · Models 21 brands 92 · Outstanding Reasons 4 · Problems 1
 - **Source:** `src/pages/app/service/service-options-page.tsx`
 - **Rows shown:** 0
 
 ### service--costing
 
 - **Path:** `/app/service/costing`
-- **Screenshot:** `screens/service--costing.png`
+- **Screenshot:** `screens/desktop/service--costing.png`
 - **Heading:** Job Costing
 - **Subtitle:** Closed jobs — record actual parts, labor & overhead costs
 - **Buttons:** All · Pending (0) · Done (0)
@@ -102,11 +102,11 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### service--items
 
 - **Path:** `/app/service/items`
-- **Screenshot:** `screens/service--items.png`
+- **Screenshot:** `screens/desktop/service--items.png`
 - **Heading:** Service Items
 - **Subtitle:** Items and services used in job cards — managed via Item Master
-- **Buttons:** Add Item · Item Master · Item · Edit · 10
-- **Columns (5):** Item | Category | Type | UOM | Selling Price
+- **Buttons:** Add Item · Item Master · Item · Edit · 10 · 10▼
+- **Columns (5):** Item | CATEGORY | TYPE | UOM | SELLING PRICE
 - **Source:** `src/pages/app/service/service-items-page.tsx`
 - **Rows shown:** 10
 
@@ -116,7 +116,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### finance--receipts
 
 - **Path:** `/app/finance/receipts`
-- **Screenshot:** `screens/finance--receipts.png`
+- **Screenshot:** `screens/desktop/finance--receipts.png`
 - **Heading:** Receipts & Payments
 - **Subtitle:** All payment entries — Job Cards and manual
 - **Buttons:** New Entry · Today · Yesterday · This Week · This Month · This Year · All Modes
@@ -127,18 +127,18 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### finance--ledger
 
 - **Path:** `/app/finance/ledger`
-- **Screenshot:** `screens/finance--ledger.png`
+- **Screenshot:** `screens/desktop/finance--ledger.png`
 - **Heading:** Party Ledger
 - **Subtitle:** Party-wise accounts · Click to view full khata
-- **Buttons:** All · Customers · Suppliers · Jobs · Billed · Paid · Balance · 10
-- **Columns (6):** Party | Type | Jobs | Billed | Paid | Balance
+- **Buttons:** All · Customers · Suppliers · Jobs · Billed · Paid · Balance · 10 · 10▼
+- **Columns (6):** PARTY | TYPE | Jobs | Billed | Paid | Balance
 - **Source:** `src/pages/app/finance/party-ledger-page.tsx`
 - **Rows shown:** 1
 
 ### finance--cashbook
 
 - **Path:** `/app/finance/cashbook`
-- **Screenshot:** `screens/finance--cashbook.png`
+- **Screenshot:** `screens/desktop/finance--cashbook.png`
 - **Heading:** Cash Book
 - **Subtitle:** Running cash position across every receipt and payment
 - **Buttons:** Export · Today · Yesterday · This Week · This Month · This Year
@@ -149,18 +149,18 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### finance--receivables
 
 - **Path:** `/app/finance/receivables`
-- **Screenshot:** `screens/finance--receivables.png`
+- **Screenshot:** `screens/desktop/finance--receivables.png`
 - **Heading:** Receivables
 - **Subtitle:** Outstanding amounts across every active job card
-- **Buttons:** Aging · Outstanding · 10
-- **Columns (6):** Job Card | Customer | Device | Created | Aging | Outstanding
+- **Buttons:** Aging · Outstanding · 10 · 10▼
+- **Columns (6):** JOB CARD | CUSTOMER | DEVICE | CREATED | Aging | Outstanding
 - **Source:** `src/pages/app/finance/receivables-page.tsx`
 - **Rows shown:** 1
 
 ### finance--payables
 
 - **Path:** `/app/finance/payables`
-- **Screenshot:** `screens/finance--payables.png`
+- **Screenshot:** `screens/desktop/finance--payables.png`
 - **Heading:** Payables
 - **Subtitle:** Refunds due and unused advances the shop is currently holding
 - **Buttons:** All · Refund Due · Unused Advance
@@ -170,7 +170,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### finance--supplier-payables
 
 - **Path:** `/app/finance/supplier-payables`
-- **Screenshot:** `screens/finance--supplier-payables.png`
+- **Screenshot:** `screens/desktop/finance--supplier-payables.png`
 - **Heading:** Supplier Payables
 - **Subtitle:** What the shop owes suppliers — purchase bills and unpaid device purchases, by age
 - **Cards:** CURRENT ₹0 · 1–30 DAYS ₹0 · 31–60 DAYS ₹0 · 60+ DAYS ₹0
@@ -182,7 +182,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### finance--expenses
 
 - **Path:** `/app/finance/expenses`
-- **Screenshot:** `screens/finance--expenses.png`
+- **Screenshot:** `screens/desktop/finance--expenses.png`
 - **Heading:** Expenses
 - **Subtitle:** Shop running costs — rent, salaries, utilities and everything else Profit & Loss subtracts
 - **Buttons:** Export CSV · New Expense · Today · Yesterday · This Week · This Month · This Year · All Categories · All time
@@ -196,29 +196,29 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### masters--uom
 
 - **Path:** `/app/masters/uom`
-- **Screenshot:** `screens/masters--uom.png`
+- **Screenshot:** `screens/desktop/masters--uom.png`
 - **Heading:** Units of Measure
 - **Subtitle:** Manage units used across items, stock, purchases and sales
-- **Buttons:** Add UOM · All Types · Unit · Decimals · 10
-- **Columns (7):** Unit | Type | Decimals | Conversion | Source | Status | Actions
+- **Buttons:** Add UOM · All Types · Unit · Decimals · 10 · 10▼
+- **Columns (7):** Unit | TYPE | Decimals | CONVERSION | SOURCE | STATUS | ACTIONS
 - **Source:** `src/pages/app/masters/uom-page.tsx`
 - **Rows shown:** 10
 
 ### masters--item-categories
 
 - **Path:** `/app/masters/item-categories`
-- **Screenshot:** `screens/masters--item-categories.png`
+- **Screenshot:** `screens/desktop/masters--item-categories.png`
 - **Heading:** Item Categories
 - **Subtitle:** Organise items into categories and sub-categories
-- **Buttons:** Add Category · All Types · All levels · All Statuses · Category · Type · Sub-Categories · 10
-- **Columns (6):** Category | Type | Level | Items | Sub-Categories | Status
+- **Buttons:** Add Category · All Types · All levels · All Statuses · Category · Type · Sub-Categories · 10 · 10▼
+- **Columns (6):** Category | Type | LEVEL | ITEMS | Sub-Categories | STATUS
 - **Source:** `src/pages/app/masters/item-categories-page.tsx`
 - **Rows shown:** 10
 
 ### masters--attributes
 
 - **Path:** `/app/masters/attributes`
-- **Screenshot:** `screens/masters--attributes.png`
+- **Screenshot:** `screens/desktop/masters--attributes.png`
 - **Heading:** Attributes
 - **Subtitle:** Dynamic product/item attributes — color, RAM, storage, etc.
 - **Buttons:** Refresh · Add attribute · All entities
@@ -229,44 +229,44 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### masters--items
 
 - **Path:** `/app/masters/items`
-- **Screenshot:** `screens/masters--items.png`
+- **Screenshot:** `screens/desktop/masters--items.png`
 - **Heading:** Item Master
 - **Subtitle:** Products, services, and spare parts catalog
-- **Buttons:** Add New... · All Types · All Categories · All taxes · All tracking · All stock · All lines · All Statuses · Item · Tax · Selling Price · 10
-- **Columns (7):** Item | Category | Type | UOM | Tax | Selling Price | Status
+- **Buttons:** Add New... · All Types · All Categories · All taxes · All tracking · All stock · All lines · All Statuses · Item · Tax · Selling Price · 10 · 10▼
+- **Columns (7):** Item | CATEGORY | TYPE | UOM | Tax | Selling Price | STATUS
 - **Source:** `src/pages/app/masters/item-master-page.tsx`
 - **Rows shown:** 10
 
 ### masters--payment-modes
 
 - **Path:** `/app/masters/payment-modes`
-- **Screenshot:** `screens/masters--payment-modes.png`
+- **Screenshot:** `screens/desktop/masters--payment-modes.png`
 - **Heading:** Payment Modes
 - **Subtitle:** Cash, UPI, card, bank transfer and other accepted payment methods
-- **Buttons:** Add Payment Mode · Payment Mode · 10
-- **Columns (5):** Payment Mode | Type | Description | Status | Actions
+- **Buttons:** Add Payment Mode · Payment Mode · 10 · 10▼
+- **Columns (5):** Payment Mode | TYPE | DESCRIPTION | STATUS | ACTIONS
 - **Source:** `src/pages/app/masters/payment-modes-page.tsx`
 - **Rows shown:** 3
 
 ### masters--party-categories
 
 - **Path:** `/app/masters/party-categories`
-- **Screenshot:** `screens/masters--party-categories.png`
+- **Screenshot:** `screens/desktop/masters--party-categories.png`
 - **Heading:** Party Categories
 - **Subtitle:** Manage all party categories
-- **Buttons:** Add Category · Category · 10
-- **Columns (5):** Category | Default (Customer) | Default (Supplier) | Status | Created
+- **Buttons:** Add Category · Category · 10 · 10▼
+- **Columns (5):** Category | DEFAULT (CUSTOMER) | DEFAULT (SUPPLIER) | STATUS | CREATED
 - **Source:** `src/pages/app/masters/party-categories-page.tsx`
 - **Rows shown:** 3
 
 ### masters--parties
 
 - **Path:** `/app/masters/parties`
-- **Screenshot:** `screens/masters--parties.png`
+- **Screenshot:** `screens/desktop/masters--parties.png`
 - **Heading:** Parties
 - **Subtitle:** Manage customers and suppliers
-- **Buttons:** Add Party · All · Customers · Suppliers · Both · General Supplier · Regular Customer · Walk-in Customer · Party · 10
-- **Columns (5):** Party | Mobile | Category | Type | Status
+- **Buttons:** Add Party · All · Customers · Suppliers · Both · General Supplier · Regular Customer · Walk-in Customer · Party · 10 · 10▼
+- **Columns (5):** Party | MOBILE | CATEGORY | TYPE | STATUS
 - **Source:** `src/pages/app/masters/parties-page.tsx`
 - **Rows shown:** 1
 
@@ -276,7 +276,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### second-hand-device--purchase
 
 - **Path:** `/app/second-hand-device/purchase`
-- **Screenshot:** `screens/second-hand-device--purchase.png`
+- **Screenshot:** `screens/desktop/second-hand-device--purchase.png`
 - **Heading:** Device Purchase
 - **Subtitle:** Buy used mobiles, laptops & other devices from sellers
 - **Buttons:** New Purchase · Today · Yesterday · This Week · This Month · This Year
@@ -287,7 +287,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### second-hand-device--sale
 
 - **Path:** `/app/second-hand-device/sale`
-- **Screenshot:** `screens/second-hand-device--sale.png`
+- **Screenshot:** `screens/desktop/second-hand-device--sale.png`
 - **Heading:** Device Sale
 - **Subtitle:** Sell devices from stock to a buyer
 - **Buttons:** Today · Yesterday · This Week · This Month · This Year
@@ -298,7 +298,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### second-hand-device--stock
 
 - **Path:** `/app/second-hand-device/stock`
-- **Screenshot:** `screens/second-hand-device--stock.png`
+- **Screenshot:** `screens/desktop/second-hand-device--stock.png`
 - **Heading:** Device Stock
 - **Subtitle:** Second hand devices currently in stock — invested amount and aging
 - **Buttons:** Today · Yesterday · This Week · This Month · This Year
@@ -309,7 +309,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### second-hand-device--purchase-register
 
 - **Path:** `/app/second-hand-device/purchase-register`
-- **Screenshot:** `screens/second-hand-device--purchase-register.png`
+- **Screenshot:** `screens/desktop/second-hand-device--purchase-register.png`
 - **Heading:** Purchase Register
 - **Subtitle:** All device purchases — filter, search and export
 - **Buttons:** Export CSV · Today · Yesterday · This Week · This Month · This Year · All Device Types · All Statuses
@@ -320,7 +320,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### second-hand-device--sale-register
 
 - **Path:** `/app/second-hand-device/sale-register`
-- **Screenshot:** `screens/second-hand-device--sale-register.png`
+- **Screenshot:** `screens/desktop/second-hand-device--sale-register.png`
 - **Heading:** Sale Register
 - **Subtitle:** All device sales — profit, margin and export
 - **Buttons:** Export CSV · Today · Yesterday · This Week · This Month · This Year
@@ -334,18 +334,18 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### reports--service
 
 - **Path:** `/app/reports/service`
-- **Screenshot:** `screens/reports--service.png`
+- **Screenshot:** `screens/desktop/reports--service.png`
 - **Heading:** Service Reports
 - **Subtitle:** Complete job card report with advanced filters
 - **Buttons:** Filters · Export Excel · Today · Yesterday · This Week · This Month · This Year · Custom · 10 · Prev · Next
-- **Columns (13):** Created | Job Card | Customer | Device | Received By | Assigned To | Est. Cost | Final Amt | Paid | Due | Status | Delivered/Returned By | Cancelled By
+- **Columns (13):** CREATED | JOB CARD | CUSTOMER | DEVICE | RECEIVED BY | ASSIGNED TO | EST. COST | FINAL AMT | PAID | DUE | STATUS | DELIVERED/RETURNED BY | CANCELLED BY
 - **Source:** `src/pages/app/reports/service-reports-page.tsx`
-- **Rows shown:** 3
+- **Rows shown:** 1
 
 ### reports--pnl
 
 - **Path:** `/app/reports/pnl`
-- **Screenshot:** `screens/reports--pnl.png`
+- **Screenshot:** `screens/desktop/reports--pnl.png`
 - **Heading:** Profit & Loss
 - **Subtitle:** Cash basis — money actually received and paid, so it always agrees with Cash Book
 - **Buttons:** Export CSV · Today · Yesterday · This Week · This Month · This Year · All Time
@@ -355,7 +355,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### reports--job-profit
 
 - **Path:** `/app/reports/job-profit`
-- **Screenshot:** `screens/reports--job-profit.png`
+- **Screenshot:** `screens/desktop/reports--job-profit.png`
 - **Heading:** Job-wise Profit
 - **Subtitle:** Job-wise profit and loss analysis
 - **Buttons:** Export Excel · Today · Yesterday · This Week · This Month · This Year · Custom
@@ -366,7 +366,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### reports--supplier
 
 - **Path:** `/app/reports/supplier`
-- **Screenshot:** `screens/reports--supplier.png`
+- **Screenshot:** `screens/desktop/reports--supplier.png`
 - **Heading:** Supplier Report
 - **Subtitle:** Supplier-wise parts purchase and cost analysis
 - **Buttons:** Export Excel · Today · Yesterday · This Week · This Month · This Year · Custom · All Suppliers
@@ -377,7 +377,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### reports--technician
 
 - **Path:** `/app/reports/technician`
-- **Screenshot:** `screens/reports--technician.png`
+- **Screenshot:** `screens/desktop/reports--technician.png`
 - **Heading:** Technician Report
 - **Subtitle:** Technician-wise job performance and profitability
 - **Buttons:** Export Excel · Today · Yesterday · This Week · This Month · This Year · Custom · All Technicians
@@ -388,7 +388,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### reports--period-summary
 
 - **Path:** `/app/reports/period-summary`
-- **Screenshot:** `screens/reports--period-summary.png`
+- **Screenshot:** `screens/desktop/reports--period-summary.png`
 - **Heading:** Period Summary
 - **Subtitle:** Daily and monthly revenue, cost, and profit summary
 - **Buttons:** Export Excel · Today · Yesterday · This Week · This Month · This Year · Custom · Daily · Monthly
@@ -399,7 +399,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### reports--field-visits
 
 - **Path:** `/app/reports/field-visits`
-- **Screenshot:** `screens/reports--field-visits.png`
+- **Screenshot:** `screens/desktop/reports--field-visits.png`
 - **Heading:** Field Visit Report
 - **Subtitle:** On-field technician logbook — time spent & engineers per job
 - **Buttons:** Export CSV · Today · Yesterday · This Week · This Month · This Year · Custom · All Technicians · All Types · All Statuses · By Technician (0) · By Job Card (0)
@@ -413,23 +413,23 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### administration--users
 
 - **Path:** `/app/administration/users`
-- **Screenshot:** `screens/administration--users.png`
+- **Screenshot:** `screens/desktop/administration--users.png`
 - **Heading:** User Management
 - **Subtitle:** Manage system users, roles, and permissions
 - **Cards:** TOTAL USERS 1 · ACTIVE USERS 1 · DISABLED USERS 0 · DELETED USERS 0
-- **Buttons:** Add New User · TOTAL USERS 1 · ACTIVE USERS 1 · DISABLED USERS 0 · DELETED USERS 0 · User · 10
-- **Columns (5):** User | Role | Contact | Status | Created
+- **Buttons:** Add New User · TOTAL USERS 1 · ACTIVE USERS 1 · DISABLED USERS 0 · DELETED USERS 0 · User · 10 · 10▼
+- **Columns (5):** User | ROLE | CONTACT | STATUS | CREATED
 - **Source:** `src/pages/app/administration/user-management-page.tsx`
 - **Rows shown:** 1
 
 ### administration--roles
 
 - **Path:** `/app/administration/roles`
-- **Screenshot:** `screens/administration--roles.png`
+- **Screenshot:** `screens/desktop/administration--roles.png`
 - **Heading:** Roles Management
 - **Subtitle:** Manage user roles, permissions, and menu access
 - **Cards:** Active Roles 5 · Disabled Roles 0 · Deleted Roles 0 · Filters
-- **Buttons:** Add Role · Active Roles 5 · Disabled Roles 0 · Deleted Roles 0 · Filters · More Actions · ROLE NAME · View Technician · Actions for Technician · View Manager · Actions for Manager · View Owner · Actions for Owner · View Salesman · Actions for Salesman · View Accountant · Actions for Accountant · 10
+- **Buttons:** Add Role · Active Roles 5 · Disabled Roles 0 · Deleted Roles 0 · Filters · More Actions · ROLE NAME · View Accountant · Actions for Accountant · View Salesman · Actions for Salesman · View Technician · Actions for Technician · View Owner · Actions for Owner · View Manager · Actions for Manager · 10 · 10▼
 - **Columns (5):** ROLE NAME | CODE | TYPE | STATUS | ACTIONS
 - **Source:** `src/pages/app/administration/role-management-page.tsx`
 - **Rows shown:** 5
@@ -437,18 +437,18 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### administration--sessions
 
 - **Path:** `/app/administration/sessions`
-- **Screenshot:** `screens/administration--sessions.png`
+- **Screenshot:** `screens/desktop/administration--sessions.png`
 - **Heading:** Active Sessions
 - **Subtitle:** Signed-in devices across your team
-- **Buttons:** User · 10
-- **Columns (5):** User | Device | IP | Last Activity | Status
+- **Buttons:** User · 10 · 10▼
+- **Columns (5):** User | DEVICE | IP | LAST ACTIVITY | STATUS
 - **Source:** `src/pages/app/administration/active-sessions-page.tsx`
-- **Rows shown:** 4
+- **Rows shown:** 10
 
 ### administration--ip-whitelist
 
 - **Path:** `/app/administration/ip-whitelist`
-- **Screenshot:** `screens/administration--ip-whitelist.png`
+- **Screenshot:** `screens/desktop/administration--ip-whitelist.png`
 - **Heading:** IP Whitelist
 - **Subtitle:** Restrict non-Owner sign-ins to trusted networks — advisory only, not a hard security boundary
 - **Buttons:** Add IP to Whitelist
@@ -459,26 +459,26 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### administration--login-report
 
 - **Path:** `/app/administration/login-report`
-- **Screenshot:** `screens/administration--login-report.png`
+- **Screenshot:** `screens/desktop/administration--login-report.png`
 - **Heading:** Login Report
 - **Subtitle:** Every account sign-in across your company
-- **Cards:** ONLINE RIGHT NOW 2 · LOGINS TODAY 4 · USERS TODAY 1 · IP ADDRESSES 1 · FAILED ATTEMPTS 0 · UNAUTHORIZED 0 · BLOCKED IPS 0
-- **Buttons:** ONLINE RIGHT NOW 2 · LOGINS TODAY 4 · USERS TODAY 1 · IP ADDRESSES 1 · FAILED ATTEMPTS 0 · UNAUTHORIZED 0 · BLOCKED IPS 0 · Today · Yesterday · This Week · This Month · This Year · Time · 10
-- **Columns (5):** Time | User | Role | IP | Result
+- **Cards:** ONLINE RIGHT NOW 1 · LOGINS TODAY 12 · USERS TODAY 1 · IP ADDRESSES 1 · FAILED ATTEMPTS 0 · UNAUTHORIZED 0 · BLOCKED IPS 0
+- **Buttons:** ONLINE RIGHT NOW 1 · LOGINS TODAY 12 · USERS TODAY 1 · IP ADDRESSES 1 · FAILED ATTEMPTS 0 · UNAUTHORIZED 0 · BLOCKED IPS 0 · Today · Yesterday · This Week · This Month · This Year · Time · 10 · 10▼
+- **Columns (5):** Time | USER | ROLE | IP | RESULT
 - **Source:** `src/pages/app/administration/login-report-page.tsx`
-- **Rows shown:** 4
+- **Rows shown:** 10
 
 ### administration--audit
 
 - **Path:** `/app/administration/audit`
-- **Screenshot:** `screens/administration--audit.png`
+- **Screenshot:** `screens/desktop/administration--audit.png`
 - **Heading:** System Audit
 - **Subtitle:** Full trail of every mutation across your company
-- **Cards:** CRITICAL 1
-- **Buttons:** Export CSV · CRITICAL 1 · All Modules · All Results · Time · 10
-- **Columns (7):** Time | Action | Entity | Performed By | Target | Result | IP
+- **Cards:** CRITICAL 0
+- **Buttons:** Export CSV · CRITICAL 0 · All Modules · All Results · Time · 10 · 10▼
+- **Columns (7):** Time | ACTION | ENTITY | PERFORMED BY | TARGET | RESULT | IP
 - **Source:** `src/pages/app/administration/system-audit-page.tsx`
-- **Rows shown:** 7
+- **Rows shown:** 10
 
 
 ## settings
@@ -486,19 +486,19 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### settings--branches
 
 - **Path:** `/app/settings/branches`
-- **Screenshot:** `screens/settings--branches.png`
+- **Screenshot:** `screens/desktop/settings--branches.png`
 - **Heading:** Branch Management
 - **Subtitle:** Manage organizational branches and locations
 - **Cards:** ACTIVE 1 · INACTIVE 0
-- **Buttons:** + Create Branch · ACTIVE 1 · INACTIVE 0 · Branch Name · 10
-- **Columns (4):** Branch Name | Status | Type | Created
+- **Buttons:** + Create Branch · ACTIVE 1 · INACTIVE 0 · Branch Name · 10 · 10▼
+- **Columns (4):** Branch Name | STATUS | TYPE | CREATED
 - **Source:** `src/pages/app/settings/branch-management-page.tsx`
 - **Rows shown:** 1
 
 ### settings--workflow
 
 - **Path:** `/app/settings/workflow`
-- **Screenshot:** `screens/settings--workflow.png`
+- **Screenshot:** `screens/desktop/settings--workflow.png`
 - **Heading:** Workflow Designer
 - **Subtitle:** Control exactly what each role can see and do at every job status.
 - **Buttons:** Role Permissions · Job Card Form · Lead Form · Select a role to configure...
@@ -508,31 +508,31 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### settings--company
 
 - **Path:** `/app/settings/company`
-- **Screenshot:** `screens/settings--company.png`
+- **Screenshot:** `screens/desktop/settings--company.png`
 - **Heading:** Company Management
 - **Subtitle:** Manage company information and settings
 - **Cards:** Active 1 · Inactive 0 · Deleted 0 · Filters
-- **Buttons:** Add Company · Active 1 · Inactive 0 · Deleted 0 · Filters · More actions · Company Name · Code · View ZZ INTAKE 1789363723375 · 10
-- **Columns (5):** Company Name | Code | GSTIN | Contact | Actions
+- **Buttons:** Add Company · Active 1 · Inactive 0 · Deleted 0 · Filters · More actions · Company Name · Code · View ZZ JCUI 1789467417823 · 10 · 10▼
+- **Columns (5):** Company Name | Code | GSTIN | CONTACT | ACTIONS
 - **Source:** `src/pages/app/settings/company-settings-page.tsx`
 - **Rows shown:** 1
 
 ### settings--financial-years
 
 - **Path:** `/app/settings/financial-years`
-- **Screenshot:** `screens/settings--financial-years.png`
+- **Screenshot:** `screens/desktop/settings--financial-years.png`
 - **Heading:** Financial Years
 - **Subtitle:** Manage financial year periods and transitions
 - **Cards:** Filters
-- **Buttons:** Create FY · Create Next FY · Filters · Name · View FY 2026-27 · Actions for FY 2026-27 · 10
-- **Columns (6):** Name | Start Date | End Date | Status | Created | Actions
+- **Buttons:** Create FY · Create Next FY · Filters · Name · View FY 2026-27 · Actions for FY 2026-27 · 10 · 10▼
+- **Columns (6):** Name | START DATE | END DATE | STATUS | CREATED | ACTIONS
 - **Source:** `src/pages/app/settings/financial-years-page.tsx`
 - **Rows shown:** 1
 
 ### settings--billing
 
 - **Path:** `/app/settings/billing`
-- **Screenshot:** `screens/settings--billing.png`
+- **Screenshot:** `screens/desktop/settings--billing.png`
 - **Heading:** Billing & Subscription
 - **Subtitle:** Your plan and billing details
 - **Source:** `src/pages/app/settings/billing-page.tsx`
@@ -541,7 +541,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### settings--print-formats
 
 - **Path:** `/app/settings/print-formats`
-- **Screenshot:** `screens/settings--print-formats.png`
+- **Screenshot:** `screens/desktop/settings--print-formats.png`
 - **Heading:** Bill & Label Designer
 - **Subtitle:** Design and manage print templates for bills, receipts and labels
 - **Buttons:** Add Missing Defaults · Import Template · Print Devices · New Template
@@ -551,7 +551,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### settings--whatsapp
 
 - **Path:** `/app/settings/whatsapp`
-- **Screenshot:** `screens/settings--whatsapp.png`
+- **Screenshot:** `screens/desktop/settings--whatsapp.png`
 - **Heading:** WhatsApp
 - **Subtitle:** Message templates sent to customers as their job progresses
 - **Buttons:** Save Changes
@@ -561,7 +561,7 @@ Captured 48 screens. Screenshots are in `screens/`.
 ### settings--backup
 
 - **Path:** `/app/settings/backup`
-- **Screenshot:** `screens/settings--backup.png`
+- **Screenshot:** `screens/desktop/settings--backup.png`
 - **Heading:** Backup & Restore
 - **Subtitle:** Download backups, schedule daily backups, and restore data safely
 - **Buttons:** Backup Now · Download Backup · Save · Restore as Archive (Safe)

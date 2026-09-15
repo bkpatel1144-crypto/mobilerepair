@@ -33,18 +33,15 @@ export function WidgetSection({
   groupKey,
   icon: Icon,
   title,
-  count,
   action,
   children,
 }: {
   groupKey: WidgetGroupKey
   icon: LucideIcon
   title: string
-  count: number
   action?: React.ReactNode
   children: React.ReactNode
 }) {
-  const { t } = useTranslation()
   return (
     <section className="rounded-xl border bg-muted/20 p-3">
       <div className="mb-3 flex items-center gap-2.5">
@@ -56,12 +53,10 @@ export function WidgetSection({
         >
           <Icon className="size-4" />
         </span>
-        <div className="min-w-0">
-          <p className="text-sm font-semibold">{title}</p>
-          <p className="text-xs text-muted-foreground">
-            {t('pages.administration.dashboardLandingTab.nWidgets', { count })}
-          </p>
-        </div>
+        {/* No "19 widgets" line. That is how a developer counts a dashboard; the shopkeeper
+         * reading it wants the heading and then the numbers. It stays on Role Configure's
+         * dashboard tab, where an admin really is choosing how many a role gets. */}
+        <p className="min-w-0 truncate text-sm font-semibold">{title}</p>
         {action && <span className="ml-auto">{action}</span>}
       </div>
       {children}

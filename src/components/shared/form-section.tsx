@@ -40,7 +40,7 @@ export function FormSection({
 }) {
   return (
     <section
-      className={cn(flat ? 'space-y-4' : 'space-y-4 rounded-lg border bg-card p-4', className)}
+      className={cn(flat ? 'space-y-4' : 'space-y-4 rounded-xl border bg-card p-4', className)}
     >
       <div>
         <h2 className="flex items-center gap-2 text-sm font-semibold">

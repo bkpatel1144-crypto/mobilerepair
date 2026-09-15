@@ -108,7 +108,7 @@ export function StatCard({
   // Supplier Report, Branch Management, Company Settings, Backup & Restore). `grid-cols-2` was
   // always fine (~165px tracks), which is why this only ever showed up on the three-up screens.
   const sharedClassName = cn(
-    'flex min-w-0 flex-1 flex-col items-start rounded-lg border bg-card p-4 text-left transition-colors sm:min-w-[9.5rem]',
+    'flex min-w-0 flex-1 flex-col items-start rounded-xl border bg-card p-4 text-left transition-colors sm:min-w-[9.5rem]',
     selected ? TONE_SELECTED_STYLES[tone] : 'border-border',
     onClick &&
       'cursor-pointer hover:border-teal-600/60 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none',
