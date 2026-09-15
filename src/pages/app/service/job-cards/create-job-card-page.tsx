@@ -19,6 +19,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { FormError } from '@/components/shared/form-error'
 import { AttributeFields } from '@/components/shared/attribute-fields'
 import { PartyFormModal } from '@/components/shared/party-form-modal'
+import { CreateItemPage } from '@/pages/app/masters/items/create-item-page'
 import { useOnlineStatus } from '@/hooks/use-online-status'
 import { blockRemaining, readBlock } from '@/lib/sequence-blocks'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
@@ -43,7 +44,7 @@ import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
 import { useParties } from '@/hooks/use-parties'
-import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
+import { useItems } from '@/hooks/use-items'
 import { useAllServiceOptions, useCreateServiceOption } from '@/hooks/use-service-options'
 import { useUsers } from '@/hooks/use-users'
 import { useCreateJobCard } from '@/hooks/use-job-cards'
@@ -138,7 +139,6 @@ export function CreateJobCardPage() {
     refetch: refetchOptions,
   } = useAllServiceOptions()
   const { data: users = [] } = useUsers()
-  const createItem = useCreateItem()
   const createServiceOption = useCreateServiceOption('problems')
   const createCustomerItem = useCreateServiceOption('customerItems')
   const createBrand = useCreateServiceOption('brands')
@@ -169,6 +169,8 @@ export function CreateJobCardPage() {
   const [customerId, setCustomerId] = useState<string | null>(draft.customerId ?? null)
   /** The name typed into the customer picker before pressing Add, while its form is open. */
   const [addingCustomer, setAddingCustomer] = useState<string | null>(null)
+  /** The name typed into the service-items picker before pressing Add. */
+  const [addingServiceItem, setAddingServiceItem] = useState<string | null>(null)
   const [alternativeMobile, setAlternativeMobile] = useState(draft.alternativeMobile ?? '')
 
   const [deviceTypeId, setDeviceTypeId] = useState<string | undefined>(draft.deviceTypeId)
@@ -857,18 +859,7 @@ export function CreateJobCardPage() {
                       placeholder={t('pages.service.createJobCard.addItemsFromCatalog')}
                       open={serviceItemsOpen}
                       onOpenChange={setServiceItemsOpen}
-                      onCreateNew={(name) =>
-                        createItem.mutate(
-                          { name, type: 'service', itemCode: nextItemCode(items, 'service') },
-                          {
-                            onSuccess: (item) =>
-                              setServiceItemsSelected((prev) => [
-                                ...prev,
-                                { itemId: item.id!, itemName: item.name, price: 0 },
-                              ]),
-                          }
-                        )
-                      }
+                      onCreateNew={setAddingServiceItem}
                     />
                   </div>
                   <Button
@@ -1242,6 +1233,20 @@ export function CreateJobCardPage() {
       {/* The real Add Party form, opened straight from the picker with whatever was typed
        * already in the name. What it saves is selected here, so the flow ends where it
        * started. */}
+      {addingServiceItem !== null && (
+        <CreateItemPage
+          defaultName={addingServiceItem}
+          onCancel={() => setAddingServiceItem(null)}
+          onSaved={(item) => {
+            setServiceItemsSelected((prev) => [
+              ...prev,
+              { itemId: item.id, itemName: item.name, price: 0 },
+            ])
+            setAddingServiceItem(null)
+          }}
+        />
+      )}
+
       {addingCustomer !== null && (
         <PartyFormModal
           editing="new"

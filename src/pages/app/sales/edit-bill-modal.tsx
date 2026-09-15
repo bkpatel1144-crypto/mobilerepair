@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Package, Plus, Trash2, ShieldCheck, Check } from 'lucide-react'
 import { FormModal } from '@/components/shared/form-modal'
 import { PartyFormModal } from '@/components/shared/party-form-modal'
+import { CreateItemPage } from '@/pages/app/masters/items/create-item-page'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useStock } from '@/hooks/use-stock'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -17,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
+import { useItems } from '@/hooks/use-items'
 import { useParties } from '@/hooks/use-parties'
 import { useEditBill, billTotals } from '@/hooks/use-edit-bill'
 import { useCompany } from '@/hooks/use-company'
@@ -51,7 +52,6 @@ export function EditBillModal({
   const { t } = useTranslation()
   const { data: items = [] } = useItems()
   const { data: parties = [] } = useParties()
-  const createItem = useCreateItem()
 
   // Keyed on the job id so switching rows re-seeds the draft without an effect — the React
   // Compiler forbids setState in render-reaction effects, and a key is what this repo uses.
@@ -61,7 +61,6 @@ export function EditBillModal({
       job={job}
       items={items}
       parties={parties}
-      createItem={createItem}
       onOpenChange={onOpenChange}
       t={t}
     />
@@ -75,14 +74,12 @@ function EditBillForm({
   job,
   items = [],
   parties = [],
-  createItem,
   onOpenChange,
   t,
 }: {
   job: JobCardWithId
   items: ItemsHook
   parties: PartiesHook
-  createItem: ReturnType<typeof useCreateItem>
   onOpenChange: (open: boolean) => void
   t: (key: string, options?: Record<string, unknown>) => string
 }) {
@@ -165,15 +162,8 @@ function EditBillForm({
     setAdding(false)
   }
 
-  async function createAndAddPart(name: string) {
-    if (!name.trim()) return
-    const created = await createItem.mutateAsync({
-      name: name.trim(),
-      type: 'part',
-      itemCode: nextItemCode(items ?? [], 'part'),
-    })
-    addPart(created.id)
-  }
+  /** The name typed into the parts picker before pressing Add, while the item form is open. */
+  const [addingPart, setAddingPart] = useState<string | null>(null)
 
   /** Which part row's supplier picker opened the Add Party form, and what was typed into it.
    *  A supplier becomes a real Party rather than a loose string: `SearchSelect` only shows a
@@ -378,7 +368,7 @@ function EditBillForm({
               options={partOptions}
               value={null}
               onChange={(id) => id && addPart(id)}
-              onCreateNew={(name) => void createAndAddPart(name)}
+              onCreateNew={setAddingPart}
               placeholder={t('pages.sales.editBill.searchOrTypePartName')}
             />
           </div>
@@ -489,6 +479,17 @@ function EditBillForm({
           </p>
         )}
       </div>
+      {addingPart !== null && (
+        <CreateItemPage
+          defaultName={addingPart}
+          onCancel={() => setAddingPart(null)}
+          onSaved={(item) => {
+            addPart(item.id)
+            setAddingPart(null)
+          }}
+        />
+      )}
+
       {addingSupplierFor && (
         <PartyFormModal
           editing="new"

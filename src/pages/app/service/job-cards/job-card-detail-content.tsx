@@ -28,6 +28,7 @@ import { useJobTimeline, type JobCardWithId } from '@/hooks/use-job-cards'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
 import { attributeRows, attributesFor } from '@/lib/attribute-values'
 import { usePermissions } from '@/hooks/use-permissions'
+import { CreateItemPage } from '@/pages/app/masters/items/create-item-page'
 import { useJobCards } from '@/hooks/use-job-cards'
 import { warrantyLinesOf, jobWarrantyState } from '@/lib/warranty'
 import { Link } from 'react-router-dom'
@@ -36,7 +37,7 @@ import { useStock } from '@/hooks/use-stock'
 import { fitCheck, stockByItemId, stockHelperText } from '@/lib/stock-check'
 import { useApplyJobAction } from '@/hooks/use-job-actions'
 import { useJobActionGating } from '@/hooks/use-job-action-gating'
-import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
+import { useItems } from '@/hooks/use-items'
 import { useReceipts } from '@/hooks/use-receipts'
 import { cn } from '@/lib/utils'
 import { uploadJobCardImage } from '@/lib/job-card-images'
@@ -103,11 +104,10 @@ export function JobCardDetailContent({
           (j.imei || j.serialNo) === deviceKey
       )
     : []
-  const jobAttributeRows = attributeRows(
-    attributesFor(allAttributes, 'jobCard'),
-    job.attributes,
-    { yes: t('common.yes'), no: t('common.no') }
-  )
+  const jobAttributeRows = attributeRows(attributesFor(allAttributes, 'jobCard'), job.attributes, {
+    yes: t('common.yes'),
+    no: t('common.no'),
+  })
   const {
     data: timeline = [],
     error: timelineError,
@@ -119,7 +119,6 @@ export function JobCardDetailContent({
   const { data: receipts = [] } = useReceipts()
   // Newest last, so the row reads in the order the money actually moved.
   const jobReceipts = receipts.filter((r) => r.jobCardId === job.id)
-  const createItem = useCreateItem()
 
   const [notesOpen, setNotesOpen] = useState(true)
   const [addPartOpen, setAddPartOpen] = useState(false)
@@ -139,6 +138,8 @@ export function JobCardDetailContent({
   /** Ticked to fit a part the shop does not have enough of. Reset whenever the part changes, so
    *  an override granted for one part is never carried silently to the next. */
   const [stockOverride, setStockOverride] = useState(false)
+  /** The name typed into the parts picker before pressing Add. */
+  const [addingPart, setAddingPart] = useState<string | null>(null)
   const [noteOpen, setNoteOpen] = useState(false)
   const [noteText, setNoteText] = useState('')
 
@@ -222,6 +223,17 @@ export function JobCardDetailContent({
           </div>
         </div>
       </div>
+
+      {addingPart !== null && (
+        <CreateItemPage
+          defaultName={addingPart}
+          onCancel={() => setAddingPart(null)}
+          onSaved={(item) => {
+            setPartItemId(item.id)
+            setAddingPart(null)
+          }}
+        />
+      )}
 
       <ActionButtons job={job} />
 
@@ -526,12 +538,7 @@ export function JobCardDetailContent({
                       if (item?.sellingPrice) setPartRate(item.sellingPrice)
                     }}
                     placeholder={t('pages.service.jobCardDetailContent.searchPart')}
-                    onCreateNew={(name) =>
-                      createItem.mutate(
-                        { name, type: 'part', itemCode: nextItemCode(items, 'part') },
-                        { onSuccess: (item) => setPartItemId(item.id!) }
-                      )
-                    }
+                    onCreateNew={setAddingPart}
                   />
                   {partFit.blocked && (
                     <div className="space-y-2 rounded-md bg-amber-50 px-2.5 py-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-300">

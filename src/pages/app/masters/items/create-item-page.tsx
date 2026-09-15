@@ -16,6 +16,7 @@ import {
 import { FormError } from '@/components/shared/form-error'
 import { FormSection, FormGrid, FormGridFull } from '@/components/shared/form-section'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import {
   useItems,
   useCreateItem,
@@ -165,11 +166,34 @@ function numOr0(value: string): number {
   return num(value) ?? 0
 }
 
-export function CreateItemPage() {
+/**
+ * Create / edit an item — the route at `masters/items/create`, and the same form opened as a
+ * modal from any part or service picker.
+ *
+ * One component rather than a page and a cut-down "quick add": an item carries thirty-nine
+ * fields and the pickers used to create one from a name alone, leaving a part with no price, no
+ * tax category and no unit. Per the client, choosing add in a dropdown opens the real form.
+ *
+ * `onSaved` is what puts it in modal mode. In that mode there is no draft autosave — a draft
+ * keyed to the page would be restored the next time someone opened the page proper — and saving
+ * hands the new item back to whichever picker opened it instead of navigating.
+ */
+export function CreateItemPage({
+  defaultName,
+  onSaved,
+  onCancel,
+}: {
+  /** Prefills the name — what was typed into the picker before pressing Add. */
+  defaultName?: string
+  /** Set to open as a modal. Receives the saved item so the picker can select it. */
+  onSaved?: (item: { id: string; name: string }) => void
+  onCancel?: () => void
+} = {}) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { itemId } = useParams<{ itemId: string }>()
-  const isEdit = !!itemId
+  const asModal = !!onSaved
+  const isEdit = !!itemId && !asModal
 
   const { data: items = [] } = useItems()
   const { data: categories = [] } = useItemCategories()
@@ -181,6 +205,7 @@ export function CreateItemPage() {
   const existing = isEdit ? items.find((i) => i.id === itemId) : undefined
 
   const [draft, setDraft] = useState<ItemDraft>(() => {
+    if (asModal) return { ...emptyDraft(), name: defaultName ?? '' }
     if (isEdit) return emptyDraft()
     try {
       const saved = window.localStorage.getItem(DRAFT_KEY)
@@ -214,7 +239,7 @@ export function CreateItemPage() {
   // Autosave, new items only — an edit draft that outlived the page would silently reapply itself
   // to whichever item was opened next.
   useEffect(() => {
-    if (isEdit) return
+    if (isEdit || asModal) return
     const id = window.setTimeout(() => {
       try {
         window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft))
@@ -224,7 +249,7 @@ export function CreateItemPage() {
       }
     }, 800)
     return () => window.clearTimeout(id)
-  }, [draft, isEdit])
+  }, [draft, isEdit, asModal])
 
   const set = <K extends keyof ItemDraft>(key: K, value: ItemDraft[K]) =>
     setDraft((prev) => ({ ...prev, [key]: value }))
@@ -318,7 +343,11 @@ export function CreateItemPage() {
       if (isEdit) {
         await updateItem.mutateAsync({ id: itemId!, ...payload })
       } else {
-        await createItem.mutateAsync(payload)
+        const created = await createItem.mutateAsync(payload)
+        if (asModal) {
+          onSaved?.({ id: created.id!, name: payload.name })
+          return
+        }
         window.localStorage.removeItem(DRAFT_KEY)
       }
       navigate(buildPath('masters', 'items'))
@@ -339,8 +368,8 @@ export function CreateItemPage() {
   const setGst = (key: keyof ItemGstRates, value: string) =>
     setDraft((prev) => ({ ...prev, gstRates: { ...prev.gstRates, [key]: numOr0(value) } }))
 
-  return (
-    <div className="mx-auto max-w-3xl space-y-4 p-4 pb-24 sm:p-6">
+  const body = (
+    <div className={asModal ? 'space-y-4' : 'mx-auto max-w-3xl space-y-4 p-4 pb-24 sm:p-6'}>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <h1 className="text-lg font-bold">
@@ -371,7 +400,14 @@ export function CreateItemPage() {
               {t('pages.service.createJobCard.clearDraft')}
             </Button>
           )}
-          <Button type="button" variant="outline" size="sm" onClick={() => navigate(-1)}>
+          {/* The dialog has its own close; two of them in the same corner is one too many. */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className={asModal ? 'hidden' : undefined}
+            onClick={() => navigate(-1)}
+          >
             <ArrowLeft />
             {t('shared.back')}
           </Button>
@@ -832,7 +868,12 @@ export function CreateItemPage() {
       </FormSection>
 
       <div className="flex justify-end gap-2 border-t pt-4">
-        <Button type="button" variant="outline" onClick={() => navigate(-1)} disabled={submitting}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => (asModal ? onCancel?.() : navigate(-1))}
+          disabled={submitting}
+        >
           {t('common.cancel')}
         </Button>
         <Button type="button" onClick={handleSubmit} disabled={submitting}>
@@ -858,5 +899,20 @@ export function CreateItemPage() {
         }}
       />
     </div>
+  )
+
+  if (!asModal) return body
+
+  return (
+    <Dialog open onOpenChange={(open) => !open && onCancel?.()}>
+      <DialogContent
+        className={
+          'inset-0 top-0 left-0 h-full max-h-none max-w-full translate-x-0 translate-y-0 overflow-y-auto rounded-none ' +
+          'sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[calc(100dvh-2rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl'
+        }
+      >
+        {body}
+      </DialogContent>
+    </Dialog>
   )
 }
