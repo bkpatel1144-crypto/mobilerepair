@@ -16,6 +16,7 @@ import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatCard } from '@/components/shared/stat-card'
 import { EmptyState } from '@/components/shared/empty-state'
 import { FormModal } from '@/components/shared/form-modal'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { SearchSelect } from '@/components/shared/search-select'
 import { Button } from '@/components/ui/button'
@@ -29,12 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,7 +47,7 @@ import {
   type PurchaseTerms,
   type PurchaseWithId,
 } from '@/hooks/use-purchases'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { useItems } from '@/hooks/use-items'
 import { usePermissions } from '@/hooks/use-permissions'
 import { formatTimestamp } from '@/lib/utils'
@@ -209,7 +205,9 @@ export function GeneralPurchasePage() {
     <div className="space-y-4 p-4 sm:p-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold">{t('pages.purchase.generalPurchase.generalPurchase')}</h1>
+          <h1 className="text-xl font-bold">
+            {t('pages.purchase.generalPurchase.generalPurchase')}
+          </h1>
           <p className="text-sm text-muted-foreground">
             {t('pages.purchase.generalPurchase.buyPartsAccessories')}
           </p>
@@ -295,7 +293,11 @@ export function GeneralPurchasePage() {
       <ConfirmDialog
         open={cancelling != null}
         onOpenChange={(o) => !o && setCancelling(null)}
-        title={cancelling ? `${t('pages.purchase.generalPurchase.cancelEntry')} ${cancelling.purchaseNumber}?` : ''}
+        title={
+          cancelling
+            ? `${t('pages.purchase.generalPurchase.cancelEntry')} ${cancelling.purchaseNumber}?`
+            : ''
+        }
         message={t('pages.purchase.generalPurchase.aCancelledEntryStops')}
         confirmLabel={t('pages.purchase.generalPurchase.cancelEntry')}
         destructive
@@ -344,7 +346,9 @@ function PurchaseViewModal({
             <dd className="font-medium">{purchase.supplierName || '—'}</dd>
           </div>
           <div className="flex items-center justify-between">
-            <dt className="text-muted-foreground">{t('pages.purchase.generalPurchase.invoiceNo')}</dt>
+            <dt className="text-muted-foreground">
+              {t('pages.purchase.generalPurchase.invoiceNo')}
+            </dt>
             <dd className="font-medium">{purchase.invoiceNumber || '—'}</dd>
           </div>
           <div className="flex items-center justify-between">
@@ -440,7 +444,8 @@ function NewPurchaseModal({
   isSaving: boolean
 }) {
   const { t } = useTranslation()
-  const createParty = useCreateParty()
+  /** The name typed into the supplier picker before pressing Add. */
+  const [addingSupplier, setAddingSupplier] = useState<string | null>(null)
   const [supplierId, setSupplierId] = useState<string | null>(null)
   const [supplierName, setSupplierName] = useState('')
   const [invoiceNumber, setInvoiceNumber] = useState('')
@@ -499,21 +504,24 @@ function NewPurchaseModal({
               setSupplierId(id)
               setSupplierName(supplierOptions.find((s) => s.id === id)?.label ?? '')
             }}
-            onCreateNew={(name) => {
-              void createParty
-                .mutateAsync({ name: name.trim(), mobile: '', partyTypes: ['supplier'] })
-                .then((p) => {
-                  setSupplierId(p.id)
-                  setSupplierName(p.name)
-                })
-            }}
+            onCreateNew={setAddingSupplier}
             placeholder={t('pages.purchase.generalPurchase.selectSupplier')}
           />
+          {addingSupplier !== null && (
+            <PartyFormModal
+              editing="new"
+              defaultName={addingSupplier}
+              defaultPartyTypes={['supplier']}
+              onClose={() => setAddingSupplier(null)}
+              onSaved={(party) => {
+                setSupplierId(party.id)
+                setSupplierName(party.name)
+              }}
+            />
+          )}
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="invoiceNumber">
-            {t('pages.purchase.generalPurchase.invoiceNumber')}
-          </Label>
+          <Label htmlFor="invoiceNumber">{t('pages.purchase.generalPurchase.invoiceNumber')}</Label>
           <Input
             id="invoiceNumber"
             value={invoiceNumber}

@@ -2409,7 +2409,8 @@
       },
       "searchSelect": {
         "typeToSearch": "Type to search...",
-        "noMatches": "No matches."
+        "noMatches": "No matches.",
+        "addNamed": "Add \"{{name}}\"…"
       },
       "errorState": {
         "couldnTLoadThisData": "Couldn't load this data"

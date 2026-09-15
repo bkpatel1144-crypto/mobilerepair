@@ -2409,7 +2409,8 @@
       },
       "searchSelect": {
         "typeToSearch": "શોધવા માટે ટાઇપ કરો...",
-        "noMatches": "કોઈ મેળ નથી."
+        "noMatches": "કોઈ મેળ નથી.",
+        "addNamed": "\"{{name}}\" ઉમેરો…"
       },
       "errorState": {
         "couldnTLoadThisData": "આ માહિતી લોડ થઈ શકી નથી"

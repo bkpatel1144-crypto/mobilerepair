@@ -22,6 +22,7 @@ import { ErrorState } from '@/components/shared/error-state'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { FormModal } from '@/components/shared/form-modal'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { SearchSelect } from '@/components/shared/search-select'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -44,7 +45,7 @@ import {
   type SupplierPayable,
   type SupplierBillWithId,
 } from '@/hooks/use-supplier-payables'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { downloadCsv } from '@/lib/csv-export'
 import { cn, toDateInputValue } from '@/lib/utils'
 import type { ReceiptDoc } from '@/types/firestore'
@@ -80,9 +81,10 @@ function NewBillModal({
   const { t } = useTranslation()
   const create = useCreateSupplierBill()
   const { data: parties = [] } = useParties()
-  const createParty = useCreateParty()
 
   const today = toDateInputValue(new Date())
+  /** The name typed into the supplier picker before pressing Add. */
+  const [addingSupplier, setAddingSupplier] = useState<string | null>(null)
   const [supplierId, setSupplierId] = useState<string | null>(null)
   const [supplierRef, setSupplierRef] = useState('')
   const [billDate, setBillDate] = useState(today)
@@ -176,13 +178,17 @@ function NewBillModal({
           value={supplierId}
           onChange={setSupplierId}
           placeholder={t('shared.searchSupplier')}
-          onCreateNew={(name) =>
-            createParty.mutate(
-              { name: name.trim(), mobile: '', partyTypes: ['supplier'] },
-              { onSuccess: (created) => setSupplierId(created.id) }
-            )
-          }
+          onCreateNew={setAddingSupplier}
         />
+        {addingSupplier !== null && (
+          <PartyFormModal
+            editing="new"
+            defaultName={addingSupplier}
+            defaultPartyTypes={['supplier']}
+            onClose={() => setAddingSupplier(null)}
+            onSaved={(party) => setSupplierId(party.id)}
+          />
+        )}
       </div>
 
       <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))]">

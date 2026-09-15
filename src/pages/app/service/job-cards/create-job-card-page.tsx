@@ -18,6 +18,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { FormError } from '@/components/shared/form-error'
 import { AttributeFields } from '@/components/shared/attribute-fields'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { useOnlineStatus } from '@/hooks/use-online-status'
 import { blockRemaining, readBlock } from '@/lib/sequence-blocks'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
@@ -41,7 +42,7 @@ import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
 import { useAllServiceOptions, useCreateServiceOption } from '@/hooks/use-service-options'
 import { useUsers } from '@/hooks/use-users'
@@ -137,7 +138,6 @@ export function CreateJobCardPage() {
     refetch: refetchOptions,
   } = useAllServiceOptions()
   const { data: users = [] } = useUsers()
-  const createParty = useCreateParty()
   const createItem = useCreateItem()
   const createServiceOption = useCreateServiceOption('problems')
   const createCustomerItem = useCreateServiceOption('customerItems')
@@ -167,9 +167,8 @@ export function CreateJobCardPage() {
   const [draft] = useState<Partial<JobCardDraft>>(readDraft)
 
   const [customerId, setCustomerId] = useState<string | null>(draft.customerId ?? null)
-  const [quickAddCustomer, setQuickAddCustomer] = useState<{ name: string; mobile: string } | null>(
-    null
-  )
+  /** The name typed into the customer picker before pressing Add, while its form is open. */
+  const [addingCustomer, setAddingCustomer] = useState<string | null>(null)
   const [alternativeMobile, setAlternativeMobile] = useState(draft.alternativeMobile ?? '')
 
   const [deviceTypeId, setDeviceTypeId] = useState<string | undefined>(draft.deviceTypeId)
@@ -325,16 +324,11 @@ export function CreateJobCardPage() {
   async function handleSubmit() {
     setFormError(null)
 
-    let finalCustomerId = customerId
+    const finalCustomerId = customerId
     let finalCustomerName: string
     let finalCustomerMobile: string
 
-    if (!finalCustomerId && quickAddCustomer) {
-      if (!quickAddCustomer.name.trim() || !/^\d{10}$/.test(quickAddCustomer.mobile)) {
-        setFormError(t('pages.service.createJobCard.enterTheNewCustomerSName'))
-        return
-      }
-    } else if (!finalCustomerId) {
+    if (!finalCustomerId) {
       setFormError(t('pages.service.createJobCard.selectOrAddACustomer'))
       return
     }
@@ -363,19 +357,9 @@ export function CreateJobCardPage() {
 
     setSubmitting(true)
     try {
-      if (!finalCustomerId && quickAddCustomer) {
-        const created = await createParty.mutateAsync({
-          name: quickAddCustomer.name,
-          mobile: quickAddCustomer.mobile,
-        })
-        finalCustomerId = created.id
-        finalCustomerName = created.name
-        finalCustomerMobile = created.mobile
-      } else {
-        const party = parties.find((p) => p.id === finalCustomerId)!
-        finalCustomerName = party.name
-        finalCustomerMobile = party.mobile
-      }
+      const party = parties.find((p) => p.id === finalCustomerId)!
+      finalCustomerName = party.name
+      finalCustomerMobile = party.mobile
 
       const deviceType = options.deviceTypes.find((d) => d.id === deviceTypeId)
       const brand = options.brands.find((b) => b.id === brandId)
@@ -500,12 +484,9 @@ export function CreateJobCardPage() {
                   <SearchSelect
                     options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
                     value={customerId}
-                    onChange={(id) => {
-                      setCustomerId(id)
-                      if (id) setQuickAddCustomer(null)
-                    }}
+                    onChange={setCustomerId}
                     placeholder={t('pages.service.createJobCard.searchCustomerByNameOrMobile')}
-                    onCreateNew={(query) => setQuickAddCustomer({ name: query, mobile: '' })}
+                    onCreateNew={(query) => setAddingCustomer(query)}
                     open={customerOpen}
                     onOpenChange={setCustomerOpen}
                   />
@@ -520,38 +501,6 @@ export function CreateJobCardPage() {
                   <UserPlus className="size-4" />
                 </Button>
               </div>
-              {quickAddCustomer && !customerId && (
-                <div className="flex gap-2 rounded-md border border-dashed p-2">
-                  <Input
-                    value={quickAddCustomer.name}
-                    onChange={(e) =>
-                      setQuickAddCustomer({ ...quickAddCustomer, name: e.target.value })
-                    }
-                    placeholder={t('shared.customerName')}
-                    className="h-8 text-sm"
-                  />
-                  <Input
-                    value={quickAddCustomer.mobile}
-                    onChange={(e) =>
-                      setQuickAddCustomer({
-                        ...quickAddCustomer,
-                        mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
-                      })
-                    }
-                    placeholder={t('pages.service.createJobCard.10DigitMobile')}
-                    className="h-8 text-sm"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-8"
-                    onClick={() => setQuickAddCustomer(null)}
-                  >
-                    <X className="size-4" />
-                  </Button>
-                </div>
-              )}
             </div>
 
             {isVisible('alternativeMobile') && (
@@ -1289,6 +1238,19 @@ export function CreateJobCardPage() {
           </div>
         </div>
       </div>
+
+      {/* The real Add Party form, opened straight from the picker with whatever was typed
+       * already in the name. What it saves is selected here, so the flow ends where it
+       * started. */}
+      {addingCustomer !== null && (
+        <PartyFormModal
+          editing="new"
+          defaultName={addingCustomer}
+          defaultPartyTypes={['customer']}
+          onClose={() => setAddingCustomer(null)}
+          onSaved={(party) => setCustomerId(party.id)}
+        />
+      )}
 
       <ScanTextModal
         open={scanningField != null}

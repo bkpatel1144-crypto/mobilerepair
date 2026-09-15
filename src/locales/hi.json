@@ -2409,7 +2409,8 @@
       },
       "searchSelect": {
         "typeToSearch": "खोजने के लिए टाइप करें...",
-        "noMatches": "कोई मेल नहीं।"
+        "noMatches": "कोई मेल नहीं।",
+        "addNamed": "\"{{name}}\" जोड़ें…"
       },
       "errorState": {
         "couldnTLoadThisData": "यह जानकारी लोड नहीं हो सकी"

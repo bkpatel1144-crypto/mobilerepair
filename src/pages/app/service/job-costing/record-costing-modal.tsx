@@ -12,8 +12,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { SearchSelect } from '@/components/shared/search-select'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { useSaveJobCosting } from '@/hooks/use-job-costing'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { cn } from '@/lib/utils'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
 import type { JobCostingDoc } from '@/types/firestore'
@@ -60,7 +61,6 @@ export function RecordCostingModal({
   const [notes, setNotes] = useState(existing?.notes ?? '')
   const saveCosting = useSaveJobCosting()
   const { data: parties = [] } = useParties()
-  const createParty = useCreateParty()
   // Same "no strict type set yet still counts" fallback the Second Hand Device seller picker
   // uses — Supplier Report (Phase 9) reads this same free-text name, not a partyId reference, so
   // picking an existing party here is a convenience/autocomplete, never a hard link.
@@ -73,15 +73,11 @@ export function RecordCostingModal({
   // never appear as a `SearchSelect` option again (that component only recognizes a `value` that
   // matches one of its own `options[].id`), so the very row you just filled in would render back
   // as its own empty placeholder the instant this closes and reopens.
-  async function handleCreateSupplier(itemId: string, name: string) {
-    if (!name.trim()) return
-    const created = await createParty.mutateAsync({
-      name: name.trim(),
-      mobile: '',
-      partyTypes: ['supplier'],
-    })
-    updateItem(itemId, { supplier: created.name })
-  }
+  /** Which cost line's supplier picker opened the Add Party form, and what was typed into it. */
+  const [addingSupplierFor, setAddingSupplierFor] = useState<{
+    itemId: string
+    name: string
+  } | null>(null)
 
   const billAmount = job.finalAmount ?? job.estimatedCost
   const totalCost = costItems.reduce((sum, c) => sum + c.cost * c.qty, 0)
@@ -234,7 +230,7 @@ export function RecordCostingModal({
                     value={item.supplier}
                     onChange={(name) => updateItem(item.id, { supplier: name })}
                     placeholder={t('shared.searchSupplier')}
-                    onCreateNew={(query) => handleCreateSupplier(item.id, query)}
+                    onCreateNew={(query) => setAddingSupplierFor({ itemId: item.id, name: query })}
                   />
                   <div className="grid grid-cols-4 items-center gap-2">
                     <Input value={item.rate ?? ''} placeholder={t('common.rate')} disabled />
@@ -331,6 +327,16 @@ export function RecordCostingModal({
           </div>
         </div>
       </div>
+
+      {addingSupplierFor && (
+        <PartyFormModal
+          editing="new"
+          defaultName={addingSupplierFor.name}
+          defaultPartyTypes={['supplier']}
+          onClose={() => setAddingSupplierFor(null)}
+          onSaved={(party) => updateItem(addingSupplierFor.itemId, { supplier: party.name })}
+        />
+      )}
     </div>
   )
 }

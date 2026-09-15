@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { SearchSelect } from '@/components/shared/search-select'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import {
   Select,
   SelectContent,
@@ -32,7 +33,7 @@ import {
   useCreateSecondHandSale,
   secondHandSalesQueryKey,
 } from '@/hooks/use-second-hand-sales'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { useAuth } from '@/hooks/use-auth'
 import { dateRangeBounds } from '@/lib/date-range'
 import { purchaseDetailSections, purchaseTimeline } from './purchase-detail-sections'
@@ -192,11 +193,11 @@ function SellDeviceModal({
 }) {
   const { t } = useTranslation()
   const { data: parties = [] } = useParties()
-  const createParty = useCreateParty()
   const createSale = useCreateSecondHandSale()
 
   const [buyerId, setBuyerId] = useState<string | null>(null)
-  const [quickAddBuyer, setQuickAddBuyer] = useState<{ name: string; mobile: string } | null>(null)
+  /** The name typed into the buyer picker before pressing Add, while its form is open. */
+  const [addingBuyer, setAddingBuyer] = useState<string | null>(null)
   const [salePrice, setSalePrice] = useState<number>(purchase.expectedSalePrice ?? 0)
   const [paymentMode, setPaymentMode] = useState<'cash' | 'upi' | 'card'>('cash')
   const [warrantyDays, setWarrantyDays] = useState(0)
@@ -209,9 +210,9 @@ function SellDeviceModal({
 
   async function handleConfirm() {
     setError(null)
-    let finalBuyerId = buyerId
+    const finalBuyerId = buyerId
     let finalBuyerName: string
-    if (!finalBuyerId && !quickAddBuyer) {
+    if (!finalBuyerId) {
       setError(t('pages.secondHandDevice.deviceSale.selectOrAddABuyer'))
       return
     }
@@ -220,16 +221,7 @@ function SellDeviceModal({
       return
     }
     try {
-      if (!finalBuyerId && quickAddBuyer) {
-        const created = await createParty.mutateAsync({
-          name: quickAddBuyer.name,
-          mobile: quickAddBuyer.mobile,
-        })
-        finalBuyerId = created.id
-        finalBuyerName = created.name
-      } else {
-        finalBuyerName = parties.find((p) => p.id === finalBuyerId)!.name
-      }
+      finalBuyerName = parties.find((p) => p.id === finalBuyerId)!.name
       await createSale.mutateAsync({
         purchase,
         buyerId: finalBuyerId!,
@@ -270,12 +262,9 @@ function SellDeviceModal({
             <SearchSelect
               options={parties.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
               value={buyerId}
-              onChange={(id) => {
-                setBuyerId(id)
-                if (id) setQuickAddBuyer(null)
-              }}
+              onChange={setBuyerId}
               placeholder={t('pages.secondHandDevice.deviceSale.searchBuyer')}
-              onCreateNew={(query) => setQuickAddBuyer({ name: query, mobile: '' })}
+              onCreateNew={(query) => setAddingBuyer(query)}
             />
           </div>
           <div className="space-y-1.5">
@@ -289,27 +278,6 @@ function SellDeviceModal({
             />
           </div>
         </div>
-        {quickAddBuyer && !buyerId && (
-          <div className="flex gap-2 rounded-md border border-dashed p-2">
-            <Input
-              value={quickAddBuyer.name}
-              onChange={(e) => setQuickAddBuyer({ ...quickAddBuyer, name: e.target.value })}
-              placeholder={t('pages.secondHandDevice.deviceSale.buyerName')}
-              className="h-8 text-sm"
-            />
-            <Input
-              value={quickAddBuyer.mobile}
-              onChange={(e) =>
-                setQuickAddBuyer({
-                  ...quickAddBuyer,
-                  mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
-                })
-              }
-              placeholder={t('common.tenDigitMobile')}
-              className="h-8 text-sm"
-            />
-          </div>
-        )}
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
@@ -361,6 +329,16 @@ function SellDeviceModal({
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
+
+        {addingBuyer !== null && (
+          <PartyFormModal
+            editing="new"
+            defaultName={addingBuyer}
+            defaultPartyTypes={['customer']}
+            onClose={() => setAddingBuyer(null)}
+            onSaved={(party) => setBuyerId(party.id)}
+          />
+        )}
 
         <div className="flex justify-end gap-2 border-t pt-3">
           <Button type="button" variant="outline" onClick={onClose}>

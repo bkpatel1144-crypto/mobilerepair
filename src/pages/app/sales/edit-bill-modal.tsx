@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Package, Plus, Trash2, ShieldCheck, Check } from 'lucide-react'
 import { FormModal } from '@/components/shared/form-modal'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useStock } from '@/hooks/use-stock'
 import { usePermissions } from '@/hooks/use-permissions'
@@ -17,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useItems, useCreateItem, nextItemCode } from '@/hooks/use-items'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { useEditBill, billTotals } from '@/hooks/use-edit-bill'
 import { useCompany } from '@/hooks/use-company'
 import { gstConfigFor, splitGst } from '@/lib/gst'
@@ -51,7 +52,6 @@ export function EditBillModal({
   const { data: items = [] } = useItems()
   const { data: parties = [] } = useParties()
   const createItem = useCreateItem()
-  const createParty = useCreateParty()
 
   // Keyed on the job id so switching rows re-seeds the draft without an effect — the React
   // Compiler forbids setState in render-reaction effects, and a key is what this repo uses.
@@ -62,7 +62,6 @@ export function EditBillModal({
       items={items}
       parties={parties}
       createItem={createItem}
-      createParty={createParty}
       onOpenChange={onOpenChange}
       t={t}
     />
@@ -77,7 +76,6 @@ function EditBillForm({
   items = [],
   parties = [],
   createItem,
-  createParty,
   onOpenChange,
   t,
 }: {
@@ -85,7 +83,6 @@ function EditBillForm({
   items: ItemsHook
   parties: PartiesHook
   createItem: ReturnType<typeof useCreateItem>
-  createParty: ReturnType<typeof useCreateParty>
   onOpenChange: (open: boolean) => void
   t: (key: string, options?: Record<string, unknown>) => string
 }) {
@@ -178,18 +175,13 @@ function EditBillForm({
     addPart(created.id)
   }
 
-  async function assignNewSupplier(partId: string, name: string) {
-    if (!name.trim()) return
-    // A typed supplier becomes a real Party, not a loose string: `SearchSelect` only shows a
-    // value that matches one of its own option ids, so a bare name would render back empty the
-    // moment this modal reopened.
-    const created = await createParty.mutateAsync({
-      name: name.trim(),
-      mobile: '',
-      partyTypes: ['supplier'],
-    })
-    patchPart(partId, { supplierId: created.id, supplierName: created.name })
-  }
+  /** Which part row's supplier picker opened the Add Party form, and what was typed into it.
+   *  A supplier becomes a real Party rather than a loose string: `SearchSelect` only shows a
+   *  value matching one of its own option ids, so a bare name renders back empty. */
+  const [addingSupplierFor, setAddingSupplierFor] = useState<{
+    partId: string
+    name: string
+  } | null>(null)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -222,7 +214,9 @@ function EditBillForm({
       {
         onSuccess: () => onOpenChange(false),
         onError: (err) =>
-          setError(err instanceof Error ? err.message : t('pages.sales.editBill.couldNotSaveTheBill')),
+          setError(
+            err instanceof Error ? err.message : t('pages.sales.editBill.couldNotSaveTheBill')
+          ),
       }
     )
   }
@@ -286,7 +280,7 @@ function EditBillForm({
                       supplierName: supplierOptions.find((s) => s.id === id)?.label ?? null,
                     })
                   }
-                  onCreateNew={(name) => void assignNewSupplier(p.id, name)}
+                  onCreateNew={(name) => setAddingSupplierFor({ partId: p.id, name })}
                   placeholder={t('pages.sales.editBill.searchSupplier')}
                 />
               </div>
@@ -460,9 +454,7 @@ function EditBillForm({
                 <dd>₹{tax.taxable}</dd>
               </div>
               <div className="flex items-center justify-between text-muted-foreground">
-                <dt>
-                  {t('pages.sales.editBill.cgstSgst', { rate: gst.rate / 2 })}
-                </dt>
+                <dt>{t('pages.sales.editBill.cgstSgst', { rate: gst.rate / 2 })}</dt>
                 <dd>
                   ₹{tax.cgst} + ₹{tax.sgst}
                 </dd>
@@ -497,6 +489,20 @@ function EditBillForm({
           </p>
         )}
       </div>
+      {addingSupplierFor && (
+        <PartyFormModal
+          editing="new"
+          defaultName={addingSupplierFor.name}
+          defaultPartyTypes={['supplier']}
+          onClose={() => setAddingSupplierFor(null)}
+          onSaved={(party) =>
+            patchPart(addingSupplierFor.partId, {
+              supplierId: party.id,
+              supplierName: party.name,
+            })
+          }
+        />
+      )}
     </FormModal>
   )
 }

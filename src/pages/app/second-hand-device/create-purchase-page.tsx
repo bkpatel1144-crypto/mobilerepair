@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { FormError } from '@/components/shared/form-error'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { FormSection, FormGrid } from '@/components/shared/form-section'
 import { ErrorState } from '@/components/shared/error-state'
 import { SearchSelect } from '@/components/shared/search-select'
@@ -21,7 +22,7 @@ import { PatternLockPicker, PatternLockPreview } from '@/components/shared/patte
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { useUsers } from '@/hooks/use-users'
 import { useAllServiceOptions, useCreateServiceOption } from '@/hooks/use-service-options'
 import { useCreateSecondHandPurchase } from '@/hooks/use-second-hand-purchases'
@@ -65,7 +66,6 @@ export function CreateSecondHandPurchasePage() {
     error: optionsError,
     refetch: refetchOptions,
   } = useAllServiceOptions()
-  const createParty = useCreateParty()
   const createBrand = useCreateServiceOption('brands')
   const createModel = useCreateServiceOption('models')
   const createPurchase = useCreateSecondHandPurchase()
@@ -101,9 +101,8 @@ export function CreateSecondHandPurchasePage() {
   const [pendingImages, setPendingImages] = useState<File[]>([])
 
   const [sellerId, setSellerId] = useState<string | null>(null)
-  const [quickAddSeller, setQuickAddSeller] = useState<{ name: string; mobile: string } | null>(
-    null
-  )
+  /** The name typed into the picker before pressing Add, while its form is open. */
+  const [addingSeller, setAddingSeller] = useState<string | null>(null)
   const [idProofType, setIdProofType] = useState(
     t('pages.secondHandDevice.createPurchase.notCaptured')
   )
@@ -147,10 +146,10 @@ export function CreateSecondHandPurchasePage() {
 
   async function handleSubmit() {
     setFormError(null)
-    let finalSellerId = sellerId
+    const finalSellerId = sellerId
     let finalSellerName: string
 
-    if (!finalSellerId && !quickAddSeller) {
+    if (!finalSellerId) {
       setFormError(t('pages.secondHandDevice.createPurchase.selectOrAddASeller'))
       return
     }
@@ -165,18 +164,8 @@ export function CreateSecondHandPurchasePage() {
 
     setSubmitting(true)
     try {
-      if (!finalSellerId && quickAddSeller) {
-        const created = await createParty.mutateAsync({
-          name: quickAddSeller.name,
-          mobile: quickAddSeller.mobile,
-          partyTypes: ['supplier'],
-        })
-        finalSellerId = created.id
-        finalSellerName = created.name
-      } else {
-        const party = parties.find((p) => p.id === finalSellerId)!
-        finalSellerName = party.name
-      }
+      const party = parties.find((p) => p.id === finalSellerId)!
+      finalSellerName = party.name
 
       const deviceType = options.deviceTypes.find((d) => d.id === deviceTypeId)
       const brand = options.brands.find((b) => b.id === brandId)
@@ -705,36 +694,12 @@ export function CreateSecondHandPurchasePage() {
           <SearchSelect
             options={sellers.map((p) => ({ id: p.id, label: p.name, helper: p.mobile }))}
             value={sellerId}
-            onChange={(id) => {
-              setSellerId(id)
-              if (id) setQuickAddSeller(null)
-            }}
+            onChange={setSellerId}
             placeholder={t('pages.secondHandDevice.createPurchase.searchSellerByNameOrMobile')}
             open={sellerOpen}
             onOpenChange={setSellerOpen}
-            onCreateNew={(query) => setQuickAddSeller({ name: query, mobile: '' })}
+            onCreateNew={(query) => setAddingSeller(query)}
           />
-          {quickAddSeller && !sellerId && (
-            <div className="flex gap-2 rounded-md border border-dashed p-2">
-              <Input
-                value={quickAddSeller.name}
-                onChange={(e) => setQuickAddSeller({ ...quickAddSeller, name: e.target.value })}
-                placeholder={t('pages.secondHandDevice.createPurchase.sellerName')}
-                className="h-8 text-sm"
-              />
-              <Input
-                value={quickAddSeller.mobile}
-                onChange={(e) =>
-                  setQuickAddSeller({
-                    ...quickAddSeller,
-                    mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
-                  })
-                }
-                placeholder={t('common.tenDigitMobile')}
-                className="h-8 text-sm"
-              />
-            </div>
-          )}
         </div>
 
         <FormGrid>
@@ -822,6 +787,16 @@ export function CreateSecondHandPurchasePage() {
           </label>
         </div>
       </FormSection>
+
+      {addingSeller !== null && (
+        <PartyFormModal
+          editing="new"
+          defaultName={addingSeller}
+          defaultPartyTypes={['supplier']}
+          onClose={() => setAddingSeller(null)}
+          onSaved={(party) => setSellerId(party.id)}
+        />
+      )}
 
       <FormSection glyph="₹" title={t('pages.secondHandDevice.createPurchase.sections.purchase')}>
         <FormGrid>

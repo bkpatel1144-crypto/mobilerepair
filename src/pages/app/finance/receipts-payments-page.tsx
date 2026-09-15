@@ -11,6 +11,7 @@ import {
   IndianRupee,
 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
+import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { EmptyState } from '@/components/shared/empty-state'
@@ -48,7 +49,7 @@ import {
   useVoidReceipt,
   type ReceiptWithId,
 } from '@/hooks/use-receipts'
-import { useParties, useCreateParty } from '@/hooks/use-parties'
+import { useParties } from '@/hooks/use-parties'
 import { useJobCards } from '@/hooks/use-job-cards'
 import { usePermissions } from '@/hooks/use-permissions'
 import { formatTimestamp } from '@/lib/utils'
@@ -305,7 +306,6 @@ function NewEntryDialog({
   const { t } = useTranslation()
   const { data: parties = [] } = useParties()
   const { data: jobs = [] } = useJobCards()
-  const createParty = useCreateParty()
   const createEntry = useCreateReceiptOrPayment()
 
   const [direction, setDirection] = useState<'in' | 'out'>('in')
@@ -315,9 +315,8 @@ function NewEntryDialog({
   const [amount, setAmount] = useState(0)
   const [mode, setMode] = useState<'cash' | 'upi' | 'card'>('cash')
   const [notes, setNotes] = useState('')
-  const [quickAddCustomer, setQuickAddCustomer] = useState<{ name: string; mobile: string } | null>(
-    null
-  )
+  /** The name typed into the party picker before pressing Add. */
+  const [addingParty, setAddingParty] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   function reset() {
@@ -328,7 +327,7 @@ function NewEntryDialog({
     setAmount(0)
     setMode('cash')
     setNotes('')
-    setQuickAddCustomer(null)
+    setAddingParty(null)
     setError(null)
   }
 
@@ -406,43 +405,18 @@ function NewEntryDialog({
             onChange={(id) => {
               setPartyId(id)
               setJobCardId(null)
-              if (id) setQuickAddCustomer(null)
             }}
             placeholder={t('pages.finance.receiptsPayments.searchCustomer')}
-            onCreateNew={(query) => setQuickAddCustomer({ name: query, mobile: '' })}
+            onCreateNew={setAddingParty}
           />
-          {quickAddCustomer && !partyId && (
-            <div className="flex gap-2 rounded-md border border-dashed p-2">
-              <Input
-                value={quickAddCustomer.name}
-                onChange={(e) => setQuickAddCustomer({ ...quickAddCustomer, name: e.target.value })}
-                placeholder={t('shared.customerName')}
-                className="h-8 text-sm"
-              />
-              <Input
-                value={quickAddCustomer.mobile}
-                onChange={(e) =>
-                  setQuickAddCustomer({
-                    ...quickAddCustomer,
-                    mobile: e.target.value.replace(/\D/g, '').slice(0, 10),
-                  })
-                }
-                placeholder={t('common.tenDigitMobile')}
-                className="h-8 text-sm"
-              />
-              <Button
-                type="button"
-                size="sm"
-                onClick={() =>
-                  createParty.mutate(
-                    { name: quickAddCustomer.name, mobile: quickAddCustomer.mobile },
-                    { onSuccess: (p) => setPartyId(p.id) }
-                  )
-                }
-              >
-                Add
-              </Button>
-            </div>
+          {addingParty !== null && (
+            <PartyFormModal
+              editing="new"
+              defaultName={addingParty}
+              defaultPartyTypes={['customer']}
+              onClose={() => setAddingParty(null)}
+              onSaved={(party) => setPartyId(party.id)}
+            />
           )}
         </div>
 

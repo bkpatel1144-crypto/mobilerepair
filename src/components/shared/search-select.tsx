@@ -63,7 +63,6 @@ export function SearchSelect({
   const setOpen = onOpenChange ?? setUncontrolledOpen
 
   const [query, setQuery] = useState('')
-  const [newLabel, setNewLabel] = useState('')
   const [active, setActive] = useState(0)
   const selected = options.find((o) => o.id === value)
   const listId = useId()
@@ -109,10 +108,12 @@ export function SearchSelect({
     }
   }
 
+  /** Hands the typed search text to the caller, which opens the real create form. Empty is
+   *  allowed — "Add New" with nothing typed opens a blank form, which is a reasonable thing to
+   *  want. */
   function handleCreate() {
-    if (!onCreateNew || !newLabel.trim()) return
-    onCreateNew(newLabel.trim())
-    setNewLabel('')
+    if (!onCreateNew) return
+    onCreateNew(query.trim())
     setQuery('')
     setOpen(false)
   }
@@ -122,125 +123,133 @@ export function SearchSelect({
   return (
     <div className="relative w-full">
       <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        render={
-          <button
-            type="button"
-            disabled={disabled}
-            role="combobox"
-            aria-expanded={open}
-            aria-haspopup="listbox"
-            className={cn(
-              'flex h-8 w-full items-center gap-2 rounded-md border bg-background px-2.5 text-sm disabled:opacity-50',
-              selected && !disabled && 'pr-8',
-              !selected && 'text-muted-foreground'
-            )}
-          >
-            {selected?.avatarLabel ? (
-              <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[9px] font-semibold text-white">
-                {selected.avatarLabel}
-              </span>
-            ) : SelectedIcon ? (
-              <SelectedIcon className="size-4 shrink-0" />
-            ) : (
-              <Search className="size-4 shrink-0" />
-            )}
-            <span className="flex-1 truncate text-left">
-              {selected ? selected.label : placeholder}
-            </span>
-            <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
-          </button>
-        }
-      />
-      <PopoverContent className="w-(--anchor-width) min-w-72 p-1" align="start">
-        <Input
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value)
-            setActive(0)
-          }}
-          onKeyDown={handleSearchKeyDown}
-          placeholder={t('components.shared.searchSelect.typeToSearch')}
-          autoFocus
-          role="combobox"
-          aria-expanded
-          aria-controls={listId}
-          aria-activedescendant={activeIndex >= 0 ? `${listId}-${activeIndex}` : undefined}
-          className="mb-1 h-8 text-sm"
-        />
-        <div id={listId} role="listbox" className="max-h-56 overflow-y-auto">
-          {filtered.map((opt, i) => {
-            const isSelected = opt.id === value
-            const Icon = opt.icon ?? Package
-            return (
-              <button
-                key={opt.id}
-                id={`${listId}-${i}`}
-                type="button"
-                role="option"
-                aria-selected={isSelected}
-                onMouseEnter={() => setActive(i)}
-                onClick={() => select(opt.id)}
-                className={cn(
-                  'flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted',
-                  i === activeIndex && 'bg-muted'
-                )}
-              >
-                {opt.avatarLabel ? (
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[10px] font-semibold text-white">
-                    {opt.avatarLabel}
-                  </span>
-                ) : (
-                  <span
-                    className={cn(
-                      'flex size-6 shrink-0 items-center justify-center rounded-md border',
-                      isSelected
-                        ? 'border-teal-600 bg-teal-600 text-white'
-                        : 'border-input text-muted-foreground'
-                    )}
-                  >
-                    {isSelected ? <Check className="size-3.5" /> : <Icon className="size-3.5" />}
-                  </span>
-                )}
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate">{opt.label}</span>
-                  {opt.helper && (
-                    <span className="block truncate text-xs text-muted-foreground">
-                      {opt.helper}
-                    </span>
-                  )}
-                </span>
-                {opt.avatarLabel && isSelected && (
-                  <Check className="size-4 shrink-0 text-teal-600" />
-                )}
-              </button>
-            )
-          })}
-          {filtered.length === 0 && (
-            <p className="px-2 py-1.5 text-sm text-muted-foreground">
-              {t('components.shared.searchSelect.noMatches')}
-            </p>
-          )}
-        </div>
-        {onCreateNew && (
-          <div className="flex gap-1 border-t p-1.5">
-            <Input
-              value={newLabel}
-              onChange={(e) => setNewLabel(e.target.value)}
-              placeholder={t('shared.addNew')}
-              className="h-8 flex-1 text-sm"
-              onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-            />
+        <PopoverTrigger
+          render={
             <button
               type="button"
-              onClick={handleCreate}
-              className="flex size-8 shrink-0 items-center justify-center rounded-md border hover:bg-muted"
+              disabled={disabled}
+              role="combobox"
+              aria-expanded={open}
+              aria-haspopup="listbox"
+              className={cn(
+                'flex h-8 w-full items-center gap-2 rounded-md border bg-background px-2.5 text-sm disabled:opacity-50',
+                selected && !disabled && 'pr-8',
+                !selected && 'text-muted-foreground'
+              )}
             >
-              <Plus className="size-4" />
+              {selected?.avatarLabel ? (
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[9px] font-semibold text-white">
+                  {selected.avatarLabel}
+                </span>
+              ) : SelectedIcon ? (
+                <SelectedIcon className="size-4 shrink-0" />
+              ) : (
+                <Search className="size-4 shrink-0" />
+              )}
+              <span className="flex-1 truncate text-left">
+                {selected ? selected.label : placeholder}
+              </span>
+              <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
             </button>
+          }
+        />
+        <PopoverContent className="w-(--anchor-width) min-w-72 p-1" align="start">
+          <Input
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setActive(0)
+            }}
+            onKeyDown={handleSearchKeyDown}
+            placeholder={t('components.shared.searchSelect.typeToSearch')}
+            autoFocus
+            role="combobox"
+            aria-expanded
+            aria-controls={listId}
+            aria-activedescendant={activeIndex >= 0 ? `${listId}-${activeIndex}` : undefined}
+            className="mb-1 h-8 text-sm"
+          />
+          <div id={listId} role="listbox" className="max-h-56 overflow-y-auto">
+            {filtered.map((opt, i) => {
+              const isSelected = opt.id === value
+              const Icon = opt.icon ?? Package
+              return (
+                <button
+                  key={opt.id}
+                  id={`${listId}-${i}`}
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  onMouseEnter={() => setActive(i)}
+                  onClick={() => select(opt.id)}
+                  className={cn(
+                    'flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted',
+                    i === activeIndex && 'bg-muted'
+                  )}
+                >
+                  {opt.avatarLabel ? (
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-purple-600 text-[10px] font-semibold text-white">
+                      {opt.avatarLabel}
+                    </span>
+                  ) : (
+                    <span
+                      className={cn(
+                        'flex size-6 shrink-0 items-center justify-center rounded-md border',
+                        isSelected
+                          ? 'border-teal-600 bg-teal-600 text-white'
+                          : 'border-input text-muted-foreground'
+                      )}
+                    >
+                      {isSelected ? <Check className="size-3.5" /> : <Icon className="size-3.5" />}
+                    </span>
+                  )}
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate">{opt.label}</span>
+                    {opt.helper && (
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {opt.helper}
+                      </span>
+                    )}
+                  </span>
+                  {opt.avatarLabel && isSelected && (
+                    <Check className="size-4 shrink-0 text-teal-600" />
+                  )}
+                </button>
+              )
+            })}
+            {filtered.length === 0 && (
+              <p className="px-2 py-1.5 text-sm text-muted-foreground">
+                {t('components.shared.searchSelect.noMatches')}
+              </p>
+            )}
           </div>
-        )}
-      </PopoverContent>
+          {onCreateNew && (
+            <div className="border-t p-1.5">
+              {/* One button, not a second text box.
+               *
+               * The footer used to be its own input: you typed a name into the search box, found
+               * nothing, and then typed it again into "Add New". Worse, what it created was a
+               * record with only that name in it — a customer with no phone number, which is not
+               * a customer a repair shop can do anything with. The client's own words: opening
+               * this should open the real form.
+               *
+               * So this hands the search text to the caller and gets out of the way. Every caller
+               * opens that entity's actual create form with the name already filled in. */}
+              <button
+                type="button"
+                onClick={handleCreate}
+                className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm font-medium text-teal-700 hover:bg-muted dark:text-teal-400"
+              >
+                <Plus className="size-4 shrink-0" />
+                <span className="min-w-0 truncate">
+                  {query.trim()
+                    ? t('components.shared.searchSelect.addNamed', { name: query.trim() })
+                    : t('shared.addNew')}
+                </span>
+              </button>
+            </div>
+          )}
+        </PopoverContent>
       </Popover>
       {/* A sibling of the trigger, not a child of it: a `button` inside a `button` is invalid
        * markup, and the `span role="button" tabIndex={0}` this replaces could be tabbed to but
