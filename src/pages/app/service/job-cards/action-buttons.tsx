@@ -143,8 +143,10 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       if (amountInput <= 0) return
       await recordPayment.mutateAsync({ amount: amountInput, mode: modeInput, purpose: 'final' })
     } else if (dialog === 'handover') {
-      const toUser = users.find((u) => u.id === handoverToId)
-      if (!toUser) return
+      const toUser = handoverCandidates.find((u) => u.id === handoverToId)
+      // Guarded here as well as in the list: a stale `handoverToId` left over from a previous
+      // job is otherwise still submittable.
+      if (!toUser || toUser.id === job.assignedToId) return
       await applyAction.mutateAsync({
         action: 'handover',
         toUserId: toUser.id,
@@ -159,6 +161,10 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
     }
     closeDialog()
   }
+
+  // Everyone except whoever already has it — handing a job to its current holder is not a
+  // hand-over, and offering it as one is how the timeline filled with rows that changed nothing.
+  const handoverCandidates = users.filter((u) => u.id !== job.assignedToId)
 
   const collectPaymentDefault = workflowConfig?.behavior.collectPaymentWithGenerateBill === true
   const isTerminal = ['closed', 'cancelled', 'pendingReturn'].includes(job.status)
@@ -582,18 +588,33 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
       >
         <div className="space-y-1.5">
           <Label>{t('pages.service.actionButtons.handoverTo')}</Label>
-          <Select value={handoverToId} onValueChange={(v) => v && setHandoverToId(v)}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder={t('pages.service.actionButtons.selectUser')} />
-            </SelectTrigger>
-            <SelectContent>
-              {users.map((u) => (
-                <SelectItem key={u.id} value={u.id}>
-                  {u.fullName}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {handoverCandidates.length === 0 ? (
+            // A one-technician shop's Hand Over list contained exactly one name — the person the
+            // job was already with — so the only thing the button could do was write a timeline
+            // row saying the job had been handed to whoever already had it. Five of those in a
+            // row is what "nothing works" looked like from the counter.
+            <p className="text-sm text-muted-foreground">
+              {t('pages.service.actionButtons.noOneElseToHandTo')}
+            </p>
+          ) : (
+            <Select value={handoverToId} onValueChange={(v) => v && setHandoverToId(v)}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t('pages.service.actionButtons.selectUser')} />
+              </SelectTrigger>
+              <SelectContent>
+                {handoverCandidates.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.fullName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+          {job.assignedToName && (
+            <p className="text-xs text-muted-foreground">
+              {t('pages.service.actionButtons.alreadyAssignedTo', { name: job.assignedToName })}
+            </p>
+          )}
         </div>
       </FormModal>
 

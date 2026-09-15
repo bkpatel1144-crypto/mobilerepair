@@ -1128,7 +1128,9 @@
         "whatsapp": "WhatsApp",
         "takeJob": "Take Job",
         "resume": "Resume",
-        "timeSpentMinutes": "Time Spent (minutes)"
+        "timeSpentMinutes": "Time Spent (minutes)",
+        "alreadyAssignedTo": "Already with {{name}}",
+        "noOneElseToHandTo": "There is no one else to hand this job to. Add another user in Administration › User Management first."
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "Couldn't load the Create Job Card form",
@@ -1189,7 +1191,10 @@
         "offlineAdvanceNotPossible": "You're offline, so an advance cannot be taken — a receipt needs a connection. Create the job card without one and record the advance when you reconnect.",
         "offlineNumbersLeft": "Offline — this device can still create {{count}} job cards. Billing and receipts need a connection.",
         "offlineNoNumbersLeft": "You're offline and this device has no job card numbers left in reserve. Reconnect to create one.",
-        "pinPlaceholder": "e.g. 1234 or tap Draw"
+        "pinPlaceholder": "e.g. 1234 or tap Draw",
+        "noProblemsYet": "No problems set up yet — this field is required.",
+        "loadStandardProblems": "Load the standard list",
+        "loadedNProblems": "Loaded {{count}} problems. Pick the ones that apply."
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "Items at Intake",

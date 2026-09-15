@@ -12,6 +12,8 @@ import { db } from '@/lib/firebase'
 import { serviceOptionsCollection } from '@/lib/firestore-paths'
 import { useAuth } from '@/hooks/use-auth'
 import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
+import { addMissingFlatServiceOptionsToBatch } from '@/lib/service-options-seed'
+import { commitBatch } from '@/lib/offline-commit'
 import type { ServiceOptionType } from '@/config/service-options'
 import type { ServiceOptionDoc } from '@/types/firestore'
 
@@ -261,5 +263,50 @@ export function useSplitSharedBrands() {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, 'brands') }),
+  })
+}
+
+/**
+ * Fills in the default options for flat groups a company has none of.
+ *
+ * The signup seed runs once and never again, so a shop created before a group had defaults keeps
+ * the empty group. For Problems that is not cosmetic: it is the only mandatory field on Create
+ * Job Card, so such a shop is stopped at "Select at least one problem" with nothing to select —
+ * the first job card they ever try to write.
+ *
+ * Only empty groups are filled. A shop that wrote its own list keeps it untouched.
+ */
+export function useSeedMissingServiceOptions() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    networkMode: 'always',
+    mutationFn: async (emptyTypes: ServiceOptionType[]) => {
+      if (emptyTypes.length === 0) return 0
+      const batch = writeBatch(db)
+      const added = addMissingFlatServiceOptionsToBatch(
+        batch,
+        companyId,
+        serverTimestamp(),
+        emptyTypes
+      )
+      if (added === 0) return 0
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: 'Create',
+        module: 'service',
+        entityType: 'Service Option',
+        entityId: companyId,
+        entityLabel: `Loaded ${added} default options (${emptyTypes.join(', ')})`,
+      })
+      await commitBatch(batch)
+      return added
+    },
+    onSuccess: (_added, emptyTypes) => {
+      for (const type of emptyTypes) {
+        void queryClient.invalidateQueries({ queryKey: serviceOptionsQueryKey(companyId, type) })
+      }
+    },
   })
 }

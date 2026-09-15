@@ -37,6 +37,15 @@ const RAW_GROUP_TO_TYPE: Record<string, ServiceOptionType> = {
   problems: 'problems',
 }
 
+/** The groups whose options are just a label — no device type, no brand to resolve. */
+const FLAT_GROUPS: RawGroup['group'][] = [
+  'cancel_reason',
+  'customer_item',
+  'hold_reason',
+  'outstanding_reason',
+  'problems',
+]
+
 function optionsFor(rawGroup: string): RawOption[] {
   return GROUPS.find((g) => g.group === rawGroup)?.options ?? []
 }
@@ -99,14 +108,7 @@ export function addDefaultServiceOptionsToBatch(
     batch.set(ref, data)
   }
 
-  const flatGroups: RawGroup['group'][] = [
-    'cancel_reason',
-    'customer_item',
-    'hold_reason',
-    'outstanding_reason',
-    'problems',
-  ]
-  for (const rawGroup of flatGroups) {
+  for (const rawGroup of FLAT_GROUPS) {
     const type = RAW_GROUP_TO_TYPE[rawGroup]
     for (const opt of optionsFor(rawGroup)) {
       const ref = doc(collection(db, serviceOptionsCollection(companyId, type)))
@@ -120,4 +122,44 @@ export function addDefaultServiceOptionsToBatch(
       batch.set(ref, data)
     }
   }
+}
+
+/**
+ * The same flat defaults, for a company that already exists and has none of them.
+ *
+ * The signup seed runs exactly once. Any shop created before a group had defaults keeps the
+ * empty group forever — and one of those groups, Problems, is the only *mandatory* field on
+ * Create Job Card. A shop in that state could pick a customer, a device, a brand and a model and
+ * still be told "Select at least one problem" with an empty list in front of them. Fixing the
+ * seed did nothing for any company already signed up, which at the time was all of them.
+ *
+ * Only groups that are currently empty are touched. A shop that has written its own problem list
+ * is never given a second, longer one on top of it, and nothing existing is edited or removed.
+ * Returns how many documents were added so the caller can say so rather than guess.
+ */
+export function addMissingFlatServiceOptionsToBatch(
+  batch: WriteBatch,
+  companyId: string,
+  now: unknown,
+  /** Types that currently hold no options — the caller reads the live counts. */
+  emptyTypes: ServiceOptionType[]
+): number {
+  let added = 0
+  for (const [rawGroup, type] of Object.entries(RAW_GROUP_TO_TYPE)) {
+    if (!FLAT_GROUPS.includes(rawGroup)) continue
+    if (!emptyTypes.includes(type)) continue
+    for (const opt of optionsFor(rawGroup)) {
+      const ref = doc(collection(db, serviceOptionsCollection(companyId, type)))
+      const data: ServiceOptionDoc = {
+        label: opt.label,
+        order: opt.order - 1,
+        status: 'active',
+        createdAt: now as never,
+        updatedAt: now as never,
+      }
+      batch.set(ref, data)
+      added += 1
+    }
+  }
+  return added
 }

@@ -1128,7 +1128,9 @@
         "whatsapp": "व्हाट्सएप",
         "takeJob": "जॉब लें",
         "resume": "फिर शुरू करें",
-        "timeSpentMinutes": "लगा समय (मिनट)"
+        "timeSpentMinutes": "लगा समय (मिनट)",
+        "alreadyAssignedTo": "पहले से {{name}} के पास",
+        "noOneElseToHandTo": "इस जॉब को सौंपने के लिए कोई और नहीं है। पहले Administration › User Management में दूसरा उपयोगकर्ता जोड़ें।"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "जॉब कार्ड बनाने का फ़ॉर्म लोड नहीं हो सका",
@@ -1189,7 +1191,10 @@
         "offlineAdvanceNotPossible": "आप ऑफ़लाइन हैं, इसलिए अग्रिम राशि नहीं ली जा सकती — रसीद के लिए कनेक्शन चाहिए। बिना अग्रिम के जॉब कार्ड बनाएं और जुड़ने पर अग्रिम दर्ज करें।",
         "offlineNumbersLeft": "ऑफ़लाइन — यह डिवाइस अभी {{count}} जॉब कार्ड बना सकता है। बिलिंग और रसीदों के लिए कनेक्शन चाहिए।",
         "offlineNoNumbersLeft": "आप ऑफ़लाइन हैं और इस डिवाइस के पास कोई आरक्षित जॉब कार्ड नंबर नहीं बचा है। बनाने के लिए दोबारा जुड़ें।",
-        "pinPlaceholder": "जैसे 1234 या Draw दबाएँ"
+        "pinPlaceholder": "जैसे 1234 या Draw दबाएँ",
+        "noProblemsYet": "अभी तक कोई समस्या सेट नहीं है — यह फ़ील्ड आवश्यक है।",
+        "loadStandardProblems": "मानक सूची लोड करें",
+        "loadedNProblems": "{{count}} समस्याएँ लोड हुईं। लागू होने वाली चुनें।"
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "लेते समय की चीज़ें",

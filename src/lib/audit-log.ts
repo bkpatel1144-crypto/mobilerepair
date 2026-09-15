@@ -33,12 +33,27 @@ import type { AuditLogDoc, AuditResult, BranchDoc, UserDoc } from '@/types/fires
 // nothing server-side can make this authoritative in a project with no server component). Cached
 // module-level so every audit-log write in one page session doesn't re-fetch it. ----
 let ipCache: Promise<string | null> | null = null
+
+/** How long a *save* may wait on an advisory field before giving up on it. Both the IP and the
+ *  branch name are labels on an audit row; neither is worth a spinner. */
+const IP_DEADLINE_MS = 1200
+
 export function getClientIp(): Promise<string | null> {
   // Offline this is a guaranteed failure, and it is only ever advisory. Skipping it keeps an
   // audit-log write from waiting on a request that cannot succeed.
   if (isOffline()) return Promise.resolve(null)
   if (!ipCache) {
-    ipCache = fetch('https://api.ipify.org?format=json')
+    // `AbortSignal.timeout` on the request, and a deadline on the wait.
+    //
+    // Both are needed and they do different jobs. A bare `fetch()` has no timeout at all, so a
+    // host that accepts the connection and then never answers — a captive portal, a firewall
+    // that blackholes the request, a shop's phone tethering through bad signal — leaves the
+    // promise pending for as long as the browser allows, which can be minutes. Every write in
+    // this app awaits this before it even builds its batch, so that is not a slow audit field:
+    // it is Save appearing to hang, with `navigator.onLine` still cheerfully reporting online.
+    ipCache = fetch('https://api.ipify.org?format=json', {
+      signal: AbortSignal.timeout(8000),
+    })
       .then((r) => r.json())
       .then((d: { ip?: string }) => d.ip ?? null)
       .catch(() => null)
@@ -52,6 +67,15 @@ export function getClientIp(): Promise<string | null> {
       })
   }
   return ipCache
+}
+
+/** Resolves to `null` if `promise` has not settled within `ms`. The promise itself is left to
+ *  finish on its own — this bounds the *wait*, not the work. */
+function withDeadline<T>(promise: Promise<T>, ms: number): Promise<T | null> {
+  return Promise.race([
+    promise,
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), ms)),
+  ])
 }
 
 // ---- Branch name (every company has exactly one branch, "Main Branch," until Phase 10 builds
@@ -124,8 +148,17 @@ export async function addAuditLogToBatch(
   input: AuditInput
 ): Promise<void> {
   const [ip, branchName] = await Promise.all([
-    getClientIp(),
-    getBranchName(ctx.companyId, ctx.branchId),
+    // The deadline, not the request: each lookup carries on in the background and the *next*
+    // write finds it cached. What must not happen is a shopkeeper watching "Saving…" because an
+    // advisory IP address or a branch label is slow to arrive.
+    //
+    // `isOffline()` already covers a device that knows it has no connection. It does not cover
+    // the worse case — online by every flag the browser has, but the server unreachable — which
+    // is a shop on bad mobile signal, and the case where hanging is least forgivable.
+    withDeadline(getClientIp(), IP_DEADLINE_MS),
+    withDeadline(getBranchName(ctx.companyId, ctx.branchId), IP_DEADLINE_MS).then(
+      (name) => name ?? 'Main Branch'
+    ),
   ])
   const ref = doc(collection(db, auditLogCollection(ctx.companyId)))
   const data: AuditLogDoc = {

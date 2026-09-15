@@ -32,7 +32,12 @@
             "label": "Xiaomi",
             "slug": "xiaomi",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Smart Watch", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
             },
             "order": 2,
             "isActive": true,
@@ -47,7 +52,12 @@
             "label": "Redmi",
             "slug": "redmi",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Smart Watch", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
             },
             "order": 3,
             "isActive": true,
@@ -62,7 +72,12 @@
             "label": "Realme",
             "slug": "realme",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Smart Watch", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
             },
             "order": 4,
             "isActive": true,
@@ -77,7 +92,11 @@
             "label": "Vivo",
             "slug": "vivo",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Earbuds / TWS"
+              ]
             },
             "order": 5,
             "isActive": true,
@@ -92,7 +111,11 @@
             "label": "Oppo",
             "slug": "oppo",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Earbuds / TWS"
+              ]
             },
             "order": 6,
             "isActive": true,
@@ -107,7 +130,12 @@
             "label": "OnePlus",
             "slug": "oneplus",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Smart Watch", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS"
+              ]
             },
             "order": 7,
             "isActive": true,
@@ -122,7 +150,13 @@
             "label": "Apple",
             "slug": "apple",
             "meta": {
-              "deviceType": ["Mobile", "Tablet", "Smart Watch", "Earbuds / TWS", "Laptop"]
+              "deviceType": [
+                "Mobile",
+                "Tablet",
+                "Smart Watch",
+                "Earbuds / TWS",
+                "Laptop"
+              ]
             },
             "order": 8,
             "isActive": true,
@@ -137,7 +171,10 @@
             "label": "Poco",
             "slug": "poco",
             "meta": {
-              "deviceType": ["Mobile", "Tablet"]
+              "deviceType": [
+                "Mobile",
+                "Tablet"
+              ]
             },
             "order": 9,
             "isActive": true,
@@ -152,7 +189,9 @@
             "label": "iQOO",
             "slug": "iqoo",
             "meta": {
-              "deviceType": ["Mobile"]
+              "deviceType": [
+                "Mobile"
+              ]
             },
             "order": 10,
             "isActive": true,
@@ -167,7 +206,11 @@
             "label": "Motorola",
             "slug": "motorola",
             "meta": {
-              "deviceType": ["Mobile", "Keypad Phone", "Tablet"]
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone",
+                "Tablet"
+              ]
             },
             "order": 11,
             "isActive": true,
@@ -182,7 +225,11 @@
             "label": "Nokia",
             "slug": "nokia",
             "meta": {
-              "deviceType": ["Mobile", "Keypad Phone", "Tablet"]
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone",
+                "Tablet"
+              ]
             },
             "order": 12,
             "isActive": true,
@@ -197,7 +244,10 @@
             "label": "Infinix",
             "slug": "infinix",
             "meta": {
-              "deviceType": ["Mobile", "Tablet"]
+              "deviceType": [
+                "Mobile",
+                "Tablet"
+              ]
             },
             "order": 13,
             "isActive": true,
@@ -212,7 +262,9 @@
             "label": "Tecno",
             "slug": "tecno",
             "meta": {
-              "deviceType": ["Mobile"]
+              "deviceType": [
+                "Mobile"
+              ]
             },
             "order": 14,
             "isActive": true,
@@ -227,7 +279,10 @@
             "label": "Google",
             "slug": "google",
             "meta": {
-              "deviceType": ["Mobile", "Earbuds / TWS"]
+              "deviceType": [
+                "Mobile",
+                "Earbuds / TWS"
+              ]
             },
             "order": 15,
             "isActive": true,
@@ -242,7 +297,10 @@
             "label": "Honor",
             "slug": "honor",
             "meta": {
-              "deviceType": ["Mobile", "Tablet"]
+              "deviceType": [
+                "Mobile",
+                "Tablet"
+              ]
             },
             "order": 16,
             "isActive": true,
@@ -257,7 +315,10 @@
             "label": "Lava",
             "slug": "lava",
             "meta": {
-              "deviceType": ["Mobile", "Keypad Phone"]
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone"
+              ]
             },
             "order": 17,
             "isActive": true,
@@ -272,7 +333,10 @@
             "label": "itel",
             "slug": "itel",
             "meta": {
-              "deviceType": ["Mobile", "Keypad Phone"]
+              "deviceType": [
+                "Mobile",
+                "Keypad Phone"
+              ]
             },
             "order": 18,
             "isActive": true,
@@ -287,7 +351,9 @@
             "label": "Jio",
             "slug": "jio",
             "meta": {
-              "deviceType": ["Keypad Phone"]
+              "deviceType": [
+                "Keypad Phone"
+              ]
             },
             "order": 19,
             "isActive": true,
@@ -2145,7 +2211,307 @@
       },
       {
         "group": "problems",
-        "options": []
+        "options": [
+          {
+            "_id": "6a9651d4d02bdfe457b3e001",
+            "group": "problems",
+            "slug": "screen_broken_cracked",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Screen Broken / Cracked",
+            "meta": {},
+            "order": 1,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e002",
+            "group": "problems",
+            "slug": "display_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Display Not Working",
+            "meta": {},
+            "order": 2,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e003",
+            "group": "problems",
+            "slug": "touch_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Touch Not Working",
+            "meta": {},
+            "order": 3,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e004",
+            "group": "problems",
+            "slug": "battery_draining_fast",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Battery Draining Fast",
+            "meta": {},
+            "order": 4,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e005",
+            "group": "problems",
+            "slug": "not_charging",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Not Charging",
+            "meta": {},
+            "order": 5,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e006",
+            "group": "problems",
+            "slug": "charging_port_damaged",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Charging Port Damaged",
+            "meta": {},
+            "order": 6,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e007",
+            "group": "problems",
+            "slug": "dead_not_switching_on",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Dead / Not Switching On",
+            "meta": {},
+            "order": 7,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e008",
+            "group": "problems",
+            "slug": "water_damaged",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Water Damaged",
+            "meta": {},
+            "order": 8,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e009",
+            "group": "problems",
+            "slug": "speaker_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Speaker Not Working",
+            "meta": {},
+            "order": 9,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e00a",
+            "group": "problems",
+            "slug": "mic_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Mic Not Working",
+            "meta": {},
+            "order": 10,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e00b",
+            "group": "problems",
+            "slug": "earpiece_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Earpiece Not Working",
+            "meta": {},
+            "order": 11,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e00c",
+            "group": "problems",
+            "slug": "camera_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Camera Not Working",
+            "meta": {},
+            "order": 12,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e00d",
+            "group": "problems",
+            "slug": "network_signal_issue",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Network / Signal Issue",
+            "meta": {},
+            "order": 13,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e00e",
+            "group": "problems",
+            "slug": "wi_fi_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Wi-Fi Not Working",
+            "meta": {},
+            "order": 14,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e00f",
+            "group": "problems",
+            "slug": "bluetooth_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Bluetooth Not Working",
+            "meta": {},
+            "order": 15,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e010",
+            "group": "problems",
+            "slug": "hanging_slow_performance",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Hanging / Slow Performance",
+            "meta": {},
+            "order": 16,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e011",
+            "group": "problems",
+            "slug": "software_os_issue",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Software / OS Issue",
+            "meta": {},
+            "order": 17,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e012",
+            "group": "problems",
+            "slug": "pattern_password_lock",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Pattern / Password Lock",
+            "meta": {},
+            "order": 18,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e013",
+            "group": "problems",
+            "slug": "button_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Button Not Working",
+            "meta": {},
+            "order": 19,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e014",
+            "group": "problems",
+            "slug": "heating_issue",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Heating Issue",
+            "meta": {},
+            "order": 20,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e015",
+            "group": "problems",
+            "slug": "fingerprint_not_working",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Fingerprint Not Working",
+            "meta": {},
+            "order": 21,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e016",
+            "group": "problems",
+            "slug": "back_panel_damaged",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Back Panel Damaged",
+            "meta": {},
+            "order": 22,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          },
+          {
+            "_id": "6a9651d4d02bdfe457b3e017",
+            "group": "problems",
+            "slug": "other",
+            "__v": 0,
+            "createdAt": "2026-09-15T00:00:00.000Z",
+            "deletedAt": null,
+            "isActive": true,
+            "label": "Other",
+            "meta": {},
+            "order": 23,
+            "updatedAt": "2026-09-15T00:00:00.000Z"
+          }
+        ]
       }
     ]
   }

@@ -1128,7 +1128,9 @@
         "whatsapp": "વોટ્સએપ",
         "takeJob": "જોબ લો",
         "resume": "ફરી શરૂ કરો",
-        "timeSpentMinutes": "લાગેલો સમય (મિનિટ)"
+        "timeSpentMinutes": "લાગેલો સમય (મિનિટ)",
+        "alreadyAssignedTo": "પહેલેથી {{name}} પાસે",
+        "noOneElseToHandTo": "આ જોબ સોંપવા માટે બીજું કોઈ નથી. પહેલા Administration › User Management માં બીજો વપરાશકર્તા ઉમેરો."
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "જોબ કાર્ડ બનાવવાનું ફોર્મ લોડ થઈ શક્યું નથી",
@@ -1189,7 +1191,10 @@
         "offlineAdvanceNotPossible": "તમે ઑફલાઇન છો, તેથી એડવાન્સ લઈ શકાતું નથી — રસીદ માટે કનેક્શન જરૂરી છે. એડવાન્સ વગર જોબ કાર્ડ બનાવો અને જોડાયા પછી એડવાન્સ નોંધો.",
         "offlineNumbersLeft": "ઑફલાઇન — આ ડિવાઇસ હજી {{count}} જોબ કાર્ડ બનાવી શકે છે. બિલિંગ અને રસીદ માટે કનેક્શન જરૂરી છે.",
         "offlineNoNumbersLeft": "તમે ઑફલાઇન છો અને આ ડિવાઇસ પાસે કોઈ અનામત જોબ કાર્ડ નંબર બાકી નથી. બનાવવા માટે ફરી જોડાઓ.",
-        "pinPlaceholder": "દા.ત. 1234 અથવા Draw દબાવો"
+        "pinPlaceholder": "દા.ત. 1234 અથવા Draw દબાવો",
+        "noProblemsYet": "હજુ સુધી કોઈ સમસ્યા સેટ કરી નથી — આ ફીલ્ડ જરૂરી છે.",
+        "loadStandardProblems": "પ્રમાણભૂત યાદી લોડ કરો",
+        "loadedNProblems": "{{count}} સમસ્યાઓ લોડ થઈ. લાગુ પડતી પસંદ કરો."
       },
       "jobCardDetailContent": {
         "itemsAtIntake": "લેતી વખતની વસ્તુઓ",

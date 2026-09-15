@@ -45,7 +45,11 @@ import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
 import { useParties } from '@/hooks/use-parties'
 import { useItems } from '@/hooks/use-items'
-import { useAllServiceOptions, useCreateServiceOption } from '@/hooks/use-service-options'
+import {
+  useAllServiceOptions,
+  useCreateServiceOption,
+  useSeedMissingServiceOptions,
+} from '@/hooks/use-service-options'
 import { useUsers } from '@/hooks/use-users'
 import { useCreateJobCard } from '@/hooks/use-job-cards'
 import { useFormSchema, blankFormSchema } from '@/hooks/use-form-schema'
@@ -140,6 +144,7 @@ export function CreateJobCardPage() {
   } = useAllServiceOptions()
   const { data: users = [] } = useUsers()
   const createServiceOption = useCreateServiceOption('problems')
+  const seedProblems = useSeedMissingServiceOptions()
   const createCustomerItem = useCreateServiceOption('customerItems')
   const createBrand = useCreateServiceOption('brands')
   const createModel = useCreateServiceOption('models')
@@ -828,6 +833,26 @@ export function CreateJobCardPage() {
                   <Plus className="size-4" />
                 </Button>
               </div>
+              {/* Problems is the only mandatory field on this form, and it is the one group the
+               * signup seed shipped empty — so a shop's very first job card was refused with
+               * "Select at least one problem" and an empty list to select from. New shops get the
+               * standard list seeded now; this is the way out for every shop created before that,
+               * offered at the exact point they are stopped rather than three menus away. */}
+              {options.problems.length === 0 && (
+                <div className="flex flex-wrap items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-2.5 py-2 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
+                  <span className="min-w-0">{t('pages.service.createJobCard.noProblemsYet')}</span>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="ms-auto border-amber-400"
+                    disabled={seedProblems.isPending}
+                    onClick={() => seedProblems.mutate(['problems'])}
+                  >
+                    {t('pages.service.createJobCard.loadStandardProblems')}
+                  </Button>
+                </div>
+              )}
             </div>
 
             {isVisible('serviceItems') && (
