@@ -47,18 +47,23 @@ export function MultiSelectPopover({
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = onOpenChange ?? setUncontrolledOpen
-  const [newLabel, setNewLabel] = useState('')
+  /** Matches `SearchSelect`: one box that both filters and feeds the Add button. The footer used
+   *  to be its own separate input, so a list with no search had you typing a name you could not
+   *  search for. */
+  const [query, setQuery] = useState('')
   const selected = options.filter((o) => selectedIds.includes(o.id))
+  const filtered = query.trim()
+    ? options.filter((o) => o.label.toLowerCase().includes(query.trim().toLowerCase()))
+    : options
 
   function toggle(id: string) {
     onChange(selectedIds.includes(id) ? selectedIds.filter((x) => x !== id) : [...selectedIds, id])
   }
 
   function handleCreate() {
-    const trimmed = newLabel.trim()
-    if (!trimmed || !onCreateNew) return
-    onCreateNew(trimmed)
-    setNewLabel('')
+    if (!onCreateNew) return
+    onCreateNew(query.trim())
+    setQuery('')
   }
 
   return (
@@ -77,13 +82,20 @@ export function MultiSelectPopover({
           }
         />
         <PopoverContent className="w-(--anchor-width) min-w-72 p-1" align="start">
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t('components.shared.searchSelect.typeToSearch')}
+            className="mb-1 h-8 text-sm"
+            autoFocus
+          />
           <div className="max-h-56 overflow-y-auto">
-            {options.length === 0 && (
+            {filtered.length === 0 && (
               <p className="px-2 py-1.5 text-sm text-muted-foreground">
                 {t('components.shared.multiSelectPopover.nothingHereYet')}
               </p>
             )}
-            {options.map((opt) => {
+            {filtered.map((opt) => {
               const isSelected = selectedIds.includes(opt.id)
               const Icon = opt.icon ?? Package
               return (
@@ -109,22 +121,18 @@ export function MultiSelectPopover({
           </div>
           <div className="flex items-center gap-1 border-t p-1.5">
             {onCreateNew && (
-              <>
-                <Input
-                  value={newLabel}
-                  onChange={(e) => setNewLabel(e.target.value)}
-                  placeholder={t('shared.addNew')}
-                  className="h-8 flex-1 text-sm"
-                  onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-                />
-                <button
-                  type="button"
-                  onClick={handleCreate}
-                  className="flex size-8 shrink-0 items-center justify-center rounded-md border hover:bg-muted"
-                >
-                  <Plus className="size-4" />
-                </button>
-              </>
+              <button
+                type="button"
+                onClick={handleCreate}
+                className="flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-2 text-left text-sm font-medium text-teal-700 hover:bg-muted dark:text-teal-400"
+              >
+                <Plus className="size-4 shrink-0" />
+                <span className="min-w-0 truncate">
+                  {query.trim()
+                    ? t('components.shared.searchSelect.addNamed', { name: query.trim() })
+                    : t('shared.addNew')}
+                </span>
+              </button>
             )}
             <button
               type="button"
