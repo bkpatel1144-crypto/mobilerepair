@@ -381,7 +381,7 @@ export function CreateItemPage({
     setDraft((prev) => ({ ...prev, gstRates: { ...prev.gstRates, [key]: numOr0(value) } }))
 
   const body = (
-    <div className={asModal ? 'space-y-4' : 'mx-auto max-w-3xl space-y-4 p-4 pb-24 sm:p-6'}>
+    <div className={asModal ? 'space-y-4' : 'space-y-4 p-4 pb-24 sm:p-6'}>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <h1 className="text-lg font-bold">
@@ -435,7 +435,7 @@ export function CreateItemPage({
         <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2 [&>*]:min-w-0">
           <div className="space-y-6">
             <FormSection flat icon={Package} title={t('pages.masters.createItem.sections.basic')}>
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 <div className="space-y-1.5">
                   <Label>
                     {t('pages.masters.itemMaster.itemName')} <span className="text-red-600">*</span>
@@ -508,7 +508,7 @@ export function CreateItemPage({
                     {t('pages.masters.createItem.followsTheTypeAbove')}
                   </p>
                 </div>
-                <div>
+                <div className="[grid-column:1/-1]">
                   <div className="space-y-1.5">
                     <Label>{t('common.description')}</Label>
                     <Textarea
@@ -526,7 +526,7 @@ export function CreateItemPage({
               icon={FolderTree}
               title={t('pages.masters.createItem.sections.classification')}
             >
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 <div className="space-y-1.5">
                   <Label>{t('common.category')}</Label>
                   <Select
@@ -579,7 +579,7 @@ export function CreateItemPage({
               </div>
             </FormSection>
             <FormSection flat icon={Ruler} title={t('pages.masters.createItem.sections.units')}>
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 {(
                   [
                     ['primaryUomId', t('pages.masters.itemMaster.primaryUom')],
@@ -615,8 +615,8 @@ export function CreateItemPage({
               icon={Shuffle}
               title={t('pages.masters.createItem.sections.variants')}
             >
-              <div className="space-y-4">
-                <label className="flex items-center gap-2 text-sm">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.hasVariants}
                     onCheckedChange={(v) => set('hasVariants', v === true)}
@@ -647,13 +647,18 @@ export function CreateItemPage({
             </FormSection>
           </div>
 
-          <div className="space-y-6">
+          {/* RIGHT COLUMN. The vertical rule is a plain `border-left` on this column rather
+            * than `divide-x` on the parent: `divide-x` applies its border with a negative-margin
+            * trick meant for gap-less layouts, which inside a grid that already has `gap-x-8`
+            * pulls this column left into the gap and over the other column's inputs. A grid's
+            * gap is real empty space, so a plain border sits cleanly in the middle of it. */}
+          <div className="space-y-6 lg:border-l lg:border-border lg:pl-8">
             <FormSection
               flat
               icon={IndianRupee}
               title={t('pages.masters.createItem.sections.pricing')}
             >
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 <div className="space-y-1.5">
                   <Label>{t('pages.masters.createItem.taxCategory')}</Label>
                   <Select
@@ -730,8 +735,11 @@ export function CreateItemPage({
               </div>
             </FormSection>
             <FormSection flat icon={Boxes} title={t('pages.masters.createItem.sections.inventory')}>
-              <div className="space-y-4">
-                <label className="flex items-center gap-2 text-sm">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
+                {/* Both span the row: the tick is a question about the whole section, and the
+                  * fields under it need the full width to pair up two-across rather than queue
+                  * in one half while the other half sits empty. */}
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.stockTracked}
                     onCheckedChange={(v) => set('stockTracked', v === true)}
@@ -742,7 +750,7 @@ export function CreateItemPage({
                 {/* The rest of this section is meaningless for something not held in stock, and a
                  * reorder level on a service is a number nobody can act on. */}
                 {draft.stockTracked && (
-                  <div className="space-y-4">
+                  <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0 [grid-column:1/-1]">
                     <div className="space-y-1.5">
                       <Label>{t('pages.masters.createItem.trackingType')}</Label>
                       <Select
@@ -814,8 +822,8 @@ export function CreateItemPage({
               </FormSection>
             )}
             <FormSection flat icon={Puzzle} title={t('pages.masters.createItem.sections.lob')}>
-              <div className="space-y-4">
-                <label className="flex items-center gap-2 text-sm">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.lob.sales.isActive}
                     onCheckedChange={(v) => setLob('sales', { isActive: v === true })}
@@ -823,7 +831,7 @@ export function CreateItemPage({
                   {t('pages.masters.itemMaster.sales')}
                 </label>
                 {draft.lob.sales.isActive && (
-                  <div className="space-y-4 pl-6">
+                  <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0 pl-6 [grid-column:1/-1]">
                     <label className="flex items-center gap-2 self-end pb-2 text-sm">
                       <Checkbox
                         checked={draft.lob.sales.allowDiscount}
@@ -846,7 +854,7 @@ export function CreateItemPage({
                   </div>
                 )}
 
-                <label className="flex items-center gap-2 text-sm">
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.lob.purchase.isActive}
                     onCheckedChange={(v) => setLob('purchase', { isActive: v === true })}
@@ -854,7 +862,7 @@ export function CreateItemPage({
                   {t('pages.masters.itemMaster.purchase')}
                 </label>
                 {draft.lob.purchase.isActive && (
-                  <div className="space-y-4 pl-6">
+                  <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0 pl-6 [grid-column:1/-1]">
                     <div className="space-y-1.5">
                       <Label>{t('pages.masters.createItem.leadTimeDays')}</Label>
                       <Input
@@ -869,7 +877,7 @@ export function CreateItemPage({
                   </div>
                 )}
 
-                <label className="flex items-center gap-2 text-sm">
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.lob.production.isActive}
                     onCheckedChange={(v) => setLob('production', { isActive: v === true })}
@@ -886,14 +894,14 @@ export function CreateItemPage({
                   </label>
                 )}
 
-                <label className="flex items-center gap-2 text-sm">
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.lob.servicePos.isActive}
                     onCheckedChange={(v) => setLob('servicePos', { isActive: v === true })}
                   />
                   {t('pages.masters.itemMaster.servicePos')}
                 </label>
-                <label className="flex items-center gap-2 text-sm">
+                <label className="flex items-center gap-2 text-sm [grid-column:1/-1]">
                   <Checkbox
                     checked={draft.lob.ecommerce.isActive}
                     onCheckedChange={(v) => setLob('ecommerce', { isActive: v === true })}
@@ -947,7 +955,7 @@ export function CreateItemPage({
       <DialogContent
         className={
           'inset-0 top-0 left-0 h-full max-h-none max-w-full translate-x-0 translate-y-0 overflow-y-auto rounded-none ' +
-          'sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[calc(100dvh-2rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl'
+          'sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[calc(100dvh-2rem)] sm:max-w-4xl sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl'
         }
       >
         {body}

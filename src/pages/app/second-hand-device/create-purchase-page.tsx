@@ -27,7 +27,11 @@ import { PartyFormModal } from '@/components/shared/party-form-modal'
 import { FormSection } from '@/components/shared/form-section'
 import { ErrorState } from '@/components/shared/error-state'
 import { SearchSelect } from '@/components/shared/search-select'
-import { PatternLockPicker, PatternLockPreview } from '@/components/shared/pattern-lock'
+import {
+  PatternLockPicker,
+  PatternLockPreview,
+  PatternReplayPopover,
+} from '@/components/shared/pattern-lock'
 import { ScanTextModal } from '@/components/shared/scan-text-modal'
 import { useBreadcrumbExtra } from '@/contexts/breadcrumb-context'
 import { useAuth } from '@/hooks/use-auth'
@@ -93,6 +97,9 @@ export function CreateSecondHandPurchasePage() {
   const [imei, setImei] = useState('')
   const [imei2, setImei2] = useState('')
   const [devicePinPattern, setDevicePinPattern] = useState('')
+  /** The value is a drawn pattern rather than a typed PIN. UI only — both are stored in the
+   *  same field, because to the shopkeeper they are the same fact about the device. */
+  const [pinIsPattern, setPinIsPattern] = useState(false)
   const [ram, setRam] = useState('')
   const [storage, setStorage] = useState('')
   const [colour, setColour] = useState('')
@@ -246,7 +253,7 @@ export function CreateSecondHandPurchasePage() {
     amountPaid !== '' && purchasePrice !== '' && Number(amountPaid) >= Number(purchasePrice)
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4 p-4 pb-24 sm:p-6">
+    <div className="space-y-4 p-4 pb-24 sm:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold">
@@ -276,7 +283,7 @@ export function CreateSecondHandPurchasePage() {
               icon={ClipboardList}
               title={t('pages.secondHandDevice.createPurchase.sections.device')}
             >
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 <div className="space-y-1.5">
                   <Label>
                     {t('pages.secondHandDevice.createPurchase.deviceTypeLabel')}{' '}
@@ -459,24 +466,47 @@ export function CreateSecondHandPurchasePage() {
                       {t('shared.optional2')}
                     </span>
                   </Label>
-                  <div className="flex items-center gap-2">
-                    {devicePinPattern ? (
-                      <>
-                        <PatternLockPreview value={devicePinPattern} />
+                  {/* A typed PIN *or* a drawn pattern, the same field Create Job Card has.
+                   * This offered Draw and nothing else, so a device locked with "1234" — which
+                   * is most of them — could not be recorded at all. */}
+                  <div className="flex gap-2">
+                    {pinIsPattern && devicePinPattern ? (
+                      <div className="flex h-8 flex-1 items-center gap-2 rounded-lg border bg-muted/30 px-2.5 text-sm">
+                        <PatternReplayPopover value={devicePinPattern}>
+                          <span className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:underline">
+                            <PatternLockPreview value={devicePinPattern} />
+                            {t('pages.service.createJobCard.patternDrawn')}
+                          </span>
+                        </PatternReplayPopover>
                         <button
                           type="button"
-                          className="text-xs text-red-600 hover:underline"
-                          onClick={() => setDevicePinPattern('')}
+                          className="ml-auto font-medium text-red-600 hover:underline dark:text-red-400"
+                          onClick={() => {
+                            setDevicePinPattern('')
+                            setPinIsPattern(false)
+                          }}
                         >
-                          {t('common.clear')}
+                          {t('shared.clear')}
                         </button>
-                      </>
+                      </div>
                     ) : (
-                      <span className="flex-1 text-sm text-muted-foreground">
-                        {t('pages.secondHandDevice.createPurchase.noPatternDrawn')}
-                      </span>
+                      <Input
+                        value={devicePinPattern}
+                        onChange={(e) => {
+                          setDevicePinPattern(e.target.value)
+                          setPinIsPattern(false)
+                        }}
+                        placeholder={t('pages.service.createJobCard.pinPlaceholder')}
+                        className="min-w-0 flex-1"
+                      />
                     )}
-                    <PatternLockPicker value={devicePinPattern} onChange={setDevicePinPattern} />
+                    <PatternLockPicker
+                      value={pinIsPattern ? devicePinPattern : ''}
+                      onChange={(v) => {
+                        setDevicePinPattern(v)
+                        setPinIsPattern(!!v)
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -726,7 +756,12 @@ export function CreateSecondHandPurchasePage() {
             </FormSection>
           </div>
 
-          <div className="space-y-6">
+          {/* RIGHT COLUMN. The vertical rule is a plain `border-left` on this column rather
+            * than `divide-x` on the parent: `divide-x` applies its border with a negative-margin
+            * trick meant for gap-less layouts, which inside a grid that already has `gap-x-8`
+            * pulls this column left into the gap and over the other column's inputs. A grid's
+            * gap is real empty space, so a plain border sits cleanly in the middle of it. */}
+          <div className="space-y-6 lg:border-l lg:border-border lg:pl-8">
             <FormSection
               flat
               icon={ShieldCheck}
@@ -749,7 +784,7 @@ export function CreateSecondHandPurchasePage() {
                 />
               </div>
 
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 <div className="space-y-1.5">
                   <Label>{t('pages.secondHandDevice.createPurchase.idProofType')}</Label>
                   <Select value={idProofType} onValueChange={(v) => v && setIdProofType(v)}>
@@ -850,7 +885,7 @@ export function CreateSecondHandPurchasePage() {
               icon={IndianRupee}
               title={t('pages.secondHandDevice.createPurchase.sections.purchase')}
             >
-              <div className="space-y-4">
+              <div className="grid min-w-0 gap-x-4 gap-y-4 [grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))] [&>*]:min-w-0">
                 <div className="space-y-1.5">
                   <Label htmlFor="purchasePrice">
                     {t('pages.secondHandDevice.createPurchase.purchasePriceLabel')}{' '}

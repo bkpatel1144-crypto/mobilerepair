@@ -781,7 +781,7 @@ export function CreateJobCardPage() {
                         setDevicePinPattern(e.target.value)
                         setPinIsPattern(false)
                       }}
-                      placeholder="e.g. 1234 or tap Draw"
+                      placeholder={t('pages.service.createJobCard.pinPlaceholder')}
                       className="min-w-0 flex-1"
                     />
                   )}
