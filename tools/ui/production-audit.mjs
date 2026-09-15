@@ -97,7 +97,17 @@ for (const [label, href] of screens) {
     .goto(base + href, { waitUntil: 'domcontentloaded', timeout: 60_000 })
     .then(() => true)
     .catch(() => false)
-  await page.waitForTimeout(3800)
+  // Wait for the screen to have finished loading rather than for a fixed 3.8s. Firestore's
+  // first read on a cold route routinely takes longer than that, and a screen caught mid-load
+  // has almost no controls on it — which is exactly what the `controls < 2` rule then reports,
+  // as a fault, on a screen that is fine. Party Categories failed this way with three rows and
+  // seven buttons on it.
+  await page
+    .locator('main button, main table, main [data-slot=empty-state]')
+    .first()
+    .waitFor({ timeout: 15_000 })
+    .catch(() => {})
+  await page.waitForTimeout(1200)
 
   const main = await page.locator('main').innerText().catch(() => '')
   const h1 = await page.locator('main h1').first().textContent().catch(() => null)
@@ -122,8 +132,17 @@ for (const [label, href] of screens) {
 await browser.close()
 
 const bad = (r) =>
-  !r.navigated || r.notFound || r.placeholder || r.errorState || !r.h1 || r.controls < 2 ||
-  r.pageErrors.length || r.errors.length || r.keyWarnings.length || r.netFails.length
+  !r.navigated ||
+  r.notFound ||
+  r.placeholder ||
+  r.errorState ||
+  !r.h1 ||
+  // Same exemption as the flag below — a read-only summary screen has nothing to click.
+  (r.controls < 2 && !/Billing/i.test(r.label)) ||
+  r.pageErrors.length ||
+  r.errors.length ||
+  r.keyWarnings.length ||
+  r.netFails.length
 
 console.log('='.repeat(78))
 console.log(`AUDITED ${report.length} SCREENS — ${report.filter(bad).length} with something to fix`)
@@ -136,7 +155,11 @@ for (const r of report.filter(bad)) {
   if (r.placeholder) flags.push('PLACEHOLDER — "coming soon"')
   if (r.errorState) flags.push('ERROR STATE')
   if (!r.h1) flags.push('no heading')
-  if (r.controls < 2) flags.push(`almost nothing rendered (${r.controls} controls)`)
+  // A read-only screen is allowed to have nothing to click: Billing & Subscription is a plan
+  // summary with one link on it, by design.
+  if (r.controls < 2 && !/Billing/i.test(r.label)) {
+    flags.push(`almost nothing rendered (${r.controls} controls)`)
+  }
   console.log(`\n${r.label}  (${r.href})`)
   if (flags.length) console.log(`  ${flags.join(' · ')}`)
   for (const e of r.pageErrors) console.log(`  CRASH: ${e}`)

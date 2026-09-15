@@ -109,12 +109,14 @@ await page.locator('button', { hasText: /^Create Job Card$/ }).first().click()
 await page.waitForTimeout(4000)
 check('the create form opened by clicking, offline', page.url().includes('/create'), page.url())
 const formBody = await page.locator('main').innerText()
+// Phase 15b: a job card CAN be created offline, from the numbers this device reserved while it
+// was connected. This probe's tenant is brand new and has never reserved a block, so the honest
+// answer is that there are none left — which is what it must say, rather than failing silently.
 check(
-  'Create Job Card explains it needs a connection',
-  /needs a connection/i.test(formBody),
-  (formBody.replace(/\s+/g, ' ').match(/You're offline\. This needs[^.]*\./) || ['not shown'])[0].slice(0, 80)
+  'Create Job Card says where it stands offline',
+  /no job card numbers left in reserve|this device can still create \d+ job cards/i.test(formBody),
+  (formBody.replace(/\s+/g, ' ').match(/(You're offline[^.]*\.|Offline —[^.]*\.)/) || ['not shown'])[0].slice(0, 90)
 )
-check('and says nothing has been saved', /Nothing has been saved/i.test(formBody))
 
 const createButton = page.locator('main button', { hasText: /^Create Job Card$/ }).last()
 check(
@@ -132,9 +134,12 @@ if ((await addParty.count()) > 0) {
   await page.waitForTimeout(1500)
   const dialog = page.locator('[role=dialog]').last()
   const dialogText = await dialog.innerText()
-  check('Create Party explains itself too', /needs a connection/i.test(dialogText))
+  // Party numbers come from reserved blocks too, so this form is *not* connection-bound any
+  // more — it opens and saves offline. What matters is that it opens at all and is not the old
+  // one-line quick-add.
+  check('Create Party opens offline', /Party Name/i.test(dialogText))
   const submit = dialog.locator('button[type=submit]').first()
-  check('with its save disabled', !(await submit.isEnabled()))
+  check('and its save is offered rather than blocked', await submit.isEnabled())
   await page.keyboard.press('Escape')
   await page.waitForTimeout(600)
 }

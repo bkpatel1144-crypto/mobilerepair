@@ -144,7 +144,11 @@ const PNG = Buffer.from(
 )
 await openPrefs()
 await page.locator('input[type=file]').setInputFiles({ name: 'logo.png', mimeType: 'image/png', buffer: PNG })
-await page.waitForTimeout(9000)
+// Wait for the thing itself, not for a guess at how long it takes. The upload has to reach
+// Storage, `getDownloadURL` has to come back and the company document has to be written before a
+// reload can show anything — a fixed sleep failed this check roughly one run in four while the
+// feature worked perfectly, which is worse than no check at all.
+await page.locator('main img[alt*="logo" i]').first().waitFor({ timeout: 40_000 }).catch(() => {})
 await openPrefs()
 const logo = page.locator('main img[alt*="logo" i]').first()
 check('logo survives a reload', (await logo.count()) > 0)
