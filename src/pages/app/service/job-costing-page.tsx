@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Calculator, IndianRupee } from 'lucide-react'
+import { Calculator, IndianRupee, Cog } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -73,7 +73,12 @@ export function JobCostingPage() {
       key: 'parts',
       header: t('common.parts'),
       hideOnMobile: true,
-      render: (j) => `⚙ ${j.partsUsed.length} parts`,
+      render: (j) => (
+        <span className="flex items-center gap-1.5">
+          <Cog className="size-3.5 text-muted-foreground" aria-hidden />
+          {t('pages.service.jobCosting.nParts', { count: j.partsUsed.length })}
+        </span>
+      ),
     },
     {
       key: 'revenue',

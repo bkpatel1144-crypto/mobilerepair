@@ -1,7 +1,7 @@
 # PRODUCTION_READINESS.md — checked 15 September 2026
 
 Everything below was measured against the **deployed** site at
-https://aimenterprise.web.app, not against a dev server and not by reading source. Where a check
+   , not against a dev server and not by reading source. Where a check
 disagreed with the app, the app was looked at before either was changed.
 
 ## Gates

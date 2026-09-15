@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, Crown } from 'lucide-react'
+import { Check, Crown, Eye, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -134,8 +134,14 @@ export function RolePermissionsTab() {
                       <span className="text-sm font-semibold">{role?.name ?? config.roleName}</span>
                     </span>
                     <span className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <span>👁 {config.statusFilter.length}</span>
-                      <span>⚡ {countEnabledActions(config.statusActionMatrix)}</span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="size-3" aria-hidden />
+                        {config.statusFilter.length}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Zap className="size-3" aria-hidden />
+                        {countEnabledActions(config.statusActionMatrix)}
+                      </span>
                     </span>
                   </button>
                 )
@@ -244,9 +250,15 @@ function SelectedRolePanel({
           </SelectContent>
         </Select>
         <span className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>👁 {draft.statusFilter.length} statuses</span>
+          <span className="flex items-center gap-1">
+            <Eye className="size-3" aria-hidden />
+            {t('pages.settings.workflowDesigner.nStatuses', { count: draft.statusFilter.length })}
+          </span>
           <span>·</span>
-          <span>⚡ {enabledActions} actions</span>
+          <span className="flex items-center gap-1">
+            <Zap className="size-3" aria-hidden />
+            {t('pages.settings.workflowDesigner.nActions', { count: enabledActions })}
+          </span>
         </span>
         {role.type === 'owner' && <Crown className="size-4 text-amber-500" />}
 

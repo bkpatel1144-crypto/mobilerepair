@@ -90,7 +90,8 @@ export function CreateRolePage() {
           <div className="space-y-5">
             <div className="space-y-1.5">
               <Label htmlFor="role-name">
-                {t('pages.administration.roleManagement.roleName')} <span className="text-red-600">*</span>
+                {t('pages.administration.roleManagement.roleName')}{' '}
+                <span className="text-red-600">*</span>
               </Label>
               <Input
                 id="role-name"
@@ -103,7 +104,8 @@ export function CreateRolePage() {
 
             <div className="space-y-1.5">
               <Label htmlFor="role-code">
-                {t('pages.administration.roleManagement.roleCode')} <span className="text-red-600">*</span>
+                {t('pages.administration.roleManagement.roleCode')}{' '}
+                <span className="text-red-600">*</span>
               </Label>
               <Input
                 id="role-code"

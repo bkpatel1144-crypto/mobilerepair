@@ -1036,7 +1036,8 @@
         "selectOrAddABuyer": "ખરીદનાર પસંદ કરો કે ઉમેરો.",
         "enterASalePriceGreaterThan": "0 થી વધુ વેચાણ કિંમત નાખો.",
         "confirmSale": "વેચાણ ખાતરી કરો",
-        "defaultsToWhatWasPurchasedWith": "ડિફોલ્ટ રીતે તે જ જે ડિવાઇસ સાથે ખરીદ્યું હતું — કંઈ રાખી લેતા હો કે નવું ઉમેરતા હો તો બદલો."
+        "defaultsToWhatWasPurchasedWith": "ડિફોલ્ટ રીતે તે જ જે ડિવાઇસ સાથે ખરીદ્યું હતું — કંઈ રાખી લેતા હો કે નવું ઉમેરતા હો તો બદલો.",
+        "devicePurchased": "ખરીદેલું ડિવાઇસ"
       },
       "deviceStock": {
         "deviceStock": "ડિવાઇસ સ્ટોક",
@@ -1212,7 +1213,8 @@
         "notEnoughStock": "ફક્ત {{onHand}} ઉપલબ્ધ છે, પણ તમે {{qty}} લગાવી રહ્યા છો — {{short}} ઓછા.",
         "fitItAnyway": "તેમ છતાં લગાવો — ટાઇમલાઇન પર સ્ટોક ઓવરરાઇડ તરીકે નોંધાશે",
         "addPart": "પાર્ટ ઉમેરો",
-        "addImage": "છબી ઉમેરો"
+        "addImage": "છબી ઉમેરો",
+        "paid": "ચૂકવાયું"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",
@@ -1260,7 +1262,11 @@
         "pendingCosting": "ખર્ચ બાકી",
         "costed": "ખર્ચ નોંધાયો",
         "recordCost": "ખર્ચ નોંધો",
-        "deviceLabel": "ડિવાઇસ: {{device}}"
+        "deviceLabel": "ડિવાઇસ: {{device}}",
+        "nParts": "{{count}} પાર્ટ્સ",
+        "linked": "જોડાયેલું",
+        "costRequired": "ખર્ચ જરૂરી",
+        "costExceedsRate": "કેટલાક પાર્ટ્સ પર વાસ્તવિક ખર્ચ મૂળ દર કરતાં વધુ છે."
       },
       "serviceItems": {
         "serviceItems": "સર્વિસ આઇટમ",
@@ -1293,7 +1299,9 @@
         "splitSharedBrands": "શેર કરેલી બ્રાન્ડ અલગ કરો",
         "addBrand": "બ્રાન્ડ ઉમેરો",
         "addModel": "મોડેલ ઉમેરો",
-        "sharedBrandsNotice": "કેટલાક બ્રાન્ડ હજી અનેક ડિવાઇસ પ્રકારોમાં વહેંચાયેલા છે. દરેક ડિવાઇસ પ્રકારને પોતાની અલગ બ્રાન્ડ પંક્તિ આપવા ઉપર <action>{{action}}</action> પર ક્લિક કરો. હાલના જોબ કાર્ડ યથાવત રહેશે."
+        "sharedBrandsNotice": "કેટલાક બ્રાન્ડ હજી અનેક ડિવાઇસ પ્રકારોમાં વહેંચાયેલા છે. દરેક ડિવાઇસ પ્રકારને પોતાની અલગ બ્રાન્ડ પંક્તિ આપવા ઉપર <action>{{action}}</action> પર ક્લિક કરો. હાલના જોબ કાર્ડ યથાવત રહેશે.",
+        "nDeviceTypes": "{{count}} ડિવાઇસ પ્રકાર",
+        "nBrands": "{{count}} બ્રાન્ડ"
       },
       "warranty": {
         "warrantyLookup": "વોરંટી તપાસ",
@@ -1407,7 +1415,8 @@
         "deliveredReturnedBy": "આપનાર / પરત કરનાર",
         "noPartsUsedOnThisJob": "આ જોબમાં કોઈ પાર્ટ વપરાયો નથી.",
         "partsItems": "પાર્ટ્સ / આઇટમ",
-        "totalPartsCost": "પાર્ટ્સનો કુલ ખર્ચ"
+        "totalPartsCost": "પાર્ટ્સનો કુલ ખર્ચ",
+        "fullyPaid": "સંપૂર્ણ ચૂકવણી"
       },
       "supplierReport": {
         "supplierReport": "સપ્લાયર રિપોર્ટ",
@@ -2192,7 +2201,9 @@
         "leadForm": "લીડ ફોર્મ",
         "controlExactlyWhatEachRoleCan": "નક્કી કરો કે દરેક જોબ સ્થિતિ પર દરેક ભૂમિકા બરાબર શું જોઈ અને કરી શકે.",
         "jobAccess": "જોબ ઍક્સેસ",
-        "allChangesSavedEditing": "બધા ફેરફારો સાચવ્યા · \"{{role}}\" સંપાદિત કરી રહ્યા છો"
+        "allChangesSavedEditing": "બધા ફેરફારો સાચવ્યા · \"{{role}}\" સંપાદિત કરી રહ્યા છો",
+        "nStatuses": "{{count}} સ્થિતિઓ",
+        "nActions": "{{count}} ક્રિયાઓ"
       },
       "fieldControlRow": {
         "hiddenClickToShow": "છુપાયેલ — બતાવવા ક્લિક કરો",

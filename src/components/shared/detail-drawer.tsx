@@ -202,9 +202,7 @@ export function DetailDrawer({
                 <div className="min-w-0 flex-1 pb-0.5">
                   <p className="text-sm font-semibold">{event.title}</p>
                   {event.description && (
-                    <p className="text-sm break-words text-muted-foreground">
-                      {event.description}
-                    </p>
+                    <p className="text-sm break-words text-muted-foreground">{event.description}</p>
                   )}
                   {event.timestamp && (
                     <p className="mt-0.5 text-xs text-muted-foreground">{event.timestamp}</p>

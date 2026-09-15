@@ -542,7 +542,8 @@ export function RoleManagementPage() {
       >
         <div className="space-y-1.5">
           <Label htmlFor="edit-role-name">
-            {t('pages.administration.roleManagement.roleName')} <span className="text-red-600">*</span>
+            {t('pages.administration.roleManagement.roleName')}{' '}
+            <span className="text-red-600">*</span>
           </Label>
           <Input
             id="edit-role-name"
@@ -553,7 +554,8 @@ export function RoleManagementPage() {
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="edit-role-code">
-            {t('pages.administration.roleManagement.roleCode')} <span className="text-red-600">*</span>
+            {t('pages.administration.roleManagement.roleCode')}{' '}
+            <span className="text-red-600">*</span>
           </Label>
           <Input
             id="edit-role-code"

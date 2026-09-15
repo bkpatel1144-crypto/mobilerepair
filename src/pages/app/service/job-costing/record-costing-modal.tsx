@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, AlertTriangle } from 'lucide-react'
+import { Plus, AlertTriangle, X, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -133,8 +133,14 @@ export function RecordCostingModal({
               {t('pages.service.recordCostingModal.recordActualCosting')}
             </h2>
           </div>
-          <Button type="button" variant="ghost" size="icon" onClick={onClose}>
-            ✕
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            aria-label={t('common.close')}
+          >
+            <X className="size-4" />
           </Button>
         </div>
 
@@ -212,7 +218,17 @@ export function RecordCostingModal({
                             : ''
                       )}
                     >
-                      {item.linked ? '🔒 Linked' : requiresCost ? '⚠ Cost required' : ''}
+                      {item.linked ? (
+                        <>
+                          <Lock className="size-3" aria-hidden />
+                          {t('pages.service.jobCosting.linked')}
+                        </>
+                      ) : requiresCost ? (
+                        <>
+                          <AlertTriangle className="size-3" aria-hidden />
+                          {t('pages.service.jobCosting.costRequired')}
+                        </>
+                      ) : null}
                     </span>
                   </div>
                   <Input
@@ -294,8 +310,9 @@ export function RecordCostingModal({
               </div>
             </div>
             {anyOverCost && (
-              <p className="rounded-lg bg-amber-50 p-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-                ⚠ Actual cost exceeds original rate on some parts.
+              <p className="flex items-start gap-1.5 rounded-lg bg-amber-50 p-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
+                <AlertTriangle className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+                <span>{t('pages.service.jobCosting.costExceedsRate')}</span>
               </p>
             )}
             <div className="space-y-1.5">

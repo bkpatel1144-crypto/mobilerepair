@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Users, User, Truck, UserCog, Plus, Pencil, Trash2 } from 'lucide-react'
+import { Users, User, Truck, UserCog, Plus, Pencil, Trash2, Phone } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { FilterBar } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
@@ -184,7 +184,8 @@ export function PartiesPage() {
           title={viewing.name}
           subtitle={
             <>
-              {viewing.partyNumber} · 📞 {viewing.mobile}
+              {viewing.partyNumber} · <Phone className="inline size-3.5 align-[-2px]" aria-hidden />{' '}
+              {viewing.mobile}
             </>
           }
           badges={

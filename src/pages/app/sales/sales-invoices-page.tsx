@@ -245,9 +245,7 @@ export function SalesInvoicesPage() {
               aria-pressed={tab === option}
               className={
                 'min-h-9 rounded-md px-3 py-1 text-sm ' +
-                (tab === option
-                  ? 'bg-teal-600 text-white'
-                  : 'text-muted-foreground hover:bg-muted')
+                (tab === option ? 'bg-teal-600 text-white' : 'text-muted-foreground hover:bg-muted')
               }
             >
               {t(TAB_LABELS[option])} {counts[option]}
@@ -280,7 +278,6 @@ export function SalesInvoicesPage() {
 
       <EditBillModal job={editing} onOpenChange={(open) => !open && setEditing(null)} />
       <BillDetailsModal job={viewing} onClose={() => setViewing(null)} />
-
     </div>
   )
 }

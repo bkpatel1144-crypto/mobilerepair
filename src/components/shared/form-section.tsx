@@ -1,3 +1,4 @@
+import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 /**
@@ -9,27 +10,41 @@ import { cn } from '@/lib/utils'
  * form looks like. This is the Buy Mobile idea, extracted so both use it literally rather than by
  * resemblance.
  *
- * The glyph is passed as text (an emoji or a symbol like ₹) to match what Buy Mobile already
- * shipped, not as an icon component — the reference app's own headings are glyph-led too.
+ * The heading takes a Lucide icon, not an emoji. It shipped with emoji — 📦, 🗂️, 📏 — which
+ * render as a different picture on every platform, sit on a different baseline from the text
+ * beside them, and are read out by a screen reader as "package". The rest of the app is drawn in
+ * one icon set; these are now too.
  */
 export function FormSection({
-  glyph,
+  icon: Icon,
   title,
   description,
   children,
+  flat,
   className,
 }: {
-  glyph?: string
+  icon?: LucideIcon
   title: string
   description?: string
   children: React.ReactNode
+  /**
+   * Drop the card chrome — border, background, padding — and keep only the heading.
+   *
+   * For the long intake forms, which the client wants laid out like Create Job Card: one card
+   * holding two columns, rather than a stack of separate cards you scroll past. The headings
+   * still earn their place inside those columns (pricing is not inventory), they just no longer
+   * each carry their own box.
+   */
+  flat?: boolean
   className?: string
 }) {
   return (
-    <section className={cn('space-y-4 rounded-lg border bg-card p-4', className)}>
+    <section
+      className={cn(flat ? 'space-y-4' : 'space-y-4 rounded-lg border bg-card p-4', className)}
+    >
       <div>
-        <h2 className="flex items-center gap-1.5 text-sm font-semibold">
-          {glyph && <span aria-hidden>{glyph}</span>}
+        <h2 className="flex items-center gap-2 text-sm font-semibold">
+          {Icon && <Icon className="size-4 shrink-0 text-muted-foreground" aria-hidden />}
           {title}
         </h2>
         {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}

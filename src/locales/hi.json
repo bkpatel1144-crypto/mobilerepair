@@ -1036,7 +1036,8 @@
         "selectOrAddABuyer": "खरीदार चुनें या जोड़ें।",
         "enterASalePriceGreaterThan": "0 से अधिक विक्रय कीमत डालें।",
         "confirmSale": "विक्रय पक्का करें",
-        "defaultsToWhatWasPurchasedWith": "डिफ़ॉल्ट रूप से वही जो डिवाइस के साथ खरीदा गया था — कुछ रोक रहे हों या नया जोड़ रहे हों तो बदलें।"
+        "defaultsToWhatWasPurchasedWith": "डिफ़ॉल्ट रूप से वही जो डिवाइस के साथ खरीदा गया था — कुछ रोक रहे हों या नया जोड़ रहे हों तो बदलें।",
+        "devicePurchased": "ख़रीदा गया डिवाइस"
       },
       "deviceStock": {
         "deviceStock": "डिवाइस स्टॉक",
@@ -1212,7 +1213,8 @@
         "notEnoughStock": "सिर्फ़ {{onHand}} उपलब्ध हैं, पर आप {{qty}} लगा रहे हैं — {{short}} कम।",
         "fitItAnyway": "फिर भी लगाएँ — टाइमलाइन पर स्टॉक ओवरराइड के रूप में दर्ज होगा",
         "addPart": "पार्ट जोड़ें",
-        "addImage": "छवि जोड़ें"
+        "addImage": "छवि जोड़ें",
+        "paid": "भुगतान हो गया"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "यह जॉब कार्ड लोड नहीं हो सका",
@@ -1260,7 +1262,11 @@
         "pendingCosting": "लागत बाकी",
         "costed": "लागत दर्ज",
         "recordCost": "लागत दर्ज करें",
-        "deviceLabel": "डिवाइस: {{device}}"
+        "deviceLabel": "डिवाइस: {{device}}",
+        "nParts": "{{count}} पार्ट्स",
+        "linked": "जुड़ा हुआ",
+        "costRequired": "लागत आवश्यक",
+        "costExceedsRate": "कुछ पार्ट्स पर वास्तविक लागत मूल दर से अधिक है।"
       },
       "serviceItems": {
         "serviceItems": "सर्विस आइटम",
@@ -1293,7 +1299,9 @@
         "splitSharedBrands": "साझा ब्रांड अलग करें",
         "addBrand": "ब्रांड जोड़ें",
         "addModel": "मॉडल जोड़ें",
-        "sharedBrandsNotice": "कुछ ब्रांड अब भी कई डिवाइस प्रकारों में साझा हैं। हर डिवाइस प्रकार को अपनी अलग ब्रांड पंक्ति देने के लिए ऊपर <action>{{action}}</action> पर क्लिक करें। मौजूदा जॉब कार्ड अछूते रहेंगे।"
+        "sharedBrandsNotice": "कुछ ब्रांड अब भी कई डिवाइस प्रकारों में साझा हैं। हर डिवाइस प्रकार को अपनी अलग ब्रांड पंक्ति देने के लिए ऊपर <action>{{action}}</action> पर क्लिक करें। मौजूदा जॉब कार्ड अछूते रहेंगे।",
+        "nDeviceTypes": "{{count}} डिवाइस प्रकार",
+        "nBrands": "{{count}} ब्रांड"
       },
       "warranty": {
         "warrantyLookup": "वारंटी जाँच",
@@ -1407,7 +1415,8 @@
         "deliveredReturnedBy": "सौंपने / लौटाने वाला",
         "noPartsUsedOnThisJob": "इस जॉब में कोई पुर्ज़ा इस्तेमाल नहीं हुआ।",
         "partsItems": "पुर्ज़े / आइटम",
-        "totalPartsCost": "पुर्ज़ों की कुल लागत"
+        "totalPartsCost": "पुर्ज़ों की कुल लागत",
+        "fullyPaid": "पूरा भुगतान"
       },
       "supplierReport": {
         "supplierReport": "सप्लायर रिपोर्ट",
@@ -2192,7 +2201,9 @@
         "leadForm": "लीड फ़ॉर्म",
         "controlExactlyWhatEachRoleCan": "तय करें कि हर जॉब स्थिति पर हर भूमिका ठीक क्या देख और कर सकती है।",
         "jobAccess": "जॉब पहुँच",
-        "allChangesSavedEditing": "सभी बदलाव सहेजे गए · \"{{role}}\" संपादित कर रहे हैं"
+        "allChangesSavedEditing": "सभी बदलाव सहेजे गए · \"{{role}}\" संपादित कर रहे हैं",
+        "nStatuses": "{{count}} स्थितियाँ",
+        "nActions": "{{count}} क्रियाएँ"
       },
       "fieldControlRow": {
         "hiddenClickToShow": "छिपा — दिखाने के लिए क्लिक करें",

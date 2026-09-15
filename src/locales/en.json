@@ -1036,7 +1036,8 @@
         "selectOrAddABuyer": "Select or add a buyer.",
         "enterASalePriceGreaterThan": "Enter a sale price greater than 0.",
         "confirmSale": "Confirm Sale",
-        "defaultsToWhatWasPurchasedWith": "Defaults to what was purchased with the device — edit if you're keeping anything back or adding something new."
+        "defaultsToWhatWasPurchasedWith": "Defaults to what was purchased with the device — edit if you're keeping anything back or adding something new.",
+        "devicePurchased": "Device Purchased"
       },
       "deviceStock": {
         "deviceStock": "Device Stock",
@@ -1212,7 +1213,8 @@
         "notEnoughStock": "Only {{onHand}} on hand, but you are fitting {{qty}} — {{short}} short.",
         "fitItAnyway": "Fit it anyway — recorded on the timeline as a stock override",
         "addPart": "Add Part",
-        "addImage": "Add Image"
+        "addImage": "Add Image",
+        "paid": "Paid"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "Couldn't load this job card",
@@ -1260,7 +1262,11 @@
         "pendingCosting": "Pending Costing",
         "costed": "Costed",
         "recordCost": "Record Cost",
-        "deviceLabel": "Device: {{device}}"
+        "deviceLabel": "Device: {{device}}",
+        "nParts": "{{count}} parts",
+        "linked": "Linked",
+        "costRequired": "Cost required",
+        "costExceedsRate": "Actual cost exceeds original rate on some parts."
       },
       "serviceItems": {
         "serviceItems": "Service Items",
@@ -1293,7 +1299,9 @@
         "splitSharedBrands": "Split shared brands",
         "addBrand": "Add brand",
         "addModel": "Add model",
-        "sharedBrandsNotice": "Some brands are still shared across multiple device types. Click <action>{{action}}</action> above to give each device type its own independent brand row. Existing job cards stay untouched."
+        "sharedBrandsNotice": "Some brands are still shared across multiple device types. Click <action>{{action}}</action> above to give each device type its own independent brand row. Existing job cards stay untouched.",
+        "nDeviceTypes": "{{count}} device types",
+        "nBrands": "{{count}} brands"
       },
       "warranty": {
         "warrantyLookup": "Warranty Lookup",
@@ -1407,7 +1415,8 @@
         "deliveredReturnedBy": "Delivered/Returned By",
         "noPartsUsedOnThisJob": "No parts used on this job.",
         "partsItems": "Parts / Items",
-        "totalPartsCost": "Total Parts Cost"
+        "totalPartsCost": "Total Parts Cost",
+        "fullyPaid": "Fully Paid"
       },
       "supplierReport": {
         "supplierReport": "Supplier Report",
@@ -2192,7 +2201,9 @@
         "leadForm": "Lead Form",
         "controlExactlyWhatEachRoleCan": "Control exactly what each role can see and do at every job status.",
         "jobAccess": "Job Access",
-        "allChangesSavedEditing": "All changes saved · Editing \"{{role}}\""
+        "allChangesSavedEditing": "All changes saved · Editing \"{{role}}\"",
+        "nStatuses": "{{count}} statuses",
+        "nActions": "{{count}} actions"
       },
       "fieldControlRow": {
         "hiddenClickToShow": "Hidden — click to show",

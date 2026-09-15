@@ -104,7 +104,7 @@ export function WelcomeBanner({
        * all — which a screen reader announces as a document with nothing to orient by, and
        * which the production audit flagged as the one defect on an otherwise clean screen. */}
       <h1 className="text-lg font-bold">
-        {t(greetingKey)}, <span className="text-teal-600 dark:text-teal-400">{name}</span> 👋
+        {t(greetingKey)}, <span className="text-teal-600 dark:text-teal-400">{name}</span>
       </h1>
       <p className="text-xs text-muted-foreground">{subtitle}</p>
     </div>

@@ -17,13 +17,7 @@ import { useTranslation } from 'react-i18next'
  * but it stays a tick box. A screen warranty does not cover a phone that has since been dropped,
  * and the person at the counter is the only one who can tell which it is.
  */
-export function ReworkModal({
-  job,
-  onClose,
-}: {
-  job: JobCardWithId
-  onClose: () => void
-}) {
+export function ReworkModal({ job, onClose }: { job: JobCardWithId; onClose: () => void }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const rework = useReopenAsRework(job)

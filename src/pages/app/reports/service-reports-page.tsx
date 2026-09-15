@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   Clock,
   IndianRupee,
+  Check,
 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
@@ -88,7 +89,10 @@ function ServiceReportRowDetail({ job }: { job: JobCardWithId }) {
           <div className="flex justify-between">
             <span className="text-muted-foreground">{t('common.outstanding')}</span>
             {outstanding === 0 ? (
-              <span className="font-medium text-emerald-600">✓ Fully Paid</span>
+              <span className="flex items-center gap-1 font-medium text-emerald-600">
+                <Check className="size-3.5" aria-hidden />
+                {t('pages.reports.serviceReports.fullyPaid')}
+              </span>
             ) : (
               <span className="font-medium text-red-600">{formatCurrency(outstanding)}</span>
             )}

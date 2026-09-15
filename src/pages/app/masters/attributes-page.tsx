@@ -119,7 +119,8 @@ export function AttributesPage() {
     const finalCode = (code.trim() || slugifyCode(name)).toUpperCase()
     // A code is only worth having if it identifies one attribute.
     const clash = attributes.find(
-      (a) => (a.code ?? '').toUpperCase() === finalCode && (editing === 'new' || a.id !== editing?.id)
+      (a) =>
+        (a.code ?? '').toUpperCase() === finalCode && (editing === 'new' || a.id !== editing?.id)
     )
     if (clash) {
       setError(t('pages.masters.attributes.thatCodeIsTaken', { name: clash.name }))

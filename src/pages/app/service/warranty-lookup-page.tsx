@@ -54,8 +54,7 @@ export function WarrantyLookupPage() {
         .slice(0, 20)
     : []
 
-  const stateLabel = (state: WarrantyWindow['state']) =>
-    t(`pages.service.warranty.state.${state}`)
+  const stateLabel = (state: WarrantyWindow['state']) => t(`pages.service.warranty.state.${state}`)
 
   return (
     <div className="space-y-4 p-4 sm:p-6">
@@ -69,7 +68,11 @@ export function WarrantyLookupPage() {
             {t('pages.service.warranty.searchByAnything')}
           </p>
         </div>
-        <Button type="button" variant="outline" render={<Link to={buildPath('service', 'job-cards')} />}>
+        <Button
+          type="button"
+          variant="outline"
+          render={<Link to={buildPath('service', 'job-cards')} />}
+        >
           <ArrowLeft className="size-4" />
           {t('pages.service.warranty.backToJobCards')}
         </Button>

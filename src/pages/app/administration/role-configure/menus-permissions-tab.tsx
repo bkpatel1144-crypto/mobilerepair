@@ -381,10 +381,7 @@ export function MenusPermissionsTab({
                         <label
                           className={cn(
                             'flex items-center gap-2 rounded-lg border px-2.5 py-2 text-sm',
-                            actionTone(
-                              'access',
-                              draft.actionPermissions[moduleAccess.key] === true
-                            )
+                            actionTone('access', draft.actionPermissions[moduleAccess.key] === true)
                           )}
                         >
                           <Checkbox

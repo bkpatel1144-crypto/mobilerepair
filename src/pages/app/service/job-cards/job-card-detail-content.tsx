@@ -16,6 +16,7 @@ import {
   Expand,
   Tags,
   History,
+  Check,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
@@ -428,7 +429,14 @@ export function JobCardDetailContent({
                       balance <= 0 ? 'font-medium text-teal-600' : 'font-medium text-amber-600'
                     }
                   >
-                    {balance <= 0 ? 'Paid ✓' : `₹${balance}`}
+                    {balance <= 0 ? (
+                      <span className="flex items-center gap-1">
+                        <Check className="size-3.5" aria-hidden />
+                        {t('pages.service.jobCardDetailContent.paid')}
+                      </span>
+                    ) : (
+                      `₹${balance}`
+                    )}
                   </dd>
                 </div>
               </dl>

@@ -43,8 +43,7 @@ export function StockPage() {
   const q = search.trim().toLowerCase()
   const filtered = q
     ? rows.filter(
-        (r) =>
-          r.item.name.toLowerCase().includes(q) || r.item.itemCode.toLowerCase().includes(q)
+        (r) => r.item.name.toLowerCase().includes(q) || r.item.itemCode.toLowerCase().includes(q)
       )
     : rows
   const summary = stockSummary(filtered)
@@ -114,9 +113,7 @@ export function StockPage() {
       key: 'state',
       header: t('common.status'),
       render: (r) => (
-        <span
-          className={`rounded-full px-2 py-0.5 text-xs font-medium ${STATE_STYLES[r.state]}`}
-        >
+        <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${STATE_STYLES[r.state]}`}>
           {t(`pages.inventory.stock.state.${r.state}`)}
         </span>
       ),
@@ -137,7 +134,11 @@ export function StockPage() {
             <RefreshCw className="size-4" />
             {t('common.refresh')}
           </Button>
-          <Button type="button" variant="outline" render={<Link to={buildPath('masters', 'items')} />}>
+          <Button
+            type="button"
+            variant="outline"
+            render={<Link to={buildPath('masters', 'items')} />}
+          >
             {t('pages.inventory.stock.openItemMaster')}
           </Button>
         </div>
@@ -192,7 +193,11 @@ export function StockPage() {
             title={t('pages.inventory.stock.nothingIsStockTracked')}
             description={t('pages.inventory.stock.turnOnStockTracked')}
             action={
-              <Button type="button" variant="outline" render={<Link to={buildPath('masters', 'items')} />}>
+              <Button
+                type="button"
+                variant="outline"
+                render={<Link to={buildPath('masters', 'items')} />}
+              >
                 {t('pages.inventory.stock.openItemMaster')}
               </Button>
             }
@@ -200,9 +205,7 @@ export function StockPage() {
         }
       />
 
-      <p className="text-xs text-muted-foreground">
-        {t('pages.inventory.stock.onHandIsDerived')}
-      </p>
+      <p className="text-xs text-muted-foreground">{t('pages.inventory.stock.onHandIsDerived')}</p>
     </div>
   )
 }

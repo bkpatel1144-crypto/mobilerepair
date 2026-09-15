@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronRight, Plus, Shuffle, Info } from 'lucide-react'
+import { ChevronRight, Plus, Shuffle, Info, Link2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { RouteFallback } from '@/components/shared/route-fallback'
@@ -397,12 +397,16 @@ export function ServiceOptionsPage() {
                   <span className="font-medium">{section.label}</span>
                   {section.type === 'brands' && (
                     <span className="flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">
-                      🔗 {data.deviceTypes.length} device types
+                      <Link2 className="size-3 shrink-0" aria-hidden />
+                      {t('pages.service.serviceOptions.nDeviceTypes', {
+                        count: data.deviceTypes.length,
+                      })}
                     </span>
                   )}
                   {section.type === 'models' && (
                     <span className="flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700 dark:bg-purple-500/15 dark:text-purple-400">
-                      🔗 {data.brands.length} brands
+                      <Link2 className="size-3 shrink-0" aria-hidden />
+                      {t('pages.service.serviceOptions.nBrands', { count: data.brands.length })}
                     </span>
                   )}
                   <span className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">

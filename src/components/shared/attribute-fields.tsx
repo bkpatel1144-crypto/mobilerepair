@@ -124,9 +124,7 @@ export function AttributeFields({
               />
             )}
 
-            {isMissing && (
-              <p className="text-xs text-red-600">{t('shared.thisFieldIsRequired')}</p>
-            )}
+            {isMissing && <p className="text-xs text-red-600">{t('shared.thisFieldIsRequired')}</p>}
           </div>
         )
       })}

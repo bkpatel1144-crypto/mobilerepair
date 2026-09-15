@@ -551,10 +551,7 @@ export function CompanySettingsPage() {
             </Select>
           </div>
           <label className="flex items-center gap-2 pb-2 text-sm">
-            <Checkbox
-              checked={defaultOnly}
-              onCheckedChange={(v) => setDefaultOnly(v === true)}
-            />
+            <Checkbox checked={defaultOnly} onCheckedChange={(v) => setDefaultOnly(v === true)} />
             {t('pages.settings.companySettings.defaultCompanyOnly')}
           </label>
           {activeFilterCount > 0 && (

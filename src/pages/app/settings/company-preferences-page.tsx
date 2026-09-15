@@ -74,7 +74,9 @@ export function CompanyPreferencesPage() {
           <Building2 className="size-5" />
         </span>
         <div className="min-w-0">
-          <h1 className="text-xl font-bold">{t('pages.settings.preferences.companyPreferences')}</h1>
+          <h1 className="text-xl font-bold">
+            {t('pages.settings.preferences.companyPreferences')}
+          </h1>
           <p className="text-sm text-muted-foreground">
             {t('pages.settings.preferences.settingsFor')}{' '}
             <span className="rounded bg-muted px-1.5 py-0.5 font-medium">

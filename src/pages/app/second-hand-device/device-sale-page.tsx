@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ShoppingBag, DollarSign, Truck, Wrench } from 'lucide-react'
+import { ShoppingBag, DollarSign, Truck, Wrench, Smartphone } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -247,7 +247,10 @@ function SellDeviceModal({
         </DialogHeader>
 
         <div className="space-y-2 rounded-md bg-muted/40 p-3 text-sm">
-          <p className="font-medium">📱 Device Purchased</p>
+          <p className="flex items-center gap-1.5 font-medium">
+            <Smartphone className="size-4 text-muted-foreground" aria-hidden />
+            {t('pages.secondHandDevice.deviceSale.devicePurchased')}
+          </p>
           <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-muted-foreground">
             <span>Device: {deviceLabel(purchase)}</span>
             <span>Condition: Grade {purchase.conditionGrade}</span>

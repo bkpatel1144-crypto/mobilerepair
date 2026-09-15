@@ -86,9 +86,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
   const [confirmingUndo, setConfirmingUndo] = useState(false)
   const [confirmingTerminal, setConfirmingTerminal] = useState<
     'close' | 'returnAndClose' | 'deliverAndClose' | null
-  >(
-    null
-  )
+  >(null)
   const [reasonInput, setReasonInput] = useState('')
   const [descriptionInput, setDescriptionInput] = useState('')
   const [amountInput, setAmountInput] = useState(0)
@@ -319,16 +317,16 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
           <span className="flex items-center gap-2">
             <Undo2 className="size-4" />
             <span className="block font-medium">
-            {t('pages.service.actionButtons.undoLastAction')}
-          </span>
-          {/* The owner bypass was only ever implicit in `useJobActionGating`. The reference says
-           * it out loud, and a shopkeeper reading "no time limit" deserves to know why. */}
-          <span className="block text-xs">
-            {isOwner
-              ? t('pages.service.actionButtons.ownerOverrideNoTimeLimit')
-              : t('pages.service.actionButtons.noTimeLimit')}{' '}
-            · {job.lastActionUndo.actionLabel}
-          </span>
+              {t('pages.service.actionButtons.undoLastAction')}
+            </span>
+            {/* The owner bypass was only ever implicit in `useJobActionGating`. The reference says
+             * it out loud, and a shopkeeper reading "no time limit" deserves to know why. */}
+            <span className="block text-xs">
+              {isOwner
+                ? t('pages.service.actionButtons.ownerOverrideNoTimeLimit')
+                : t('pages.service.actionButtons.noTimeLimit')}{' '}
+              · {job.lastActionUndo.actionLabel}
+            </span>
           </span>
           <Button
             type="button"
