@@ -41,6 +41,7 @@ import { useJobActionGating } from '@/hooks/use-job-action-gating'
 import { useItems } from '@/hooks/use-items'
 import { useReceipts } from '@/hooks/use-receipts'
 import { cn } from '@/lib/utils'
+import { DetailPanel, CountChip, EmptyDash } from './detail-panel'
 import { uploadJobCardImage } from '@/lib/job-card-images'
 import { useAuth } from '@/hooks/use-auth'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
@@ -53,22 +54,22 @@ function statusLabel(key: string) {
   return JOB_STATUSES.find((s) => s.key === key)?.label ?? key
 }
 
-function Panel({
-  icon: Icon,
-  title,
-  children,
+/** One line of a bill: label left, amount right, digits that line up between rows. */
+function MoneyRow({
+  label,
+  amount,
+  strong,
+  muted,
 }: {
-  icon: React.ComponentType<{ className?: string }>
-  title: string
-  children: React.ReactNode
+  label: string
+  amount: number
+  strong?: boolean
+  muted?: boolean
 }) {
   return (
-    <div className="space-y-2 rounded-lg border p-4">
-      <div className="flex items-center gap-1.5 text-sm font-semibold">
-        <Icon className="size-4 text-muted-foreground" />
-        {title}
-      </div>
-      {children}
+    <div className="flex items-baseline justify-between py-0.5">
+      <dt className={muted ? 'text-muted-foreground' : undefined}>{label}</dt>
+      <dd className={cn('tabular-nums', strong && 'font-semibold')}>₹{amount}</dd>
     </div>
   )
 }
@@ -176,9 +177,15 @@ export function JobCardDetailContent({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b pb-4">
-        <div>
+    // `@container`, not viewport breakpoints. This same component is the full page *and* the
+    // drawer, and `lg:grid-cols-3` looked at the window rather than the space it actually had —
+    // so in the drawer it laid out three columns inside a sheet, wrapping "RCP-1509-00001" over
+    // three lines and "Keypad Phone" over two. Container queries ask the right question.
+    <div className="@container space-y-4">
+      {/* One band carrying what anyone asks first: which job, for whom, which device, and what
+       * is still owed. It was four lines of plain text on white. */}
+      <div className="flex flex-wrap items-start justify-between gap-4 rounded-xl border bg-gradient-to-br from-muted/60 to-card px-4 py-3.5">
+        <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <Wrench className="size-5 text-teal-600" />
             <span className="text-lg font-bold">#{job.jobNumber}</span>
@@ -212,16 +219,40 @@ export function JobCardDetailContent({
               </Button>
             )}
           </div>
-          <div className="mt-1 flex items-center gap-2">
-            <span className="flex size-7 items-center justify-center rounded-full bg-purple-600 text-xs font-semibold text-white">
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-purple-600 text-xs font-semibold text-white">
               {job.customerName.slice(0, 2).toUpperCase()}
             </span>
             <span className="font-medium">{job.customerName}</span>
-            <span className="flex items-center gap-1 text-sm text-muted-foreground">
+            <a
+              href={`tel:${job.customerMobile}`}
+              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground hover:underline"
+            >
               <Phone className="size-3.5" />
               {job.customerMobile}
-            </span>
+            </a>
+            {(job.brandName || job.model) && (
+              <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Smartphone className="size-3.5" />
+                {[job.brandName, job.model].filter(Boolean).join(' ')}
+              </span>
+            )}
           </div>
+        </div>
+
+        {/* The number the counter is actually asking about. */}
+        <div className="shrink-0 text-right">
+          <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+            {balance > 0 ? t('common.balance') : t('common.paid')}
+          </p>
+          <p
+            className={
+              'text-2xl font-bold tabular-nums ' +
+              (balance > 0 ? 'text-amber-600' : 'text-teal-600')
+            }
+          >
+            {balance > 0 ? `₹${balance}` : `₹${job.paidAmount}`}
+          </p>
         </div>
       </div>
 
@@ -274,18 +305,19 @@ export function JobCardDetailContent({
         </div>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 @2xl:grid-cols-2 @5xl:grid-cols-3">
         <div className="space-y-4">
-          <Panel icon={ClipboardList} title={t('pages.service.jobCardDetailContent.itemsAtIntake')}>
+          <DetailPanel
+            icon={ClipboardList}
+            title={t('pages.service.jobCardDetailContent.itemsAtIntake')}
+          >
             <div className="space-y-2">
               <div>
                 <p className="mb-1 text-xs text-muted-foreground uppercase">
                   {t('pages.service.jobCardDetailContent.receivedAtIntake')}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {job.itemsReceived.length === 0 && (
-                    <span className="text-sm text-muted-foreground">—</span>
-                  )}
+                  {job.itemsReceived.length === 0 && <EmptyDash />}
                   {job.itemsReceived.map((label) => (
                     <StatusBadge key={label} status={label} tone="warning" />
                   ))}
@@ -296,18 +328,16 @@ export function JobCardDetailContent({
                   {t('pages.service.jobCardDetailContent.returnedAtIntake')}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {job.itemsReturned.length === 0 && (
-                    <span className="text-sm text-muted-foreground">—</span>
-                  )}
+                  {job.itemsReturned.length === 0 && <EmptyDash />}
                   {job.itemsReturned.map((label) => (
                     <StatusBadge key={label} status={label} tone="success" />
                   ))}
                 </div>
               </div>
             </div>
-          </Panel>
+          </DetailPanel>
 
-          <Panel icon={Smartphone} title={t('common.device')}>
+          <DetailPanel icon={Smartphone} title={t('common.device')}>
             <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
               <div>
                 <dt className="text-xs text-muted-foreground uppercase">{t('common.type')}</dt>
@@ -334,10 +364,10 @@ export function JobCardDetailContent({
                 </div>
               )}
             </dl>
-          </Panel>
+          </DetailPanel>
 
           {jobAttributeRows.length > 0 && (
-            <Panel icon={Tags} title={t('pages.masters.createItem.sections.attributes')}>
+            <DetailPanel icon={Tags} title={t('pages.masters.createItem.sections.attributes')}>
               <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
                 {jobAttributeRows.map((row) => (
                   <div key={row.label}>
@@ -346,10 +376,10 @@ export function JobCardDetailContent({
                   </div>
                 ))}
               </dl>
-            </Panel>
+            </DetailPanel>
           )}
 
-          <Panel
+          <DetailPanel
             icon={AlertTriangle}
             title={t('pages.service.jobCardDetailContent.problemReported')}
           >
@@ -369,9 +399,9 @@ export function JobCardDetailContent({
                 <p className="text-sm">{job.remark}</p>
               </div>
             )}
-          </Panel>
+          </DetailPanel>
 
-          <Panel icon={UserRound} title={t('pages.service.jobCardDetailContent.assignment')}>
+          <DetailPanel icon={UserRound} title={t('pages.service.jobCardDetailContent.assignment')}>
             <div className="flex items-center gap-2">
               <span className="flex size-8 items-center justify-center rounded-full bg-teal-600 text-xs font-semibold text-white">
                 {(job.assignedToName ?? '—').slice(0, 2).toUpperCase()}
@@ -401,32 +431,35 @@ export function JobCardDetailContent({
                 </div>
               )}
             </dl>
-          </Panel>
+          </DetailPanel>
         </div>
 
         <div className="space-y-4">
           {canViewMoney && (
-            <Panel icon={IndianRupee} title={t('common.payment')}>
-              <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-                <div>
-                  <dt className="text-xs text-muted-foreground uppercase">
-                    {t('pages.service.jobCardDetailContent.estimated')}
-                  </dt>
-                  <dd>₹{job.estimatedCost}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-muted-foreground uppercase">{t('common.advance')}</dt>
-                  <dd>₹{job.advanceReceived}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-muted-foreground uppercase">{t('common.paid')}</dt>
-                  <dd>₹{job.paidAmount}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-muted-foreground uppercase">{t('common.balance')}</dt>
+            <DetailPanel icon={IndianRupee} title={t('common.payment')} tone="accent">
+              {/* Money reads down a column, right-aligned and tabular, the way a bill does.
+               * Four label-over-value pairs in a 2×2 grid made ₹500 owed look like a field. */}
+              <dl className="text-sm">
+                <MoneyRow
+                  label={t('pages.service.jobCardDetailContent.estimated')}
+                  amount={job.estimatedCost}
+                />
+                <MoneyRow
+                  label={t('pages.service.jobCardDetailContent.partsCost')}
+                  amount={job.partsCost}
+                />
+                {job.finalAmount != null && (
+                  <MoneyRow label={t('common.finalAmount')} amount={job.finalAmount} strong />
+                )}
+                <MoneyRow label={t('common.advance')} amount={job.advanceReceived} muted />
+                <MoneyRow label={t('common.paid')} amount={job.paidAmount} muted />
+                <div className="mt-1 flex items-baseline justify-between border-t pt-2">
+                  <dt className="font-semibold">{t('common.balance')}</dt>
                   <dd
                     className={
-                      balance <= 0 ? 'font-medium text-teal-600' : 'font-medium text-amber-600'
+                      balance <= 0
+                        ? 'font-semibold text-teal-600'
+                        : 'text-base font-bold text-amber-600 tabular-nums'
                     }
                   >
                     {balance <= 0 ? (
@@ -440,18 +473,6 @@ export function JobCardDetailContent({
                   </dd>
                 </div>
               </dl>
-              <div className="flex justify-between border-t pt-2 text-sm">
-                <span className="text-muted-foreground">
-                  {t('pages.service.jobCardDetailContent.partsCost')}
-                </span>
-                <span>₹{job.partsCost}</span>
-              </div>
-              {job.finalAmount != null && (
-                <div className="flex justify-between text-sm font-medium">
-                  <span>{t('common.finalAmount')}</span>
-                  <span>₹{job.finalAmount}</span>
-                </div>
-              )}
               {/* What was actually taken, and how. The panel showed totals but never the
                * receipts behind them, so "Paid ₹250" could not be traced to anything — and a
                * refund on a bill edit was invisible here entirely. */}
@@ -487,10 +508,14 @@ export function JobCardDetailContent({
                   </div>
                 </div>
               )}
-            </Panel>
+            </DetailPanel>
           )}
 
-          <Panel icon={Cog} title={`Parts Used (${job.partsUsed.length})`}>
+          <DetailPanel
+            icon={Cog}
+            title={t('pages.service.jobCardDetailContent.partsUsed')}
+            action={<CountChip n={job.partsUsed.length} />}
+          >
             <div className="space-y-1.5">
               {job.partsUsed.map((p) => {
                 // Parts added before Edit Bill existed have no `itemCode`, so it is looked up
@@ -518,9 +543,19 @@ export function JobCardDetailContent({
                 )
               })}
               {job.partsUsed.length === 0 && (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground/70">
                   {t('pages.service.jobCardDetailContent.noPartsUsedYet')}
                 </p>
+              )}
+              {/* Every row carried its own total and the panel none, so the one number anyone
+               * adds up by hand — what the parts came to — was the one not shown. */}
+              {canViewMoney && job.partsUsed.length > 1 && (
+                <div className="flex items-baseline justify-between border-t pt-2 text-sm font-semibold">
+                  <span>{t('pages.service.jobCardDetailContent.partsTotal')}</span>
+                  <span className="tabular-nums">
+                    ₹{job.partsUsed.reduce((sum, part) => sum + part.rate * part.qty, 0)}
+                  </span>
+                </div>
               )}
             </div>
             {canAddParts &&
@@ -637,11 +672,15 @@ export function JobCardDetailContent({
                   {t('pages.service.jobCardDetailContent.addPart')}
                 </button>
               ))}
-          </Panel>
+          </DetailPanel>
 
-          <Panel icon={ImageIcon} title={t('pages.service.jobCardDetailContent.images')}>
+          <DetailPanel
+            icon={ImageIcon}
+            title={t('pages.service.jobCardDetailContent.images')}
+            action={job.imageUrls.length > 0 ? <CountChip n={job.imageUrls.length} /> : undefined}
+          >
             {job.imageUrls.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground/70">
                 {t('pages.service.jobCardDetailContent.noImagesUploaded')}
               </p>
             ) : (
@@ -671,21 +710,35 @@ export function JobCardDetailContent({
                 />
               </label>
             )}
-          </Panel>
+          </DetailPanel>
 
-          <Panel icon={StickyNote} title={`Notes (${job.notes.length})`}>
-            <button
-              type="button"
-              onClick={() => setNotesOpen((o) => !o)}
-              className="flex w-full items-center justify-between text-sm"
-            >
-              <span className="sr-only">{t('pages.service.jobCardDetailContent.toggleNotes')}</span>
-              {notesOpen ? (
-                <ChevronUp className="ml-auto size-4" />
-              ) : (
-                <ChevronDown className="ml-auto size-4" />
-              )}
-            </button>
+          {/* The toggle was a full-width button containing nothing but a chevron, which read as
+           * an empty row under the heading. It is a control on the heading, so it sits there. */}
+          <DetailPanel
+            icon={StickyNote}
+            title={t('common.notes')}
+            action={
+              <div className="flex items-center gap-1.5">
+                <CountChip n={job.notes.length} />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => setNotesOpen((o) => !o)}
+                  aria-expanded={notesOpen}
+                >
+                  <span className="sr-only">
+                    {t('pages.service.jobCardDetailContent.toggleNotes')}
+                  </span>
+                  {notesOpen ? (
+                    <ChevronUp className="size-4" />
+                  ) : (
+                    <ChevronDown className="size-4" />
+                  )}
+                </Button>
+              </div>
+            }
+          >
             {notesOpen && (
               <div className="space-y-2">
                 {job.notes.map((n) => (
@@ -704,7 +757,7 @@ export function JobCardDetailContent({
                 </button>
               </div>
             )}
-          </Panel>
+          </DetailPanel>
         </div>
 
         <div>

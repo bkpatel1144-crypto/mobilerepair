@@ -1215,7 +1215,9 @@
         "fitItAnyway": "તેમ છતાં લગાવો — ટાઇમલાઇન પર સ્ટોક ઓવરરાઇડ તરીકે નોંધાશે",
         "addPart": "પાર્ટ ઉમેરો",
         "addImage": "છબી ઉમેરો",
-        "paid": "ચૂકવાયું"
+        "paid": "ચૂકવાયું",
+        "partsUsed": "વપરાયેલા પાર્ટ્સ",
+        "partsTotal": "પાર્ટ્સ કુલ"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",

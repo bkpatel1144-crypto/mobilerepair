@@ -1,5 +1,14 @@
 import { useState } from 'react'
-import { PackageCheck, Ban, RotateCcw, Undo2 } from 'lucide-react'
+import {
+  PackageCheck,
+  Ban,
+  RotateCcw,
+  Undo2,
+  Tag,
+  FileText,
+  ReceiptText,
+  MessageCircle,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { FormModal } from '@/components/shared/form-modal'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -156,66 +165,11 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
 
   return (
     <>
-      <div className="flex flex-wrap gap-2">
-        {shows('cancel') && (
-          <Button
-            type="button"
-            variant="outline"
-            className="border-red-300 text-red-600 hover:bg-red-50"
-            onClick={() => setDialog('cancel')}
-          >
-            <Ban className="size-4" />
-            {t('pages.service.actionButtons.cancelJob')}
-          </Button>
-        )}
-        {canDo('SERVICE_JOB_CARDS_CREATE') && (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate(buildPath('service', 'job-cards') + '/create')}
-          >
-            <RotateCcw className="size-4" />
-            {t('pages.service.actionButtons.repeatJob')}
-          </Button>
-        )}
-        {canDo('SERVICE_JOB_CARDS_PRINT_LABEL') && (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handlePrintLabel}
-            disabled={!deviceTagTemplate}
-          >
-            {t('shared.printLabel')}
-          </Button>
-        )}
-        {canDo('SERVICE_JOB_CARDS_PRINT_RECEIPT') && (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handlePrintJobCard}
-            disabled={!jobCardTemplate}
-          >
-            {t('pages.service.actionButtons.printJobCard')}
-          </Button>
-        )}
-        {canDo('SERVICE_JOB_CARDS_INVOICE') && (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handlePrintBill}
-            disabled={!jobCardBillTemplate}
-          >
-            {t('pages.service.actionButtons.printBill')}
-          </Button>
-        )}
-        <Button
-          type="button"
-          className="bg-teal-600 hover:bg-teal-700"
-          render={<a href={whatsAppLink} target="_blank" rel="noreferrer" />}
-        >
-          {t('pages.service.actionButtons.whatsapp')}
-        </Button>
-
+      {/* Grouped by what the button does to the job, because eleven buttons in one
+       * undifferentiated wrap made "Cancel Job" the same weight as "Print Label" and hid
+       * the one action the job is actually waiting for. Workflow left, tools right,
+       * destructive last. */}
+      <div className="flex flex-wrap items-center gap-2 rounded-xl border bg-card p-2">
         {shows('takeJob') && (
           <Button
             type="button"
@@ -310,6 +264,73 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
             {t('pages.service.actionButtons.handOver')}
           </Button>
         )}
+
+        {/* Always available, never the point: they recede and sit out of the way. */}
+        <div className="ms-auto flex flex-wrap items-center gap-1.5">
+          {canDo('SERVICE_JOB_CARDS_CREATE') && (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => navigate(buildPath('service', 'job-cards') + '/create')}
+            >
+              <RotateCcw className="size-4" />
+              {t('pages.service.actionButtons.repeatJob')}
+            </Button>
+          )}
+          {canDo('SERVICE_JOB_CARDS_PRINT_LABEL') && (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={handlePrintLabel}
+              disabled={!deviceTagTemplate}
+            >
+              <Tag className="size-4" />
+              {t('shared.printLabel')}
+            </Button>
+          )}
+          {canDo('SERVICE_JOB_CARDS_PRINT_RECEIPT') && (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={handlePrintJobCard}
+              disabled={!jobCardTemplate}
+            >
+              <FileText className="size-4" />
+              {t('pages.service.actionButtons.printJobCard')}
+            </Button>
+          )}
+          {canDo('SERVICE_JOB_CARDS_INVOICE') && (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={handlePrintBill}
+              disabled={!jobCardBillTemplate}
+            >
+              <ReceiptText className="size-4" />
+              {t('pages.service.actionButtons.printBill')}
+            </Button>
+          )}
+          <Button
+            type="button"
+            className="bg-teal-600 hover:bg-teal-700"
+            render={<a href={whatsAppLink} target="_blank" rel="noreferrer" />}
+          >
+            <MessageCircle className="size-4" />
+            {t('pages.service.actionButtons.whatsapp')}
+          </Button>
+          <span className="mx-0.5 h-6 w-px bg-border" aria-hidden />
+          {shows('cancel') && (
+            <Button
+              type="button"
+              variant="outline"
+              className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-500/30 dark:hover:bg-red-500/10"
+              onClick={() => setDialog('cancel')}
+            >
+              <Ban className="size-4" />
+              {t('pages.service.actionButtons.cancelJob')}
+            </Button>
+          )}
+        </div>
       </div>
 
       {!isTerminal && allowUndo && job.lastActionUndo && (

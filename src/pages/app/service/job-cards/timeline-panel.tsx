@@ -22,6 +22,7 @@ import { formatTimestamp } from '@/lib/utils'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
 import type { TimelineEventWithId } from '@/hooks/use-job-cards'
 import { useTranslation } from 'react-i18next'
+import { DetailPanel, CountChip } from './detail-panel'
 
 const EVENT_ICONS: Record<string, LucideIcon> = {
   created: Plus,
@@ -57,11 +58,11 @@ export function TimelinePanel({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="space-y-1">
-      <div className="flex items-center gap-1.5 text-sm font-semibold">
-        <Clock className="size-4 text-muted-foreground" />
-        {t('common.timeline')}
-      </div>
+    <DetailPanel
+      icon={Clock}
+      title={t('common.timeline')}
+      action={events.length > 0 ? <CountChip n={events.length} /> : undefined}
+    >
       {error ? (
         // Every job card has at least a "Created" event written at intake, so an empty timeline
         // is only ever truthful when the read succeeded — "No activity yet" on a failed read
@@ -73,7 +74,7 @@ export function TimelinePanel({
           className="py-6"
         />
       ) : events.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground/70">
           {t('pages.service.timelinePanel.noActivityYet')}
         </p>
       ) : (
@@ -102,6 +103,6 @@ export function TimelinePanel({
           })}
         </ol>
       )}
-    </div>
+    </DetailPanel>
   )
 }

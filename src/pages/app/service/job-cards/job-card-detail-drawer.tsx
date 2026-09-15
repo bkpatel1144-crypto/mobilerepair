@@ -5,10 +5,14 @@ import { buildPath } from '@/config/nav'
 import { JobCardDetailContent } from './job-card-detail-content'
 import type { JobCardWithId } from '@/hooks/use-job-cards'
 
-/** The drawer half of "build one component, the drawer just renders it narrower" — same
- * `JobCardDetailContent`, just inside a `sm:max-w-3xl` sheet instead of the full page, so its
- * `lg:grid-cols-3` body naturally stacks to one/two columns here. The expand icon inside the
- * header navigates to the full-page route for the same job. */
+/** The drawer half of "build one component, the drawer just renders it narrower" — the same
+ * `JobCardDetailContent` inside a `sm:max-w-3xl` sheet instead of the full page.
+ *
+ * It stacks to two columns here rather than three because the content measures *itself*: the
+ * body is an `@container` and its columns key off the space it has, not the browser window.
+ * While it used `lg:grid-cols-3` the drawer asked the window and got three columns in a sheet,
+ * which wrapped receipt numbers over three lines. The expand icon in the header navigates to
+ * the full-page route for the same job. */
 export function JobCardDetailDrawer({
   job,
   open,

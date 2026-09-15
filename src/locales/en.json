@@ -1215,7 +1215,9 @@
         "fitItAnyway": "Fit it anyway — recorded on the timeline as a stock override",
         "addPart": "Add Part",
         "addImage": "Add Image",
-        "paid": "Paid"
+        "paid": "Paid",
+        "partsUsed": "Parts Used",
+        "partsTotal": "Parts Total"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "Couldn't load this job card",
