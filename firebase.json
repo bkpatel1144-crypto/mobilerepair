@@ -10,7 +10,7 @@
     "rules": "storage.rules"
   },
   "hosting": {
-    "site": "aimenterprise",
+    "site": "aim-enterprise",
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
