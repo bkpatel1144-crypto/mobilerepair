@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { collection, getDocs } from 'firebase/firestore'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { collection, doc, getDocs, serverTimestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { sessionsCollection } from '@/lib/firestore-paths'
+import { sessionDoc, sessionsCollection } from '@/lib/firestore-paths'
+import { addAuditLogToBatch, auditContextFrom } from '@/lib/audit-log'
 import { useAuth } from '@/hooks/use-auth'
 import { getCurrentSessionId, heartbeatCurrentSession } from '@/lib/session-lifecycle'
 import type { SessionDoc } from '@/types/firestore'
@@ -99,4 +100,43 @@ export function useSessionHeartbeat() {
     const id = setInterval(() => void heartbeatCurrentSession(companyId), HEARTBEAT_INTERVAL_MS)
     return () => clearInterval(id)
   }, [companyId])
+}
+
+/**
+ * Ends someone else's session — the answer to a lost or stolen device.
+ *
+ * Active Sessions could show every signed-in device and do nothing about any of them. Setting
+ * `endedAt` is only half of it: the field was written by a device logging *itself* out and read
+ * back by nobody, so on its own this would have been a button that changes a value the revoked
+ * phone never looks at. `heartbeatCurrentSession` now checks it each interval and signs out, so
+ * a revoked device drops within one heartbeat.
+ *
+ * The honest limit: this ends the *session*, not the Firebase Auth credential. Someone holding
+ * the password can sign in again, and that is a password reset, not a revoke. Disable the user
+ * in User Management when that is what you mean.
+ */
+export function useRevokeSession() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    networkMode: 'always',
+    mutationFn: async (input: { sessionId: string; userName: string; deviceLabel: string }) => {
+      const batch = writeBatch(db)
+      batch.update(doc(db, sessionDoc(companyId, input.sessionId)), {
+        endedAt: serverTimestamp(),
+      })
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: 'Revoke Session',
+        module: 'administration',
+        entityType: 'Session',
+        entityId: input.sessionId,
+        entityLabel: `${input.userName} — ${input.deviceLabel}`,
+        critical: true, // signs a device out from under whoever is holding it
+      })
+      await batch.commit()
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: sessionsQueryKey(companyId) }),
+  })
 }

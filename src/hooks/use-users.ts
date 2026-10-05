@@ -78,3 +78,58 @@ export function useSetUserStatus() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: usersQueryKey(companyId) }),
   })
 }
+
+/**
+ * Changes a teammate's name, mobile or role.
+ *
+ * There was no way to do this at all: User Management could create a user and disable one, and
+ * nothing in between. Promoting a technician to manager meant disabling their account and
+ * making a second one, which leaves the shop with two rows for one person and a job history
+ * attached to the dead one.
+ *
+ * Email is deliberately not editable. It is the Firebase Auth identity, and changing it here
+ * would change the Firestore row while leaving the sign-in untouched — a user who looks renamed
+ * and still logs in as the old address. That needs an Auth-side flow, which this app (client SDK
+ * only, no server) cannot do safely.
+ */
+export function useUpdateUser() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    networkMode: 'always',
+    mutationFn: async (input: {
+      uid: string
+      fullName: string
+      mobile: string | null
+      roleId: string
+      roleName: string
+      /** The role before this edit, so the audit entry says what actually changed. */
+      previousRoleName: string
+    }) => {
+      const batch = writeBatch(db)
+      batch.update(doc(db, userDoc(input.uid)), {
+        fullName: input.fullName,
+        mobile: input.mobile,
+        roleId: input.roleId,
+        roleName: input.roleName,
+        updatedAt: serverTimestamp(),
+      })
+      const roleChanged = input.roleName !== input.previousRoleName
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: 'Update User',
+        module: 'administration',
+        entityType: 'User',
+        entityId: input.uid,
+        entityLabel: input.fullName,
+        // A role change is what someone can do *after* it that matters, so it is logged as
+        // critical and says which way it went.
+        critical: roleChanged,
+        details: roleChanged ? { role: `${input.previousRoleName} → ${input.roleName}` } : {},
+      })
+      await batch.commit()
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: usersQueryKey(companyId) }),
+  })
+}

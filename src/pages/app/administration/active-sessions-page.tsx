@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Monitor, Users, Clock, ChevronRight, Wifi } from 'lucide-react'
+import { LogOut, Monitor, Users, Clock, ChevronRight, Wifi } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -8,10 +8,13 @@ import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
+import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { Button } from '@/components/ui/button'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
   useSessions,
   isSessionActive,
+  useRevokeSession,
   isSessionOnline,
   isSessionIdle,
   isCurrentSession,
@@ -51,6 +54,9 @@ export function ActiveSessionsPage() {
 
   const online = sessions.filter(isSessionOnline)
   const idle = sessions.filter(isSessionIdle)
+  const [revoking, setRevoking] = useState<SessionWithId | null>(null)
+  const revokeSession = useRevokeSession()
+
   const uniqueUsers = new Set(sessions.filter(isSessionActive).map((s) => s.userId)).size
 
   const filtered = sessions.filter((s) =>
@@ -129,6 +135,28 @@ export function ActiveSessionsPage() {
         searchPlaceholder={t('pages.administration.activeSessions.searchByUserDeviceIp')}
       />
 
+      <ConfirmDialog
+        open={!!revoking}
+        onOpenChange={(open: boolean) => !open && setRevoking(null)}
+        title={t('pages.administration.activeSessions.revokeSession')}
+        message={t('pages.administration.activeSessions.revokeConfirm', {
+          user: revoking?.userName ?? '',
+          device: revoking?.deviceLabel ?? '',
+        })}
+        confirmLabel={t('pages.administration.activeSessions.revokeSession')}
+        isPending={revokeSession.isPending}
+        onConfirm={async () => {
+          if (!revoking) return
+          await revokeSession.mutateAsync({
+            sessionId: revoking.id,
+            userName: revoking.userName,
+            deviceLabel: revoking.deviceLabel,
+          })
+          setRevoking(null)
+          setViewing(null)
+        }}
+      />
+
       <DataTable
         columns={columns}
         data={filtered}
@@ -156,6 +184,22 @@ export function ActiveSessionsPage() {
           icon={Monitor}
           title={viewing.userName}
           subtitle={viewing.deviceLabel}
+          actions={
+            // Only a live session can be ended, and not the one you are reading this on —
+            // signing yourself out from the admin screen is the Logout button, not this.
+            isSessionActive(viewing) && !isCurrentSession(viewing) ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-500/30 dark:hover:bg-red-500/10"
+                onClick={() => setRevoking(viewing)}
+              >
+                <LogOut className="size-3.5" />
+                {t('pages.administration.activeSessions.revokeSession')}
+              </Button>
+            ) : null
+          }
           badges={
             <>
               <StatusBadge

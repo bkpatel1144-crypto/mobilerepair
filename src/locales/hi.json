@@ -1628,7 +1628,9 @@
         "searchByUserDeviceIp": "उपयोगकर्ता, डिवाइस, IP से खोजें...",
         "thisIsYourCurrentSession": "यह आपका मौजूदा सत्र है",
         "thisDevice": "यह डिवाइस",
-        "technicalDetails": "तकनीकी विवरण"
+        "technicalDetails": "तकनीकी विवरण",
+        "revokeSession": "इस डिवाइस को साइन आउट करें",
+        "revokeConfirm": "{{device}} पर {{user}} को साइन आउट करें? वे एक मिनट में हट जाएंगे। यह सत्र समाप्त करता है, पासवर्ड नहीं — उसके लिए उपयोगकर्ता को अक्षम करें।"
       },
       "createRole": {
         "backToRoles": "भूमिकाओं पर वापस",
@@ -1817,7 +1819,12 @@
         "searchByNameEmailOrMobile": "नाम, ईमेल या मोबाइल से खोजें...",
         "enableUser": "उपयोगकर्ता चालू करें",
         "thisRestoresTheirAbilityToSign": "इससे उनकी लॉग इन करने की सुविधा वापस आ जाती है।",
-        "addNewUser": "नया उपयोगकर्ता जोड़ें"
+        "addNewUser": "नया उपयोगकर्ता जोड़ें",
+        "disableUser": "उपयोगकर्ता अक्षम करें",
+        "editUser": "उपयोगकर्ता संपादित करें",
+        "emailCannotChange": "ईमेल साइन-इन पता है और इसे यहाँ बदला नहीं जा सकता।",
+        "disable": "अक्षम करें",
+        "disableWarning": "यह उन्हें तुरंत साइन आउट कर देता है और पुनः सक्षम होने तक हर भविष्य के साइन-इन को रोकता है — पहले से चल रहे सत्र सहित।"
       }
     },
     "settings": {

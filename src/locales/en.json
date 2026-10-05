@@ -1628,7 +1628,9 @@
         "searchByUserDeviceIp": "Search by user, device, IP...",
         "thisIsYourCurrentSession": "This is your current session",
         "thisDevice": "This device",
-        "technicalDetails": "Technical details"
+        "technicalDetails": "Technical details",
+        "revokeSession": "Sign out this device",
+        "revokeConfirm": "Sign out {{user}} on {{device}}? They drop off within a minute. This ends the session, not the password — disable the user if you need that."
       },
       "createRole": {
         "backToRoles": "Back to roles",
@@ -1817,7 +1819,12 @@
         "searchByNameEmailOrMobile": "Search by name, email, or mobile...",
         "enableUser": "Enable User",
         "thisRestoresTheirAbilityToSign": "This restores their ability to sign in.",
-        "addNewUser": "Add New User"
+        "addNewUser": "Add New User",
+        "disableUser": "Disable User",
+        "editUser": "Edit User",
+        "emailCannotChange": "Email is the sign-in address and cannot be changed here.",
+        "disable": "Disable",
+        "disableWarning": "This immediately signs them out and blocks every future sign-in until re-enabled — including a session already in progress."
       }
     },
     "settings": {

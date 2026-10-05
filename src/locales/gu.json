@@ -1628,7 +1628,9 @@
         "searchByUserDeviceIp": "વપરાશકર્તા, ડિવાઇસ, IP થી શોધો...",
         "thisIsYourCurrentSession": "આ તમારું હાલનું સેશન છે",
         "thisDevice": "આ ડિવાઇસ",
-        "technicalDetails": "ટેકનિકલ વિગતો"
+        "technicalDetails": "ટેકનિકલ વિગતો",
+        "revokeSession": "આ ઉપકરણને સાઇન આઉટ કરો",
+        "revokeConfirm": "{{device}} પર {{user}} ને સાઇન આઉટ કરીએ? તેઓ એક મિનિટમાં નીકળી જશે. આ સત્ર સમાપ્ત કરે છે, પાસવર્ડ નહીં — તે માટે વપરાશકર્તાને નિષ્ક્રિય કરો."
       },
       "createRole": {
         "backToRoles": "ભૂમિકાઓ પર પાછા",
@@ -1817,7 +1819,12 @@
         "searchByNameEmailOrMobile": "નામ, ઈમેલ કે મોબાઇલથી શોધો...",
         "enableUser": "વપરાશકર્તા ચાલુ કરો",
         "thisRestoresTheirAbilityToSign": "આનાથી તેમની લોગ ઇન કરવાની સુવિધા પાછી આવે છે.",
-        "addNewUser": "નવો વપરાશકર્તા ઉમેરો"
+        "addNewUser": "નવો વપરાશકર્તા ઉમેરો",
+        "disableUser": "વપરાશકર્તા નિષ્ક્રિય કરો",
+        "editUser": "વપરાશકર્તા સંપાદિત કરો",
+        "emailCannotChange": "ઈમેલ એ સાઇન-ઇન સરનામું છે અને તેને અહીં બદલી શકાતું નથી.",
+        "disable": "નિષ્ક્રિય કરો",
+        "disableWarning": "આ તેમને તરત જ સાઇન આઉટ કરે છે અને ફરીથી સક્રિય ન થાય ત્યાં સુધી દરેક ભાવિ સાઇન-ઇન અટકાવે છે — પહેલેથી ચાલુ સત્ર સહિત."
       }
     },
     "settings": {

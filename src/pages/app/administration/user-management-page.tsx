@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, UserPlus, Phone, Mail, Ban, CheckCircle2 } from 'lucide-react'
+import { Users, UserPlus, Phone, Mail, Ban, CheckCircle2, Pencil } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { FilterBar } from '@/components/shared/filter-bar'
@@ -10,7 +10,18 @@ import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { EmptyState } from '@/components/shared/empty-state'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
-import { useUsers, useSetUserStatus, type UserWithId } from '@/hooks/use-users'
+import { useUsers, useSetUserStatus, useUpdateUser, type UserWithId } from '@/hooks/use-users'
+import { useRoles } from '@/hooks/use-roles'
+import { FormModal } from '@/components/shared/form-modal'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useAuth } from '@/hooks/use-auth'
 import { formatTimestamp } from '@/lib/utils'
 import { buildPath } from '@/config/nav'
@@ -36,6 +47,20 @@ export function UserManagementPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('active')
   const [selectedUser, setSelectedUser] = useState<UserWithId | null>(null)
   const [confirmingToggle, setConfirmingToggle] = useState(false)
+  /** The user being edited, held as a draft so cancelling changes nothing. */
+  const [editing, setEditing] = useState<UserWithId | null>(null)
+  const [draftName, setDraftName] = useState('')
+  const [draftMobile, setDraftMobile] = useState('')
+  const [draftRoleId, setDraftRoleId] = useState('')
+  const { data: roles = [] } = useRoles()
+  const updateUser = useUpdateUser()
+
+  function openEdit(u: UserWithId) {
+    setDraftName(u.fullName)
+    setDraftMobile(u.mobile ?? '')
+    setDraftRoleId(u.roleId)
+    setEditing(u)
+  }
 
   const counts = {
     total: users.length,
@@ -187,21 +212,36 @@ export function UserManagementPage() {
           !selectedUser.protected &&
           selectedUser.id !== currentUser?.uid &&
           selectedUser.status !== 'deleted' && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setConfirmingToggle(true)}
-            >
-              {selectedUser.status === 'active' ? (
-                <Ban className="size-3.5" />
-              ) : (
-                <CheckCircle2 className="size-3.5" />
-              )}
-              {selectedUser.status === 'active'
-                ? 'Disable User'
-                : t('pages.administration.userManagement.enableUser')}
-            </Button>
+            <>
+              {/* There was no way to change a teammate at all — not their name, not their
+               * mobile, and not their role. The only route from technician to manager was to
+               * disable the account and create a second one, which leaves the shop with two
+               * rows for one person and the job history on the dead one. */}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => openEdit(selectedUser)}
+              >
+                <Pencil className="size-3.5" />
+                {t('pages.administration.userManagement.editUser')}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setConfirmingToggle(true)}
+              >
+                {selectedUser.status === 'active' ? (
+                  <Ban className="size-3.5" />
+                ) : (
+                  <CheckCircle2 className="size-3.5" />
+                )}
+                {selectedUser.status === 'active'
+                  ? t('pages.administration.userManagement.disableUser')
+                  : t('pages.administration.userManagement.enableUser')}
+              </Button>
+            </>
           )
         }
         sections={
@@ -238,15 +278,19 @@ export function UserManagementPage() {
         <ConfirmDialog
           open={confirmingToggle}
           onOpenChange={setConfirmingToggle}
-          title={`${selectedUser.status === 'active' ? 'Disable' : t('common.enable')} "${selectedUser.fullName}"?`}
+          title={`${
+            selectedUser.status === 'active'
+              ? t('pages.administration.userManagement.disable')
+              : t('common.enable')
+          } "${selectedUser.fullName}"?`}
           message={
             selectedUser.status === 'active'
-              ? 'This immediately signs them out and blocks every future sign-in until re-enabled — including a session already in progress.'
+              ? t('pages.administration.userManagement.disableWarning')
               : t('pages.administration.userManagement.thisRestoresTheirAbilityToSign')
           }
           confirmLabel={
             selectedUser.status === 'active'
-              ? 'Disable User'
+              ? t('pages.administration.userManagement.disableUser')
               : t('pages.administration.userManagement.enableUser')
           }
           destructive={selectedUser.status === 'active'}
@@ -263,6 +307,77 @@ export function UserManagementPage() {
           }
         />
       )}
+
+      <FormModal
+        open={!!editing}
+        onOpenChange={(open) => !open && setEditing(null)}
+        title={t('pages.administration.userManagement.editUser')}
+        submitLabel={t('common.save')}
+        isSubmitting={updateUser.isPending}
+        error={updateUser.error ? updateUser.error.message : null}
+        onSubmit={async (e) => {
+          e.preventDefault()
+          if (!editing || !draftName.trim()) return
+          const role = roles.find((r) => r.id === draftRoleId)
+          if (!role) return
+          try {
+            await updateUser.mutateAsync({
+              uid: editing.id,
+              fullName: draftName.trim(),
+              mobile: draftMobile.trim() || null,
+              roleId: role.id,
+              roleName: role.name,
+              previousRoleName: editing.roleName,
+            })
+          } catch {
+            return // the modal stays open and shows what went wrong
+          }
+          setSelectedUser(null)
+          setEditing(null)
+        }}
+      >
+        <div className="space-y-3">
+          <div className="space-y-1.5">
+            <Label htmlFor="edit-user-name">{t('shared.fullName')}</Label>
+            <Input
+              id="edit-user-name"
+              value={draftName}
+              onChange={(e) => setDraftName(e.target.value)}
+              autoFocus
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="edit-user-mobile">{t('common.mobile')}</Label>
+            <Input
+              id="edit-user-mobile"
+              inputMode="tel"
+              value={draftMobile}
+              onChange={(e) => setDraftMobile(e.target.value)}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label>{t('common.role')}</Label>
+            <Select value={draftRoleId} onValueChange={(v) => v && setDraftRoleId(v)}>
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {roles.map((r) => (
+                  <SelectItem key={r.id} value={r.id}>
+                    {r.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {/* Email is the Firebase Auth identity. Changing it here would rename the Firestore
+           * row and leave the sign-in untouched — a user who looks renamed and still logs in as
+           * the old address. That needs an Auth-side flow this app has no server for. */}
+          <p className="text-xs text-muted-foreground">
+            {t('pages.administration.userManagement.emailCannotChange')}
+          </p>
+        </div>
+      </FormModal>
     </div>
   )
 }

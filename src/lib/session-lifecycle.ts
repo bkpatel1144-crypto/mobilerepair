@@ -7,7 +7,8 @@ import {
   writeBatch,
   type WriteBatch,
 } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+import { signOut } from 'firebase/auth'
+import { auth, db } from '@/lib/firebase'
 import { branchDoc, sessionDoc, sessionsCollection } from '@/lib/firestore-paths'
 import { getClientIp } from '@/lib/audit-log'
 import { deviceLabelFromUserAgent } from '@/lib/user-agent'
@@ -139,6 +140,26 @@ export async function heartbeatCurrentSession(companyId: string): Promise<void> 
   const sessionId = getCurrentSessionId()
   if (!sessionId) return
   try {
+    // Read before writing, because this is also where a revoked session finds out.
+    //
+    // `endedAt` was only ever set by a device logging itself out, and nothing anywhere read it
+    // back — so an owner "ending" someone's session from Active Sessions would have changed a
+    // field that no device consults, and the revoked phone would have carried on working. A
+    // revoke button that does not revoke is worse than no revoke button, because the owner
+    // believes the lost device is locked out.
+    //
+    // The heartbeat already runs on a timer and already knows which session it is. Checking
+    // here costs one read per interval and makes the revocation real.
+    const snap = await getDoc(doc(db, sessionDoc(companyId, sessionId)))
+    if (snap.exists() && (snap.data() as SessionDoc).endedAt !== null) {
+      try {
+        sessionStorage.removeItem(CURRENT_SESSION_STORAGE_KEY)
+      } catch {
+        // Nothing to clean up if it never got set.
+      }
+      await signOut(auth)
+      return
+    }
     await writeBatch(db)
       .update(doc(db, sessionDoc(companyId, sessionId)), { lastActivityAt: serverTimestamp() })
       .commit()
