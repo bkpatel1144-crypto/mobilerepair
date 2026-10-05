@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import type { DesignerDraft } from './use-designer-state'
 import type { PrintContext } from '@/lib/print-contexts'
 import { useTranslation } from 'react-i18next'
+import { qrSvg, code128Svg } from '@/lib/print-symbols'
 
 /** Screen pixels per millimetre at 100% zoom. 3.78 is the CSS definition (96dpi ÷ 25.4), so a
  * template drawn at 100% is genuinely life-size on a typical monitor. */
@@ -78,15 +79,29 @@ function ElementView({ el, values }: { el: PrintElement; values: PrintContext })
       )
     }
     case 'barcode':
-    case 'qrcode':
+    case 'qrcode': {
+      // The canvas draws the same symbol the printer will, so what you lay out is what comes
+      // out. It used to show the word "QR" in a dashed box, which told you nothing about how
+      // much room the real thing needs — and the real thing has a fixed aspect ratio, so a box
+      // sized against a text placeholder prints squashed.
+      const svg = text ? (el.type === 'qrcode' ? qrSvg(text) : code128Svg(text)) : null
+      if (!svg) {
+        return (
+          <div
+            className="flex size-full items-center justify-center border border-dashed border-muted-foreground/50 font-mono"
+            style={{ fontSize: `${Math.min(s.fontSize, 7)}pt`, letterSpacing: '0.5px' }}
+          >
+            {text || (el.type === 'qrcode' ? 'QR' : t('pages.settings.designer.barcode'))}
+          </div>
+        )
+      }
       return (
         <div
-          className="flex size-full items-center justify-center border border-dashed border-muted-foreground/50 font-mono"
-          style={{ fontSize: `${Math.min(s.fontSize, 7)}pt`, letterSpacing: '0.5px' }}
-        >
-          {text || (el.type === 'qrcode' ? 'QR' : t('pages.settings.designer.barcode'))}
-        </div>
+          className="flex size-full items-center justify-center overflow-hidden"
+          dangerouslySetInnerHTML={{ __html: svg }}
+        />
       )
+    }
     case 'field':
       if (el.showLabel) {
         return (

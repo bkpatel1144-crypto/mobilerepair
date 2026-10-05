@@ -778,10 +778,25 @@ export function JobCardDetailContent({
         title={t('pages.service.jobCardDetailContent.addNote')}
         submitLabel={t('pages.service.jobCardDetailContent.addNote')}
         isSubmitting={applyAction.isPending}
-        onSubmit={(e) => {
+        error={
+          applyAction.error
+            ? t('pages.service.actionButtons.actionFailed', {
+                reason: applyAction.error.message,
+              })
+            : null
+        }
+        onSubmit={async (e) => {
           e.preventDefault()
           if (!noteText.trim()) return
-          applyAction.mutate({ action: 'note', text: noteText.trim() })
+          // Waits for the write before closing. Firing and closing is how a note that Firestore
+          // refused outright still looked like it had saved — the dialog shut, the panel stayed
+          // empty, and nothing anywhere said why. Every other action on this job card already
+          // awaits its mutation; this was the one that did not.
+          try {
+            await applyAction.mutateAsync({ action: 'note', text: noteText.trim() })
+          } catch {
+            return // stays open, with `error` above saying what happened
+          }
           setNoteOpen(false)
           setNoteText('')
         }}

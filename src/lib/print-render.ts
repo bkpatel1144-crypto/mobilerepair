@@ -5,6 +5,7 @@ import {
   type PrintTemplateDoc,
 } from '@/types/firestore'
 import type { PrintContext } from '@/lib/print-contexts'
+import { qrSvg, code128Svg } from '@/lib/print-symbols'
 
 /** Print contexts are built from real records, so a field can legitimately be a number or
  * absent. Coerced once here rather than making every caller stringify its own context. */
@@ -79,13 +80,26 @@ function renderElement(el: PrintElement, values: PrintContext): string {
 
     case 'barcode':
     case 'qrcode': {
-      // Rendered as the encoded text with a monospace face rather than a fake bar pattern. A
-      // real symbology needs an encoder, and printing a decorative barcode that no scanner can
-      // read would be worse than printing the value plainly — see PROGRESS.md's "no fake data"
-      // bar. The value is still correct and human-readable.
+      // Real symbols, not the value in a dashed box.
+      //
+      // These printed as monospace text on the stated grounds that a fake bar pattern no
+      // scanner could read is worse than honest text. True — but the conclusion was wrong,
+      // because this app *has* a scanner: Scan Job Card decodes QR with `jsqr`. The loop was
+      // open at exactly one point, and it was this one: the app could read a label it was
+      // incapable of printing.
+      //
+      // Inline SVG, so it needs no network — printed HTML opens in a blank popup where an
+      // external `<img>` would come out as a broken box — and stays sharp at whatever mm the
+      // element was sized to.
       const raw = el.fieldKey ? valueOf(values, el.fieldKey) : (el.text ?? '')
       if (!raw) return ''
-      return `<div style="${styleAttr(el, 'font-family:monospace;letter-spacing:0.3mm;display:flex;align-items:center;justify-content:center;border:0.2mm dashed #999')}">${escapeHtml(raw)}</div>`
+      const svg = el.type === 'qrcode' ? qrSvg(raw) : code128Svg(raw)
+      if (svg) {
+        return `<div style="${styleAttr(el, 'display:flex;align-items:center;justify-content:center;overflow:hidden')}">${svg}</div>`
+      }
+      // Code 128 set B cannot carry every character. Printing the value plainly is right when
+      // the alternative is a symbol that scans as something else.
+      return `<div style="${styleAttr(el, 'font-family:monospace;letter-spacing:0.3mm;display:flex;align-items:center;justify-content:center')}">${escapeHtml(raw)}</div>`
     }
 
     case 'field': {
@@ -129,7 +143,22 @@ export function renderTemplateBody(template: PrintTemplateDoc, values: PrintCont
 /** Full standalone HTML document for one template + one record's values. */
 export function renderPrintHtml(template: PrintTemplateDoc, values: PrintContext): string {
   const { paper, margins, settings } = template
-  const contentWidth = paper.width - margins.left - margins.right
+
+  // `@page { size: … }` takes one length (a square), two lengths (width height), or a *named*
+  // page size optionally plus an orientation keyword. It does not take a length plus `auto`,
+  // and it does not take a length plus `landscape`. Both of those were being emitted — so the
+  // declaration was invalid, browsers dropped the whole rule, and every print in this app came
+  // out on the default A4 no matter what paper the template said. On an 80mm receipt printer
+  // that is a job card stretched across a page the printer does not have.
+  //
+  // `paper.height` was there the whole time and nothing read it.
+  const landscape = paper.orientation === 'landscape'
+  const pageW = landscape ? paper.height : paper.width
+  // Roll stock is set up as a width with no meaningful height. A roll is not infinite to CSS,
+  // so give it a long page rather than a zero one, and let the printer cut where it likes.
+  const pageH = (landscape ? paper.width : paper.height) || 297
+
+  const contentWidth = pageW - margins.left - margins.right
   const totalHeight = PRINT_BANDS.reduce((sum, b) => sum + (template.bandHeights[b] ?? 0), 0)
 
   const one = `<div class="pt-page" style="position:relative;width:${contentWidth}mm;height:${totalHeight}mm">${renderTemplateBody(template, values)}</div>`
@@ -144,13 +173,13 @@ export function renderPrintHtml(template: PrintTemplateDoc, values: PrintContext
 <meta charset="utf-8" />
 <title>${escapeHtml(template.name)}</title>
 <style>
-  @page { size: ${paper.width}mm ${paper.orientation === 'landscape' ? 'landscape' : 'auto'}; margin: 0; }
+  @page { size: ${pageW}mm ${pageH}mm; margin: 0; }
   * { box-sizing: border-box; }
   body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: ${margins.top}mm ${margins.right}mm ${margins.bottom}mm ${margins.left}mm;
-    width: ${paper.width}mm;
+    width: ${pageW}mm;
     color: #000;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -174,8 +203,21 @@ export function openPrintWindow(html: string): void {
   win.document.open()
   win.document.write(html)
   win.document.close()
-  win.onload = () => {
+
+  // `onload` was assigned *after* `document.close()`, which is a race it can lose: a short
+  // document written this way is often already complete by then, the load event has already
+  // fired, and the handler is attached to something that will never happen again — so Print
+  // opened a window and just sat there. Checking the state we are already in, rather than
+  // waiting for a transition we may have missed, is what makes it reliable.
+  const print = () => {
     win.focus()
     win.print()
+  }
+  if (win.document.readyState === 'complete') {
+    // Still a tick late: images and web fonts in the template need a frame to lay out, and
+    // printing before they do produces a blank or half-drawn page.
+    win.setTimeout(print, 150)
+  } else {
+    win.addEventListener('load', () => win.setTimeout(print, 150), { once: true })
   }
 }

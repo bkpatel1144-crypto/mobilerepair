@@ -1130,7 +1130,8 @@
         "resume": "Resume",
         "timeSpentMinutes": "Time Spent (minutes)",
         "alreadyAssignedTo": "Already with {{name}}",
-        "noOneElseToHandTo": "There is no one else to hand this job to. Add another user in Administration › User Management first."
+        "noOneElseToHandTo": "There is no one else to hand this job to. Add another user in Administration › User Management first.",
+        "actionFailed": "That didn't save. {{reason}}"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "Couldn't load the Create Job Card form",

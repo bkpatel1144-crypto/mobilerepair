@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore'
+import { collection, doc, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import {
   jobCardDoc,
@@ -308,7 +308,15 @@ function buildActionPatch(
         text: input.text,
         userId: uid,
         userName,
-        createdAt: serverTimestamp() as never,
+        // `Timestamp.now()`, not `serverTimestamp()`. Firestore rejects a sentinel inside an
+        // array element outright — "FieldValue.serverTimestamp() cannot be used inside an
+        // array" — so the whole batch failed and Add Note wrote *nothing*: no note, and no
+        // timeline entry either. The dialog closed on its own because the caller did not wait
+        // for the write, so it looked like it had worked every single time.
+        //
+        // `partsUsed` gets away with an array element because its objects carry no timestamp.
+        // A note needs one, and inside an array the client's clock is the only option there is.
+        createdAt: Timestamp.now(),
       }
       return {
         patch: { notes: [...job.notes, note] },
@@ -395,8 +403,7 @@ export function useApplyJobAction(job: JobCardWithId) {
         // A stock override joins it: it is the one action here that deliberately puts the
         // shop's own inventory out of step with what it holds.
         critical:
-          input.action === 'generateBill' ||
-          (input.action === 'addPart' && !!input.stockOverride),
+          input.action === 'generateBill' || (input.action === 'addPart' && !!input.stockOverride),
         details: { action: input.action },
       })
       await batch.commit()

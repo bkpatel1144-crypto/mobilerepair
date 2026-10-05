@@ -1130,7 +1130,8 @@
         "resume": "ફરી શરૂ કરો",
         "timeSpentMinutes": "લાગેલો સમય (મિનિટ)",
         "alreadyAssignedTo": "પહેલેથી {{name}} પાસે",
-        "noOneElseToHandTo": "આ જોબ સોંપવા માટે બીજું કોઈ નથી. પહેલા Administration › User Management માં બીજો વપરાશકર્તા ઉમેરો."
+        "noOneElseToHandTo": "આ જોબ સોંપવા માટે બીજું કોઈ નથી. પહેલા Administration › User Management માં બીજો વપરાશકર્તા ઉમેરો.",
+        "actionFailed": "તે સાચવાયું નથી. {{reason}}"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "જોબ કાર્ડ બનાવવાનું ફોર્મ લોડ થઈ શક્યું નથી",

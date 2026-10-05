@@ -1130,7 +1130,8 @@
         "resume": "फिर शुरू करें",
         "timeSpentMinutes": "लगा समय (मिनट)",
         "alreadyAssignedTo": "पहले से {{name}} के पास",
-        "noOneElseToHandTo": "इस जॉब को सौंपने के लिए कोई और नहीं है। पहले Administration › User Management में दूसरा उपयोगकर्ता जोड़ें।"
+        "noOneElseToHandTo": "इस जॉब को सौंपने के लिए कोई और नहीं है। पहले Administration › User Management में दूसरा उपयोगकर्ता जोड़ें।",
+        "actionFailed": "यह सहेजा नहीं गया। {{reason}}"
       },
       "createJobCard": {
         "couldnTLoadTheCreateJob": "जॉब कार्ड बनाने का फ़ॉर्म लोड नहीं हो सका",

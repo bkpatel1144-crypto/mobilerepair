@@ -162,6 +162,16 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
     closeDialog()
   }
 
+  // Not one of the seven modals on this screen surfaced a failure: each fired its mutation and
+  // closed, so a write Firestore refused was indistinguishable from one it accepted. That is how
+  // Add Note managed to fail on every attempt and look like it worked.
+  const actionError =
+    applyAction.error || recordPayment.error
+      ? t('pages.service.actionButtons.actionFailed', {
+          reason: (applyAction.error ?? recordPayment.error)?.message ?? '',
+        })
+      : null
+
   // Everyone except whoever already has it — handing a job to its current holder is not a
   // hand-over, and offering it as one is how the timeline filled with rows that changed nothing.
   const handoverCandidates = users.filter((u) => u.id !== job.assignedToId)
@@ -421,6 +431,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('pages.service.actionButtons.hold')}
         isSubmitting={applyAction.isPending}
+        error={actionError}
       >
         <div className="space-y-1.5">
           <Label>{t('pages.service.actionButtons.reason')}</Label>
@@ -446,6 +457,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('pages.service.actionButtons.cancelJob')}
         isSubmitting={applyAction.isPending}
+        error={actionError}
       >
         <div className="space-y-1.5">
           <Label>{t('pages.service.actionButtons.reason')}</Label>
@@ -471,6 +483,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('pages.service.actionButtons.jobDone')}
         isSubmitting={applyAction.isPending}
+        error={actionError}
       >
         <div className="space-y-1.5">
           <Label>
@@ -495,6 +508,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('pages.service.actionButtons.generateBill')}
         isSubmitting={applyAction.isPending || recordPayment.isPending}
+        error={actionError}
       >
         <div className="space-y-3">
           <div className="space-y-1.5">
@@ -548,6 +562,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('shared.recordPayment')}
         isSubmitting={recordPayment.isPending}
+        error={actionError}
       >
         <div className="grid grid-cols-2 gap-2">
           <div className="space-y-1.5">
@@ -585,6 +600,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('pages.service.actionButtons.handover')}
         isSubmitting={applyAction.isPending}
+        error={actionError}
       >
         <div className="space-y-1.5">
           <Label>{t('pages.service.actionButtons.handoverTo')}</Label>
@@ -625,6 +641,7 @@ export function ActionButtons({ job }: { job: JobCardWithId }) {
         onSubmit={submitDialog}
         submitLabel={t('pages.service.actionButtons.logVisit')}
         isSubmitting={applyAction.isPending}
+        error={actionError}
       >
         <div className="space-y-3">
           <div className="space-y-1.5">
