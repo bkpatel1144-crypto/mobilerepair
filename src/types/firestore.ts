@@ -497,6 +497,16 @@ export interface JobNote {
  * function end-to-end — intake, assignment, payment, parts, delivery, cancellation — matching
  * `preview (69)`'s table columns and `preview (71)`/`(72)`'s detail panels exactly. Rendered
  * *from* `formSchemas/jobCard` (Phase 4) at creation time, not a second hardcoded field list. */
+/** A bill that was raised and cancelled. The number is kept so it is never issued again. */
+export interface VoidedBill {
+  invoiceNumber: string | null
+  amount: number
+  reason: string
+  voidedAt: Timestamp
+  voidedById: string
+  voidedByName: string
+}
+
 export interface JobCardDoc {
   jobNumber: string // "JC-2026-27-00001"
   status: string // a `JOB_STATUSES` key from `workflow-statuses-actions.ts`
@@ -597,6 +607,20 @@ export interface JobCardDoc {
    * every job billed before this field existed; those keep showing their job number.
    */
   invoiceNumber?: string | null
+
+  /**
+   * Bills that were raised on this job and then cancelled.
+   *
+   * Kept, rather than simply undone, because of how GST numbering works: a cancelled invoice
+   * number may not be reused, and it may not silently disappear either — every number issued
+   * has to be accounted for, including the cancelled ones. So voiding a bill clears
+   * `invoiceNumber` (the next bill mints a fresh one) and pushes the old bill here, where
+   * Sales Invoices still lists it, marked Cancelled.
+   *
+   * An array because a job can be billed, corrected and billed again. Optional, because every
+   * job card written before this has no such field.
+   */
+  voidedBills?: VoidedBill[]
   closedAt: Timestamp | null
   cancelledAt: Timestamp | null
 }

@@ -36,6 +36,13 @@ export const ACTION_APPLICABLE_STATUSES: Record<string, string[]> = {
    * the job would move the shop's cost without moving the bill. After billing, the way to
    * change what was charged is Edit Bill. */
   removePart: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone'],
+  /* Only `ready` — billed, and the device still on the bench.
+   *
+   * Once a device has been handed over, cancelling its bill is not a correction, it is a
+   * credit note, and it has to answer what happens to money already collected and to a
+   * customer walking around with a receipt. That is a different feature; refusing here is
+   * better than half-doing it. */
+  voidBill: ['ready'],
   // One button where there were two — see `deliverAndClose` in use-job-actions.ts.
   deliverAndClose: ['ready'],
   deliver: ['ready'],

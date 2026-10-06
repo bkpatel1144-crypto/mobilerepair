@@ -1482,7 +1482,13 @@
         "aJobCardAppearsHereOnce": "A job card appears here once its bill has been generated from the job card's own Generate Bill action.",
         "billDate": "Bill Date",
         "closed": "Closed",
-        "clearDates": "Clear dates"
+        "clearDates": "Clear dates",
+        "cancelBill": "Cancel bill",
+        "cancelBillTitle": "Cancel {{number}}?",
+        "cancelBillMessage": "The job goes back to Tech Done so a new bill can be raised. {{number}} is kept on this list marked Cancelled and is never issued again — the next bill gets a fresh number. Payments already received are not touched.",
+        "cancelReason": "Why is this bill being cancelled?",
+        "cancelled": "Cancelled",
+        "onlyBeforeHandover": "A bill can only be cancelled before the device is handed over."
       },
       "editBill": {
         "editBill": "Edit Bill",

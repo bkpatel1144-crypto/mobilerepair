@@ -23,6 +23,7 @@ import type {
   JobTimelineEventDoc,
   PartUsed,
   ReceiptDoc,
+  VoidedBill,
 } from '@/types/firestore'
 
 /**
@@ -71,6 +72,13 @@ export type JobActionInput =
   | { action: 'removePart'; partId: string }
   | { action: 'removeImage'; url: string }
   | { action: 'removeNote'; noteId: string }
+  /* Cancels a bill that should not have been raised, and lets the job be billed again.
+   *
+   * Generate Bill was one-way. A bill raised for the wrong amount left `finalAmount` set and
+   * the job at `ready`, and the only routes out were cancelling the whole job — which is a
+   * different thing entirely, the customer's device is still on the bench — or delivering at
+   * the wrong price. */
+  | { action: 'voidBill'; reason: string }
 
 /** For an action whose target has already gone — two people pressing Remove on the same row. */
 function noop(uid: string, userName: string): Omit<JobTimelineEventDoc, 'createdAt'> {
@@ -320,6 +328,42 @@ function buildActionPatch(
           userName,
         },
       }
+    case 'voidBill': {
+      const voided: VoidedBill = {
+        invoiceNumber: job.invoiceNumber ?? null,
+        amount: job.finalAmount ?? 0,
+        reason: input.reason,
+        // `Timestamp.now()`, not `serverTimestamp()` — this goes inside an array element, and
+        // Firestore rejects a sentinel there outright. Add Note shipped broken for months on
+        // exactly that.
+        voidedAt: Timestamp.now(),
+        voidedById: uid,
+        voidedByName: userName,
+      }
+      return {
+        patch: {
+          // Back to where Generate Bill found it, so the bill can be raised again.
+          status: 'techDone',
+          finalAmount: null,
+          billGeneratedAt: null,
+          // Cleared on purpose. `useApplyJobAction` mints a number only when there is not one
+          // already, so leaving it would re-issue the cancelled number on the next bill —
+          // which GST does not allow. The old number lives on in `voidedBills` instead, and
+          // Sales Invoices still shows it.
+          invoiceNumber: null,
+          voidedBills: [...(job.voidedBills ?? []), voided],
+        },
+        event: {
+          type: 'billGenerated',
+          title: 'Bill Cancelled',
+          description: `Bill ${voided.invoiceNumber ?? ''} for ₹${voided.amount} cancelled: ${input.reason}`,
+          fromStatus: job.status,
+          toStatus: 'techDone',
+          userId: uid,
+          userName,
+        },
+      }
+    }
     case 'removePart': {
       const part = job.partsUsed.find((p) => p.id === input.partId)
       if (!part) return { patch: {}, event: noop(uid, userName) }
