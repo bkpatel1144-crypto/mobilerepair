@@ -1073,3 +1073,16 @@
 :root[data-look='studio'] [data-slot='status-dot'] {
   box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 18%, transparent);
 }
+
+/* The app shell owns the viewport.
+ *
+ * Set by `AppShell` while it is mounted, and only then — the marketing pages share this
+ * document and scroll normally. See the comment on the effect for what this is defending
+ * against: a stray 166px of document height that let the whole application be scrolled off
+ * the top of the screen, leaving blank page below it. */
+html[data-app-shell],
+html[data-app-shell] body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
