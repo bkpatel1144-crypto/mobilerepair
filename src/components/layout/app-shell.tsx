@@ -30,7 +30,7 @@ export function AppShell() {
        * used to span the full width with the wordmark and hamburger in it, which is not how the
        * reference app is built (see SCREENS_NOTES.md's capture: the sidebar owns the wordmark,
        * its own collapse toggle and a nav search, and runs floor to ceiling). */}
-      <div className="flex h-dvh overflow-hidden">
+      <div data-chrome-surface="shell" className="flex h-dvh overflow-hidden">
         <AppSidebar
           collapsed={collapsed}
           onExpandRequest={() => setCollapsed(false)}

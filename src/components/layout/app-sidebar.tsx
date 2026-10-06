@@ -47,6 +47,7 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
 
   return (
     <aside
+      data-chrome-surface="sidebar"
       className={cn(
         'hidden h-dvh shrink-0 flex-col border-r bg-sidebar transition-[width] duration-150 md:flex',
         collapsed ? 'w-16' : 'w-[270px]'

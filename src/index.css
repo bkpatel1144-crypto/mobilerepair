@@ -104,8 +104,14 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  /* Brand primary = teal-600 (#0d9488), matching the reference app's accent color. */
-  --primary: oklch(0.6 0.118 184.704);
+  /* Brand primary, the reference app's teal.
+   *
+   * Darkened from teal-600 (`oklch(0.6 …)`, #0d9488) because white text on it measured 3.52:1
+   * — under the 4.5:1 WCAG AA floor for normal text, on the most-pressed button in the app.
+   * It had been that way since the palette was written and nothing caught it; the appearance
+   * probe measures all eight accents in both themes now, which is what found it. Same hue and
+   * chroma, so it still reads as the brand colour. */
+  --primary: oklch(0.52 0.11 184.704);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -580,4 +586,298 @@
     12px 100%;
   background-repeat: no-repeat;
   background-attachment: local, local, scroll, scroll;
+}
+
+/* ===========================================================================
+ * Appearance: accent, cards, typeface, and the glass chrome layer.
+ *
+ * Driven by data attributes on <html> from `src/lib/appearance.ts`. Everything here overrides
+ * *role* variables only — `--primary`, `--card`, `--sidebar` — so no component knows which
+ * accent is active, and adding a colour never means touching a component again.
+ * ======================================================================== */
+
+/* --- Accent ---------------------------------------------------------------
+ * Each accent sets the same four roles. `--primary` is the fill, `--ring` the focus colour,
+ * and the two sidebar roles keep the active nav pill in the same hue family as the accent —
+ * which is what makes it read as part of the column rather than a sticker on it.
+ * `teal` is the default and is already in `:root`, so it needs no block. */
+:root[data-accent='navy'] {
+  --primary: oklch(0.45 0.13 264);
+  --ring: oklch(0.55 0.13 264);
+  --sidebar-primary: oklch(0.45 0.13 264);
+  --sidebar-accent: oklch(0.95 0.03 264);
+  --sidebar-accent-foreground: oklch(0.4 0.1 264);
+}
+:root[data-accent='forest'] {
+  --primary: oklch(0.52 0.12 149);
+  --ring: oklch(0.62 0.12 149);
+  --sidebar-primary: oklch(0.52 0.12 149);
+  --sidebar-accent: oklch(0.95 0.04 149);
+  --sidebar-accent-foreground: oklch(0.42 0.09 149);
+}
+:root[data-accent='indigo'] {
+  --primary: oklch(0.51 0.16 285);
+  --ring: oklch(0.61 0.16 285);
+  --sidebar-primary: oklch(0.51 0.16 285);
+  --sidebar-accent: oklch(0.95 0.035 285);
+  --sidebar-accent-foreground: oklch(0.43 0.12 285);
+}
+:root[data-accent='orchid'] {
+  --primary: oklch(0.55 0.17 310);
+  --ring: oklch(0.65 0.17 310);
+  --sidebar-primary: oklch(0.55 0.17 310);
+  --sidebar-accent: oklch(0.95 0.04 310);
+  --sidebar-accent-foreground: oklch(0.45 0.13 310);
+}
+:root[data-accent='rosewood'] {
+  --primary: oklch(0.52 0.14 15);
+  --ring: oklch(0.62 0.14 15);
+  --sidebar-primary: oklch(0.52 0.14 15);
+  --sidebar-accent: oklch(0.95 0.035 15);
+  --sidebar-accent-foreground: oklch(0.43 0.11 15);
+}
+:root[data-accent='amber'] {
+  /* Darker than the swatch looks, on purpose: amber at its natural lightness cannot carry
+   * white text at 4.5:1, and `--primary-foreground` is white in every other accent. */
+  --primary: oklch(0.52 0.12 75);
+  --ring: oklch(0.65 0.13 75);
+  --sidebar-primary: oklch(0.52 0.12 75);
+  --sidebar-accent: oklch(0.95 0.045 75);
+  --sidebar-accent-foreground: oklch(0.42 0.09 75);
+}
+:root[data-accent='slate'] {
+  --primary: oklch(0.44 0.03 250);
+  --ring: oklch(0.56 0.03 250);
+  --sidebar-primary: oklch(0.44 0.03 250);
+  --sidebar-accent: oklch(0.94 0.008 250);
+  --sidebar-accent-foreground: oklch(0.38 0.02 250);
+}
+
+/* Dark mode needs lighter accents — a 0.45-lightness fill on a 0.145 background is a hole, not
+ * a button — and the sidebar pill becomes a translucent wash of the accent rather than a tint. */
+.dark[data-accent='navy'] { --primary: oklch(0.62 0.14 264); --ring: oklch(0.62 0.14 264); }
+.dark[data-accent='forest'] { --primary: oklch(0.66 0.13 149); --ring: oklch(0.66 0.13 149); }
+.dark[data-accent='indigo'] { --primary: oklch(0.66 0.16 285); --ring: oklch(0.66 0.16 285); }
+.dark[data-accent='orchid'] { --primary: oklch(0.68 0.16 310); --ring: oklch(0.68 0.16 310); }
+.dark[data-accent='rosewood'] { --primary: oklch(0.64 0.14 15); --ring: oklch(0.64 0.14 15); }
+.dark[data-accent='amber'] { --primary: oklch(0.72 0.13 75); --ring: oklch(0.72 0.13 75); }
+.dark[data-accent='slate'] { --primary: oklch(0.6 0.03 250); --ring: oklch(0.6 0.03 250); }
+.dark[data-accent] {
+  --sidebar-primary: var(--primary);
+  --sidebar-accent: color-mix(in oklab, var(--primary) 18%, transparent);
+  --sidebar-accent-foreground: var(--primary);
+}
+
+/* --- Card style -----------------------------------------------------------
+ * The content layer only. `tinted` lifts cards slightly off the page; `filled` gives them the
+ * muted fill, which is what a dense screen wants when every row is a card. */
+:root[data-cards='tinted'] {
+  --card: color-mix(in oklab, var(--primary) 4%, var(--background));
+}
+:root[data-cards='filled'] {
+  --card: var(--muted);
+}
+.dark[data-cards='tinted'] {
+  --card: color-mix(in oklab, var(--primary) 10%, oklch(0.205 0 0));
+}
+.dark[data-cards='filled'] {
+  --card: oklch(0.24 0 0);
+}
+
+/* --- Typeface -------------------------------------------------------------
+ * System stacks for everything but Geist, which the app already bundles. A picker offering ten
+ * webfonts would add ten payloads to a shop on a phone connection to solve a preference. */
+:root[data-font='system'] body {
+  font-family:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+:root[data-font='serif'] body {
+  font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+:root[data-font='mono'] body {
+  font-family: ui-monospace, 'Cascadia Mono', Menlo, Consolas, 'Courier New', monospace;
+}
+
+/* --- Glass ----------------------------------------------------------------
+ * The floating chrome layer: sidebar, top bar, drawers, menus. Never content — no cards, rows,
+ * tables or chips. Two tiers, because `backdrop-filter` over a scrolling table is expensive on
+ * a mid-range phone and the look must survive without it.
+ *
+ * Tier B (this block) is the fallback and has to stand on its own: a high-opacity fill over the
+ * page colour, a rim highlight along the top edge, and a shadow. Tier A adds the blur. */
+.glass {
+  background-color: color-mix(in oklab, var(--card) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.35),
+    0 6px 18px -6px oklch(0 0 0 / 0.18);
+}
+.glass-lg {
+  background-color: color-mix(in oklab, var(--card) 94%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.35),
+    0 18px 40px -12px oklch(0 0 0 / 0.26);
+}
+.dark .glass,
+.dark .glass-lg {
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.14),
+    0 18px 40px -12px oklch(0 0 0 / 0.5);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .glass {
+    background-color: color-mix(in oklab, var(--card) 62%, transparent);
+    backdrop-filter: blur(24px) saturate(1.4);
+  }
+  .glass-lg {
+    background-color: color-mix(in oklab, var(--card) 76%, transparent);
+    backdrop-filter: blur(32px) saturate(1.4);
+  }
+}
+
+/* Identity. Three different reasons to switch glass off, one result: an opaque surface with a
+ * real border. Written as one rule so a surface can never be translucent in a mode that asked
+ * for it not to be. `prefers-reduced-transparency` support is still partial, which is why the
+ * high-contrast attribute is in the same list rather than relying on it. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-lg {
+    background-color: var(--card);
+    backdrop-filter: none;
+    box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.08);
+  }
+}
+:root[data-a11y-contrast] .glass,
+:root[data-a11y-contrast] .glass-lg {
+  background-color: var(--card);
+  backdrop-filter: none;
+  border-color: var(--foreground);
+  box-shadow: none;
+}
+
+/* --- Floating chrome ------------------------------------------------------
+ * The "try a new look" toggle. Opt-in, because it is a real change to a screen people already
+ * know, and `docked` stays the default for exactly that reason.
+ *
+ * Styled entirely from here, keyed off attributes, so no layout component knows which chrome is
+ * active — the same reason the accents override role variables rather than component classes.
+ * The hooks are explicit (`data-chrome-surface`) rather than `aside`/`header`, because
+ * `DetailPanel` also renders a `<header>` and would otherwise be caught by this. */
+:root[data-chrome='floating'] [data-chrome-surface='shell'] {
+  /* The page tint the floating surfaces sample. Without something behind them, translucency
+   * has nothing to be translucent against and glass just reads as grey. */
+  background:
+    radial-gradient(60rem 40rem at 12% -10%, color-mix(in oklab, var(--primary) 12%, transparent), transparent),
+    radial-gradient(50rem 36rem at 105% 8%, color-mix(in oklab, var(--primary) 8%, transparent), transparent),
+    var(--background);
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+:root[data-chrome='floating'] [data-chrome-surface='sidebar'] {
+  height: auto;
+  border: none;
+  border-radius: 1.25rem;
+  background-color: color-mix(in oklab, var(--sidebar) 70%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.35),
+    0 18px 40px -12px oklch(0 0 0 / 0.22);
+  overflow: hidden;
+}
+
+:root[data-chrome='floating'] [data-chrome-surface='topbar'] {
+  border: none;
+  border-radius: 1rem;
+  margin-bottom: 0.75rem;
+  background-color: color-mix(in oklab, var(--card) 70%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.35),
+    0 6px 18px -6px oklch(0 0 0 / 0.18);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  :root[data-chrome='floating'] [data-chrome-surface='sidebar'],
+  :root[data-chrome='floating'] [data-chrome-surface='topbar'] {
+    backdrop-filter: blur(28px) saturate(1.4);
+  }
+}
+
+.dark[data-chrome='floating'] [data-chrome-surface='sidebar'],
+.dark[data-chrome='floating'] [data-chrome-surface='topbar'] {
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.12),
+    0 18px 40px -12px oklch(0 0 0 / 0.5);
+}
+
+/* The floating surfaces round their own corners, so the scroll container has to stop painting
+ * a square edge underneath them. */
+:root[data-chrome='floating'] [data-chrome-surface='shell'] > div > main {
+  border-radius: 1rem;
+}
+
+/* Same identity rule as `.glass`: whichever accessibility mode asked for it, the surface
+ * becomes opaque with a real border and keeps its shape. */
+@media (prefers-reduced-transparency: reduce) {
+  :root[data-chrome='floating'] [data-chrome-surface='sidebar'] {
+    background-color: var(--sidebar);
+    backdrop-filter: none;
+  }
+  :root[data-chrome='floating'] [data-chrome-surface='topbar'] {
+    background-color: var(--card);
+    backdrop-filter: none;
+  }
+}
+:root[data-a11y-contrast][data-chrome='floating'] [data-chrome-surface='sidebar'],
+:root[data-a11y-contrast][data-chrome='floating'] [data-chrome-surface='topbar'] {
+  background-color: var(--card);
+  backdrop-filter: none;
+  border: 1px solid var(--foreground);
+  box-shadow: none;
+}
+
+/* The overlay layer — sheets, dialogs, popovers, menus — follows the chrome setting too.
+ *
+ * All four already share `bg-popover` and carry a `data-slot`, so this is one rule rather than
+ * four edited components. They are chrome by definition (Apple's floating functional layer), so
+ * they get glass; what is *inside* them stays solid content, which is why only the container is
+ * targeted and never its children. */
+:root[data-chrome='floating'] [data-slot='popover-content'],
+:root[data-chrome='floating'] [data-slot='dropdown-menu-content'],
+:root[data-chrome='floating'] [data-slot='dropdown-menu-sub-content'],
+:root[data-chrome='floating'] [data-slot='dialog-content'],
+:root[data-chrome='floating'] [data-slot='sheet-content'] {
+  background-color: color-mix(in oklab, var(--popover) 82%, transparent);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  :root[data-chrome='floating'] [data-slot='popover-content'],
+  :root[data-chrome='floating'] [data-slot='dropdown-menu-content'],
+  :root[data-chrome='floating'] [data-slot='dropdown-menu-sub-content'],
+  :root[data-chrome='floating'] [data-slot='dialog-content'],
+  :root[data-chrome='floating'] [data-slot='sheet-content'] {
+    background-color: color-mix(in oklab, var(--popover) 72%, transparent);
+    backdrop-filter: blur(28px) saturate(1.4);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root[data-chrome='floating'] [data-slot='popover-content'],
+  :root[data-chrome='floating'] [data-slot='dropdown-menu-content'],
+  :root[data-chrome='floating'] [data-slot='dropdown-menu-sub-content'],
+  :root[data-chrome='floating'] [data-slot='dialog-content'],
+  :root[data-chrome='floating'] [data-slot='sheet-content'] {
+    background-color: var(--popover);
+    backdrop-filter: none;
+  }
+}
+:root[data-a11y-contrast] [data-slot='popover-content'],
+:root[data-a11y-contrast] [data-slot='dropdown-menu-content'],
+:root[data-a11y-contrast] [data-slot='dropdown-menu-sub-content'],
+:root[data-a11y-contrast] [data-slot='dialog-content'],
+:root[data-a11y-contrast] [data-slot='sheet-content'] {
+  background-color: var(--popover);
+  backdrop-filter: none;
+  border-color: var(--foreground);
 }

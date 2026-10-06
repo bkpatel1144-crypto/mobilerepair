@@ -2458,6 +2458,32 @@
         "couldNotLoadTheCatalogue": "કેટલોગ લોડ થઈ શક્યું નથી.",
         "yourItemMasterIsEmpty": "તમારું આઇટમ માસ્ટર ખાલી છે. શરૂ કરવા માટે પ્રમાણભૂત સેવાઓ અને સ્પેર-પાર્ટ શ્રેણીઓ લોડ કરો."
       }
+    },
+    "appearance": {
+      "title": "દેખાવ",
+      "theme": "થીમ",
+      "colour": "રંગ",
+      "cards": "કાર્ડ",
+      "typeface": "ટાઇપફેસ",
+      "tryNewLook": "નવો દેખાવ અજમાવો",
+      "floatingChrome": "ફ્લોટિંગ સાઇડબાર અને ટોપ બાર",
+      "reset": "પ્રમાણભૂત દેખાવ પર રીસેટ કરો",
+      "savedOnThisDevice": "ફક્ત આ ઉપકરણ પર સાચવેલ.",
+      "cardWhite": "સફેદ",
+      "cardTinted": "રંગીન",
+      "cardFilled": "ભરેલું",
+      "fontGeist": "Geist",
+      "fontSystem": "સિસ્ટમ",
+      "fontSerif": "સેરિફ",
+      "fontMono": "મોનો",
+      "accentTeal": "ટીલ",
+      "accentNavy": "નેવી",
+      "accentForest": "ફોરેસ્ટ",
+      "accentIndigo": "ઇન્ડિગો",
+      "accentOrchid": "ઓર્કિડ",
+      "accentRosewood": "રોઝવુડ",
+      "accentAmber": "એમ્બર",
+      "accentSlate": "સ્લેટ"
     }
   },
   "marketing": {

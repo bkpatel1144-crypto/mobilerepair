@@ -2458,6 +2458,32 @@
         "couldNotLoadTheCatalogue": "Could not load the catalogue.",
         "yourItemMasterIsEmpty": "Your Item Master is empty. Load the standard services and spare-part categories to start from."
       }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "colour": "Colour",
+      "cards": "Cards",
+      "typeface": "Typeface",
+      "tryNewLook": "Try a new look",
+      "floatingChrome": "Floating sidebar and top bar",
+      "reset": "Reset to standard look",
+      "savedOnThisDevice": "Saved on this device only.",
+      "cardWhite": "White",
+      "cardTinted": "Tinted",
+      "cardFilled": "Filled",
+      "fontGeist": "Geist",
+      "fontSystem": "System",
+      "fontSerif": "Serif",
+      "fontMono": "Mono",
+      "accentTeal": "Teal",
+      "accentNavy": "Navy",
+      "accentForest": "Forest",
+      "accentIndigo": "Indigo",
+      "accentOrchid": "Orchid",
+      "accentRosewood": "Rosewood",
+      "accentAmber": "Amber",
+      "accentSlate": "Slate"
     }
   },
   "marketing": {

@@ -41,6 +41,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useTheme } from '@/hooks/use-theme'
+import { AppearancePanel } from '@/components/shared/appearance-panel'
 import { useTranslation } from 'react-i18next'
 import { useLanguage } from '@/hooks/use-language'
 import { LANGUAGES } from '@/lib/i18n'
@@ -73,7 +74,7 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
   const { language, setLanguage } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
-  const { theme, toggleTheme } = useTheme()
+  const { theme } = useTheme()
   const { profile, logOut } = useAuth()
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -101,7 +102,10 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
   }
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-background px-3 sm:px-4">
+    <header
+      data-chrome-surface="topbar"
+      className="flex h-14 shrink-0 items-center gap-3 border-b bg-background px-3 sm:px-4"
+    >
       {/* Mobile only. On desktop the sidebar is always present and carries its own collapse
        * toggle, so a second nav control up here was redundant; the wordmark moved into the
        * sidebar with it, matching the reference. */}
@@ -222,14 +226,30 @@ export function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
           {isFullscreen ? <Minimize className="size-4.5" /> : <Maximize className="size-4.5" />}
         </Button>
 
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          onClick={toggleTheme}
-          aria-label={t('shell.toggleTheme')}
-        >
-          {theme === 'dark' ? <Sun className="size-4.5" /> : <Moon className="size-4.5" />}
-        </Button>
+        {/* The theme toggle grew into the whole Appearance panel — theme is one of five things
+         * a person can change here now, and a button that flips only one of them while the rest
+         * hide in a settings page is the wrong shape. The icon still reflects the current theme,
+         * so the control a user already reaches for is where it always was. */}
+        <Popover>
+          <PopoverTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label={t('components.appearance.title')}
+              >
+                {theme === 'dark' ? (
+                  <Sun className="size-4.5" />
+                ) : (
+                  <Moon className="size-4.5" />
+                )}
+              </Button>
+            }
+          />
+          <PopoverContent align="end" className="glass-lg w-auto rounded-2xl p-0">
+            <AppearancePanel />
+          </PopoverContent>
+        </Popover>
 
         <Popover>
           <PopoverTrigger

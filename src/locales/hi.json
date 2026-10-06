@@ -2458,6 +2458,32 @@
         "couldNotLoadTheCatalogue": "कैटलॉग लोड नहीं हो सका।",
         "yourItemMasterIsEmpty": "आपका आइटम मास्टर खाली है। शुरू करने के लिए मानक सेवाएँ और स्पेयर-पार्ट श्रेणियाँ लोड करें।"
       }
+    },
+    "appearance": {
+      "title": "दिखावट",
+      "theme": "थीम",
+      "colour": "रंग",
+      "cards": "कार्ड",
+      "typeface": "टाइपफ़ेस",
+      "tryNewLook": "नया रूप आज़माएँ",
+      "floatingChrome": "फ़्लोटिंग साइडबार और टॉप बार",
+      "reset": "मानक रूप पर रीसेट करें",
+      "savedOnThisDevice": "केवल इस डिवाइस पर सहेजा गया।",
+      "cardWhite": "सफ़ेद",
+      "cardTinted": "रंगा हुआ",
+      "cardFilled": "भरा हुआ",
+      "fontGeist": "Geist",
+      "fontSystem": "सिस्टम",
+      "fontSerif": "सेरिफ़",
+      "fontMono": "मोनो",
+      "accentTeal": "टील",
+      "accentNavy": "नेवी",
+      "accentForest": "फ़ॉरेस्ट",
+      "accentIndigo": "इंडिगो",
+      "accentOrchid": "ऑर्किड",
+      "accentRosewood": "रोज़वुड",
+      "accentAmber": "एम्बर",
+      "accentSlate": "स्लेट"
     }
   },
   "marketing": {
