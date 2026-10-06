@@ -423,6 +423,7 @@
   --color-mk-accent: var(--mk-accent);
   --color-mk-accent-soft: var(--mk-accent-soft);
   --color-mk-warm: var(--mk-warm);
+  --color-mk-cool: var(--mk-cool);
 }
 
 :root {
@@ -437,6 +438,13 @@
   --mk-accent: oklch(0.6 0.118 184.704);
   --mk-accent-soft: oklch(0.72 0.11 186);
   --mk-warm: oklch(0.78 0.14 72);
+  /* The hero's second light. It used `--mk-warm`, an orange at hue 72, mixed over a teal
+   * field — and orange over teal is olive, which is why the hero read as murky rather than
+   * rich. The reasoning behind a second hue was right (a field lit by one colour looks
+   * tinted rather than lit); the hue was wrong. A cool blue sits on the other side of the
+   * teal and stays harmonious as the two overlap.
+   * `--mk-warm` keeps its own uses elsewhere. */
+  --mk-cool: oklch(0.56 0.15 248);
 }
 
 .dark {

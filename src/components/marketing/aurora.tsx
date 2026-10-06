@@ -44,7 +44,7 @@ export function Aurora({ className }: { className?: string }) {
         style={{
           animationDelay: '-6s',
           background:
-            'radial-gradient(circle, color-mix(in oklab, var(--color-mk-warm) 55%, transparent), transparent 60%)',
+            'radial-gradient(circle, color-mix(in oklab, var(--color-mk-cool) 62%, transparent), transparent 60%)',
         }}
       />
       <div

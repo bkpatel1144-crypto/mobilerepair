@@ -92,7 +92,14 @@ export function LandingPage() {
         className="-mt-16 overflow-hidden pt-16 lg:-mt-18 lg:pt-18"
       >
         <Aurora />
-        <Container className="relative py-(--spacing-section) lg:py-32 xl:py-40">
+        {/* Deliberately tighter than the rest of the page.
+         *
+         * This was `py-(--spacing-section) lg:py-32 xl:py-40` — up to 160px above *and*
+         * below, on top of the 64px the sticky header already reserves — which put the
+         * headline about 360px down and pushed the product screenshot off the bottom of a
+         * laptop screen. The one thing a landing page has to do in the first viewport is
+         * show the product, and this was spending that viewport on empty dark green. */}
+        <Container className="relative pt-10 pb-14 lg:pt-14 lg:pb-20 xl:pt-16 xl:pb-24">
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
             <div className="min-w-0">
               <Reveal>
@@ -112,7 +119,10 @@ export function LandingPage() {
                     className="bg-clip-text text-transparent"
                     style={{
                       backgroundImage:
-                        'linear-gradient(100deg, var(--color-mk-accent-soft), var(--color-mk-warm) 70%)',
+                        // Teal into cyan. It ran teal into the warm tan, and the midpoint of
+                        // that ramp lands on a dull khaki right where the thickest strokes of
+                        // the word are.
+                        'linear-gradient(100deg, var(--color-mk-accent-soft), oklch(0.82 0.13 200) 72%)',
                     }}
                   >
                     {COMPANY.productName}
