@@ -1,0 +1,79 @@
+{
+  "siteUrl": "https://aim-enterprise.web.app",
+  "siteName": "aim",
+  "orgName": "AIM ENTERPRISE",
+  "pages": [
+    {
+      "path": "/",
+      "title": "Repair Shop Software for Mobile & Electronics | aim",
+      "description": "Job cards, technician workflow, WhatsApp updates, GST billing and warranty tracking in one system. Built for Indian mobile repair shops. Free to start.",
+      "changefreq": "weekly",
+      "priority": 1
+    },
+    {
+      "path": "/features",
+      "title": "Features — Job Cards, Billing, Inventory | aim",
+      "description": "Every feature a repair shop runs on: intake job cards, parts and stock, GST invoices, second-hand device trade, technician reports and warranty lookup.",
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/solutions",
+      "title": "Solutions for Mobile, Laptop & Electronics Repair | aim",
+      "description": "How aim fits a single-counter mobile shop, a multi-technician service centre, or a second-hand device dealer — the same system, set up differently.",
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/pricing",
+      "title": "Pricing — Free for Every Repair Shop | aim",
+      "description": "What aim costs, what is included, and what is not. No per-job-card fees and no card required to start.",
+      "changefreq": "monthly",
+      "priority": 0.9
+    },
+    {
+      "path": "/about",
+      "title": "About AIM ENTERPRISE | aim",
+      "description": "Who builds aim, why it exists, and how a repair-shop ERP from Surat is made for the way Indian shops actually work.",
+      "changefreq": "yearly",
+      "priority": 0.5
+    },
+    {
+      "path": "/contact",
+      "title": "Contact AIM ENTERPRISE | aim",
+      "description": "Talk to the people who build aim. Phone, WhatsApp and email, plus the Surat address — answered by the team, not a queue.",
+      "changefreq": "yearly",
+      "priority": 0.6
+    },
+    {
+      "path": "/faq",
+      "title": "Frequently Asked Questions | aim",
+      "description": "Does it work offline? Is GST billing included? Can I import my existing data? The questions shops ask before they switch.",
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/privacy",
+      "title": "Privacy Policy | aim",
+      "description": "What data aim stores, where it is stored, who can see it, and how to delete it.",
+      "changefreq": "yearly",
+      "priority": 0.3
+    },
+    {
+      "path": "/terms",
+      "title": "Terms of Service | aim",
+      "description": "The terms under which AIM ENTERPRISE provides aim — what you can expect from the service, and what we ask of the shops that use it.",
+      "changefreq": "yearly",
+      "priority": 0.3
+    }
+  ],
+  "organization": {
+    "streetAddress": "40, Shankar Nagar, Adarsh Society, Ram Nagar, Hirabaugh",
+    "addressLocality": "Surat",
+    "addressRegion": "Gujarat",
+    "postalCode": "395006",
+    "addressCountry": "IN",
+    "telephone": "+91-9998181685",
+    "email": "kintesh@aimenterprise.in"
+  }
+}

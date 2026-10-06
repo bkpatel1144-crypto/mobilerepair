@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useSeo } from '@/hooks/use-seo'
 import { MarketingNav } from '@/components/marketing/marketing-nav'
 import { MarketingFooter } from '@/components/marketing/marketing-footer'
 import { AccessibilityWidget } from '@/components/a11y/accessibility-widget'
@@ -19,6 +20,10 @@ import { AccessibilityWidget } from '@/components/a11y/accessibility-widget'
 export function MarketingLayout() {
   const { t } = useTranslation()
   const { pathname, hash } = useLocation()
+
+  // Title, description, canonical and the social cards, per route. Without it every page after
+  // the first keeps the previous one's head.
+  useSeo()
 
   // Restore the top of the page on navigation. React Router keeps the scroll position by
   // default, so following a footer link from halfway down one page lands halfway down the next.
