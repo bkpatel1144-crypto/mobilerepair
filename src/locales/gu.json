@@ -1223,7 +1223,13 @@
         "addImage": "છબી ઉમેરો",
         "paid": "ચૂકવાયું",
         "partsUsed": "વપરાયેલા પાર્ટ્સ",
-        "partsTotal": "પાર્ટ્સ કુલ"
+        "partsTotal": "પાર્ટ્સ કુલ",
+        "removePart": "પાર્ટ દૂર કરો",
+        "removePartConfirm": "આ જોબમાંથી {{name}} દૂર કરીએ? પાર્ટ્સ ખર્ચમાંથી ₹{{amount}} ઘટશે અને ટાઈમલાઈનમાં નોંધાશે.",
+        "removeImage": "છબી દૂર કરો",
+        "removeImageConfirm": "આ જોબ કાર્ડમાંથી આ છબી દૂર કરીએ?",
+        "removeNote": "નોંધ દૂર કરો",
+        "removeNoteConfirm": "આ નોંધ દૂર કરીએ? ટાઈમલાઈનમાં તે દૂર કર્યાનો રેકોર્ડ રહેશે."
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "આ જોબ કાર્ડ લોડ થઈ શક્યું નથી",

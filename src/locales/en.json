@@ -1223,7 +1223,13 @@
         "addImage": "Add Image",
         "paid": "Paid",
         "partsUsed": "Parts Used",
-        "partsTotal": "Parts Total"
+        "partsTotal": "Parts Total",
+        "removePart": "Remove part",
+        "removePartConfirm": "Remove {{name}} from this job? ₹{{amount}} comes off the parts cost and the timeline records it.",
+        "removeImage": "Remove image",
+        "removeImageConfirm": "Remove this image from the job card?",
+        "removeNote": "Remove note",
+        "removeNoteConfirm": "Remove this note? The timeline keeps a record that it was removed."
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "Couldn't load this job card",

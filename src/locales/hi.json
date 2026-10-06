@@ -1223,7 +1223,13 @@
         "addImage": "छवि जोड़ें",
         "paid": "भुगतान हो गया",
         "partsUsed": "उपयोग किए गए पार्ट्स",
-        "partsTotal": "पार्ट्स कुल"
+        "partsTotal": "पार्ट्स कुल",
+        "removePart": "पार्ट हटाएँ",
+        "removePartConfirm": "इस जॉब से {{name}} हटाएँ? पार्ट्स लागत से ₹{{amount}} घटेगा और टाइमलाइन में दर्ज होगा।",
+        "removeImage": "छवि हटाएँ",
+        "removeImageConfirm": "इस जॉब कार्ड से यह छवि हटाएँ?",
+        "removeNote": "नोट हटाएँ",
+        "removeNoteConfirm": "यह नोट हटाएँ? टाइमलाइन में इसके हटाए जाने का रिकॉर्ड रहेगा।"
       },
       "jobCardDetail": {
         "couldnTLoadThisJobCard": "यह जॉब कार्ड लोड नहीं हो सका",

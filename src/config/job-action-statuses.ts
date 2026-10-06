@@ -31,6 +31,11 @@ export const ACTION_APPLICABLE_STATUSES: Record<string, string[]> = {
    */
   addPart: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone'],
   payment: ['techDone', 'ready', 'delivered', 'closed'],
+  /* Removing a part follows exactly the same rule as adding one, and for the same reason: once
+   * a bill exists, `finalAmount` is what the customer owes, and quietly taking a part back off
+   * the job would move the shop's cost without moving the bill. After billing, the way to
+   * change what was charged is Edit Bill. */
+  removePart: ['pending', 'inQueue', 'inProgress', 'onHold', 'techDone'],
   // One button where there were two — see `deliverAndClose` in use-job-actions.ts.
   deliverAndClose: ['ready'],
   deliver: ['ready'],

@@ -58,6 +58,24 @@ export type JobActionInput =
   | { action: 'fieldVisit'; durationMinutes?: number; note?: string }
   | { action: 'handover'; toUserId: string; toUserName: string }
   | { action: 'note'; text: string }
+  /* The inverses.
+   *
+   * `addPart`, `addImage` and `note` all existed with nothing to undo them, so a part entered
+   * at the wrong price, a photo of the wrong device and a note with the customer's name spelt
+   * wrong were all permanent. A shop cannot work that way, and the absence showed up as people
+   * creating a second job card to get a clean one.
+   *
+   * Each carries the label as well as the id, because the timeline entry has to say *what* was
+   * removed — by the time anyone reads it the record is gone, and "a part was removed" is not
+   * an audit trail. */
+  | { action: 'removePart'; partId: string }
+  | { action: 'removeImage'; url: string }
+  | { action: 'removeNote'; noteId: string }
+
+/** For an action whose target has already gone — two people pressing Remove on the same row. */
+function noop(uid: string, userName: string): Omit<JobTimelineEventDoc, 'createdAt'> {
+  return { type: 'note', title: 'No change', description: '', userId: uid, userName }
+}
 
 function buildActionPatch(
   job: JobCardWithId,
@@ -302,6 +320,50 @@ function buildActionPatch(
           userName,
         },
       }
+    case 'removePart': {
+      const part = job.partsUsed.find((p) => p.id === input.partId)
+      if (!part) return { patch: {}, event: noop(uid, userName) }
+      return {
+        patch: {
+          partsUsed: job.partsUsed.filter((p) => p.id !== input.partId),
+          // The cost comes back off too. Removing the row and leaving `partsCost` where it was
+          // would be the mirror of the bug that let parts be added to a billed job: the shop's
+          // own cost saying one thing and the list of parts saying another.
+          partsCost: Math.max(0, job.partsCost - part.rate * part.qty),
+        },
+        event: {
+          type: 'partAdded',
+          title: 'Part Removed',
+          description: `Part removed: ${part.itemName} x${part.qty} (−₹${part.rate * part.qty})`,
+          userId: uid,
+          userName,
+        },
+      }
+    }
+    case 'removeImage':
+      return {
+        patch: { imageUrls: job.imageUrls.filter((u) => u !== input.url) },
+        event: {
+          type: 'note',
+          title: 'Image Removed',
+          description: 'Image removed',
+          userId: uid,
+          userName,
+        },
+      }
+    case 'removeNote': {
+      const note = job.notes.find((n) => n.id === input.noteId)
+      return {
+        patch: { notes: job.notes.filter((n) => n.id !== input.noteId) },
+        event: {
+          type: 'note',
+          title: 'Note Removed',
+          description: note ? `Note removed: ${note.text}` : 'Note removed',
+          userId: uid,
+          userName,
+        },
+      }
+    }
     case 'note': {
       const note = {
         id: crypto.randomUUID(),

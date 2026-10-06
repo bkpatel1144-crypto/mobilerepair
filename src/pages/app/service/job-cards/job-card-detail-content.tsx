@@ -4,6 +4,7 @@ import {
   Phone,
   ClipboardList,
   Smartphone,
+  Trash2,
   AlertTriangle,
   UserRound,
   IndianRupee,
@@ -21,6 +22,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { FormModal } from '@/components/shared/form-modal'
+import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Textarea } from '@/components/ui/textarea'
@@ -143,6 +145,9 @@ export function JobCardDetailContent({
   /** The name typed into the parts picker before pressing Add. */
   const [addingPart, setAddingPart] = useState<string | null>(null)
   const [noteOpen, setNoteOpen] = useState(false)
+  /* One confirm for all three removals. Each carries its own message, so the dialog says what
+   * is about to go rather than asking "are you sure?" about nothing in particular. */
+  const [removing, setRemoving] = useState<{ message: string; run: () => void } | null>(null)
   const [noteText, setNoteText] = useState('')
 
   const partOptions = items.filter((i) => i.type === 'part' || i.type === 'service')
@@ -531,14 +536,38 @@ export function JobCardDetailContent({
                       <p className="truncate font-medium">{p.itemName}</p>
                       {code && <p className="text-xs text-muted-foreground">{code}</p>}
                     </div>
-                    {canViewMoney && (
-                      <div className="shrink-0 text-right">
-                        <p className="font-semibold">₹{p.rate * p.qty}</p>
-                        <p className="text-xs text-muted-foreground">
-                          ₹{p.rate} × {p.qty}
-                        </p>
-                      </div>
-                    )}
+                    <div className="flex shrink-0 items-start gap-1">
+                      {canViewMoney && (
+                        <div className="text-right">
+                          <p className="font-semibold">₹{p.rate * p.qty}</p>
+                          <p className="text-xs text-muted-foreground">
+                            ₹{p.rate} × {p.qty}
+                          </p>
+                        </div>
+                      )}
+                      {/* A part could be added and never taken off. One typed at the wrong
+                       * price stayed on the job and in the shop's costs for good. */}
+                      {canAddParts && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon-sm"
+                          className="text-muted-foreground hover:text-red-600"
+                          aria-label={t('pages.service.jobCardDetailContent.removePart')}
+                          onClick={() =>
+                            setRemoving({
+                              message: t('pages.service.jobCardDetailContent.removePartConfirm', {
+                                name: p.itemName,
+                                amount: p.rate * p.qty,
+                              }),
+                              run: () => applyAction.mutate({ action: 'removePart', partId: p.id }),
+                            })
+                          }
+                        >
+                          <Trash2 className="size-3.5" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 )
               })}
@@ -686,12 +715,31 @@ export function JobCardDetailContent({
             ) : (
               <div className="grid grid-cols-3 gap-2">
                 {job.imageUrls.map((url) => (
-                  <img
-                    key={url}
-                    src={url}
-                    alt={t('common.job')}
-                    className="aspect-square rounded-md object-cover"
-                  />
+                  <div key={url} className="group relative">
+                    <img
+                      src={url}
+                      alt={t('common.job')}
+                      className="aspect-square w-full rounded-md object-cover"
+                    />
+                    {canPerform('addImage') && (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        size="icon-sm"
+                        // Always reachable on touch, where there is no hover to reveal it.
+                        className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
+                        aria-label={t('pages.service.jobCardDetailContent.removeImage')}
+                        onClick={() =>
+                          setRemoving({
+                            message: t('pages.service.jobCardDetailContent.removeImageConfirm'),
+                            run: () => applyAction.mutate({ action: 'removeImage', url }),
+                          })
+                        }
+                      >
+                        <Trash2 className="size-3.5" />
+                      </Button>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
@@ -742,9 +790,29 @@ export function JobCardDetailContent({
             {notesOpen && (
               <div className="space-y-2">
                 {job.notes.map((n) => (
-                  <div key={n.id} className="rounded-md bg-muted/40 p-2 text-sm">
-                    <p>{n.text}</p>
-                    <p className="text-xs text-muted-foreground">{n.userName}</p>
+                  <div
+                    key={n.id}
+                    className="group flex items-start gap-2 rounded-md bg-muted/40 p-2 text-sm"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="break-words">{n.text}</p>
+                      <p className="text-xs text-muted-foreground">{n.userName}</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon-sm"
+                      className="shrink-0 text-muted-foreground opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-red-600 pointer-coarse:opacity-100"
+                      aria-label={t('pages.service.jobCardDetailContent.removeNote')}
+                      onClick={() =>
+                        setRemoving({
+                          message: t('pages.service.jobCardDetailContent.removeNoteConfirm'),
+                          run: () => applyAction.mutate({ action: 'removeNote', noteId: n.id }),
+                        })
+                      }
+                    >
+                      <Trash2 className="size-3.5" />
+                    </Button>
                   </div>
                 ))}
                 <button
@@ -768,6 +836,20 @@ export function JobCardDetailContent({
           />
         </div>
       </div>
+
+      <ConfirmDialog
+        open={!!removing}
+        onOpenChange={(open) => !open && setRemoving(null)}
+        title={t('common.confirm')}
+        message={removing?.message ?? ''}
+        confirmLabel={t('common.remove')}
+        destructive
+        isPending={applyAction.isPending}
+        onConfirm={() => {
+          removing?.run()
+          setRemoving(null)
+        }}
+      />
 
       <FormModal
         open={noteOpen}
