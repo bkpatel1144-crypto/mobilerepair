@@ -496,7 +496,8 @@
     "expand": "विस्तार करें",
     "collapse": "समेटें",
     "autoSaved": "स्वतः सहेजा गया",
-    "allTimeCapitalised": "सभी समय"
+    "allTimeCapitalised": "सभी समय",
+    "saving": "सहेजा जा रहा है…"
   },
   "pages": {
     "dashboard": {
@@ -595,7 +596,8 @@
         "posted": "दर्ज हुआ",
         "searchExpenseCategoryPartyNotes": "खर्च #, श्रेणी, पार्टी, टिप्पणी खोजें...",
         "setThisToHaveTheExpense": "यह भरने पर खर्च उस पार्टी के खाते में दिखेगा। चाय या भाड़े जैसी चीज़ों के लिए खाली छोड़ें।",
-        "paidBy": "भुगतान माध्यम"
+        "paidBy": "भुगतान माध्यम",
+        "editExpense": "खर्च संपादित करें"
       },
       "partyLedger": {
         "partyLedger": "पार्टी खाता",
@@ -1037,7 +1039,8 @@
         "enterASalePriceGreaterThan": "0 से अधिक विक्रय कीमत डालें।",
         "confirmSale": "विक्रय पक्का करें",
         "defaultsToWhatWasPurchasedWith": "डिफ़ॉल्ट रूप से वही जो डिवाइस के साथ खरीदा गया था — कुछ रोक रहे हों या नया जोड़ रहे हों तो बदलें।",
-        "devicePurchased": "ख़रीदा गया डिवाइस"
+        "devicePurchased": "ख़रीदा गया डिवाइस",
+        "sellDevice": "{{device}} बेचें"
       },
       "deviceStock": {
         "deviceStock": "डिवाइस स्टॉक",
@@ -1088,7 +1091,12 @@
         "sales": "विक्रय",
         "noSalesYet": "अभी कोई विक्रय नहीं",
         "devicesSoldFromDeviceSaleWill": "डिवाइस विक्रय से बेची गई डिवाइस यहाँ दिखेंगी।",
-        "profit": "लाभ (₹)"
+        "profit": "लाभ (₹)",
+        "voidSale": "बिक्री रद्द करें",
+        "voidSaleTitle": "{{number}} रद्द करें?",
+        "voidSaleMessage": "बिक्री रजिस्टर में \"रद्द\" के रूप में रहेगी और बिक्री व लाभ में नहीं गिनी जाएगी। {{device}} वापस डिवाइस स्टॉक में आ जाएगा और फिर से बेचा जा सकेगा।",
+        "voidReason": "कारण",
+        "voided": "रद्द"
       }
     },
     "service": {

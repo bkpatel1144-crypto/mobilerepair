@@ -496,7 +496,8 @@
     "expand": "વિસ્તૃત કરો",
     "collapse": "સંકોચો",
     "autoSaved": "આપમેળે સાચવ્યું",
-    "allTimeCapitalised": "બધો સમય"
+    "allTimeCapitalised": "બધો સમય",
+    "saving": "સાચવી રહ્યું છે…"
   },
   "pages": {
     "dashboard": {
@@ -595,7 +596,8 @@
         "posted": "નોંધાયું",
         "searchExpenseCategoryPartyNotes": "ખર્ચ #, શ્રેણી, પાર્ટી, નોંધ શોધો...",
         "setThisToHaveTheExpense": "આ ભરવાથી ખર્ચ તે પાર્ટીના ખાતામાં દેખાશે. ચા કે ભાડા જેવી વસ્તુઓ માટે ખાલી છોડો.",
-        "paidBy": "ચુકવણી માધ્યમ"
+        "paidBy": "ચુકવણી માધ્યમ",
+        "editExpense": "ખર્ચ સંપાદિત કરો"
       },
       "partyLedger": {
         "partyLedger": "પાર્ટી ખાતાવહી",
@@ -1037,7 +1039,8 @@
         "enterASalePriceGreaterThan": "0 થી વધુ વેચાણ કિંમત નાખો.",
         "confirmSale": "વેચાણ ખાતરી કરો",
         "defaultsToWhatWasPurchasedWith": "ડિફોલ્ટ રીતે તે જ જે ડિવાઇસ સાથે ખરીદ્યું હતું — કંઈ રાખી લેતા હો કે નવું ઉમેરતા હો તો બદલો.",
-        "devicePurchased": "ખરીદેલું ડિવાઇસ"
+        "devicePurchased": "ખરીદેલું ડિવાઇસ",
+        "sellDevice": "{{device}} વેચો"
       },
       "deviceStock": {
         "deviceStock": "ડિવાઇસ સ્ટોક",
@@ -1088,7 +1091,12 @@
         "sales": "વેચાણ",
         "noSalesYet": "હજી કોઈ વેચાણ નથી",
         "devicesSoldFromDeviceSaleWill": "ડિવાઇસ વેચાણમાંથી વેચેલી ડિવાઇસ અહીં દેખાશે.",
-        "profit": "નફો (₹)"
+        "profit": "નફો (₹)",
+        "voidSale": "વેચાણ રદ કરો",
+        "voidSaleTitle": "{{number}} રદ કરીએ?",
+        "voidSaleMessage": "વેચાણ રજિસ્ટરમાં \"રદ\" તરીકે રહેશે અને વેચાણ તથા નફામાં ગણાશે નહીં. {{device}} પાછું ડિવાઇસ સ્ટોકમાં આવશે અને ફરી વેચી શકાશે.",
+        "voidReason": "કારણ",
+        "voided": "રદ"
       }
     },
     "service": {

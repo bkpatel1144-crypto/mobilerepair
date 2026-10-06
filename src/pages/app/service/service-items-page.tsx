@@ -18,6 +18,7 @@ import {
   type ItemWithId,
 } from '@/hooks/use-items'
 import { useTranslation } from 'react-i18next'
+import { ItemStatusButton } from '@/components/shared/item-status-button'
 
 /**
  * Read-only-by-design view of Item Master, filtered to `type === 'service'` — matches
@@ -111,20 +112,27 @@ export function ServiceItemsPage() {
       render: (i) => (i.sellingPrice != null ? `₹${i.sellingPrice}` : '—'),
     },
     {
-      key: 'edit',
+      key: 'actions',
       header: '',
+      // Edit was the only thing a row could do. A service typed by mistake, or one the shop
+      // stopped offering, stayed in every picker in the app with no way to retire it —
+      // `useSetItemStatus` already existed and nothing on this screen reached it.
       render: (i) => (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            openEdit(i)
-          }}
-          className="flex items-center gap-1 py-1.5 text-sm text-teal-700 pointer-fine:py-0 hover:underline dark:text-teal-400"
+        <div
+          className="flex items-center justify-end gap-1"
+          // The row itself opens the detail; neither control should also do that.
+          onClick={(e) => e.stopPropagation()}
         >
-          <Pencil className="size-3.5" />
-          {t('common.edit')}
-        </button>
+          <button
+            type="button"
+            onClick={() => openEdit(i)}
+            className="flex items-center gap-1 py-1.5 text-sm text-teal-700 pointer-fine:py-0 hover:underline dark:text-teal-400"
+          >
+            <Pencil className="size-3.5" />
+            {t('common.edit')}
+          </button>
+          <ItemStatusButton item={i} />
+        </div>
       ),
     },
   ]

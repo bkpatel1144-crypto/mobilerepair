@@ -1,10 +1,13 @@
 import { useState } from 'react'
-import { Download, Receipt } from 'lucide-react'
+import { Ban, Download, Receipt } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
 import { FilterBar, type DateRangeKey } from '@/components/shared/filter-bar'
 import { DataTable, type DataTableColumn } from '@/components/shared/data-table'
+import { FormModal } from '@/components/shared/form-modal'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { StatusBadge } from '@/components/shared/status-badge'
 import { EmptyState } from '@/components/shared/empty-state'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
@@ -12,6 +15,8 @@ import { Button } from '@/components/ui/button'
 import { useSecondHandPurchases } from '@/hooks/use-second-hand-purchases'
 import {
   useSecondHandSales,
+  isLiveSale,
+  useVoidSecondHandSale,
   joinSaleWithPurchase,
   type SecondHandSaleWithId,
 } from '@/hooks/use-second-hand-sales'
@@ -30,6 +35,11 @@ export function SaleRegisterPage() {
   const [search, setSearch] = useState('')
   const [dateRange, setDateRange] = useState<DateRangeKey | 'all'>('all')
   const [viewing, setViewing] = useState<SecondHandSaleWithId | null>(null)
+  /* A sale is reversed from here because this is the only screen that lists sales — the Device
+   * Sale page lists purchases that are still available to sell. */
+  const [voiding, setVoiding] = useState<SecondHandSaleWithId | null>(null)
+  const [voidReason, setVoidReason] = useState('')
+  const voidSale = useVoidSecondHandSale()
 
   const bounds = dateRangeBounds(dateRange)
   const filtered = sales
@@ -47,8 +57,11 @@ export function SaleRegisterPage() {
         : true
     )
 
-  const totalSales = filtered.reduce((sum, s) => sum + s.salePrice, 0)
-  const totalProfit = filtered.reduce((sum, s) => sum + s.profit, 0)
+  // A reversed sale is still a row in the register — it happened and was undone — but it is
+  // not revenue, and it is not profit.
+  const counted = filtered.filter(isLiveSale)
+  const totalSales = counted.reduce((sum, s) => sum + s.salePrice, 0)
+  const totalProfit = counted.reduce((sum, s) => sum + s.profit, 0)
   const totalInvested = filtered.reduce((sum, s) => sum + s.purchasePrice + s.refurbCost, 0)
   const avgMargin = totalSales > 0 ? (totalProfit / totalSales) * 100 : 0
 
@@ -76,6 +89,30 @@ export function SaleRegisterPage() {
       header: t('common.salePrice'),
       sortValue: (s) => s.salePrice,
       render: (s) => `₹${s.salePrice}`,
+    },
+    {
+      key: 'actions',
+      header: '',
+      className: 'text-right',
+      render: (s) =>
+        isLiveSale(s) ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            className="text-red-600"
+            aria-label={t('pages.secondHandDevice.saleRegister.voidSale')}
+            onClick={(e) => {
+              e.stopPropagation()
+              setVoidReason('')
+              setVoiding(s)
+            }}
+          >
+            <Ban className="size-4" />
+          </Button>
+        ) : (
+          <StatusBadge status={t('pages.secondHandDevice.saleRegister.voided')} tone="danger" />
+        ),
     },
     {
       key: 'profit',
@@ -140,8 +177,54 @@ export function SaleRegisterPage() {
         onDateRangeChange={setDateRange}
       />
 
+      <FormModal
+        needsConnection
+        open={!!voiding}
+        onOpenChange={(o: boolean) => !o && setVoiding(null)}
+        title={t('pages.secondHandDevice.saleRegister.voidSaleTitle', {
+          number: voiding?.saleNumber ?? '',
+        })}
+        submitLabel={t('pages.secondHandDevice.saleRegister.voidSale')}
+        isSubmitting={voidSale.isPending}
+        error={voidSale.error ? voidSale.error.message : null}
+        onSubmit={async (e: React.FormEvent) => {
+          e.preventDefault()
+          if (!voiding || !voidReason.trim()) return
+          try {
+            await voidSale.mutateAsync({ sale: voiding, reason: voidReason.trim() })
+          } catch {
+            return // the modal stays open and says why
+          }
+          setVoiding(null)
+        }}
+      >
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            {t('pages.secondHandDevice.saleRegister.voidSaleMessage', {
+              device: voiding?.deviceLabel ?? '',
+            })}
+          </p>
+          {/* Required. Reversing a sale moves money and stock, and six months later the only
+           * thing that explains it is what someone typed here. */}
+          <div className="space-y-1.5">
+            <Label htmlFor="void-reason">
+              {t('pages.secondHandDevice.saleRegister.voidReason')}
+              <span className="text-red-600"> *</span>
+            </Label>
+            <Textarea
+              id="void-reason"
+              rows={2}
+              value={voidReason}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setVoidReason(e.target.value)}
+              autoFocus
+            />
+          </div>
+        </div>
+      </FormModal>
+
       <DataTable
         columns={columns}
+        rowClassName={(s) => (isLiveSale(s) ? undefined : 'opacity-55 line-through')}
         data={filtered}
         rowKey={(s) => s.id}
         isLoading={isLoading}

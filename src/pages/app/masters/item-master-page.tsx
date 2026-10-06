@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Package, Wrench, Plus, Pencil, Ban, CheckCircle2, Boxes, IndianRupee } from 'lucide-react'
+import { Package, Wrench, Plus, Pencil, CheckCircle2, Boxes, IndianRupee } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -11,7 +11,6 @@ import { EmptyState } from '@/components/shared/empty-state'
 import { DetailDrawer } from '@/components/shared/detail-drawer'
 import { useItemAttributes } from '@/hooks/use-item-attributes'
 import { attributeRows, attributesFor } from '@/lib/attribute-values'
-import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -20,7 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useItems, useSetItemStatus, type ItemRow } from '@/hooks/use-items'
+import { useItems, type ItemRow } from '@/hooks/use-items'
+import { ItemStatusButton } from '@/components/shared/item-status-button'
 import { useItemCategories } from '@/hooks/use-item-categories'
 import { usePermissions } from '@/hooks/use-permissions'
 import { TAX_CATEGORIES, TRACKING_TYPES, taxPercentOf } from '@/lib/item-defaults'
@@ -575,37 +575,3 @@ export function ItemMasterPage() {
   )
 }
 
-function ItemStatusButton({ item }: { item: ItemRow }) {
-  const { t } = useTranslation()
-  const setStatus = useSetItemStatus()
-  const [confirming, setConfirming] = useState(false)
-  const willDeactivate = item.status === 'active'
-
-  return (
-    <>
-      <Button type="button" variant="outline" size="sm" onClick={() => setConfirming(true)}>
-        {willDeactivate ? <Ban className="size-3.5" /> : <CheckCircle2 className="size-3.5" />}
-        {willDeactivate ? t('common.deactivate') : t('common.activate')}
-      </Button>
-      <ConfirmDialog
-        open={confirming}
-        onOpenChange={setConfirming}
-        title={`${willDeactivate ? t('common.deactivate') : t('common.activate')} "${item.name}"?`}
-        message={
-          willDeactivate
-            ? t('pages.masters.itemMaster.deactivatedItemsNoLongerAppear')
-            : t('pages.masters.itemMaster.thisItemWillBecomeSelectableAgain')
-        }
-        confirmLabel={willDeactivate ? t('common.deactivate') : t('common.activate')}
-        destructive={willDeactivate}
-        isPending={setStatus.isPending}
-        onConfirm={() =>
-          setStatus.mutate(
-            { id: item.id, status: willDeactivate ? 'disabled' : 'active', itemName: item.name },
-            { onSuccess: () => setConfirming(false) }
-          )
-        }
-      />
-    </>
-  )
-}

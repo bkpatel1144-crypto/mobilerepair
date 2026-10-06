@@ -14,7 +14,7 @@ import { useItems } from '@/hooks/use-items'
 import { useStock, stockSummary } from '@/hooks/use-stock'
 import { useUsers } from '@/hooks/use-users'
 import { useJobCards } from '@/hooks/use-job-cards'
-import { useSecondHandSales } from '@/hooks/use-second-hand-sales'
+import { useSecondHandSales, isLiveSale } from '@/hooks/use-second-hand-sales'
 import { useSecondHandPurchases } from '@/hooks/use-second-hand-purchases'
 import { useAuth } from '@/hooks/use-auth'
 import { JOB_STATUSES } from '@/config/workflow-statuses-actions'
@@ -135,7 +135,9 @@ export function RecentPartiesWidget({ label }: { label: string }) {
 
 export function SalesVsPurchaseWidget({ label }: { label: string }) {
   const { t } = useTranslation()
-  const { data: sales = [] } = useSecondHandSales()
+  // A reversed sale never happened as far as a revenue chart is concerned.
+  const { data: allSales = [] } = useSecondHandSales()
+  const sales = allSales.filter(isLiveSale)
   const { data: purchases = [] } = useSecondHandPurchases()
 
   // Second-hand trade, which is the one place this app records both a sale price and a purchase

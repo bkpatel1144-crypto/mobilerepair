@@ -1017,6 +1017,21 @@ export interface SecondHandSaleDoc {
 
   soldById: string
   soldByName: string
+
+  /**
+   * A sale entered by mistake, reversed.
+   *
+   * Optional, because every sale written before this existed has no such field and a missing
+   * value must read as "not voided" rather than as `undefined` leaking into a filter. Voided
+   * rather than deleted: the sale burned an `SHDS-` number and the device moved, so the record
+   * of that has to survive — and voiding is what puts the device back into stock.
+   */
+  voided?: boolean
+  voidedAt?: Timestamp | null
+  voidedById?: string | null
+  voidedByName?: string | null
+  voidReason?: string | null
+
   createdAt: Timestamp
   updatedAt: Timestamp
 }

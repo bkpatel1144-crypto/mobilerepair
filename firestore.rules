@@ -439,12 +439,26 @@ service cloud.firestore {
       }
 
       // ---- companies/{companyId}/secondHandSales/{id} ----------------------------------------
-      // Append-only, like every other financial-event doc in this app (receipts, timeline
-      // events) — a sale is never edited after the fact, only ever created.
+      // Append-only in content, reversible in fact.
+      //
+      // `allow update: if false` was right that a sale is never *edited* — the price, the buyer
+      // and the device are what happened — and wrong that it can therefore never change at all.
+      // A sale recorded against the wrong device marks a real handset `sold`, and with no way
+      // to reverse it that device is unsellable for ever.
+      //
+      // So the update is allowed only when the affected keys are exactly the void fields:
+      // every other field stays as immutable as before, and this cannot be used to quietly
+      // rewrite a price. One-way, too — a voided sale cannot be un-voided, because that would
+      // pull the device back out of stock with nothing to say it had been sold again.
       match /secondHandSales/{id} {
         allow read: if belongsToCompany(companyId);
         allow create: if belongsToCompany(companyId) && hasMenuAccess(companyId, 'second-hand-device/sale');
-        allow update: if false;
+        allow update: if belongsToCompany(companyId)
+          && hasMenuAccess(companyId, 'second-hand-device/sale')
+          && request.resource.data.diff(resource.data).affectedKeys()
+               .hasOnly(['voided', 'voidedAt', 'voidedById', 'voidedByName', 'voidReason', 'updatedAt'])
+          && request.resource.data.voided == true
+          && resource.data.get('voided', false) == false;
         allow delete: if false;
       }
 

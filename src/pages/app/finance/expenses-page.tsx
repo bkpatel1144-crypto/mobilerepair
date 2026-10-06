@@ -1,5 +1,14 @@
 import { useState } from 'react'
-import { Wallet, Plus, Ban, IndianRupee, Receipt as ReceiptIcon, Tag, Download } from 'lucide-react'
+import {
+  Wallet,
+  Plus,
+  Ban,
+  Pencil,
+  IndianRupee,
+  Receipt as ReceiptIcon,
+  Tag,
+  Download,
+} from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from '@/components/shared/stat-card'
 import { StatCardGrid } from '@/components/shared/stat-card-grid'
@@ -24,6 +33,7 @@ import {
 import {
   useExpenses,
   useCreateExpense,
+  useUpdateExpense,
   useVoidExpense,
   type ExpenseWithId,
 } from '@/hooks/use-expenses'
@@ -46,31 +56,53 @@ function modeFromName(name: string): ExpenseDoc['mode'] {
   return 'upi'
 }
 
-function NewExpenseModal({
+/**
+ * One modal for recording an expense and for correcting one.
+ *
+ * `editing` is what switches it. The alternative — a second, nearly identical modal — is how
+ * the two drift: the create form grows a field, the edit form does not, and the only way to
+ * set that field on an existing row becomes voiding it and typing it again.
+ */
+function ExpenseModal({
   open,
   onOpenChange,
+  editing,
 }: {
   open: boolean
   onOpenChange: (o: boolean) => void
+  /** An existing expense to correct, or `null` to record a new one. */
+  editing?: ExpenseWithId | null
 }) {
   const { t } = useTranslation()
   const create = useCreateExpense()
+  const update = useUpdateExpense()
   const { data: categories = [] } = useExpenseCategories()
   const createCategory = useCreateExpenseCategory()
   const { data: parties = [] } = useParties()
   const { data: modes = [] } = usePaymentModes()
 
   const today = toDateInputValue(new Date())
-  const [date, setDate] = useState(today)
-  const [categoryId, setCategoryId] = useState<string | null>(null)
-  const [amount, setAmount] = useState('')
-  const [mode, setMode] = useState<ExpenseDoc['mode']>('cash')
-  const [partyId, setPartyId] = useState<string | null>(null)
-  const [notes, setNotes] = useState('')
+
+  /* Initialised from `editing`, not synced to it.
+   *
+   * The first version prefilled in a `useEffect`, which the React Compiler rejects outright —
+   * setting state from an effect on every open is a cascading render, and it is also the wrong
+   * shape: these fields are a *draft*, owned by the form, seeded once. The call site gives the
+   * modal a `key` so React remounts it when the row changes, which re-runs these initialisers
+   * and costs nothing. */
+  const [date, setDate] = useState(() =>
+    editing ? toDateInputValue(editing.expenseDate.toDate()) : today
+  )
+  const [categoryId, setCategoryId] = useState<string | null>(editing?.categoryId ?? null)
+  const [amount, setAmount] = useState(editing ? String(editing.amount) : '')
+  const [mode, setMode] = useState<ExpenseDoc['mode']>(editing?.mode ?? 'cash')
+  const [partyId, setPartyId] = useState<string | null>(editing?.paidToPartyId ?? null)
+  const [notes, setNotes] = useState(editing?.notes ?? '')
   const [error, setError] = useState<string | null>(null)
 
   const category = categories.find((c) => c.id === categoryId)
   const party = parties.find((p) => p.id === partyId)
+
 
   function reset() {
     setDate(today)
@@ -97,17 +129,19 @@ function NewExpenseModal({
       setError(t('shared.enterAnAmountGreaterThanZero'))
       return
     }
+    const fields = {
+      expenseDate: new Date(`${date}T00:00:00`),
+      categoryId: category.id,
+      categoryName: category.name,
+      amount: value,
+      mode,
+      paidToPartyId: party?.id ?? null,
+      paidToPartyName: party?.name ?? null,
+      notes: notes.trim() || null,
+    }
     try {
-      await create.mutateAsync({
-        expenseDate: new Date(`${date}T00:00:00`),
-        categoryId: category.id,
-        categoryName: category.name,
-        amount: value,
-        mode,
-        paidToPartyId: party?.id ?? null,
-        paidToPartyName: party?.name ?? null,
-        notes: notes.trim() || null,
-      })
+      if (editing) await update.mutateAsync({ expense: editing, ...fields })
+      else await create.mutateAsync(fields)
       reset()
       onOpenChange(false)
     } catch (err) {
@@ -126,9 +160,15 @@ function NewExpenseModal({
         if (!o) reset()
         onOpenChange(o)
       }}
-      title={t('pages.finance.expenses.newExpense')}
+      title={editing ? t('pages.finance.expenses.editExpense') : t('pages.finance.expenses.newExpense')}
       description={t('pages.finance.expenses.recordedAsMoneyOutItAppears')}
-      submitLabel={create.isPending ? 'Saving…' : t('pages.finance.expenses.recordExpense')}
+      submitLabel={
+        create.isPending || update.isPending
+          ? t('shared.saving')
+          : editing
+            ? t('common.save')
+            : t('pages.finance.expenses.recordExpense')
+      }
       isSubmitting={create.isPending}
       onSubmit={handleSubmit}
     >
@@ -242,6 +282,7 @@ export function ExpensesPage() {
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [newOpen, setNewOpen] = useState(false)
   const [voidTarget, setVoidTarget] = useState<ExpenseWithId | null>(null)
+  const [editTarget, setEditTarget] = useState<ExpenseWithId | null>(null)
 
   const { data: categories = [] } = useExpenseCategories()
 
@@ -330,19 +371,36 @@ export function ExpensesPage() {
       className: 'text-right',
       render: (e) =>
         e.voided ? null : (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            aria-label={`Void ${e.expenseNumber}`}
-            className="text-red-600"
-            onClick={(ev) => {
-              ev.stopPropagation()
-              setVoidTarget(e)
-            }}
-          >
-            <Ban className="size-4" />
-          </Button>
+          <div className="flex items-center justify-end gap-0.5">
+            {/* Correcting an amount used to mean voiding the row and typing it again, which
+             * burns an EXP- number, leaves a voided line in the list for ever, and makes one
+             * mistyped expense look like two expenses. */}
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label={`${t('common.edit')} ${e.expenseNumber}`}
+              onClick={(ev) => {
+                ev.stopPropagation()
+                setEditTarget(e)
+              }}
+            >
+              <Pencil className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label={`Void ${e.expenseNumber}`}
+              className="text-red-600"
+              onClick={(ev) => {
+                ev.stopPropagation()
+                setVoidTarget(e)
+              }}
+            >
+              <Ban className="size-4" />
+            </Button>
+          </div>
         ),
     },
   ]
@@ -446,7 +504,16 @@ export function ExpensesPage() {
         }
       />
 
-      <NewExpenseModal open={newOpen} onOpenChange={setNewOpen} />
+      <ExpenseModal open={newOpen} onOpenChange={setNewOpen} />
+
+      {/* `key` so the draft is rebuilt for each row — without it, opening a second expense
+        * after a first would show the first one's values. */}
+      <ExpenseModal
+        key={editTarget?.id ?? 'none'}
+        open={!!editTarget}
+        onOpenChange={(o) => !o && setEditTarget(null)}
+        editing={editTarget}
+      />
 
       <ConfirmDialog
         open={!!voidTarget}

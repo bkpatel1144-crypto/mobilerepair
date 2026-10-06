@@ -496,7 +496,8 @@
     "expand": "Expand",
     "collapse": "Collapse",
     "autoSaved": "Auto-saved",
-    "allTimeCapitalised": "All Time"
+    "allTimeCapitalised": "All Time",
+    "saving": "Saving…"
   },
   "pages": {
     "dashboard": {
@@ -595,7 +596,8 @@
         "posted": "Posted",
         "searchExpenseCategoryPartyNotes": "Search expense #, category, party, notes...",
         "setThisToHaveTheExpense": "Set this to have the expense show on that party's ledger. Leave empty for things like tea or transport.",
-        "paidBy": "Paid by"
+        "paidBy": "Paid by",
+        "editExpense": "Edit Expense"
       },
       "partyLedger": {
         "partyLedger": "Party Ledger",
@@ -1037,7 +1039,8 @@
         "enterASalePriceGreaterThan": "Enter a sale price greater than 0.",
         "confirmSale": "Confirm Sale",
         "defaultsToWhatWasPurchasedWith": "Defaults to what was purchased with the device — edit if you're keeping anything back or adding something new.",
-        "devicePurchased": "Device Purchased"
+        "devicePurchased": "Device Purchased",
+        "sellDevice": "Sell {{device}}"
       },
       "deviceStock": {
         "deviceStock": "Device Stock",
@@ -1088,7 +1091,12 @@
         "sales": "Sales",
         "noSalesYet": "No sales yet",
         "devicesSoldFromDeviceSaleWill": "Devices sold from Device Sale will appear here.",
-        "profit": "Profit (₹)"
+        "profit": "Profit (₹)",
+        "voidSale": "Void sale",
+        "voidSaleTitle": "Void {{number}}?",
+        "voidSaleMessage": "The sale stays in the register marked Voided and stops counting towards sales and profit. {{device}} goes back into Device Stock and can be sold again.",
+        "voidReason": "Reason",
+        "voided": "Voided"
       }
     },
     "service": {

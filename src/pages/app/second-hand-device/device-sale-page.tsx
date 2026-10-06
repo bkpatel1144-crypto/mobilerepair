@@ -30,6 +30,7 @@ import {
 } from '@/hooks/use-second-hand-purchases'
 import {
   useSecondHandSales,
+  isLiveSale,
   useCreateSecondHandSale,
   secondHandSalesQueryKey,
 } from '@/hooks/use-second-hand-sales'
@@ -52,7 +53,9 @@ export function DeviceSalePage() {
   const availableToSell = purchases.filter((p) => p.status === 'inStock')
   const inRefurb = purchases.filter((p) => p.status === 'inRefurb')
   const sold = purchases.filter((p) => p.status === 'sold')
-  const totalProfit = sales.reduce((sum, s) => sum + s.profit, 0)
+  // Voided sales stay in the list and out of the totals.
+  const live = sales.filter(isLiveSale)
+  const totalProfit = live.reduce((sum, s) => sum + s.profit, 0)
 
   const bounds = dateRangeBounds(dateRange)
   const filtered = availableToSell
@@ -243,7 +246,11 @@ function SellDeviceModal({
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Sell {deviceLabel(purchase)}</DialogTitle>
+          <DialogTitle>
+            {t('pages.secondHandDevice.deviceSale.sellDevice', {
+              device: deviceLabel(purchase),
+            })}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-2 rounded-md bg-muted/40 p-3 text-sm">
@@ -348,7 +355,9 @@ function SellDeviceModal({
             {t('common.cancel')}
           </Button>
           <Button type="button" onClick={handleConfirm} disabled={createSale.isPending}>
-            {createSale.isPending ? 'Saving…' : t('pages.secondHandDevice.deviceSale.confirmSale')}
+            {createSale.isPending
+              ? t('shared.saving')
+              : t('pages.secondHandDevice.deviceSale.confirmSale')}
           </Button>
         </div>
       </DialogContent>

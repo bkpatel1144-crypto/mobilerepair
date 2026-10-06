@@ -32,6 +32,9 @@ const ROOT = 'src/pages/app'
  */
 const READ_ONLY = new Set([
   'administration/login-report-page.tsx',
+  // Lists purchases that are still available to sell, as a way in to recording a sale. It owns
+  // none of those rows — Device Purchase does.
+  'second-hand-device/device-sale-page.tsx',
   'administration/system-audit-page.tsx',
   'finance/cash-book-page.tsx',
   'finance/party-ledger-page.tsx',
@@ -46,7 +49,6 @@ const READ_ONLY = new Set([
   'reports/technician-report-page.tsx',
   'second-hand-device/device-stock-page.tsx',
   'second-hand-device/purchase-register-page.tsx',
-  'second-hand-device/sale-register-page.tsx',
   'service/job-costing-page.tsx',
 ])
 
@@ -59,8 +61,9 @@ const VOID_NOT_DELETE = new Set([
   'finance/expenses-page.tsx',
   'finance/receipts-payments-page.tsx',
   'sales/sales-invoices-page.tsx',
+  // Reverses a purchase by returning the device to the seller — it had this all along and the
+  // audit mis-flagged it, because it looks for the word "void" and this says "returnedToSeller".
   'second-hand-device/device-purchase-page.tsx',
-  'second-hand-device/device-sale-page.tsx',
 ])
 
 /**
@@ -68,6 +71,9 @@ const VOID_NOT_DELETE = new Set([
  * receipt numbered inside it.
  */
 const LOCK_NOT_DELETE = new Set(['settings/financial-years-page.tsx'])
+
+/** Records that are reversed rather than corrected. */
+const VOID_ONLY = new Set(['second-hand-device/sale-register-page.tsx'])
 
 /** Rows that are sessions, not records: the action is "revoke", not "delete". */
 const REVOKE = new Set(['administration/active-sessions-page.tsx'])
@@ -98,11 +104,17 @@ for (const file of walk(ROOT)) {
     // Deactivate count. A row a job card has already referenced cannot simply vanish.
     // Terms specific enough not to collide with the `disabled=` attribute that sits on almost
     // every button in the app — matching that made every screen look like it had a delete.
-    del: /Trash2?\b|useDelete|handleDelete|onDelete\b|setDeleting|[Dd]eactivate|disableUser|useSetUserStatus/.test(
+    // `ItemStatusButton` is the shared deactivate control. This reads each page's own source
+    // only, so lifting that control into a component — which was right, two pages needed it —
+    // made both pages look like they had lost the feature.
+    del: /Trash2?\b|useDelete|handleDelete|onDelete\b|setDeleting|[Dd]eactivate|disableUser|useSetUserStatus|ItemStatusButton/.test(
       src
     ),
     locked: /Lock|closeYear/i.test(src),
-    voided: /voided|voidReceipt|useVoid|Void/.test(src),
+    // `returnedToSeller` is this app's void for a purchase — the device goes back to whoever
+    // sold it. Matching only the literal word "void" reported a screen that had the feature as
+    // missing it.
+    voided: /voided|voidReceipt|useVoid|Void|returnedToSeller/.test(src),
     revoke: /revoke|signOut|terminate/i.test(src),
     open: /onRowClick|navigate\(/.test(src),
   })
@@ -116,6 +128,11 @@ function expectation(r) {
   if (REVOKE.has(r.rel)) return { kind: 'revoke', missing: r.revoke ? [] : ['revoke'] }
   if (LOCK_NOT_DELETE.has(r.rel)) {
     return { kind: 'edit + lock', missing: [!r.edit && 'edit', !r.locked && 'lock'].filter(Boolean) }
+  }
+  if (VOID_ONLY.has(r.rel)) {
+    // Nothing about a completed sale is corrected in place: the price, the buyer and the
+    // device are what happened. It is reversed and entered again.
+    return { kind: 'void only', missing: r.voided ? [] : ['void'] }
   }
   if (VOID_NOT_DELETE.has(r.rel)) {
     return {

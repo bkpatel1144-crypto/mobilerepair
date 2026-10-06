@@ -192,3 +192,84 @@ export function useVoidExpense() {
     },
   })
 }
+
+/**
+ * Corrects an expense that was entered wrong.
+ *
+ * An expense could be created and voided and nothing in between, so a tea bill typed as ₹5,000
+ * instead of ₹500 had to be voided and re-entered — which burns an `EXP-` number, leaves a
+ * voided row in the list for ever, and makes the day look like two expenses happened.
+ *
+ * The paired receipt is updated in the same batch. An expense writes two documents, and the
+ * cash book reads the *receipt*: changing the expense alone would leave Finance showing ₹5,000
+ * leaving the till while the expense list said ₹500. The number, the receipt id and the
+ * financial year are deliberately not editable — those identify the record rather than
+ * describe it, and a correction must not be able to renumber history.
+ */
+export function useUpdateExpense() {
+  const { user, profile } = useAuth()
+  const companyId = profile!.companyId
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    networkMode: 'always',
+    mutationFn: async (input: {
+      expense: ExpenseWithId
+      expenseDate: Date
+      categoryId: string
+      categoryName: string
+      amount: number
+      mode: 'cash' | 'upi' | 'card'
+      paidToPartyId: string | null
+      paidToPartyName: string | null
+      notes: string | null
+    }) => {
+      const { expense } = input
+      const now = serverTimestamp()
+      const batch = writeBatch(db)
+
+      batch.update(doc(db, expenseDoc(companyId, expense.id)), {
+        expenseDate: Timestamp.fromDate(input.expenseDate),
+        categoryId: input.categoryId,
+        categoryName: input.categoryName,
+        amount: input.amount,
+        mode: input.mode,
+        paidToPartyId: input.paidToPartyId,
+        paidToPartyName: input.paidToPartyName,
+        notes: input.notes,
+        updatedAt: now,
+      })
+
+      if (expense.receiptId) {
+        batch.update(doc(db, receiptDoc(companyId, expense.receiptId)), {
+          amount: input.amount,
+          mode: input.mode,
+          partyId: input.paidToPartyId,
+          partyName: input.paidToPartyName,
+          updatedAt: now,
+        })
+      }
+
+      await addAuditLogToBatch(batch, auditContextFrom(user!, profile!), {
+        action: 'Expense Updated',
+        module: 'finance',
+        entityType: 'Expense',
+        entityId: expense.id,
+        entityLabel: expense.expenseNumber,
+        targetLabel: input.categoryName,
+        // Money changing on a recorded expense is worth finding later, so the entry carries
+        // both numbers rather than only the new one.
+        critical: expense.amount !== input.amount,
+        details:
+          expense.amount !== input.amount
+            ? { amount: `₹${expense.amount} → ₹${input.amount}` }
+            : {},
+      })
+      await batch.commit()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: expensesQueryKey(companyId) })
+      queryClient.invalidateQueries({ queryKey: receiptsQueryKey(companyId) })
+    },
+  })
+}
