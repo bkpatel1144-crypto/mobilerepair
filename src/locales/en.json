@@ -2483,7 +2483,10 @@
       "accentOrchid": "Orchid",
       "accentRosewood": "Rosewood",
       "accentAmber": "Amber",
-      "accentSlate": "Slate"
+      "accentSlate": "Slate",
+      "look": "Look",
+      "lookStudio": "Studio",
+      "lookClassic": "Classic"
     }
   },
   "marketing": {

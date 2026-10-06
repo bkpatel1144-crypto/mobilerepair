@@ -671,17 +671,23 @@
 /* --- Card style -----------------------------------------------------------
  * The content layer only. `tinted` lifts cards slightly off the page; `filled` gives them the
  * muted fill, which is what a dense screen wants when every row is a card. */
-:root[data-cards='tinted'] {
-  --card: color-mix(in oklab, var(--primary) 4%, var(--background));
+/* Two attributes, so these beat whichever look set a base `--card`.
+ *
+ * With one attribute each they tied on specificity and lost on source order — Studio sets
+ * `--card` further down the file, so inside Studio the Tinted and Filled options silently did
+ * nothing at all. The probe caught it; the screen would not have, because White is the default
+ * and the other two just looked like White. */
+:root[data-look][data-cards='tinted'] {
+  --card: color-mix(in oklab, var(--primary) 5%, var(--background));
 }
-:root[data-cards='filled'] {
+:root[data-look][data-cards='filled'] {
   --card: var(--muted);
 }
-.dark[data-cards='tinted'] {
-  --card: color-mix(in oklab, var(--primary) 10%, oklch(0.205 0 0));
+.dark[data-look][data-cards='tinted'] {
+  --card: color-mix(in oklab, var(--primary) 12%, var(--background));
 }
-.dark[data-cards='filled'] {
-  --card: oklch(0.24 0 0);
+.dark[data-look][data-cards='filled'] {
+  --card: oklch(0.255 0.008 256);
 }
 
 /* --- Typeface -------------------------------------------------------------
@@ -880,4 +886,182 @@
   background-color: var(--popover);
   backdrop-filter: none;
   border-color: var(--foreground);
+}
+
+/* The page-header icon tile, tinted from whichever accent is active. */
+[data-slot='page-header-icon'] {
+  background-color: color-mix(in oklab, var(--primary) 14%, var(--card));
+}
+
+/* ===========================================================================
+ * Studio — the app's own look, rather than the framework's.
+ *
+ * The honest diagnosis of what came before: `--background` and `--card` were both
+ * `oklch(1 0 0)`. Pure white cards on a pure white page cannot read as cards, so the only
+ * thing separating anything on screen was a one-pixel grey hairline, and page titles were
+ * 18px. That is the default shadcn surface treatment, and it is why every admin panel built
+ * on it looks like every other one.
+ *
+ * Four changes carry almost all of the difference, and none of them is decoration:
+ *
+ *  1. The canvas stops being white. A faintly cool paper, so a white card floats on it and
+ *     depth comes from the relationship between two surfaces rather than from a border.
+ *  2. The sidebar becomes deep ink even in light mode. A dark rail against a light canvas is
+ *     the strongest, cheapest identity move there is — it is why Linear, Vercel and Stripe
+ *     all read as themselves from across a room.
+ *  3. Real type hierarchy. A page title at 18px next to 14px body is not a hierarchy, it is a
+ *     rounding error. 28px with negative tracking is.
+ *  4. Elevation instead of hairlines. Two-layer shadows tinted toward ink, the way a physical
+ *     card actually sits on paper.
+ *
+ * `classic` keeps the previous look exactly, for anyone who preferred it.
+ * ======================================================================== */
+
+:root[data-look='studio'] {
+  /* Cool paper. Light enough that body text contrast is unchanged, tinted enough that a white
+   * card has something to sit on. */
+  --background: oklch(0.966 0.005 247);
+  --card: oklch(1 0 0);
+  --popover: oklch(1 0 0);
+  --muted: oklch(0.955 0.006 247);
+  --border: oklch(0.925 0.005 247);
+  --input: oklch(0.925 0.005 247);
+  --radius: 0.875rem;
+
+  /* Deep ink rail. The accent pill sits on it as a translucent wash of the accent itself, so
+   * it belongs to the column instead of being a sticker on it — and it follows whichever
+   * accent is chosen, which the old hardcoded mint could not. */
+  --sidebar: oklch(0.21 0.018 256);
+  --sidebar-foreground: oklch(0.93 0.008 256);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: color-mix(in oklab, var(--primary) 26%, transparent);
+  --sidebar-accent-foreground: oklch(0.99 0 0);
+  --sidebar-border: oklch(1 0 0 / 0.08);
+  --sidebar-ring: var(--primary);
+}
+
+/* Dark mode keeps its own ground but gains the same separation between page and card, which it
+ * only half had. */
+.dark[data-look='studio'] {
+  --background: oklch(0.145 0.006 256);
+  --card: oklch(0.198 0.008 256);
+  --popover: oklch(0.198 0.008 256);
+  --muted: oklch(0.235 0.008 256);
+  --border: oklch(1 0 0 / 0.09);
+  --input: oklch(1 0 0 / 0.11);
+  --sidebar: oklch(0.172 0.008 256);
+  --sidebar-foreground: oklch(0.93 0.008 256);
+  --sidebar-border: oklch(1 0 0 / 0.07);
+}
+
+/* --- Elevation ------------------------------------------------------------
+ * The two-layer shadow a real card casts: a tight contact shadow plus a wider soft one, both
+ * tinted toward ink rather than pure black, which is what keeps it from looking grey and
+ * muddy. Borders stay, but recede to almost nothing — they are there for high-contrast mode
+ * and for the edge where a shadow alone is ambiguous. */
+:root[data-look='studio'] [data-slot='card'],
+:root[data-look='studio'] .glass,
+:root[data-look='studio'] [data-chrome-surface='topbar'] {
+  box-shadow:
+    0 1px 2px -1px oklch(0.2 0.03 256 / 0.08),
+    0 2px 8px -2px oklch(0.2 0.03 256 / 0.1);
+}
+:root[data-look='studio'] [data-slot='popover-content'],
+:root[data-look='studio'] [data-slot='dropdown-menu-content'],
+:root[data-look='studio'] [data-slot='dialog-content'],
+:root[data-look='studio'] [data-slot='sheet-content'],
+:root[data-look='studio'] .glass-lg {
+  box-shadow:
+    0 2px 4px -2px oklch(0.2 0.03 256 / 0.1),
+    0 16px 40px -8px oklch(0.2 0.03 256 / 0.18);
+}
+.dark[data-look='studio'] [data-slot='card'],
+.dark[data-look='studio'] .glass,
+.dark[data-look='studio'] [data-chrome-surface='topbar'] {
+  box-shadow: 0 1px 3px 0 oklch(0 0 0 / 0.4);
+}
+
+/* --- Type -----------------------------------------------------------------
+ * The jump that makes a screen feel designed. Negative tracking at display size is not a
+ * flourish: letter-spacing that reads correctly at 14px is visibly loose at 28px. */
+:root[data-look='studio'] [data-slot='page-title'] {
+  font-size: 1.5rem;
+  line-height: 1.15;
+  /* 600, not 700. Weight restraint is what separates the dashboards people call premium from
+   * the ones that look like a template — Stripe sets display type at 300 and it reads as
+   * confident rather than loud. At 28px the size and the tracking are already doing the work;
+   * adding weight on top is shouting. */
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+@media (min-width: 640px) {
+  :root[data-look='studio'] [data-slot='page-title'] {
+    font-size: 1.75rem;
+  }
+}
+
+/* Tracking tightens as size grows, everywhere, not only on page titles. Letter-spacing that is
+ * correct at 14px is visibly loose at 24px and sloppy at 36px — this is the single most
+ * consistent thing the design systems people admire do, and the cheapest to adopt. */
+:root[data-look='studio'] h1,
+:root[data-look='studio'] h2 {
+  letter-spacing: -0.022em;
+}
+:root[data-look='studio'] h3,
+:root[data-look='studio'] .text-2xl,
+:root[data-look='studio'] .text-3xl {
+  letter-spacing: -0.018em;
+}
+
+/* The big numbers — KPI tiles, the balance on a job card — get the same treatment plus tabular
+ * figures, so a row of them lines up and a changing one does not jitter. */
+:root[data-look='studio'] [data-slot='stat-value'],
+:root[data-look='studio'] .tabular-nums {
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A focus ring that was designed rather than inherited. Two rings — the accent against a
+ * background-coloured gap — so it stays visible on a white card, on the ink sidebar and on
+ * glass, which a single-colour outline does not. */
+:root[data-look='studio'] *:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}
+:root[data-look='studio'] [data-slot='page-header-icon'] {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.875rem;
+}
+
+/* Table headings: the grey band goes, and the work is done by the letterforms and one firm
+ * rule underneath. A tinted band plus small caps plus a border is three signals for one job. */
+:root[data-look='studio'] thead {
+  background-color: transparent !important;
+}
+:root[data-look='studio'] thead tr {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--foreground);
+}
+:root[data-look='studio'] [data-slot='table-head'] {
+  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+}
+
+/* Every figure that can line up, lines up. Prices in a column that jitter because the digits
+ * are proportional is the detail people feel without being able to name. */
+:root[data-look='studio'] table,
+:root[data-look='studio'] [data-slot='card'] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Signature detail -----------------------------------------------------
+ * The status dot gets a soft halo in its own colour. It is the single most repeated element
+ * in this app — every job card, every row, every chip — so it is the one worth the extra
+ * ring, and it makes a status readable at a glance from further away. */
+:root[data-look='studio'] [data-slot='status-dot'] {
+  box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 18%, transparent);
 }

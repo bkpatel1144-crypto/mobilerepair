@@ -45,7 +45,7 @@ export function MobileSidebar({ open, onOpenChange }: MobileSidebarProps) {
               onChange={(e) => setFilter(e.target.value)}
               placeholder={t('shared.search')}
               aria-label={t('shared.searchNavigation')}
-              className="h-10 rounded-full bg-background pl-9"
+              className="h-10 rounded-full bg-sidebar-accent/40 pl-9 text-sidebar-foreground placeholder:text-sidebar-foreground/50"
             />
           </div>
         </div>

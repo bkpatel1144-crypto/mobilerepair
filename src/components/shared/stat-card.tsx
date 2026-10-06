@@ -68,7 +68,9 @@ export function StatCard({
           <p className="line-clamp-2 text-xs leading-tight font-medium tracking-wide text-muted-foreground uppercase">
             {label}
           </p>
-          <p className="mt-1 text-2xl font-bold tabular-nums">{value}</p>
+          <p data-slot="stat-value" className="mt-1 text-2xl font-bold tabular-nums">
+            {value}
+          </p>
           {sublabel && <p className="mt-0.5 text-xs text-muted-foreground">{sublabel}</p>}
           {trend && (
             <p

@@ -49,7 +49,11 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
     <aside
       data-chrome-surface="sidebar"
       className={cn(
-        'hidden h-dvh shrink-0 flex-col border-r bg-sidebar transition-[width] duration-150 md:flex',
+        // `text-sidebar-foreground`, not inherited: the column set its background from
+        // the sidebar tokens and its text from the page's. Invisible while the rail
+        // was near-white and dark text happened to be right; dark-on-dark the moment
+        // a look made it ink.
+        'hidden h-dvh shrink-0 flex-col border-r bg-sidebar text-sidebar-foreground transition-[width] duration-150 md:flex',
         collapsed ? 'w-16' : 'w-[270px]'
       )}
     >
@@ -99,13 +103,13 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
       {!collapsed && (
         <div className="shrink-0 px-3 pt-3 pb-1">
           <div className="relative">
-            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-sidebar-foreground/60" />
             <Input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               placeholder={t('shared.search')}
               aria-label={t('shared.searchNavigation')}
-              className="h-10 rounded-full border-sidebar-border bg-background pl-9"
+              className="h-10 rounded-full border-sidebar-border bg-sidebar-accent/40 pl-9 text-sidebar-foreground placeholder:text-sidebar-foreground/50"
             />
           </div>
         </div>
@@ -114,7 +118,7 @@ export function AppSidebar({ collapsed, onExpandRequest, onToggleCollapse }: App
       <SidebarNav collapsed={collapsed} onExpandRequest={onExpandRequest} filter={filter} />
 
       {!collapsed && (
-        <div className="shrink-0 border-t p-3 text-center text-xs text-muted-foreground">
+        <div className="shrink-0 border-t border-sidebar-border p-3 text-center text-xs text-sidebar-foreground/70">
           {/* The product's own name and the current year, not a hardcoded "2025 ERP Pro" —
            * a scaffold leftover that sat under the menu on every screen in the app. Same source
            * as the marketing footer, so the two cannot drift apart. */}

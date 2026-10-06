@@ -107,6 +107,61 @@ async function primaryContrast() {
   })
 }
 
+
+/**
+ * The worst-contrast piece of text in the sidebar, against the rail it sits on.
+ *
+ * Added because the ink sidebar shipped with the company wordmark dark-on-dark: the column set
+ * its background from the sidebar tokens and its text colour from the page's, which is correct
+ * right up until a look makes the rail dark. Nothing measured it, so it took a screenshot to
+ * notice — exactly the kind of thing that should be a number.
+ */
+async function worstSidebarContrast() {
+  return page.evaluate(() => {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 1
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    const toRgb = (css) => {
+      ctx.clearRect(0, 0, 1, 1)
+      ctx.fillStyle = '#000'
+      ctx.fillStyle = css
+      ctx.fillRect(0, 0, 1, 1)
+      const d = ctx.getImageData(0, 0, 1, 1).data
+      return [d[0], d[1], d[2]]
+    }
+    const lum = (rgb) => {
+      const [r, g, b] = rgb.map((v) => {
+        const c = v / 255
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+      })
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b
+    }
+    const ratio = (fg, bg) => {
+      const a = lum(toRgb(fg))
+      const b = lum(toRgb(bg))
+      return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+    }
+
+    const side = document.querySelector('[data-chrome-surface="sidebar"]')
+    if (!side) return null
+    const railBg = getComputedStyle(side).backgroundColor
+    let worst = null
+    side.querySelectorAll('*').forEach((el) => {
+      const text = (el.textContent || '').trim()
+      if (!text || el.children.length) return
+      const r = el.getBoundingClientRect()
+      if (r.width === 0 || r.height === 0) return
+      const cs = getComputedStyle(el)
+      // Against its own painted background if it has one, else the rail.
+      const ownBg = cs.backgroundColor
+      const bg = ownBg === 'rgba(0, 0, 0, 0)' || ownBg === 'transparent' ? railBg : ownBg
+      const v = ratio(cs.color, bg)
+      if (!worst || v < worst.ratio) worst = { ratio: v, text: text.slice(0, 24) }
+    })
+    return worst
+  })
+}
+
 const ACCENTS = ['teal', 'navy', 'forest', 'indigo', 'orchid', 'rosewood', 'amber', 'slate']
 
 for (const mode of ['light', 'dark']) {
@@ -176,7 +231,25 @@ const phone = await page.evaluate(() => ({
 }))
 check('and still fits a phone', !phone.overflow, phone.width + 'px in 390px')
 
+await page.setViewportSize({ width: 1500, height: 1000 })
 await setAppearance({ chrome: 'docked' })
+
+// ---- the sidebar, in both looks and both themes -----------------------------
+for (const look of ['studio', 'classic']) {
+  for (const mode of ['light', 'dark']) {
+    await page.evaluate((m) => document.documentElement.classList.toggle('dark', m === 'dark'), mode)
+    await setAppearance({ look })
+    const w = await worstSidebarContrast()
+    check(
+      look + '/' + mode + ': every sidebar label is readable on the rail',
+      !!w && w.ratio >= 4.5,
+      w ? w.ratio.toFixed(2) + ':1 worst, on "' + w.text + '"' : 'no sidebar text found'
+    )
+  }
+}
+await page.evaluate(() => document.documentElement.classList.remove('dark'))
+await setAppearance({ look: 'studio' })
+
 check('no console errors', errors.length === 0, errors.slice(0, 2).join(' | '))
 
 console.log('\nscreenshots in ' + outDir + '/')

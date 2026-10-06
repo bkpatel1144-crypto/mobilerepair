@@ -32,6 +32,14 @@ export type Accent = (typeof ACCENTS)[number]
 export const CARD_STYLES = ['white', 'tinted', 'filled'] as const
 export type CardStyle = (typeof CARD_STYLES)[number]
 
+/**
+ * The visual identity. `studio` is the app's own — cool paper canvas, ink sidebar, elevation
+ * instead of hairlines, display type with real tracking. `classic` is the flat white-on-white
+ * surface treatment the app shipped with, kept for anyone who preferred it.
+ */
+export const LOOKS = ['studio', 'classic'] as const
+export type Look = (typeof LOOKS)[number]
+
 /** `floating` lifts the sidebar and top bar off the edges as glass; `docked` is the original. */
 export const CHROME_STYLES = ['docked', 'floating'] as const
 export type ChromeStyle = (typeof CHROME_STYLES)[number]
@@ -45,6 +53,7 @@ export const FONTS = ['geist', 'system', 'serif', 'mono'] as const
 export type Font = (typeof FONTS)[number]
 
 export interface Appearance {
+  look: Look
   accent: Accent
   cards: CardStyle
   chrome: ChromeStyle
@@ -52,6 +61,7 @@ export interface Appearance {
 }
 
 export const DEFAULT_APPEARANCE: Appearance = {
+  look: 'studio',
   accent: 'teal', // the brand colour the app was designed around
   cards: 'white',
   chrome: 'docked', // the look every existing user already has; floating is opt-in
@@ -73,6 +83,7 @@ export function readAppearance(): Appearance {
     // Field by field rather than trusting the object: a value written by an older build, or
     // edited by hand, must not be able to put the app into a look that has no CSS behind it.
     return {
+      look: isOneOf(LOOKS, parsed.look) ? parsed.look : DEFAULT_APPEARANCE.look,
       accent: isOneOf(ACCENTS, parsed.accent) ? parsed.accent : DEFAULT_APPEARANCE.accent,
       cards: isOneOf(CARD_STYLES, parsed.cards) ? parsed.cards : DEFAULT_APPEARANCE.cards,
       chrome: isOneOf(CHROME_STYLES, parsed.chrome) ? parsed.chrome : DEFAULT_APPEARANCE.chrome,
@@ -86,6 +97,7 @@ export function readAppearance(): Appearance {
 
 export function applyAppearance(appearance: Appearance, { persist = true } = {}): void {
   const root = document.documentElement
+  root.setAttribute('data-look', appearance.look)
   root.setAttribute('data-accent', appearance.accent)
   root.setAttribute('data-cards', appearance.cards)
   root.setAttribute('data-chrome', appearance.chrome)

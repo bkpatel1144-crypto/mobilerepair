@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { applyTheme, getPreferredTheme, type Theme } from '@/lib/theme'
 import {
   ACCENTS,
+  LOOKS,
   CARD_STYLES,
   DEFAULT_APPEARANCE,
   FONTS,
@@ -16,6 +17,7 @@ import {
   type Appearance,
   type CardStyle,
   type Font,
+  type Look,
 } from '@/lib/appearance'
 
 /**
@@ -47,6 +49,11 @@ const ACCENT_LABEL: Record<Accent, string> = {
   rosewood: 'accentRosewood',
   amber: 'accentAmber',
   slate: 'accentSlate',
+}
+
+const LOOK_LABEL: Record<Look, string> = {
+  studio: 'lookStudio',
+  classic: 'lookClassic',
 }
 
 const CARD_LABEL: Record<CardStyle, string> = {
@@ -87,11 +94,7 @@ function SegmentedChoice<T extends string>({
       <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
         {label}
       </p>
-      <div
-        role="radiogroup"
-        aria-label={label}
-        className="flex gap-1 rounded-xl bg-muted/60 p-1"
-      >
+      <div role="radiogroup" aria-label={label} className="flex gap-1 rounded-xl bg-muted/60 p-1">
         {options.map((option) => (
           <button
             key={option}
@@ -134,6 +137,7 @@ export function AppearancePanel() {
 
   const isDefault =
     theme === 'light' &&
+    appearance.look === DEFAULT_APPEARANCE.look &&
     appearance.accent === DEFAULT_APPEARANCE.accent &&
     appearance.cards === DEFAULT_APPEARANCE.cards &&
     appearance.chrome === DEFAULT_APPEARANCE.chrome &&
@@ -141,6 +145,15 @@ export function AppearancePanel() {
 
   return (
     <div className="w-[320px] max-w-[calc(100vw-2rem)] space-y-5 p-4">
+      {/* First, because it is the one setting that changes everything else's meaning. */}
+      <SegmentedChoice
+        label={t('components.appearance.look')}
+        options={LOOKS}
+        value={appearance.look}
+        onChange={(look) => update({ look })}
+        render={(option) => t(`components.appearance.${LOOK_LABEL[option]}`)}
+      />
+
       <SegmentedChoice
         label={t('components.appearance.theme')}
         options={['light', 'dark'] as const}
@@ -158,7 +171,11 @@ export function AppearancePanel() {
         <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
           {t('components.appearance.colour')}
         </p>
-        <div role="radiogroup" aria-label={t('components.appearance.colour')} className="flex flex-wrap gap-2">
+        <div
+          role="radiogroup"
+          aria-label={t('components.appearance.colour')}
+          className="flex flex-wrap gap-2"
+        >
           {ACCENTS.map((accent) => {
             const selected = appearance.accent === accent
             return (
